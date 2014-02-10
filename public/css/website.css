@@ -8,23 +8,23 @@
 }
 
 .navbar.navbar-inverse .nav > li.active > a {
-  color: #3670C7;
+  color: #ffffff;
 }
 
 .navbar.navbar-inverse .nav > li > a:hover, .navbar.navbar-inverse .nav > li > a:active {
-color: #3670C7;
+color: #ffffff;
 }
 
 .navbar.navbar-inverse .nav > li > a {
   font-size: 15px;
   font-weight: 600; 
-  color: #BDBADF;
+  color: #89BEEE;
   text-shadow: none;
   opacity: 60;
 }
 
 .navbar.navbar-inverse .nav > li > a:hover, .navbar.navbar-inverse .nav > li > a:active {
-  color: #3670C7;
+  color: #ffffff;
   opacity: 100;
   filter: alpha(opacity=100);
 }
@@ -119,7 +119,7 @@ color: #3670C7;
   font-size: 17px;
   font-weight: 400;
   text-align: right;
-  color: #BDBADF;
+  color: #ffffff;
   padding-top: 5px;
   padding-bottom:2px;
 }
@@ -285,10 +285,9 @@ and (min-width : 1680px) {
 
   #feature_slider .slide {
   width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10%;
+  margin-right: 10%;
   height: 480px;
-  position: absolute;
   display: none;
   overflow: hidden;
   }
@@ -298,13 +297,15 @@ and (min-width : 1680px) {
 #footer {
 
   max-height: 10000px;
+  background-color: #333352;
 }
 
 html {
-background-color:#252528;
+background-color:#333352;
 }
 
 body {
 
 background-color: #ffffff; /*the body color*/
 }
+
