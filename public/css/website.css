@@ -288,7 +288,7 @@ and (min-width : 1680px) {
   margin-left: auto;
   margin-right: auto;
   height: 480px;
-  position: static;
+  position: absolute;
   display: none;
   overflow: hidden;
   }
