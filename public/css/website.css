@@ -272,3 +272,39 @@ color: #3670C7;
   margin-left: auto;
   margin-right: auto;
 }
+
+#feature_slider {
+  height: 720px;
+  height: 480px;
+  background: #FDF8F8;
+}
+
+/* Large screens ----------- */
+@media only screen 
+and (min-width : 1680px) {
+
+  #feature_slider .slide {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 480px;
+  position: static;
+  display: none;
+  overflow: hidden;
+  }
+ 
+}
+
+#footer {
+
+  max-height: 10000px;
+}
+
+html {
+background-color:#252528;
+}
+
+body {
+
+background-color: #ffffff; /*the body color*/
+}
