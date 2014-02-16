@@ -1,9 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Toptutoring</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Top Tutoring">
+    <%= yield :head %>
+
+    <link href="favicon.png" rel="shortcut-icon" type="image/png" /> 
+    <link rel ="icon" href ="favicon.png" type ="image/icon" />
+  
+    <!-- Styles -->
+<!--     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/compiled/bootstrap-overrides.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/compiled/theme.css" />
+    <link href="assets/css/style.css" media="screen" rel="stylesheet" /> -->
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css' />
+
+<!--     <link rel="stylesheet" href="css/compiled/index.css" type="text/css" media="screen" />    
+    <link rel="stylesheet" type="text/css" href="css/lib/animate.css" media="screen, projection" /> -->
+
+
+
+    <!-- CSS Implementing Plugins -->    
+<!--     <link href="assets/plugins/font-awesome/css/font-awesome.css" media="screen" rel="stylesheet" /> -->
+<!--     <link href="assets/plugins/flexslider/flexslider.css" media="screen" rel="stylesheet" /> -->
+<!--     <link href="assets/plugins/parallax-slider/css/parallax-slider.css" media="screen" rel="stylesheet" /> -->
+
+<!--     <link rel="stylesheet" type="text/css" href="css/website.css" media="screen, projection" />  -->
+
+    <!-- Font Awesome -->
+   <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.min.css">
+
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+
+
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>

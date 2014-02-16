@@ -1,4 +1,14 @@
 Toptutoring::Application.routes.draw do
+  root 'pages#index'
+
+  get "/index.html" => "pages#index"
+  get "/contact" => "pages#contact"
+  get "/contactsubmit" => "pages#contactsubmit"
+  get "/about-us" => "pages#about-us"
+  get "/New_SAT_2016.html" => "pages#New_SAT_2016"
+  get "/New_SAT_Writing.html" => "pages#New_Sat_Writing"
+  get "/services.html" => "pages#services"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
