@@ -3,6 +3,7 @@ Toptutoring::Application.routes.draw do
 
   get "/index.html" => "pages#index"
   get "/contact" => "pages#contact"
+  get "/login" => "pages#login"
   get "/contactsubmit" => "pages#contactsubmit"
   get "/about-us" => "pages#about-us"
   get "/New_SAT_2016.html" => "pages#New_SAT_2016"
