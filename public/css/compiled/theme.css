@@ -309,6 +309,17 @@ header {
 
   .navbar.navbar-inverse {
     background: #252528; } }
+/*@media (min-width: 768px) and (max-width: 991px) {
+  .navbar {
+    margin-bottom: 0; }
+    .navbar.transparent.navbar-fixed-top {
+      margin-bottom: -70px;
+      position: relative;
+      top: 999; }
+    .navbar.home.navbar-fixed-top {
+      margin-bottom: -70px;
+      position: relative;
+      top: 999; } }*/
 @media (min-width: 768px) and (max-width: 991px) {
   .navbar {
     margin-bottom: 0; }
@@ -319,8 +330,8 @@ header {
     .navbar.home.navbar-fixed-top {
       margin-bottom: -70px;
       position: relative;
-      top: 999; } }
-@media (max-width: 767px) {
+      top: 999; } }      
+@media (max-width: 991px) {
   .navbar.navbar-inverse .container .navbar-header .navbar-brand {
     margin-left: -5px; }
   .navbar .navbar-nav .open .dropdown-menu > li > a {
