@@ -9,7 +9,7 @@ Toptutoring::Application.routes.draw do
   get "/New_SAT_2016.html" => "pages#New_SAT_2016"
   get "/New_SAT_Writing.html" => "pages#New_Sat_Writing"
   get "/services.html" => "pages#services"
-  get "/pay_online" => "payments#show"
+  get "/payment" => "payments#show"
   post "/payments" => "payments#create"
   get "/confirmation" => "payments#confirmation"
   # The priority is based upon order of creation: first created -> highest priority.
