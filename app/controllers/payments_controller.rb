@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
   if Rails.env.production?
-    force_ssl(host: "top-tutoring.herokuapp.com")
+    force_ssl(host: "toptutoring.herokuapp.com")
   end
 
   def create
@@ -17,7 +17,7 @@ class PaymentsController < ApplicationController
         :source => token,
         :description => params[:payments][:description])
 
-      flash[:success] = "Payment succesfully completed!"
+      flash[:success] = "Payment successfully completed!"
       redirect_to confirmation_url(host: ENV['HOST'], protocol: "http")
     rescue Stripe::CardError => e
       flash[:danger] = e.message
