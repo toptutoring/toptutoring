@@ -21,8 +21,6 @@
       <li><a href="services.html">SERVICES</a></li>
       <li><a href="contact.html">CONTACT US</a></li>
       <li><a href="New_SAT_2016.html">BLOG</a></li>
-      <li><a href="login.html">LOGIN</a></li>
-
       <!-- <li><a href="sign-in.html">Sign in</a></li>
       <li><a href="sign-up.html">Sign up</a></li> -->
     </ul>
@@ -51,7 +49,7 @@
       <div class="form-group">
         <label for="amount" class="col-sm-2 control-label">Amount</label>
         <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm" name="payments[amount]">
+          <input type="number" class="form-control col-sm-3 input-sm" name="payments[amount]" min="0">
           </input>
         </div>
       </div>
@@ -132,5 +130,5 @@
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
-  Stripe.setPublishableKey('pk_test_V69cI1W1VeyqgAuzhMXviEuO');
+  Stripe.setPublishableKey(ENV['STRIPE_PUBLISHABLE_KEY']);
 </script>
