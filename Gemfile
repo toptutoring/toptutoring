@@ -3,9 +3,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.0.0'
 
-group :development do
-  gem 'sqlite3'
-end
+gem 'pg'
 gem 'bootstrap-sass'
 gem 'bootstrap_form'
 # Use SCSS for stylesheets
@@ -15,7 +13,6 @@ group :production do
   # platforms :ruby do
   #   gem 'unicorn'
   # end
-  gem 'pg'
   gem 'rails_12factor'
 end
 # Use Uglifier as compressor for JavaScript assets
