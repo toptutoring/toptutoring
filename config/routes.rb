@@ -1,4 +1,7 @@
 Toptutoring::Application.routes.draw do
+  devise_for :users, controllers: { registrations: "registrations" }, path: '',
+   path_names: { sign_in: 'login', sign_out: 'logout'}
+
   root 'pages#index'
 
   get "/index.html" => "pages#index"
@@ -9,9 +12,15 @@ Toptutoring::Application.routes.draw do
   get "/New_SAT_2016.html" => "pages#New_SAT_2016"
   get "/New_SAT_Writing.html" => "pages#New_Sat_Writing"
   get "/services.html" => "pages#services"
-  get "/payment" => "payments#show"
-  post "/payments" => "payments#create"
+
+  resource :payments, only: [:new, :create]
+  get "payment/one_time" => "one_time_payments#new"
+  post "payments/one_time" => "one_time_payments#create"
   get "/confirmation" => "payments#confirmation"
+
+  devise_scope :user do
+    get "/users/:user_id" => "registrations#show", :as => :user
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
