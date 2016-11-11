@@ -1,5 +1,4 @@
 class OneTimePaymentsController < ApplicationController
-  before_action :authenticate_user!
   layout false
   if Rails.env.production?
     force_ssl(host: "toptutoring.herokuapp.com")
