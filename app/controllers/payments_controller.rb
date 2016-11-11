@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
   if Rails.env.production?
-    force_ssl(host: "toptutoring.herokuapp.com")
+    force_ssl(host: "toptutoring.herokuapp.com/payment")
   end
 
   def create
