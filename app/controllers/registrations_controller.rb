@@ -1,4 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
+  if Rails.env.production?
+    force_ssl(host: "toptutoring.herokuapp.com")
+  end
 
   def create
     super do
@@ -30,6 +33,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(resource)
-    new_payments_path
+    new_payments_path(host: ENV['HOST'], protocol: "http")
   end
 end
