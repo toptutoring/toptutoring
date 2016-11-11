@@ -10,6 +10,34 @@ jQuery(function($) {
     // Prevent the form from submitting with the default action
     return false;
   });
+
+  $('#amount').on('keydown', function(e) {
+    $('#hours').val('0');
+    $('#hourly_rate').val('0');
+  });
+
+  $('#hours').on('keyup', function(e) {
+    if ($('#hourly_rate').val() != '') {
+      console.log(parseInt($('#hours').val()))
+      console.log(parseInt($('#hourly_rate').val()))
+      console.log($('#hourly_rate').val())
+      console.log(parseInt($('#hours').val()) * parseInt($('#hourly_rate').val()))
+      var total = parseInt($('#hours').val()) * parseInt($('#hourly_rate').val());
+      $('#amount').val(total);
+    }
+  });
+
+  $('#hourly_rate').on('keyup', function(e) {
+    if ($('#hours').val() != '') {
+      console.log(parseInt($('#hours').val()))
+      console.log(parseInt($('#hourly_rate').val()))
+      console.log($('#hourly_rate').val())
+      console.log(parseInt($('#hours').val()) * parseInt($('#hourly_rate').val()))
+      var total = parseInt($('#hours').val()) * parseInt($('#hourly_rate').val());
+      $('#amount').val(total);
+    }
+  });
+
 });
 
 var stripeResponseHandler = function(status, response) {

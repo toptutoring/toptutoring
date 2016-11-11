@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Top Tutoring">
+    <%= yield :head %>
 
     <link href="../favicon.png" rel="shortcut-icon" type="image/png" />
     <link rel ="icon" href ="../favicon.png" type ="image/icon" />
@@ -32,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../css/website.css" media="screen, projection" />
 
     <!-- Font Awesome -->
-   <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.min.css">
+   <link rel="stylesheet" href="../font-awesome-4.0.3/css/font-awesome.min.css">
 
 
     <!--[if lt IE 9]>
@@ -46,7 +47,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -55,7 +56,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href = "index.html"><img src ="img/toptutoring3.png" class="navbar-brand img-responsive"></a>
+      <a href="../index.html"><img src ="../img/toptutoring3.png" class="navbar-brand img-responsive"></a>
 
     </div>
 
@@ -64,11 +65,11 @@
        Call For a Free Consultation (510) 842-5221
     </div>
       <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="index.html">HOME</a></li>
-        <li><a href="about-us.html">ABOUT US</a></li>
-        <li><a href="services.html">SERVICES</a></li>
-        <li><a href="contact.html">CONTACT US</a></li>
-        <li><a href="New_SAT_2016.html">BLOG</a></li>
+        <li><a href="../index.html">HOME</a></li>
+        <li><a href="../about-us.html">ABOUT US</a></li>
+        <li><a href="../services.html">SERVICES</a></li>
+        <li><a href="../contact.html">CONTACT US</a></li>
+        <li><a href="../New_SAT_2016.html">BLOG</a></li>
         <% if user_signed_in? %>
         <li>
           <%= link_to('LOG OUT', destroy_user_session_path, :method => :delete) %>
@@ -87,26 +88,32 @@
 
     </div>
   </div>
+  </div>
+
+<div class="text-center" style="height:600px;">
+<h2>Change your password</h2>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+  <%= f.hidden_field :reset_password_token %>
+
+  <div class="field">
+    <%= f.label :password, "New password" %><br />
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+    <% end %>
+    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirm new password" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Change my password", class:"btn btn-success"  %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
 </div>
-
-<div class= "container" style="height:400px;">
-  <legend><h3><i class="icon-thumbs-up color-green"></i>
-    <% flash.each do |key, value| %>
-      <%= value %>
-    <% end %></h3></legend>
-</div>
-
-</body>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-5353766-6', 'toptutoring.com');
-  ga('send', 'pageview');
-
-</script>
-
-</html>

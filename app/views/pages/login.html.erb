@@ -27,12 +27,22 @@
       </div>
         <ul class="nav navbar-nav navbar-right">
           <li class="active"><a href="index.html">HOME</a></li>
-          <li><a href="about-us.html">ABOUT US</a></li>                    
+          <li><a href="about-us.html">ABOUT US</a></li>
           <li><a href="services.html">SERVICES</a></li>
           <li><a href="contact.html">CONTACT US</a></li>
           <li><a href="New_SAT_2016.html">BLOG</a></li>
-          <li><a href="login.html">LOGIN</a></li>
-
+          <% if user_signed_in? %>
+          <li>
+            <%= link_to('LOGOUT', destroy_user_session_path, :method => :delete) %>
+          </li>
+          <% else %>
+          <li>
+            <%= link_to('LOGIN', new_user_session_path)  %>
+          </li>
+          <li>
+            <%= link_to('SIGN UP', new_user_registration_path) %>
+          </li>
+          <% end %>
           <!-- <li><a href="sign-in.html">Sign in</a></li>
           <li><a href="sign-up.html">Sign up</a></li> -->
         </ul>
@@ -57,14 +67,14 @@
     <div class="container">
       <div class="section_header">
         <h3>Test Prep Services</h3>
-        
-      </div>            
-      
+
+      </div>
+
         <!-- Features Row -->
         <div class="features_op1_row">
           <!-- Feature -->
           <div class="col-sm-12 feature first">
-          
+
             <div class="text">
               <h6>Achieve academic success with our SAT & PSAT test preparation courses.</h6><br>
               <h6 class = "info"><i>Currently serving the Alameda, Berkeley, Piedmont, Oakland, Hayward, Castro Valley, Lafayette, Dublin, Pleasanton, Union City, and Fremont areas. </i></h6><br>
@@ -85,21 +95,21 @@
 
       <div class="section_header">
         <h3>Other Services</h3>
-        
-      </div>   
+
+      </div>
         <!-- Features Row -->
         <div class="features_op1_row">
           <!-- Feature -->
           <div class="col-sm-12 feature first">
-          
+
             <div class="text">
               <h6>Academic Tutoring</h6>
-              <p>Struggling in class? Here at Top Tutoring we offer subject tutoring for courses including English, History, Biology, Chemistry, Pre-Algebra, Algebra, Geometry, Pre-Calculus, and Psychology. 
-              </p><br>                        
-           
+              <p>Struggling in class? Here at Top Tutoring we offer subject tutoring for courses including English, History, Biology, Chemistry, Pre-Algebra, Algebra, Geometry, Pre-Calculus, and Psychology.
+              </p><br>
+
               <h6>Essay Editing</h6>
               <p>
-                Don't let writer's block overtake you! We offer in-depth and detailed essay editing services for college admission essays and academic essays. Ensure that your essay is 100% free of errors and ready for submission with our team of professional essay editors. 
+                Don't let writer's block overtake you! We offer in-depth and detailed essay editing services for college admission essays and academic essays. Ensure that your essay is 100% free of errors and ready for submission with our team of professional essay editors.
               </p><br>
             </div>
           </div>
@@ -107,20 +117,20 @@
 
         <div class="section_header">
         <h3>Why Choose Top Tutoring?</h3>
-        
-      </div>   
+
+      </div>
         <!-- Features Row -->
         <div class="features_op1_row">
           <!-- Feature -->
           <div class="col-sm-12 feature first">
-          
+
             <div class="text">
               <h6>Ethical SAT Prep</h6>
-              <p>At Top Tutoring our materials are entirely legal and authorized by the College Board. Other companies will use material illegally by copying tests from the College Board and copying problems from real SAT sittings. Not only is this illegal, but the company itself has no way of verifying the correct answers to the copied exam questions. 
-              </p><br>  
+              <p>At Top Tutoring our materials are entirely legal and authorized by the College Board. Other companies will use material illegally by copying tests from the College Board and copying problems from real SAT sittings. Not only is this illegal, but the company itself has no way of verifying the correct answers to the copied exam questions.
+              </p><br>
               <h6>Focused Study</h6>
-              <p>We don't rely on mindless repetition and drills to teach students, but cater our tutoring to each individual students' needs. Our material is based entirely on actual SAT questions so students get accurate diagnostic test results and effective practice problems that pinpoint their weaknesses.</p><br>   
-              <h6>The Best Tutors</h6>                   
+              <p>We don't rely on mindless repetition and drills to teach students, but cater our tutoring to each individual students' needs. Our material is based entirely on actual SAT questions so students get accurate diagnostic test results and effective practice problems that pinpoint their weaknesses.</p><br>
+              <h6>The Best Tutors</h6>
               <p>We only hire the best. All our tutors come from top tier schools and have scored in the 98th percentile and above on the SAT. They are passionate about and enjoy teaching and helping students like you succeed. Most other SAT companies hire tutors who have scored much lower on the SAT than our tutors. While this may help in filling the gap to find enough tutors to teach, their lack of knowledge and familiarity with the SAT often limits the students potential for improvement.
               </p><br>
               <p>At Top Tutoring, we only give you the best.</p><br>
@@ -132,13 +142,13 @@
 
     </div>
   </div>
-      
+
 
    <!-- starts footer -->
   <footer id="footer">
     <div class="container">
       <div class="row sections">
-        
+
         <div class="col-sm-4 testimonials">
           <h3 class="footer_header">
             About
@@ -149,8 +159,8 @@
             Moraga | Orinda | Lafayette | Dublin |
             Pleasanton | Union City | Fremont | Castro Valley</span>
 
-          
-          
+
+
         </div>
         <div class="col-sm-4 recent_posts">
           <h3 class="footer_header">
@@ -189,26 +199,26 @@
             tutor@toptutoring.com</span><br>
             <span class = "socialmedia">
               <!-- <span class = "socialpadding"><a href ="http://google.com/"<i class ="fa fa-google-plus-square fa-2x"></i></a></span> -->
-              <a href = "https://www.facebook.com/pages/Toptutoring/251682038342960"><i class ="fa fa-facebook-square fa-2x"></i></a>  </span>                                           
+              <a href = "https://www.facebook.com/pages/Toptutoring/251682038342960"><i class ="fa fa-facebook-square fa-2x"></i></a>  </span>
 
          </div>
-      </div>     
+      </div>
           <div>
             <span class ="copyrightlogo">© 2014 TopTutoring. All rights reserved. </span>
             <br>
             <span class ="copyrightlogo">SAT® is a trademark registered and/or owned by the College Board, which was not involved in the production of, and does not endorse, this site. </span>
           </div>
     </div>
-    
-             
+
+
   </footer>
 
-  <!-- Scripts    
+  <!-- Scripts
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/theme.js"></script>
 
-  <script type="text/javascript" src="js/index-slider.js"></script> 
+  <script type="text/javascript" src="js/index-slider.js"></script>
  -->
 
 </body>
