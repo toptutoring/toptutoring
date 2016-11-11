@@ -14,7 +14,7 @@ Toptutoring::Application.routes.draw do
   get "/services.html" => "pages#services"
 
   resource :payments, only: [:new, :create]
-  get "payment/one_time" => "one_time_payments#new"
+  get "payment" => "one_time_payments#new"
   post "payments/one_time" => "one_time_payments#create"
   get "/confirmation" => "payments#confirmation"
 
