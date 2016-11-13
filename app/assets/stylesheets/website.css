@@ -16,7 +16,7 @@
 
 .navbar.navbar-inverse .nav > li > a {
   font-size: 15px;
-  font-weight: 600; 
+  font-weight: 600;
   color: #89BEEE;
   text-shadow: none;
   opacity: 60;
@@ -116,7 +116,7 @@
 }
 
 .navbar.navbar-inverse {
-  
+
   border-bottom: 0px solid #585858;
 }
 
@@ -281,7 +281,7 @@
 }
 
 /* Large screens ----------- */
-@media only screen 
+@media only screen
 and (min-width : 1680px) {
 
   #feature_slider .slide {
@@ -292,7 +292,7 @@ and (min-width : 1680px) {
   display: none;
   overflow: hidden;
   }
- 
+
 }
 
 #footer {
@@ -372,11 +372,3 @@ background-color: #ffffff; /*the body color*/
     margin-top: -70px;
   }
 }
-
-body.pull_top {
-  padding-top: 1px !important;
-}
-
-
-
-

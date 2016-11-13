@@ -1,0 +1,12 @@
+/* Responsive design */
+
+@media screen and (max-width: 1366px) {
+  html body {
+    padding-top: 90px;
+  }
+
+  .preload {
+    padding-bottom: 20px;
+  }
+
+}

@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-family: 'Lato', sans-serif !important;
   padding-top: 107px;
-  line-height: 20px; }
+  line-height: 20px;}
   body h1, body h2, body h3, body h4, body h5, body h6, body .h1, body .h2, body .h3, body .h4, body .h5, body .h6 {
     font-family: 'Lato', sans-serif !important;
     font-weight: bold;
@@ -25,9 +25,6 @@ input[type="password"],
 input[type="submit"],
 textarea {
   font-family: 'Lato', Helvetica; }
-
-body.pull_top {
-  padding-top: 0px !important; }
 
 header {
   background: rgba(0, 0, 0, 0.6) !important; }
@@ -72,7 +69,7 @@ header {
       margin-top: 0px !important;
       margin-bottom: 0px !important; }
   .navbar .container {
-    margin-top: 10px;
+    /* margin-top: 10px; */
     margin-bottom: 10px;
     -webkit-transition: margin .2s ease-in-out;
     -moz-transition: margin .2s ease-in-out;
@@ -304,8 +301,8 @@ header {
 /* Responsive
 -------------------------------------------------- */
 @media (max-width: 991px) {
-  body {
-    padding-top: 0 !important; }
+  /*body {
+    padding-top: 0 !important; }*/
 
   .navbar.navbar-inverse {
     background: #252528; } }

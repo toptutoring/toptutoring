@@ -1,7 +1,6 @@
 class OneTimePaymentsController < ApplicationController
-  layout false
   if Rails.env.production?
-    force_ssl(host: "toptutoring.herokuapp.com")
+    force_ssl(host: "toptutoring.herokuapp.com/payment")
   end
 
   def create
@@ -18,11 +17,10 @@ class OneTimePaymentsController < ApplicationController
         :source => token,
         :description => params[:payments][:description])
 
-      flash[:success] = "Payment successfully completed!"
       redirect_to confirmation_url(host: ENV['HOST'], protocol: "http")
     rescue Stripe::CardError => e
       flash[:danger] = e.message
-      redirect_to confirmation_url(host: ENV['HOST'], protocol: "http")
+      render :new
     end
   end
 end

@@ -1,0 +1,36 @@
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href = "index.html"><%= image_tag("toptutoring3.png", class:"navbar-brand img-responsive") %></a>
+    </div>
+
+    <div class="collapse navbar-collapse navbar-ex1-collapse" role="navigation">
+      <div class="phone">
+        Call For a Free Consultation (510) 842-5221
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <%= nav_link 'HOME', "/index.html" %>
+        <%= nav_link 'ABOUT US', "/about-us.html" %>
+        <%= nav_link 'SERVICES', "/services.html" %>
+        <%= nav_link 'CONTACT US', "/contact.html" %>
+        <%= nav_link 'BLOG', "/New_SAT_2016.html.html" %>
+        <% if user_signed_in? %>
+        <li>
+          <%= link_to('LOG OUT', destroy_user_session_path, :method => :delete) %>
+        </li>
+        <% else %>
+          <%= nav_link "SIGN UP", "/sign_up" %>
+        <% end %>
+        <!-- <li><a href="sign-in.html">Sign in</a></li>
+        <li><a href="sign-up.html">Sign up</a></li> -->
+      </ul>
+    </div>
+
+  </div>
+</div>

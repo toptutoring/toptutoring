@@ -1,0 +1,49 @@
+/*custom*/
+.preload {
+  padding-bottom: 107px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.alert {
+  border-radius: 0;
+  border: 0;
+  margin-top: -1px;
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+.alert li {
+  list-style-type: none;
+}
+
+.no-padding {
+  padding-top: 70px;
+}
+
+.col-cvv-fixed-width {
+  width: 80px;
+  margin: 0 auto;
+}
+
+.payment-errors {
+  min-height: 0;
+}
+
+.confirmation-title {
+  padding: 20px;
+  width: 50%;
+  margin: 0 auto;
+  display: block;
+  background-color: #dff0d8;
+  text-align: center;
+  position: relative;
+  top: 50px;
+  color: #3c763d;
+  border-radius: 4px;
+  border-color: #d6e9c6
+}

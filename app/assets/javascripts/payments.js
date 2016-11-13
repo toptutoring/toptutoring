@@ -1,5 +1,6 @@
 jQuery(function($) {
   $('#payment-form').submit(function(event) {
+    Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
     var $form = $(this);
     // Disable the submit button to prevent repeated clicks
     $form.find('.payment_submit').prop('disabled', true);
@@ -18,10 +19,6 @@ jQuery(function($) {
 
   $('#hours').on('keyup', function(e) {
     if ($('#hourly_rate').val() != '') {
-      console.log(parseInt($('#hours').val()))
-      console.log(parseInt($('#hourly_rate').val()))
-      console.log($('#hourly_rate').val())
-      console.log(parseInt($('#hours').val()) * parseInt($('#hourly_rate').val()))
       var total = parseInt($('#hours').val()) * parseInt($('#hourly_rate').val());
       $('#amount').val(total);
     }
@@ -29,10 +26,6 @@ jQuery(function($) {
 
   $('#hourly_rate').on('keyup', function(e) {
     if ($('#hours').val() != '') {
-      console.log(parseInt($('#hours').val()))
-      console.log(parseInt($('#hourly_rate').val()))
-      console.log($('#hourly_rate').val())
-      console.log(parseInt($('#hours').val()) * parseInt($('#hourly_rate').val()))
       var total = parseInt($('#hours').val()) * parseInt($('#hourly_rate').val());
       $('#amount').val(total);
     }

@@ -20,7 +20,7 @@
 }
 
 
-/* 
+/*
   Bootstrap 3 by default keeps the navbar visible on tablets.
   From here onwards it's to get the navbar to collapse starting on 991px - tablets
 */
@@ -51,14 +51,14 @@ $grid-float-breakpoint: 992px;
   }
 }
 
-@media (min-width: $grid-float-breakpoint) { 
+@media (min-width: $grid-float-breakpoint) {
   .navbar {
     .collapse {
       display: block !important;
-    }    
+    }
   }
 }
-@media (max-width: 991px) { 
+@media (max-width: 991px) {
   .navbar {
     .navbar-header {
       float: none;

@@ -1,8 +1,7 @@
 class PaymentsController < ApplicationController
-  before_action :authenticate_user!
-  layout false
+  before_action :authenticate_user!, except: :confirmation
   if Rails.env.production?
-    force_ssl(host: "toptutoring.herokuapp.com/payment")
+    force_ssl(host: "toptutoring.herokuapp.com/payments/new")
   end
 
   def create
@@ -11,19 +10,23 @@ class PaymentsController < ApplicationController
     @amount = Float(@amount).round(2)
     @amount = (@amount * 100).to_i
 
-    begin
-      Stripe::Charge.create(
-      amount: @amount,
-      currency: 'usd',
-      customer: current_user.customer_id,
-      description: params[:payments][:description]
-      )
+    if current_user.customer_id == nil
+      flash[:danger] = "You must provide your card information before making a payment."
+      render :new
+    else
+      begin
+        Stripe::Charge.create(
+        amount: @amount,
+        currency: 'usd',
+        customer: current_user.customer_id,
+        description: params[:payments][:description]
+        )
 
-      flash[:success] = "Payment successfully completed!"
-      redirect_to confirmation_url(host: ENV['HOST'], protocol: "http")
-    rescue Stripe::CardError => e
-      flash[:danger] = e.message
-      redirect_to confirmation_url(host: ENV['HOST'], protocol: "http")
+        redirect_to confirmation_url(host: ENV['HOST'], protocol: "http")
+      rescue Stripe::CardError => e
+        flash[:danger] = e.message
+        render :new
+      end
     end
   end
 end
