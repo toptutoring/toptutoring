@@ -1,7 +1,3 @@
-<% content_for :head do %>
-  <%= tag :meta, :name => "stripe-key", :content => ENV['STRIPE_PUBLISHABLE_KEY'] %>
-<% end %>
-
 <div class="container text-center">
   <legend><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card Form</legend>
 </div>
@@ -107,6 +103,3 @@
 </div>
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script type="text/javascript">
-  Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
-</script>

@@ -1,6 +1,6 @@
 jQuery(function($) {
   $('#payment-form').submit(function(event) {
-    Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
+    Stripe.setPublishableKey("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>");
     var $form = $(this);
     // Disable the submit button to prevent repeated clicks
     $form.find('.payment_submit').prop('disabled', true);
@@ -12,7 +12,7 @@ jQuery(function($) {
     return false;
   });
 
-  $('#amount').on('keydown', function(e) {
+  $('#amount').on('keyup', function(e) {
     $('#hours').val('0');
     $('#hourly_rate').val('0');
   });
