@@ -39,6 +39,7 @@ gem 'devise'
 
 gem 'pry-rails', :group => :development
 
+gem 'twitter-bootstrap-rails', '~> 3.2', '>= 3.2.2'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
