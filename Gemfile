@@ -1,14 +1,15 @@
 source 'https://rubygems.org'
 
 
-gem 'rails', '4.0.0'
+gem "rails", "~> 4.2.7.1"
 
 gem 'pg'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.3.6'
 gem 'bootstrap_form'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
-
+gem 'bootstrap', '~> 4.0.0.alpha5'
+gem 'sass-rails', '~> 5.0', '>= 5.0.4'
+gem 'sprockets-rails', '~> 3.2'
 group :production do
   # platforms :ruby do
   #   gem 'unicorn'
@@ -36,6 +37,8 @@ gem 'jbuilder', '~> 1.2'
 gem 'stripe', '~> 1.56'
 
 gem 'devise'
+
+gem 'pry-rails', :group => :development
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

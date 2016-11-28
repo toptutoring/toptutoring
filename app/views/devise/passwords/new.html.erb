@@ -1,104 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Top Tutoring">
-    <%= yield :head %>
-
-    <link href="../favicon.png" rel="shortcut-icon" type="image/png" />
-    <link rel ="icon" href ="../favicon.png" type ="image/icon" />
-
-    <!-- Styles -->
-    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/compiled/bootstrap-overrides.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../css/compiled/theme.css" />
-    <link href="../assets/css/style.css" media="screen" rel="stylesheet" />
-
-    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css' />
-
-    <link rel="stylesheet" href="../css/compiled/index.css" type="text/css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="../css/lib/animate.css" media="screen, projection" />
-
-
-
-    <!--CSS Implementing Plugins -->
- <link href="../assets/plugins/font-awesome/css/font-awesome.css" media="screen" rel="stylesheet" />
-    <link href="../assets/plugins/flexslider/flexslider.css" media="screen" rel="stylesheet" />
-    <link href="../assets/plugins/parallax-slider/css/parallax-slider.css" media="screen" rel="stylesheet" />
-
-    <link rel="stylesheet" type="text/css" href="../css/website.css" media="screen, projection" />
-
-    <!-- Font Awesome -->
-   <link rel="stylesheet" href="../font-awesome-4.0.3/css/font-awesome.min.css">
-
-
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-
-
-  <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="../index.html"><img src ="../img/toptutoring3.png" class="navbar-brand img-responsive"></a>
-
-    </div>
-
-    <div class="collapse navbar-collapse navbar-ex1-collapse" role="navigation">
-      <div class="phone">
-       Call For a Free Consultation (510) 842-5221
-    </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="../index.html">HOME</a></li>
-        <li><a href="../about-us.html">ABOUT US</a></li>
-        <li><a href="../services.html">SERVICES</a></li>
-        <li><a href="../contact.html">CONTACT US</a></li>
-        <li><a href="../New_SAT_2016.html">BLOG</a></li>
-        <% if user_signed_in? %>
-        <li>
-          <%= link_to('LOG OUT', destroy_user_session_path, :method => :delete) %>
-        </li>
-        <% else %>
-        <li>
-          <%= link_to('LOG IN', new_user_session_path)  %>
-        </li>
-        <li>
-          <%= link_to('SIGN UP', new_user_registration_path) %>
-        </li>
-        <% end %>
-        <!-- <li><a href="sign-in.html">Sign in</a></li>
-        <li><a href="sign-up.html">Sign up</a></li> -->
-      </ul>
-
-    </div>
-  </div>
-  </div>
-
-<div class="text-center" style="height:600px;">
+<div class="text-center">
 
   <h2>Forgot your password?</h2>
 
-  <div class="form-group">
-      <%= devise_error_messages! %>
-  </div>
 
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "form-horizontal col-sm-offset-4" }) do |f| %>
+
+  <div class="sign-up-alert">
+    <%= devise_error_messages! %>
+  </div>
 
     <div class="form-group">
       <%= f.label :email, class:"col-sm-2 control-label" %>

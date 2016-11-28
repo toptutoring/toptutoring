@@ -1,6 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   if Rails.env.production?
-    force_ssl(host: "toptutoring.herokuapp.com")
+    force_ssl(host: "toptutoring.herokuapp.com/sign_up")
   end
 
   def create
@@ -8,12 +8,18 @@ class RegistrationsController < Devise::RegistrationsController
       Stripe.api_key = ENV['STRIPE_SECRET_KEY']
       token = params[:stripeToken]
 
-      customer = Stripe::Customer.create(
-      source: token,
-      email: sign_up_params[:email])
+      begin
+        customer = Stripe::Customer.create(
+        source: token,
+        email: sign_up_params[:email])
 
-      resource.customer_id = customer.id
-      resource.save
+        resource.customer_id = customer.id
+        resource.save
+      rescue Stripe::CardError => e
+        flash[:danger] = e.message
+        redirect_to new_user_registration_path(resource)
+        return
+      end
      end
   end
 

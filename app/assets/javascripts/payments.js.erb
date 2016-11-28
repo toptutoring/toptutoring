@@ -1,5 +1,6 @@
 jQuery(function($) {
   $('#payment-form').submit(function(event) {
+    Stripe.setPublishableKey("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>");
     var $form = $(this);
     // Disable the submit button to prevent repeated clicks
     $form.find('.payment_submit').prop('disabled', true);
@@ -11,17 +12,13 @@ jQuery(function($) {
     return false;
   });
 
-  $('#amount').on('keydown', function(e) {
-    $('#hours').val('0');
-    $('#hourly_rate').val('0');
+  $('#amount').on('keyup', function(e) {
+    $('#hours').val('');
+    $('#hourly_rate').val('');
   });
 
   $('#hours').on('keyup', function(e) {
     if ($('#hourly_rate').val() != '') {
-      console.log(parseInt($('#hours').val()))
-      console.log(parseInt($('#hourly_rate').val()))
-      console.log($('#hourly_rate').val())
-      console.log(parseInt($('#hours').val()) * parseInt($('#hourly_rate').val()))
       var total = parseInt($('#hours').val()) * parseInt($('#hourly_rate').val());
       $('#amount').val(total);
     }
@@ -29,10 +26,6 @@ jQuery(function($) {
 
   $('#hourly_rate').on('keyup', function(e) {
     if ($('#hours').val() != '') {
-      console.log(parseInt($('#hours').val()))
-      console.log(parseInt($('#hourly_rate').val()))
-      console.log($('#hourly_rate').val())
-      console.log(parseInt($('#hours').val()) * parseInt($('#hourly_rate').val()))
       var total = parseInt($('#hours').val()) * parseInt($('#hourly_rate').val());
       $('#amount').val(total);
     }

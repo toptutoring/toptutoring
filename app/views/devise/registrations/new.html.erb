@@ -1,141 +1,101 @@
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href = "index.html"><img src ="img/toptutoring3.png" class="navbar-brand img-responsive"></a>
-
-    </div>
-
-    <div class="collapse navbar-collapse navbar-ex1-collapse" role="navigation">
-      <div class="phone">
-       Call For a Free Consultation (510) 842-5221
-    </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.html">HOME</a></li>
-        <li><a href="about-us.html">ABOUT US</a></li>
-        <li><a href="services.html">SERVICES</a></li>
-        <li><a href="contact.html">CONTACT US</a></li>
-        <li><a href="New_SAT_2016.html">BLOG</a></li>
-        <% if user_signed_in? %>
-        <li>
-          <%= link_to('LOG OUT', destroy_user_session_path, :method => :delete) %>
-        </li>
-        <% else %>
-        <li>
-          <%= link_to('LOG IN', new_user_session_path)  %>
-        </li>
-        <li>
-          <%= link_to('SIGN UP', new_user_registration_path, class:"active") %>
-        </li>
-        <% end %>
-
-        <!-- <li><a href="sign-in.html">Sign in</a></li>
-        <li><a href="sign-up.html">Sign up</a></li> -->
-      </ul>
-
-    </div>
-  </div>
-</div>
-<div class="text-center" style="height:600px;">
-<h2>Sign up</h2>
-<p>Already have an account?<%= render "devise/shared/links" %></p></br>
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "form-horizontal col-sm-offset-4", id: "payment-form" }) do |f| %>
+<div class="wrapper text-center">
   <%= devise_error_messages! %>
+  <h2>Sign up</h2>
+  <p>Already have an account?<%= render "devise/shared/links" %></p>
+  <h4> Signing up requires a credit card for future payments. </h4>
+
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "form-horizontal col-sm-offset-4", id: "payment-form" }) do |f| %>
 
   <div class="form-group">
-    <%= f.label :name, class:"col-sm-2 control-label" %>
-    <div class="col-sm-3">
-      <%= f.text_field :name, autofocus: true, data: {stripe: "name"}, class:"form-control col-sm-3 input-sm" %>
-    </div>
-  </div>
+    <span class="payment-errors alert-danger col-sm-7"></span>
+  </div></br>
 
-  <div class="form-group">
-    <%= f.label :email, class:"col-sm-2 control-label" %>
-    <div class="col-sm-3">
-      <%= f.email_field :email, autofocus: true, class:"form-control col-sm-3 input-sm" %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
-    <div class="col-sm-3">
-      <input type="text" class="form-control col-sm-3 input-sm"  data-stripe="number" title="Fill in your credit card number.">
-      </input>
-    </div>
-    <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
-  </div>
-
-  <div class="form-group">
-    <label for="exp" class="col-sm-2 control-label">Expiration</label>
-    <div class="controls">
-
-      <div class="col-sm-2">
-       <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control input-sm', name: nil, data: {stripe: "exp-month"}) %>
+    <div class="form-group">
+      <%= f.label :name, class:"col-sm-2 control-label" %>
+      <div class="col-sm-3">
+        <%= f.text_field :name, autofocus: true, data: {stripe: "name"}, class:"form-control col-sm-3 input-sm", :required => true %>
       </div>
+    </div>
 
-      <div class="col-sm-5">
-        <div class="col-sm-3">
-          <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control input-sm', name: nil, data: {stripe: "exp-year"}) %>
+    <div class="form-group">
+      <%= f.label :email, class:"col-sm-2 control-label" %>
+      <div class="col-sm-3">
+        <%= f.email_field :email, autofocus: true, class:"form-control col-sm-3 input-sm", :required => true %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control col-sm-3 input-sm"  data-stripe="number" title="Fill in your credit card number." required>
+        </input>
+      </div>
+      <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
+    </div>
+
+    <div class="form-group">
+      <label for="exp" class="col-sm-2 control-label">Expiration</label>
+      <div class="controls">
+
+        <div class="col-sm-2">
+          <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control input-sm', name: nil, data: {stripe: "exp-month"}) %>
         </div>
+
+        <div class="col-sm-5">
+          <div class="col-sm-3">
+            <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control input-sm', name: nil, data: {stripe: "exp-year"}) %>
+          </div>
+        </div>
+
+        <%= hidden_field_tag :token %>
+
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
+      <div class="col-sm-1 col-cvv-fixed-width">
+        <input type="text" class="form-control input-sm"  data-stripe="cvc" size="4" required></input>
       </div>
 
-      <%= hidden_field_tag :token %>
-
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
-    <div class="col-sm-1">
-      <input type="text" class="form-control input-sm"  data-stripe="cvc" size="4"></input>
-    </div>
-
-    <a id="cvv" class="col-sm-2" data-content="<strong>Visa®, Mastercard®, and Discover® cardholders:</strong><p>Turn your card over and look at the signature box. You should see either the entire 16-digit credit card number or
+      <a id="cvv" class="col-sm-2" data-content="<strong>Visa®, Mastercard®, and Discover® cardholders:</strong><p>Turn your card over and look at the signature box. You should see either the entire 16-digit credit card number or
 just the last four digits followed by a special 3-digit code. This 3-digit code is your CVV number / Card Security Code.</p><strong> American Express® cardholders:</strong><p>Look for the 4-digit code printed on the front of your card just above and to the right of your main credit card number. This 4-digit code is your Card Identification Number (CID). The CID is the four-digit code printed just above the Account Number.</p>" data-placement="right" data-toggle="popover" class="btn" data-original-title="Card Verification Number" data-html="true" style="font-size:11px">What is my CVV code?</a>
 
-  </div>
-</fieldset>
-
-  <div class="form-group">
-    <%= f.label :password, class:"col-sm-2 control-label" %>
-    <div class="col-sm-3">
-      <%= f.password_field :password, autocomplete: "off", class:"form-control col-sm-3 input-sm" %>
     </div>
-      <% if @minimum_password_length %>
-      <em class="col-sm-3">(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %>
-  </div>
+  </fieldset>
 
-  <div class="form-group">
-    <%= f.label :password_confirmation, class:"col-sm-2 control-label" %>
-    <div class="col-sm-3">
-      <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control col-sm-3 input-sm" %>
+    <div class="form-group">
+      <%= f.label :password, class:"col-sm-2 control-label" %>
+      <div class="col-sm-3">
+        <%= f.password_field :password, autocomplete: "off", class:"form-control col-sm-3 input-sm", :required => true %>
+      </div>
+        <% if @minimum_password_length %>
+        <em class="col-sm-3">(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %>
+      </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, class:"col-sm-2 control-label" %>
+      <div class="col-sm-3">
+        <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control col-sm-3 input-sm", :required => true %>
+      </div>
     </div>
-  </div>
 
 
-  <div class="form-group">
-    <div class="col-sm-2"></div>
-    <%= f.submit "Sign up", class:"btn btn-success col-sm-3" %>
-  </div>
-<% end %>
-
-</br><h4> Signing up requires a credit card for future payments. </h4>
-
+    <div class="form-group">
+      <div class="col-sm-2"></div>
+      <%= f.submit "Sign up", class:"btn btn-success col-sm-3" %>
+    </div>
+  <% end %>
 </div>
+
 <script>
-$(function ()
-{ $("#cvv").popover({
-  trigger: 'hover'
+  $(function () {
+    $("#cvv").popover({
+      trigger: 'hover'
+    });
   });
-});
 </script>
+
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script type="text/javascript">
-  Stripe.setPublishableKey('pk_live_m0mM7Lkyu9ySQ3FeOA1GFf1V');
-</script>
