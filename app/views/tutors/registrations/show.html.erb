@@ -1,7 +1,7 @@
 <div class="container">
   <div class="section_header section_header_small_screen">
       <h3>Profile</h3>
-     <%= link_to edit_user_path(@user) do %>
+     <%= link_to edit_tutor_path(@user) do %>
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
       <% end %>
   </div>
@@ -44,27 +44,21 @@
       <section class="module">
         <div class="module-inner">
           <div class="module-heading">
-            Student information
+            Tutoring information
           </div>
           <div class="module-content">
             <div class="module-content-inner">
                 <div class="col-md-5">
-                  <strong>Name</strong>
+                  <strong>Subject</strong>
                 </div>
                 <div class="col-md-7">
-                  <%= @user.student.name %>
+                  <%= @user.tutor.subject %>
                 </div>
                 <div class="col-md-5">
-                  <strong>Email</strong>
+                  <strong>Type</strong>
                 </div>
                 <div class="col-md-7">
-                  <%= @user.student.email %>
-                </div>
-                <div class="col-md-5">
-                  <strong>Phone Number</strong>
-                </div>
-                <div class="col-md-7">
-                  <%= @user.student.phone_number %>
+                  <%= @user.tutor.activity_type %>
                 </div>
           </div>
         </div>

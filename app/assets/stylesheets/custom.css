@@ -54,3 +54,40 @@ input[type=number]::-webkit-outer-spin-button {
     color: #468847;
     margin-bottom: 0px;
  }
+
+ .module {
+  border: 1px solid #f3f3f3;
+  border-bottom-width: 2px;
+  background: #fff;
+  margin-bottom: 30px;
+  position: relative;
+  border-radius: 4px;
+  background-clip: padding-box;
+}
+
+.module .module-inner {
+  padding: 30px;
+}
+
+.module .module-content {
+  padding-bottom: 30px;
+}
+
+.module .module-content-inner {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.section_header a {
+  display: inline;
+  vertical-align: middle;
+  padding-left: .5em;
+}
+
+.section_header a span {
+  top: 2px;
+}
+
+.section_header h3 {
+  vertical-align: middle;
+}
