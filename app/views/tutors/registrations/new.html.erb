@@ -1,52 +1,49 @@
 <div class="wrapper text-center">
   <%= devise_error_messages! %>
-  <h2>Sign up</h2>
-  <p>Already have an account?<%= render "devise/shared/links" %></p>
+  <h2>Sign up as a tutor</h2>
+  <p>Already have an account?<%= render "devise/shared/links" %><br /></p>
 
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "form-horizontal col-sm-offset-3" }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: tutor_registration_path, html: { class: "form-horizontal col-sm-offset-4" }) do |f| %>
+
+  <div class="form-group">
+    <span class="payment-errors alert-danger col-sm-7"></span>
+  </div></br>
 
     <div class="form-group">
-      <%= f.label :name, class:"col-sm-3 control-label" %>
+      <%= f.label :name, class:"col-sm-2 control-label" %>
       <div class="col-sm-3">
         <%= f.text_field :name, autofocus: true, data: {stripe: "name"}, class:"form-control col-sm-3 input-sm", :required => true %>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :email, class:"col-sm-3 control-label" %>
+      <%= f.label :email, class:"col-sm-2 control-label" %>
       <div class="col-sm-3">
         <%= f.email_field :email, autofocus: true, class:"form-control col-sm-3 input-sm", :required => true %>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :phone_number, class:"col-sm-3 control-label" %>
+      <%= f.label :phone_number, class:"col-sm-2 control-label" %>
       <div class="col-sm-3">
         <%= f.text_field :phone_number, autofocus: true, class:"form-control col-sm-3 input-sm", :required => true %>
       </div>
     </div>
 
     <br>
-    <%= f.fields_for :student do |student_field| %>
+    <%= f.fields_for :tutor do |tutor_field| %>
 
       <div class="form-group">
-        <%= student_field.label :student_name, class:"col-sm-3 control-label" %>
+        <%= tutor_field.label :subject, class:"col-sm-2 control-label" %>
         <div class="col-sm-3">
-          <%= student_field.text_field :name, autofocus: true, class:"form-control col-sm-3 input-sm", :required => true %>
+          <%= tutor_field.text_field :subject, autofocus: true, class:"form-control col-sm-3 input-sm", :required => true %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= student_field.label :student_email, class:"col-sm-3 control-label" %>
+        <%= tutor_field.label :activity_type, class:"col-sm-2 control-label" %>
         <div class="col-sm-3">
-          <%= student_field.email_field :email, autofocus: true, class:"form-control col-sm-3 input-sm", :required => true %>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <%= student_field.label :student_phone_number, class:"col-sm-3 control-label" %>
-        <div class="col-sm-3">
-          <%= student_field.text_field :phone_number, autofocus: true, class:"form-control col-sm-3 input-sm", :required => true %>
+          <%= tutor_field.select :activity_type, Tutor::ACTIVITY_TYPE, {}, class:"form-control", :required => true %>
         </div>
       </div>
 
@@ -55,25 +52,25 @@
     <br>
 
     <div class="form-group">
-      <%= f.label :password, class:"col-sm-3 control-label" %>
+      <%= f.label :password, class:"col-sm-2 control-label" %>
       <div class="col-sm-3">
         <%= f.password_field :password, autocomplete: "off", class:"form-control col-sm-3 input-sm", :required => true %>
       </div>
-        <% if @minimum_password_length %>
+      <% if @minimum_password_length %>
         <em class="col-sm-3">(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %>
-      </div>
+      <% end %>
+    </div>
 
     <div class="form-group">
-      <%= f.label :password_confirmation, class:"col-sm-3 control-label" %>
+      <%= f.label :password_confirmation, class:"col-sm-2 control-label" %>
       <div class="col-sm-3">
         <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control col-sm-3 input-sm", :required => true %>
       </div>
     </div>
 
-  </br>
+
     <div class="form-group">
-      <div class="col-sm-3"></div>
+      <div class="col-sm-2"></div>
       <%= f.submit "Sign up", class:"btn btn-success col-sm-3" %>
     </div>
   <% end %>

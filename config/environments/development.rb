@@ -29,4 +29,7 @@ Toptutoring::Application.configure do
   # number of complex assets.
   config.assets.debug = true
   Rails.application.routes.default_url_options[:host] = '0.0.0.0:3000'
+  ENV['STRIPE_SECRET_KEY']="sk_test_sh18MsBrCNXjfaeymmbRMVLH"
+  ENV['STRIPE_PUBLISHABLE_KEY']="pk_test_V69cI1W1VeyqgAuzhMXviEuO"
+  ENV['HOST']="http://0.0.0.0:3000"
 end

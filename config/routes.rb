@@ -19,7 +19,15 @@ Toptutoring::Application.routes.draw do
   get "/confirmation" => "payments#confirmation"
 
   devise_scope :user do
-    get "/users/:user_id" => "registrations#show", :as => :user
+    get "/users/:id" => "registrations#show", :as => :user
+    get "/users/:id/edit" => "registrations#edit", :as => :edit_user
+  end
+
+  resource :payment_informations, only: [:new, :create]
+  devise_for :tutors, controllers: { registrations: 'tutors/registrations' }, path: '/tutors'
+  devise_scope :tutor do
+    get "/tutors/:id" => "tutors/registrations#show", :as => :tutor
+    get "/tutors/:id/edit" => "tutors/registrations#edit", :as => :edit_tutor
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
