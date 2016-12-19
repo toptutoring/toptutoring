@@ -1,5 +1,5 @@
 {
-  "name":"blank-rails",
+  "name":"toptutoring",
   "scripts":{},
   "env":{
     "APPLICATION_HOST":{
@@ -13,6 +13,10 @@
     },
     "HEROKU_PARENT_APP_NAME": {
       "required":true
+    },
+    "MAILER_SENDER": {
+      "description": "The sender email for Clearance",
+      "value": "no-reply@toptutoring.com"
     },
     "RACK_ENV":{
       "required":true

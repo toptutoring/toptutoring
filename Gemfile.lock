@@ -44,6 +44,7 @@ GEM
     autoprefixer-rails (6.5.4)
       execjs
     awesome_print (1.7.0)
+    bcrypt (3.1.11)
     bugsnag (5.0.1)
     builder (3.2.2)
     bullet (5.4.3)
@@ -63,6 +64,10 @@ GEM
     capybara-webkit (1.11.1)
       capybara (>= 2.3.0, < 2.8.0)
       json
+    clearance (1.14.2)
+      bcrypt
+      email_validator (~> 1.4)
+      rails (>= 3.1)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
@@ -76,6 +81,8 @@ GEM
     dotenv-rails (2.1.1)
       dotenv (= 2.1.1)
       railties (>= 4.0, < 5.1)
+    email_validator (1.6.0)
+      activemodel
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.7.0)
@@ -262,6 +269,7 @@ DEPENDENCIES
   bullet
   bundler-audit (>= 0.5.0)
   capybara-webkit
+  clearance
   database_cleaner
   dotenv-rails
   factory_girl_rails

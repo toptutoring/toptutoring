@@ -20,6 +20,7 @@ gem "title"
 gem "uglifier"
 
 gem "bugsnag"
+gem "clearance"
 
 group :development do
   gem "listen"
