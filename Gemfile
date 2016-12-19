@@ -19,6 +19,8 @@ gem "sprockets", ">= 3.0.0"
 gem "title"
 gem "uglifier"
 
+gem "bugsnag"
+
 group :development do
   gem "listen"
   gem "spring"
