@@ -14,6 +14,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= body_class %>">
+  <% if signed_in? %>
+    Signed in as: <%= current_user.email %>
+  <% else %>
+    <%= link_to 'Sign in', sign_in_path %>
+  <% end %>
   <%= render "flashes" -%>
   <%= yield %>
   <%= render "javascript" %>
