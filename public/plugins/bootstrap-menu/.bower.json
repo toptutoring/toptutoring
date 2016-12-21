@@ -1,0 +1,15 @@
+{
+  "name": "bootstrap-menu",
+  "homepage": "https://github.com/dgoguerra/bootstrap-menu",
+  "version": "1.0.11",
+  "_release": "1.0.11",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.11",
+    "commit": "e86f33915e25382f6bd49d8ee64a690811d71848"
+  },
+  "_source": "https://github.com/dgoguerra/bootstrap-menu.git",
+  "_target": "^1.0.11",
+  "_originalSource": "https://github.com/dgoguerra/bootstrap-menu.git",
+  "_direct": true
+}

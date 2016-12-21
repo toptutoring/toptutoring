@@ -1,0 +1,14 @@
+{
+  "name": "code-prettify",
+  "homepage": "https://github.com/google/code-prettify",
+  "_release": "af3bf281c5",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "af3bf281c53b835c454142fc2b7072a786f1bf20"
+  },
+  "_source": "https://github.com/google/code-prettify.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/google/code-prettify.git",
+  "_direct": true
+}
