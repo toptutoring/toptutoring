@@ -1,0 +1,14 @@
+{
+  "name": "formatting",
+  "_cacheHeaders": {
+    "ETag": "\"00ffe787208a35466ac86bf83a495ae33912c161\"",
+    "Content-Length": "2244",
+    "Content-Type": "text/plain; charset=utf-8"
+  },
+  "_release": "e-tag:00ffe7872",
+  "main": "index.js",
+  "_source": "https://raw.githubusercontent.com/codemirror/CodeMirror/v2.36/lib/util/formatting.js",
+  "_target": "*",
+  "_originalSource": "https://raw.githubusercontent.com/codemirror/CodeMirror/v2.36/lib/util/formatting.js",
+  "_direct": true
+}

@@ -1,58 +1,62 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
+ruby "2.3.1"
 
-gem "rails", "~> 4.2.7.1"
+gem "autoprefixer-rails"
+gem "sidekiq"
+gem "honeybadger"
+gem "jquery-rails"
+gem "normalize-rails", "~> 3.0.0"
+gem "pg"
+gem "puma"
+gem "rack-canonical-host"
+gem "rails", "~> 5.0.0"
+gem "recipient_interceptor"
+gem "sass-rails", "~> 5.0"
+gem "simple_form"
+gem "skylight"
+gem "sprockets", ">= 3.0.0"
+gem "title"
+gem "uglifier"
 
-gem 'pg'
-gem 'bootstrap-sass', '~> 3.3.6'
-gem 'bootstrap_form'
-# Use SCSS for stylesheets
-gem 'bootstrap', '~> 4.0.0.alpha5'
-gem 'sass-rails', '~> 5.0', '>= 5.0.4'
-gem 'sprockets-rails', '~> 3.2'
-group :production do
-  # platforms :ruby do
-  #   gem 'unicorn'
-  # end
-  gem 'rails_12factor'
-end
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem "bugsnag"
+gem "clearance"
 
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
-
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
-
-gem 'stripe', '~> 1.56'
-
-gem 'devise'
-
-gem 'pry-rails', :group => :development
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+group :development do
+  gem "listen"
+  gem "spring"
+  gem "spring-commands-rspec"
+  gem "web-console"
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+group :development, :test do
+  gem "awesome_print"
+  gem "bullet"
+  gem "bundler-audit", ">= 0.5.0", require: false
+  gem "dotenv-rails"
+  gem "factory_girl_rails"
+  gem "pry-byebug"
+  gem "pry-rails"
+  gem "rb-readline"
+  gem "rspec-rails", "~> 3.5.0.beta4"
+end
 
-# Use unicorn as the app server
-# gem 'unicorn'
+group :development, :staging do
+  gem "rack-mini-profiler", require: false
+end
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
+group :test do
+  gem "capybara-webkit"
+  gem "database_cleaner"
+  gem "formulaic"
+  gem "launchy"
+  gem "shoulda-matchers"
+  gem "simplecov", require: false
+  gem "timecop"
+  gem "webmock"
+end
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
+group :staging, :production do
+  gem "rack-timeout"
+  gem "rails_stdout_logging"
+end

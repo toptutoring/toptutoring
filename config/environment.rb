@@ -1,5 +1,2 @@
-# Load the Rails application.
-require File.expand_path('../application', __FILE__)
-
-# Initialize the Rails application.
-Toptutoring::Application.initialize!
+require_relative 'application'
+Rails.application.initialize!

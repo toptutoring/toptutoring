@@ -1,24 +1,21 @@
-development:
+development: &default
   adapter: postgresql
-  encoding: unicode
-  database: toptutoring_development
-  pool: 5
+  database: top_tutoring_development
+  encoding: utf8
+  min_messages: warning
+  pool: <%= Integer(ENV.fetch("DB_POOL", 5)) %>
+  reaping_frequency: <%= Integer(ENV.fetch("DB_REAPING_FREQUENCY", 10)) %>
   timeout: 5000
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
-  adapter: postgresql
-  encoding: unicode
-  host: localhost
-  database: toptutoring_test
-  pool: 5
-  timeout: 5000
+  <<: *default
+  database: top_tutoring_test
 
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: toptutoring
-  pool: 5
+production: &deploy
+  encoding: utf8
+  min_messages: warning
+  pool: <%= [Integer(ENV.fetch("MAX_THREADS", 5)), Integer(ENV.fetch("DB_POOL", 5))].max %>
   timeout: 5000
+  url:  <%= ENV.fetch("DATABASE_URL", "") %>
+
+staging: *deploy

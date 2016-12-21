@@ -1,0 +1,50 @@
+{
+  "name": "datatables.net-keytable-bs",
+  "description": "KeyTable for DataTables with styling for [Bootstrap](http://getbootstrap.com/)",
+  "main": [
+    "css/keyTable.bootstrap.css"
+  ],
+  "keywords": [
+    "spreadsheet",
+    "excel",
+    "keyboard",
+    "DataTables",
+    "jQuery",
+    "table",
+    "Bootstrap"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7",
+    "datatables.net-bs": ">=1.10.9",
+    "datatables.net-keytable": ">=2.0.0"
+  },
+  "moduleType": [
+    "globals",
+    "amd",
+    "node"
+  ],
+  "ignore": [
+    "composer.json",
+    "datatables.json",
+    "package.json"
+  ],
+  "authors": [
+    {
+      "name": "SpryMedia Ltd",
+      "homepage": "https://datatables.net"
+    }
+  ],
+  "homepage": "https://datatables.net",
+  "license": "MIT",
+  "version": "2.1.1",
+  "_release": "2.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.1.1",
+    "commit": "1832bab7f70c61a587c5717e61152d470da7088d"
+  },
+  "_source": "git://github.com/DataTables/Dist-DataTables-KeyTable-Bootstrap.git",
+  "_target": "^2.1.1",
+  "_originalSource": "datatables.net-keytable-bs",
+  "_direct": true
+}

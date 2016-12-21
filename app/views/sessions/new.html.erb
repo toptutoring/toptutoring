@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sigma App - Login</title>
+    <!-- PACE-->
+    <link rel="stylesheet" type="text/css" href="../plugins/PACE/themes/blue/pace-theme-flash.css">
+    <script type="text/javascript" src="../plugins/PACE/pace.min.js"></script>
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" type="text/css" href="../plugins/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Ionicons-->
+    <link rel="stylesheet" type="text/css" href="../plugins/Ionicons/css/ionicons.min.css">
+    <!-- Itim-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Itim">
+    <!-- Core CSS-->
+    <link rel="stylesheet" type="text/css" href="../build/css/first-layout.css">
+  </head>
+  <body class="body-bg-full">
+    <div class="container page-container">
+      <div class="page-content">
+        <div class="logo"><img src="../build/images/logo/logo-dark.png" alt="" width="160"></div>
+        <form method="get" action="index.html" class="form-horizontal">
+          <div class="form-group">
+            <div class="col-xs-12">
+              <input type="text" placeholder="Username" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <input type="password" placeholder="Password" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <div class="checkbox-inline checkbox-custom pull-left">
+                <input id="exampleCheckboxRemember" type="checkbox" value="remember">
+                <label for="exampleCheckboxRemember">Remember me</label>
+              </div>
+              <div class="pull-right"><a href="forgot-password.html" class="inline-block form-control-static">Forgot a Passowrd?</a></div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success btn-rounded btn-block">Sign in</button>
+        </form>
+        <hr>
+        <p class="text-muted">Sign in with your Facebook or Twitter accounts</p>
+        <div class="clearfix">
+          <div class="pull-left">
+            <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-primary"><i class="ion-social-facebook mr-5"></i> Facebook</button>
+          </div>
+          <div class="pull-right">
+            <button type="button" style="width: 130px" class="btn btn-outline btn-rounded btn-info"><i class="ion-social-twitter mr-5"></i> Twitter</button>
+          </div>
+        </div>
+        <hr>
+        <div class="clearfix">
+          <p class="text-muted mb-0 pull-left">Want new account?</p><a href="register.html" class="inline-block pull-right">Sign Up</a>
+        </div>
+      </div>
+    </div>
+    <!-- jQuery-->
+    <script type="text/javascript" src="../plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript-->
+    <script type="text/javascript" src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="form-box-inner">
+  <h2 class="title text-center">Login to Your Account</h2>
+  <div class="row">
+    <div class="form-container col-md-5 col-sm-12 col-xs-12">
+      <%= form_for :session, url: session_path, html: { class: "login-form" } do |form| %>
+        <div class="form-group email">
+          <%= form.label :email, class: "sr-only"  %>
+          <span class="fa fa-user icon"></span>
+          <%= form.email_field :email, type: "email", placeholder: "Email", class: "form-control login-email" %>
+        </div>
+
+        <div class="form-group password">
+          <%= form.label :password, class: "sr-only"  %>
+          <span class="fa fa-lock icon"></span>
+          <%= form.password_field :password, placeholder: "Password", class: "form-control login-password" %>
+        </div>
+
+        <div class="form-group">
+          <div class="pull-left">
+              <%= form.label :remember_me, class: "remember-me" do %>
+                <%= form.check_box :remember_me %>
+                  Remember me
+              <% end %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="pull-right">
+        <p class="resetp-path">
+          <%= link_to "Trouble signing in?", reset_password_path, class: "resetp-link" %>
+        </p>
+      </div>
+    </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Login</button>
+
+        <p class="alt-path">Need an account?
+          <a class="signup-link" href="http://www.plexmate.com/sign_up">Sign up now</a>
+         </p>
+
+      <% end %>
+    </div>
+
+    <div class="social-btns col-md-5 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-sm-offset-0">
+      <div class="divider">
+        <span>Or</span>
+      </div>
+      <ul class="list-unstyled social-login">
+        <li>
+          <%= link_to "/auth/dwolla", class: "social-btn twitter-btn btn" do %>
+            <i class="fa fa-university"></i>Log in with Dwolla</button>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

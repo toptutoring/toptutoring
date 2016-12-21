@@ -1,0 +1,14 @@
+{
+  "name": "ModalWindowEffects",
+  "homepage": "https://github.com/codrops/ModalWindowEffects",
+  "_release": "859d73f6f8",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "859d73f6f88e763ad10e698746cb94acceb870d9"
+  },
+  "_source": "https://github.com/codrops/ModalWindowEffects.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/codrops/ModalWindowEffects.git",
+  "_direct": true
+}

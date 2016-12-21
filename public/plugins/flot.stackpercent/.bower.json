@@ -1,0 +1,14 @@
+{
+  "name": "flot.stackpercent",
+  "homepage": "https://github.com/skeleton9/flot.stackpercent",
+  "_release": "5228fa18e4",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "5228fa18e4e8fb793575ae70faf1f61c470c77c9"
+  },
+  "_source": "https://github.com/skeleton9/flot.stackpercent.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/skeleton9/flot.stackpercent.git",
+  "_direct": true
+}
