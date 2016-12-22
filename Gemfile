@@ -21,6 +21,7 @@ gem "uglifier"
 
 gem "bugsnag"
 gem "clearance"
+gem 'stripe', '~> 1.56'
 
 group :development do
   gem "listen"

@@ -9,6 +9,10 @@ class SessionsController < Clearance::SessionsController
 
   private
 
+  def url_after_create
+    payment_path
+  end
+
   def set_remember_me
     if params[:session][:remember_me]
       cookies.permanent[:remember_me] = true
