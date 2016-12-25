@@ -1,0 +1,32 @@
+.btn {
+  background-color: #529ECC;
+  border-radius: 2px;
+  color: white;
+}
+
+@media (min-width: 1200px) {
+  .container {
+      width: 100%;
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.span-optional {
+  margin-right: 100px;
+}
+
+.media-left.avatar {
+  .icon {
+    font-size: 37px;
+  }
+}
+
+.avatar .status {
+  top: 3px;
+  left: 19px;
+}

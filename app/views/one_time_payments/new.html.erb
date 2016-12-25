@@ -1,8 +1,8 @@
 <div class="container text-center">
-  <legend><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card Form</legend>
+  <legend><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
 </div>
 
-<div class="container text-center">
+<div class="text-center col-md-8 col-md-offset-2">
   <p>Note: All fields are required.</p>
   <p>This page is protected through secure SSL encrypted payment.</p>
 
@@ -27,7 +27,7 @@
       <div class="form-group">
         <div class="col-sm-2"></div>
         <label for="description" class="col-sm-2 control-label">Description</label>
-        <div class="col-sm-5">
+        <div class="col-sm-3">
           <input type="text" class="form-control col-sm-3 input-sm"  name="payments[description]">
           </input>
         </div>
@@ -35,8 +35,8 @@
 
       <div class="form-group">
         <div class="col-sm-2"></div>
-        <label for="card-holder-name" class="col-sm-2 control-label" >Card Holder's Name</label>
-        <div class="col-sm-5">
+        <label for="card-holder-name" class="col-sm-2 control-label">Card Holder's Name</label>
+        <div class="col-sm-3">
           <input type="text" class="form-control col-sm-3 input-sm"  data-stripe="name" title="This is the name as written on your credit card.">
           </input>
         </div>
@@ -61,10 +61,8 @@
            <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control input-sm', name: nil, data: {stripe: "exp-month"}) %>
           </div>
 
-          <div class="col-sm-5">
-            <div class="col-sm-3">
+          <div class="col-sm-1">
               <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control input-sm', name: nil, data: {stripe: "exp-year"}) %>
-            </div>
           </div>
 
           <%= hidden_field_tag :token %>
@@ -75,7 +73,7 @@
       <div class="form-group">
         <div class="col-sm-2"></div>
         <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
-        <div class="col-sm-1 col-cvv-fixed-width">
+        <div class="col-sm-2 col-cvv-fixed-width">
           <input type="text" class="form-control input-sm"  data-stripe="cvc" size="4"></input>
         </div>
 
@@ -95,7 +93,7 @@
 
     <div class="form-group">
     <div class="col-sm-5"></div>
-    <input type="submit" value="Pay" class="btn btn-success col-sm-2 payment_submit">
+    <input type="submit" value="Pay" class="btn col-sm-2 payment_submit">
     </input>
   </div>
 

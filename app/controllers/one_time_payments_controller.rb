@@ -1,25 +1,28 @@
 class OneTimePaymentsController < ApplicationController
-  if Rails.env.production?
-    force_ssl(host: "toptutoring.herokuapp.com/payment")
-  end
+  before_action :require_login
 
   def create
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
     token = params[:stripeToken]
-    puts params
-    puts token
     @amount = params[:payments][:amount]
     @amount = Float(@amount).round(2)
     @amount = (@amount * 100).to_i
 
     begin
-      Stripe::Charge.create(
-        :amount => @amount,
-        :currency => 'usd',
-        :source => params[:stripeToken],
-        :description => params[:payments][:description])
+      customer = Stripe::Customer.create(
+        source: token,
+        email: current_user.email)
 
-      redirect_to confirmation_url(host: ENV['HOST'], protocol: "http")
+      current_user.customer_id = customer.id
+      current_user.save
+
+      Stripe::Charge.create(
+        amount: @amount,
+        currency: 'usd',
+        customer: current_user.customer_id,
+        description: params[:payments][:description])
+
+      redirect_to confirmation_path
     rescue Stripe::CardError => e
       flash[:danger] = e.message
       render :new
