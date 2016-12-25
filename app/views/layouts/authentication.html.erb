@@ -20,10 +20,12 @@
     <link rel="stylesheet" type="text/css" href="../plugins/bootstrap/dist/css/bootstrap.min.css">
     <!-- Ionicons-->
     <link rel="stylesheet" type="text/css" href="../plugins/Ionicons/css/ionicons.min.css">
-    <!-- Font Awesome-->
-    <link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css">
     <!-- Itim-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Itim">
+    <!-- Font Awesome-->
+    <link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Dancing Script -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing+Script">
     <!-- Core CSS-->
     <link rel="stylesheet" type="text/css" href="../build/css/first-layout.css">
     <title><%= title %></title>
@@ -38,16 +40,20 @@
     <%= stylesheet_link_tag :application, media: "all" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="pace-done main-sidebar-toggled sidebar-unpin">
+  <body class="login">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KWRWF9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <%= render "flashes" %>
-    <%= render "header" %>
 
     <div class="main-container">
       <div class="page-content">
+        <h1 class="logo-word large text-center" id="logo">
+          <i class="icon ion-university"></i>
+          <span class="highlight">Top</span>Tutoring
+          <!--<a class="logo_anchor" href="/" aria-label="Toptutoring" tabindex="-1">Toptutoring</a>-->
+        </h1>
         <%= yield %>
       </div>
     </div>

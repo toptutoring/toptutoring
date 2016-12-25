@@ -1,0 +1,92 @@
+body.login {
+  background-color: #476684;
+  color: white;
+  a {
+    color: white;
+  }
+
+  .highlight {
+    font-weight: 800;
+  }
+}
+
+.logo-word.large {
+    float: none;
+}
+
+.logo-word {
+    overflow: hidden;
+    margin: auto;
+    width: 335px;
+    height: 60px;
+    padding: 10px;
+    font-size: 41px;
+    margin-bottom: 20px;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 300;
+    padding-left: 43px;
+    .icon {
+      position: absolute;
+      left: 0;
+    }
+}
+
+#logo a {
+    pointer-events: none;
+    font-family: "Dancing Script";
+    color: white;
+}
+
+.logo-word .logo_anchor {
+    background-position: 50%;
+    text-indent: -999em;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.login {
+  .widget {
+  border: none;
+  }
+  .social-btns {
+    padding-left: 60px;
+    min-height: 250px;
+    margin-bottom: 15px;
+    margin-top: 5%;
+      .divider {
+        padding: 3%;
+      }
+  }
+  .btn {
+    margin-left: 2px;
+  }
+  .signup-link {
+    margin-left: 20%;
+  }
+  .fa {
+    margin-right: 5px;
+  }
+
+  .social-btn .fa {
+    font-size: 18px;
+    position: relative;
+    top: 2px;
+    margin-right: 10px;
+    border-right: 1px solid rgba(0,0,0,0.05);
+    padding-right: 10px;
+    width: 30px;
+  }
+}
+
+form.login{
+  input {
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    margin: 4px;
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+}

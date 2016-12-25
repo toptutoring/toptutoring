@@ -1,4 +1,6 @@
 class SessionsController < Clearance::SessionsController
+  layout "authentication"
+
   def new
   end
 
@@ -10,8 +12,12 @@ class SessionsController < Clearance::SessionsController
   private
 
   def url_after_create
-    payment_path
-  end
+    if current_user.parent?
+      payment_path
+    elsif current_user.tutor
+      root_path
+    end
+end
 
   def set_remember_me
     if params[:session][:remember_me]
