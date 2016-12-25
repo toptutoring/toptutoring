@@ -1,11 +1,13 @@
-<div class="container text-center">
+<div class="container">
   <legend><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
 </div>
 
-<div class= "text-center col-md-8 col-md-offset-2">
+<div class="col-md-8">
   <p>Note: All fields are required.</p>
   <p>This page is protected through secure SSL encrypted payment.</p>
+</div>
 
+<div class="col-md-8 col-md-offset-1">
   <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal" do |f| %>
 
     <fieldset class="credit_card">
@@ -54,8 +56,7 @@
       <div class="col-xs-2 col-xs-offset-5">
         <input type="submit" value="Pay" class="btn btn-block payment_submit">
       </div>
-    </input>
-  </div>
+    </div>
 
   <% end %>
 </div>
