@@ -72,17 +72,6 @@ $(document).ready(function() {
             show: false
         }
     };
-    $.plot($('#flot-order'), datasetOrder, optionsOrder);
-    $('#flot-order').bind('plothover', function(event, pos, item) {
-        if (item) {
-            $('.flotTip').text('Orders: ' + item.datapoint[1].toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')).css({
-                top: item.pageY + 15,
-                left: item.pageX + 10
-            }).show();
-        } else {
-            $('.flotTip').hide();
-        }
-    });
 
     // Total Revenue
     // --------------------------------------------------

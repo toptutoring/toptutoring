@@ -22,8 +22,5 @@ Rails.application.routes.draw do
     get "/payment" => "one_time_payments#new"
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.tutor? } do
-  end
-
   root to: "sessions#new"
 end

@@ -120,43 +120,6 @@ $(document).ready(function() {
         name: 'São Tomé and Príncipe',
         earnings: '150'
     }];
-    $('#world-map').vectorMap({
-        map: 'world_mill',
-        backgroundColor: 'rgba(0,0,0,0)',
-        zoomOnScroll: false,
-        regionStyle: {
-            initial: {
-                fill: '#1F364F',
-                "fill-opacity": 0.1,
-                stroke: '#1F364F',
-                'stroke-width': 1
-            }
-        },
-        markers: dataMapMarker,
-        markerStyle: {
-            initial: {
-                fill: '#E5343D',
-                stroke: '#E5343D',
-                'fill-opacity': 1,
-                'stroke-width': 10,
-                'stroke-opacity': 0.2,
-                r: 5
-            },
-            hover: {
-                stroke: '#1F364F',
-                'stroke-width': 2,
-                cursor: 'pointer'
-            }
-        },
-        onRegionTipShow: function(e, el, code) {
-            if (dataSale.hasOwnProperty(code)) {
-                el.html(el.html() + ' ($' + dataSale[code] + ')');
-            }
-        },
-        onMarkerTipShow: function(e, el, code) {
-            el.html(el.html() + ' ($' + dataMapMarker[code].earnings + ')');
-        }
-    });
 
     // Sales Analytics
     // --------------------------------------------------

@@ -14,8 +14,8 @@ class SessionsController < Clearance::SessionsController
   def url_after_create
     if current_user.parent?
       payment_path
-    elsif current_user.tutor
-      root_path
+    elsif current_user.tutor?
+      example_dashboard_path
     end
 end
 
