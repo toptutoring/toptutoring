@@ -5,4 +5,5 @@ class Tutor < ActiveRecord::Base
 
   # Associations
   belongs_to :user
+
 end

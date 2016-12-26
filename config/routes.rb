@@ -14,6 +14,18 @@ Rails.application.routes.draw do
   resource :session, controller: "sessions", only: [:new, :create]
   resources :payments, only: [:new, :create]
 
+  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
+    get "/dashboard" => "pages#admin_dashboard"
+  end
+
+  constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do
+    get "/dashboard" => "pages#director_dashboard"
+  end
+
+  constraints Clearance::Constraints::SignedIn.new { |user| user.tutor? } do
+    get "/dashboard" => "pages#tutor_dashboard"
+  end
+
   constraints Clearance::Constraints::SignedIn.new { |user| user.parent? && user.customer? } do
     get "/payment" => "payments#new"
   end

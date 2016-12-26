@@ -8,6 +8,11 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :tutor
 
   # Roles
+
+  def director?
+    self.tutor.present? && self.tutor.director?
+  end
+
   def tutor?
     self.tutor.present?
   end

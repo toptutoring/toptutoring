@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
 
-  def example_dashboard
-    render "example_dashboard", :layout => false
+  def director_dashboard
+    render "director_dashboard", :layout => false
   end
 
   def calendar
