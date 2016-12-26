@@ -1,14 +1,16 @@
 <div class="container">
-  <legend><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
-</div>
 
-<div class="col-md-8">
-  <p>Note: All fields are required.</p>
-  <p>This page is protected through secure SSL encrypted payment.</p>
-</div>
+    <div class="row">
+      <legend class="col-sm-6 col-sm-offset-3"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
+    </div>
+    <div class="row">
+      <p class="col-sm-2 col-sm-offset-3">Note: All fields are required.</p>
+    </div>
+    <div class="row">
+      <p class="col-sm-4 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
+    </div>
 
-<div class="col-md-8 col-md-offset-1">
-  <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal" do |f| %>
+  <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal col-md-8 col-md-offset-1" do |f| %>
 
     <fieldset class="credit_card">
 
