@@ -21,6 +21,10 @@ gem "uglifier"
 
 gem "bugsnag"
 gem "clearance"
+gem 'stripe', '~> 1.56'
+gem "dwolla_v2", "~> 1.0"
+gem "omniauth"
+gem "omniauth-oauth2"
 
 group :development do
   gem "listen"
