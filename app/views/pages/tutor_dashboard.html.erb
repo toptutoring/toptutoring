@@ -99,7 +99,6 @@
 <%= csrf_meta_tags %>
 <script src="/assets/jquery_ujs.self-784a997f6726036b1993eb2217c9cb558e1cbb801c6da88105588c56f13b466a.js?body=1"></script>
   </head>
-  </head>
   <body>
     <!-- Header start-->
     <header>
@@ -171,7 +170,7 @@
       <div class="page-container">
         <div class="page-content container-fluid">
           <div class="row">
-            <div class="social-btns col-md-3 col-sm-12 col-xs-12">
+            <!--<div class="social-btns col-md-3 col-sm-12 col-xs-12">
               <div class="widget">
                 <div class="widget-body">
                   <div class="media">
@@ -181,49 +180,31 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-3">
+            </div>-->
+            <div class="col-md-4">
               <div class="widget">
-                <div class="widget-body">
-                  <div class="media">
-                    <div class="media-body"><span class="fs-12 text-muted text-uppercase">Total Revenue </span><span class="text-success"><i class="ion-arrow-up-c"></i> 6.54%</span>
-                      <div class="fs-36 fw-300">$<span class="counter">20,320</span></div>
-                    </div>
-                    <div class="media-right"><i class="ion-ios-pulse fs-36"></i></div>
-                  </div>
+                <div class="widget-heading">
+                  <h3 class="widget-title">Today's activities</h3>
                 </div>
-                <div id="flot-revenue" style="height: 50px; margin-top: -30px"></div>
+                <div class="widget-body">
+                  <ul class="activity-list activity-sm list-unstyled mb-0">
+                    <li class="activity-purple">
+                      <time datetime="2016-12-10T20:50:48+07:00" class="fs-13 text-muted">15:00</time>
+                      <p class="mt-10 mb-0">Math session with Karen Ortega</p>
+                    </li>
+                    <li class="activity-danger">
+                      <time datetime="2016-12-10T20:42:40+07:00" class="fs-13 text-muted">18:30</time>
+                      <p class="mt-10 mb-0">Biology session with Harold Fuller</p>
+                    </li>
+                    <li class="activity-warning">
+                      <time datetime="2016-12-10T20:35:35+07:00" class="fs-13 text-muted">20:00</time>
+                      <p class="mt-10 mb-0">Math session with Harold Fuller</p>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="widget">
-                <div class="widget-body">
-                  <div class="media">
-                    <div class="media-body"><span class="fs-12 text-muted text-uppercase">New Students </span><span class="text-success"><i class="ion-arrow-up-c"></i> 5.62%</span>
-                      <div class="fs-36 fw-300 counter">7</div>
-                    </div>
-                    <div class="media-right"><i class="ion-ios-person-outline fs-36"></i></div>
-                  </div>
-                </div>
-                <div id="flot-user" style="height: 50px; margin-top: -30px"></div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="widget">
-                <div class="widget-body">
-                  <div class="media">
-                    <div class="media-body"><span class="fs-12 text-muted text-uppercase">Student Feedback </span><span class="text-success"><i class="ion-arrow-up-c"></i> 3.98%</span>
-                      <div class="fs-36 fw-300 counter">9</div>
-                    </div>
-                    <div class="media-right"><i class="ion-ios-compose-outline fs-36"></i></div>
-                  </div>
-                </div>
-                <div id="flot-feedback" style="height: 50px; margin-top: -30px"></div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-8">
               <div class="widget">
                 <div class="widget-heading clearfix">
                   <h3 class="widget-title pull-left">Latest Sessions</h3>
@@ -275,96 +256,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-5">
-              <div class="widget">
-                <div class="widget-heading">
-                  <h3 class="widget-title">Today's activities</h3>
-                </div>
-                <div class="widget-body">
-                  <ul class="activity-list activity-sm list-unstyled mb-0">
-                    <li class="activity-purple">
-                      <time datetime="2016-12-10T20:50:48+07:00" class="fs-13 text-muted">15:00</time>
-                      <p class="mt-10 mb-0">Math session with Karen Ortega</p>
-                    </li>
-                    <li class="activity-danger">
-                      <time datetime="2016-12-10T20:42:40+07:00" class="fs-13 text-muted">18:30</time>
-                      <p class="mt-10 mb-0">Biology session with Harold Fuller</p>
-                    </li>
-                    <li class="activity-warning">
-                      <time datetime="2016-12-10T20:35:35+07:00" class="fs-13 text-muted">20:00</time>
-                      <p class="mt-10 mb-0">Math session with Harold Fuller</p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="widget">
-                <div class="widget-heading clearfix">
-                  <h3 class="widget-title pull-left">Sessions Analytics</h3>
-                  <ul class="widget-tools pull-right list-inline">
-                    <li><a href="javascript:;" class="widget-collapse"><i class="ion-chevron-up"></i></a></li>
-                    <li><a href="javascript:;" class="widget-reload"><i class="ion-refresh"></i></a></li>
-                    <li><a href="javascript:;" class="widget-remove"><i class="ion-close-round"></i></a></li>
-                  </ul>
-                </div>
-                <div class="widget-body">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="clearfix">
-                        <div id="flot-sale-legend" class="pull-left">
-                          <table style="font-size:smaller;color:#545454">
-                            <tbody>
-                              <tr>
-                                <td class="legendColorBox">
-                                  <div style="border:1px solid rgba(0,0,0,0);padding:1px">
-                                    <div style="width:4px;height:0;border:5px solid #ED4D6E;overflow:hidden"></div>
-                                  </div>
-                                </td>
-                                <td class="legendLabel">Revenue</td>
-                                <td class="legendColorBox">
-                                  <div style="border:1px solid rgba(0,0,0,0);padding:1px">
-                                    <div style="width:4px;height:0;border:5px solid #0667D6;overflow:hidden"></div>
-                                  </div>
-                                </td>
-                                <td class="legendLabel">Sessions</td><td class="legendColorBox">
-                                  <div style="border:1px solid rgba(0,0,0,0);padding:1px">
-                                    <div style="width:4px;height:0;border:5px solid #17A88B;overflow:hidden"></div>
-                                  </div>
-                                </td>
-                                <td class="legendLabel">Students</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="pull-right">
-                          <div role="group" aria-label="Change date" class="btn-group btn-rounded">
-                            <button type="button" class="btn btn-default btn-outline">Last 7 days</button>
-                            <button type="button" class="btn btn-default btn-outline">Last month</button>
-                            <button type="button" class="btn btn-default btn-outline">Last 3 months</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div id="flot-sale" style="height: 351px; padding: 0px; position: relative;"><canvas class="flot-base" width="736" height="351" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 736px; height: 351px;"></canvas><div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);"><div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;"><div style="position: absolute; max-width: 212px; top: 338px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 14px; text-align: center;">Monday</div><div style="position: absolute; max-width: 212px; top: 338px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 127px; text-align: center;">Tuesday</div><div style="position: absolute; max-width: 212px; top: 338px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 230px; text-align: center;">Wednesday</div><div style="position: absolute; max-width: 212px; top: 338px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 348px; text-align: center;">Thursday</div><div style="position: absolute; max-width: 212px; top: 338px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 468px; text-align: center;">Friday</div><div style="position: absolute; max-width: 212px; top: 338px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 573px; text-align: center;">Saturday</div><div style="position: absolute; max-width: 212px; top: 338px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 690px; text-align: center;">Sunday</div></div><div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;"><div style="position: absolute; top: 317px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 13px; text-align: right;">0</div><div style="position: absolute; top: 254px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 0px; text-align: right;">100</div><div style="position: absolute; top: 191px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 0px; text-align: right;">200</div><div style="position: absolute; top: 128px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 0px; text-align: right;">300</div><div style="position: absolute; top: 65px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 0px; text-align: right;">400</div><div style="position: absolute; top: 2px; font-style: normal; font-variant: normal; font-weight: 400; font-stretch: normal; font-size: 11px; line-height: 13px; font-family: Lato, sans-serif; color: rgb(154, 154, 154); left: 0px; text-align: right;">500</div></div></div><canvas class="flot-overlay" width="736" height="351" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 736px; height: 351px;"></canvas></div>
-                      <div class="row row-0 mt-10 text-center">
-                        <div class="col-xs-4">
-                          <div class="fs-36 fw-300">$500</div><span class="fs-12 text-muted text-uppercase">Total Revenue </span><span class="text-danger"><i class="ion-arrow-down-c"></i> 2.43%</span>
-                        </div>
-                        <div class="col-xs-4">
-                          <div class="fs-36 fw-300">30</div><span class="fs-12 text-muted text-uppercase">Total Sessions </span><span class="text-success"><i class="ion-arrow-up-c"></i> 6.54%</span>
-                        </div>
-                        <div class="col-xs-4">
-                          <div class="fs-36 fw-300">60</div><span class="fs-12 text-muted text-uppercase">Total Students </span><span class="text-success"><i class="ion-arrow-up-c"></i> 5.62%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <!-- Right Sidebar start-->
