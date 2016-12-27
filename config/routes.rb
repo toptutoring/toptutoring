@@ -16,6 +16,9 @@ Rails.application.routes.draw do
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
     get "/dashboard" => "pages#admin_dashboard"
+    namespace :admin do
+      resources :payments, only: [:new, :create, :index]
+    end
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do

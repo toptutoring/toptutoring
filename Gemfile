@@ -25,6 +25,8 @@ gem 'stripe', '~> 1.56'
 gem "dwolla_v2", "~> 1.0"
 gem "omniauth"
 gem "omniauth-oauth2"
+gem "attr_encrypted", "~> 3.0.0"
+
 
 group :development do
   gem "listen"

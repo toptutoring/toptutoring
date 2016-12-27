@@ -41,6 +41,8 @@ GEM
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (7.1.4)
+    attr_encrypted (3.0.3)
+      encryptor (~> 3.0.0)
     autoprefixer-rails (6.5.4)
       execjs
     awesome_print (1.7.0)
@@ -89,6 +91,7 @@ GEM
       hashie (~> 3.4)
     email_validator (1.6.0)
       activemodel
+    encryptor (3.0.0)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.7.0)
@@ -302,6 +305,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  attr_encrypted (~> 3.0.0)
   autoprefixer-rails
   awesome_print
   bugsnag

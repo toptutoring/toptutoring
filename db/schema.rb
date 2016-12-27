@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161226192659) do
+ActiveRecord::Schema.define(version: 20161226233721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "amount"
+    t.string  "description"
+    t.string  "status"
+    t.string  "source"
+    t.string  "destination"
+    t.integer "payer_id"
+    t.integer "payee_id"
+    t.index ["payee_id"], name: "index_payments_on_payee_id", using: :btree
+    t.index ["payer_id"], name: "index_payments_on_payer_id", using: :btree
+  end
 
   create_table "students", force: :cascade do |t|
     t.string  "name",                       null: false
@@ -53,6 +65,8 @@ ActiveRecord::Schema.define(version: 20161226192659) do
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end
 
+  add_foreign_key "payments", "users", column: "payee_id"
+  add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "students", "users"
   add_foreign_key "tutors", "users"
 end

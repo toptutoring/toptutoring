@@ -12,11 +12,18 @@ class PaymentsController < ApplicationController
       render :new
     else
       begin
-        Stripe::Charge.create(
+        payment = Stripe::Charge.create(
           amount: @amount,
           currency: 'usd',
           customer: current_user.customer_id,
           description: params[:payments][:description])
+
+        Payment.create(
+          amount: payment.amount,
+          description: payment.description,
+          status: payment.status,
+          source: payment.customer,
+          destination: payment.destination)
 
         redirect_to confirmation_path
       rescue Stripe::CardError => e
