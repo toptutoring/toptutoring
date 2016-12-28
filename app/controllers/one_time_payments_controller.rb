@@ -26,8 +26,9 @@ class OneTimePaymentsController < ApplicationController
         amount: payment.amount,
         description: payment.description,
         status: payment.status,
-        source: payment.customer,
-        destination: payment.destination)
+        customer_id: payment.customer,
+        destination: payment.destination,
+        payer_id: current_user.id)
 
       redirect_to confirmation_path
     rescue Stripe::CardError => e
