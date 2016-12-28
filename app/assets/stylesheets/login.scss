@@ -1,6 +1,5 @@
 body.login {
-  background-color: #476684;
-  color: white;
+  color: #529ECC;
   a {
     color: white;
   }
@@ -17,15 +16,10 @@ body.login {
 .logo-word {
     overflow: hidden;
     margin: auto;
-    width: 335px;
-    height: 60px;
     padding: 10px;
-    font-size: 41px;
-    margin-bottom: 20px;
+    font-size: 32px;
     position: relative;
-    text-transform: uppercase;
-    font-weight: 300;
-    padding-left: 43px;
+    font-weight: 700;
     .icon {
       position: absolute;
       left: 0;
@@ -88,5 +82,11 @@ form.login{
   }
   .form-group {
     margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .page-content {
+      padding: 150px 20px 0 0;
   }
 }

@@ -6,6 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-tutor = User.create!(email: "tutor@example.com", password: 'password', name: 'tutor').create_tutor(subject: "Math", activity_type: "VAT")
-parent = User.create(email: "parent@example.com", password: 'password', name: 'parent')
-student = parent.create_student(email: "student@example.com", name: 'student', subject: "Math", activity_type: "SAT")
+# Create users
+# Users have the password "Passw0rd" in dwolla sandbox.
+# Admin has email "admin@tutoring.com" in dwolla sandbox.
+tutor = User.create!(name: "tutor", email: "tutor@toptutoring.com", password: "password").create_tutor(subject: "Math", activity_type: "VAT")
+director = User.create!(name: "director", email: "director@toptutoring.com", password: "password").create_tutor(subject: "Math", activity_type: "VAT", director: true)
+parent = User.create(name: "parent", email: "parent@toptutoring.com", password: "password")
+student = parent.create_student(name: "student", email: "student@toptutoring.com", subject: "Math", activity_type: "SAT")
+admin = User.create!(name: "admin", email: "admin@toptutoring.com", password: "password", admin: "true")

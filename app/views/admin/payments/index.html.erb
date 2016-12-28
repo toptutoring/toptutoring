@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Toptutoring</title>
     <!-- PACE-->
-    <!-- jQuery-->
     <script type="text/javascript" src="../plugins/tinycolor/demo/jquery-1.9.1.js"></script>
     <!-- Bootstrap JavaScript-->
     <script type="text/javascript" src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -67,6 +66,11 @@
     <script type="text/javascript" src="../plugins/moment/moment.js/"></script>
     <script type="text/javascript" src="../plugins/bootstrap/js/modal.js/"></script>
 
+    <script type="text/javascript" src="../build/js/page-content/charts/flot-charts.js"></script>
+    <script type="text/javascript" src="../build/js/page-content/charts/chart-js.js"></script>
+    <script type="text/javascript" src="../build/js/page-content/charts/morris-charts.js"></script>
+
+
     <link rel="stylesheet" type="text/css" href="../plugins/weather-icons/css/weather-icons-wind.min.css">
     <link rel="stylesheet" type="text/css" href="../plugins/weather-icons/css/weather-icons.min.css">
     <!-- Bootstrap Date Range Picker-->
@@ -81,9 +85,6 @@
 
     <script type="text/javascript" src="../plugins/jquery-ui/jquery-ui.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../plugins/fullcalendar/dist/fullcalendar.css">
-    <script type="text/javascript" src="../plugins/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="../build/js/page-content/extra-pages/calendar.js"></script>
     <script type="text/javascript" src="../build/js/page-content/extra-pages/chat-dashboard.js"></script>
 
     <!-- Core CSS-->
@@ -97,6 +98,7 @@
 <script type="text/javascript" charset="utf-8" async="" src="https://platform.twitter.com/js/button.3943c052be33b5e812dac6838df9cb3d.js"></script>
 <%= csrf_meta_tags %>
 <script src="/assets/jquery_ujs.self-784a997f6726036b1993eb2217c9cb558e1cbb801c6da88105588c56f13b466a.js?body=1"></script>
+  </head>
   </head>
   <body>
     <!-- Header start-->
@@ -162,46 +164,55 @@
           <li class="panel"><a href="#"><i class="ion-ios-person-outline bg-success"></i><span class="sidebar-title">Profile</span></a></li>
           <li class="panel"><a href="calendar.html"><i class="ion-ios-calendar-outline bg-info"></i><span class="sidebar-title">Calendar</span></a></li>
           <li class="panel"><a href="#"><i class="ion-ios-printer-outline bg-danger"></i><span class="sidebar-title">Messages</span></a></li>
+          <li class="panel"><a href="/auth/dwolla"><i class="ion-card bg-info"></i><span class="sidebar-title">Log in with Dwolla</span></a></li>
+          <% if current_user.admin? %>
+            <li class="panel"><a href="/admin/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payments</span></a></li>
+          <% end %>
         </ul>
       </aside>
       <!-- Main Sidebar end-->
       <div class="page-container">
         <div class="page-content container-fluid">
-          <div class="row mb-20">
+          <div class="row">
             <div class="col-md-12">
-              <div id="fullcalendar" class="fc fc-ltr fc-unthemed">
-              </div>
-          </div>
-          <div id="addNewEvent" tabindex="-1" role="dialog" aria-labelledby="ModalEventLabel" class="modal fade in">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header bg-black no-border">
-                  <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-                  <h4 id="ModalEventLabel" class="modal-title">Schedule session</h4>
+              <div class="widget">
+                <div class="widget-heading clearfix">
+                  <h3 class="widget-title pull-left">Payments</h3>
+                  <a href="/admin/payments/new" class="btn btn-success" style="margin-left:20px;">Pay tutor</a>
+                  <ul class="widget-tools pull-right list-inline">
+                    <li><a href="javascript:;" class="widget-collapse"><i class="ion-chevron-up"></i></a></li>
+                    <li><a href="javascript:;" class="widget-reload"><i class="ion-refresh"></i></a></li>
+                    <li><a href="javascript:;" class="widget-remove"><i class="ion-close-round"></i></a></li>
+                  </ul>
                 </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="form-group">
-                      <input id="inputTitleEvent" type="text" placeholder="Subject" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <input id="" type="text" placeholder="Student" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <div class="minicolors minicolors-theme-bootstrap minicolors-position-bottom minicolors-position-left"><input id="inputBackgroundEvent" type="text" value="#34495e" class="form-control minicolors-input" size="7"><span class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(52, 73, 94);"></span></span><div class="minicolors-panel minicolors-slider-hue"><div class="minicolors-slider minicolors-sprite"><div class="minicolors-picker" style="top: 62.5px;"></div></div><div class="minicolors-opacity-slider minicolors-sprite"><div class="minicolors-picker"></div></div><div class="minicolors-grid minicolors-sprite" style="background-color: rgb(0, 128, 255);"><div class="minicolors-grid-inner"></div><div class="minicolors-picker" style="top: 94px; left: 68px;"><div></div></div></div></div></div>
-                    </div>
-                    <input id="start" type="hidden" value="2016/03/02 12:00 am">
-                    <input id="end" type="hidden" value="2016/03/03 12:00 am">
-                    <input id="allDay" type="hidden">
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-                  <button id="btnAddNewEvent" type="submit" class="btn btn-black">Save</button>
+                <div class="widget-body">
+                  <div class="table-responsive">
+                    <table class="table mb-0">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Parent Name</th>
+                          <th class="text-center">Amount</th>
+                          <th class="text-center">Description</th>
+                          <th class="text-center">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @payments.each do |payment| %>
+                          <tr>
+                            <td><%= payment.id %></td>
+                            <td><%= payment.payer.name %></td>
+                            <td class="text-center"><%= payment.amount %></td>
+                            <td class="text-center"><%= payment.description %></td>
+                            <td class="text-center"><%= payment.status %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
@@ -383,10 +394,39 @@
       </aside>
       <!-- Right Sidebar end-->
     </div>
-    <script>
-    $(".dropdown.hidden-sm.hidden-xs").click(function() {
-      $(this).addClass("open")
-    });
-    </script>
+    <!-- jQuery-->
+    <script type="text/javascript" src="../plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript-->
+    <script type="text/javascript" src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Malihu Scrollbar-->
+    <script type="text/javascript" src="../plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Animo.js-->
+    <!-- Bootstrap Progressbar-->
+    <script type="text/javascript" src="../plugins/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- jQuery Easy Pie Chart-->
+    <script type="text/javascript" src="../plugins/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+    <!-- MomentJS-->
+    <script type="text/javascript" src="../plugins/moment/min/moment.min.js"></script>
+    <!-- jQuery BlockUI-->
+    <script type="text/javascript" src="../plugins/blockUI/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="../plugins/jvectormap/lib/world-map.js"></script>
+    <script type="text/javascript" src="../plugins/jvectormap/jquery-jvectormap.js"></script>
+    <!-- jQuery Counter Up-->
+    <script type="text/javascript" src="../plugins/jquery-waypoints/waypoints.min.js"></script>
+    <script type="text/javascript" src="../plugins/Counter-Up/jquery.counterup.min.js"></script>
+    <!-- Flot Charts-->
+    <script type="text/javascript" src="../plugins/flot/jquery.flot.js"></script>
+    <script type="text/javascript" src="../plugins/flot/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="../plugins/flot.curvedlines/curvedLines.js"></script>
+    <script type="text/javascript" src="../plugins/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <!-- Bootstrap Date Range Picker-->
+    <script type="text/javascript" src="../plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- Core JS-->
+    <script type="text/javascript" src="../plugins/animo.js/animo.min.js"></script>
+    <script type="text/javascript" src="../plugins/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="../plugins/datatables.net-buttons/js/dataTables.buttons.js"></script>
+
+    <script type="text/javascript" src="../build/js/page-content/dashboard/index-v2.js"></script>
+    <script type="text/javascript" src="../build/js/page-content/dashboard/index.js"></script>
   </body>
 </html>
