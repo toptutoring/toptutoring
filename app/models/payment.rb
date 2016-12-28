@@ -1,14 +1,6 @@
 class Payment < ActiveRecord::Base
-  belongs_to :payer
-  belongs_to :payee
+  belongs_to :payer, class_name: "User", foreign_key: "payer_id"
+  belongs_to :payee, class_name: "User", foreign_key: "payee_id"
 
-  scope :from_parents, ->{ where(destination: nil) }
-
-  def payer
-    if self.destination.nil?
-      User.find_by(customer_id: self.source)
-    else
-      User.find_by(auth_uid: self.source)
-    end
-  end
+  scope :from_parents, ->{ where.not(customer_id: nil) }
 end

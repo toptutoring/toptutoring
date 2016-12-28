@@ -1,3 +1,5 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
   get "sign_in" => "sessions#new", as: nil
   get "/reset_password" => "passwords#new", as: "reset_password"
@@ -15,10 +17,11 @@ Rails.application.routes.draw do
   resources :payments, only: [:new, :create]
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
-    get "/dashboard" => "pages#admin_dashboard"
+    mount Sidekiq::Web, at: '/sidekiq'
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
     end
+    get "/dashboard" => "pages#admin_dashboard"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do

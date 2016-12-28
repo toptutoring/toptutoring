@@ -191,8 +191,8 @@
                     </div>
 
                     <div class="form-group">
-                      <%= form.label :destination, "Tutor id" %>
-                      <%= form.text_field :destination, class: "form-control" %>
+                      <%= form.label :payee_id, "Tutor" %>
+                      <%= form.select :payee_id, options_from_collection_for_select(@tutors, :id, :name), {}, class: "form-control" %>
                     </div>
 
                     <div class="form-group">
@@ -209,6 +209,7 @@
                       <%= form.text_area :description, class: "form-control", rows: 3, required: true %>
                     </div>
 
+                    <%= form.hidden_field :payer_id, value: current_user.id %>
                   <%= form.submit "Send Payment", class: "btn btn-success margin-top-md center-block", date: {dismiss: "modal"}%>
                 <% end %>
                 </div>

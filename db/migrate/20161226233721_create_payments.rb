@@ -7,6 +7,7 @@ class CreatePayments < ActiveRecord::Migration[5.0]
       t.string :source
       t.string :destination
       t.string :external_code
+      t.string :customer_id
       t.references :payer, index: true
       t.references :payee, index: true
     end

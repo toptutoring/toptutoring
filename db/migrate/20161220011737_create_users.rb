@@ -11,8 +11,10 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :customer_id
       t.string :auth_provider
       t.string :auth_uid
-      t.string :access_token
-      t.string :refresh_token
+      t.string :encrypted_access_token
+      t.string :encrypted_access_token_iv
+      t.string :encrypted_refresh_token
+      t.string :encrypted_refresh_token_iv
       t.integer :token_expires_at
     end
 

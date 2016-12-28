@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20161226233721) do
     t.string  "status"
     t.string  "source"
     t.string  "destination"
+    t.string  "external_code"
+    t.string  "customer_id"
     t.integer "payer_id"
     t.integer "payee_id"
     t.index ["payee_id"], name: "index_payments_on_payee_id", using: :btree
@@ -46,21 +48,23 @@ ActiveRecord::Schema.define(version: 20161226233721) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.string   "name",                                           null: false
-    t.string   "email",                                          null: false
-    t.string   "encrypted_password", limit: 128,                 null: false
-    t.string   "confirmation_token", limit: 128
-    t.string   "remember_token",     limit: 128,                 null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+    t.string   "name",                                                   null: false
+    t.string   "email",                                                  null: false
+    t.string   "encrypted_password",         limit: 128,                 null: false
+    t.string   "confirmation_token",         limit: 128
+    t.string   "remember_token",             limit: 128,                 null: false
     t.string   "phone_number"
     t.string   "customer_id"
     t.string   "auth_provider"
     t.string   "auth_uid"
-    t.string   "access_token"
-    t.string   "refresh_token"
+    t.string   "encrypted_access_token"
+    t.string   "encrypted_access_token_iv"
+    t.string   "encrypted_refresh_token"
+    t.string   "encrypted_refresh_token_iv"
     t.integer  "token_expires_at"
-    t.boolean  "admin",                          default: false, null: false
+    t.boolean  "admin",                                  default: false, null: false
     t.index ["email"], name: "index_users_on_email", using: :btree
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end

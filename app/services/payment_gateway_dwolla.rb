@@ -7,7 +7,7 @@ class PaymentGatewayDwolla
   def create_transfer
     ensure_valid_token
     response = account_token.post("transfers", transfer_payload)
-    #payment.update(external_code: response.headers["location"])
+    payment.update(external_code: response.headers["location"])
   end
 
   private
