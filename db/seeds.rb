@@ -9,8 +9,8 @@
 # Create users
 # Users have the password "Passw0rd" in dwolla sandbox.
 # Admin has email "admin@tutoring.com" in dwolla sandbox.
-tutor = User.create!(name: "tutor", email: "tutor@toptutoring.com", password: "password").create_tutor(subject: "Math", activity_type: "VAT")
-director = User.create!(name: "director", email: "director@toptutoring.com", password: "password").create_tutor(subject: "Math", activity_type: "VAT", director: true)
-parent = User.create(name: "parent", email: "parent@toptutoring.com", password: "password")
-student = parent.create_student(name: "student", email: "student@toptutoring.com", subject: "Math", activity_type: "SAT")
-admin = User.create!(name: "admin", email: "admin@toptutoring.com", password: "password", admin: "true")
+tutor = User.create!(name: "Tutor", email: "tutor@toptutoring.com", password: "password").create_tutor(subject: "Math", activity_type: "VAT")
+director = User.create!(name: "Director", email: "director@toptutoring.com", password: "password").create_tutor(subject: "Math", activity_type: "VAT", director: true)
+parent = User.create(name: "Parent", email: "parent@toptutoring.com", password: "password")
+student = parent.create_student(name: "Student", email: "student@toptutoring.com", subject: "Math", activity_type: "SAT")
+admin = User.create!(name: "Admin", email: "admin@toptutoring.com", password: "adminpassword123", admin: "true")
