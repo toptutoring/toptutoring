@@ -12,7 +12,7 @@ namespace :prod do
     student.name = "Student",
     student.email = "student@toptutoring.com",
     student.subject = "Math",
-    student.activity_type = "SAT"
+    student.academic_type = "Test Prep"
     student.save!
 
     # Update tutor
@@ -30,7 +30,7 @@ namespace :prod do
 
     tutor_info = Tutor.where(user_id: tutor.id).first_or_initialize
     tutor_info.subject = "Math"
-    tutor_info.activity_type = "VAT"
+    tutor_info.academic_type = "Test Prep"
     tutor_info.save!
 
     # Update director
@@ -41,7 +41,7 @@ namespace :prod do
 
     director_info = Tutor.where(user_id: director.id).first_or_initialize
     director_info.subject = "Math"
-    director_info.activity_type = "VAT"
+    director_info.academic_type = "Test Prep"
     director_info.director = true
     director_info.save!
 
