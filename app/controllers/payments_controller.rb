@@ -2,7 +2,7 @@ class PaymentsController < ApplicationController
   before_action :require_login
 
   def create
-    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+    Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
     @amount = params[:payments][:amount]
     @amount = Float(@amount).round(2)
     @amount = (@amount * 100).to_i

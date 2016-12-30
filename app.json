@@ -24,17 +24,32 @@
     "SECRET_KEY_BASE":{
       "generator":"secret"
     },
-    "SMTP_ADDRESS":{
-      "required":true
+    "DWOLLA_APPLICATION_KEY": {
+      "required": true
     },
-    "SMTP_DOMAIN":{
-      "required":true
+    "STRIPE_SECRET_KEY": {
+      "required": true
     },
-    "SMTP_PASSWORD":{
-      "required":true
+    "STRIPE_PUBLISHABLE_KEY": {
+      "required": true
     },
-    "SMTP_USERNAME":{
-      "required":true
+    "DWOLLA_API_URL": {
+      "required": true
+    },
+    "DWOLLA_APPLICATION_KEY": {
+      "required": true
+    },
+    "DWOLLA_APPLICATION_SECRET": {
+      "required": true
+    },
+    "DWOLLA_ENVIRONMENT": {
+      "required": true
+    },
+    "DWOLLA_URL": {
+      "required": true
+    },
+    "DWOLLA_APPLICATION_KEY": {
+      "required": true
     }
   },
   "addons":[
