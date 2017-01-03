@@ -6,6 +6,7 @@ namespace :prod do
     parent.password = "password"
     parent.customer_id = "cus_9pLqJitvVtlSXr"
     parent.save!
+    parent.enable!
 
     # Update student
     student = Student.where(user_id: parent.id).first_or_initialize
@@ -27,6 +28,7 @@ namespace :prod do
     tutor.encrypted_refresh_token_iv = "3mWniaKYXeuCbh6/\n"
     tutor.token_expires_at = 1482931110
     tutor.save!
+    tutor.enable!
 
     tutor_info = Tutor.where(user_id: tutor.id).first_or_initialize
     tutor_info.subject = "Math"
@@ -38,6 +40,7 @@ namespace :prod do
     director.name = "Director"
     director.password = "password"
     director.save!
+    director.enable!
 
     director_info = Tutor.where(user_id: director.id).first_or_initialize
     director_info.subject = "Math"
@@ -58,6 +61,7 @@ namespace :prod do
     admin.encrypted_refresh_token_iv = "QptZJBCecrjtF1wJ\n"
     admin.token_expires_at = 1482932904
     admin.save!
+    admin.enable!
 
     # Update payments
       parent.payments.destroy

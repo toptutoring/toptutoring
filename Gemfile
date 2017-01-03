@@ -28,6 +28,7 @@ gem "omniauth-oauth2"
 gem "attr_encrypted", "~> 3.0.0"
 gem "responders"
 gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
+gem 'state_machines-activerecord'
 
 group :development do
   gem "listen"

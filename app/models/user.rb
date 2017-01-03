@@ -11,6 +11,18 @@ class User < ActiveRecord::Base
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
 
+  #### State Machine ####
+
+  state_machine :access_state, :initial => :disabled do
+    event :enable do
+      transition :disabled => :enabled
+    end
+
+    event :disable do
+      transition :enabled => :disabled
+    end
+  end
+
   # Roles
 
   def director?
