@@ -40,5 +40,13 @@ Rails.application.routes.draw do
     get "/payment" => "one_time_payments#new"
   end
 
+  # API
+  namespace :api do
+    namespace :signups do
+      resources :users, only: :create
+      resources :tutors, only: :create
+    end
+  end
+
   root to: "sessions#new"
 end

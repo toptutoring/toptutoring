@@ -26,7 +26,8 @@ gem "dwolla_v2", "~> 1.0"
 gem "omniauth"
 gem "omniauth-oauth2"
 gem "attr_encrypted", "~> 3.0.0"
-
+gem "responders"
+gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
 
 group :development do
   gem "listen"
