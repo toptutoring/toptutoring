@@ -30,18 +30,18 @@ ActiveRecord::Schema.define(version: 20161226233721) do
   end
 
   create_table "students", force: :cascade do |t|
-    t.string  "name",                       null: false
-    t.string  "email",         default: "", null: false
+    t.string  "name"
+    t.string  "email"
     t.string  "phone_number"
     t.string  "subject"
-    t.string  "activity_type"
+    t.string  "academic_type"
     t.integer "user_id"
     t.index ["user_id"], name: "index_students_on_user_id", using: :btree
   end
 
   create_table "tutors", force: :cascade do |t|
-    t.string  "subject",                       null: false
-    t.string  "activity_type",                 null: false
+    t.string  "subject"
+    t.string  "academic_type"
     t.integer "user_id"
     t.boolean "director",      default: false, null: false
     t.index ["user_id"], name: "index_tutors_on_user_id", using: :btree
