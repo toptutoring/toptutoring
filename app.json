@@ -24,9 +24,6 @@
     "SECRET_KEY_BASE":{
       "generator":"secret"
     },
-    "DWOLLA_APPLICATION_KEY": {
-      "required": true
-    },
     "STRIPE_SECRET_KEY": {
       "required": true
     },
@@ -48,9 +45,9 @@
     "DWOLLA_URL": {
       "required": true
     },
-    "DWOLLA_APPLICATION_KEY": {
+    "ENCRYPTOR_KEY": {
       "required": true
-    }
+    },
   },
   "addons":[
     "heroku-postgresql"
