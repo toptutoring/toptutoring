@@ -1,7 +1,7 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
-  get "sign_in" => "sessions#new", as: nil
+  get "/sign_in" => "sessions#new", as: "login"
   get "/reset_password" => "passwords#new", as: "reset_password"
   get "/example_dashboard" => "pages#example_dashboard"
   get "/calendar" => "pages#calendar"
