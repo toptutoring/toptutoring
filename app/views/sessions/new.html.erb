@@ -18,16 +18,16 @@
       <%= form.password_field :password, placeholder: "Password", class: "form-control login-password" %>
     </div>
 
-      <div class="col-xs-11">
+      <div class="col-xs-12">
         <div class="pull-left">
           <%= form.label :remember_me, class: "remember-me inline-block form-control-static" do %>
             <%= form.check_box :remember_me %>
               Remember me
           <% end %>
         </div>
-        <!--<div class="pull-right">
+        <div class="pull-right">
           <%= link_to "Trouble signing in?", reset_password_path, class: "inline-block form-control-static" %>
-        </div>-->
+        </div>
       </div>
 
     <div class="col-xs-12">
