@@ -39,7 +39,7 @@
     <%= csrf_meta_tags %>
     <%= favicon_link_tag 'favicon.png' %>
   </head>
-  <body class="login">
+  <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KWRWF9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -48,9 +48,6 @@
 
     <div class="main-container">
       <div class="page-content">
-        <h1 class="logo-word large text-center" id="logo">
-          <img src="<%= image_url('toptutoring3.png') %>">
-        </h1>
         <%= yield %>
       </div>
     </div>
