@@ -1,5 +1,5 @@
 class OneTimePaymentsController < ApplicationController
-  before_action :require_login
+  layout "authentication"
 
   def create
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
@@ -9,26 +9,11 @@ class OneTimePaymentsController < ApplicationController
     @amount = (@amount * 100).to_i
 
     begin
-      customer = Stripe::Customer.create(
-        source: token,
-        email: current_user.email)
-
-      current_user.customer_id = customer.id
-      current_user.save
-
-      payment = Stripe::Charge.create(
+      Stripe::Charge.create(
         amount: @amount,
         currency: 'usd',
-        customer: current_user.customer_id,
+        source: token,
         description: params[:payments][:description])
-
-      Payment.create(
-        amount: payment.amount,
-        description: payment.description,
-        status: payment.status,
-        customer_id: payment.customer,
-        destination: payment.destination,
-        payer_id: current_user.id)
 
       redirect_to confirmation_path
     rescue Stripe::CardError => e
