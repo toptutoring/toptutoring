@@ -1,6 +1,10 @@
 class OneTimePaymentsController < ApplicationController
   layout "authentication"
 
+  if Rails.env.production?
+    force_ssl(host: "toptutoring.herokuapp.com/payment")
+  end
+
   def create
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
     token = params[:stripeToken]
