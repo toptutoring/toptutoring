@@ -1,6 +1,7 @@
 jQuery(function($) {
   $('#payment-form').submit(function(event) {
-    Stripe.setPublishableKey("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>");
+    var publishable_key = $(this).find('#stripe_publishable_key').val();
+    Stripe.setPublishableKey(publishable_key);
     var $form = $(this);
     // Disable the submit button to prevent repeated clicks
     $form.find('.payment_submit').prop('disabled', true);
