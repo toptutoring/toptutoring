@@ -9,7 +9,7 @@ gem "jquery-rails"
 gem "normalize-rails", "~> 3.0.0"
 gem "pg"
 gem "puma"
-gem "rack-canonical-host"
+# gem "rack-canonical-host" Temporarily disable until payments are figured out
 gem "rails", "~> 5.0.0"
 gem "recipient_interceptor"
 gem "sass-rails", "~> 5.0"
