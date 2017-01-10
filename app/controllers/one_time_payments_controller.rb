@@ -19,7 +19,7 @@ class OneTimePaymentsController < ApplicationController
         source: token,
         description: params[:payments][:description])
 
-      redirect_to confirmation_path
+      redirect_to confirmation_url(host: ENV['APPLICATION_HOST'], protocol: "http")
     rescue Stripe::CardError => e
       flash[:danger] = e.message
       render :new
