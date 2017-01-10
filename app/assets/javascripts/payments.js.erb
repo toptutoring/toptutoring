@@ -1,5 +1,5 @@
 jQuery(function($) {
-  $('#payment-form').submit(function(event) {
+  $('.payment-form').submit(function(event) {
     var publishable_key = $(this).find('#stripe_publishable_key').val();
     Stripe.setPublishableKey(publishable_key);
     var $form = $(this);
@@ -31,11 +31,10 @@ jQuery(function($) {
       $('#amount').val(total);
     }
   });
-
 });
 
 var stripeResponseHandler = function(status, response) {
-  var $form = $('#payment-form');
+  var $form = $('.payment-form');
   if (response.error) {
     // Show the errors on the form
     $form.find('.payment-errors').text(response.error.message);

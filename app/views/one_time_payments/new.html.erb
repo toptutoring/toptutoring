@@ -10,7 +10,7 @@
       <p class="col-sm-4 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
     </div>
 
-  <%= form_tag url_for(:controller => 'one_time_payments', :action => 'create', method: :post), class: "form-horizontal", id: "payment-form" do |f| %>
+  <%= form_tag url_for(:controller => 'one_time_payments', :action => 'create', method: :post), class: "form-horizontal payment-form", id: "payment-form" do |f| %>
 
     <fieldset class="credit_card">
 

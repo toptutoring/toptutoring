@@ -35,11 +35,11 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.parent? && user.customer? } do
-    get "/payment" => "payments#new"
+    get "/payment/new" => "payments#new"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.parent? } do
-    get "/payment" => "one_time_payments#new"
+    get "/payment/new" => "one_time_payments#new"
   end
 
   # API
@@ -49,6 +49,9 @@ Rails.application.routes.draw do
       resources :tutors, only: :create
     end
   end
+
+  # Users
+  resources :users, only: [:edit, :update]
 
   root to: "sessions#new"
 end

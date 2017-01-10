@@ -12,12 +12,14 @@ class SessionsController < Clearance::SessionsController
   private
 
   def url_after_create
-    if current_user.parent?
-      payment_path
+    if current_user.disabled?
+      edit_user_path(current_user)
+    elsif current_user.parent?
+      payment_new_path
     else
       dashboard_path
     end
-end
+  end
 
   def set_remember_me
     if params[:session][:remember_me]

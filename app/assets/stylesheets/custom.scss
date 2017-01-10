@@ -34,3 +34,11 @@ input[type=number]::-webkit-outer-spin-button {
 .password-reset p {
   text-align: center;
 }
+
+.hidden-submit {
+  display: none;
+}
+
+.form-group .left {
+  padding-left: 0px;
+}
