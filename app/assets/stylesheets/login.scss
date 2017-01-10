@@ -90,3 +90,105 @@ form.login{
       padding: 150px 20px 0 0;
   }
 }
+
+.authentication-header {
+  background-color: #292929;
+  .logo {
+    width: 60%;
+  }
+  .header-icon {
+    color: white;
+    letter-spacing: 1px;
+    font-size: 15px;
+  }
+  .header-icon:hover {
+    background-color: black;
+  }
+  .header-logo:hover {
+    background-color: inherit;
+  }
+}
+
+.footer-2 {
+    padding-bottom: 35px;
+    padding-top: 35px;
+    color: white;
+}
+.bg-dark {
+    background: #292929;
+}
+footer {
+    padding: 72px 0;
+}
+section, footer {
+    padding: 96px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  flex: 1;
+}
+
+.footer-2 {
+  .widget {
+    margin-bottom: auto;
+    border: inherit;
+    border-radius: inherit;
+    margin-bottom: 48px;
+    .title {
+      font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      line-height: 24px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .instafeed li {
+      display: inline-block;
+      padding: 0 4px 4px 0;
+      color: #fefefe;
+    }
+    ul {
+      padding-left: 0;
+    }
+  }
+  a {
+    color: #fff;
+  }
+  @media (min-width: 1200px) {
+    .container {
+      width: 1170px;
+    }
+  }
+  h6.uppercase{
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+
+  .careers-link {
+    padding-top: 10px;
+  }
+}
+
+
+.fade-half {
+  opacity: 0.5;
+}
+
+.uppercase {
+  font-weight: 400;
+  text-transform: uppercase;
+}

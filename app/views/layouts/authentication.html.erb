@@ -45,12 +45,15 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <%= render "flashes" %>
+    <%= render "authentication_header" %>
 
     <div class="main-container">
-      <div class="page-content">
+      <div class="page-content login">
         <%= yield %>
       </div>
     </div>
+
+    <%= render "footer" %>
 
     <%= render "javascript" %>
     <%= render "css_overrides" %>
