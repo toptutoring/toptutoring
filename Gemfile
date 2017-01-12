@@ -18,6 +18,8 @@ gem "skylight"
 gem "sprockets", ">= 3.0.0"
 gem "title"
 gem "uglifier"
+gem 'bootstrap-sass', '~> 3.3.6'
+gem "sass-rails", "~> 5.0"
 
 gem "bugsnag"
 gem "clearance"
@@ -28,6 +30,8 @@ gem "omniauth-oauth2"
 gem "attr_encrypted", "~> 3.0.0"
 gem "responders"
 gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
+gem 'state_machines'
+gem 'state_machines-activerecord'
 
 group :development do
   gem "listen"

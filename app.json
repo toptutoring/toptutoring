@@ -50,7 +50,7 @@
     },
     "API_APPLICATION_KEY": {
       "required": true
-    },
+    }
   },
   "addons":[
     "heroku-postgresql"

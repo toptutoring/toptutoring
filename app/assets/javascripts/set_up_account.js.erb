@@ -1,0 +1,8 @@
+$( window ).load(function() {
+  $(".actions a[href$='#finish']").on("click", function() {
+    $(".hidden-submit").click();
+  });
+  $("#cvv").popover({
+    trigger: 'hover'
+  });
+});

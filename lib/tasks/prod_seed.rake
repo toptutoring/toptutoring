@@ -5,6 +5,7 @@ namespace :prod do
     parent.name = "Parent"
     parent.password = "password"
     parent.customer_id = "cus_9pLqJitvVtlSXr"
+    parent.access_state = "enabled"
     parent.save!
 
     # Update student
@@ -26,6 +27,7 @@ namespace :prod do
     tutor.encrypted_refresh_token = "syJw0E8cFDEqBHsOBVJXnomByFwn7NxUDEilZAuxwTnaMU6kokI5YsAmIj4r\nTWIpWpw8g72E3+16D53tAHMGFLFQ\n"
     tutor.encrypted_refresh_token_iv = "3mWniaKYXeuCbh6/\n"
     tutor.token_expires_at = 1482931110
+    tutor.access_state = "enabled"
     tutor.save!
 
     tutor_info = Tutor.where(user_id: tutor.id).first_or_initialize
@@ -37,6 +39,7 @@ namespace :prod do
     director = User.where(email: "director@toptutoring.com").first_or_initialize
     director.name = "Director"
     director.password = "password"
+    director.access_state = "enabled"
     director.save!
 
     director_info = Tutor.where(user_id: director.id).first_or_initialize
@@ -57,16 +60,17 @@ namespace :prod do
     admin.encrypted_refresh_token = "ftHidcBP/NfGtBUlxBWTbsAdwMc7NqHLPjXwJyDcT0z/zeOHMqtd1ktLs/2u\nSEypEJklv+I8rUmhtXicmyZyeRni\n"
     admin.encrypted_refresh_token_iv = "QptZJBCecrjtF1wJ\n"
     admin.token_expires_at = 1482932904
+    admin.access_state = "enabled"
     admin.save!
 
     # Update payments
-      parent.payments.destroy
-      Payment.create(
-        amount: 200,
-        description: "Payment for Tutor",
-        status: "succeeded",
-        customer_id: parent.customer_id,
-        payer_id: parent.id,
-        payee_id: tutor.id)
+    parent.payments.destroy
+    Payment.create(
+      amount: 200,
+      description: "Payment for Tutor",
+      status: "succeeded",
+      customer_id: parent.customer_id,
+      payer_id: parent.id,
+      payee_id: tutor.id)
   end
 end

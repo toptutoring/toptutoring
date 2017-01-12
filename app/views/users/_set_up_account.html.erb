@@ -1,0 +1,133 @@
+<div class="page-content container-fluid">
+  <div class="widget">
+    <div class="widget-heading">
+      <h3 class="widget-title"></h3>
+    </div>
+    <div class="widget-body">
+      <%= form_for(current_user, url: user_path(current_user), html: { method: :put, class: "payment-form", id: "form-vertical" }) do |f| %>
+        <h3>Acount Infomation</h3>
+        <fieldset>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :name %>
+                <%= f.text_field :name, value: current_user.name, autofocus: true, class:"form-control"%>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :email %>
+                <%= f.text_field :email, value: current_user.email, autofocus: true, class:"form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :phone_number %>
+                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), autofocus: true, class:"form-control"%>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <h3>Student Information</h3>
+        <fieldset>
+          <%= f.fields_for :student do |student_field| %>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= student_field.label :student_name %>
+                  <%= student_field.text_field :name, autofocus: true, class:"form-control" %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= student_field.label :student_email %>
+                  <%= student_field.email_field :email, autofocus: true, class:"form-control" %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= student_field.label :student_phone_number %>
+                  <%= student_field.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), autofocus: true, class:"form-control"%>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= student_field.label :subject %>
+                  <%= student_field.text_field :subject, autofocus: true, class:"form-control" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </fieldset>
+        <h3>Payment Information</h3>
+        <fieldset class="credit-card">
+          <legend><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card Form</legend>
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+              <div class="form-group text-center">
+                <span class="payment-errors alert-danger col-sm-7"></span>
+              </div>
+            </div>
+          </div>
+          <p>Note: All fields are required.</p>
+          <p>This page is protected through secure SSL encrypted payment.</p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="card-holder-name">Card Holder's Name</label>
+                <input type="text" class="form-control"  data-stripe="name" title="This is the name as written on your credit card." required>
+                </input>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="credit-card-number">Credit Card</label>
+                <input type="text" class="form-control"  data-stripe="number" title="Fill in your credit card number." required>
+                </input>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="exp">Expiration</label>
+                <div class="controls">
+                  <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control input-sm', name: nil, data: {stripe: "exp-month"}, required: true) %>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="exp"></label>
+                <div class="controls">
+                  <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control input-sm', name: nil, data: {stripe: "exp-year"}, required: true) %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="col-md-3 col-cvv-fixed-width left">
+                  <label for="cvv-code" class="control-label">CVV</label>
+                  <input type="text" class="form-control input-sm"  data-stripe="cvc" size="4" required></input>
+                </div>
+              </div>
+            </br>
+              <a id="cvv" class="col-md-3" data-content="<strong>Visa®, Mastercard®, and Discover® cardholders:</strong><p>Turn your card over and look at the signature box. You should see either the entire 16-digit credit card number or
+                just the last four digits followed by a special 3-digit code. This 3-digit code is your CVV number / Card Security Code.</p><strong> American Express® cardholders:</strong><p>Look for the 4-digit code printed on the front of your card just above and to the right of your main credit card number. This 4-digit code is your Card Identification Number (CID). The CID is the four-digit code printed just above the Account Number.</p>" data-placement="right" data-toggle="popover" class="btn" data-original-title="Card Verification Number" data-html="true" style="font-size:11px">What is my CVV code?</a>
+            </div>
+          </div>
+          <%= hidden_field_tag :token %>
+        </fieldset>
+        <%= hidden_field_tag :stripe_publishable_key, ENV['STRIPE_PUBLISHABLE_KEY'] %>
+        <%= f.submit "", class:"hidden-submit" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
