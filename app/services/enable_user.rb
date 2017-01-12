@@ -4,19 +4,19 @@ class EnableUser
   end
 
   def perform
-    enable_user
+    @enable_user
     create_assignment
   end
 
   private
 
   def enable_user
-    #@user.enable!
+    @user.enable!
   end
 
   def create_assignment
     Assignment.create(
-      student_id: @user.student.id,
+      student_id: @user.id,
       subject: @user.student.subject,
       academic_type: @user.student.academic_type
     )
