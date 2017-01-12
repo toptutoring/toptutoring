@@ -42,3 +42,13 @@ input[type=number]::-webkit-outer-spin-button {
 .form-group .left {
   padding-left: 0px;
 }
+
+form {
+  overflow: visible !important;
+}
+
+.wizard.vertical {
+  .content {
+    overflow: visible;
+  }
+}
