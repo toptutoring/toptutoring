@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_one :tutor, dependent: :destroy
   accepts_nested_attributes_for :tutor
   has_many :payments
+  has_many :assignments
 
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")

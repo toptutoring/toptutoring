@@ -16,7 +16,7 @@
     <%= csrf_meta_tags %>
 <!--     <%= favicon_link_tag 'favicon.png' %> -->
   </head>
-  <body class="pace-done main-sidebar-toggled sidebar-unpin">
+  <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KWRWF9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -25,8 +25,11 @@
     <%= render "user_header" %>
 
     <div class="main-container">
-      <div class="page-content">
-        <%= yield %>
+      <%= render "menu" %>
+      <div class="page-container">
+        <div class="page-content container-fluid">
+          <%= yield %>
+        </div>
       </div>
     </div>
 
