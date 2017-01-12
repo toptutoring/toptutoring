@@ -25,7 +25,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <%= f.label :phone_number %>
-                <%= f.text_field :phone_number, value: current_user.phone_number, autofocus: true, class:"form-control"%>
+                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), autofocus: true, class:"form-control"%>
               </div>
             </div>
           </div>
@@ -51,7 +51,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <%= student_field.label :student_phone_number %>
-                  <%= student_field.text_field :phone_number, autofocus: true, class:"form-control" %>
+                  <%= student_field.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), autofocus: true, class:"form-control"%>
                 </div>
               </div>
               <div class="col-md-6">
