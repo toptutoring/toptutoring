@@ -11,12 +11,19 @@
     %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Toptutoring</title>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KWRWF9');</script>
+    <!-- End Google Tag Manager -->
     <%= render "css_import" %>
     <%= stylesheet_link_tag :application, media: "all" %>
     <%= csrf_meta_tags %>
 <!--     <%= favicon_link_tag 'favicon.png' %> -->
   </head>
-  <body class="pace-done main-sidebar-toggled sidebar-unpin">
+  <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KWRWF9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -25,8 +32,11 @@
     <%= render "user_header" %>
 
     <div class="main-container">
-      <div class="page-content">
-        <%= yield %>
+      <%= render "menu" %>
+      <div class="page-container">
+        <div class="page-content container-fluid">
+          <%= yield %>
+        </div>
       </div>
     </div>
 

@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
     end
-    get "/dashboard" => "pages#admin_dashboard"
+    get "/dashboard" => "dashboards#admin"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do
@@ -52,6 +52,13 @@ Rails.application.routes.draw do
 
   # Users
   resources :users, only: [:edit, :update]
+  resources :assignments
+
+  # Demo dashboards
+  get "/tutor-dashboard" => "pages#tutor_dashboard"
+  get "/director-dashboard" => "pages#director_dashboard"
+  get "/admin-dashboard" => "pages#admin_dashboard"
+
 
   root to: "sessions#new"
 end

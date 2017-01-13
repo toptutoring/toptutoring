@@ -8,13 +8,6 @@
           </div>
         </div></a>
       <ul aria-labelledby="dropdownMenu2" class="dropdown-menu dropdown-menu-right fadeInUp icon animated" style="animation-duration: 0.2s; animation-delay: 0s; animation-timing-function: linear; animation-iteration-count: 1;">
-        <% if current_user.enabled? %>
-          <li>
-            <%= link_to payment_path do %>
-              <i class="ion-card mr-5"></i>Payment
-              <% end %>
-        <% end %>
-        </li>
         <li>
           <%= link_to sign_out_path, method: :delete do %>
             <i class="ion-unlocked mr-5"></i>Logout

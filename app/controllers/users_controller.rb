@@ -14,7 +14,7 @@ class UsersController < Clearance::SessionsController
 
         current_user.customer_id = customer.id
         current_user.save!
-        current_user.enable!
+        EnableUser.new(current_user).perform
         redirect_to payment_new_path
         return
       rescue Stripe::CardError => e
