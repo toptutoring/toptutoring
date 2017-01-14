@@ -46,7 +46,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :signups do
       resources :users, only: :create
+      match '/users' => "users#create", via: :options
       resources :tutors, only: :create
+      match '/tutors' => "tutors#create", via: :options
     end
   end
 
