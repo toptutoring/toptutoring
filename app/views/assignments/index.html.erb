@@ -21,6 +21,7 @@
                   <th class="text-center">Academic Type</th>
                   <th class="text-center">Status</th>
                   <th class="text-center"></th>
+                  <th class="text-center"></th>
                 </tr>
               </thead>
               <tbody>
@@ -33,9 +34,22 @@
                     <td class="text-center"><span class="label label-outline label-warning"><%= assignment.state %></span></td>
                     <td class="text-center">
                       <%= link_to edit_assignment_path(assignment) do %>
-                        <button type="button" class="btn btn-raised btn-xs btn-primary">Edit</button>
+                        <button type="button" class="btn btn-outline btn-primary">Edit</button>
                       <% end %>
                     </td>
+                    <% if assignment.updated? && assignment.pending? %>
+                      <td class="text-center">
+                        <%= link_to enable_assignment_path(assignment) do %>
+                          <button type="button" class="btn btn-outline btn-success">Enable</button>
+                        <% end %>
+                      </td>
+                    <% elsif assignment.active? %>
+                      <td class="text-center">
+                        <%= link_to disable_assignment_path(assignment) do %>
+                          <button type="button" class="btn btn-outline btn-danger">Disable</button>
+                        <% end %>
+                      </td>
+                    <% end %>
                   </tr>
                 <% end %>
               </tbody>
