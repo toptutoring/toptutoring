@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do
-    get "/dashboard" => "pages#director_dashboard"
+    get "/dashboard" => "dashboards#director"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.tutor? } do
