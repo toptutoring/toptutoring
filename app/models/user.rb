@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
 
+  # Validation #
+  validates_uniqueness_of :email
+
   #### State Machine ####
 
   state_machine :access_state, :initial => :disabled do
