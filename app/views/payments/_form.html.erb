@@ -4,10 +4,10 @@
       <legend class="col-sm-6 col-sm-offset-3"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
     </div>
     <div class="row">
-      <p class="col-sm-2 col-sm-offset-3">Note: All fields are required.</p>
+      <p class="col-sm-3 col-sm-offset-3">Note: All fields are required.</p>
     </div>
     <div class="row">
-      <p class="col-sm-4 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
+      <p class="col-sm-5 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
     </div>
     <div class="row">
       <p class="col-sm-4 col-sm-offset-3">This tutor has an hourly rate of <strong><%= current_user.assignment.hourly_rate %>$</strong>.</p>
@@ -32,7 +32,7 @@
       <div class="form-group">
         <label for="hours" class="col-sm-2 control-label col-sm-offset-3">Sessions</label>
         <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm" id="hours"  name="payments[hours]" min="0.5" required="">
+          <input type="number" class="form-control col-sm-3 input-sm" id="hours"  name="payments[hours]" min="0.5" required step="0.5">
         </input>
         </div>
         <span class="span-optional">(Optional)</span>
