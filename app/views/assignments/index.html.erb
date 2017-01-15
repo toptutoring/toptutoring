@@ -24,8 +24,8 @@
                 </tr>
               </thead>
               <tbody>
+                <% @assignments.each do |assignment| %>
                   <tr>
-                    <% @assignments.each do |assignment| %>
                     <td><%= assignment.id %></td>
                     <td><%= assignment.student_id %></td>
                     <td><%= assignment.subject %></td>
@@ -36,8 +36,8 @@
                         <button type="button" class="btn btn-raised btn-xs btn-primary">Edit</button>
                       <% end %>
                     </td>
-                    <% end %>
                   </tr>
+                <% end %>
               </tbody>
             </table>
           </div>

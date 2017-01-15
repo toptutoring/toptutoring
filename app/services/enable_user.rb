@@ -4,7 +4,7 @@ class EnableUser
   end
 
   def perform
-    @enable_user
+    enable_user
     create_assignment
   end
 
@@ -18,7 +18,6 @@ class EnableUser
     Assignment.create(
       student_id: @user.id,
       subject: @user.student.subject,
-      academic_type: @user.student.academic_type
-    )
+      academic_type: @user.student.academic_type)
   end
 end

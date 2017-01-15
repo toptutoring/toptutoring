@@ -14,13 +14,13 @@ jQuery(function($) {
   });
 
   $('#amount').on('keyup', function(e) {
-    $('#hours').val('');
-    $('#hourly_rate').val('');
+    var hours = parseFloat($('#amount').val()) / parseFloat($('#hourly_rate').val());
+    $('#hours').val(hours);
   });
 
   $('#hours').on('keyup', function(e) {
     if ($('#hourly_rate').val() != '') {
-      var total = parseInt($('#hours').val()) * parseInt($('#hourly_rate').val());
+      var total = parseFloat($('#hours').val()) * parseFloat($('#hourly_rate').val());
       $('#amount').val(total);
     }
   });
