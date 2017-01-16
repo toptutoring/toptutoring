@@ -15,7 +15,11 @@ class Assignment < ActiveRecord::Base
     end
 
     event :disable do
-      transition :active => :inactive
+      transition :active => :pending
     end
+  end
+
+  def updated?
+    hourly_rate && tutor
   end
 end

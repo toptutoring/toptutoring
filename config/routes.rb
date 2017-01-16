@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do
-    get "/dashboard" => "pages#director_dashboard"
+    get "/dashboard" => "dashboards#director"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.tutor? } do
@@ -54,7 +54,12 @@ Rails.application.routes.draw do
 
   # Users
   resources :users, only: [:edit, :update]
-  resources :assignments
+  resources :assignments do
+    member do
+      get '/enable' => "assignments#enable"
+      get '/disable' => "assignments#disable"
+    end
+  end
 
   # Demo dashboards
   get "/tutor-dashboard" => "pages#tutor_dashboard"

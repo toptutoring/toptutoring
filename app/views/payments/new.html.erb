@@ -1,66 +1,9 @@
-<div class="container">
-
-    <div class="row">
-      <legend class="col-sm-6 col-sm-offset-3"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
+<% if current_user.assignment.active? %>
+  <%= render "form" %>
+<% else %>
+  <div class="container">
+    <div class="row text-center">
+      <h3>We are in the process of assigning you a tutor.</h3>
     </div>
-    <div class="row">
-      <p class="col-sm-2 col-sm-offset-3">Note: All fields are required.</p>
-    </div>
-    <div class="row">
-      <p class="col-sm-4 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
-    </div>
-
-  <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal col-md-8 col-md-offset-1" do |f| %>
-
-    <fieldset class="credit_card">
-
-      <div class="form-group">
-        <span class="payment-errors alert-danger col-sm-7"></span>
-      </div>
-
-      <div class="form-group">
-        <label for="amount" class="col-sm-2 control-label col-sm-offset-3">Amount</label>
-        <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm" id="amount" name="payments[amount]" min="0">
-          </input>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="description" class="col-sm-2 control-label col-sm-offset-3">Description</label>
-        <div class="col-sm-3">
-          <input type="text" class="form-control col-sm-3 input-sm"  name="payments[description]">
-          </input>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="hours" class="col-sm-2 control-label col-sm-offset-3">Hours</label>
-        <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm" id="hours"  name="payments[hours]" min="0">
-        </input>
-        </div>
-        <span class="span-optional">(Optional)</span>
-      </div>
-
-      <div class="form-group">
-        <label for="hourly_rate" class="col-sm-2 control-label col-sm-offset-3">Hourly Rate</label>
-        <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm" id="hourly_rate"  name="payments[hourly_rate]" min="0">
-          </input>
-        </div>
-        <span class="span-optional">(Optional)</span>
-      </div>
-
-    </fieldset>
-
-    <div class="form-group">
-      <div class="col-xs-2 col-xs-offset-5">
-        <input type="submit" value="Pay" class="btn btn-block payment_submit">
-      </div>
-    </div>
-
-    <%= hidden_field_tag :stripe_publishable_key, ENV['STRIPE_PUBLISHABLE_KEY'] %>
-
-  <% end %>
-</div>
+  </div>
+<% end %>
