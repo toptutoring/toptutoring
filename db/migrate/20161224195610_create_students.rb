@@ -5,7 +5,7 @@ class CreateStudents < ActiveRecord::Migration[5.0]
       t.string :email
       t.string :phone_number
       t.string :subject
-      t.string :activity_type
+      t.string :academic_type
       t.references :user, index: true, foreign_key: true
     end
   end
