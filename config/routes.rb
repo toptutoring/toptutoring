@@ -20,12 +20,16 @@ Rails.application.routes.draw do
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
     mount Sidekiq::Web, at: '/sidekiq'
+    get "/dashboard" => "dashboards#admin"
+  end
+
+
+  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? || user.director? } do
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
       resources :users, only: [:index, :edit, :update]
       resources :invoices, only: [:index]
     end
-    get "/dashboard" => "dashboards#admin"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do

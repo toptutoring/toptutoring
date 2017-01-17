@@ -28,16 +28,19 @@
   <ul class="list-unstyled navigation mb-0">
     <% if current_user.parent? %>
       <%= render "application/menu_links/parent" %>
-    <% end %>
-    <% if current_user.admin? || current_user.director? %>
+    <% elsif current_user.admin? || current_user.director? %>
     <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
-      <li class="panel"><a href="/admin/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payments</span></a></li>
-      <li class="panel">
-        <%= link_to assignments_path do %>
-          <i class="icon ion-ios-contact bg-primary"></i>
-          <span class="sidebar-title">Assignments</span>
-        <% end %>
-      </li>
+    <li class="panel"><a href="/admin/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payments</span></a></li>
+    <li class="panel">
+      <%= link_to assignments_path do %>
+        <i class="icon ion-ios-contact bg-primary"></i>
+        <span class="sidebar-title">Assignments</span>
+      <% end %>
+    </li>
+    <li class="panel"><a href="/auth/dwolla"><i class="ion-card bg-info"></i><span class="sidebar-title">Log in with Dwolla</span></a></li>
+    <% elsif current_user.tutor? %>
+      <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
+      <li class="panel"><a href="/auth/dwolla"><i class="ion-card bg-info"></i><span class="sidebar-title">Log in with Dwolla</span></a></li>
     <% end %>
     <% if current_user.admin? %>
       <li class="panel">
