@@ -4,7 +4,7 @@ namespace :prod do
     parent = User.where(email: "parent@toptutoring.com").first_or_initialize
     parent.name = "Parent"
     parent.password = "password"
-    parent.customer_id = "cus_9pLqJitvVtlSXr"
+    parent.customer_id = "cus_9xET9cNmAJjO8A"
     parent.access_state = "enabled"
     parent.save!
 
