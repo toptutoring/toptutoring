@@ -50,6 +50,9 @@
     },
     "API_APPLICATION_KEY": {
       "required": true
+    },
+    "SSL_APPLICATION_HOST": {
+      "required": true
     }
   },
   "addons":[
