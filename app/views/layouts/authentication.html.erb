@@ -44,7 +44,13 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KWRWF9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <%= render "authentication_header" %>
+
+    <% if current_user.nil? %>
+      <%= render "authentication_header" %>
+    <% else %>
+      <%= render "user_header" %>
+      <%= render "menu" %>
+    <% end %>
 
     <div class="main-container">
       <div class="page-content login">
@@ -53,13 +59,9 @@
       </div>
     </div>
 
-    <%= render "footer" %>
+    <%= render "footer" if current_user.nil? %>
 
     <%= render "javascript" %>
     <%= render "css_overrides" %>
-    <!-- jQuery-->
-    <script type="text/javascript" src="../plugins/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript-->
-    <script type="text/javascript" src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
