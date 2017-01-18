@@ -37,7 +37,7 @@ PROD_KEYS=`heroku config -s --app $heroku_prod_name | ag -o '[A-Z].*(?==)'`
 
 # Replace these arrays with whichever keys are fine to keep for staging or prod
 staging_specific_keys=("EMAIL_RECIPIENTS" "KEY1")
-prod_specific_keys=("NEW_RELIC_LICENSE_KEY" "NEW_RELIC_LOG" "HEROKU_POSTGRESQL_JADE_URL")
+prod_specific_keys=("BUGSNAG_API_KEY" "NEW_RELIC_LICENSE_KEY" "NEW_RELIC_LOG" "HEROKU_POSTGRESQL_JADE_URL")
 
 filtered_staging_string='echo "$STAGING_KEYS" '
 for i in "${staging_specific_keys[@]}"
