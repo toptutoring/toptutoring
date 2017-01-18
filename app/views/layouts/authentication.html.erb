@@ -44,11 +44,11 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KWRWF9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <%= render "flashes" %>
     <%= render "authentication_header" %>
 
     <div class="main-container">
       <div class="page-content login">
+        <%= render "flashes" %>
         <%= yield %>
       </div>
     </div>
