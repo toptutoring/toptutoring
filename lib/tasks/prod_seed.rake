@@ -63,6 +63,17 @@ namespace :prod do
     admin.access_state = "enabled"
     admin.save!
 
+    # Update assignments
+    parent.assignments.destroy_all
+    assignment = Assignment.create(
+      tutor_id: tutor.id,
+      student_id: parent.id,
+      subject: student.subject,
+      academic_type: student.academic_type,
+      hourly_rate: 20
+    )
+    assignment.enable!
+
     # Update payments
     parent.payments.destroy
     Payment.create(
