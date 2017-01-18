@@ -220,6 +220,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rollbar (2.14.0)
+      multi_json
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -351,6 +353,7 @@ DEPENDENCIES
   rb-readline
   recipient_interceptor
   responders
+  rollbar
   rspec-rails (~> 3.5.0.beta4)
   sass-rails (~> 5.0)
   shoulda-matchers

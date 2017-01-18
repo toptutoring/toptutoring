@@ -50,7 +50,10 @@
     },
     "API_APPLICATION_KEY": {
       "required": true
-    }
+    },
+    "ROLLBAR_ACCESS_TOKEN": {
+      "required": true
+    },
   },
   "addons":[
     "heroku-postgresql"
