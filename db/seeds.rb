@@ -16,3 +16,6 @@ student = parent.create_student(name: "Student", email: "student@toptutoring.com
 assignment = Assignment.create(tutor_id: tutor.id, student_id: parent.id, subject: student.subject, academic_type: student.academic_type, hourly_rate: 20)
 assignment.enable!
 admin = User.create!(name: "Admin", email: "admin@toptutoring.com", password: "adminpassword123", admin: "true")
+
+# Run the prod seed update task to update values
+Rake::Task['prod:seed'].invoke
