@@ -26,7 +26,8 @@ class PaymentsController < ApplicationController
           destination: payment.destination,
           payer_id: current_user.id)
 
-        redirect_to confirmation_path
+          flash[:notice] = 'Payment successfully made.'
+          redirect_to :back
       rescue Stripe::CardError => e
         flash[:danger] = e.message
         render :new

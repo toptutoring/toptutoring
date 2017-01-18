@@ -1,7 +1,14 @@
-<% if flash.any? %>
-  <div class="flashes">
-    <% user_facing_flashes.each do |key, value| -%>
-      <div class="flash-<%= key %>"><%= value %></div>
-    <% end -%>
-  </div>
+<% flash.each do |type, content| %>
+    <% if content.respond_to?('each') 
+        content.each do |item| %>
+            <%= render 'layouts/alert', 
+                type: type,
+                content: item %>
+        <% end %>
+    <% else %>
+        <%= render 'layouts/alert', 
+                type: type,
+                content: content %>
+    <% end %>
+
 <% end %>
