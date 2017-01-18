@@ -28,13 +28,14 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KWRWF9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <%= render "flashes" %>
     <%= render "user_header" %>
 
     <div class="main-container">
       <%= render "menu" %>
       <div class="page-container">
         <div class="page-content container-fluid">
+          <%= render "flashes" %>
+
           <%= yield %>
         </div>
       </div>
