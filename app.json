@@ -1,6 +1,8 @@
 {
   "name":"toptutoring",
-  "scripts":{},
+  "scripts": {
+    "postdeploy": "rake db:setup"
+  },
   "env":{
     "APPLICATION_HOST":{
       "required":true
