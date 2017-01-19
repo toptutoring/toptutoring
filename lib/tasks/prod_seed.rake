@@ -4,7 +4,7 @@ namespace :prod do
     parent = User.where(email: "parent@toptutoring.com").first_or_initialize
     parent.name = "Parent"
     parent.password = "password"
-    parent.customer_id = "cus_9pLqJitvVtlSXr"
+    parent.customer_id = "cus_9xET9cNmAJjO8A"
     parent.access_state = "enabled"
     parent.save!
 
@@ -62,6 +62,17 @@ namespace :prod do
     admin.token_expires_at = 1482932904
     admin.access_state = "enabled"
     admin.save!
+
+    # Update assignments
+    parent.assignments.destroy_all
+    assignment = Assignment.create(
+      tutor_id: tutor.id,
+      student_id: parent.id,
+      subject: student.subject,
+      academic_type: student.academic_type,
+      hourly_rate: 20
+    )
+    assignment.enable!
 
     # Update payments
     parent.payments.destroy
