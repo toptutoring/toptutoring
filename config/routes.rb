@@ -34,12 +34,8 @@ Rails.application.routes.draw do
     get "/dashboard" => "pages#tutor_dashboard"
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.parent? && user.customer? } do
-    get "/payment/new" => "payments#new"
-  end
-
   constraints Clearance::Constraints::SignedIn.new { |user| user.parent? } do
-    get "/payment/new" => "one_time_payments#new"
+    get "/payment/new" => "payments#new"
   end
 
   # API
