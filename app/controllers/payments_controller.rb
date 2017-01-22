@@ -18,14 +18,7 @@ class PaymentsController < ApplicationController
           customer: current_user.customer_id,
           description: params[:payments][:description])
 
-        Payment.create(
-          amount: payment.amount,
-          description: payment.description,
-          status: payment.status,
-          customer_id: payment.customer,
-          destination: payment.destination,
-          payer_id: current_user.id)
-
+          PaymentService.new.perform(payment, current_user.id)
           flash[:notice] = 'Payment successfully made.'
           redirect_to :back
       rescue Stripe::CardError => e
