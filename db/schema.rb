@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118222800) do
+ActiveRecord::Schema.define(version: 20170122171246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20170118222800) do
     t.integer  "token_expires_at"
     t.boolean  "admin",                                  default: false,      null: false
     t.string   "access_state",                           default: "disabled", null: false
+    t.integer  "balance",                                default: 0,          null: false
     t.index ["email"], name: "index_users_on_email", using: :btree
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end
