@@ -19,6 +19,6 @@ class PaymentService
   end
 
   def update_user_balance(amount, user_id)
-    IncreaseUserBalanceWorker.perform_async(amount, user_id)
+    UpdateUserBalance.new(amount, user_id).increase
   end
 end

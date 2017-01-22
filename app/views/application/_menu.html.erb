@@ -5,10 +5,16 @@
     </div>
     <div style="overflow: visible" class="media-body media-middle">
       <h4 class="media-heading fs-16"><%= current_user.name %></h4>
-      <div class="dropdown"><a id="dropdown-status" href="javascript:;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle"><span class="status bg-success"></span> Online <span class="caret"></span></a>
-        <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
-        </ul>
-      </div>
+      <% if current_user.parent? %>
+        <div class="dropdown">
+          <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
+            <i class="icon green-icon ion-social-usd"></i>
+            <%= current_user.balance %> / <%= current_user.decorate.hourly_balance %> hrs
+          </a>
+          <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
+          </ul>
+        </div>
+      <% end %>
     </div>
   </div>
   <ul class="list-unstyled navigation mb-0">
