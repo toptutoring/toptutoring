@@ -1,0 +1,48 @@
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="widget-heading clearfix">
+          <h3 class="widget-title pull-left">Invoices</h3>
+          <ul class="widget-tools pull-right list-inline">
+            <li><a href="javascript:;" class="widget-collapse"><i class="ion-chevron-up"></i></a></li>
+            <li><a href="javascript:;" class="widget-reload"><i class="ion-refresh"></i></a></li>
+            <li><a href="javascript:;" class="widget-remove"><i class="ion-close-round"></i></a></li>
+          </ul>
+        </div>
+        <div class="widget-body">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Tutor</th>
+                  <th>Subject</th>
+                  <th class="text-center">Academic Type</th>
+                  <th class="text-center">Description</th>
+                  <th class="text-center">Hours</th>
+                  <th class="text-center">Hourly Rate</th>
+                  <th class="text-center">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @invoices.each do |invoice| %>
+                  <tr>
+                    <td><%= invoice.decorate.student_name %></td>
+                    <td><%= invoice.tutor.name %></td>
+                    <td><%= invoice.decorate.subject %></td>
+                    <td class="text-center"><%= invoice.decorate.academic_type %></td>
+                    <td class="text-center"><%= invoice.description %></td>
+                    <td class="text-center"><%= invoice.hours %></span></td>
+                    <td class="text-center"><%= invoice.hourly_rate %></span></td>
+                    <td class="text-center"><%= invoice.amount %></span></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

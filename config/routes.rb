@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
       resources :users, only: [:index, :edit, :update]
+      resources :invoices, only: [:index]
     end
     get "/dashboard" => "dashboards#admin"
   end
