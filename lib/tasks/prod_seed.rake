@@ -10,9 +10,9 @@ namespace :prod do
 
     # Update student
     student = Student.where(user_id: parent.id).first_or_initialize
-    student.name = "Student",
-    student.email = "student@toptutoring.com",
-    student.subject = "Math",
+    student.name = "Student"
+    student.email = "student@toptutoring.com"
+    student.subject = "Math"
     student.academic_type = "Test Prep"
     student.save!
 
