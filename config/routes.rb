@@ -32,7 +32,10 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.tutor? } do
-    get "/dashboard" => "pages#tutor_dashboard"
+    get "/dashboard" => "dashboards#tutor"
+    namespace :tutors do
+      resources :students, only: [:index]
+    end
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.parent? } do

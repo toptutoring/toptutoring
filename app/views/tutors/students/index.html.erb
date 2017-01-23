@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Students</h3>
+        <ul class="widget-tools pull-right list-inline">
+          <li><a href="javascript:;" class="widget-collapse"><i class="ion-chevron-up"></i></a></li>
+          <li><a href="javascript:;" class="widget-reload"><i class="ion-refresh"></i></a></li>
+          <li><a href="javascript:;" class="widget-remove"><i class="ion-close-round"></i></a></li>
+        </ul>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Subject</th>
+                <th>Academic Type</th>
+                <th class="text-center">Hourly Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @students.each do |student| %>
+                <tr>
+                  <td><%= student.student.name %></td>
+                  <td><%= student.student.email %></td>
+                  <td><%= student.student.phone_number %></td>
+                  <td><%= student.student.subject %></td>
+                  <td><%= student.student.academic_type %></td>
+                  <td class="text-center"><%= student.decorate.hourly_balance %> hrs</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

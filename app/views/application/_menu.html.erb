@@ -3,13 +3,22 @@
     <div class="media-left">
       <div id="esp-user-profile" data-percent="66" style="height: 56px; width: 56px; line-height: 40px; padding: 8px;" class="easy-pie-chart"><i class="icon ion-ios-person avatar img-circle"></i></div>
     </div>
-    <div style="overflow: visible" class="media-body media-middle">
+    <div class="media-body media-middle">
       <h4 class="media-heading fs-16"><%= current_user.name %></h4>
       <% if current_user.parent? %>
         <div class="dropdown">
           <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
             <i class="icon green-icon ion-social-usd"></i>
             <%= current_user.balance %> / <%= current_user.decorate.hourly_balance %> hrs
+          </a>
+          <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
+          </ul>
+        </div>
+      <% elsif current_user.tutor? %>
+        <div class="dropdown">
+          <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
+            <i class="icon green-icon ion-social-usd"></i>
+            <%= current_user.balance %>
           </a>
           <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
           </ul>
@@ -34,6 +43,14 @@
     <% if current_user.admin? %>
       <li class="panel">
         <%= link_to admin_users_path do %>
+          <i class="icon ion-ios-contact bg-success"></i>
+          <span class="sidebar-title">Students</span>
+        <% end %>
+      </li>
+    <% end %>
+    <% if current_user.tutor? %>
+      <li class="panel">
+        <%= link_to tutors_students_path do %>
           <i class="icon ion-ios-contact bg-success"></i>
           <span class="sidebar-title">Students</span>
         <% end %>

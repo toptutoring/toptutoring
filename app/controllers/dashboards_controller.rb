@@ -8,4 +8,8 @@ class DashboardsController < ApplicationController
   def director
     @assignments = Assignment.pending
   end
+
+  def tutor
+    @assignments = Assignment.where(tutor_id: current_user.id)
+  end
 end

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-7">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Students</h3>
+        <ul class="widget-tools pull-right list-inline">
+          <li><a href="javascript:;" class="widget-collapse"><i class="ion-chevron-up"></i></a></li>
+          <li><a href="javascript:;" class="widget-reload"><i class="ion-refresh"></i></a></li>
+          <li><a href="javascript:;" class="widget-remove"><i class="ion-close-round"></i></a></li>
+        </ul>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Student Name</th>
+                <th class="text-center">Subject</th>
+                <th class="text-center">Academic Type</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Hourly balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @assignments.each do |assignment| %>
+                <tr>
+                  <td><%= assignment.decorate.student_id %></td>
+                  <td><%= assignment.decorate.student_name %></td>
+                  <td class="text-center"><%= assignment.decorate.student_subject %></td>
+                  <td class="text-center"><%= assignment.decorate.student_academic_type %></td>
+                  <td class="text-center"><span class="label label-outline label-warning"><%= assignment.state %></span></td>
+                  <td class="text-center"><%= assignment.student.decorate.hourly_balance %> hrs</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
