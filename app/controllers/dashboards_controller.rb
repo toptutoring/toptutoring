@@ -10,6 +10,6 @@ class DashboardsController < ApplicationController
   end
 
   def tutor
-    @assignments = Assignment.where(tutor_id: current_user.id)
+    @assignments = current_user.assignments
   end
 end

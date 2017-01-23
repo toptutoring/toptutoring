@@ -35,6 +35,12 @@ Rails.application.routes.draw do
     get "/dashboard" => "dashboards#tutor"
     namespace :tutors do
       resources :students, only: [:index]
+      resources :invoices, only: [:index]
+    end
+    resources :users do
+      member do
+        resources :invoices, only: [:new, :create]
+      end
     end
   end
 
