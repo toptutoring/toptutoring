@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web, at: '/sidekiq'
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
+      resources :users, only: [:index, :edit, :update]
     end
     get "/dashboard" => "dashboards#admin"
   end
