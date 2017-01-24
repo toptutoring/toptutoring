@@ -7,6 +7,10 @@ class AssignmentDecorator < Draper::Decorator
     object.student.student.name
   end
 
+  def tutor_name
+    object.tutor.try(:name)
+  end
+
   def student_subject
     object.student.student.subject
   end

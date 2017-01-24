@@ -11,7 +11,8 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Student Id</th>
+                  <th>Student</th>
+                  <th>Tutor</th>
                   <th>Subject</th>
                   <th class="text-center">Academic Type</th>
                   <th class="text-center">Status</th>
@@ -23,7 +24,8 @@
                 <% @assignments.each do |assignment| %>
                   <tr>
                     <td><%= assignment.id %></td>
-                    <td><%= assignment.student_id %></td>
+                    <td><%= assignment.decorate.student_name %></td>
+                    <td><%= assignment.decorate.tutor_name %></td>
                     <td><%= assignment.subject %></td>
                     <td class="text-center"><%= assignment.academic_type %></td>
                     <td class="text-center"><span class="label label-outline label-warning"><%= assignment.state %></span></td>
