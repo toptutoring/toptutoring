@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :require_login
-  before_action :set_student, only: [:new, :create]
+  before_action :set_student, :authorize_tutor, only: [:new, :create]
 
   def new
     @invoice = Invoice.new
@@ -25,5 +25,11 @@ class InvoicesController < ApplicationController
 
   def set_student
     @student = User.find(params[:id])
+  end
+
+  def authorize_tutor
+    if @student.assignment.nil? || @student.assignment.tutor_id != current_user.id
+      render file: "#{Rails.root}/public/404.html", layout: false, status: 404
+    end
   end
 end
