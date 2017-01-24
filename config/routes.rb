@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
   # API
   namespace :api do
-    namespace :signups do
+    namespace :signups, defaults: { format: 'json' } do
       resources :users, only: :create
       match '/users' => "users#create", via: :options
       resources :tutors, only: :create
