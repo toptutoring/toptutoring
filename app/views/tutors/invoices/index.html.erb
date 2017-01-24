@@ -18,6 +18,7 @@
                   <th>Student</th>
                   <th>Subject</th>
                   <th class="text-center">Academic Type</th>
+                  <th class="text-center">Date</th>
                   <th class="text-center">Description</th>
                   <th class="text-center">Hours</th>
                   <th class="text-center">Hourly Rate</th>
@@ -30,6 +31,7 @@
                     <td><%= invoice.decorate.student_name %></td>
                     <td><%= invoice.decorate.subject %></td>
                     <td class="text-center"><%= invoice.decorate.academic_type %></td>
+                    <td class="text-center"><%= invoice.created_at %></td>
                     <td class="text-center"><%= invoice.description %></td>
                     <td class="text-center"><%= invoice.hours %></span></td>
                     <td class="text-center"><%= invoice.hourly_rate %></span></td>

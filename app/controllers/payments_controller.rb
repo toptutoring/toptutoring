@@ -1,6 +1,10 @@
 class PaymentsController < ApplicationController
   before_action :require_login
 
+  def index
+    @payments = Payment.from_customer(current_user.customer_id)
+  end
+
   def create
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
     @amount = params[:payments][:amount]
@@ -27,4 +31,5 @@ class PaymentsController < ApplicationController
       end
     end
   end
+
 end

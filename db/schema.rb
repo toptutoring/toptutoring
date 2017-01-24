@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123162604) do
+ActiveRecord::Schema.define(version: 20170124120514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,28 +29,31 @@ ActiveRecord::Schema.define(version: 20170123162604) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.integer "student_id"
-    t.integer "tutor_id"
-    t.integer "assignment_id"
-    t.integer "hours"
-    t.integer "hourly_rate"
-    t.integer "amount"
-    t.string  "description"
+    t.integer  "student_id"
+    t.integer  "tutor_id"
+    t.integer  "assignment_id"
+    t.integer  "hours"
+    t.integer  "hourly_rate"
+    t.integer  "amount"
+    t.string   "description"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.index ["assignment_id"], name: "index_invoices_on_assignment_id", using: :btree
     t.index ["student_id"], name: "index_invoices_on_student_id", using: :btree
     t.index ["tutor_id"], name: "index_invoices_on_tutor_id", using: :btree
   end
 
   create_table "payments", force: :cascade do |t|
-    t.integer "amount"
-    t.string  "description"
-    t.string  "status"
-    t.string  "source"
-    t.string  "destination"
-    t.string  "external_code"
-    t.string  "customer_id"
-    t.integer "payer_id"
-    t.integer "payee_id"
+    t.integer  "amount"
+    t.string   "description"
+    t.string   "status"
+    t.string   "source"
+    t.string   "destination"
+    t.string   "external_code"
+    t.string   "customer_id"
+    t.integer  "payer_id"
+    t.integer  "payee_id"
+    t.datetime "created_at"
     t.index ["payee_id"], name: "index_payments_on_payee_id", using: :btree
     t.index ["payer_id"], name: "index_payments_on_payer_id", using: :btree
   end

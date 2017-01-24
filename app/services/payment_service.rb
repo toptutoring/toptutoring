@@ -15,7 +15,8 @@ class PaymentService
       status: payment.status,
       customer_id: payment.customer,
       destination: payment.destination,
-      payer_id: user_id)
+      payer_id: user_id,
+      created_at: Time.now)
   end
 
   def update_user_balance(amount, user_id)

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   #Clearance routes
   resource :session, controller: "sessions", only: [:new, :create]
-  resources :payments, only: [:new, :create]
+  resources :payments, only: [:new, :create, :index]
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
     mount Sidekiq::Web, at: '/sidekiq'

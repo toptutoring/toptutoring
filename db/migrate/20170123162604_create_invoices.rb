@@ -8,6 +8,7 @@ class CreateInvoices < ActiveRecord::Migration[5.0]
       t.integer :hourly_rate
       t.integer :amount
       t.string :description
+      t.timestamps
     end
   end
 end

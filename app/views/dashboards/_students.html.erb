@@ -25,7 +25,7 @@
             <tbody>
               <% @assignments.each do |assignment| %>
                 <tr>
-                  <td><%= assignment.decorate.student_id %></td>
+                  <td><%= assignment.id %></td>
                   <td><%= assignment.decorate.student_name %></td>
                   <td class="text-center"><%= assignment.decorate.student_subject %></td>
                   <td class="text-center"><%= assignment.decorate.student_academic_type %></td>
