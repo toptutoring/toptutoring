@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do
     get "/dashboard" => "dashboards#director"
     namespace :admin do
-      resources :payments, only: [:new, :create, :index]
+      resources :payments, only: [:index]
     end
   end
 
