@@ -64,7 +64,7 @@ namespace :prod do
     admin.save!
 
     # Update assignments
-    parent.assignments.destroy_all
+    tutor.assignments.destroy_all
     assignment = Assignment.create(
       tutor_id: tutor.id,
       student_id: parent.id,
@@ -75,7 +75,7 @@ namespace :prod do
     assignment.enable!
 
     # Update payments
-    parent.payments.destroy
+    Payment.from_customer(parent.customer_id).destroy_all
     Payment.create(
       amount: 200,
       description: "Payment for Tutor",
@@ -83,5 +83,17 @@ namespace :prod do
       customer_id: parent.customer_id,
       payer_id: parent.id,
       payee_id: tutor.id)
+
+    # Update invoices
+    tutor.invoices.destroy_all
+    Invoice.create(
+      tutor_id: tutor.id,
+      student_id: parent.id,
+      hours: 2,
+      description: 'Preparation for math test.',
+      hourly_rate: parent.assignment.hourly_rate,
+      assignment_id: parent.assignment.id
+    )
+
   end
 end
