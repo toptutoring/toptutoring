@@ -9,7 +9,6 @@ module Admin
 
     def new
       @payment = Payment.new
-      render "new", :layout => false
     end
 
     def create
