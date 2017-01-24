@@ -23,7 +23,7 @@
         <div class="col-sm-2"></div>
         <label for="amount" class="col-sm-2 control-label">Amount</label>
         <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm" name="payments[amount]" min="0">
+          <input type="number" class="form-control col-sm-3 input-sm" name="payments[amount]" min="0" max="999999" required>
           </input>
         </div>
       </div>
@@ -48,9 +48,9 @@
 
       <div class="form-group">
         <div class="col-sm-2"></div>
-        <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
+      <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control col-sm-3 input-sm"  data-stripe="number" title="Fill in your credit card number.">
+          <input type="text" class="form-control col-sm-3 input-sm"  data-stripe="number" title="Fill in your credit card number." maxlength="19" required>
           </input>
         </div>
         <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
@@ -78,7 +78,7 @@
         <div class="col-sm-2"></div>
         <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
         <div class="col-sm-2 col-cvv-fixed-width">
-          <input type="text" class="form-control input-sm"  data-stripe="cvc" size="4"></input>
+          <input type="text" class="form-control input-sm"  data-stripe="cvc" size="4"></input required>
         </div>
 
         <script>
