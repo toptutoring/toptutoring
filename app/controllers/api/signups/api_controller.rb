@@ -3,14 +3,9 @@ module Api
     class ApiController < ActionController::Base
       respond_to :json
       skip_filter :verify_authenticity_token, :create
-      before_filter :authenticate_request
+      before_action :authenticate_request
 
       private
-
-      def params
-        json_body = JSON.parse(request.body.read)
-        params = ActionController::Parameters.new(json_body)
-      end
 
       def authenticate_request
         if request.method == 'OPTIONS'
