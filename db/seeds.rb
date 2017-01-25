@@ -15,7 +15,6 @@ parent = User.create(name: "Parent", email: "parent@toptutoring.com", password: 
 student = parent.create_student(name: "Student", email: "student@toptutoring.com", subject: "Math", academic_type: "Test Prep")
 assignment = Assignment.create(tutor_id: tutor.id, student_id: parent.id, subject: student.subject, academic_type: student.academic_type, hourly_rate: 20)
 assignment.enable!
-invoice = Invoice.create(tutor_id: tutor.id, student_id: parent.id, hours: 2, description: 'Preparation for math test.', hourly_rate: parent.assignment.hourly_rate, assignment_id: parent.assignment.id)
 admin = User.create!(name: "Admin", email: "admin@toptutoring.com", password: "adminpassword123", admin: "true")
 
 # Run the prod seed update task to update values

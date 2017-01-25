@@ -83,17 +83,5 @@ namespace :prod do
       customer_id: parent.customer_id,
       payer_id: parent.id,
       payee_id: tutor.id)
-
-    # Update invoices
-    tutor.invoices.destroy_all
-    Invoice.create(
-      tutor_id: tutor.id,
-      student_id: parent.id,
-      hours: 2,
-      description: 'Preparation for math test.',
-      hourly_rate: parent.assignment.hourly_rate,
-      assignment_id: parent.assignment.id
-    )
-
   end
 end

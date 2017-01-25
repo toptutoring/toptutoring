@@ -5,7 +5,7 @@ module Api
       def create
         @user = Clearance.configuration.user_model.new(signups_params)
         if @user.save
-          head 200
+          render :status => 200, json: {}
         else
           render :status => 422, json: @user.errors.full_messages
         end
