@@ -1,0 +1,37 @@
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="widget-heading clearfix">
+          <h3 class="widget-title pull-left">Payments</h3>
+        </div>
+        <div class="widget-body">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th class="text-center">Description</th>
+                  <th class="text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @payments.each do |payment| %>
+                  <tr>
+                    <td><%= payment.id %></td>
+                    <td><%= payment.created_at %></td>
+                    <td><%= payment.amount / 100 %></td>
+                    <td class="text-center"><%= payment.description %></td>
+                    <td class="text-center"><%= payment.status %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

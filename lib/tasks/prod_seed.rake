@@ -10,9 +10,9 @@ namespace :prod do
 
     # Update student
     student = Student.where(user_id: parent.id).first_or_initialize
-    student.name = "Student",
-    student.email = "student@toptutoring.com",
-    student.subject = "Math",
+    student.name = "Student"
+    student.email = "student@toptutoring.com"
+    student.subject = "Math"
     student.academic_type = "Test Prep"
     student.save!
 
@@ -22,11 +22,11 @@ namespace :prod do
     tutor.password = "password"
     tutor.auth_provider = "dwolla"
     tutor.auth_uid = "854f5ac8-e728-4959-b6e0-13917cd2cf60"
-    tutor.encrypted_access_token = "0A5jAEX8D9UqV/0/ZiUWd3Q/wBlTaV64JtWHqYcntH0Ch2iaVuU0a+EjT+Y1\nrHvk6eA2I5vWWbvV3WSDuCqXDrRO\n"
-    tutor.encrypted_access_token_iv = "BuiS/0btfFFtyo2C\n"
-    tutor.encrypted_refresh_token = "syJw0E8cFDEqBHsOBVJXnomByFwn7NxUDEilZAuxwTnaMU6kokI5YsAmIj4r\nTWIpWpw8g72E3+16D53tAHMGFLFQ\n"
-    tutor.encrypted_refresh_token_iv = "3mWniaKYXeuCbh6/\n"
-    tutor.token_expires_at = 1482931110
+    tutor.encrypted_access_token = "kmUbaKcZv1Ia4/muQCWPqI9iuAshoc5pUT/cuAtYmeuPRzyKddcmAB8IVwBi\nhMh1m9a3DR4H+hF0dcoirEG9Qzo9\n"
+    tutor.encrypted_access_token_iv = "JaXjfkqC/SVme9mC\n"
+    tutor.encrypted_refresh_token = "99HdtNneryU875PDFp+yULGzo0Bii0GOnu+40k1PNgRwcuHe/tPZ7IGDYxVb\nkY2lIPIjuIKg8NEhCA0k622gxwaH\n"
+    tutor.encrypted_refresh_token_iv = "WDhbS1OoyvVxXzHh\n"
+    tutor.token_expires_at = 1485294818
     tutor.access_state = "enabled"
     tutor.save!
 
@@ -54,17 +54,17 @@ namespace :prod do
     admin.password = "adminpassword123"
     admin.admin = true
     admin.auth_provider = "dwolla"
-    admin.auth_uid = "8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"
-    admin.encrypted_access_token = "mFkL+ribc3QgrgawJEhcf50mkwOXE0xwm69OEpwak8bMqWfLEkB8/TbReKrU\nkT+Jb6c2GbhAgRhKQUejJ2Z5DOeC\n"
-    admin.encrypted_access_token_iv = "c9p0rnaMMViAnzVm\n"
-    admin.encrypted_refresh_token = "ftHidcBP/NfGtBUlxBWTbsAdwMc7NqHLPjXwJyDcT0z/zeOHMqtd1ktLs/2u\nSEypEJklv+I8rUmhtXicmyZyeRni\n"
-    admin.encrypted_refresh_token_iv = "QptZJBCecrjtF1wJ\n"
-    admin.token_expires_at = 1482932904
+    admin.auth_uid = "c6afd2f7-0825-4049-8eab-daafd7f84df4"
+    admin.encrypted_access_token = "G63QqjhYAp48IW18IayWHlYbmHwXFWGfe5fvdt/nSpuOVw3XY2rQQQS5Dy+C\n5U5g28mmSI1NzHGjCKHBh5QnEsmr\n"
+    admin.encrypted_access_token_iv = "G27TdUpzwLdZ67lF\n"
+    admin.encrypted_refresh_token = "tXXBSmCUqEDQc/c7G+NQDyuy/v3dwuyGsWG4MrDkkym+df2YMVxHEuXwTYP0\nKTqGpfEg5Mbk1QSGpuq3Rezjl9qA\n"
+    admin.encrypted_refresh_token_iv = "zPYh1yAlPQtOr9kq\n"
+    admin.token_expires_at = 1485294294
     admin.access_state = "enabled"
     admin.save!
 
     # Update assignments
-    parent.assignments.destroy_all
+    tutor.assignments.destroy_all
     assignment = Assignment.create(
       tutor_id: tutor.id,
       student_id: parent.id,
@@ -75,7 +75,7 @@ namespace :prod do
     assignment.enable!
 
     # Update payments
-    parent.payments.destroy
+    Payment.from_customer(parent.customer_id).destroy_all
     Payment.create(
       amount: 200,
       description: "Payment for Tutor",
@@ -83,5 +83,17 @@ namespace :prod do
       customer_id: parent.customer_id,
       payer_id: parent.id,
       payee_id: tutor.id)
+
+    # Update invoices
+    tutor.invoices.destroy_all
+    Invoice.create(
+      tutor_id: tutor.id,
+      student_id: parent.id,
+      hours: 2,
+      description: 'Preparation for math test.',
+      hourly_rate: parent.assignment.hourly_rate,
+      assignment_id: parent.assignment.id
+    )
+
   end
 end

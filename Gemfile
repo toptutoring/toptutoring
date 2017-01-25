@@ -19,7 +19,6 @@ gem "sprockets", ">= 3.0.0"
 gem "title"
 gem "uglifier"
 gem 'bootstrap-sass', '~> 3.3.6'
-gem "sass-rails", "~> 5.0"
 
 gem "bugsnag"
 gem "clearance"
@@ -32,6 +31,8 @@ gem "responders"
 gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
 gem 'state_machines'
 gem 'state_machines-activerecord'
+gem 'activemodel-serializers-xml'
+gem 'draper'
 
 group :development do
   gem "listen"

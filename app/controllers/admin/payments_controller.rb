@@ -5,12 +5,10 @@ module Admin
 
     def index
       @payments = Payment.from_parents
-      render "index", :layout => false
     end
 
     def new
       @payment = Payment.new
-      render "new", :layout => false
     end
 
     def create

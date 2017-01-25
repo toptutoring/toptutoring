@@ -16,30 +16,40 @@ Rails.application.routes.draw do
 
   #Clearance routes
   resource :session, controller: "sessions", only: [:new, :create]
-  resources :payments, only: [:new, :create]
+  resources :payments, only: [:new, :create, :index]
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
     mount Sidekiq::Web, at: '/sidekiq'
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
+      resources :users, only: [:index, :edit, :update]
+      resources :invoices, only: [:index]
     end
     get "/dashboard" => "dashboards#admin"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do
     get "/dashboard" => "dashboards#director"
+    namespace :admin do
+      resources :payments, only: [:index]
+    end
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.tutor? } do
-    get "/dashboard" => "pages#tutor_dashboard"
-  end
-
-  constraints Clearance::Constraints::SignedIn.new { |user| user.parent? && user.customer? } do
-    get "/payment/new" => "payments#new"
+    get "/dashboard" => "dashboards#tutor"
+    namespace :tutors do
+      resources :students, only: [:index]
+      resources :invoices, only: [:index]
+    end
+    resources :users do
+      member do
+        resources :invoices, only: [:new, :create]
+      end
+    end
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.parent? } do
-    get "/payment/new" => "one_time_payments#new"
+    get "/payment/new" => "payments#new"
   end
 
   # API

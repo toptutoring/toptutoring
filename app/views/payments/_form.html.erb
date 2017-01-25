@@ -10,7 +10,7 @@
       <p class="col-sm-5 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
     </div>
     <div class="row">
-      <p class="col-sm-4 col-sm-offset-3">This tutor has an hourly rate of <strong><%= current_user.assignment.hourly_rate %>$</strong>.</p>
+      <p class="col-sm-4 col-sm-offset-3">This tutor has an hourly rate of <strong>$<%= current_user.assignment.hourly_rate %></strong>.</p>
     </div>
 
   <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal col-md-8 col-md-offset-1" do |f| %>

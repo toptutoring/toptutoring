@@ -1,6 +1,10 @@
 class PaymentsController < ApplicationController
   before_action :require_login
 
+  def index
+    @payments = Payment.from_customer(current_user.customer_id)
+  end
+
   def create
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
     @amount = params[:payments][:amount]
@@ -18,14 +22,7 @@ class PaymentsController < ApplicationController
           customer: current_user.customer_id,
           description: params[:payments][:description])
 
-        Payment.create(
-          amount: payment.amount,
-          description: payment.description,
-          status: payment.status,
-          customer_id: payment.customer,
-          destination: payment.destination,
-          payer_id: current_user.id)
-
+          PaymentService.new.perform(payment, current_user.id)
           flash[:notice] = 'Payment successfully made.'
           redirect_to :back
       rescue Stripe::CardError => e
@@ -34,4 +31,5 @@ class PaymentsController < ApplicationController
       end
     end
   end
+
 end

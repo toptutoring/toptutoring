@@ -8,4 +8,8 @@ class DashboardsController < ApplicationController
   def director
     @assignments = Assignment.pending
   end
+
+  def tutor
+    @assignments = current_user.assignments
+  end
 end

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :payments
   has_many :assignments, class_name: "Assignment", foreign_key: "tutor_id"
   has_one :assignment, class_name: "Assignment", foreign_key: "student_id"
+  has_many :invoices, class_name: "Invoice", foreign_key: "tutor_id"
 
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
