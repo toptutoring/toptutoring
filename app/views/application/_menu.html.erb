@@ -37,10 +37,8 @@
         <span class="sidebar-title">Assignments</span>
       <% end %>
     </li>
-    <li class="panel"><a href="/auth/dwolla"><i class="ion-card bg-info"></i><span class="sidebar-title">Log in with Dwolla</span></a></li>
     <% elsif current_user.tutor? %>
       <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
-      <li class="panel"><a href="/auth/dwolla"><i class="ion-card bg-info"></i><span class="sidebar-title">Log in with Dwolla</span></a></li>
     <% end %>
     <% if current_user.admin? %>
       <li class="panel">
@@ -49,7 +47,6 @@
           <span class="sidebar-title">Students</span>
         <% end %>
       </li>
-      <li class="panel"><a href="/auth/dwolla"><i class="ion-card bg-info"></i><span class="sidebar-title">Log in with Dwolla</span></a></li>
       <li class="panel">
         <%= link_to admin_invoices_path do %>
           <i class="icon ion-clipboard bg-primary"></i>
@@ -70,6 +67,8 @@
           <span class="sidebar-title">Invoices</span>
         <% end %>
       </li>
+    <% end %>
+    <% unless current_user.parent? %>
       <li class="panel"><a href="/auth/dwolla"><i class="ion-card bg-info"></i><span class="sidebar-title">Log in with Dwolla</span></a></li>
     <% end %>
   </ul>
