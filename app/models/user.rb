@@ -17,6 +17,9 @@ class User < ActiveRecord::Base
   # Validation #
   validates_uniqueness_of :email
 
+  # Scopes #
+  scope :customer, ->(customer_id) { where(customer_id: customer_id) }
+
   #### State Machine ####
 
   state_machine :access_state, :initial => :disabled do
