@@ -28,6 +28,7 @@ namespace :prod do
     tutor.encrypted_refresh_token_iv = "WDhbS1OoyvVxXzHh\n"
     tutor.token_expires_at = 1485294818
     tutor.access_state = "enabled"
+    tutor.balance = 200
     tutor.save!
 
     tutor_info = Tutor.where(user_id: tutor.id).first_or_initialize
@@ -39,7 +40,15 @@ namespace :prod do
     director = User.where(email: "director@toptutoring.com").first_or_initialize
     director.name = "Director"
     director.password = "password"
+    director.auth_provider = "dwolla"
+    director.auth_uid = "eef71d60-c133-4eed-af14-77dd2e4b9950"
+    director.encrypted_access_token = "+/84IHlVuaJn/x0hu0XGYmwhx9JJBc7QmtTPaYFjl9rREGkG75sLyCNSo583\ngD8QxFanK1U+21FtWBwKv8lH0cPG\n"
+    director.encrypted_access_token_iv = "wiYo5eSFYpEVwA0I\n"
+    director.encrypted_refresh_token = "JAKIiXuzvMSLRt8frqXrLKEgUYMVxtc7ekhRrFC6nNmW5MrwIrR5Vko619nO\nOXAxmxRzjzErdcLJnhD+ourGUyhh\n"
+    director.encrypted_refresh_token_iv = "Evnq72hkmE0TNOuL\n"
+    director.token_expires_at = 1485624471
     director.access_state = "enabled"
+    director.balance = 200
     director.save!
 
     director_info = Tutor.where(user_id: director.id).first_or_initialize
@@ -54,12 +63,12 @@ namespace :prod do
     admin.password = "adminpassword123"
     admin.admin = true
     admin.auth_provider = "dwolla"
-    admin.auth_uid = "c6afd2f7-0825-4049-8eab-daafd7f84df4"
-    admin.encrypted_access_token = "G63QqjhYAp48IW18IayWHlYbmHwXFWGfe5fvdt/nSpuOVw3XY2rQQQS5Dy+C\n5U5g28mmSI1NzHGjCKHBh5QnEsmr\n"
-    admin.encrypted_access_token_iv = "G27TdUpzwLdZ67lF\n"
-    admin.encrypted_refresh_token = "tXXBSmCUqEDQc/c7G+NQDyuy/v3dwuyGsWG4MrDkkym+df2YMVxHEuXwTYP0\nKTqGpfEg5Mbk1QSGpuq3Rezjl9qA\n"
-    admin.encrypted_refresh_token_iv = "zPYh1yAlPQtOr9kq\n"
-    admin.token_expires_at = 1485294294
+    admin.auth_uid = "8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"
+    admin.encrypted_access_token = "VqnBLMc9Tcm/Rh7/9W2Ri3JZAy5+/ChD2gJ0YHgWyYWcnxzkgqSwxCgVmyH5\nMPsmSOLY+VR3qHsXx9Db1pIFT66a\n"
+    admin.encrypted_access_token_iv = "Mmpxw3eGM6TFvFbl\n"
+    admin.encrypted_refresh_token = "GAuJyoBXf1H6lK7BGyZZqw0a733YzgVqgw+Jb29cfUT8pn77KbMc/nYGNS68\nouGtVzk37har7vbj795dc9GoNUwZ\n"
+    admin.encrypted_refresh_token_iv = "aqDNOlMrFyIwrjqU\n"
+    admin.token_expires_at = 1485621339
     admin.access_state = "enabled"
     admin.save!
 
