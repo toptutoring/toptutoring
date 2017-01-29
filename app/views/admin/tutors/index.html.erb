@@ -2,7 +2,8 @@
   <div class="col-md-12">
     <div class="widget">
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Students</h3>
+        <h3 class="widget-title pull-left">Tutors</h3>
+        <a href="/admin/payments/new" class="btn btn-success" style="margin-left:20px;">Pay tutor</a>
       </div>
       <div class="widget-body">
         <div class="table-responsive">
@@ -15,27 +16,17 @@
                 <th>Subject</th>
                 <th>Academic Type</th>
                 <th class="text-center">Balance</th>
-                <th class="text-center">Hourly Balance</th>
-                <th class="text-center">Tutor</th>
-                <th class="text-center"></th>
               </tr>
             </thead>
             <tbody>
               <% @users.each do |user| %>
                 <tr>
                   <td><%= user.id %></td>
-                  <td><%= user.student.name %></td>
-                  <td><%= user.student.email %></td>
-                  <td><%= user.student.subject %></td>
-                  <td><%= user.student.academic_type %></td>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.tutor.subject %></td>
+                  <td><%= user.tutor.academic_type %></td>
                   <td class="text-center">$ <%= user.balance %></td>
-                  <td class="text-center"><%= user.decorate.hourly_balance %> hrs</td>
-                  <td class="text-center"><%= user.assignment.tutor.name %></td>
-                  <td class="text-center">
-                    <%= link_to edit_admin_user_path(user) do %>
-                      <button type="button" class="btn btn-outline btn-success">Edit</button>
-                    <% end %>
-                  </td>
                 </tr>
               <% end %>
             </tbody>
