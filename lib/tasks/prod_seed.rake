@@ -85,6 +85,8 @@ namespace :prod do
 
     # Update payments
     Payment.from_customer(parent.customer_id).destroy_all
+    Payment.where(payer_id: admin.id).destroy_all
+    Payment.where(payer_id: director.id).destroy_all
     Payment.create(
       amount: 200,
       description: "Payment for Tutor",
