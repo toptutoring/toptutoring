@@ -35,7 +35,11 @@ module Admin
     end
 
     def set_auth_tutor
-      @tutors = User.all.select { |user| user.tutor? && user.has_external_auth? }
+      if current_user.admin?
+        @tutors = User.all.select { |user| user.tutor? && user.has_external_auth? }
+      else
+        @tutors = User.all.select { |user| user.tutor? && user.has_external_auth? && !user.director? }
+      end
     end
 
     def validate_payment
