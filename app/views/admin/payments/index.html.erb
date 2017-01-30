@@ -11,7 +11,6 @@
             <thead>
               <tr>
                 <th>Parent</th>
-                <th>Tutor assigned</th>
                 <th class="text-center">Amount</th>
                 <th class="text-center">Description</th>
                 <th class="text-center">Status</th>
@@ -21,7 +20,6 @@
               <% @payments.each do |payment| %>
                 <tr>
                   <td><%= payment.payer.name  %></td>
-                  <td><%= payment.payee.name %></td>
                   <td class="text-center"><%= payment.amount %></td>
                   <td class="text-center"><%= payment.description %></td>
                   <td class="text-center"><%= payment.status %></td>
