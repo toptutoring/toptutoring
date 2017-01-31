@@ -40,9 +40,9 @@ module Admin
 
     def set_auth_tutor
       if current_user.admin?
-        @tutors = User.all.select { |user| user.tutor? && user.has_external_auth? }
+        @tutors = User.tutors_with_external_auth
       else
-        @tutors = User.all.select { |user| user.tutor? && user.has_external_auth? && !user.director? }
+        @tutors = User.tutors_for_director_with_external_auth
       end
     end
 

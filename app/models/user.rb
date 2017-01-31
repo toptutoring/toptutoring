@@ -19,6 +19,9 @@ class User < ActiveRecord::Base
 
   # Scopes #
   scope :customer, ->(customer_id) { where(customer_id: customer_id) }
+  scope :with_external_auth, -> { where.not(encrypted_access_token: nil) & where.not(encrypted_refresh_token: nil) }
+  scope :tutors_with_external_auth, -> { joins(:tutor) & User.with_external_auth }
+  scope :tutors_for_director_with_external_auth, -> { joins(:tutor).where('tutors.director = ?', false) & User.with_external_auth }
 
   #### State Machine ####
 
