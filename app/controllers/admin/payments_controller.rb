@@ -49,7 +49,8 @@ module Admin
     def validate_payment
       if current_user.is_director?
         if User.find(payment_params[:payee_id]).balance.to_f * 0.9 < payment_params[:amount].to_f
-          flash[:danger] = 'Tutor cannot be paid more than 90% of his earnings.'
+          flash[:danger] = 'This exceeds the maximum payment for this tutor.
+            Please contact an administrator if you have any questions'
           redirect_to :back
         end
       end
