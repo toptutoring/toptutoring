@@ -3,7 +3,7 @@ module Admin
   before_action :require_login
 
     def index
-      @users = User.all.select { |user| user.tutor? }
+      @users = User.with_tutor_role
     end
   end
 end
