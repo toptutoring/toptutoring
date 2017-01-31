@@ -14,16 +14,16 @@ module Admin
 
     def create
       @payment = Payment.new(payment_params)
-      @payment.destination = User.find(@payment.payee_id).auth_uid
-      if @payment.save
-        perform_tranfer
-        if transfer_error
-          redirect_to new_admin_payment_path
-        else
+      if @payment.valid?
+        if perform_transfer
+          @payment.save!
           redirect_to admin_payments_path, notice: 'Payment is being processed.'
+        else
+          flash[:danger] = transfer_error
+          redirect_to new_admin_payment_path
         end
       else
-        flash[:danger] = @payment.errors
+        flash[:danger] = @payment.errors.full_messages
         redirect_to new_admin_payment_path
       end
     end
@@ -55,16 +55,14 @@ module Admin
       end
     end
 
-    def transfer_error
-      if @transfer.error
-        error = JSON.parse @transfer.error.to_s.gsub('=>', ':')
-        flash[:danger] = error["_embedded"]["errors"].first["message"]
-      end
-    end
-
-    def perform_tranfer
+    def perform_transfer
       @transfer = Transfer.new(@payment)
       @transfer.perform
+      @transfer.error ? false : true
+    end
+
+    def transfer_error
+      @transfer.error
     end
   end
 end
