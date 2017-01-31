@@ -15,7 +15,7 @@ class Payment < ActiveRecord::Base
 
   def payee_validation
     if source && !payee_id
-      errors.add(:payee_id, "Payment must have a payee!")
+      errors.add(:payee_id, "can't be blank")
     end
   end
 
