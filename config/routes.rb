@@ -23,11 +23,11 @@ Rails.application.routes.draw do
     get "/dashboard" => "dashboards#admin"
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.director? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.is_director? } do
     get "/dashboard" => "dashboards#director"
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? || user.director? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? || user.is_director? } do
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
       resources :users, only: [:index, :edit, :update]
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.tutor? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.is_tutor? } do
     get "/dashboard" => "dashboards#tutor"
     namespace :tutors do
       resources :students, only: [:index]
@@ -49,7 +49,7 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.parent? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.is_parent? } do
     get "/payment/new" => "payments#new"
   end
 

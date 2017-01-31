@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
 
   # Scopes #
   scope :customer, ->(customer_id) { where(customer_id: customer_id) }
+  scope :with_tutor_role, -> { joins(:tutor) }
+  scope :with_parent_role, -> { joins(:student) }
   scope :with_external_auth, -> { where.not(encrypted_access_token: nil) & where.not(encrypted_refresh_token: nil) }
   scope :tutors_with_external_auth, -> { joins(:tutor) & User.with_external_auth }
   scope :tutors_for_director_with_external_auth, -> { joins(:tutor).where('tutors.director = ?', false) & User.with_external_auth }
@@ -37,19 +39,19 @@ class User < ActiveRecord::Base
 
   # Roles
 
-  def director?
+  def is_director?
     tutor.present? && tutor.director?
   end
 
-  def tutor?
+  def is_tutor?
     tutor.present?
   end
 
-  def parent?
+  def is_parent?
     student.present?
   end
 
-  def customer?
+  def is_customer?
     customer_id.present?
   end
 

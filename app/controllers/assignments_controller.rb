@@ -42,6 +42,6 @@ class AssignmentsController < ApplicationController
   end
 
   def set_tutors
-    @tutors = User.all.select { |user| user.tutor? }
+    @tutors = User.with_tutor_role
   end
 end
