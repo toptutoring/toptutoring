@@ -10,9 +10,10 @@ class PaymentGatewayDwolla
     ensure_valid_token
     begin
       response = account_token.post("transfers", transfer_payload)
-      payment.update(external_code: response.headers["location"])
+      payment.external_code = response.headers["location"]
+      payment.status = "created"
     rescue DwollaV2::Error => e
-      @error = e
+      @error = e._embedded.errors.first.message
     end
   end
 
