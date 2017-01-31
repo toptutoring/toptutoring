@@ -1,4 +1,6 @@
 class PaymentGatewayDwolla
+  attr_reader :error
+
   def initialize(payment)
     @payment = payment
     @payer = payment.payer
@@ -6,8 +8,12 @@ class PaymentGatewayDwolla
 
   def create_transfer
     ensure_valid_token
-    response = account_token.post("transfers", transfer_payload)
-    payment.update(external_code: response.headers["location"])
+    begin
+      response = account_token.post("transfers", transfer_payload)
+      payment.update(external_code: response.headers["location"])
+    rescue DwollaV2::Error => e
+      @error = e
+    end
   end
 
   private

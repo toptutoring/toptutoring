@@ -2,6 +2,7 @@ class Payment < ActiveRecord::Base
   # Associations #
   belongs_to :payer, class_name: "User", foreign_key: "payer_id"
   belongs_to :payee, class_name: "User", foreign_key: "payee_id"
+  before_create :set_destination
 
   # Validations #
   validates_presence_of :payer_id
@@ -15,6 +16,12 @@ class Payment < ActiveRecord::Base
   def payee_validation
     if source && !payee_id
       errors.add(:payee_id, "Payment must have a payee!")
+    end
+  end
+
+  def set_destination
+    if source
+      destination = payee.auth_uid
     end
   end
 end
