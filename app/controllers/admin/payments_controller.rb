@@ -16,11 +16,15 @@ module Admin
       @payment = Payment.new(payment_params)
       @payment.destination = User.find(@payment.payee_id).auth_uid
       if @payment.save
-        TransferWorker.perform_async(@payment.id)
-        redirect_to admin_payments_path, notice: 'Payment successfully made.'
+        perform_tranfer
+        if transfer_error
+          redirect_to new_admin_payment_path
+        else
+          redirect_to admin_payments_path, notice: 'Payment is being processed.'
+        end
       else
-        flash[:danger] = "You must provide your card information before making a payment."
-        redirect_to :back
+        flash[:danger] = @payment.errors
+        redirect_to new_admin_payment_path
       end
     end
 
@@ -49,6 +53,18 @@ module Admin
           redirect_to :back
         end
       end
+    end
+
+    def transfer_error
+      if @transfer.error
+        error = JSON.parse @transfer.error.to_s.gsub('=>', ':')
+        flash[:danger] = error["_embedded"]["errors"].first["message"]
+      end
+    end
+
+    def perform_tranfer
+      @transfer = Transfer.new(@payment)
+      @transfer.perform
     end
   end
 end
