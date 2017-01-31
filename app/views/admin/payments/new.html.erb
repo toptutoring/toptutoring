@@ -2,11 +2,6 @@
   <div class="col-md-8 col-md-offset-2">
     <div class="widget">
       <div class="widget-heading clearfix">
-        <ul class="widget-tools pull-right list-inline">
-          <li><a href="javascript:;" class="widget-collapse"><i class="ion-chevron-up"></i></a></li>
-          <li><a href="javascript:;" class="widget-reload"><i class="ion-refresh"></i></a></li>
-          <li><a href="javascript:;" class="widget-remove"><i class="ion-close-round"></i></a></li>
-        </ul>
       </div>
       <div class="widget-body">
         <%= form_for @payment, :url => admin_payments_path(@login), html: {class: "js-form-validation"} do |form| %>
