@@ -5,9 +5,9 @@ class Payment < ActiveRecord::Base
   before_validation :set_destination
 
   # Validations #
-  validates_presence_of :payer_id
   validates :amount, presence: true, numericality: { greater_than: 0 }
   validate :payee_validation
+  validate :payer_validation
 
   # Scopes #
   scope :from_parents, -> { where.not(customer_id: nil) }
@@ -16,6 +16,12 @@ class Payment < ActiveRecord::Base
   def payee_validation
     if source && !payee_id
       errors.add(:payee_id, "can't be blank")
+    end
+  end
+
+  def payer_validation
+    if customer_id || source && !payer_id
+      errors.add(:payer_id, "can't be blank")
     end
   end
 
