@@ -1,10 +1,6 @@
 class OneTimePaymentsController < ApplicationController
   layout "authentication"
 
-  if Rails.env.production?
-    force_ssl(host: ENV['SSL_APPLICATION_HOST'])
-  end
-
   def confirmation
   end
 
@@ -22,7 +18,7 @@ class OneTimePaymentsController < ApplicationController
         source: token,
         description: params[:payments][:description])
 
-      redirect_to confirmation_url(host: ENV['APPLICATION_HOST'], protocol: "http")
+      redirect_to confirmation_path
     rescue Stripe::CardError => e
       flash[:danger] = e.message
       render :new
