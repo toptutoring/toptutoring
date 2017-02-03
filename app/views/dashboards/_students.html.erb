@@ -18,14 +18,15 @@
               </tr>
             </thead>
             <tbody>
-              <% @assignments.each do |assignment| %>
+              <% @assignments.each do |assignment|
+                representer = AssignmentPresenter.new(assignment) %>
                 <tr>
-                  <td><%= assignment.id %></td>
-                  <td><%= assignment.decorate.student_name %></td>
-                  <td class="text-center"><%= assignment.decorate.student_subject %></td>
-                  <td class="text-center"><%= assignment.decorate.student_academic_type %></td>
-                  <td class="text-center"><span class="label label-outline label-warning"><%= assignment.state %></span></td>
-                  <td class="text-center"><%= assignment.student.decorate.hourly_balance %> hrs</td>
+                  <td><%= representer.id %></td>
+                  <td><%= representer.student_name %></td>
+                  <td class="text-center"><%= representer.student_subject %></td>
+                  <td class="text-center"><%= representer.student_academic_type %></td>
+                  <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
+                  <td class="text-center"><%= representer.student.decorate.hourly_balance %> hrs</td>
                 </tr>
               <% end %>
             </tbody>

@@ -32,7 +32,6 @@ gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
 gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'activemodel-serializers-xml'
-gem 'draper'
 
 group :development do
   gem "listen"
@@ -66,7 +65,6 @@ group :test do
   gem "simplecov", require: false
   gem "timecop"
   gem "webmock"
-  gem 'shoulda-matchers'
 end
 
 group :staging, :production do
