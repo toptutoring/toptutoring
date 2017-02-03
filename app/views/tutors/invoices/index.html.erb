@@ -21,16 +21,17 @@
                 </tr>
               </thead>
               <tbody>
-                <% @invoices.each do |invoice| %>
+                <% @invoices.each do |invoice|
+                  presenter = InvoicePresenter.new(invoice) %>
                   <tr>
-                    <td><%= invoice.decorate.student_name %></td>
-                    <td><%= invoice.decorate.subject %></td>
-                    <td class="text-center"><%= invoice.decorate.academic_type %></td>
-                    <td class="text-center"><%= invoice.created_at %></td>
-                    <td class="text-center"><%= invoice.description %></td>
-                    <td class="text-center"><%= invoice.hours %></span></td>
-                    <td class="text-center"><%= invoice.hourly_rate %></span></td>
-                    <td class="text-center"><%= invoice.amount %></span></td>
+                    <td><%= presenter.student_name %></td>
+                    <td><%= presenter.subject %></td>
+                    <td class="text-center"><%= presenter.academic_type %></td>
+                    <td class="text-center"><%= presenter.created_at %></td>
+                    <td class="text-center"><%= presenter.description %></td>
+                    <td class="text-center"><%= presenter.hours %></span></td>
+                    <td class="text-center"><%= presenter.hourly_rate %></span></td>
+                    <td class="text-center"><%= presenter.amount %></span></td>
                   </tr>
                 <% end %>
               </tbody>

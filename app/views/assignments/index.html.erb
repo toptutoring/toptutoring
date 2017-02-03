@@ -21,28 +21,29 @@
                 </tr>
               </thead>
               <tbody>
-                <% @assignments.each do |assignment| %>
+                <% @assignments.each do |assignment|
+                  representer = AssignmentPresenter.new(assignment) %>
                   <tr>
-                    <td><%= assignment.id %></td>
-                    <td><%= assignment.decorate.student_name %></td>
-                    <td><%= assignment.decorate.tutor_name %></td>
-                    <td><%= assignment.subject %></td>
-                    <td class="text-center"><%= assignment.academic_type %></td>
-                    <td class="text-center"><span class="label label-outline label-warning"><%= assignment.state %></span></td>
+                    <td><%= representer.id %></td>
+                    <td><%= representer.student_name %></td>
+                    <td><%= representer.tutor_name %></td>
+                    <td><%= representer.subject %></td>
+                    <td class="text-center"><%= representer.academic_type %></td>
+                    <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
                     <td class="text-center">
-                      <%= link_to edit_assignment_path(assignment) do %>
+                      <%= link_to edit_assignment_path(representer.id) do %>
                         <button type="button" class="btn btn-outline btn-primary">Edit</button>
                       <% end %>
                     </td>
-                    <% if assignment.updated? && assignment.pending? %>
+                    <% if representer.updated? && representer.pending? %>
                       <td class="text-center">
-                        <%= link_to enable_assignment_path(assignment) do %>
+                        <%= link_to enable_assignment_path(representer) do %>
                           <button type="button" class="btn btn-outline btn-success">Enable</button>
                         <% end %>
                       </td>
-                    <% elsif assignment.active? %>
+                    <% elsif representer.active? %>
                       <td class="text-center">
-                        <%= link_to disable_assignment_path(assignment) do %>
+                        <%= link_to disable_assignment_path(representer.id) do %>
                           <button type="button" class="btn btn-outline btn-danger">Disable</button>
                         <% end %>
                       </td>

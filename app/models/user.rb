@@ -62,4 +62,8 @@ class User < ActiveRecord::Base
   def valid_token?
     Time.zone.at(token_expires_at) > Time.current
   end
+
+  def hourly_balance
+    balance.to_f / assignment.hourly_rate
+  end
 end
