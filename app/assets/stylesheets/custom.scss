@@ -68,3 +68,9 @@ form {
 .form-control.no-padding {
   padding-left: 6px;
 }
+
+@media all and (-ms-high-contrast:none) {
+  *::-ms-backdrop, .main-container {
+    flex: none;
+  } /* IE */
+}
