@@ -10,6 +10,7 @@ if ENV.fetch("COVERAGE", false)
 end
 
 require "webmock/rspec"
+require 'capybara/rspec'
 
 # http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
