@@ -3,8 +3,10 @@ require 'spec_helper'
 feature 'Invoices Index' do
   scenario 'when user is tutor' do
     tutor = FactoryGirl.create(:tutor_user)
-    invoice = FactoryGirl.create(:invoice, tutor: tutor)
-    
+    parent = FactoryGirl.create(:parent_user)
+    assignment = FactoryGirl.create(:assignment, tutor: tutor, student: parent)
+    invoice = FactoryGirl.create(:invoice, tutor: tutor, assignment: assignment)
+
     sign_in(tutor)
     visit tutors_invoices_path
 

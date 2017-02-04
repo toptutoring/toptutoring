@@ -3,7 +3,8 @@ require 'spec_helper'
 feature 'Students Index' do
   scenario 'when user is tutor' do
     tutor = FactoryGirl.create(:tutor_user)
-    assignment = FactoryGirl.create(:assignment, tutor: tutor)
+    parent = FactoryGirl.create(:parent_user)
+    assignment = FactoryGirl.create(:assignment, tutor: tutor, student: parent)
 
     sign_in(tutor)
     visit tutors_students_path
