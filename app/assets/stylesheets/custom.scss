@@ -74,3 +74,9 @@ form {
     flex: none;
   } /* IE */
 }
+
+@media all and (-ms-high-contrast:none) and (min-width: 1200px) {
+  *::-ms-backdrop, .page-content.login {
+	   padding: 20px 20px 70px 0;
+	} /* IE */
+}
