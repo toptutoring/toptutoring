@@ -3,6 +3,6 @@ FactoryGirl.define do
     name     { "Parent" }
     email    { "parent@test.com" }
     password { "password" }
-    student    { FactoryGirl.create(:student) }
+    student  { FactoryGirl.create(:student) }
   end
 end
