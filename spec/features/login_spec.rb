@@ -21,7 +21,7 @@ feature 'User logs in' do
     fill_in 'Password', with: user.password
     click_button 'Login'
 
-    expect(page).to have_content("Bad email or password.")
+    expect(page).to have_content("Invalid email or password.")
     expect(page).to have_current_path(session_path)
   end
 
@@ -32,7 +32,7 @@ feature 'User logs in' do
     fill_in 'Password', with: ''
     click_button 'Login'
 
-    expect(page).to have_content("Bad email or password.")
+    expect(page).to have_content("Invalid email or password.")
     expect(page).to have_current_path(session_path)
   end
 

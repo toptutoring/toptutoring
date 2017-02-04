@@ -1,7 +1,7 @@
 namespace :prod do
   task seed: :environment do
     # Update parent
-    parent = User.where(email: "parent@test.com").first_or_initialize
+    parent = User.where(email: "parent@example.com").first_or_initialize
     parent.name = "Parent"
     parent.password = "password"
     parent.customer_id = "cus_9xET9cNmAJjO8A"
@@ -11,13 +11,13 @@ namespace :prod do
     # Update student
     student = Student.where(user_id: parent.id).first_or_initialize
     student.name = "Student"
-    student.email = "student@test.com"
+    student.email = "student@example.com"
     student.subject = "Math"
     student.academic_type = "Test Prep"
     student.save!
 
     # Update tutor
-    tutor = User.where(email: "tutor@test.com").first_or_initialize
+    tutor = User.where(email: "tutor@example.com").first_or_initialize
     tutor.name = "Tutor"
     tutor.password = "password"
     tutor.auth_provider = "dwolla"
@@ -33,7 +33,7 @@ namespace :prod do
     tutor_info.save!
 
     # Update director
-    director = User.where(email: "director@test.com").first_or_initialize
+    director = User.where(email: "director@example.com").first_or_initialize
     director.name = "Director"
     director.password = "password"
     director.auth_provider = "dwolla"
@@ -50,7 +50,7 @@ namespace :prod do
     director_info.save!
 
     # Update admin
-    admin = User.where(email: "admin@test.com").first_or_initialize
+    admin = User.where(email: "admin@example.com").first_or_initialize
     admin.name = "Admin"
     admin.password = "adminpassword123"
     admin.admin = true
