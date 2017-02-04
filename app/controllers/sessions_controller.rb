@@ -4,6 +4,7 @@ class SessionsController < Clearance::SessionsController
   def new
   end
 
+  # Change clearance's flash message from notice to error.
   def create
     set_remember_me
     @user = authenticate(params)
