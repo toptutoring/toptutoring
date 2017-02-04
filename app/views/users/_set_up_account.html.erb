@@ -124,7 +124,7 @@
           <%= hidden_field_tag :token %>
         </fieldset>
         <%= hidden_field_tag :stripe_publishable_key, ENV['STRIPE_PUBLISHABLE_KEY'] %>
-        <%= f.submit "", class:"hidden-submit", hidden: true %>
+        <%= f.submit "", class:"hidden-submit" %>
       <% end %>
     </div>
   </div>

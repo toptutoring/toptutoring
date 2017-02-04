@@ -1,0 +1,35 @@
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="widget-heading clearfix">
+          <h3 class="widget-title pull-left">Emails</h3>
+        </div>
+        <div class="widget-body">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>Parent</th>
+                  <th>Tutor</th>
+                  <th>Body</th>
+                  <th class="text-center">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @emails.each do |email| %>
+                  <tr>
+                    <td><%= email.parent.try(:name) %></td>
+                    <td><%= email.tutor.try(:name) %></td>
+                    <td><%= email.body %></td>
+                    <td class="text-center"><%= email.created_at %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

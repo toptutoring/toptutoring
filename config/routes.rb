@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       resources :invoices, only: [:index]
       resources :tutors, only: [:index, :edit, :update]
       resources :funding_sources, only: [:new, :create, :edit, :update]
+      resources :emails, only: [:index]
     end
   end
 
@@ -42,10 +43,12 @@ Rails.application.routes.draw do
     namespace :tutors do
       resources :students, only: [:index]
       resources :invoices, only: [:index]
+      resources :emails, only: [:index]
     end
     resources :users do
       member do
         resources :invoices, only: [:new, :create]
+        resources :emails, only: [:new, :create]
       end
     end
   end

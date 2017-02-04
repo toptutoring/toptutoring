@@ -33,6 +33,8 @@ gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
 gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'activemodel-serializers-xml'
+gem "sendgrid", "~> 1.2", ">= 1.2.4"
+gem "sendgrid-ruby"
 
 group :development do
   gem "listen"

@@ -34,6 +34,13 @@
                       <button type="button" class="btn btn-outline btn-success">Log session</button>
                     <% end %>
                   </td>
+                  <% if can_send_email?(student) %>
+                    <td class="text-center">
+                      <%= link_to new_email_path(student) do %>
+                        <button type="button" class="btn btn-outline btn-primary">Send Email</button>
+                      <% end %>
+                    </td>
+                  <% end %>
                 </tr>
               <% end %>
             </tbody>
