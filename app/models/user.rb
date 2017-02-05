@@ -64,6 +64,8 @@ class User < ActiveRecord::Base
   end
 
   def hourly_balance
-    balance.to_f / assignment.hourly_rate
+    if assignment && assignment.active?
+      balance.to_f / assignment.hourly_rate
+    end
   end
 end

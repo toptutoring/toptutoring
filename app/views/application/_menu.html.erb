@@ -8,7 +8,9 @@
       <% if current_user.is_parent? %>
         <div class="dropdown">
           <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
-            <%= current_user.hourly_balance %> hrs balance
+            <%= current_user.hourly_balance do
+              "hrs balance"
+            end if current_user.hourly_balance %>
           </a>
           <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
           </ul>
