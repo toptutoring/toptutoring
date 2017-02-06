@@ -10,15 +10,19 @@ class DwollaService
                           "transfer_reclaimed",
                           "transfer_completed"].freeze
 
-  def initialize(user)
-    @user = user
+  def initialize
+    if ENV.fetch("DWOLLA_ENVIRONMENT") == "production"
+      @user = User.admin_payer.first
+    else
+      @user = User.find_by_admin(true)
+    end
   end
 
-  def funding_sources
+  def funding_source
     return [] unless user.has_external_auth?
     ensure_valid_token
     response = account_token.get("#{account_url}/funding-sources")
-    response._embedded["funding-sources"]
+    response._embedded["funding-sources"].first
   end
 
   private
