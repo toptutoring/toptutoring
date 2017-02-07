@@ -26,7 +26,7 @@
                   <td><%= user.email %></td>
                   <td><%= user.tutor.subject %></td>
                   <td><%= user.tutor.academic_type %></td>
-                  <td class="text-center">$ <%= user.balance %></td>
+                  <td class="text-center">$ <%= tutor_balance(user)%></td>
                 </tr>
               <% end %>
             </tbody>

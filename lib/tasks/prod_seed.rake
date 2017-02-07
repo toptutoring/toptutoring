@@ -6,6 +6,7 @@ namespace :prod do
     parent.password = "password"
     parent.customer_id = "cus_9xET9cNmAJjO8A"
     parent.access_state = "enabled"
+    parent.demo = true
     parent.save!
 
     # Update student
@@ -25,6 +26,7 @@ namespace :prod do
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
     tutor.balance = 200
+    tutor.demo = true
     tutor.save!
 
     tutor_info = Tutor.where(user_id: tutor.id).first_or_initialize
@@ -41,6 +43,7 @@ namespace :prod do
     director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
     director.balance = 200
+    director.demo = true
     director.save!
 
     director_info = Tutor.where(user_id: director.id).first_or_initialize
@@ -58,6 +61,7 @@ namespace :prod do
     admin.auth_uid = "8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"
     admin.token_expires_at = Time.current.to_i + 12.months.to_i
     admin.access_state = "enabled"
+    admin.demo = true
     admin.save!
 
     # Update assignments

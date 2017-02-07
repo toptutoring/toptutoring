@@ -1,11 +1,16 @@
 module Admin
   class PaymentsController < ApplicationController
     before_action :require_login
-    before_action :set_funding_sources, :set_auth_tutor, only: :new
-    before_action :validate_payment, only: :create
+    before_action :set_auth_tutor, only: :new
+    before_action :set_funding_source, :validate_payment, only: :create
 
     def index
-      @payments = Payment.from_parents
+      @parent_payments = Payment.from_parents
+      if current_user.admin
+        @tutor_payments = Payment.to_tutor
+      elsif current_user.is_director?
+        @tutor_payments = Payment.from_user(current_user.id)
+      end
     end
 
     def new
@@ -31,19 +36,16 @@ module Admin
     private
 
     def payment_params
-      params.require(:payment).permit(:amount, :source, :description, :destination, :payee_id, :payer_id)
+      params.require(:payment).permit(:amount, :source, :description, :destination,
+      :payee_id, :payer_id).merge(source: @funding_source.id)
     end
 
-    def set_funding_sources
-      @funding_sources = DwollaService.new(current_user).funding_sources
+    def set_funding_source
+      @funding_source = DwollaService.new.funding_source
     end
 
     def set_auth_tutor
-      if current_user.admin?
-        @tutors = User.tutors_with_external_auth
-      else
-        @tutors = User.tutors_for_director_with_external_auth
-      end
+      @tutors = User.tutors_with_external_auth
     end
 
     def validate_payment
