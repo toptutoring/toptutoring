@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       resources :payments, only: [:new, :create, :index]
       resources :users, only: [:index, :edit, :update]
       resources :invoices, only: [:index]
-      resources :tutors, only: [:index]
+      resources :tutors, only: [:index, :edit, :update]
     end
   end
 
