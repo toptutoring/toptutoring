@@ -304,6 +304,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     uniform_notifier (1.10.0)
+    vcr (3.0.3)
     web-console (3.4.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -373,6 +374,7 @@ DEPENDENCIES
   timecop
   title
   uglifier
+  vcr
   web-console
   webmock
 
