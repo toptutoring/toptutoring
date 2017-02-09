@@ -2,7 +2,7 @@ module Admin
   class PaymentsController < ApplicationController
     before_action :require_login
     before_action :set_auth_tutor, only: :new
-    before_action :set_funding_source, :validate_payment, only: :create
+    before_action :set_funding_source, :validate_funding_source, :validate_payment, only: :create
 
     def index
       @parent_payments = Payment.from_parents
@@ -42,6 +42,13 @@ module Admin
 
     def set_funding_source
       @funding_source = DwollaService.new.funding_source
+    end
+
+    def validate_funding_source
+      if @funding_source.empty?
+        flash[:danger] = "Something went wrong! Please contact your administrator."
+        redirect_to new_admin_payment_path
+      end
     end
 
     def set_auth_tutor

@@ -50,6 +50,7 @@ group :development, :test do
   gem "pry-rails"
   gem "rb-readline"
   gem "rspec-rails", "~> 3.5.0.beta4"
+  gem "vcr"
 end
 
 group :development, :staging do

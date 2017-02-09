@@ -1,0 +1,148 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://uat.dwolla.com/oauth/v2/token
+    body:
+      encoding: UTF-8
+      string: grant_type=refresh_token&refresh_token=deGkVTvFBU9mFlAT3shbi672FPQsA8VI5yw0vmbYDCRC8EjXZ0
+    headers:
+      User-Agent:
+      - dwolla-v2-ruby 1.1.2
+      Authorization:
+      - Basic NkxjT2U0a2puc2xCcVZEb0pzQk00WWppcVc0UFhyeVhrMWRISDZSemlzWFp3OTUzZHA6MDJ1ejY5RlV4RUoySHh1cDlWMnVXdnFZUVlIWERyekRLY3QycFdwb2N1Q2lrVlc1NjI=
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 08 Feb 2017 22:53:38 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d35dcc757b274994f8034b10fd643cbbd1486594417; expires=Thu, 08-Feb-18
+        22:53:37 GMT; path=/; domain=.dwolla.com; HttpOnly
+      - dtid=9159936d-cf8f-40c0-897f-07a4b0dec4bb; expires=Mon, 08-Feb-2027 22:53:40
+        GMT; path=/; HttpOnly
+      Cache-Control:
+      - private
+      P3p:
+      - CP="CAO PSA OUR"
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Aspnetmvc-Version:
+      - '4.0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 32e2a8a3bb170a9c-PRG
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_links":{"account":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"}},"access_token":"nS6XYRelDPoY3hHD4AGV4h07dmtWBUaUH6jHogrswqirwXARiw","expires_in":3185,"refresh_token":"weVBmnBJh9VlkieDRKy0lrMANSgbWi3benQfLrVSNmb4HvyooR","refresh_expires_in":5183585,"token_type":"bearer","scope":"accountinfofull|email|transactions|send|funding","account_id":"8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"}'
+    http_version: 
+  recorded_at: Wed, 08 Feb 2017 22:53:38 GMT
+- request:
+    method: get
+    uri: https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f/funding-sources
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer nS6XYRelDPoY3hHD4AGV4h07dmtWBUaUH6jHogrswqirwXARiw
+      Accept:
+      - application/vnd.dwolla.v1.hal+json
+      User-Agent:
+      - dwolla-v2-ruby 1.1.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 08 Feb 2017 22:53:39 GMT
+      Content-Type:
+      - application/vnd.dwolla.v1.hal+json; charset=UTF-8
+      Content-Length:
+      - '1684'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d5725cedb2b039f1fc2a45b94a72825e31486594419; expires=Thu, 08-Feb-18
+        22:53:39 GMT; path=/; domain=.dwolla.com; HttpOnly
+      X-Request-Id:
+      - e2f6f3de-6b3a-4cd8-bff3-3a044288900c
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 32e2a8aeea563dde-PRG
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f/funding-sources","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"}},"_embedded":{"funding-sources":[{"_links":{"self":{"href":"https://api-uat.dwolla.com/funding-sources/58be4af4-adbc-4683-aa10-e50059cdf294","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"},"account":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f","type":"application/vnd.dwolla.v1.hal+json","resource-type":"account"}},"id":"58be4af4-adbc-4683-aa10-e50059cdf294","status":"verified","type":"bank","name":"Superhero
+        Savings Bank","created":"2016-12-28T12:47:08.000Z","removed":false,"channels":["ach"],"bankName":"SANDBOX
+        TEST BANK"},{"_links":{"self":{"href":"https://api-uat.dwolla.com/funding-sources/c9b5fe28-2bd5-4cf7-9e83-b71316020430","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"},"account":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f","type":"application/vnd.dwolla.v1.hal+json","resource-type":"account"},"with-available-balance":{"href":"https://api-uat.dwolla.com/funding-sources/c9b5fe28-2bd5-4cf7-9e83-b71316020430","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"},"balance":{"href":"https://api-uat.dwolla.com/funding-sources/c9b5fe28-2bd5-4cf7-9e83-b71316020430/balance","type":"application/vnd.dwolla.v1.hal+json","resource-type":"balance"}},"id":"c9b5fe28-2bd5-4cf7-9e83-b71316020430","status":"verified","type":"balance","name":"Balance","created":"2016-12-28T12:47:06.000Z","removed":false,"channels":[]}]}}'
+    http_version: 
+  recorded_at: Wed, 08 Feb 2017 22:53:39 GMT
+- request:
+    method: post
+    uri: https://api-uat.dwolla.com/transfers
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"destination":{"href":"https://api-uat.dwolla.com/accounts/854f5ac8-e728-4959-b6e0-13917cd2cf60"},"source":{"href":"https://api-uat.dwolla.com/funding-sources/58be4af4-adbc-4683-aa10-e50059cdf294"}},"amount":{"currency":"USD","value":200},"metadata":{"concept":"Payment
+        description"}}'
+    headers:
+      Authorization:
+      - Bearer nS6XYRelDPoY3hHD4AGV4h07dmtWBUaUH6jHogrswqirwXARiw
+      Accept:
+      - application/vnd.dwolla.v1.hal+json
+      User-Agent:
+      - dwolla-v2-ruby 1.1.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Wed, 08 Feb 2017 22:53:41 GMT
+      Content-Length:
+      - '0'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=dbf4e02b01eef5d2cf507d8a338273cde1486594420; expires=Thu, 08-Feb-18
+        22:53:40 GMT; path=/; domain=.dwolla.com; HttpOnly
+      Location:
+      - https://api-uat.dwolla.com/transfers/3addd072-51ee-e611-80ee-0aa34a9b2388
+      X-Request-Id:
+      - 6f823c2d-f338-4929-a166-f7be8afe524e
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 32e2a8b52d1f6421-FRA
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 08 Feb 2017 22:53:41 GMT
+recorded_with: VCR 3.0.3
