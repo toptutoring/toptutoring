@@ -18,7 +18,7 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(:balance, tutor_attributes: [:subject, :academic_type, :id])
+      params.require(:user).permit(:balance, tutor_attributes: [:subject, :academic_type, :id, :hourly_rate])
     end
 
     def set_user

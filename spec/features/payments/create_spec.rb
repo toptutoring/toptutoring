@@ -1,93 +1,30 @@
 require 'spec_helper'
 
-feature "Payments Index" do
-  context "when user is admin" do
-    scenario "and does not have external auth" do
-      tutor = FactoryGirl.create(:tutor_user)
-      admin = FactoryGirl.create(:admin_user)
+feature "Create payment as parent" do
+  scenario "with an invalid stripe card", js: true do
+    VCR.use_cassette('invalid stripe card') do
+      parent = FactoryGirl.create(:parent_user, customer_id: "cus_9xET9cNmAJjO8A")
+      sign_in(parent)
 
-      sign_in(admin)
-      visit admin_tutors_path
-      click_on "Pay tutor"
+      fill_in "hours", with: 2
+      expect(page).to have_field("amount", with: "60")
+      click_on "Pay"
 
-      fill_in "payment_amount", with: 200
-      fill_in "payment_description", with: "Payment description"
-      click_button "Send Payment"
-
-      expect(page).to have_content("Something went wrong! Please contact your administrator.")
-    end
-
-    scenario 'and has external auth' do
-      VCR.use_cassette('dwolla authetication') do
-        tutor = FactoryGirl.create(:tutor_user)
-        director = FactoryGirl.create(:director_user)
-        admin = FactoryGirl.create(:auth_admin_user)
-
-        sign_in(director)
-        visit admin_tutors_path
-        click_on "Pay tutor"
-
-        fill_in "payment_amount", with: 200
-        fill_in "payment_description", with: "Payment description"
-        click_button "Send Payment"
-
-        expect(page).to have_content('Payment is being processed.')
-      end
+      expect(page).to have_content("Your card has expired.")
     end
   end
 
-  context "when user is director" do
-    scenario "and admin does not have external auth" do
-      tutor = FactoryGirl.create(:tutor_user, access_token: 'xxx', refresh_token: 'xxx')
-      admin = FactoryGirl.create(:admin_user)
-      director = FactoryGirl.create(:director_user)
+  scenario "with a valid stripe card", js: true do
+    VCR.use_cassette('valid stripe card') do
+      parent = FactoryGirl.create(:parent_user, customer_id: "cus_A45BGhlr4VjDcJ", balance: 30)
+      sign_in(parent)
 
-      sign_in(director)
-      visit admin_tutors_path
-      click_on "Pay tutor"
+      fill_in "hours", with: 2
+      expect(page).to have_field("amount", with: "60")
+      click_on "Pay"
 
-      fill_in "payment_amount", with: 200
-      fill_in "payment_description", with: "Payment description"
-      click_button "Send Payment"
-
-      expect(page).to have_content('Something went wrong! Please contact your administrator.')
-    end
-
-    scenario "and admin has external auth" do
-      VCR.use_cassette('dwolla authetication') do
-        tutor = FactoryGirl.create(:tutor_user)
-        director = FactoryGirl.create(:director_user)
-        admin = FactoryGirl.create(:auth_admin_user)
-
-        sign_in(director)
-        visit admin_tutors_path
-        click_on "Pay tutor"
-
-        fill_in "payment_amount", with: 200
-        fill_in "payment_description", with: "Payment description"
-        click_button "Send Payment"
-
-        expect(page).to have_content('Payment is being processed.')
-      end
-    end
-
-    scenario "and payment exceeds tutor's balance" do
-      VCR.use_cassette('dwolla authetication') do
-        tutor = FactoryGirl.create(:tutor_user, balance: 100)
-        director = FactoryGirl.create(:director_user)
-        admin = FactoryGirl.create(:auth_admin_user)
-
-        sign_in(director)
-        visit admin_tutors_path
-        click_on "Pay tutor"
-
-        fill_in "payment_amount", with: 200
-        fill_in "payment_description", with: "Payment description"
-        click_button "Send Payment"
-
-        expect(page).to have_content('This exceeds the maximum payment for this tutor.
-          Please contact an administrator if you have any questions')
-      end
+      expect(page).to have_content("Payment successfully made.")
+      expect(page).to have_content("3.0 hrs balance")
     end
   end
 end

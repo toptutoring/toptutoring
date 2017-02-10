@@ -14,12 +14,12 @@ feature 'Dashboard Index' do
     expect(page).to have_content('Subject')
     expect(page).to have_content('Academic Type')
     expect(page).to have_content('Status')
-    expect(page).to have_content('Hourly balance')
+    expect(page).to have_content('Balance')
     expect(page).to have_content(assignment.id)
     expect(page).to have_content(assignment.student.student.name)
     expect(page).to have_content(assignment.subject)
     expect(page).to have_content(assignment.academic_type)
     expect(page).to have_content(assignment.state)
-    expect(page).to have_content(assignment.student.hourly_balance)
+    expect(page).to have_content(assignment.student.balance)
     end
 end

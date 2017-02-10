@@ -13,7 +13,7 @@
 
           <div class="form-group">
             <%= f.label :hourly_rate %>
-            <%= f.number_field :hourly_rate,  class: "form-control", required: :true %>
+            <%= f.number_field :hourly_rate,  class: "form-control", required: :true, min: @assignment.tutor.tutor.hourly_rate %>
           </div>
 
           <div class="form-group">
@@ -23,7 +23,7 @@
 
           <div class="form-group">
             <%= f.label :subject %>
-            <%= f.text_field :subject, value: @assignment.subject, class:"form-control" %>
+            <%= f.text_field :subject, value: @assignment.subject, class:"form-control", disabled: true%>
           </div>
 
           <div class="form-group">

@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: UTF-8
+      string: amount=6000&currency=usd&customer=cus_9xET9cNmAJjO8A&description=
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.58.0
+      Authorization:
+      - Bearer sk_test_sh18MsBrCNXjfaeymmbRMVLH
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.58.0","lang":"ruby","lang_version":"2.3.1 p112 (2016-04-26)","platform":"x86_64-darwin15","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Alexandras-MacBook-Pro.local 16.4.0 Darwin Kernel Version 16.4.0: Thu Dec
+        22 22:53:21 PST 2016; root:xnu-3789.41.3~3/RELEASE_X86_64 x86_64","hostname":"Alexandras-MacBook-Pro.local"}'
+      Content-Length:
+      - '65'
+      Host:
+      - api.stripe.com
+  response:
+    status:
+      code: 402
+      message: Payment Required
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 11 Feb 2017 15:06:11 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '186'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_A6Ev0jOD2xtnoC
+      Stripe-Version:
+      - '2016-07-06'
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "error": {
+            "message": "Your card has expired.",
+            "type": "card_error",
+            "param": "exp_month",
+            "code": "expired_card",
+            "charge": "ch_19m2RzICcPwb8fjtZHdMXbLX"
+          }
+        }
+    http_version: 
+  recorded_at: Sat, 11 Feb 2017 15:06:11 GMT
+recorded_with: VCR 3.0.3
