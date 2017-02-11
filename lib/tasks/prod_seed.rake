@@ -4,7 +4,7 @@ namespace :prod do
     parent = User.where(email: "parent@example.com").first_or_initialize
     parent.name = "Parent"
     parent.password = "password"
-    parent.customer_id = "cus_9xET9cNmAJjO8A"
+    parent.customer_id = "cus_A45BGhlr4VjDcJ"
     parent.access_state = "enabled"
     parent.demo = true
     parent.save!
