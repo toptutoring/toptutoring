@@ -4,7 +4,7 @@ SMTP_SETTINGS = {
   domain: "heroku.com",
   enable_starttls_auto: true,
   password: ENV["SENDRID_PASSWORD"],
-  port: "587",
+  port: 25,
   user_name: ENV["SENDGRID_USERNAME"]
 }
 
