@@ -14,7 +14,7 @@ feature "Create payment for tutor" do
       fill_in "payment_description", with: "Payment description"
       click_button "Send Payment"
 
-      expect(page).to have_content("Something went wrong! Please contact your administrator.")
+      expect(page).to have_content("You must authenticate with Dwolla before making a payment.")
     end
 
     scenario 'and has external auth' do

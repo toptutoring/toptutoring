@@ -49,7 +49,7 @@ module Admin
         if current_user.is_director?
           flash[:danger] = "Something went wrong! Please contact your administrator."
         else
-          flash[:danger] = "You must authenticate with dwolla before making a payment."
+          flash[:danger] = "You must authenticate with Dwolla before making a payment."
         end
         redirect_to new_admin_payment_path
       end
