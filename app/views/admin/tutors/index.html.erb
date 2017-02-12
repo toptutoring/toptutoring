@@ -10,7 +10,6 @@
           <table class="table mb-0">
             <thead>
               <tr>
-                <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Subject</th>
@@ -22,7 +21,6 @@
             <tbody>
               <% @users.each do |user| %>
                 <tr>
-                  <td><%= user.id %></td>
                   <td><%= user.name %></td>
                   <td><%= user.email %></td>
                   <td><%= user.tutor.subject %></td>

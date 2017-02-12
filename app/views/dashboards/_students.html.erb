@@ -1,37 +1,33 @@
-<div class="row">
-  <div class="col-md-7">
-    <div class="widget">
-      <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Assignments</h3>
-      </div>
-      <div class="widget-body">
-        <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Student Name</th>
-                <th class="text-center">Subject</th>
-                <th class="text-center">Academic Type</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Balance</th>
-              </tr>
-            </thead>
+<div class="col-md-7">
+  <div class="widget">
+    <div class="widget-heading clearfix">
+      <h3 class="widget-title pull-left">Assignments</h3>
+    </div>
+    <div class="widget-body">
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th class="text-center">Subject</th>
+              <th class="text-center">Academic Type</th>
+              <th class="text-center">Status</th>
+              <th class="text-center">Hourly balance</th>
+            </tr>
+          </thead>
             <tbody>
               <% @assignments.each do |assignment|
                 representer = AssignmentPresenter.new(assignment) %>
                 <tr>
-                  <td><%= representer.id %></td>
-                  <td><%= representer.student_name %></td>
-                  <td class="text-center"><%= representer.student_subject %></td>
-                  <td class="text-center"><%= representer.student_academic_type %></td>
-                  <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
-                  <td class="text-center"><%= representer.student.balance %> hrs</td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+                <td><%= representer.student_name %></td>
+                <td class="text-center"><%= representer.student_subject %></td>
+                <td class="text-center"><%= representer.student_academic_type %></td>
+                <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
+                <td class="text-center"><%= representer.student.hourly_balance %> hrs</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

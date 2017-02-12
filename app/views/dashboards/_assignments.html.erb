@@ -8,7 +8,6 @@
         <table class="table mb-0">
           <thead>
             <tr>
-              <th>#</th>
               <th>Student Name</th>
               <th class="text-center">Subject</th>
               <th class="text-center">Academic Type</th>
@@ -19,7 +18,6 @@
           <tbody>
             <% @assignments.each do |assignment| %>
               <tr>
-                <td><%= assignment.id %></td>
                 <td><%= assignment.student.name %></td>
                 <td class="text-center"><%= assignment.subject %></td>
                 <td class="text-center"><%= assignment.academic_type %></td>

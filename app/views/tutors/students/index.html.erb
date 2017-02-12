@@ -10,6 +10,7 @@
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Parent</th>
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Subject</th>
@@ -22,6 +23,7 @@
               <% @students.each do |student| %>
                 <tr>
                   <td><%= student.student.name %></td>
+                  <td><%= student.name %></td>
                   <td><%= student.student.email %></td>
                   <td><%= student.student.phone_number %></td>
                   <td><%= student.student.subject %></td>
