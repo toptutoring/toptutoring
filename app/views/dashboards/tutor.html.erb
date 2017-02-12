@@ -1,2 +1,5 @@
 <%= render "menu" %>
-<%= render "students" %>
+<div class="row">
+  <%= render "dwolla_login" if !current_user.has_external_auth? %>
+  <%= render "assignments" %>
+</end>

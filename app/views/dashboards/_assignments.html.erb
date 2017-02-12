@@ -1,53 +1,51 @@
-<div class="row">
-  <div class="col-md-7">
-    <div class="widget">
-      <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Pending Assignments</h3>
-      </div>
-      <div class="widget-body">
-        <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
+<div class="col-md-7">
+  <div class="widget">
+    <div class="widget-heading clearfix">
+      <h3 class="widget-title pull-left">Pending Assignments</h3>
+    </div>
+    <div class="widget-body">
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student Name</th>
+              <th class="text-center">Subject</th>
+              <th class="text-center">Academic Type</th>
+              <th class="text-center">Status</th>
+              <th class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @assignments.each do |assignment| %>
               <tr>
-                <th>#</th>
-                <th>Student Name</th>
-                <th class="text-center">Subject</th>
-                <th class="text-center">Academic Type</th>
-                <th class="text-center">Status</th>
-                <th class="text-center"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @assignments.each do |assignment| %>
-                <tr>
-                  <td><%= assignment.id %></td>
-                  <td><%= assignment.student.name %></td>
-                  <td class="text-center"><%= assignment.subject %></td>
-                  <td class="text-center"><%= assignment.academic_type %></td>
-                  <td class="text-center"><span class="label label-outline label-warning"><%= assignment.state %></span></td>
+                <td><%= assignment.id %></td>
+                <td><%= assignment.student.name %></td>
+                <td class="text-center"><%= assignment.subject %></td>
+                <td class="text-center"><%= assignment.academic_type %></td>
+                <td class="text-center"><span class="label label-outline label-warning"><%= assignment.state %></span></td>
+                <td class="text-center">
+                  <%= link_to edit_assignment_path(assignment) do %>
+                    <button type="button" class="btn btn-outline btn-primary">Edit</button>
+                  <% end %>
+                </td>
+                <% if assignment.updated? && assignment.pending? %>
                   <td class="text-center">
-                    <%= link_to edit_assignment_path(assignment) do %>
-                      <button type="button" class="btn btn-outline btn-primary">Edit</button>
+                    <%= link_to enable_assignment_path(assignment) do %>
+                      <button type="button" class="btn btn-outline btn-success">Enable</button>
                     <% end %>
                   </td>
-                  <% if assignment.updated? && assignment.pending? %>
-                    <td class="text-center">
-                      <%= link_to enable_assignment_path(assignment) do %>
-                        <button type="button" class="btn btn-outline btn-success">Enable</button>
-                      <% end %>
-                    </td>
-                  <% elsif assignment.active? %>
-                    <td class="text-center">
-                      <%= link_to disable_assignment_path(assignment) do %>
-                        <button type="button" class="btn btn-outline btn-danger">Disable</button>
-                      <% end %>
-                    </td>
-                  <% end %>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+                <% elsif assignment.active? %>
+                  <td class="text-center">
+                    <%= link_to disable_assignment_path(assignment) do %>
+                      <button type="button" class="btn btn-outline btn-danger">Disable</button>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
