@@ -22,7 +22,7 @@ class Payment < ActiveRecord::Base
   end
 
   def payer_validation
-    if customer_id || source && !payer_id
+    if ( customer_id || source)  && !payer_id
       errors.add(:payer_id, "can't be blank")
     end
   end

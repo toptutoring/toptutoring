@@ -62,9 +62,7 @@ class User < ActiveRecord::Base
     Time.zone.at(token_expires_at) > Time.current
   end
 
-  def hourly_balance
-    if assignment && assignment.active?
-      balance.to_f / assignment.hourly_rate
-    end
+  def currency_balance
+    balance * tutor.hourly_rate
   end
 end

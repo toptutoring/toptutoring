@@ -2,7 +2,7 @@ class PaymentService
 
   def perform(payment, user_id)
     if payment = create_payment(payment, user_id)
-      update_user_balance(payment.amount/100, user_id)
+      update_user_balance(payment.amount/100, user_id) if payment.valid?
     end
   end
 

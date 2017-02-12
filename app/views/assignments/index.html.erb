@@ -15,8 +15,8 @@
                   <th>Tutor</th>
                   <th>Subject</th>
                   <th class="text-center">Academic Type</th>
+                  <th class="text-center">Hourly Rate</th>
                   <th class="text-center">Status</th>
-                  <th class="text-center"></th>
                   <th class="text-center"></th>
                 </tr>
               </thead>
@@ -29,6 +29,7 @@
                     <td><%= representer.tutor_name %></td>
                     <td><%= representer.subject %></td>
                     <td class="text-center"><%= representer.academic_type %></td>
+                    <td class="text-center">$<%= representer.hourly_rate %></td>
                     <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
                     <td class="text-center">
                       <%= link_to edit_assignment_path(representer.id) do %>

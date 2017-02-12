@@ -28,13 +28,6 @@
             <%= f.text_field :balance, class:"form-control", min: "0"%>
           </div>
 
-          <div class="form-group">
-            <label for="user_balance">Hourly Balance</label>
-            <input class="form-control" type="text" value="<%= @user.hourly_balance %>" name="hourly_balance" id="user_hourly_balance">
-          </div>
-
-          <input class="form-control" type="hidden" value="<%= @user.assignment.hourly_rate %>" name="hourly_rate" id="user_hourly_rate", min="0">
-
           <div class="text-center">
             <button type="submit" class="btn btn-outline btn-success">Submit</button>
           </div>

@@ -1,5 +1,7 @@
 module ParentHelper
-  def parent_hourly_rate(parent)
-    "#{parent.hourly_balance} hrs balance" if parent.hourly_balance
+  def parent_balance(parent)
+    if parent.assignment && parent.assignment.active?
+      "#{parent.balance / parent.assignment.hourly_rate} hrs balance"
+    end
   end
 end

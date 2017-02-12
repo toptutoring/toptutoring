@@ -2,7 +2,7 @@ module Admin
   class PaymentsController < ApplicationController
     before_action :require_login
     before_action :set_auth_tutor, only: :new
-    before_action :set_funding_source, :validate_funding_source, :validate_payment, only: :create
+    before_action :set_funding_source, :validate_funding_source, :set_payee, :validate_payment, only: :create
 
     def index
       @parent_payments = Payment.from_parents
@@ -57,7 +57,7 @@ module Admin
 
     def validate_payment
       if current_user.is_director?
-        if User.find(payment_params[:payee_id]).balance.to_f * 0.9 < payment_params[:amount].to_f
+        if @payee.currency_balance < payment_params[:amount].to_f
           flash[:danger] = 'This exceeds the maximum payment for this tutor.
             Please contact an administrator if you have any questions'
           redirect_to :back
@@ -73,6 +73,10 @@ module Admin
 
     def transfer_error
       @transfer.error
+    end
+
+    def set_payee
+      @payee = User.find(payment_params[:payee_id])
     end
   end
 end

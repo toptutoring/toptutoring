@@ -4,7 +4,7 @@ namespace :prod do
     parent = User.where(email: "parent@example.com").first_or_initialize
     parent.name = "Parent"
     parent.password = "password"
-    parent.customer_id = "cus_9xET9cNmAJjO8A"
+    parent.customer_id = "cus_A45BGhlr4VjDcJ"
     parent.access_state = "enabled"
     parent.demo = true
     parent.save!
@@ -25,13 +25,14 @@ namespace :prod do
     tutor.auth_uid = "854f5ac8-e728-4959-b6e0-13917cd2cf60"
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
-    tutor.balance = 200
+    tutor.balance = 2
     tutor.demo = true
     tutor.save!
 
     tutor_info = Tutor.where(user_id: tutor.id).first_or_initialize
     tutor_info.subject = "Math"
     tutor_info.academic_type = "Test Prep"
+    tutor_info.hourly_rate = 20
     tutor_info.save!
 
     # Update director
@@ -42,7 +43,7 @@ namespace :prod do
     director.auth_uid = "eef71d60-c133-4eed-af14-77dd2e4b9950"
     director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
-    director.balance = 200
+    director.balance = 2
     director.demo = true
     director.save!
 
@@ -50,6 +51,7 @@ namespace :prod do
     director_info.subject = "Math"
     director_info.academic_type = "Test Prep"
     director_info.director = true
+    director_info.hourly_rate = 20
     director_info.save!
 
     # Update admin
@@ -71,7 +73,7 @@ namespace :prod do
       student_id: parent.id,
       subject: student.subject,
       academic_type: student.academic_type,
-      hourly_rate: 20
+      hourly_rate: 30
     )
     assignment.enable!
 

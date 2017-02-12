@@ -8,7 +8,7 @@
       <% if current_user.is_parent? %>
         <div class="dropdown">
           <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
-            <%= parent_hourly_rate(current_user) %>
+            <%= parent_balance(current_user) %>
           </a>
           <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
           </ul>
@@ -16,8 +16,7 @@
       <% elsif current_user.is_tutor? %>
         <div class="dropdown">
           <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
-            <i class="icon green-icon ion-social-usd"></i>
-            <%= tutor_balance(current_user) %> earned
+            <%= tutor_balance(current_user) %>
           </a>
           <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
           </ul>

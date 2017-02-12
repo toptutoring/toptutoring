@@ -14,7 +14,7 @@
                 <th>Phone Number</th>
                 <th>Subject</th>
                 <th>Academic Type</th>
-                <th class="text-center">Hourly Balance</th>
+                <th class="text-center">Balance</th>
                 <th class="text-center"></th>
               </tr>
             </thead>
@@ -26,7 +26,7 @@
                   <td><%= student.student.phone_number %></td>
                   <td><%= student.student.subject %></td>
                   <td><%= student.student.academic_type %></td>
-                  <td class="text-center"><%= student.hourly_balance %> hrs</td>
+                  <td class="text-center"><%= student.balance %> hrs</td>
                   <td class="text-center">
                     <%= link_to new_invoice_path(student) do %>
                       <button type="button" class="btn btn-outline btn-success">Log session</button>
