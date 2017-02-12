@@ -10,7 +10,6 @@
             <table class="table mb-0">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Date</th>
                   <th>Amount</th>
                   <th class="text-center">Description</th>
@@ -20,7 +19,6 @@
               <tbody>
                 <% @payments.each do |payment| %>
                   <tr>
-                    <td><%= payment.id %></td>
                     <td><%= payment.created_at %></td>
                     <td><%= payment.amount / 100 %></td>
                     <td class="text-center"><%= payment.description %></td>
