@@ -46,7 +46,11 @@ module Admin
 
     def validate_funding_source
       if @funding_source.empty?
-        flash[:danger] = "Something went wrong! Please contact your administrator."
+        if current_user.is_director?
+          flash[:danger] = "Something went wrong! Please contact your administrator."
+        else
+          flash[:danger] = "You must authenticate with dwolla before making a payment."
+        end
         redirect_to new_admin_payment_path
       end
     end
