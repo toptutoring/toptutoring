@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+      </div>
+      <div class="widget-body">
+        <%= form_for @funding_source, :url => admin_funding_source_path(@funding_source.id), html: {class: "js-form-validation"} do |form| %>
+
+        <div class="form-group">
+          <%= form.label :funding_source_id, "Send from:" %>
+          <%= form.select :funding_source_id,  options_from_collection_for_select(@funding_sources, :id, :name, @funding_source.funding_source_id), {}, class: "form-control", required: true %>
+        </div>
+
+        <%= form.submit "Set Funding source", class: "btn btn-success margin-top-md center-block", date: {dismiss: "modal"}%>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
