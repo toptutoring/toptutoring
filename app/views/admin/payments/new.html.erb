@@ -11,11 +11,21 @@
             <%= form.select :payee_id, options_from_collection_for_select(@tutors, :id, :name), {}, class: "form-control" %>
           </div>
 
+          <% @tutors.each do |tutor| %>
+            <input type="hidden" id="<%= tutor.id %>_tutor_hourly_rate" value="<%= tutor.tutor.hourly_rate %>"></input>
+          <% end %>
+
+          <div class="form-group">
+            <label for="hours">Hours</label>
+              <input type="number" class="form-control no-padding" id="tutor_hours" name="payments[hours]" min="0.5" max="9999" required step="0.5">
+            </input>
+          </div>
+
           <div class="form-group">
             <%= form.label :amount, "Amount:" %>
             <div class="input-group">
               <div class="input-group-addon">$</div>
-              <%= form.number_field :amount, class: "form-control no-padding", required: true, min: "1" %>
+              <%= form.number_field :amount, class: "form-control no-padding", id: "payment_amount", required: true, min: "1" %>
               <div class="input-group-addon">.00</div>
             </div>
           </div>
