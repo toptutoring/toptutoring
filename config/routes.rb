@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :edit, :update]
       resources :invoices, only: [:index]
       resources :tutors, only: [:index, :edit, :update]
+      resources :funding_sources, only: [:new, :create, :edit, :update]
     end
   end
 

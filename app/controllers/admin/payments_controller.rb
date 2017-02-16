@@ -37,19 +37,19 @@ module Admin
 
     def payment_params
       params.require(:payment).permit(:amount, :source, :description, :destination,
-      :payee_id, :payer_id).merge(source: @funding_source.id)
+      :payee_id, :payer_id).merge(source: @funding_source.funding_source_id)
     end
 
     def set_funding_source
-      @funding_source = DwollaService.new.funding_source
+      @funding_source = FundingSource.last
     end
 
     def validate_funding_source
-      if @funding_source.empty?
+      if @funding_source.nil?
         if current_user.is_director?
           flash[:danger] = "Something went wrong! Please contact your administrator."
         else
-          flash[:danger] = "You must authenticate with Dwolla before making a payment."
+          flash[:danger] = "You must authenticate with Dwolla and select a funding source before making a payment."
         end
         redirect_to new_admin_payment_path
       end

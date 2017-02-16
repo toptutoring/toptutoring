@@ -18,11 +18,11 @@ class DwollaService
     end
   end
 
-  def funding_source
+  def funding_sources
     return [] unless user.has_external_auth?
     ensure_valid_token
     response = account_token.get("#{account_url}/funding-sources")
-    response._embedded["funding-sources"].first
+    response._embedded["funding-sources"]
   end
 
   private

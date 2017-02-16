@@ -14,7 +14,7 @@ feature "Create payment for tutor" do
       fill_in "payment_description", with: "Payment description"
       click_button "Send Payment"
 
-      expect(page).to have_content("You must authenticate with Dwolla before making a payment.")
+      expect(page).to have_content("You must authenticate with Dwolla and select a funding source before making a payment.")
     end
 
     scenario 'and has external auth' do
@@ -22,6 +22,7 @@ feature "Create payment for tutor" do
         tutor = FactoryGirl.create(:tutor_user)
         director = FactoryGirl.create(:director_user)
         admin = FactoryGirl.create(:auth_admin_user)
+        funding_source = FactoryGirl.create(:funding_source, user_id: admin.id)
 
         sign_in(director)
         visit admin_tutors_path
@@ -58,6 +59,7 @@ feature "Create payment for tutor" do
         tutor = FactoryGirl.create(:tutor_user)
         director = FactoryGirl.create(:director_user)
         admin = FactoryGirl.create(:auth_admin_user)
+        funding_source = FactoryGirl.create(:funding_source, user_id: admin.id)
 
         sign_in(director)
         visit admin_tutors_path
@@ -76,6 +78,7 @@ feature "Create payment for tutor" do
         tutor = FactoryGirl.create(:tutor_user)
         director = FactoryGirl.create(:director_user)
         admin = FactoryGirl.create(:auth_admin_user)
+        funding_source = FactoryGirl.create(:funding_source, user_id: admin.id)
 
         sign_in(director)
         visit admin_tutors_path
@@ -94,6 +97,7 @@ feature "Create payment for tutor" do
       VCR.use_cassette('dwolla authetication') do
         director = FactoryGirl.create(:director_user, balance: 10)
         admin = FactoryGirl.create(:auth_admin_user)
+        funding_source = FactoryGirl.create(:funding_source, user_id: admin.id)
 
         sign_in(director)
         visit admin_tutors_path
