@@ -1,7 +1,7 @@
 {
   "name":"toptutoring",
   "scripts": {
-    "postdeploy": "rake db:migrate"
+    "postdeploy": "rake db:migrate db:seed"
   },
   "env":{
     "APPLICATION_HOST":{
@@ -57,7 +57,15 @@
       "required": true
     }
   },
-  "addons":[
-    "heroku-postgresql"
+  "addons": [
+    "scheduler:standard",
+    "sendgrid:starter",
+    "papertrail:choklad",
+    "heroku-postgresql:hobby-dev",
+    "rediscloud:30"
+  ],
+  "formation": [
+    { "process": "web",    "quantity": 1},
+    { "process": "worker", "quantity": 1}
   ]
 }
