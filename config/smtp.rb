@@ -1,11 +1,11 @@
 SMTP_SETTINGS = {
+  user_name: ENV["SENDGRID_USERNAME"],
+  password: ENV["SENDGRID_PASSWORD"],
   address: "smtp.sendgrid.net",
   authentication: :plain,
-  domain: "heroku.com",
+  domain: ENV["APPLICATION_HOST"],
   enable_starttls_auto: true,
-  password: ENV["SENDRID_PASSWORD"],
-  port: "587",
-  user_name: ENV["SENDGRID_USERNAME"]
+  port: "587"
 }
 
 if ENV["EMAIL_RECIPIENTS"].present?
