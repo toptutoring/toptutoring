@@ -1,4 +1,4 @@
-namespace :prod do
+namespace :dev do
   task seed: :environment do
     # Update parent
     parent = User.where(email: "parent@example.com").first_or_initialize
@@ -22,10 +22,8 @@ namespace :prod do
     tutor.name = "Tutor"
     tutor.password = "password"
     tutor.auth_provider = "dwolla"
-    tutor.auth_uid = nil
-    tutor.token_expires_at = nil
-    tutor.refresh_token = nil
-    tutor.access_token = nil
+    tutor.auth_uid = "854f5ac8-e728-4959-b6e0-13917cd2cf60"
+    tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
     tutor.balance = 2
     tutor.demo = true
@@ -42,10 +40,8 @@ namespace :prod do
     director.name = "Director"
     director.password = "password"
     director.auth_provider = "dwolla"
-    director.auth_uid = nil
-    director.token_expires_at = nil
-    director.refresh_token = nil
-    director.access_token = nil
+    director.auth_uid = "eef71d60-c133-4eed-af14-77dd2e4b9950"
+    director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
     director.balance = 2
     director.demo = true
@@ -64,17 +60,33 @@ namespace :prod do
     admin.password = "adminpassword123"
     admin.admin = true
     admin.auth_provider = "dwolla"
-    admin.auth_uid = nil
-    admin.token_expires_at = nil
-    admin.refresh_token = nil
-    admin.access_token = nil
+    admin.auth_uid = "8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"
+    admin.token_expires_at = Time.current.to_i + 12.months.to_i
     admin.access_state = "enabled"
     admin.demo = true
     admin.save!
 
-    # Delete test payments
+    # Update assignments
+    tutor.assignments.destroy_all
+    assignment = Assignment.create(
+      tutor_id: tutor.id,
+      student_id: parent.id,
+      subject: student.subject,
+      academic_type: student.academic_type,
+      hourly_rate: 30
+    )
+    assignment.enable!
+
+    # Update payments
     Payment.from_customer(parent.customer_id).destroy_all
     Payment.where(payer_id: admin.id).destroy_all
     Payment.where(payer_id: director.id).destroy_all
+    Payment.create(
+      amount: 200,
+      description: "Payment for Tutor",
+      status: "succeeded",
+      customer_id: parent.customer_id,
+      payer_id: parent.id,
+      payee_id: tutor.id)
   end
 end

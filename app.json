@@ -1,7 +1,7 @@
 {
   "name":"toptutoring",
   "scripts": {
-    "postdeploy": "rake db:migrate db:seed"
+    "postdeploy": "rake db:create db:schema:load db:seed"
   },
   "env":{
     "APPLICATION_HOST":{
