@@ -24,8 +24,10 @@ namespace :prod do
     tutor.auth_provider = "dwolla"
     tutor.auth_uid = nil
     tutor.token_expires_at = nil
-    tutor.refresh_token = nil
-    tutor.access_token = nil
+    tutor.encrypted_access_token = nil
+    tutor.encrypted_access_token_iv = nil
+    tutor.encrypted_refresh_token = nil
+    tutor.encrypted_refresh_token_iv = nil
     tutor.access_state = "enabled"
     tutor.balance = 2
     tutor.demo = true
@@ -44,8 +46,10 @@ namespace :prod do
     director.auth_provider = "dwolla"
     director.auth_uid = nil
     director.token_expires_at = nil
-    director.refresh_token = nil
-    director.access_token = nil
+    director.encrypted_access_token = nil
+    director.encrypted_access_token_iv = nil
+    director.encrypted_refresh_token = nil
+    director.encrypted_refresh_token_iv = nil
     director.access_state = "enabled"
     director.balance = 2
     director.demo = true
@@ -66,8 +70,10 @@ namespace :prod do
     admin.auth_provider = "dwolla"
     admin.auth_uid = nil
     admin.token_expires_at = nil
-    admin.refresh_token = nil
-    admin.access_token = nil
+    admin.encrypted_access_token = nil
+    admin.encrypted_access_token_iv = nil
+    admin.encrypted_refresh_token = nil
+    admin.encrypted_refresh_token_iv = nil
     admin.access_state = "enabled"
     admin.demo = true
     admin.save!
