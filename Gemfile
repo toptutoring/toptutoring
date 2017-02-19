@@ -24,6 +24,7 @@ gem "bugsnag"
 gem "clearance"
 gem 'stripe', '~> 1.56'
 gem "dwolla_v2", "~> 1.0"
+gem "newrelic_rpm"
 gem "omniauth"
 gem "omniauth-oauth2"
 gem "attr_encrypted", "~> 3.0.0"

@@ -50,7 +50,7 @@
     "ENCRYPTOR_KEY": {
       "required": true
     },
-    "API_APPLICATION_KEY": {
+    "NEW_RELIC_LICENSE_KEY": {
       "required": true
     },
     "SSL_APPLICATION_HOST": {
