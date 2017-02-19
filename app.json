@@ -1,7 +1,7 @@
 {
   "name":"toptutoring",
   "scripts": {
-    "postdeploy": "rake db:create db:schema:load db:seed"
+    "postdeploy": "rake db:schema:load db:seed"
   },
   "env":{
     "APPLICATION_HOST":{
@@ -48,9 +48,6 @@
       "required": true
     },
     "ENCRYPTOR_KEY": {
-      "required": true
-    },
-    "API_APPLICATION_KEY": {
       "required": true
     },
     "SSL_APPLICATION_HOST": {
