@@ -52,12 +52,6 @@
     },
     "SSL_APPLICATION_HOST": {
       "required": true
-    },
-    "SENDGRID_API_KEY": {
-      "required": true
-    },
-    "TUTOR_TEMPLATE_ID": {
-      "required": true
     }
   },
   "addons": [
