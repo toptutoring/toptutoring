@@ -78,6 +78,17 @@ namespace :prod do
     admin.demo = true
     admin.save!
 
+    # Update assignments
+    tutor.assignments.destroy_all
+    assignment = Assignment.create(
+      tutor_id: tutor.id,
+      student_id: parent.id,
+      subject: student.subject,
+      academic_type: student.academic_type,
+      hourly_rate: 30
+    )
+    assignment.enable!
+
     # Delete test payments
     Payment.from_customer(parent.customer_id).destroy_all
     Payment.where(payer_id: admin.id).destroy_all
