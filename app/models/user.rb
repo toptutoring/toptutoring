@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
 
   # Validation #
   validates_uniqueness_of :email
+  validates_presence_of :name
 
   # Scopes #
   scope :customer, ->(customer_id) { where(customer_id: customer_id) }

@@ -1,0 +1,37 @@
+<div class="form-box-inner">
+  <h2 class="title text-center">Sign up</h2>
+  <div class="row">
+    <div class="form-container col-md-4 col-sm-12 col-xs-12 col-md-offset-4">
+      <%= form_for @user, url: users_tutors_path(@user), html: { class: "signup-form" } do |form| %>
+        <div class="form-group name">
+          <%= form.label :name %>
+          <%= form.text_field :name, type: "name", placeholder: "Full Name", class: "form-control login-email" %>
+        </div>
+
+        <div class="form-group email">
+          <%= form.label :email %>
+          <%= form.email_field :email, type: "email", placeholder: "Your Email", class: "form-control login-email" %>
+        </div>
+
+        <div class="form-group password">
+          <%= form.label :password%>
+          <%= form.password_field :password, placeholder: "Password", class: "form-control login-password" %>
+        </div>
+
+        <%= form.fields_for :tutor do |tutor_field| %>
+          <div class="form-group">
+            <%= tutor_field.label :academic_type %>
+            <%= tutor_field.select :academic_type, options_for_select(Tutor::ACADEMIC_TYPE), {}, class:"form-control" %>
+          </div>
+        <% end %>
+
+        <button type="submit" class="btn btn-block btn-primary">Sign up</button>
+        <p class="note text-center">By signing up, you agree to our terms of services and privacy policy.</p>
+        <p class="alt-path text-center">Already have an account?
+          <%= link_to "Login", sign_in_path, class: "login-link"%>
+        </p>
+      <% end %>
+    </div>
+  </div>
+
+</div>
