@@ -14,7 +14,6 @@ class Email < ActiveRecord::Base
   def email_body(invoice, parent)
     "#{invoice.tutor.name} has invoiced #{invoice.hours} hours of tutoring for #{invoice.assignment.subject}. " +
     "You have #{parent.hourly_balance <= 0 ? 0 : parent.hourly_balance} hours left in your hourly balance and payments " +
-    "must be made in advance before the next tutoring sessions. Please login to " +
-    "https://toptutoring.herokuapp.com to pay for your next sessions."
+    "must be made in advance before the next tutoring sessions."
   end
 end

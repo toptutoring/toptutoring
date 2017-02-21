@@ -2,9 +2,10 @@
   <div class="col-md-6 col-md-offset-3">
     <div class="widget">
       <div class="widget-heading">
-        <h3 class="widget-title text-center">Send email to <%= @parent.name %></h3>
+        <h3 class="widget-title text-center">Low balance email</h3>
       </div>
       <div class="widget-body">
+        <h5>Use this form to notify the client that their tutoring balance is low.</h5>
         <%= form_for(@email) do |f| %>
 
         <div class="form-group">
