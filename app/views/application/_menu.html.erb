@@ -59,6 +59,12 @@
         <% end %>
       </li>
       <li class="panel">
+        <%= link_to admin_emails_path do %>
+          <i class="icon ion-ios-email-outline bg-danger"></i>
+          <span class="sidebar-title">Emails</span>
+        <% end %>
+      </li>
+      <li class="panel">
         <%= link_to new_admin_funding_source_path do %>
           <i class="icon ion-card bg-primary"></i>
           <span class="sidebar-title">Funding Source</span>
@@ -76,6 +82,12 @@
         <%= link_to tutors_invoices_path do %>
           <i class="icon ion-clipboard bg-primary"></i>
           <span class="sidebar-title">Invoices</span>
+        <% end %>
+      </li>
+      <li class="panel">
+        <%= link_to tutors_emails_path do %>
+          <i class="icon ion-ios-email-outline bg-danger"></i>
+          <span class="sidebar-title">Emails</span>
         <% end %>
       </li>
     <% end %>

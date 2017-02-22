@@ -1,10 +1,12 @@
 <div class="row">
+  <%= render "low_balance_alert" %>
   <div class="col-md-6 col-md-offset-3">
     <div class="widget">
       <div class="widget-heading">
         <h3 class="widget-title text-center">Invoice session</h3>
       </div>
       <div class="widget-body">
+        <h5>Use this form to log future sessions with your students.</h5>
         <%= form_for(@invoice) do |f| %>
 
           <div class="form-group">

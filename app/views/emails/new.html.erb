@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="widget">
+      <div class="widget-heading">
+        <h3 class="widget-title text-center">Low balance email</h3>
+      </div>
+      <div class="widget-body">
+        <h5>Use this form to notify the client that their tutoring balance is low.</h5>
+        <%= form_for(@email) do |f| %>
+
+        <div class="form-group">
+            <%= f.label :subject %>
+            <%= f.text_field :subject, value: @email.email_subject(@invoice), class:"form-control", required: true, readonly: "readonly" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :body %>
+            <%= f.text_area :body, value: @email.email_body(@invoice, @parent), class:"form-control", rows: "10", required: true, readonly: "readonly" %>
+          </div>
+
+          <%= f.hidden_field :parent_id, value: @parent.id %>
+
+          <br />
+          <div class="text-center">
+            <button type="submit" class="btn btn-outline btn-success">Submit</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
