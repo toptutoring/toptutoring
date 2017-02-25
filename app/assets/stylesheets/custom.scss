@@ -87,7 +87,6 @@ body {
 }
 
 a, a:hover, a:visited, a.focus {
-  font-weight: 600;
   color: #59a4f0;
   text-decoration: none;
   outline: none;
@@ -322,4 +321,68 @@ ul.menu {
 
 .main-container {
   padding-top: 0;
+}
+
+.footer-top-padding {
+  padding-top: 30px;
+}
+
+.footer-2 {
+  padding-bottom: 35px;
+  padding-top: 35px;
+}
+
+.pt96 {
+  padding-top: 96px;
+}
+
+.bg-dark {
+  background: #292929;
+}
+
+footer {
+  padding: 72px 0;
+}
+
+.footer-2 .row.fade-half {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.footer-2 span {
+  color: #fefefe;
+}
+
+.footer-left ul {
+  float: left;
+  margin-bottom: 0px;
+  padding-left: 0px;
+}
+
+.footer-2 ul li {
+  display: table-cell;
+  position: relative;
+  padding: 0 10px;
+}
+
+.fade-on-hover.footer-link {
+  padding-left: 10px;
+}
+
+footer.bg-dark a {
+  color: #fefefe;
+  opacity: 1;
+}
+
+.footer-2 .rights {
+  padding-right: 20px;
+  float: right;
+}
+
+.fade-on-hover.footer-link {
+  padding-left: 10px;
+}
+
+.fade-on-hover:hover {
+  opacity: 1;
 }
