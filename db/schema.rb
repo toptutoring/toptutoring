@@ -28,12 +28,6 @@ ActiveRecord::Schema.define(version: 20170215203002) do
     t.index ["tutor_id"], name: "index_assignments_on_tutor_id", using: :btree
   end
 
-  create_table "funding_sources", force: :cascade do |t|
-    t.string  "funding_source_id"
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_funding_sources_on_user_id", using: :btree
-  end
-  
   create_table "emails", force: :cascade do |t|
     t.string   "subject"
     t.string   "body"
@@ -43,6 +37,12 @@ ActiveRecord::Schema.define(version: 20170215203002) do
     t.integer  "parent_id"
     t.index ["parent_id"], name: "index_emails_on_parent_id", using: :btree
     t.index ["tutor_id"], name: "index_emails_on_tutor_id", using: :btree
+  end
+
+  create_table "funding_sources", force: :cascade do |t|
+    t.string  "funding_source_id"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_funding_sources_on_user_id", using: :btree
   end
 
   create_table "invoices", force: :cascade do |t|

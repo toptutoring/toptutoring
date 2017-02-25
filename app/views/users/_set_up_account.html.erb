@@ -92,18 +92,20 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="exp">Expiration</label>
+              <label for="exp">Expiration</label>
+              <div class="form-group select-option">
                 <div class="controls">
-                  <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control input-sm', name: nil, data: {stripe: "exp-month"}, required: true) %>
+                  <i class="ion-chevron-down"></i>
+                  <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}, required: true) %>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="exp"></label>
+              <label for="exp"></label>
+              <div class="form-group select-option">
                 <div class="controls">
-                  <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control input-sm', name: nil, data: {stripe: "exp-year"}, required: true) %>
+                  <i class="ion-chevron-down"></i>
+                  <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, data: {stripe: "exp-year"}, required: true) %>
                 </div>
               </div>
             </div>

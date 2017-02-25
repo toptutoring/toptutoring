@@ -96,7 +96,7 @@ input, button, select, textarea {
   font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-input[type="text"], input[type="password"], input[type="email"] {
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea {
   background: #f5f5f5;
   border: none;
   width: 100%;
@@ -107,7 +107,7 @@ input[type="text"], input[type="password"], input[type="email"] {
   border-radius: 0;
 }
 
-input[type="text"], button, textarea, select, input[type="password"], input[type="email"] {
+input[type="text"], button, textarea, select, input[type="password"], input[type="email"], input[type="number"], textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -383,4 +383,12 @@ footer.bg-dark a {
 
 .fade-on-hover:hover {
   opacity: 1;
+}
+
+a#dropdownMenu2, a#dropdownMenu2:hover {
+  color: #9a9a9a;
+}
+
+legend {
+  border-bottom: 0;
 }

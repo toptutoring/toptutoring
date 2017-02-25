@@ -33,13 +33,13 @@
                     <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
                     <td class="text-center">
                       <%= link_to edit_assignment_path(representer.id) do %>
-                        <button type="button" class="btn btn-outline btn-primary">Edit</button>
+                        <button type="button" class="btn btn-outline btn-success">Edit</button>
                       <% end %>
                     </td>
                     <% if representer.updated? && representer.pending? %>
                       <td class="text-center">
                         <%= link_to enable_assignment_path(representer) do %>
-                          <button type="button" class="btn btn-outline btn-success">Enable</button>
+                          <button type="button" class="btn btn-outline btn-primary">Enable</button>
                         <% end %>
                       </td>
                     <% elsif representer.active? %>

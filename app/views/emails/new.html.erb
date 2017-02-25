@@ -15,14 +15,14 @@
 
           <div class="form-group">
             <%= f.label :body %>
-            <%= f.text_area :body, value: @email.email_body(@invoice, @parent), class:"form-control", rows: "10", required: true, readonly: "readonly" %>
+            <%= f.text_area :body, value: @email.email_body(@invoice, @parent), class:"form-control", rows: "4", required: true, readonly: "readonly" %>
           </div>
 
           <%= f.hidden_field :parent_id, value: @parent.id %>
 
           <br />
           <div class="text-center">
-            <button type="submit" class="btn btn-outline btn-success">Submit</button>
+            <button type="submit" class="btn btn-outline btn-blue">Submit</button>
           </div>
         <% end %>
       </div>
