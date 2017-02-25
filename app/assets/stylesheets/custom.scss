@@ -4,12 +4,6 @@
   color: white;
 }
 
-@media (min-width: 1200px) {
-  .container {
-      width: 100%;
-  }
-}
-
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -79,6 +73,116 @@ form {
   *::-ms-backdrop, .page-content.login {
 	   padding: 20px 20px 70px 0;
 	} /* IE */
+}
+
+.contact-us-image {
+  padding-top: 50px;
+}
+
+body {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 24px;
+  color: #666;
+  font-size: 13px;
+}
+
+a, a:hover, a:visited, a.focus {
+  font-weight: 600;
+  color: #59a4f0;
+  text-decoration: none;
+  outline: none;
+}
+
+input, button, select, textarea {
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+input[type="text"], input[type="password"] {
+  background: #f5f5f5;
+  border: none;
+  width: 100%;
+  height: 50px;
+  padding-left: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  border-radius: 0;
+}
+
+input[type="text"], button, textarea, select, input[type="password"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.select-option {
+  position: relative;
+  cursor: pointer;
+  height: 50px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.select-option i {
+  position: absolute;
+  font-size: 18px;
+  right: 20px;
+  top: 14px;
+  z-index: 2;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  cursor: pointer;
+  right: 30px;
+}
+
+select {
+  height: 50px;
+  background: #f5f5f5;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  outline: none;
+  padding-left: 20px;
+  position: relative;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #777;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.select-option select {
+  margin-bottom: 0;
+}
+
+.btn.btn-blue {
+  background: #59a4f0;
+  border: 2px solid #59a4f0;
+  margin-right: 0;
+  color: #fff;
+}
+
+.btn.btn-blue:hover {
+  background: #4890da;
+  color: #fff;
+}
+
+input[type="submit"], button[type="submit"] {
+  height: 50px;
+  line-height: 48px;
+  color: #fff;
+  width: 100%;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-radius: 0 !important;
+  padding: 0 !important;
 }
 
 .alert-danger {

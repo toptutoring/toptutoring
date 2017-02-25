@@ -11,6 +11,7 @@
     %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Top Tutoring</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600' rel='stylesheet' type='text/css'>
     <!-- PACE-->
     <%= stylesheet_link_tag '/plugins/PACE/themes/blue/pace-theme-flash.css' %>
     <%= javascript_include_tag '/plugins/PACE/pace.min.js' %>
@@ -53,10 +54,8 @@
     <% end %>
 
     <div class="main-container">
-      <div class="page-content login">
-        <%= render "flashes" %>
-        <%= yield %>
-      </div>
+      <%= render "flashes" %>
+      <%= yield %>
     </div>
 
     <%= render "footer" if current_user.nil? %>
