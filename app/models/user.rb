@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   scope :with_external_auth, -> { where.not(encrypted_access_token: nil) & where.not(encrypted_refresh_token: nil) }
   scope :tutors_with_external_auth, -> { joins(:tutor) & User.with_external_auth }
   scope :admin_payer, -> { where(admin: true) & where(demo: false) }
+  scope :enabled, -> { where(access_state: "enabled") }
 
   #### State Machine ####
   state_machine :access_state, :initial => :disabled do
