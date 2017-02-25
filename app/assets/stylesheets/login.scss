@@ -10,34 +10,35 @@ body.login {
 }
 
 .logo-word.large {
-    float: none;
+  float: none;
+  padding-bottom: 40px;
 }
 
 .logo-word {
-    overflow: hidden;
-    margin: auto;
-    padding: 10px;
-    font-size: 32px;
-    position: relative;
-    font-weight: 700;
-    .icon {
-      position: absolute;
-      left: 0;
-    }
+  overflow: hidden;
+  margin: auto;
+  padding: 10px;
+  font-size: 32px;
+  position: relative;
+  font-weight: 700;
+  .icon {
+    position: absolute;
+    left: 0;
+  }
 }
 
 #logo a {
-    pointer-events: none;
-    font-family: "Dancing Script";
-    color: white;
+  pointer-events: none;
+  font-family: "Dancing Script";
+  color: white;
 }
 
 .logo-word .logo_anchor {
-    background-position: 50%;
-    text-indent: -999em;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
+  background-position: 50%;
+  text-indent: -999em;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .login {
@@ -87,8 +88,8 @@ form.login{
 
 @media (min-width: 1200px) {
   .login-container .page-content {
-      padding: 150px 20px 0 0;
-    }
+    padding: 150px 20px 0 0;
+  }
 }
 
 .authentication-header {
@@ -110,20 +111,20 @@ form.login{
 }
 
 .footer-2 {
-    padding-bottom: 35px;
-    padding-top: 35px;
-    color: white;
+  padding-bottom: 35px;
+  padding-top: 35px;
+  color: white;
 }
 .bg-dark {
-    background: #292929;
+  background: #292929;
 }
 footer {
-    padding: 72px 0;
+  padding: 72px 0;
 }
 section, footer {
-  padding: 50px 0;
   position: relative;
   overflow: hidden;
+  padding-bottom: 5%;
 }
 
 html {
@@ -191,4 +192,8 @@ body {
 .uppercase {
   font-weight: 400;
   text-transform: uppercase;
+}
+
+.logo-img {
+  width: 250px;
 }

@@ -1,23 +1,19 @@
-<div class="page-content login">
-  <div class="login-content">
+<section>
+  <div class="container">
   <h1 class="logo-word large text-center" id="logo">
-    <img src="<%= image_url('toptutoring3.png') %>">
+    <img src="<%= image_url('topTutoringFinal.png') %>" class="logo-img">
   </h1>
   <div class="row">
-  <div class="col-md-4 col-md-offset-4 text-center login">
-    <div class="widget">
-      <div class="widget-heading">
-      </div>
-      <div class="widget-body">
+  <div class="col-md-4 col-md-offset-4 text-center">
     <%= form_for :session, url: session_path, html: { class: "form-horizontal login" } do |form| %>
       <div class="email col-xs-12">
         <%= form.label :email, class: "sr-only"  %>
-        <%= form.email_field :email, type: "email", placeholder: "Email", class: "form-control login-email" %>
+        <%= form.email_field :email, type: "email", placeholder: "Email" %>
       </div>
 
       <div class="password col-xs-12">
         <%= form.label :password, class: "sr-only"  %>
-        <%= form.password_field :password, placeholder: "Password", class: "form-control login-password" %>
+        <%= form.password_field :password, type: "password", placeholder: "Password" %>
       </div>
 
         <div class="col-xs-12">
@@ -33,14 +29,14 @@
         </div>
 
       <div class="col-xs-12">
-        <button type="submit" class="btn btn-block">Login</button>
+        <button type="submit" class="btn btn-lg btn-blue">Login</button>
       </div>
 
     <% end %>
     </div>
   </div>
   </div>
-  </div>
+</section>
 
   <!--<div class="social-btns col-md-6 col-sm-12 col-xs-12">
     <div class="clearfix">
@@ -58,5 +54,3 @@
 
   </div>
   </div>-->
-  </div>
-</div>
