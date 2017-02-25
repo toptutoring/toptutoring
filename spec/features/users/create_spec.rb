@@ -8,7 +8,7 @@ feature 'Create user' do
       fill_in "user_name", with: 'student'
       fill_in "user_email", with: 'student@example.com'
       fill_in "user_password", with: 'password'
-      click_on "Sign up"
+      click_button "Sign up"
 
       expect(page).to have_current_path(edit_user_path(User.first.id))
     end
@@ -19,7 +19,7 @@ feature 'Create user' do
       fill_in "user_name", with: 'tutor'
       fill_in "user_email", with: 'tutor@example.com'
       fill_in "user_password", with: 'password'
-      click_on "Sign up"
+      click_button "Sign up"
 
       expect(page).to have_current_path(dashboard_path)
     end
@@ -32,7 +32,7 @@ feature 'Create user' do
       fill_in "user_name", with: 'student'
       fill_in "user_email", with: 'student'
       fill_in "user_password", with: 'password'
-      click_on "Sign up"
+      click_button "Sign up"
 
       expect(page).to have_content('Email is invalid')
     end
@@ -42,7 +42,7 @@ feature 'Create user' do
 
       fill_in "user_name", with: 'tutor'
       fill_in "user_email", with: 'tutor@example.com'
-      click_on "Sign up"
+      click_button "Sign up"
 
       expect(page).to have_content("Password can't be blank")
     end
