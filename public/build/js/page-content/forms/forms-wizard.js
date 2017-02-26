@@ -4,12 +4,6 @@ $(document).ready(function() {
 		bodyTag: 'fieldset',
 		transitionEffect: 'slide'
 	});
-	$('#form-vertical').steps({
-		headerTag: 'h3',
-		bodyTag: 'fieldset',
-		transitionEffect: 'slide',
-		stepsOrientation: 'vertical'
-	});
 	$('#form-tabs').steps({
 		headerTag: 'h3',
 		bodyTag: 'fieldset',
