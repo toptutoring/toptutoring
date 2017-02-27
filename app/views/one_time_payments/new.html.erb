@@ -1,13 +1,13 @@
-<div class="payment-container">
+<section>
 
     <div class="row">
-      <legend class="col-sm-6 col-sm-offset-3"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
+      <legend class="col-sm-6 col-sm-offset-4"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
     </div>
     <div class="row">
-      <p class="col-sm-2 col-sm-offset-3">Note: All fields are required.</p>
+      <p class="col-sm-2 col-sm-offset-4">Note: All fields are required.</p>
     </div>
     <div class="row">
-      <p class="col-sm-4 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
+      <p class="col-sm-4 col-sm-offset-4">This page is protected through secure SSL encrypted payment.</p>
     </div>
 
   <%= form_tag url_for(:controller => 'one_time_payments', :action => 'create', method: :post), class: "form-horizontal payment-form", id: "payment-form" do |f| %>
@@ -56,17 +56,19 @@
         <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
       </div>
 
-      <div class="form-group">
+      <div class="form-group select-option">
         <div class="col-sm-2"></div>
         <label for="exp" class="col-sm-2 control-label">Expiration</label>
         <div class="controls">
 
           <div class="col-sm-2">
-           <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control input-sm', name: nil, data: {stripe: "exp-month"}) %>
+            <i class="ion-chevron-down"></i>
+            <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}) %>
           </div>
 
           <div class="col-sm-1">
-              <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control input-sm', name: nil, data: {stripe: "exp-year"}) %>
+            <i class="ion-chevron-down"></i>
+            <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, data: {stripe: "exp-year"}) %>
           </div>
 
           <%= hidden_field_tag :token %>
@@ -96,7 +98,7 @@
     </fieldset>
 
     <div class="form-group">
-      <div class="col-xs-2 col-xs-offset-4">
+      <div class="col-xs-3 col-xs-offset-4">
         <input type="submit" value="Pay" class="btn btn-block payment_submit">
       </div>
     </div>
@@ -104,6 +106,6 @@
     <%= hidden_field_tag :stripe_publishable_key, ENV['STRIPE_PUBLISHABLE_KEY'] %>
 
   <% end %>
-</div>
+</section>
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>

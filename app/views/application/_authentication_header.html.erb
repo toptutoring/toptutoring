@@ -1,23 +1,35 @@
-<header class="authentication-header">
-  <ul class="notification-bar list-inline pull-left">
-    <li class="visible-lg">
-      <a href="http://toptutoring.com" role="button" class="header-icon header-logo sidebar-control">
-        <img src="<%= image_url('toptutoring3.png') %>" class="logo">
-      </a>
-    </li>
-  </ul>
-  <ul class="notification-bar list-inline pull-right">
-    <li class="visible-lg">
-      <a href="http://www.toptutoring.com/sign_up/" role="button" class="header-icon sidebar-control">SIGN UP</a>
-    </li>
-    <li class="visible-lg">
-      <a href="http://www.toptutoring.com/contact/" role="button" class="header-icon sidebar-control">CONTACT</a>
-    </li>
-    <li class="visible-lg">
-      <a href="http://www.toptutoring.com/about_us/" role="button" class="header-icon sidebar-control">ABOUT US</a>
-    </li>
-    <li class="visible-lg">
-      <a href="http://www.toptutoring.com/blog/" role="button" class="header-icon sidebar-control">BLOG</a>
-    </li>
-  </ul>
-</header>
+<nav>
+  <div class="nav-bar">
+    <div class="module left">
+        <a href="<%= root_path %>">
+          <div class="vnu">
+            <img src="<%= image_url('topTutoringFinal.png') %>" class="logo logo-dark">
+          </div>
+        </a>
+    </div>
+    <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
+        <i class="ti-menu"></i>
+    </div>
+    <div class="module-group right">
+        <div class="module left">
+            <ul class="menu">
+              <li>
+                <a class="page-link logo-dark" href="http://www.toptutoring.com/how_it_works/">How It Works</a>
+              </li>
+              <li>
+                <a class="page-link logo-dark" href="http://www.toptutoring.com/about_us/">About us</a>
+              </li>
+              <li>
+                <a class="page-link logo-dark" href="http://www.toptutoring.com/contact/">Contact</a>
+              </li>
+              <li>
+                <a class="page-link logo-dark" href="http://www.toptutoring.com/blog/">Blog</a>
+              </li>
+              <li>
+                <%= link_to "Sign up", new_users_student_path, class: "page-link logo-dark" %>
+              </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+</nav>

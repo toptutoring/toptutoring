@@ -69,6 +69,13 @@ Rails.application.routes.draw do
 
   # Users
   resources :users, only: [:edit, :update]
+
+  # Users signup.
+  namespace :users do
+    resources :students, only: [:new, :create]
+    resources :tutors, only: [:new, :create]
+  end
+
   resources :assignments do
     member do
       get '/enable' => "assignments#enable"

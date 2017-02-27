@@ -6,9 +6,10 @@
       <div class="widget-body">
         <%= form_for @payment, :url => admin_payments_path(@login), html: {class: "js-form-validation"} do |form| %>
 
-          <div class="form-group">
-            <%= form.label :payee_id, "Tutor" %>
-            <%= form.select :payee_id, options_from_collection_for_select(@tutors, :id, :name), {}, class: "form-control" %>
+          <%= form.label :payee_id, "Tutor" %>
+          <div class="select-option">
+            <i class="ion-chevron-down"></i>
+            <%= form.select :payee_id, options_from_collection_for_select(@tutors, :id, :name), {} %>
           </div>
 
           <% @tutors.each do |tutor| %>
@@ -36,7 +37,7 @@
           </div>
 
           <%= form.hidden_field :payer_id, value: current_user.id %>
-        <%= form.submit "Send Payment", class: "btn btn-success margin-top-md center-block", date: {dismiss: "modal"}%>
+        <%= form.submit "Send Payment", class: "btn btn-blue margin-top-md center-block", date: {dismiss: "modal"}%>
       <% end %>
       </div>
     </div>

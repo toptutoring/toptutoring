@@ -1,0 +1,47 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-md-5">
+        <h4 class="uppercase">Sign Up</h4>
+        <p> Already have an account?
+          <%= link_to "Sign in", sign_in_path %>
+        </p>
+        <%= image_tag("yellownotebook.jpg", class: "contact-us-image") %>
+        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br></p>
+      </div>
+      <div class="col-sm-6 col-md-6 col-md-offset-1">
+        <%= form_for @user, url: users_students_path(@user), html: { class: "signup-form" } do |form| %>
+          <div class="col-md-12">
+            <%= form.text_field :name, type: "text", placeholder: "Full Name" %>
+          </div>
+
+          <div class="col-md-12">
+            <%= form.email_field :email, type: "text", placeholder: "Your Email" %>
+          </div>
+
+          <div class="col-md-12">
+            <%= form.password_field :password, placeholder: "Password" %>
+          </div>
+
+          <%= form.fields_for :student do |student_field| %>
+            <div class="col-md-12 select-option">
+              <i class="ion-chevron-down"></i>
+              <%= student_field.select :academic_type, options_for_select(Student::ACADEMIC_TYPE), {}, class:"wpcf7-form-control wpcf7-select" %>
+            </div>
+          <% end %>
+
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-lg btn-blue">Sign up</button>
+          </div>
+
+          <div class="col-md-12">
+            <p class="note text-center">
+              By signing up, you agree to our terms of services and privacy policy.
+            </p>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

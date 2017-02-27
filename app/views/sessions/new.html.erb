@@ -1,60 +1,56 @@
-<div class="login-content">
-<h1 class="logo-word large text-center" id="logo">
-  <img src="<%= image_url('toptutoring3.png') %>">
-</h1>
-<div class="row">
-<div class="col-md-4 col-md-offset-4 text-center login">
-  <div class="widget">
-    <div class="widget-heading">
-    </div>
-    <div class="widget-body">
-  <%= form_for :session, url: session_path, html: { class: "form-horizontal login" } do |form| %>
-    <div class="email col-xs-12">
-      <%= form.label :email, class: "sr-only"  %>
-      <%= form.email_field :email, type: "email", placeholder: "Email", class: "form-control login-email" %>
-    </div>
-
-    <div class="password col-xs-12">
-      <%= form.label :password, class: "sr-only"  %>
-      <%= form.password_field :password, placeholder: "Password", class: "form-control login-password" %>
-    </div>
-
-      <div class="col-xs-12">
-        <div class="pull-left">
-          <%= form.label :remember_me, class: "remember-me inline-block form-control-static" do %>
-            <%= form.check_box :remember_me %>
-              Remember me
-          <% end %>
-        </div>
-        <div class="pull-right">
-          <%= link_to "Trouble signing in?", reset_password_path, class: "inline-block form-control-static" %>
-        </div>
+<section>
+  <div class="container">
+  <h1 class="logo-word large text-center" id="logo">
+    <img src="<%= image_url('topTutoringFinal.png') %>" class="logo-img">
+  </h1>
+  <div class="row">
+  <div class="col-md-4 col-md-offset-4 text-center">
+    <%= form_for :session, url: session_path, html: { class: "form-horizontal login" } do |form| %>
+      <div class="email col-xs-12">
+        <%= form.label :email, class: "sr-only"  %>
+        <%= form.email_field :email, type: "email", placeholder: "Email" %>
       </div>
 
-    <div class="col-xs-12">
-      <button type="submit" class="btn btn-block">Login</button>
+      <div class="password col-xs-12">
+        <%= form.label :password, class: "sr-only"  %>
+        <%= form.password_field :password, type: "password", placeholder: "Password" %>
+      </div>
+
+        <div class="col-xs-12">
+          <div class="pull-left">
+            <%= form.label :remember_me, class: "remember-me inline-block form-control-static" do %>
+              <%= form.check_box :remember_me %>
+                Remember me
+            <% end %>
+          </div>
+          <div class="pull-right">
+            <%= link_to "Trouble signing in?", reset_password_path, class: "inline-block form-control-static" %>
+          </div>
+        </div>
+
+      <div class="col-xs-12">
+        <button type="submit" class="btn btn-lg btn-blue">Login</button>
+      </div>
+
+    <% end %>
     </div>
-
-  <% end %>
   </div>
-</div>
-</div>
-</div>
-
-<!--<div class="social-btns col-md-6 col-sm-12 col-xs-12">
-  <div class="clearfix">
-    <p class="text-muted text-center">Need an account?<a class="signup-link" href="">Sign up now</a></p>
   </div>
-  <div class="divider">
-    <span>Or</span>
-  </div>
-    <div class="widget">
-    <div class="widget-body">
-      <%= link_to "/auth/dwolla", class: "btn btn-block social-btn" do %>
-        <i class="fa fa-university"></i>Log in with Dwolla</button>
-        <% end %>
-</div>
+</section>
 
-</div>
-</div>-->
-</div>
+  <!--<div class="social-btns col-md-6 col-sm-12 col-xs-12">
+    <div class="clearfix">
+      <p class="text-muted text-center">Need an account?<a class="signup-link" href="">Sign up now</a></p>
+    </div>
+    <div class="divider">
+      <span>Or</span>
+    </div>
+      <div class="widget">
+      <div class="widget-body">
+        <%= link_to "/auth/dwolla", class: "btn btn-block social-btn" do %>
+          <i class="fa fa-university"></i>Log in with Dwolla</button>
+          <% end %>
+  </div>
+
+  </div>
+  </div>-->

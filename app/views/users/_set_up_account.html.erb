@@ -10,13 +10,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <%= f.label :name %>
-                <%= f.text_field :name, value: current_user.name, class:"form-control"%>
+                <%= f.text_field :name, value: current_user.name, class:"form-control", required: true%>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <%= f.label :email %>
-                <%= f.text_field :email, value: current_user.email, class:"form-control" %>
+                <%= f.text_field :email, value: current_user.email, class:"form-control", required: true %>
               </div>
             </div>
           </div>
@@ -24,7 +24,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <%= f.label :phone_number %>
-                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), class:"form-control"%>
+                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), class:"form-control", required: true%>
               </div>
             </div>
           </div>
@@ -36,13 +36,13 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <%= student_field.label :student_name %>
-                  <%= student_field.text_field :name, class:"form-control" %>
+                  <%= student_field.text_field :name, class:"form-control", required: true %>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <%= student_field.label :student_email %>
-                  <%= student_field.email_field :email, class:"form-control" %>
+                  <%= student_field.email_field :email, class:"form-control"%>
                 </div>
               </div>
             </div>
@@ -56,7 +56,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <%= student_field.label :subject %>
-                  <%= student_field.text_field :subject, class:"form-control" %>
+                  <%= student_field.text_field :subject, class:"form-control", required: true %>
                 </div>
               </div>
             </div>
@@ -92,18 +92,20 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="exp">Expiration</label>
+              <label for="exp">Expiration</label>
+              <div class="form-group select-option">
                 <div class="controls">
-                  <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control input-sm', name: nil, data: {stripe: "exp-month"}, required: true) %>
+                  <i class="ion-chevron-down"></i>
+                  <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}, required: true) %>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="exp"></label>
+              <label for="exp"></label>
+              <div class="form-group select-option">
                 <div class="controls">
-                  <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control input-sm', name: nil, data: {stripe: "exp-year"}, required: true) %>
+                  <i class="ion-chevron-down"></i>
+                  <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, data: {stripe: "exp-year"}, required: true) %>
                 </div>
               </div>
             </div>

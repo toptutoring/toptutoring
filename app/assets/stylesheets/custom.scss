@@ -4,12 +4,6 @@
   color: white;
 }
 
-@media (min-width: 1200px) {
-  .container {
-      width: 100%;
-  }
-}
-
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -81,6 +75,320 @@ form {
 	} /* IE */
 }
 
+.contact-us-image {
+  padding-top: 50px;
+}
+
+body {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 24px;
+  color: #666;
+  font-size: 13px;
+}
+
+a, a:hover, a:visited, a.focus {
+  color: #59a4f0;
+  text-decoration: none;
+  outline: none;
+}
+
+input, button, select, textarea {
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea {
+  background: #f5f5f5;
+  border: none;
+  width: 100%;
+  height: 50px;
+  padding-left: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  border-radius: 0;
+}
+
+input[type="text"], button, textarea, select, input[type="password"], input[type="email"], input[type="number"], textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.select-option {
+  position: relative;
+  cursor: pointer;
+  height: 50px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.select-option i {
+  position: absolute;
+  font-size: 18px;
+  right: 20px;
+  top: 14px;
+  z-index: 2;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  cursor: pointer;
+  right: 30px;
+}
+
+select {
+  height: 50px;
+  background: #f5f5f5;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  outline: none;
+  padding-left: 20px;
+  position: relative;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #777;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.select-option select {
+  margin-bottom: 0;
+}
+
+.btn.btn-blue {
+  background: #59a4f0;
+  border: 2px solid #59a4f0;
+  margin-right: 0;
+  color: #fff;
+}
+
+.btn.btn-blue:hover {
+  background: #4890da;
+  color: #fff;
+}
+
+input[type="submit"], button[type="submit"] {
+  height: 50px;
+  line-height: 48px;
+  color: #fff;
+  width: 100%;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
 .alert-danger {
   min-height: 0px;
+  position: absolute;
+  width: 100%;
+}
+
+nav {
+  background: #fff;
+  max-width: 100%;
+}
+
+.nav-bar {
+  height: 55px;
+  max-height: 55px;
+  line-height: 53px;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav-bar .module, .nav-bar .module-group {
+  height: 55px;
+}
+
+.module.left, .module-group.left {
+  float: left;
+}
+
+.module {
+  display: inline-block;
+  padding: 0 32px;
+}
+
+.nav-bar a {
+  display: inline-block;
+  height: 55px;
+}
+
+.vnu {
+  display: inline;
+}
+
+.logo {
+  max-height: 60%;
+}
+
+.module.widget-handle {
+  border-left: 1px solid #ccc;
+  padding: 0 24px;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  margin: 0;
+}
+
+.module.right, .module-group.right {
+  float: right;
+}
+
+.right {
+  right: 0;
+}
+
+.visible-xs, .visible-sm, .visible-md, .visible-lg {
+  display: none !important;
+}
+
+.module.widget-handle i {
+  font-size: 20px;
+  line-height: 53px;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+}
+
+[class^="ti-"], [class*=" ti-"] {
+  font-family: 'themify';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.module-group {
+  display: inline-block;
+}
+
+.menu {
+  width: 100%;
+  height: 55px;
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+nav ul {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1120px) {
+  .menu > li {
+      margin-right: 24px;
+  }
+}
+
+.menu > li {
+  margin-right: 32px;
+  float: left;
+  position: relative;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  opacity: 1;
+}
+
+.menu li a {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #292929;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  max-width: 100%;
+  white-space: normal;
+}
+
+ul.menu {
+  list-style: none;
+}
+
+.menu > li:last-child {
+  margin-right: 0;
+}
+
+.footer-top-padding {
+  padding-top: 30px;
+}
+
+.footer-2 {
+  padding-bottom: 35px;
+  padding-top: 35px;
+}
+
+.pt96 {
+  padding-top: 96px;
+}
+
+.bg-dark {
+  background: #292929;
+}
+
+footer {
+  padding: 72px 0;
+}
+
+.footer-2 .row.fade-half {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.footer-2 span {
+  color: #fefefe;
+}
+
+.footer-left ul {
+  float: left;
+  margin-bottom: 0px;
+  padding-left: 0px;
+}
+
+.footer-2 ul li {
+  display: table-cell;
+  position: relative;
+  padding: 0 10px;
+}
+
+.fade-on-hover.footer-link {
+  padding-left: 10px;
+}
+
+footer.bg-dark a {
+  color: #fefefe;
+  opacity: 1;
+}
+
+.footer-2 .rights {
+  padding-right: 20px;
+  float: right;
+}
+
+.fade-on-hover.footer-link {
+  padding-left: 10px;
+}
+
+.fade-on-hover:hover {
+  opacity: 1;
+}
+
+a#dropdownMenu2, a#dropdownMenu2:hover {
+  color: #9a9a9a;
+}
+
+legend {
+  border-bottom: 0;
 }

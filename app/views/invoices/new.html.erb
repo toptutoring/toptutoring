@@ -20,20 +20,18 @@
           </div>
 
           <div class="form-group">
-            <%= f.label :hours %>
-            <%= f.number_field :hours, class:"form-control", required: true, min:"0.5", pattern: "[0-9]", step: "0.5"%>
+            <%= f.number_field :hours, class:"form-control", required: true, min:"0.5", pattern: "[0-9]", step: "0.5", placeholder: "Hours"%>
           </div>
 
           <div class="form-group">
-            <%= f.label :description %>
-            <%= f.text_field :description, class:"form-control" %>
+            <%= f.text_field :description, class:"form-control", placeholder: "Description" %>
           </div>
 
           <%= f.hidden_field :student_id, value: @student.id %>
 
           <br />
           <div class="text-center">
-            <button type="submit" class="btn btn-outline btn-success">Submit</button>
+            <button type="submit" class="btn btn-outline btn-blue">Submit</button>
           </div>
         <% end %>
       </div>
