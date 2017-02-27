@@ -7,6 +7,7 @@ class Assignment < ActiveRecord::Base
   #### Scopes ####
 
   scope :pending, -> { where(state: :pending).order('created_at DESC') }
+  scope :active, -> { where(state: :active) }
 
   #### State Machine ####
 
