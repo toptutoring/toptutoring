@@ -6,5 +6,10 @@ module Features
       fill_in 'Password', with: user.password
       click_button 'Login'
     end
+
+    def sign_out
+      click_on "dropdownMenu2"
+      click_on "sign-out"
+    end
   end
 end

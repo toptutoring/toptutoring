@@ -78,14 +78,14 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="card-holder-name">Card Holder's Name</label>
-                <input type="text" class="form-control"  data-stripe="name" title="This is the name as written on your credit card." required>
+                <input type="text" class="form-control" id="card_holder"  data-stripe="name" title="This is the name as written on your credit card." required>
                 </input>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="credit-card-number">Credit Card</label>
-                <input type="text" class="form-control"  data-stripe="number" title="Fill in your credit card number." required>
+                <input type="text" class="form-control"  id="credit_card" data-stripe="number" title="Fill in your credit card number." required>
                 </input>
               </div>
             </div>
@@ -115,7 +115,7 @@
               <div class="form-group">
                 <div class="col-md-3 col-cvv-fixed-width left">
                   <label for="cvv-code" class="control-label">CVV</label>
-                  <input type="text" class="form-control input-sm"  data-stripe="cvc" size="4" required></input>
+                  <input type="text" class="form-control input-sm" id="cvc"  data-stripe="cvc" size="4" required></input>
                 </div>
               </div>
             </br>
