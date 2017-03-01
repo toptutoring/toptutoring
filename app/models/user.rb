@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   scope :tutors_with_external_auth, -> { joins(:tutor) & User.with_external_auth }
   scope :admin_payer, -> { where(admin: true) & where(demo: false) }
   scope :enabled, -> { where(access_state: "enabled") }
+  scope :assigned, -> { joins(:assignment).merge(Assignment.active) }
 
   #### State Machine ####
   state_machine :access_state, :initial => :disabled do

@@ -4,7 +4,7 @@ module Admin
     before_action :set_user, only: [:edit, :update]
 
     def index
-      @users = User.with_parent_role.enabled
+      @users = User.with_parent_role.assigned
     end
 
     def update
