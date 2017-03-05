@@ -395,7 +395,29 @@ legend {
 
 @media (max-width: 767px) {
   .notification-bar > li.dropdown.open .dropdown-menu {
-      top: 54px;
-      width: 100%;
+    top: 54px;
+    width: 160px;
+  }
+}
+
+@media (min-width: 870px) {
+  .main-sidebar {
+    opacity: 1;
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 870px) {
+  .page-container {
+    padding-left: 260px;
+    -webkit-transition: padding-left 0.3s;
+    -moz-transition: padding-left 0.3s;
+    -o-transition: padding-left 0.3s;
+    transition: padding-left 0.3s;
   }
 }
