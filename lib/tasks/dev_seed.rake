@@ -77,6 +77,9 @@ namespace :dev do
     )
     assignment.enable!
 
+    # Update invoices
+    tutor.invoices.destroy_all
+
     # Update payments
     Payment.from_customer(parent.customer_id).destroy_all
     Payment.where(payer_id: admin.id).destroy_all

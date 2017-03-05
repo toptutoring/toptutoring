@@ -5,7 +5,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :assignment
   before_save :set_amount_value
 
-  validates :hours, presence: true, numericality: { greater_than_or_equal_to: 1 }
+  validates :hours, presence: true, numericality: { greater_than_or_equal_to: 0.5 }
 
   private
 

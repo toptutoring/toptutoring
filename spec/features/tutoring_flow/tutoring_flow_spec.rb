@@ -61,7 +61,7 @@ feature 'Tutoring flow' do
 
     click_link "Send Email"
     expect(page).to have_content("Use this form to notify the client that their tutoring balance is low.")
-    expect(page).to have_field("email_body", with: "Tutor has invoiced 3 hours of tutoring for Math. You have 0 hours left in your hourly balance and payments must be made in advance before the next tutoring sessions.")
+    expect(page).to have_field("email_body", with: "Tutor has invoiced 3.0 hours of tutoring for Math. You have 0 hours left in your hourly balance and payments must be made in advance before the next tutoring sessions.")
     click_on "Submit"
     sign_out
 

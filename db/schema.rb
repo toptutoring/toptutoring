@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215203002) do
+ActiveRecord::Schema.define(version: 20170305124351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,12 +49,12 @@ ActiveRecord::Schema.define(version: 20170215203002) do
     t.integer  "student_id"
     t.integer  "tutor_id"
     t.integer  "assignment_id"
-    t.integer  "hours"
+    t.decimal  "hours",         precision: 10, scale: 2, default: "0.0", null: false
     t.integer  "hourly_rate"
     t.integer  "amount"
     t.string   "description"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.index ["assignment_id"], name: "index_invoices_on_assignment_id", using: :btree
     t.index ["student_id"], name: "index_invoices_on_student_id", using: :btree
     t.index ["tutor_id"], name: "index_invoices_on_tutor_id", using: :btree

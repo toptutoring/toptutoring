@@ -7,7 +7,7 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.create(invoice_params)
+    @invoice = Invoice.new(invoice_params)
     if @invoice.save
       UpdateUserBalance.new(@invoice.amount, current_user.id).increase
       UpdateUserBalance.new(@invoice.amount, @student.id).decrease

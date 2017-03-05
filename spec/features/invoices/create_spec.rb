@@ -25,7 +25,7 @@ feature 'Create Invoice' do
 
     fill_in "invoice_hours", with: 0
     click_on "Submit"
-    expect(page).to have_content('Hours must be greater than or equal to 1')
+    expect(page).to have_content('Hours must be greater than or equal to 0.5')
   end
 
   scenario 'with valid params' do
@@ -36,7 +36,7 @@ feature 'Create Invoice' do
     sign_in(tutor)
     visit new_invoice_path(parent)
 
-    fill_in "invoice_hours", with: 1
+    fill_in "invoice_hours", with: 0.5
     click_on "Submit"
     expect(page).to have_content('Session successfully logged!')
   end
