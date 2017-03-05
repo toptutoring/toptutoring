@@ -7,7 +7,8 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    if @invoice = Invoice.create(invoice_params)
+    @invoice = Invoice.create(invoice_params)
+    if @invoice.save
       UpdateUserBalance.new(@invoice.amount, current_user.id).increase
       UpdateUserBalance.new(@invoice.amount, @student.id).decrease
       redirect_to tutors_students_path, notice: 'Session successfully logged!'

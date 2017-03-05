@@ -10,13 +10,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <%= f.label :name %>
-                <%= f.text_field :name, value: current_user.name, class:"form-control", required: true%>
+                <%= f.text_field :name, value: current_user.name, class:"form-control", required: true, readonly: true %>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <%= f.label :email %>
-                <%= f.text_field :email, value: current_user.email, class:"form-control", required: true %>
+                <%= f.text_field :email, value: current_user.email, class:"form-control", required: true, readonly: true %>
               </div>
             </div>
           </div>
@@ -24,7 +24,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <%= f.label :phone_number %>
-                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), class:"form-control", required: true%>
+                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), class:"form-control" %>
               </div>
             </div>
           </div>
@@ -42,7 +42,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <%= student_field.label :student_email %>
-                  <%= student_field.email_field :email, class:"form-control"%>
+                  <%= student_field.email_field :email, class:"form-control", required: true %>
                 </div>
               </div>
             </div>
@@ -50,7 +50,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <%= student_field.label :student_phone_number %>
-                  <%= student_field.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), class:"form-control"%>
+                  <%= student_field.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), class:"form-control" %>
                 </div>
               </div>
               <div class="col-md-6">

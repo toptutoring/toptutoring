@@ -18,6 +18,15 @@ module Admin
       end
     end
 
+    def update
+      if @funding_source.update(funding_source_params)
+        redirect_to :back, notice: 'Funding source successfully set.'
+      else
+        flash[:danger] = @funding_source.errors.full_messages
+        redirect_to :back
+      end
+    end
+
     private
 
     def funding_source_params

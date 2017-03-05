@@ -9,7 +9,7 @@
           <%= f.fields_for :student do |student_field| %>
             <div class="form-group">
               <%= student_field.label :student_name %>
-              <%= student_field.text_field :name, autofocus: true, class:"form-control", disabled: true %>
+              <%= student_field.text_field :name, autofocus: true, class:"form-control", readonly: true %>
             </div>
 
             <div class="form-group">
