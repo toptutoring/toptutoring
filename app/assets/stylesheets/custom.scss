@@ -392,3 +392,10 @@ a#dropdownMenu2, a#dropdownMenu2:hover {
 legend {
   border-bottom: 0;
 }
+
+@media (max-width: 767px) {
+  .notification-bar > li.dropdown.open .dropdown-menu {
+      top: 54px;
+      width: 100%;
+  }
+}
