@@ -14,7 +14,8 @@ class EmailsController < ApplicationController
       TutorMailer.perform(@email.id).deliver_now
       redirect_to tutors_students_path, notice: 'Email has been sent!'
     else
-      redirect_to :back, flash: { error: @email.errors.full_messages }
+      redirect_back(fallback_location: (request.referer || root_path),
+                    flash: { error: @email.errors.full_messages })
     end
   end
 
@@ -31,7 +32,8 @@ class EmailsController < ApplicationController
 
   def check_parent
     if @parent.id != email_params[:parent_id].to_i
-      redirect_to :back, flash: { error: 'Invalid receiver!' }
+      redirect_back(fallback_location: (request.referer || root_path),
+                    flash: { error: 'Invalid receiver!' })
     end
   end
 

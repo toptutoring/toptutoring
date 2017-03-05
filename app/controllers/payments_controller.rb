@@ -24,7 +24,7 @@ class PaymentsController < ApplicationController
 
           PaymentService.new.perform(payment, current_user.id)
           flash[:notice] = 'Payment successfully made.'
-          redirect_to :back
+          redirect_back(fallback_location: (request.referer || root_path))
       rescue Stripe::CardError => e
         flash[:danger] = e.message
         render :new

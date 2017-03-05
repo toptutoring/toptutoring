@@ -5,7 +5,7 @@ feature "Index students" do
     scenario "should see students" do
       director = FactoryGirl.create(:director_user)
       parent = FactoryGirl.create(:parent_user)
-      assignment = FactoryGirl.create(:assignment, tutor: director, student: parent)
+      parent.assignment.update(tutor_id: director.id)
 
       sign_in(director)
       visit tutors_students_path
@@ -31,7 +31,7 @@ feature "Index students" do
       admin = FactoryGirl.create(:admin_user)
       parent = FactoryGirl.create(:parent_user)
       director = FactoryGirl.create(:director_user)
-      assignment = FactoryGirl.create(:assignment, tutor: director, student: parent)
+      parent.assignment.update(tutor_id: director.id)
 
       sign_in(admin)
       visit admin_users_path
@@ -46,7 +46,7 @@ feature "Index students" do
       expect(page).to have_content(parent.student.subject)
       expect(page).to have_content(parent.student.academic_type)
       expect(page).to have_content(parent.balance)
-      expect(page).to have_content(assignment.tutor.name)
+      expect(page).to have_content(parent.assignment.tutor.name)
       expect(page).to have_content("Edit")
     end
   end

@@ -64,7 +64,7 @@ module Admin
         if @payee.currency_balance < payment_params[:amount].to_f
           flash[:danger] = 'This exceeds the maximum payment for this tutor.
             Please contact an administrator if you have any questions'
-          redirect_to :back
+            redirect_back(fallback_location: (request.referer || root_path))
         end
       end
     end
