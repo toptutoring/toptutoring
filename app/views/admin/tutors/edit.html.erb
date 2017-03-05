@@ -19,14 +19,14 @@
 
             <div class="form-group">
               <%= tutor_field.label :hourly_rate %>
-              <%= tutor_field.number_field :hourly_rate, class:"form-control", min: "0"%>
+              <%= tutor_field.number_field :hourly_rate, class:"form-control", min: "0", required: true%>
             </div>
           <% end %>
 
           <% if current_user.admin %>
             <div class="form-group">
               <%= f.label :balance %>
-              <%= f.number_field :balance, class:"form-control", min: "0"%>
+              <%= f.number_field :balance, class:"form-control", min: "0", required: true%>
             </div>
           <% end %>
 
