@@ -33,6 +33,7 @@ gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
 gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'activemodel-serializers-xml'
+gem "intercom-rails"
 
 group :development do
   gem "listen"
