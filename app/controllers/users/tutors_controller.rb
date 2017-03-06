@@ -1,6 +1,6 @@
 module Users
   class TutorsController < ApplicationController
-    before_filter :redirect_to_root, :only => [:new, :create], :if => :signed_in?
+    before_action :redirect_to_root, :only => [:new, :create], :if => :signed_in?
     layout "authentication"
 
     def new
@@ -14,7 +14,8 @@ module Users
         sign_in(@user)
         redirect_to :root
       else
-        redirect_to :back, flash: { error: @user.errors.full_messages }
+        redirect_back(fallback_location: (request.referer || root_path),
+                      flash: { error: @user.errors.full_messages })
       end
     end
 

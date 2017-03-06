@@ -1,0 +1,147 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f/funding-sources
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer QDNYpjlWQJyvtgxqj2LYcCNlJUVdISlcdUPwsW83ueXEIuuu7v
+      Accept:
+      - application/vnd.dwolla.v1.hal+json
+      User-Agent:
+      - dwolla-v2-ruby 1.1.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 05 Mar 2017 08:12:37 GMT
+      Content-Type:
+      - application/vnd.dwolla.v1.hal+json; charset=UTF-8
+      Content-Length:
+      - '1684'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=df87f495173613ca926abcd93dec4b2751488701557; expires=Mon, 05-Mar-18
+        08:12:37 GMT; path=/; domain=.dwolla.com; HttpOnly
+      X-Request-Id:
+      - 5c497599-bc6f-48d7-921b-8f7faa217041
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 33ab9c7bbaf7139b-LHR
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f/funding-sources","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"}},"_embedded":{"funding-sources":[{"_links":{"self":{"href":"https://api-uat.dwolla.com/funding-sources/58be4af4-adbc-4683-aa10-e50059cdf294","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"},"account":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f","type":"application/vnd.dwolla.v1.hal+json","resource-type":"account"}},"id":"58be4af4-adbc-4683-aa10-e50059cdf294","status":"verified","type":"bank","name":"Superhero
+        Savings Bank","created":"2016-12-28T12:47:08.000Z","removed":false,"channels":["ach"],"bankName":"SANDBOX
+        TEST BANK"},{"_links":{"self":{"href":"https://api-uat.dwolla.com/funding-sources/c9b5fe28-2bd5-4cf7-9e83-b71316020430","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"},"account":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f","type":"application/vnd.dwolla.v1.hal+json","resource-type":"account"},"with-available-balance":{"href":"https://api-uat.dwolla.com/funding-sources/c9b5fe28-2bd5-4cf7-9e83-b71316020430","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"},"balance":{"href":"https://api-uat.dwolla.com/funding-sources/c9b5fe28-2bd5-4cf7-9e83-b71316020430/balance","type":"application/vnd.dwolla.v1.hal+json","resource-type":"balance"}},"id":"c9b5fe28-2bd5-4cf7-9e83-b71316020430","status":"verified","type":"balance","name":"Balance","created":"2016-12-28T12:47:06.000Z","removed":false,"channels":[]}]}}'
+    http_version: 
+  recorded_at: Sun, 05 Mar 2017 08:12:37 GMT
+- request:
+    method: post
+    uri: https://uat.dwolla.com/oauth/v2/token
+    body:
+      encoding: UTF-8
+      string: grant_type=refresh_token&refresh_token=TQ9z9qBMBMEhSPx4PE3shQ1v5uDN0jxO1zHqn7EtrXRb8bjCr5
+    headers:
+      User-Agent:
+      - dwolla-v2-ruby 1.1.2
+      Authorization:
+      - Basic NkxjT2U0a2puc2xCcVZEb0pzQk00WWppcVc0UFhyeVhrMWRISDZSemlzWFp3OTUzZHA6MDJ1ejY5RlV4RUoySHh1cDlWMnVXdnFZUVlIWERyekRLY3QycFdwb2N1Q2lrVlc1NjI=
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 05 Mar 2017 08:12:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d807f40438812f105eef9bf943c93a04f1488701560; expires=Mon, 05-Mar-18
+        08:12:40 GMT; path=/; domain=.dwolla.com; HttpOnly
+      - dtid=75ad6b6a-58ad-4092-8b7b-5e909b0e0c74; expires=Fri, 05-Mar-2027 08:12:39
+        GMT; path=/; HttpOnly
+      Cache-Control:
+      - private
+      P3p:
+      - CP="CAO PSA OUR"
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Aspnetmvc-Version:
+      - '4.0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 33ab9c935e1a2c0c-AMS
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_links":{"account":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"}},"access_token":"xoczZ19b75qf9iwdmYJ0NwXf7vDbNS36ZiZqGYqCu2CdN27Dhc","expires_in":3638,"refresh_token":"zr5yPJ2UtLe7oB3UhKxQ5RCfBdiAoulI7uyimehoeM5W1bmpR6","refresh_expires_in":5184038,"token_type":"bearer","scope":"accountinfofull|email|transactions|send|funding","account_id":"8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"}'
+    http_version: 
+  recorded_at: Sun, 05 Mar 2017 08:12:42 GMT
+- request:
+    method: get
+    uri: https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f/funding-sources
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer xoczZ19b75qf9iwdmYJ0NwXf7vDbNS36ZiZqGYqCu2CdN27Dhc
+      Accept:
+      - application/vnd.dwolla.v1.hal+json
+      User-Agent:
+      - dwolla-v2-ruby 1.1.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 05 Mar 2017 08:12:44 GMT
+      Content-Type:
+      - application/vnd.dwolla.v1.hal+json; charset=UTF-8
+      Content-Length:
+      - '1684'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=daf0663b1ff67b42582534d6785bc92e51488701563; expires=Mon, 05-Mar-18
+        08:12:43 GMT; path=/; domain=.dwolla.com; HttpOnly
+      X-Request-Id:
+      - 0e60db7d-81c6-4914-b223-6a6ac9f022a2
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 33ab9ca53cd13560-LHR
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f/funding-sources","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"}},"_embedded":{"funding-sources":[{"_links":{"self":{"href":"https://api-uat.dwolla.com/funding-sources/58be4af4-adbc-4683-aa10-e50059cdf294","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"},"account":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f","type":"application/vnd.dwolla.v1.hal+json","resource-type":"account"}},"id":"58be4af4-adbc-4683-aa10-e50059cdf294","status":"verified","type":"bank","name":"Superhero
+        Savings Bank","created":"2016-12-28T12:47:08.000Z","removed":false,"channels":["ach"],"bankName":"SANDBOX
+        TEST BANK"},{"_links":{"self":{"href":"https://api-uat.dwolla.com/funding-sources/c9b5fe28-2bd5-4cf7-9e83-b71316020430","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"},"account":{"href":"https://api-uat.dwolla.com/accounts/8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f","type":"application/vnd.dwolla.v1.hal+json","resource-type":"account"},"with-available-balance":{"href":"https://api-uat.dwolla.com/funding-sources/c9b5fe28-2bd5-4cf7-9e83-b71316020430","type":"application/vnd.dwolla.v1.hal+json","resource-type":"funding-source"},"balance":{"href":"https://api-uat.dwolla.com/funding-sources/c9b5fe28-2bd5-4cf7-9e83-b71316020430/balance","type":"application/vnd.dwolla.v1.hal+json","resource-type":"balance"}},"id":"c9b5fe28-2bd5-4cf7-9e83-b71316020430","status":"verified","type":"balance","name":"Balance","created":"2016-12-28T12:47:06.000Z","removed":false,"channels":[]}]}}'
+    http_version: 
+  recorded_at: Sun, 05 Mar 2017 08:12:44 GMT
+recorded_with: VCR 3.0.3

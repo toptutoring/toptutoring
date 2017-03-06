@@ -7,12 +7,14 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    if @invoice = Invoice.create(invoice_params)
+    @invoice = Invoice.new(invoice_params)
+    if @invoice.save
       UpdateUserBalance.new(@invoice.amount, current_user.id).increase
       UpdateUserBalance.new(@invoice.amount, @student.id).decrease
       redirect_to tutors_students_path, notice: 'Session successfully logged!'
     else
-      redirect_to :back, flash: { error: @invoice.errors.full_messages }
+      redirect_back(fallback_location: (request.referer || root_path),
+                    flash: { error: @invoice.errors.full_messages })
     end
   end
 

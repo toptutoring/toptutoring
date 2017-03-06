@@ -11,7 +11,8 @@ module Admin
       if @user.update_attributes(user_params)
         redirect_to admin_tutors_path, notice: 'Tutor successfully updated!'
       else
-        redirect_to :back, flash: { error: @user.errors.full_messages }
+        redirect_back(fallback_location: (request.referer || root_path),
+                      flash: { error: @user.errors.full_messages })
       end
     end
 

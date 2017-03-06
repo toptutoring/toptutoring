@@ -11,23 +11,28 @@ class AssignmentsController < ApplicationController
     if @assignment.update_attributes(assignment_params)
       redirect_to assignments_path, notice: 'Assignment successfully updated!'
     else
-      redirect_to :back, flash: { error: @assignment.errors.full_messages }
+      redirect_back(fallback_location: (request.referer || root_path),
+                    flash: { error: @assignment.errors.full_messages })
     end
   end
 
   def enable
     if @assignment.enable!
-      redirect_to :back, notice: 'Assignment successfully enabled!'
+      redirect_back(fallback_location: (request.referer || root_path),
+                     notice: 'Assignment successfully enabled!')
     else
-      redirect_to :back, flash: { error: @assignment.errors.full_messages }
+      redirect_back(fallback_location: (request.referer || root_path),
+                    flash: { error: @assignment.errors.full_messages })
     end
   end
 
   def disable
     if @assignment.disable!
-      redirect_to :back, notice: 'Assignment successfully disabled!'
+      redirect_back(fallback_location: (request.referer || root_path),
+                     notice: 'Assignment successfully enabled!')
     else
-      redirect_to :back, flash: { error: @assignment.errors.full_messages }
+      redirect_back(fallback_location: (request.referer || root_path),
+                    flash: { error: @assignment.errors.full_messages })
     end
   end
 
