@@ -4,7 +4,7 @@ feature 'Create Invoice' do
   scenario 'has valid form' do
     tutor = FactoryGirl.create(:tutor_user)
     parent = FactoryGirl.create(:parent_user)
-    parent.assignment.update(tutor_id: tutor.id)
+    parent.student.assignment.update(tutor_id: tutor.id)
 
     sign_in(tutor)
     visit tutors_students_path
@@ -12,13 +12,13 @@ feature 'Create Invoice' do
 
     expect(page).to have_content('Use this form to log future sessions with your students.')
     expect(page).to have_content(parent.student.name)
-    expect(page).to have_content(parent.assignment.subject)
+    expect(page).to have_content(parent.student.assignment.subject)
   end
 
   scenario 'with invalid params' do
     tutor = FactoryGirl.create(:tutor_user)
     parent = FactoryGirl.create(:parent_user)
-    parent.assignment.update(tutor_id: tutor.id)
+    parent.student.assignment.update(tutor_id: tutor.id)
 
     sign_in(tutor)
     visit new_invoice_path(parent)
@@ -31,7 +31,7 @@ feature 'Create Invoice' do
   scenario 'with valid params' do
     tutor = FactoryGirl.create(:tutor_user)
     parent = FactoryGirl.create(:parent_user)
-    parent.assignment.update(tutor_id: tutor.id)
+    parent.student.assignment.update(tutor_id: tutor.id)
 
     sign_in(tutor)
     visit new_invoice_path(parent)

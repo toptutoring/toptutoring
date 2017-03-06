@@ -3,9 +3,10 @@ FactoryGirl.define do
     name          { "Director" }
     email         { "director@test.com" }
     password      { "password" }
+    roles         { [:tutor, :director] }
     auth_uid      { "xxx-xxx" }
     access_token  { "xxx-xxx" }
     refresh_token { "xxx-xxx" }
-    tutor         { FactoryGirl.create(:tutor, director: true) }
+    tutor_info    { FactoryGirl.create(:tutor_info) }
   end
 end

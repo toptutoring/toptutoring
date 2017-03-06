@@ -1,7 +1,7 @@
 FactoryGirl.define do
-  factory :student do
+  factory :tutor_info do
     subject       { "Math" }
     academic_type { "Test Prep" }
-    name          { "Student" }
+    hourly_rate   { 20 }
   end
 end

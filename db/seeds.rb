@@ -10,11 +10,13 @@
 # Users have the password "Passw0rd" in dwolla sandbox.
 # Admin has email "admin@tutoring.com" in dwolla sandbox.
 # Director has email "director@toptutor.com" in dowlla sandbox.
-tutor = User.create!(name: "Tutor", email: "tutor@example.com", password: "password").create_tutor(subject: "Math", academic_type: "Test Prep", hourly_rate: 20)
-director = User.create!(name: "Director", email: "director@example.com", password: "password").create_tutor(subject: "Math", academic_type: "Test Prep", director: true)
+tutor = User.create!(name: "Tutor", email: "tutor@example.com", password: "password")
+tutor_info = tutor.create_tutor_info(subject: "Math", academic_type: "Test Prep", hourly_rate: 20)
+director = User.create!(name: "Director", email: "director@example.com", password: "password").create_tutor_info(subject: "Math", academic_type: "Test Prep", director: true)
 parent = User.create(name: "Parent", email: "parent@example.com", password: "password")
-student = parent.create_student(name: "Student", email: "student@example.com", subject: "Math", academic_type: "Test Prep")
-assignment = Assignment.create(tutor_id: tutor.id, student_id: parent.id, subject: student.subject, academic_type: student.academic_type, hourly_rate: 30)
+student = User.create(name: "Student", email: "student@example.com", password: "password", parent_id: parent.id)
+student_info = student.create_student_info(subject: "Math", academic_type: "Test Prep")
+assignment = Assignment.create(tutor_id: tutor.id, student_id: student.id, subject: student.student_info.subject, academic_type: student.student_info.academic_type, hourly_rate: 30)
 assignment.enable!
 admin = User.create!(name: "Admin", email: "admin@example.com", password: "adminpassword123", admin: "true")
 

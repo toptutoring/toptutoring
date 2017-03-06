@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
 
   context "when user is parent" do
     before {
-      allow(subject).to receive(:student).and_return(FactoryGirl.create(:student))
+      allow(subject).to receive(:student).and_return(FactoryGirl.create(:student_user))
     }
     it { should have_one(:student) }
     it { should accept_nested_attributes_for(:student)}
@@ -13,10 +13,10 @@ RSpec.describe User, type: :model do
 
   context "when user is tutor" do
     before {
-      allow(subject).to receive(:tutor).and_return(FactoryGirl.create(:tutor))
+      allow(subject).to receive(:tutor_info).and_return(FactoryGirl.create(:tutor_info))
     }
-    it { should have_one(:tutor) }
-    it { should accept_nested_attributes_for(:tutor) }
+    it { should have_one(:tutor_info) }
+    it { should accept_nested_attributes_for(:tutor_info) }
   end
 
 end

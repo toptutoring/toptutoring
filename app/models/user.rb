@@ -2,10 +2,12 @@ class User < ActiveRecord::Base
   include Clearance::User
 
   # Associations
-  has_one :student, dependent: :destroy
-  accepts_nested_attributes_for :student
-  has_one :tutor, dependent: :destroy
-  accepts_nested_attributes_for :tutor
+  has_one :student_info, dependent: :destroy
+  accepts_nested_attributes_for :student_info
+  has_one :tutor_info, dependent: :destroy
+  accepts_nested_attributes_for :tutor_info
+  has_many :children, class_name: "User", foreign_key: "parent_id"
+  belongs_to :parent, class_name: "User", foreign_key: "parent_id"
   has_many :payments
   has_many :assignments, class_name: "Assignment", foreign_key: "tutor_id"
   has_one :assignment, class_name: "Assignment", foreign_key: "student_id"
@@ -41,18 +43,23 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Roles
+  ### Roles ###
+  ROLES = %i[admin director tutor parent student]
 
-  def is_director?
-    tutor.present? && tutor.director?
+  # This will perform the necessary bitwise operations to translate an array of roles into the integer field.
+  def roles=(roles)
+    roles = [*roles].map { |r| r.to_sym }
+    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
   end
 
-  def is_tutor?
-    tutor.present?
+  def roles
+    ROLES.reject do |r|
+      ((roles_mask.to_i || 0) & 2**ROLES.index(r)).zero?
+    end
   end
 
-  def is_parent?
-    student.present?
+  def has_role?(role)
+    roles.include?(role)
   end
 
   def is_customer?

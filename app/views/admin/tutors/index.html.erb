@@ -27,7 +27,7 @@
                   <td><%= user.tutor.academic_type %></td>
                   <td class="text-center"><%= tutor_balance(user)%></td>
                   <td class="text-center"><%= user.tutor.hourly_rate %></td>
-                  <% if current_user.admin? || current_user.is_director? %>
+                  <% if current_user.admin? || current_user.has_role?(:director) %>
                     <td class="text-center">
                       <%= link_to edit_admin_tutor_path(user) do %>
                         <button type="button" class="btn btn-outline btn-success">Edit</button>

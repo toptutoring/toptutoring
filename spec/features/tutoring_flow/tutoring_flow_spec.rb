@@ -6,7 +6,7 @@ feature 'Tutoring flow' do
   scenario "parent signup and set up account", js: true do
     tutor = FactoryGirl.create(:tutor_user)
 
-    visit new_users_student_path
+    visit new_users_parent_path
 
     fill_in "user_name", with: "Parent"
     fill_in "user_email", with: "parent@example.com"

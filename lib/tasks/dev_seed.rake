@@ -10,12 +10,21 @@ namespace :dev do
     parent.save!
 
     # Update student
-    student = Student.where(user_id: parent.id).first_or_initialize
+    student = Student.where(parent_id: parent.id).first_or_initialize
     student.name = "Student"
     student.email = "student@example.com"
+    parent.password = "password"
     student.subject = "Math"
     student.academic_type = "Test Prep"
+    parent.access_state = "enabled"
+    parent.demo = true
     student.save!
+
+    # Update student info
+    student_info = StudentInfo.where(user_id: student.id).first_or_initialize
+    student_info.subject = "Math"
+    student_info.academic_type = "Test Prep"
+    student_info.save!
 
     # Update tutor
     tutor = User.where(email: "tutor@example.com").first_or_initialize
@@ -70,9 +79,9 @@ namespace :dev do
     tutor.assignments.destroy_all
     assignment = Assignment.create(
       tutor_id: tutor.id,
-      student_id: parent.id,
-      subject: student.subject,
-      academic_type: student.academic_type,
+      student_id: student.id,
+      subject: student.student_info.subject,
+      academic_type: student.student_info.academic_type,
       hourly_rate: 30
     )
     assignment.enable!

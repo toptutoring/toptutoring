@@ -3,8 +3,8 @@ FactoryGirl.define do
     name         { "Parent" }
     email        { "parent@test.com" }
     password     { "password" }
-    student      { FactoryGirl.create(:student) }
+    roles         { [:parent] }
+    student      { FactoryGirl.create(:student_user) }
     access_state { "enabled" }
-    assignment   { FactoryGirl.create(:assignment) }
   end
 end

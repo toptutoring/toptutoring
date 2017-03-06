@@ -5,7 +5,7 @@
     </div>
     <div class="media-body media-middle">
       <h4 class="media-heading fs-16"><%= current_user.name %></h4>
-      <% if current_user.is_parent? %>
+      <% if current_user.has_role?(:parent) %>
         <div class="dropdown">
           <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
             <%= parent_balance(current_user) %>
@@ -13,7 +13,7 @@
           <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
           </ul>
         </div>
-      <% elsif current_user.is_tutor? %>
+      <% elsif current_user.has_role?(:tutor) %>
         <div class="dropdown">
           <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
             <%= tutor_balance(current_user) %>
@@ -25,9 +25,9 @@
     </div>
   </div>
   <ul class="list-unstyled navigation mb-0">
-    <% if current_user.is_parent? %>
+    <% if current_user.has_role?(:parent) %>
       <%= render "application/menu_links/parent" %>
-    <% elsif current_user.admin? || current_user.is_director? %>
+    <% elsif current_user.admin? || current_user.has_role?(:director) %>
     <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
     <li class="panel"><a href="/admin/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payments</span></a></li>
     <li class="panel">
@@ -42,7 +42,7 @@
         <span class="sidebar-title">Tutors</span>
       <% end %>
     </li>
-    <% elsif current_user.is_tutor? %>
+    <% elsif current_user.has_role?(:tutor) %>
       <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
     <% end %>
     <% if current_user.admin? %>
@@ -71,7 +71,7 @@
         <% end %>
       </li>
     <% end %>
-    <% if current_user.is_tutor? %>
+    <% if current_user.has_role?(:tutor) %>
       <li class="panel">
         <%= link_to tutors_students_path do %>
           <i class="icon ion-ios-contact bg-success"></i>

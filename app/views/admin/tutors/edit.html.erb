@@ -6,7 +6,7 @@
       </div>
       <div class="widget-body">
         <%= form_for(@user, url: admin_tutor_path(@user)) do |f| %>
-          <%= f.fields_for :tutor do |tutor_field| %>
+          <%= f.fields_for :tutor_info do |tutor_field| %>
             <div class="form-group">
               <%= tutor_field.label :subject %>
               <%= tutor_field.text_field :subject, class:"form-control" %>

@@ -22,9 +22,9 @@ class SessionsController < Clearance::SessionsController
   private
 
   def url_after_create
-    if current_user.disabled? && current_user.is_parent?
+    if current_user.disabled? && current_user.has_role?(:parent)
       edit_user_path(current_user)
-    elsif current_user.is_parent?
+    elsif current_user.has_role?(:parent)
       payment_new_path
     else
       dashboard_path

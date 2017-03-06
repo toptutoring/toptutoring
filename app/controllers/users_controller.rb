@@ -29,6 +29,6 @@ class UsersController < Clearance::SessionsController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :phone_number, :password, student_attributes: [:id, :name, :email, :phone_number, :subject])
+    params.require(:user).permit(:name, :email, :phone_number, :password, student_info_attributes: [:id, :name, :email, :phone_number, :subject])
   end
 end

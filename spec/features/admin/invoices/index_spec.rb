@@ -3,9 +3,9 @@ require 'spec_helper'
 feature 'Invoices Index' do
   scenario 'when user is admin' do
     tutor = FactoryGirl.create(:tutor_user)
-    parent = FactoryGirl.create(:parent_user)
+    student = FactoryGirl.create(:student_user)
     admin = FactoryGirl.create(:admin_user)
-    assignment = FactoryGirl.create(:assignment, tutor: tutor, student: parent)
+    assignment = FactoryGirl.create(:assignment, tutor: tutor, student: student)
     invoice = FactoryGirl.create(:invoice, tutor: tutor, assignment: assignment)
 
     sign_in(admin)
@@ -20,7 +20,7 @@ feature 'Invoices Index' do
     expect(page).to have_content('Hours')
     expect(page).to have_content('Hourly Rate')
     expect(page).to have_content('Amount')
-    expect(page).to have_content(invoice.assignment.student.student.name)
+    expect(page).to have_content(invoice.assignment.student.name)
     expect(page).to have_content(invoice.assignment.tutor.name)
     expect(page).to have_content(invoice.assignment.subject)
     expect(page).to have_content(invoice.assignment.academic_type)

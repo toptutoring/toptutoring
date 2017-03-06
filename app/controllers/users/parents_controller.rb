@@ -1,5 +1,5 @@
 module Users
-  class StudentsController < ApplicationController
+  class ParentsController < ApplicationController
     before_action :redirect_to_root, :only => [:new, :create], :if => :signed_in?
     layout "authentication"
 
@@ -24,7 +24,7 @@ module Users
     private
 
     def signups_params
-      params.require(:user).permit(:name, :email, :password, student_attributes: [:academic_type])
+      params.require(:user).permit(:name, :email, :password, student_info_attributes: [:academic_type]).merge(roles: :parent)
     end
 
     def redirect_to_root

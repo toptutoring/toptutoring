@@ -4,9 +4,9 @@ feature 'Emails Index' do
   scenario 'when user is tutor' do
     tutor = FactoryGirl.create(:tutor_user)
     parent = FactoryGirl.create(:parent_user)
-    parent.assignment.update(tutor_id: tutor.id)
-    invoice = FactoryGirl.create(:invoice, tutor: tutor, assignment: parent.assignment)
-    invoice.update(student_id: parent.id)
+    parent.student.assignment.update(tutor_id: tutor.id)
+    invoice = FactoryGirl.create(:invoice, tutor: tutor, assignment: parent.student.assignment)
+    invoice.update(student_id: parent.student.id)
     email = FactoryGirl.create(:email, tutor: tutor, parent: parent)
 
     sign_in(tutor)
