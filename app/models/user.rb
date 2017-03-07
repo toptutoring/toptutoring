@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   scope :admin_payer, -> { where(admin: true) & where(demo: false) }
   scope :enabled, -> { where(access_state: "enabled") }
   scope :assigned, -> { joins(:assignment).merge(Assignment.active) }
+  scope :admin_and_directors, -> { left_joins(:tutor).where('users.admin=? OR tutors.director=?', true, true) }
 
   #### State Machine ####
   state_machine :access_state, :initial => :disabled do
