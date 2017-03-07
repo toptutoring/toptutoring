@@ -11,7 +11,7 @@ module Users
     def create
       @user = Clearance.configuration.user_model.new(signups_params)
       if @user.save
-        send_emails
+        NewTutorNotifierMailer.welcome(@user, User.admin_and_directors).deliver_now
         sign_in(@user)
         redirect_to :root
       else
@@ -23,15 +23,11 @@ module Users
     private
 
     def signups_params
-      params.require(:user).permit(:name, :email, :password, tutor_attributes: [:academic_type])
+      params.require(:user).permit(:name, :email, :password, tutor_attributes: [:academic_type]).merge(access_state: "enabled")
     end
 
     def redirect_to_root
       redirect_to root_path
-    end
-
-    def send_emails
-      NewTutorNotifierMailer.perform(@user, User.admin_and_directors).deliver_now
     end
   end
 end
