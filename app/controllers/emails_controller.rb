@@ -1,11 +1,11 @@
 class EmailsController < ApplicationController
   before_action :require_login
-  before_action :set_parent, :authorize_tutor, only: [:new, :create]
-  before_action :check_parent, only: [:create]
+  before_action :set_client, :authorize_tutor, only: [:new, :create]
+  before_action :check_client, only: [:create]
 
   def new
     @email = Email.new
-    @invoice = @parent.assignment.invoices.last
+    @invoice = @client.assignment.invoices.last
   end
 
   def create
@@ -22,23 +22,23 @@ class EmailsController < ApplicationController
   private
 
   def email_params
-    params.require(:email).permit(:parent_id, :subject, :body)
+    params.require(:email).permit(:client_id, :subject, :body)
     .merge(tutor_id: current_user.id)
   end
 
-  def set_parent
-    @parent = User.find(params[:id])
+  def set_client
+    @client_id = User.find(params[:id])
   end
 
-  def check_parent
-    if @parent.id != email_params[:parent_id].to_i
+  def check_client
+    if @client.id != email_params[:client_id].to_i
       redirect_back(fallback_location: (request.referer || root_path),
                     flash: { error: 'Invalid receiver!' })
     end
   end
 
   def authorize_tutor
-    if @parent.assignment.nil? || @parent.assignment.tutor_id != current_user.id
+    if @client.assignment.nil? || @client.assignment.tutor_id != current_user.id
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
     end
   end

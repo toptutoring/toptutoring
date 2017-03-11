@@ -1,17 +1,20 @@
 require 'spec_helper'
 
 feature "Index payments" do
+  before(:all) do
+    set_roles
+  end
   context "when user is director" do
-    scenario "should see parent payments" do
+    scenario "should see client payments" do
       director = FactoryGirl.create(:director_user)
-      parent = FactoryGirl.create(:parent_user)
-      payment = FactoryGirl.create(:payment, payer: parent, amount: 20000, customer_id: "xxx")
+      client = FactoryGirl.create(:client_user)
+      payment = FactoryGirl.create(:payment, payer: client, amount: 20000, customer_id: "xxx")
 
       sign_in(director)
       visit admin_payments_path
 
-      expect(page).to have_content("Parent Payments")
-      expect(page).to have_content("Parent")
+      expect(page).to have_content("Client Payments")
+      expect(page).to have_content("Client")
       expect(page).to have_content("Amount")
       expect(page).to have_content("Description")
       expect(page).to have_content("Status")
@@ -48,16 +51,16 @@ feature "Index payments" do
   end
 
   context "when user is admin" do
-    scenario "should see parent payments" do
+    scenario "should see client payments" do
       admin = FactoryGirl.create(:admin_user)
-      parent = FactoryGirl.create(:parent_user)
-      payment = FactoryGirl.create(:payment, payer: parent, amount: 20000, customer_id: "xxx")
+      client = FactoryGirl.create(:client_user)
+      payment = FactoryGirl.create(:payment, payer: client, amount: 20000, customer_id: "xxx")
 
       sign_in(admin)
       visit admin_payments_path
 
-      expect(page).to have_content("Parent Payments")
-      expect(page).to have_content("Parent")
+      expect(page).to have_content("Client Payments")
+      expect(page).to have_content("Client")
       expect(page).to have_content("Amount")
       expect(page).to have_content("Description")
       expect(page).to have_content("Status")

@@ -10,7 +10,7 @@
             <table class="table mb-0">
               <thead>
                 <tr>
-                  <th>Parent</th>
+                  <th>Client</th>
                   <th>Tutor</th>
                   <th>Body</th>
                   <th class="text-center">Date</th>
@@ -19,7 +19,7 @@
               <tbody>
                 <% @emails.each do |email| %>
                   <tr>
-                    <td><%= email.parent.try(:name) %></td>
+                    <td><%= email.client.try(:name) %></td>
                     <td><%= email.tutor.try(:name) %></td>
                     <td><%= email.body %></td>
                     <td class="text-center"><%= email.created_at %></td>

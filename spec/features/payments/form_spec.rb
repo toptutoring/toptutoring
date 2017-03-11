@@ -1,9 +1,12 @@
 require 'spec_helper'
 
-feature "Navigate to payment as parent" do
+feature "Navigate to payment as client" do
+  before(:all) do
+    set_roles
+  end
   scenario "with valid payment form" do
-    parent = FactoryGirl.create(:parent_user, balance: 30)
-    sign_in(parent)
+    client = FactoryGirl.create(:client_user, balance: 30)
+    sign_in(client)
 
     expect(page.current_path).to eq payment_new_path
     expect(page).to have_content("1.0 hrs balance")

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 feature 'Students Index' do
+  before(:all) do
+    set_roles
+  end
   scenario 'when user is tutor' do
     tutor = FactoryGirl.create(:tutor_user)
     student = FactoryGirl.create(:student_user)

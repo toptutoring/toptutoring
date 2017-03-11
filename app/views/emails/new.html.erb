@@ -15,10 +15,10 @@
 
           <div class="form-group">
             <%= f.label :body %>
-            <%= f.text_area :body, value: @email.email_body(@invoice, @parent), class:"form-control", rows: "4", required: true, readonly: "readonly" %>
+            <%= f.text_area :body, value: @email.email_body(@invoice, @client), class:"form-control", rows: "4", required: true, readonly: "readonly" %>
           </div>
 
-          <%= f.hidden_field :parent_id, value: @parent.id %>
+          <%= f.hidden_field :client_id, value: @client.id %>
 
           <br />
           <div class="text-center">

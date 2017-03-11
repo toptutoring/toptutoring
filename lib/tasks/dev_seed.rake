@@ -1,23 +1,23 @@
 namespace :dev do
   task seed: :environment do
-    # Update parent
-    parent = User.where(email: "parent@example.com").first_or_initialize
-    parent.name = "Parent"
-    parent.password = "password"
-    parent.customer_id = "cus_A45BGhlr4VjDcJ"
-    parent.access_state = "enabled"
-    parent.demo = true
-    parent.save!
+    # Update client
+    client = User.where(email: "client@example.com").first_or_initialize
+    client.name = "Client"
+    client.password = "password"
+    client.customer_id = "cus_A45BGhlr4VjDcJ"
+    client.access_state = "enabled"
+    client.demo = true
+    client.roles = "client"
+    client.save!
 
     # Update student
-    student = Student.where(parent_id: parent.id).first_or_initialize
+    student = User.where(email: "student@example.com").first_or_initialize
     student.name = "Student"
     student.email = "student@example.com"
-    parent.password = "password"
-    student.subject = "Math"
-    student.academic_type = "Test Prep"
-    parent.access_state = "enabled"
-    parent.demo = true
+    client.password = "password"
+    client.access_state = "enabled"
+    client.demo = true
+    student.roles = "student"
     student.save!
 
     # Update student info
@@ -36,9 +36,10 @@ namespace :dev do
     tutor.access_state = "enabled"
     tutor.balance = 2
     tutor.demo = true
+    student.roles = "tutor"
     tutor.save!
 
-    tutor_info = Tutor.where(user_id: tutor.id).first_or_initialize
+    tutor_info = TutorInfo.where(user_id: tutor.id).first_or_initialize
     tutor_info.subject = "Math"
     tutor_info.academic_type = "Test Prep"
     tutor_info.hourly_rate = 20
@@ -54,9 +55,10 @@ namespace :dev do
     director.access_state = "enabled"
     director.balance = 2
     director.demo = true
+    student.roles = "director"
     director.save!
 
-    director_info = Tutor.where(user_id: director.id).first_or_initialize
+    director_info = TutorInfo.where(user_id: director.id).first_or_initialize
     director_info.subject = "Math"
     director_info.academic_type = "Test Prep"
     director_info.director = true
@@ -67,12 +69,12 @@ namespace :dev do
     admin = User.where(email: "admin@example.com").first_or_initialize
     admin.name = "Admin"
     admin.password = "adminpassword123"
-    admin.admin = true
     admin.auth_provider = "dwolla"
     admin.auth_uid = "8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"
     admin.token_expires_at = Time.current.to_i + 12.months.to_i
     admin.access_state = "enabled"
     admin.demo = true
+    student.roles = "admin"
     admin.save!
 
     # Update assignments
@@ -90,15 +92,15 @@ namespace :dev do
     tutor.invoices.destroy_all
 
     # Update payments
-    Payment.from_customer(parent.customer_id).destroy_all
+    Payment.from_customer(client.customer_id).destroy_all
     Payment.where(payer_id: admin.id).destroy_all
     Payment.where(payer_id: director.id).destroy_all
     Payment.create(
       amount: 200,
       description: "Payment for Tutor",
       status: "succeeded",
-      customer_id: parent.customer_id,
-      payer_id: parent.id,
+      customer_id: client.customer_id,
+      payer_id: client.id,
       payee_id: tutor.id)
   end
 end

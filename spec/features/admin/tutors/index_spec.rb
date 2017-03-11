@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 feature "Index tutors" do
+  before(:all) do
+    set_roles
+  end
   context "when user is director" do
     scenario "should see tutors" do
       director = FactoryGirl.create(:director_user)
@@ -18,10 +21,10 @@ feature "Index tutors" do
       expect(page).to have_content("Hourly Rate")
       expect(page).to have_content(tutor.name)
       expect(page).to have_content(tutor.email)
-      expect(page).to have_content(tutor.tutor.subject)
-      expect(page).to have_content(tutor.tutor.academic_type)
+      expect(page).to have_content(tutor.tutor_info.subject)
+      expect(page).to have_content(tutor.tutor_info.academic_type)
       expect(page).to have_content("#{tutor.balance} hrs of tutoring")
-      expect(page).to have_content(tutor.tutor.hourly_rate)
+      expect(page).to have_content(tutor.tutor_info.hourly_rate)
       expect(page).to have_link("Edit")
       expect(page).to have_link("Pay tutor")
     end
@@ -44,10 +47,10 @@ feature "Index tutors" do
       expect(page).to have_content("Hourly Rate")
       expect(page).to have_content(tutor.name)
       expect(page).to have_content(tutor.email)
-      expect(page).to have_content(tutor.tutor.subject)
-      expect(page).to have_content(tutor.tutor.academic_type)
+      expect(page).to have_content(tutor.tutor_info.subject)
+      expect(page).to have_content(tutor.tutor_info.academic_type)
       expect(page).to have_content("#{tutor.balance} hrs of tutoring")
-      expect(page).to have_content(tutor.tutor.hourly_rate)
+      expect(page).to have_content(tutor.tutor_info.hourly_rate)
       expect(page).to have_link("Edit")
       expect(page).to have_link("Pay tutor")
     end

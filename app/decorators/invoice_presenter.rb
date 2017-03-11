@@ -14,6 +14,6 @@ class InvoicePresenter < SimpleDelegator
   end
 
   def student_name
-    @invoice.assignment.student.student.name
+    @invoice.assignment.student.name
   end
 end

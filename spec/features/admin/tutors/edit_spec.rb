@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 feature "Edit tutor" do
+  before(:all) do
+    set_roles
+  end
   context "when user is director" do
     scenario "has valid form" do
       director = FactoryGirl.create(:director_user)
@@ -12,9 +15,9 @@ feature "Edit tutor" do
       expect(page).to have_content("Subject")
       expect(page).to have_content("Academic type")
       expect(page).to have_content("Hourly rate")
-      expect(page).to have_field "user_tutor_attributes_subject", with: tutor.tutor.subject
-      expect(page).to have_field "user_tutor_attributes_academic_type", with: tutor.tutor.academic_type
-      expect(page).to have_field "user_tutor_attributes_hourly_rate", with: tutor.tutor.hourly_rate
+      expect(page).to have_field "user_tutor_attributes_subject", with: tutor.tutor_info.subject
+      expect(page).to have_field "user_tutor_attributes_academic_type", with: tutor.tutor_info.academic_type
+      expect(page).to have_field "user_tutor_attributes_hourly_rate", with: tutor.tutor_info.hourly_rate
     end
 
     scenario "with invalid params" do

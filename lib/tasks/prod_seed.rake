@@ -1,23 +1,23 @@
 namespace :prod do
   task seed: :environment do
-    # Update parent
-    parent = User.where(email: "parent@example.com").first_or_initialize
-    parent.name = "Parent"
-    parent.password = "password"
-    parent.customer_id = "cus_A45BGhlr4VjDcJ"
-    parent.access_state = "enabled"
-    parent.demo = true
-    parent.roles = :parent
-    parent.save!
+    # Update client
+    client = User.where(email: "client@example.com").first_or_initialize
+    client.name = "Client"
+    client.password = "password"
+    client.customer_id = "cus_A45BGhlr4VjDcJ"
+    client.access_state = "enabled"
+    client.demo = true
+    client.roles = "client"
+    client.save!
 
     # Update student
-    student = User.where(parent_id: parent.id).first_or_initialize
+    student = User.where(client_id: client.id).first_or_initialize
     student.name = "Student"
     student.password = "password"
     student.email = "student@example.com"
-    parent.access_state = "enabled"
-    parent.demo = true
-    student.roles = :student
+    client.access_state = "enabled"
+    client.demo = true
+    student.roles = "student"
     student.save!
 
     # Update student info
@@ -34,7 +34,7 @@ namespace :prod do
     tutor.access_state = "enabled"
     tutor.balance = 2
     tutor.demo = true
-    tutor.roles = :tutor
+    tutor.roles = "tutor"
     tutor.save!
 
     tutor_info = TutorInfo.where(user_id: tutor.id).first_or_initialize
@@ -51,7 +51,7 @@ namespace :prod do
     director.access_state = "enabled"
     director.balance = 2
     director.demo = true
-    director.roles = [:tutor, :director]
+    director.roles = ["tutor", "director"]
     director.save!
 
     director_info = TutorInfo.where(user_id: director.id).first_or_initialize
@@ -69,7 +69,7 @@ namespace :prod do
     admin.auth_provider = "dwolla"
     admin.access_state = "enabled"
     admin.demo = true
-    admin.roles = :admin
+    admin.roles = "admin"
     admin.save!
 
     # Update assignments
@@ -84,7 +84,7 @@ namespace :prod do
     assignment.enable!
 
     # Delete test payments
-    Payment.from_customer(parent.customer_id).destroy_all
+    Payment.from_customer(client.customer_id).destroy_all
     Payment.where(payer_id: admin.id).destroy_all
     Payment.where(payer_id: director.id).destroy_all
   end

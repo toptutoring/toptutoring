@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 feature "Index assignments" do
+  before(:all) do
+    set_roles
+  end
   context "when user is director" do
     scenario "should see assignments" do
       director = FactoryGirl.create(:director_user)

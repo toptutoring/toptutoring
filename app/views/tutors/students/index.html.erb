@@ -10,7 +10,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Parent</th>
+                <th>Client</th>
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Subject</th>
@@ -22,12 +22,12 @@
             <tbody>
               <% @students.each do |student| %>
                 <tr>
-                  <td><%= student.student.name %></td>
                   <td><%= student.name %></td>
-                  <td><%= student.student.email %></td>
-                  <td><%= student.student.phone_number %></td>
-                  <td><%= student.student.subject %></td>
-                  <td><%= student.student.academic_type %></td>
+                  <td><%= student.name %></td>
+                  <td><%= student.email %></td>
+                  <td><%= student.phone_number %></td>
+                  <td><%= student.student_info.subject %></td>
+                  <td><%= student.student_info.academic_type %></td>
                   <td class="text-center"><%= student.balance %> hrs</td>
                   <td class="text-center">
                     <%= link_to new_invoice_path(student) do %>

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 feature 'Dashboard Index' do
+  before(:all) do
+    set_roles
+  end
   scenario "when user doesn't have external auth" do
     tutor = FactoryGirl.create(:tutor_user, access_token: nil)
 
@@ -34,7 +37,7 @@ feature 'Dashboard Index' do
     expect(page).to have_content(assignment.subject)
     expect(page).to have_content(assignment.academic_type)
     expect(page).to have_content(assignment.state)
-    expect(page).to have_content(assignment.student.parent.balance)
+    expect(page).to have_content(assignment.student.client.balance)
   end
 
   scenario 'when user is tutor' do
@@ -54,7 +57,7 @@ feature 'Dashboard Index' do
     expect(page).to have_content(assignment.subject)
     expect(page).to have_content(assignment.academic_type)
     expect(page).to have_content(assignment.state)
-    expect(page).to have_content(assignment.student.parent.balance)
+    expect(page).to have_content(assignment.student.client.balance)
   end
 
   scenario 'when user is director' do

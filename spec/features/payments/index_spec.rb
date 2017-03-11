@@ -1,10 +1,13 @@
 require 'spec_helper'
 
 feature "Index Payments" do
+  before(:all) do
+    set_roles
+  end
   scenario "show all user's past payments" do
-    parent = FactoryGirl.create(:parent_user)
-    payment = FactoryGirl.create(:payment, payer: parent, amount: 20000)
-    sign_in(parent)
+    client = FactoryGirl.create(:client_user)
+    payment = FactoryGirl.create(:payment, payer: client, amount: 20000)
+    sign_in(client)
 
     visit payments_path
 

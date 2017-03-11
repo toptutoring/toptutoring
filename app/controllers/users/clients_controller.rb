@@ -1,18 +1,17 @@
 module Users
-  class ParentsController < ApplicationController
+  class ClientsController < ApplicationController
     before_action :redirect_to_root, :only => [:new, :create], :if => :signed_in?
     layout "authentication"
 
     def new
       @user = User.new
-      @user.build_student
     end
 
     def create
       @user = Clearance.configuration.user_model.new(signups_params)
       if @user.save
         UserNotifierMailer.send_signup_email(@user).deliver_now
-        NewStudentNotifierMailer.welcome(@user, User.admin_and_directors).deliver_now
+        NewClientNotifierMailer.welcome(@user, User.admin_and_directors).deliver_now
         sign_in(@user)
         redirect_to :root
       else
@@ -24,7 +23,7 @@ module Users
     private
 
     def signups_params
-      params.require(:user).permit(:name, :email, :password, student_info_attributes: [:academic_type]).merge(roles: :parent)
+      params.require(:user).permit(:name, :email, :password).merge(roles: :client)
     end
 
     def redirect_to_root

@@ -1,29 +1,32 @@
 require 'spec_helper'
 
 feature 'Tutoring flow' do
+  before(:all) do
+    set_roles
+  end
   let(:director) { FactoryGirl.create(:director_user) }
 
-  scenario "parent signup and set up account", js: true do
+  scenario "client signup and set up account", js: true do
     tutor = FactoryGirl.create(:tutor_user)
 
-    visit new_users_parent_path
+    visit new_users_client_path
 
-    fill_in "user_name", with: "Parent"
-    fill_in "user_email", with: "parent@example.com"
+    fill_in "user_name", with: "Client"
+    fill_in "user_email", with: "client@example.com"
     fill_in "user_password", with: "password"
     click_button "Sign up"
 
     fill_in "user_phone_number", with: "0000000000"
     click_link "Next"
 
-    fill_in "user_student_attributes_name", with: "Student"
-    fill_in "user_student_attributes_email", with: "student@example.com"
-    fill_in "user_student_attributes_phone_number", with: "0000000000"
-    fill_in "user_student_attributes_subject", with: "Math"
+    fill_in "user_student_info_attributes_name", with: "Student"
+    fill_in "user_student_info_attributes_email", with: "student@example.com"
+    fill_in "user_student_info_attributes_phone_number", with: "0000000000"
+    fill_in "user_student_info_attributes_subject", with: "Math"
     click_link "Next"
 
     VCR.use_cassette('valid stripe account info') do
-      fill_in "card_holder", with: "Parent"
+      fill_in "card_holder", with: "Client"
       fill_in "credit_card", with: "4242424242424242"
       fill_in "cvc", with: "1234"
       click_link "Finish"
@@ -66,7 +69,7 @@ feature 'Tutoring flow' do
     sign_out
 
     visit login_path
-    fill_in 'Email', with: "parent@example.com"
+    fill_in 'Email', with: "client@example.com"
     fill_in 'Password', with: "password"
     click_button 'Login'
     expect(page).to have_content("-3.0 hrs balance")
