@@ -1,8 +1,15 @@
 class UsersController < Clearance::SessionsController
   before_action :require_login
 
+  def edit
+    if !current_user.is_student?
+      current_user.students.build
+    end
+  end
+
   def update
     if current_user.update_attributes(user_params)
+      current_user.students.last.create_student_info(subject: current_user.client_info.subject)
 
       Stripe.api_key = ENV['STRIPE_SECRET_KEY']
       token = params[:stripeToken]
@@ -14,7 +21,7 @@ class UsersController < Clearance::SessionsController
 
         current_user.customer_id = customer.id
         current_user.save!
-        EnableUser.new(current_user).perform
+        enable_user
         redirect_to payment_new_path
         return
       rescue Stripe::CardError => e
@@ -28,7 +35,28 @@ class UsersController < Clearance::SessionsController
 
   private
 
+  def enable_user
+    if current_user.is_student?
+      EnableUserAsStudent.new(current_user).perform
+    else
+      EnableUserWithStudent.new(current_user).perform
+    end
+  end
+
   def user_params
-    params.require(:user).permit(:name, :email, :phone_number, :password, student_info_attributes: [:id, :name, :email, :phone_number, :subject])
+    if current_user.is_student?
+      client_as_student_params
+    else
+      client_with_student_params
+    end
+  end
+
+  def client_with_student_params
+    params[:user][:students_attributes]["0"][:password] = rand(36**4).to_s(36)
+    params.require(:user).permit(:name, :email, :phone_number, :password, students_attributes: [:id, :name, :email, :phone_number, :password, :subject])
+  end
+
+  def client_as_student_params
+    params.require(:user).permit(:name, :email, :phone_number, :password, client_info_attributes: [:id, :subject])
   end
 end

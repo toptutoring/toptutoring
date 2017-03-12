@@ -6,7 +6,10 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :student_info
   has_one :tutor_info, dependent: :destroy
   accepts_nested_attributes_for :tutor_info
+  has_one :client_info, dependent: :destroy
+  accepts_nested_attributes_for :client_info
   has_many :students, class_name: "User", foreign_key: "client_id"
+  accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
   has_many :payments
   has_many :assignments, class_name: "Assignment", foreign_key: "tutor_id"
@@ -25,8 +28,9 @@ class User < ActiveRecord::Base
   # Scopes #
   scope :customer, ->(customer_id) { where(customer_id: customer_id) }
   # Refactor these
-  scope :with_tutor_role, -> { joins(:tutor) }
-  scope :with_client_role, -> { joins(:student) }
+  scope :with_tutor_role, -> { joins(:roles).where("roles.name = ?", "tutor").distinct }
+  scope :with_client_role, -> { joins(:roles).where("roles.name = ?", "client").distinct }
+  scope :with_student_role, -> { joins(:roles).where("roles.name = ?", "student").distinct }
   scope :with_external_auth, -> { where.not(encrypted_access_token: nil) & where.not(encrypted_refresh_token: nil) }
   scope :tutors_with_external_auth, -> { joins(:tutor) & User.with_external_auth }
   scope :admin_payer, -> { where(admin: true) & where(demo: false) }
@@ -81,5 +85,9 @@ class User < ActiveRecord::Base
     if assignment && assignment.active?
       balance.to_f / assignment.hourly_rate
     end
+  end
+
+  def is_student?
+    client_info.tutoring_for == 0
   end
 end

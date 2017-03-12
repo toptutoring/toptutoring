@@ -5,6 +5,7 @@ module Users
 
     def new
       @user = User.new
+      @user.build_client_info
     end
 
     def create
@@ -23,7 +24,7 @@ module Users
     private
 
     def signups_params
-      params.require(:user).permit(:name, :email, :password).merge(roles: :client)
+      params.require(:user).permit(:name, :email, :password,  client_info_attributes: [:tutoring_for, :subject]).merge(roles: "client")
     end
 
     def redirect_to_root

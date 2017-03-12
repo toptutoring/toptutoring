@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170311173547) do
+ActiveRecord::Schema.define(version: 20170312120723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,13 @@ ActiveRecord::Schema.define(version: 20170311173547) do
     t.datetime "updated_at",                        null: false
     t.index ["student_id"], name: "index_assignments_on_student_id", using: :btree
     t.index ["tutor_id"], name: "index_assignments_on_tutor_id", using: :btree
+  end
+
+  create_table "client_infos", force: :cascade do |t|
+    t.string  "subject"
+    t.integer "tutoring_for"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_client_infos_on_user_id", using: :btree
   end
 
   create_table "emails", force: :cascade do |t|
@@ -128,6 +135,7 @@ ActiveRecord::Schema.define(version: 20170311173547) do
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end
 
+  add_foreign_key "client_infos", "users"
   add_foreign_key "payments", "users", column: "payee_id"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "student_infos", "users"

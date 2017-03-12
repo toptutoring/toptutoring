@@ -23,7 +23,7 @@
             <%= form.password_field :password, placeholder: "Password" %>
           </div>
 
-          <%= form.fields_for :tutor do |tutor_field| %>
+          <%= form.fields_for :tutor_info do |tutor_field| %>
             <div class="col-md-12 select-option">
               <i class="ion-chevron-down"></i>
               <%= tutor_field.select :academic_type, options_for_select(TutorInfo::ACADEMIC_TYPE), {}, class:"wpcf7-form-control wpcf7-select" %>

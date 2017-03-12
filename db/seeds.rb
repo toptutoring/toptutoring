@@ -21,4 +21,4 @@ assignment.enable!
 admin = User.create!(name: "Admin", email: "admin@example.com", password: "adminpassword123", roles: "admin")
 
 # Run the prod seed update task to update values
-#Rake::Task['prod:seed'].invoke
+Rake::Task['prod:seed'].invoke
