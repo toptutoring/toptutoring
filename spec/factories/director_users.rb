@@ -8,5 +8,6 @@ FactoryGirl.define do
     access_token  { "xxx-xxx" }
     refresh_token { "xxx-xxx" }
     tutor_info    { FactoryGirl.create(:tutor_info) }
+    balance       { 10 }
   end
 end

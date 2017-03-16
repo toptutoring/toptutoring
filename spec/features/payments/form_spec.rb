@@ -5,12 +5,16 @@ feature "Navigate to payment as client" do
     set_roles
   end
   scenario "with valid payment form" do
-    client = FactoryGirl.create(:client_user, balance: 30)
+    tutor = FactoryGirl.create(:tutor_user)
+    student = FactoryGirl.create(:student_user)
+    student.assignment.update(tutor_id: tutor.id)
+    client = student.client
+
     sign_in(client)
 
     expect(page.current_path).to eq payment_new_path
-    expect(page).to have_content("1.0 hrs balance")
-    expect(page).to have_content("This tutor has an hourly rate of $30.")
-    expect(page).to have_field("hourly_rate", with: "30")
+    expect(page).to have_content("0.0 hrs balance")
+    expect(page).to have_content("This tutor has an hourly rate of $20.")
+    expect(page).to have_field("hourly_rate", with: "20.0")
   end
 end

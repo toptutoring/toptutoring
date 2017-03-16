@@ -13,9 +13,9 @@ feature "Index students" do
 
       [admin, director].each do |user|
         sign_in(user)
-        visit tutors_students_path
+        visit admin_users_path
         expect(page).to have_content("Name")
-        expect(page).to have_content("Client")
+        expect(page).to have_content("Parent")
         expect(page).to have_content("Email")
         expect(page).to have_content("Phone Number")
         expect(page).to have_content("Subject")
@@ -28,6 +28,7 @@ feature "Index students" do
         expect(page).to have_content(student.student_info.subject)
         expect(page).to have_content(student.student_info.academic_type)
         expect(page).to have_content(student.client.balance)
+        sign_out
       end
     end
   end

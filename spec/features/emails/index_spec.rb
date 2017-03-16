@@ -6,11 +6,11 @@ feature 'Emails Index' do
   end
   scenario 'when user is tutor' do
     tutor = FactoryGirl.create(:tutor_user)
-    client = FactoryGirl.create(:client_user)
-    client.students.first.assignment.update(tutor_id: tutor.id)
-    invoice = FactoryGirl.create(:invoice, tutor: tutor, assignment: client.students.first.assignment)
-    invoice.update(student_id: client.students.first.id)
-    email = FactoryGirl.create(:email, tutor: tutor, client: client)
+    student = FactoryGirl.create(:student_user)
+    student.assignment.update(tutor_id: tutor.id)
+    invoice = FactoryGirl.create(:invoice, tutor: tutor, assignment: student.assignment)
+    invoice.update(student_id: student.id)
+    email = FactoryGirl.create(:email, tutor: tutor, client: student.client)
 
     sign_in(tutor)
     visit tutors_emails_path

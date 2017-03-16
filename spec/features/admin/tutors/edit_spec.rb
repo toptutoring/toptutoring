@@ -15,9 +15,9 @@ feature "Edit tutor" do
       expect(page).to have_content("Subject")
       expect(page).to have_content("Academic type")
       expect(page).to have_content("Hourly rate")
-      expect(page).to have_field "user_tutor_attributes_subject", with: tutor.tutor_info.subject
-      expect(page).to have_field "user_tutor_attributes_academic_type", with: tutor.tutor_info.academic_type
-      expect(page).to have_field "user_tutor_attributes_hourly_rate", with: tutor.tutor_info.hourly_rate
+      expect(page).to have_field "user_tutor_info_attributes_subject", with: tutor.tutor_info.subject
+      expect(page).to have_field "user_tutor_info_attributes_academic_type", with: tutor.tutor_info.academic_type
+      expect(page).to have_field "user_tutor_info_attributes_hourly_rate", with: tutor.tutor_info.hourly_rate
     end
 
     scenario "with invalid params" do
@@ -27,9 +27,9 @@ feature "Edit tutor" do
       sign_in(director)
       visit edit_admin_tutor_path(tutor)
 
-      fill_in "user_tutor_attributes_academic_type", with: nil
+      fill_in "user_tutor_info_attributes_academic_type", with: nil
       click_on "Submit"
-      expect(page).to have_content("Tutor academic type can't be blank")
+      expect(page).to have_content("Tutor info academic type can't be blank")
     end
 
     scenario "with valid params" do
@@ -39,7 +39,7 @@ feature "Edit tutor" do
       sign_in(director)
       visit edit_admin_tutor_path(tutor)
 
-      fill_in "user_tutor_attributes_subject", with: "Literature"
+      fill_in "user_tutor_info_attributes_subject", with: "Literature"
       click_on "Submit"
       expect(page).to have_content("Tutor successfully updated!")
     end
@@ -53,9 +53,9 @@ feature "Edit tutor" do
       sign_in(admin)
       visit edit_admin_tutor_path(tutor)
 
-      fill_in "user_tutor_attributes_academic_type", with: nil
+      fill_in "user_tutor_info_attributes_academic_type", with: nil
       click_on "Submit"
-      expect(page).to have_content("Tutor academic type can't be blank")
+      expect(page).to have_content("Tutor info academic type can't be blank")
     end
 
     scenario "with valid params" do
@@ -65,7 +65,7 @@ feature "Edit tutor" do
       sign_in(admin)
       visit edit_admin_tutor_path(tutor)
 
-      fill_in "user_tutor_attributes_subject", with: "Literature"
+      fill_in "user_tutor_info_attributes_subject", with: "Literature"
       click_on "Submit"
       expect(page).to have_content("Tutor successfully updated!")
     end

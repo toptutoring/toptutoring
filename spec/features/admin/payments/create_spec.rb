@@ -68,7 +68,7 @@ feature "Create payment for tutor" do
         visit admin_tutors_path
         click_on "Pay tutor"
 
-        fill_in "payment_amount", with: 200
+        fill_in "payment_amount", with: 100
         fill_in "payment_description", with: "Payment description"
         click_button "Send Payment"
 

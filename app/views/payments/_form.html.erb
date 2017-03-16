@@ -10,7 +10,7 @@
       <p class="col-sm-5 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
     </div>
     <div class="row">
-      <p class="col-sm-4 col-sm-offset-3">This tutor has an hourly rate of <strong>$<%= current_user.assignment.hourly_rate %></strong>.</p>
+      <p class="col-sm-4 col-sm-offset-3">This tutor has an hourly rate of <strong>$<%= current_user.students.last.assignment.tutor&.tutor_info&.hourly_rate&.to_s %></strong>.</p>
     </div>
 
   <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal col-md-9" do |f| %>
@@ -49,7 +49,7 @@
       <div class="form-group">
         <label for="description" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
         <div class="col-sm-5">
-          <input type="text" class="form-control col-sm-3 input-sm" id="hourly_rate"  name="payments[hourly_rate]" value="<%= current_user.assignment.hourly_rate %>" min="1" max="9999">
+          <input type="text" class="form-control col-sm-3 input-sm" id="hourly_rate"  name="payments[hourly_rate]" value="<%= current_user.students.last.assignment.tutor&.tutor_info&.hourly_rate&.to_s %>" min="1" max="9999">
           </input>
         </div>
         <span class="span-optional">(Optional)</span>

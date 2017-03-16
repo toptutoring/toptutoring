@@ -5,5 +5,6 @@ FactoryGirl.define do
     password     { "password" }
     roles        { "client" }
     access_state { "enabled" }
+    client_info  { FactoryGirl.create(:client_info) }
   end
 end

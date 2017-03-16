@@ -1,12 +1,9 @@
 require 'spec_helper'
 
 feature 'Set up account' do
-  before(:all) do
-    set_roles
-  end
-  let(:client) { FactoryGirl.create(:client_user, assignment: nil, access_state: "disabled") }
-
   scenario "has user inputs prefilled correctly" do
+    set_roles
+    client = FactoryGirl.create(:client_user, assignment: nil, access_state: "disabled")
     sign_in(client)
 
     expect(page).to have_field("user_name", with: client.name)
@@ -14,6 +11,8 @@ feature 'Set up account' do
   end
 
   scenario "has required fields validation", js: true do
+    set_roles
+    client = FactoryGirl.create(:client_user, assignment: nil, access_state: "disabled")
     sign_in(client)
 
     click_link "Next"
@@ -22,15 +21,16 @@ feature 'Set up account' do
   end
 
   scenario "with valid params", js: true do
+    set_roles
+    client = FactoryGirl.create(:client_user, assignment: nil, access_state: "disabled")
     sign_in(client)
 
     fill_in "user_phone_number", with: "0000000000"
     click_link "Next"
 
-    fill_in "user_student_info_attributes_name", with: "Student"
-    fill_in "user_student_info_attributes_email", with: "student@example.com"
-    fill_in "user_student_info_attributes_phone_number", with: "0000000000"
-    fill_in "user_student_info_attributes_subject", with: "Math"
+    fill_in "user_students_attributes_0_name", with: "Student"
+    fill_in "user_students_attributes_0_email", with: "student@example.com"
+    fill_in "user_students_attributes_0_phone_number", with: "0000000000"
     click_link "Next"
 
     VCR.use_cassette('valid stripe account info') do
@@ -39,7 +39,7 @@ feature 'Set up account' do
       fill_in "cvc", with: "1234"
       click_link "Finish"
 
-      expect(page).to have_content("We are in the process of assigning you a tutor.")
+      expect(page).to have_content("Make payment")
     end
   end
 end

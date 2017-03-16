@@ -1,6 +1,7 @@
 
 RSpec.describe Payment, type: :model do
-  context "for dwolla tranfers" do
+  FactoryGirl.create(:role)
+  context "for dwolla transfers" do
     before {
       allow(subject).to receive(:source).and_return('xxx')
       allow(subject).to receive(:payee).and_return(FactoryGirl.create(:tutor_user))

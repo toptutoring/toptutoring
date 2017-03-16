@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: UTF-8
-      string: email=parent%40example.com
+      string: email=client%40example.com
     headers:
       Accept:
       - "*/*"
@@ -33,7 +33,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sun, 26 Feb 2017 18:15:31 GMT
+      - Thu, 16 Mar 2017 09:48:47 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -51,7 +51,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_ABuNTIezySleZf
+      - req_AIWGPsYNfB9YKl
       Stripe-Version:
       - '2016-07-06'
       Strict-Transport-Security:
@@ -60,16 +60,16 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "cus_ABuNS7irn7OqWf",
+          "id": "cus_AIWG8L6oK7qzzs",
           "object": "customer",
           "account_balance": 0,
-          "created": 1488132930,
+          "created": 1489657727,
           "currency": null,
           "default_source": null,
           "delinquent": false,
           "description": null,
           "discount": null,
-          "email": "parent@example.com",
+          "email": "client@example.com",
           "livemode": false,
           "metadata": {},
           "shipping": null,
@@ -78,16 +78,16 @@ http_interactions:
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/customers/cus_ABuNS7irn7OqWf/sources"
+            "url": "/v1/customers/cus_AIWG8L6oK7qzzs/sources"
           },
           "subscriptions": {
             "object": "list",
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/customers/cus_ABuNS7irn7OqWf/subscriptions"
+            "url": "/v1/customers/cus_AIWG8L6oK7qzzs/subscriptions"
           }
         }
     http_version: 
-  recorded_at: Sun, 26 Feb 2017 18:15:31 GMT
+  recorded_at: Thu, 16 Mar 2017 09:48:47 GMT
 recorded_with: VCR 3.0.3

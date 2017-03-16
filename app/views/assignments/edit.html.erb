@@ -20,17 +20,17 @@
 
           <div class="form-group">
             <%= f.label :student_id %>
-            <%= f.text_field :student_id, value: @assignment.student.name, class:"form-control", disabled: true%>
+            <%= f.text_field :student_id, value: @assignment.student.name, class:"form-control", disabled: true %>
           </div>
 
           <div class="form-group">
             <%= f.label :subject %>
-            <%= f.text_field :subject, value: @assignment.subject, class:"form-control", disabled: true%>
+            <%= f.text_field :subject, value: @assignment.subject, class:"form-control" %>
           </div>
 
           <div class="form-group">
             <%= f.label :academic_type %>
-            <%= f.text_field :academic_type, value: @assignment.academic_type, class:"form-control", disabled: true%>
+            <%= f.text_field :academic_type, value: @assignment.academic_type, class:"form-control" %>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-outline btn-blue">Submit</button>

@@ -1,11 +1,11 @@
 class EmailsController < ApplicationController
   before_action :require_login
-  before_action :set_client, :authorize_tutor, only: [:new, :create]
+  before_action :set_student, :set_client, :authorize_tutor, only: [:new, :create]
   before_action :check_client, only: [:create]
 
   def new
     @email = Email.new
-    @invoice = @client.assignment.invoices.last
+    @invoice = @student.assignment.invoices.last
   end
 
   def create
@@ -26,8 +26,12 @@ class EmailsController < ApplicationController
     .merge(tutor_id: current_user.id)
   end
 
+  def set_student
+    @student = User.find(params[:id])
+  end
+
   def set_client
-    @client_id = User.find(params[:id])
+    @client = @student.is_student? ? @student : @student.client
   end
 
   def check_client
@@ -38,7 +42,7 @@ class EmailsController < ApplicationController
   end
 
   def authorize_tutor
-    if @client.assignment.nil? || @client.assignment.tutor_id != current_user.id
+    if @student.assignment.nil? || @student.assignment.tutor_id != current_user.id
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
     end
   end

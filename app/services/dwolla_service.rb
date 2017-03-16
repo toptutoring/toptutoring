@@ -14,7 +14,7 @@ class DwollaService
     if ENV.fetch("DWOLLA_ENVIRONMENT") == "production"
       @user = User.admin_payer.first
     else
-      @user = User.find_by_admin(true)
+      @user = User.admin
     end
   end
 

@@ -34,7 +34,7 @@ class Transfer
   end
 
   def tutor_hourly_rate
-    tutor.tutor.hourly_rate
+    tutor.tutor_info.hourly_rate
   end
 
   def hourly_amount

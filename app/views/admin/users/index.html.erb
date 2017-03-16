@@ -11,7 +11,9 @@
               <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Parent</th>
                 <th>Email</th>
+                <th>Phone Number</th>
                 <th>Subject</th>
                 <th>Academic Type</th>
                 <th class="text-center">Balance</th>
@@ -24,7 +26,9 @@
                 <tr>
                   <td><%= user.id %></td>
                   <td><%= user.name %></td>
+                  <td><%= user.client.name %></td>
                   <td><%= user.email %></td>
+                  <td><%= user.phone_number %></td>
                   <td><%= user.student_info.subject %></td>
                   <td><%= user.student_info.academic_type %></td>
                   <td class="text-center"><%= client_balance(user.client) %></td>

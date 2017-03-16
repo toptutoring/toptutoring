@@ -1,15 +1,11 @@
 RSpec.describe User, type: :model do
+  before {
+    FactoryGirl.create(:role, name: "client")
+    FactoryGirl.create(:role, name: "tutor")
+  }
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:password) }
-
-  context "when user is client" do
-    before {
-      allow(subject).to receive(:student).and_return(FactoryGirl.create(:student_user))
-    }
-    it { should have_one(:student) }
-    it { should accept_nested_attributes_for(:student)}
-  end
 
   context "when user is tutor" do
     before {

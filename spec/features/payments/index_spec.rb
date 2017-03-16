@@ -5,9 +5,9 @@ feature "Index Payments" do
     set_roles
   end
   scenario "show all user's past payments" do
-    client = FactoryGirl.create(:client_user)
-    payment = FactoryGirl.create(:payment, payer: client, amount: 20000)
-    sign_in(client)
+    student = FactoryGirl.create(:student_user)
+    payment = FactoryGirl.create(:payment, payer: student.client, amount: 20000)
+    sign_in(student.client)
 
     visit payments_path
 

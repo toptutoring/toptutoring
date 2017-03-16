@@ -22,14 +22,17 @@ class UsersController < Clearance::SessionsController
         current_user.customer_id = customer.id
         current_user.save!
         enable_user
-        redirect_to payment_new_path
-        return
       rescue Stripe::CardError => e
-        flash[:danger] = e.message
+        redirect_back(fallback_location: (request.referer || root_path),
+                      flash: { error: e.message })
+        return
       else
-        flash[:danger] = current_user.errors.full_messages
+        redirect_back(fallback_location: (request.referer || root_path),
+                      flash: { error: current_user.errors.full_messages })
+        return
       end
-      render :edit
+      redirect_to payment_new_path
+      return
     end
   end
 

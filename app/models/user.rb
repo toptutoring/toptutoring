@@ -31,9 +31,11 @@ class User < ActiveRecord::Base
   scope :with_tutor_role, -> { joins(:roles).where("roles.name = ?", "tutor").distinct }
   scope :with_client_role, -> { joins(:roles).where("roles.name = ?", "client").distinct }
   scope :with_student_role, -> { joins(:roles).where("roles.name = ?", "student").distinct }
+  scope :with_admin_role, -> { joins(:roles).where("roles.name = ?", "admin").distinct }
+  scope :admin, -> { with_admin_role.where(demo: false).last }
   scope :with_external_auth, -> { where.not(encrypted_access_token: nil) & where.not(encrypted_refresh_token: nil) }
-  scope :tutors_with_external_auth, -> { joins(:tutor) & User.with_external_auth }
-  scope :admin_payer, -> { where(admin: true) & where(demo: false) }
+  scope :tutors_with_external_auth, -> { with_tutor_role.with_external_auth }
+  scope :admin_payer, -> { with_client_role.where(demo: false) }
   scope :enabled, -> { where(access_state: "enabled") }
   scope :assigned, -> { joins(:assignment).merge(Assignment.active) }
   scope :admin_and_directors, -> { joins(:roles).where("roles.name = ? OR roles.name = ?", "admin", "director").distinct }
@@ -78,16 +80,16 @@ class User < ActiveRecord::Base
   end
 
   def currency_balance
-    balance * tutor.hourly_rate
+    balance * tutor_info.hourly_rate
   end
 
-  def hourly_balance
-    if assignment && assignment.active?
-      balance.to_f / assignment.hourly_rate
+  def hourly_balance(student)
+    if student.assignment && student.assignment.active?
+      balance.to_f / student.assignment.hourly_rate
     end
   end
 
   def is_student?
-    client_info.tutoring_for == 0
+    client_info&.tutoring_for == 0
   end
 end

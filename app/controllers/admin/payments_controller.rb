@@ -6,7 +6,7 @@ module Admin
 
     def index
       @client_payments = Payment.from_clients
-      if current_user.admin
+      if current_user.has_role?("admin")
         @tutor_payments = Payment.to_tutor
       elsif current_user.has_role?("director")
         @tutor_payments = Payment.from_user(current_user.id)

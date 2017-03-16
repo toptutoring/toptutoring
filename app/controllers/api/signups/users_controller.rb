@@ -14,7 +14,7 @@ module Api
       private
 
       def signups_params
-        params.require(:user).permit(:name, :email, :password, student_info_attributes: [:academic_type]).merge(roles: :client)
+        params.require(:user).permit(:name, :email, :password, client_info_attributes: [:tutoring_for, :subject]).merge(roles: "client")
       end
 
     end

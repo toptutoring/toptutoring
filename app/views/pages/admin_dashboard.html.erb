@@ -165,7 +165,7 @@
           <li class="panel"><a href="calendar.html"><i class="ion-ios-calendar-outline bg-info"></i><span class="sidebar-title">Calendar</span></a></li>
           <li class="panel"><a href="#"><i class="ion-ios-printer-outline bg-danger"></i><span class="sidebar-title">Messages</span></a></li>
           <li class="panel"><a href="/auth/dwolla"><i class="ion-card bg-info"></i><span class="sidebar-title">Log in with Dwolla</span></a></li>
-          <% if current_user.admin? %>
+          <% if current_user.has_role?("admin") %>
             <li class="panel"><a href="/admin/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payments</span></a></li>
           <% end %>
         </ul>

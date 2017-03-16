@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resource :session, controller: "sessions", only: [:new, :create]
   resources :payments, only: [:new, :create, :index]
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
     mount Sidekiq::Web, at: '/sidekiq'
     get "/dashboard" => "dashboards#admin"
   end
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     get "/dashboard" => "dashboards#director"
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? || user.has_role?("director") } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") || user.has_role?("director") } do
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
       resources :users, only: [:index, :edit, :update]
