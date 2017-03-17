@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Students</h3>
+        <%= link_to new_student_path do %>
+          <button type="button" class="btn btn-outline btn-primary inline-button">New student</button>
+        <% end %>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Tutor</th>
+                <th>Subject</th>
+                <th>Academic Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @students.each do |user| %>
+                <tr>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.assignment&.tutor.name %></td>
+                  <td><%= user.student_info&.subject %></td>
+                  <td><%= user.student_info&.academic_type %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -43,6 +43,8 @@ class UsersController < Clearance::SessionsController
       EnableUserAsStudent.new(current_user).perform
     else
       EnableUserWithStudent.new(current_user).perform
+      current_user.students.last.forgot_password!
+      SetStudentPasswordMailer.set_password(current_user.students.last).deliver_now
     end
   end
 

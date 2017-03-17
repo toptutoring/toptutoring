@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("client") } do
     get "/payment/new" => "payments#new"
+    resources :students, only: [:index, :new, :create]
   end
 
   # API
