@@ -12,14 +12,14 @@ class DwollaService
 
   def initialize
     if ENV.fetch("DWOLLA_ENVIRONMENT") == "production"
-      @user = User.admin_payer.first
-    else
       @user = User.admin
+    else
+      @user =  User.with_admin_role.first
     end
   end
 
   def funding_sources
-    return [] unless user.has_external_auth?
+    return [] unless @user.has_external_auth?
     ensure_valid_token
     response = account_token.get("#{account_url}/funding-sources")
     response._embedded["funding-sources"]

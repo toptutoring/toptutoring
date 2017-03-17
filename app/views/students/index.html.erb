@@ -16,7 +16,6 @@
                 <th>Email</th>
                 <th>Tutor</th>
                 <th>Subject</th>
-                <th>Academic Type</th>
               </tr>
             </thead>
             <tbody>
@@ -24,9 +23,8 @@
                 <tr>
                   <td><%= user.name %></td>
                   <td><%= user.email %></td>
-                  <td><%= user.assignment&.tutor.name %></td>
-                  <td><%= user.student_info&.subject %></td>
-                  <td><%= user.student_info&.academic_type %></td>
+                  <td><%= user.assignment&.tutor&.name %></td>
+                  <td><%= user.is_student? ? user.client_info&.subject : user.student_info&.subject %></td>
                 </tr>
               <% end %>
             </tbody>

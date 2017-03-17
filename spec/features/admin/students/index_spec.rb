@@ -19,15 +19,13 @@ feature "Index students" do
         expect(page).to have_content("Email")
         expect(page).to have_content("Phone Number")
         expect(page).to have_content("Subject")
-        expect(page).to have_content("Academic Type")
         expect(page).to have_content("Balance")
         expect(page).to have_content(student.name)
-        expect(page).to have_content(student.client.name)
+        expect(page).to have_content(student.client&.name)
         expect(page).to have_content(student.email)
         expect(page).to have_content(student.phone_number)
-        expect(page).to have_content(student.student_info.subject)
-        expect(page).to have_content(student.student_info.academic_type)
-        expect(page).to have_content(student.client.balance)
+        expect(page).to have_content(student.is_student? ? student.client_info.subject : student.student_info.subject)
+        expect(page).to have_content(student.is_student? ? student.balance : student.client.balance)
         sign_out
       end
     end

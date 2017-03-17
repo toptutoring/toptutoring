@@ -9,7 +9,9 @@ class UsersController < Clearance::SessionsController
 
   def update
     if current_user.update_attributes(user_params)
-      current_user.students.last.create_student_info(subject: current_user.client_info.subject)
+      if !current_user.is_student?
+        current_user.students.last.create_student_info(subject: current_user.client_info.subject)
+      end
 
       Stripe.api_key = ENV['STRIPE_SECRET_KEY']
       token = params[:stripeToken]

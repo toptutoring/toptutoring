@@ -15,7 +15,6 @@
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Subject</th>
-                <th>Academic Type</th>
                 <th class="text-center">Balance</th>
                 <th class="text-center">Tutor</th>
                 <th class="text-center"></th>
@@ -30,7 +29,6 @@
                   <td><%= user.email %></td>
                   <td><%= user.phone_number %></td>
                   <td><%= user.student_info.subject %></td>
-                  <td><%= user.student_info.academic_type %></td>
                   <td class="text-center"><%= client_balance(user.client) %></td>
                   <td class="text-center"><%= user.assignment.tutor.name %></td>
                   <td class="text-center">

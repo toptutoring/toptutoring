@@ -5,6 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+# Create roles
+Role.create(name: "admin")
+Role.create(name: "director")
+Role.create(name: "tutor")
+Role.create(name: "client")
+Role.create(name: "student")
 
 # Create users
 # Users have the password "Passw0rd" in dwolla sandbox.

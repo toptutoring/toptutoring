@@ -14,7 +14,6 @@
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Subject</th>
-                <th>Academic Type</th>
                 <th class="text-center">Balance</th>
                 <th class="text-center"></th>
               </tr>
@@ -26,9 +25,8 @@
                   <td><%= student.name %></td>
                   <td><%= student.email %></td>
                   <td><%= student.phone_number %></td>
-                  <td><%= student.student_info.subject %></td>
-                  <td><%= student.student_info.academic_type %></td>
-                  <td class="text-center"><%= student.balance %> hrs</td>
+                  <td><%= student.is_student? ? student.client_info.subject : student.student_info.subject %></td>
+                  <td class="text-center"><%= student.is_student? ? student.hourly_balance(student) : student.client.hourly_balance(student) %> hrs</td>
                   <td class="text-center">
                     <%= link_to new_invoice_path(student) do %>
                       <button type="button" class="btn btn-outline btn-success">Log session</button>

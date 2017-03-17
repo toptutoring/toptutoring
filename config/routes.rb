@@ -58,6 +58,10 @@ Rails.application.routes.draw do
     resources :students, only: [:index, :new, :create]
   end
 
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("student") } do
+    get "/dashboard" => "dashboards#student"
+  end
+
   # API
   namespace :api do
     namespace :signups, defaults: { format: 'json' } do

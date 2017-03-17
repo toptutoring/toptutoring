@@ -27,7 +27,6 @@ class User < ActiveRecord::Base
 
   # Scopes #
   scope :customer, ->(customer_id) { where(customer_id: customer_id) }
-  # Refactor these
   scope :with_tutor_role, -> { joins(:roles).where("roles.name = ?", "tutor").distinct }
   scope :with_client_role, -> { joins(:roles).where("roles.name = ?", "client").distinct }
   scope :with_student_role, -> { joins(:roles).where("roles.name = ?", "student").distinct }
@@ -84,7 +83,11 @@ class User < ActiveRecord::Base
   end
 
   def hourly_balance(student)
-    if student.assignment && student.assignment.active?
+    if is_student?
+      if assignment && assignment.active?
+        balance.to_f / assignment.hourly_rate
+      end
+    elsif student.assignment && student.assignment.active?
       balance.to_f / student.assignment.hourly_rate
     end
   end

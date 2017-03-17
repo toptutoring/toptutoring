@@ -23,7 +23,7 @@
               <%= label :tutoring_info_myself, 'Myself' %>
             </div>
             <div class="col-md-5 col-md-offset-2">
-              <%= client_field.radio_button :tutoring_for, 1 %>
+              <%= client_field.radio_button :tutoring_for, 1, checked: true %>
               <%= label :tutoring_info_someone_else, 'Someone else (My child)' %>
             </div>
             </br></br>
@@ -56,7 +56,6 @@
               By signing up, you agree to our terms of services and privacy policy.
             </p>
           </div>
-
         <% end %>
       </div>
     </div>

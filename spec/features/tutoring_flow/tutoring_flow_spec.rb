@@ -28,9 +28,9 @@ feature 'Tutoring flow' do
       fill_in "credit_card", with: "4242424242424242"
       fill_in "cvc", with: "1234"
       click_link "Finish"
+      sign_out
     end
 
-    sign_out
     sign_in(director)
 
     expect(page).to have_content("Dashboard")
