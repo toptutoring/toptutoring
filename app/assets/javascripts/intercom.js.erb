@@ -1,0 +1,8 @@
+jQuery(function($) {
+  $('#client-payment').submit(function(event) {
+    window.Intercom("trackEvent", "client_payment", {
+      "amount": $('#client-payment #amount').val(),
+      "hours": $('#client-payment #hours').val(),
+    });
+  });
+});
