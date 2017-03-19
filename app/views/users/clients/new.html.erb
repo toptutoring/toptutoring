@@ -15,7 +15,7 @@
             Who is this tutoring for?
           </p>
         </div>
-        <%= form_for @user, url: users_clients_path(@user), html: { class: "signup-form" } do |form| %>
+        <%= form_for @user, url: users_clients_path(@user), html: { class: "signup-form", id: "client-signup" } do |form| %>
 
           <%= form.fields_for :client_info do |client_field| %>
             <div class="col-md-2 col-md-offset-2">
@@ -30,21 +30,21 @@
           <% end %>
 
           <div class="col-md-12">
-            <%= form.text_field :name, type: "text", placeholder: "Full Name" %>
+            <%= form.text_field :name, type: "text", placeholder: "FULL NAME" %>
           </div>
 
           <div class="col-md-12">
-            <%= form.email_field :email, type: "text", placeholder: "Your Email" %>
+            <%= form.email_field :email, type: "text", placeholder: "YOUR EMAIL" %>
           </div>
 
           <%= form.fields_for :client_info do |client_field| %>
             <div class="col-md-12">
-              <%= client_field.text_field :subject, placeholder: "Tutoring Subject" %>
+              <%= client_field.text_field :subject, placeholder: "TUTORING SUBJECT" %>
             </div>
           <% end %>
 
           <div class="col-md-12">
-            <%= form.password_field :password, placeholder: "Password" %>
+            <%= form.password_field :password, placeholder: "PASSWORD" %>
           </div>
 
           <div class="col-md-12">
