@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature 'Create Invoice' do
-  before(:all) do
-    set_roles
-  end
   scenario 'has valid form' do
     tutor = FactoryGirl.create(:tutor_user)
     student = FactoryGirl.create(:student_user)

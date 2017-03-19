@@ -2,7 +2,6 @@ require 'spec_helper'
 
 feature 'Tutoring flow' do
   scenario "client signup and set up account", js: true do
-    set_roles
     director = FactoryGirl.create(:director_user)
     tutor = FactoryGirl.create(:tutor_user)
 

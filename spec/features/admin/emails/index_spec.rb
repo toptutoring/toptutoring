@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature 'Emails Index' do
-  before(:all) do
-    set_roles
-  end
   scenario 'when user is admin' do
     admin = FactoryGirl.create(:admin_user)
     tutor = FactoryGirl.create(:tutor_user)

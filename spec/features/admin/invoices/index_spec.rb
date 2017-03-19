@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature 'Invoices Index' do
-  before(:all) do
-    set_roles
-  end
   scenario 'when user is admin' do
     tutor = FactoryGirl.create(:tutor_user)
     student = FactoryGirl.create(:student_user)

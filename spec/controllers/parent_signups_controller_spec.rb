@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Api::Signups::UsersController do
   describe '#creates a tutor' do
-    FactoryGirl.create(:role, name: "client")
     let(:user) { FactoryGirl.create(:client_user) }
 
     it 'with valid parameters' do
