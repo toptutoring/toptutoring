@@ -13,7 +13,7 @@
           </div>
 
           <% @tutors.each do |tutor| %>
-            <input type="hidden" id="<%= tutor.id %>_tutor_hourly_rate" value="<%= tutor.tutor.hourly_rate %>"></input>
+            <input type="hidden" id="<%= tutor.id %>_tutor_hourly_rate" value="<%= tutor.tutor_info.hourly_rate %>"></input>
           <% end %>
 
           <div class="form-group">

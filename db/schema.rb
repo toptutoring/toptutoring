@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305124351) do
+ActiveRecord::Schema.define(version: 20170312120723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,14 +28,21 @@ ActiveRecord::Schema.define(version: 20170305124351) do
     t.index ["tutor_id"], name: "index_assignments_on_tutor_id", using: :btree
   end
 
+  create_table "client_infos", force: :cascade do |t|
+    t.string  "subject"
+    t.integer "tutoring_for"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_client_infos_on_user_id", using: :btree
+  end
+
   create_table "emails", force: :cascade do |t|
     t.string   "subject"
     t.string   "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "tutor_id"
-    t.integer  "parent_id"
-    t.index ["parent_id"], name: "index_emails_on_parent_id", using: :btree
+    t.integer  "client_id"
+    t.index ["client_id"], name: "index_emails_on_client_id", using: :btree
     t.index ["tutor_id"], name: "index_emails_on_tutor_id", using: :btree
   end
 
@@ -75,23 +82,31 @@ ActiveRecord::Schema.define(version: 20170305124351) do
     t.index ["payer_id"], name: "index_payments_on_payer_id", using: :btree
   end
 
-  create_table "students", force: :cascade do |t|
-    t.string  "name"
-    t.string  "email"
-    t.string  "phone_number"
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "student_infos", force: :cascade do |t|
     t.string  "subject"
     t.string  "academic_type"
     t.integer "user_id"
-    t.index ["user_id"], name: "index_students_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_student_infos_on_user_id", using: :btree
   end
 
-  create_table "tutors", force: :cascade do |t|
+  create_table "tutor_infos", force: :cascade do |t|
     t.string  "subject"
     t.string  "academic_type"
     t.integer "user_id"
     t.boolean "director",                               default: false, null: false
     t.decimal "hourly_rate",   precision: 10, scale: 2, default: "0.0", null: false
-    t.index ["user_id"], name: "index_tutors_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_tutor_infos_on_user_id", using: :btree
+  end
+
+  create_table "user_roles", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+    t.index ["role_id"], name: "index_user_roles_on_role_id", using: :btree
+    t.index ["user_id"], name: "index_user_roles_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -115,12 +130,14 @@ ActiveRecord::Schema.define(version: 20170305124351) do
     t.string   "access_state",                                                    default: "disabled", null: false
     t.decimal  "balance",                                precision: 10, scale: 2, default: "0.0",      null: false
     t.boolean  "demo",                                                            default: false,      null: false
+    t.integer  "client_id"
     t.index ["email"], name: "index_users_on_email", using: :btree
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end
 
+  add_foreign_key "client_infos", "users"
   add_foreign_key "payments", "users", column: "payee_id"
   add_foreign_key "payments", "users", column: "payer_id"
-  add_foreign_key "students", "users"
-  add_foreign_key "tutors", "users"
+  add_foreign_key "student_infos", "users"
+  add_foreign_key "tutor_infos", "users"
 end

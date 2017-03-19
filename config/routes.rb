@@ -18,16 +18,16 @@ Rails.application.routes.draw do
   resource :session, controller: "sessions", only: [:new, :create]
   resources :payments, only: [:new, :create, :index]
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
     mount Sidekiq::Web, at: '/sidekiq'
     get "/dashboard" => "dashboards#admin"
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.is_director? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("director") } do
     get "/dashboard" => "dashboards#director"
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? || user.is_director? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") || user.has_role?("director") } do
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
       resources :users, only: [:index, :edit, :update]
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.is_tutor? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("tutor") } do
     get "/dashboard" => "dashboards#tutor"
     namespace :tutors do
       resources :students, only: [:index]
@@ -53,8 +53,13 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.is_parent? } do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("client") } do
     get "/payment/new" => "payments#new"
+    resources :students, only: [:index, :new, :create]
+  end
+
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("student") } do
+    get "/dashboard" => "dashboards#student"
   end
 
   # API
@@ -72,7 +77,7 @@ Rails.application.routes.draw do
 
   # Users signup.
   namespace :users do
-    resources :students, only: [:new, :create]
+    resources :clients, only: [:new, :create]
     resources :tutors, only: [:new, :create]
   end
 

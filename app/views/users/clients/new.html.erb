@@ -10,7 +10,25 @@
         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br></p>
       </div>
       <div class="col-sm-6 col-md-6 col-md-offset-1">
-        <%= form_for @user, url: users_students_path(@user), html: { class: "signup-form" } do |form| %>
+        <div class="col-md-12">
+          <p class="note text-center">
+            Who is this tutoring for?
+          </p>
+        </div>
+        <%= form_for @user, url: users_clients_path(@user), html: { class: "signup-form" } do |form| %>
+
+          <%= form.fields_for :client_info do |client_field| %>
+            <div class="col-md-2 col-md-offset-2">
+              <%= client_field.radio_button :tutoring_for, 0 %>
+              <%= label :tutoring_info_myself, 'Myself' %>
+            </div>
+            <div class="col-md-5 col-md-offset-2">
+              <%= client_field.radio_button :tutoring_for, 1, checked: true %>
+              <%= label :tutoring_info_someone_else, 'Someone else (My child)' %>
+            </div>
+            </br></br>
+          <% end %>
+
           <div class="col-md-12">
             <%= form.text_field :name, type: "text", placeholder: "Full Name" %>
           </div>
@@ -19,16 +37,15 @@
             <%= form.email_field :email, type: "text", placeholder: "Your Email" %>
           </div>
 
+          <%= form.fields_for :client_info do |client_field| %>
+            <div class="col-md-12">
+              <%= client_field.text_field :subject, placeholder: "Tutoring Subject" %>
+            </div>
+          <% end %>
+
           <div class="col-md-12">
             <%= form.password_field :password, placeholder: "Password" %>
           </div>
-
-          <%= form.fields_for :student do |student_field| %>
-            <div class="col-md-12 select-option">
-              <i class="ion-chevron-down"></i>
-              <%= student_field.select :academic_type, options_for_select(Student::ACADEMIC_TYPE), {}, class:"wpcf7-form-control wpcf7-select" %>
-            </div>
-          <% end %>
 
           <div class="col-md-12">
             <button type="submit" class="btn btn-lg btn-blue">Sign up</button>
@@ -39,7 +56,6 @@
               By signing up, you agree to our terms of services and privacy policy.
             </p>
           </div>
-
         <% end %>
       </div>
     </div>

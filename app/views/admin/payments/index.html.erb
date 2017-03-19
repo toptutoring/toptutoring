@@ -2,14 +2,14 @@
   <div class="col-md-6">
     <div class="widget">
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Parent Payments</h3>
+        <h3 class="widget-title pull-left">Client Payments</h3>
       </div>
       <div class="widget-body">
         <div class="table-responsive">
           <table class="table mb-0">
             <thead>
               <tr>
-                <th>Parent</th>
+                <th>Client</th>
                 <th class="text-center">Amount</th>
                 <th class="text-center">Description</th>
                 <th class="text-center">Status</th>
@@ -17,7 +17,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @parent_payments.each do |payment| %>
+              <% @client_payments.each do |payment| %>
                 <tr>
                   <td><%= payment.payer.name  %></td>
                   <td class="text-center"><%= payment.amount %></td>

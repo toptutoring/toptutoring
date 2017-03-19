@@ -1,5 +1,5 @@
 class AssignmentPresenter < SimpleDelegator
-  
+
   def initialize(assignment)
     @assignment = assignment
     super
@@ -10,18 +10,18 @@ class AssignmentPresenter < SimpleDelegator
   end
 
   def student_name
-    @assignment.student.student.name
+    @assignment.student.name
   end
 
   def tutor_name
-    @assignment.tutor.try(:name)
+    @assignment.tutor&.name
   end
 
   def student_subject
-    @assignment.student.student.subject
+    @assignment.student.student_info.subject
   end
 
   def student_academic_type
-    @assignment.student.student.academic_type
+    @assignment.student.student_info.academic_type
   end
 end

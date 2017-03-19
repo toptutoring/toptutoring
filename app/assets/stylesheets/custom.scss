@@ -421,3 +421,12 @@ legend {
     transition: padding-left 0.3s;
   }
 }
+
+.alert-danger {
+  min-height: 0;
+}
+
+.inline-button {
+  margin-left: 20px;
+  margin-top: -6px;
+}

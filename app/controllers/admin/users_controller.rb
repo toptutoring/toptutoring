@@ -4,7 +4,7 @@ module Admin
     before_action :set_user, only: [:edit, :update]
 
     def index
-      @users = User.with_parent_role.assigned
+      @users = User.with_student_role
     end
 
     def update
@@ -19,7 +19,7 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(:balance, student_attributes: [:name, :email, :subject, :academic_type, :id])
+      params.require(:user).permit(:balance, student_info_attributes: [:name, :email, :subject, :academic_type, :id])
     end
 
     def set_user

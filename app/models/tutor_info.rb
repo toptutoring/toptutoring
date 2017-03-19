@@ -1,4 +1,4 @@
-class Tutor < ActiveRecord::Base
+class TutorInfo < ActiveRecord::Base
   TEST_PREP = "Test Prep"
   ACADEMIC = "Academic"
   ACADEMIC_TYPE = [TEST_PREP, ACADEMIC]

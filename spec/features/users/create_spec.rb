@@ -1,13 +1,17 @@
 require 'spec_helper'
 
 feature 'Create user' do
+  before(:all) do
+    set_roles
+  end
   context "with valid params" do
     scenario 'when user is student' do
-      visit new_users_student_path
+      visit new_users_client_path
 
       fill_in "user_name", with: 'student'
       fill_in "user_email", with: 'student@example.com'
       fill_in "user_password", with: 'password'
+      choose "user_client_info_attributes_tutoring_for_1"
       click_button "Sign up"
 
       expect(page).to have_current_path(edit_user_path(User.first.id))
@@ -27,7 +31,7 @@ feature 'Create user' do
 
   context "with invalid params" do
     scenario 'when user is student' do
-      visit new_users_student_path
+      visit new_users_client_path
 
       fill_in "user_name", with: 'student'
       fill_in "user_email", with: 'student'

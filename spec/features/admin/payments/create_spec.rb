@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 feature "Create payment for tutor" do
+  before(:all) do
+    set_roles
+  end
   context "when user is admin" do
     scenario "and does not have external auth" do
       tutor = FactoryGirl.create(:tutor_user)
@@ -65,7 +68,7 @@ feature "Create payment for tutor" do
         visit admin_tutors_path
         click_on "Pay tutor"
 
-        fill_in "payment_amount", with: 200
+        fill_in "payment_amount", with: 100
         fill_in "payment_description", with: "Payment description"
         click_button "Send Payment"
 

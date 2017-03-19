@@ -1,37 +1,36 @@
 require 'spec_helper'
 
 feature 'Tutoring flow' do
-  let(:director) { FactoryGirl.create(:director_user) }
-
-  scenario "parent signup and set up account", js: true do
+  scenario "client signup and set up account", js: true do
+    set_roles
+    director = FactoryGirl.create(:director_user)
     tutor = FactoryGirl.create(:tutor_user)
 
-    visit new_users_student_path
+    visit new_users_client_path
 
-    fill_in "user_name", with: "Parent"
-    fill_in "user_email", with: "parent@example.com"
+    fill_in "user_name", with: "Client"
+    fill_in "user_email", with: "client@example.com"
+    fill_in "user_client_info_attributes_subject", with: "Math"
     fill_in "user_password", with: "password"
+    choose "user_client_info_attributes_tutoring_for_1"
     click_button "Sign up"
 
     fill_in "user_phone_number", with: "0000000000"
     click_link "Next"
 
-    fill_in "user_student_attributes_name", with: "Student"
-    fill_in "user_student_attributes_email", with: "student@example.com"
-    fill_in "user_student_attributes_phone_number", with: "0000000000"
-    fill_in "user_student_attributes_subject", with: "Math"
+    fill_in "user_students_attributes_0_name", with: "Student"
+    fill_in "user_students_attributes_0_email", with: "student@example.com"
+    fill_in "user_students_attributes_0_phone_number", with: "0000000000"
     click_link "Next"
 
     VCR.use_cassette('valid stripe account info') do
-      fill_in "card_holder", with: "Parent"
+      fill_in "card_holder", with: "Client"
       fill_in "credit_card", with: "4242424242424242"
       fill_in "cvc", with: "1234"
       click_link "Finish"
-
-      expect(page).to have_content("We are in the process of assigning you a tutor.")
+      sign_out
     end
 
-    sign_out
     sign_in(director)
 
     expect(page).to have_content("Dashboard")
@@ -66,7 +65,7 @@ feature 'Tutoring flow' do
     sign_out
 
     visit login_path
-    fill_in 'Email', with: "parent@example.com"
+    fill_in 'Email', with: "client@example.com"
     fill_in 'Password', with: "password"
     click_button 'Login'
     expect(page).to have_content("-3.0 hrs balance")
@@ -74,7 +73,7 @@ feature 'Tutoring flow' do
     VCR.use_cassette('valid stripe card') do
       fill_in "hours", with: 3
       expect(page).to have_field("amount", with: "60")
-      expect(page).to have_field("hourly_rate", with: "20")
+      expect(page).to have_field("hourly_rate", with: "20.0")
       click_on "Pay"
 
       expect(page).to have_content("Payment successfully made.")

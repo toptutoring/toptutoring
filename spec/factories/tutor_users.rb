@@ -3,10 +3,11 @@ FactoryGirl.define do
     name          { "Tutor" }
     email         { "tutor@test.com" }
     password      { "password" }
+    roles         { "tutor" }
     auth_uid      { "xxx-xxx" }
     access_token  { "xxx-xxx" }
     refresh_token { "xxx-xxx" }
-    tutor         { FactoryGirl.create(:tutor) }
+    tutor_info    { FactoryGirl.create(:tutor_info) }
     balance       { 10 }
   end
 end

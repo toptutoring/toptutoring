@@ -1,4 +1,4 @@
-class EnableUser
+class EnableUserAsStudent
   def initialize(user)
     @user = user
   end
@@ -17,7 +17,6 @@ class EnableUser
   def create_assignment
     Assignment.create(
       student_id: @user.id,
-      subject: @user.student.subject,
-      academic_type: @user.student.academic_type)
+      subject: @user.client_info.subject)
   end
 end

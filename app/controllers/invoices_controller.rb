@@ -10,7 +10,11 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params)
     if @invoice.save
       UpdateUserBalance.new(@invoice.amount, current_user.id).increase
-      UpdateUserBalance.new(@invoice.amount, @student.id).decrease
+      if @student.is_student?
+        UpdateUserBalance.new(@invoice.amount, @student.id).decrease
+      else
+        UpdateUserBalance.new(@invoice.amount, @student.client.id).decrease
+      end
       redirect_to tutors_students_path, notice: 'Session successfully logged!'
     else
       redirect_back(fallback_location: (request.referer || root_path),

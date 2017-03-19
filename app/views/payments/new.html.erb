@@ -1,4 +1,4 @@
-<% if current_user.assignment && current_user.assignment.active? %>
+<% if current_user.enabled? %>
   <%= render "form" %>
 <% else %>
   <div class="container">

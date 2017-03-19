@@ -3,6 +3,6 @@ FactoryGirl.define do
     name     { "Admin" }
     email    { "admin@test.com" }
     password { "password" }
-    admin    { true }
+    roles    { "admin" }
   end
 end

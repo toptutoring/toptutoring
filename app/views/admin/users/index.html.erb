@@ -11,9 +11,10 @@
               <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Parent</th>
                 <th>Email</th>
+                <th>Phone Number</th>
                 <th>Subject</th>
-                <th>Academic Type</th>
                 <th class="text-center">Balance</th>
                 <th class="text-center">Tutor</th>
                 <th class="text-center"></th>
@@ -23,11 +24,12 @@
               <% @users.each do |user| %>
                 <tr>
                   <td><%= user.id %></td>
-                  <td><%= user.student.name %></td>
-                  <td><%= user.student.email %></td>
-                  <td><%= user.student.subject %></td>
-                  <td><%= user.student.academic_type %></td>
-                  <td class="text-center"><%= parent_balance(user) %></td>
+                  <td><%= user.name %></td>
+                  <td><%= user.client.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.phone_number %></td>
+                  <td><%= user.student_info.subject %></td>
+                  <td class="text-center"><%= client_balance(user.client) %></td>
                   <td class="text-center"><%= user.assignment.tutor.name %></td>
                   <td class="text-center">
                     <%= link_to edit_admin_user_path(user) do %>

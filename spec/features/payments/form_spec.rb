@@ -1,13 +1,20 @@
 require 'spec_helper'
 
-feature "Navigate to payment as parent" do
+feature "Navigate to payment as client" do
+  before(:all) do
+    set_roles
+  end
   scenario "with valid payment form" do
-    parent = FactoryGirl.create(:parent_user, balance: 30)
-    sign_in(parent)
+    tutor = FactoryGirl.create(:tutor_user)
+    student = FactoryGirl.create(:student_user)
+    student.assignment.update(tutor_id: tutor.id)
+    client = student.client
+
+    sign_in(client)
 
     expect(page.current_path).to eq payment_new_path
-    expect(page).to have_content("1.0 hrs balance")
-    expect(page).to have_content("This tutor has an hourly rate of $30.")
-    expect(page).to have_field("hourly_rate", with: "30")
+    expect(page).to have_content("0.0 hrs balance")
+    expect(page).to have_content("This tutor has an hourly rate of $20.")
+    expect(page).to have_field("hourly_rate", with: "20.0")
   end
 end

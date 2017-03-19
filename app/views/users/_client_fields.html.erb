@@ -1,0 +1,13 @@
+<h3>Tutoring Information</h3>
+<fieldset>
+  <%= f.fields_for :client_info do |client_info| %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= client_info.label :subject %>
+          <%= client_info.text_field :subject, class:"form-control", required: true %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</fieldset>

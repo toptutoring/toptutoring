@@ -1,4 +1,4 @@
-class NewStudentNotifierMailer < ApplicationMailer
+class NewClientNotifierMailer < ApplicationMailer
   default from: 'tutor@toptutoring.org'
 
   def welcome(new_user, users)

@@ -1,10 +1,13 @@
 require 'spec_helper'
 
 feature 'Invoices Index' do
+  before(:all) do
+    set_roles
+  end
   scenario 'when user is tutor' do
     tutor = FactoryGirl.create(:tutor_user)
-    parent = FactoryGirl.create(:parent_user)
-    assignment = FactoryGirl.create(:assignment, tutor: tutor, student: parent)
+    student = FactoryGirl.create(:student_user)
+    assignment = FactoryGirl.create(:assignment, tutor: tutor, student: student)
     invoice = FactoryGirl.create(:invoice, tutor: tutor, assignment: assignment)
 
     sign_in(tutor)
@@ -19,7 +22,7 @@ feature 'Invoices Index' do
     expect(page).to have_content('Hours')
     expect(page).to have_content('Hourly Rate')
     expect(page).to have_content('Amount')
-    expect(page).to have_content(invoice.assignment.student.student.name)
+    expect(page).to have_content(invoice.assignment.student.name)
     expect(page).to have_content(invoice.assignment.subject)
     expect(page).to have_content(invoice.assignment.academic_type)
     expect(page).to have_content(invoice.created_at)

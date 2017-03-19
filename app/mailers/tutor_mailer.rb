@@ -9,7 +9,7 @@ class TutorMailer < ActionMailer::Base
 
   def set_params(email_id)
     @email = ActiveRecord::Base::Email.find(email_id)
-    @receiver = @email.parent.email
+    @receiver = @email.client.email
   end
 
   def send_email

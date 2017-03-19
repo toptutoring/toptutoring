@@ -6,7 +6,7 @@ class PaymentGatewayDwolla
     if ENV.fetch("DWOLLA_ENVIRONMENT") == "production"
       @payer = User.admin_payer.first
     else
-      @payer = User.find_by_admin(true)
+      @payer = User.admin
     end
   end
 
