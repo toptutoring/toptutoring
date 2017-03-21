@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature "Navigate to payment as client" do
-  before(:all) do
-    set_roles
-  end
   scenario "with valid payment form" do
     tutor = FactoryGirl.create(:tutor_user)
     student = FactoryGirl.create(:student_user)

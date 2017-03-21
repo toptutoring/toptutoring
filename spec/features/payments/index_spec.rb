@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature "Index Payments" do
-  before(:all) do
-    set_roles
-  end
   scenario "show all user's past payments" do
     student = FactoryGirl.create(:student_user)
     payment = FactoryGirl.create(:payment, payer: student.client, amount: 20000)

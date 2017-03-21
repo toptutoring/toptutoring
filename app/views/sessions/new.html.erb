@@ -8,12 +8,12 @@
     <%= form_for :session, url: session_path, html: { class: "form-horizontal login" } do |form| %>
       <div class="email col-xs-12">
         <%= form.label :email, class: "sr-only"  %>
-        <%= form.email_field :email, type: "email", placeholder: "Email" %>
+        <%= form.email_field :email, type: "email", placeholder: "EMAIL" %>
       </div>
 
       <div class="password col-xs-12">
         <%= form.label :password, class: "sr-only"  %>
-        <%= form.password_field :password, type: "password", placeholder: "Password" %>
+        <%= form.password_field :password, type: "password", placeholder: "PASSWORD" %>
       </div>
 
         <div class="col-xs-12">

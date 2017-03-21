@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature 'Create user' do
-  before(:all) do
-    set_roles
-  end
   context "with valid params" do
     scenario 'when user is student' do
       visit new_users_client_path

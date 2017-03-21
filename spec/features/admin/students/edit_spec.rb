@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature "Edit student" do
-  before(:all) do
-    set_roles
-  end
   scenario "has valid form" do
     admin = FactoryGirl.create(:admin_user)
     client = FactoryGirl.create(:client_user)

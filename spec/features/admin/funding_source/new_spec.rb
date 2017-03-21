@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature 'Set funding source' do
-  before(:all) do
-    set_roles
-  end
   scenario 'goes to new' do
     admin = FactoryGirl.create(:admin_user)
 

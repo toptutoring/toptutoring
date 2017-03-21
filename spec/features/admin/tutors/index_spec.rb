@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature "Index tutors" do
-  before(:all) do
-    set_roles
-  end
   context "when user is director" do
     scenario "should see tutors" do
       director = FactoryGirl.create(:director_user)

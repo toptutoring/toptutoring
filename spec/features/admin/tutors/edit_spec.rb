@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature "Edit tutor" do
-  before(:all) do
-    set_roles
-  end
   context "when user is director" do
     scenario "has valid form" do
       director = FactoryGirl.create(:director_user)

@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 feature 'Dashboard Index' do
-  before(:all) do
-    set_roles
-  end
   scenario "when user doesn't have external auth" do
     tutor = FactoryGirl.create(:tutor_user, access_token: nil)
 

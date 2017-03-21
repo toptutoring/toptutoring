@@ -14,9 +14,9 @@ namespace :dev do
     student = User.where(email: "student@example.com").first_or_initialize
     student.name = "Student"
     student.email = "student@example.com"
-    client.password = "password"
-    client.access_state = "enabled"
-    client.demo = true
+    student.password = "password"
+    student.access_state = "enabled"
+    student.demo = true
     student.roles = "student"
     student.save!
 
