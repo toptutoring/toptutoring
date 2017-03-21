@@ -24,11 +24,5 @@ module BlankRails
     config.autoload_paths += %W(#{config.root}/lib/cli)
     config.action_controller.action_on_unpermitted_parameters = :raise
     config.active_job.queue_adapter = :sidekiq
-    config.middleware.insert_before 0, "Rack::Cors" do
-      allow do
-        origins /^http(s)?:\/\/(toptutoring.com)$/
-        resource '*', :headers => :any, :methods => [:post]
-      end
-    end
   end
 end
