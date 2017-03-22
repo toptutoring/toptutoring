@@ -17,7 +17,7 @@
       </p>
     </div>
 
-  <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal col-md-9" do |f| %>
+  <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal col-md-9", id: "client-payment" do |f| %>
 
     <fieldset class="credit_card">
 
@@ -43,9 +43,9 @@
       </div>
 
       <div class="form-group">
-        <label for="description" class="col-sm-2 control-label col-sm-offset-2">Description</label>
+        <label for="description" class="col-sm-2 control-label col-sm-offset-2" id="description">Description</label>
         <div class="col-sm-5">
-          <input type="text" class="form-control col-sm-3 input-sm"  name="payments[description]">
+          <input type="text" class="form-control col-sm-3 input-sm"  name="payments[description]" id="description">
           </input>
         </div>
       </div>
@@ -68,6 +68,7 @@
       </div>
 
     <%= hidden_field_tag :stripe_publishable_key, ENV['STRIPE_PUBLISHABLE_KEY'] %>
+    <%= hidden_field_tag :payer_email, current_user.email %>
 
   <% end %>
 </div>
