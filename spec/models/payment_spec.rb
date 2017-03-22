@@ -1,6 +1,6 @@
+require "rails_helper"
 
 RSpec.describe Payment, type: :model do
-  FactoryGirl.create(:role)
   context "for dwolla transfers" do
     before {
       allow(subject).to receive(:source).and_return('xxx')
