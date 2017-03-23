@@ -22,7 +22,6 @@ class User < ActiveRecord::Base
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
 
   # Validation #
-  validates_uniqueness_of :email
   validates_presence_of :name
 
   # Scopes #
@@ -94,5 +93,10 @@ class User < ActiveRecord::Base
 
   def is_student?
     client_info&.tutoring_for == 0
+  end
+
+  # Overide clearance email validation
+  def email_optional?
+    client_id.present?
   end
 end

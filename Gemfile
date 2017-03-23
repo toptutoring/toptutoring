@@ -51,8 +51,6 @@ group :development, :test do
   gem "pry-byebug"
   gem "pry-rails"
   gem "rb-readline"
-  gem "rspec-rails", "~> 3.5.0.beta4"
-  gem "vcr"
 end
 
 group :development, :staging do
@@ -68,6 +66,10 @@ group :test do
   gem "simplecov", require: false
   gem "timecop"
   gem "webmock"
+  gem 'fake_stripe'
+  gem 'sinatra', '~> 2.0.0.rc2', require: false
+  gem "vcr"
+  gem "rspec-rails", "~> 3.5.0.beta4"
 end
 
 group :staging, :production do

@@ -11,7 +11,7 @@ feature 'Create user' do
       choose "user_client_info_attributes_tutoring_for_1"
       click_button "Sign up"
 
-      expect(page).to have_current_path(edit_user_path(User.first.id))
+      expect(page).to have_current_path(dashboard_path)
     end
 
     scenario 'when user is tutor' do

@@ -79,7 +79,7 @@ namespace :prod do
       student_id: student.id,
       subject: student.student_info.subject,
       academic_type: student.student_info.academic_type,
-      hourly_rate: 30
+      hourly_rate: 20
     )
     assignment.enable!
 

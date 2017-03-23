@@ -1,0 +1,12 @@
+<%= render "menu" %>
+<% unless current_user.enabled? %>
+  <%= render "new_user_message" %>
+<% end %>
+<% if current_user.enabled? %>
+  <% if !current_user.is_student? && current_user.students.first.assignment&.pending? %>
+    <%= render "student_pending_assignment_message" %>
+  <% end %>
+  <% if current_user.is_student? && current_user.assignment&.pending? %>
+    <%= render "pending_assignment_message" %>
+  <% end %>
+<% end %>

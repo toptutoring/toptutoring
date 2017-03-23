@@ -10,8 +10,10 @@ class StudentsController < ApplicationController
     @user = Clearance.configuration.user_model.new(student_params)
     @user.client_id = current_user.id
     if @user.save
-      @user.forgot_password!
-      SetStudentPasswordMailer.set_password(@user).deliver_now
+      if @user.email.present?
+        @user.forgot_password!
+        SetStudentPasswordMailer.set_password(@user).deliver_now
+      end
       Assignment.create(
         student_id: @user.id,
         subject: @user.student_info.subject)

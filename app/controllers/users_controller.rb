@@ -12,30 +12,13 @@ class UsersController < Clearance::SessionsController
       if !current_user.is_student?
         current_user.students.last.create_student_info(subject: current_user.client_info.subject)
       end
-
-      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
-      token = params[:stripeToken]
-
-      begin
-        customer = Stripe::Customer.create(
-        source: token,
-        email: current_user.email)
-
-        current_user.customer_id = customer.id
-        current_user.save!
-        enable_user
-      rescue Stripe::CardError => e
-        redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: e.message })
-        return
-      else
-        redirect_back(fallback_location: (request.referer || root_path),
+    else redirect_back(fallback_location: (request.referer || root_path),
                       flash: { error: current_user.errors.full_messages })
-        return
-      end
-      redirect_to payment_new_path
       return
     end
+    enable_user
+    redirect_to dashboard_path
+    return
   end
 
   private
@@ -45,8 +28,10 @@ class UsersController < Clearance::SessionsController
       EnableUserAsStudent.new(current_user).perform
     else
       EnableUserWithStudent.new(current_user).perform
-      current_user.students.last.forgot_password!
-      SetStudentPasswordMailer.set_password(current_user.students.last).deliver_now
+      if current_user.students.last.email.present?
+        current_user.students.last.forgot_password!
+        SetStudentPasswordMailer.set_password(current_user.students.last).deliver_now
+      end
     end
   end
 

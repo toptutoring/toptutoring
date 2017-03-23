@@ -16,11 +16,29 @@ class OneTimePaymentsController < ApplicationController
     @amount = (@amount * 100).to_i
 
     begin
-      Stripe::Charge.create(
-        amount: @amount,
-        currency: 'usd',
-        source: token,
-        description: params[:payments][:description])
+      if params[:save_payment_info] && current_user
+        customer = Stripe::Customer.create(
+          source: token,
+          email: current_user.email)
+
+        current_user.customer_id = customer.id
+        current_user.save!
+        payment = Stripe::Charge.create(
+          amount: @amount,
+          currency: 'usd',
+          customer: current_user.customer_id,
+          description: params[:payments][:description])
+      else
+        payment = Stripe::Charge.create(
+          amount: @amount,
+          currency: 'usd',
+          source: token,
+          description: params[:payments][:description])
+      end
+
+      if current_user
+        PaymentService.new.perform(payment, current_user.id)
+      end
 
       redirect_to confirmation_path
     rescue Stripe::CardError => e

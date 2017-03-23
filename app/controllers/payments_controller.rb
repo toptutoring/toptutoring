@@ -1,6 +1,12 @@
 class PaymentsController < ApplicationController
   before_action :require_login
 
+  def new
+    if !current_user.is_customer?
+      redirect_to one_time_payment_path
+    end
+  end
+
   def index
     @payments = Payment.from_customer(current_user.customer_id)
   end

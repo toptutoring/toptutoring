@@ -6,5 +6,6 @@ FactoryGirl.define do
     roles        { "client" }
     access_state { "enabled" }
     client_info  { FactoryGirl.create(:client_info) }
+    customer_id  { "xxx" }
   end
 end
