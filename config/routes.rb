@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   post "/passwords" => "passwords#create"
   get "/example_dashboard" => "pages#example_dashboard"
   get "/calendar" => "pages#calendar"
-  get "/payment" => "one_time_payments#new"
+  get "/one_time_payment" => "one_time_payments#new"
   post "/payments/one_time" => "one_time_payments#create"
   get "/confirmation" => "one_time_payments#confirmation"
+  get "payment" => "pages#payment"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"
@@ -55,6 +56,9 @@ Rails.application.routes.draw do
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("client") } do
     get "/payment/new" => "payments#new"
+    get "/one_time_payment" => "one_time_payments#new"
+    post "/payments/one_time" => "one_time_payments#create"
+    get "/confirmation" => "one_time_payments#confirmation"
     resources :students, only: [:index, :new, :create]
   end
 
