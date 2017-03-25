@@ -430,3 +430,39 @@ legend {
   margin-left: 20px;
   margin-top: -6px;
 }
+
+.btn.btn-block {
+    background: #59a4f0;
+    border: 2px solid #59a4f0;
+    margin-right: 0;
+    color: #fff;
+}
+
+.form-box-inner {
+  padding: 5%;
+  .title {
+    padding-bottom: 10px;
+  }
+}
+
+#clearance.password-reset {
+  padding-top: 6%;
+  font-size: 16px;
+  text-align: center;
+  h2 {
+    padding-bottom: 30px;
+  }
+  p {
+    padding-bottom: 10px;
+  }
+  form {
+    padding-left: 30%;
+    padding-right: 30%;
+  }
+  .submit-field input {
+    background: #59a4f0;
+    border: 2px solid #59a4f0;
+    margin-right: 0;
+    color: #fff;
+  }
+}
