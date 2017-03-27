@@ -37,15 +37,19 @@
             <%= form.email_field :email, type: "text", placeholder: "YOUR EMAIL" %>
           </div>
 
+          <div class="col-md-12">
+            <%= form.password_field :password, placeholder: "PASSWORD" %>
+          </div>
+
           <%= form.fields_for :client_info do |client_field| %>
             <div class="col-md-12">
               <%= client_field.text_field :subject, placeholder: "TUTORING SUBJECT" %>
             </div>
-          <% end %>
 
-          <div class="col-md-12">
-            <%= form.password_field :password, placeholder: "PASSWORD" %>
-          </div>
+            <div class="col-md-12">
+              <%= client_field.text_area :comments, placeholder: "COMMENTS", rows: "3", style: "height:100px;" %>
+            </div>
+          <% end %>
 
           <div class="col-md-12">
             <button type="submit" class="btn btn-lg btn-blue">Sign up</button>
