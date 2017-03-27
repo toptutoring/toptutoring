@@ -9,5 +9,6 @@ FactoryGirl.define do
     refresh_token { "xxx-xxx" }
     tutor_info    { FactoryGirl.create(:tutor_info) }
     balance       { 10 }
+    access_state  { "enabled" }
   end
 end

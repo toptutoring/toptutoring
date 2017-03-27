@@ -60,6 +60,7 @@ Rails.application.routes.draw do
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
     resources :students, only: [:index, :new, :create]
+    get "/dashboard" => "dashboards#client"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("student") } do

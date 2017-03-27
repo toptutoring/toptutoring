@@ -12,11 +12,7 @@
             </div>
 
             <div class="form-group">
-              <%= f.email_field :email, class:"form-control", required: true, placeholder: "Email" %>
-            </div>
-
-            <div class="form-group">
-              <%= f.text_field number_to_phone(:phone_number), class:"form-control", placeholder: "Phone Number" %>
+              <%= f.email_field :email, class:"form-control", placeholder: "Email" %>
             </div>
 
             <%= f.fields_for :student_info do |student_field| %>

@@ -19,20 +19,11 @@ feature 'Tutoring flow' do
 
     fill_in "user_students_attributes_0_name", with: "Student"
     fill_in "user_students_attributes_0_email", with: "student@example.com"
-    fill_in "user_students_attributes_0_phone_number", with: "0000000000"
-    click_link "Next"
+    click_link "Finish"
 
-    VCR.use_cassette('valid stripe account info') do
-      fill_in "card_holder", with: "Client"
-      fill_in "credit_card", with: "4242424242424242"
-      fill_in "cvc", with: "1234"
-      click_link "Finish"
-      sign_out
-    end
-
+    sign_out
     sign_in(director)
 
-    expect(page).to have_content("Dashboard")
     expect(page).to have_content("Pending Assignments")
     click_link "Edit"
 
@@ -69,6 +60,18 @@ feature 'Tutoring flow' do
     click_button 'Login'
     expect(page).to have_content("-3.0 hrs balance")
 
+    VCR.use_cassette('one time payment') do
+      fill_in "amount", with: 60
+      fill_in "name", with: "Client"
+      fill_in "credit-card", with: "4242424242424242"
+      check("save_payment_info")
+      click_on "Pay"
+
+      expect(page).to have_content("Payment successfully made!")
+    end
+
+    visit new_payment_path
+
     VCR.use_cassette('valid stripe card') do
       fill_in "hours", with: 3
       expect(page).to have_field("amount", with: "60")
@@ -76,7 +79,7 @@ feature 'Tutoring flow' do
       click_on "Pay"
 
       expect(page).to have_content("Payment successfully made.")
-      expect(page).to have_content("0.0 hrs balance")
+      expect(page).to have_content("-2.0 hrs balance")
     end
   end
 end

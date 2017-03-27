@@ -9,7 +9,7 @@ feature "Navigate to payment as client" do
 
     sign_in(client)
 
-    expect(page.current_path).to eq payment_new_path
+    expect(page.current_path).to eq new_payment_path
     expect(page).to have_content("0.0 hrs balance")
     expect(page).to have_content("This tutor has an hourly rate of $20.")
     expect(page).to have_field("hourly_rate", with: "20.0")
