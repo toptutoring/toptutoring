@@ -9,13 +9,13 @@
     <div class="row">
       <p class="col-sm-5 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
     </div>
-    <div class="row">
+<!--     <div class="row">
       <p class="col-sm-4 col-sm-offset-3">This tutor has an hourly rate of
         <strong>
-          $<%= current_user.is_student? ? current_user.assignment.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.assignment.tutor&.tutor_info&.hourly_rate&.to_s %>
+          $<%#= current_user.is_student? ? current_user.assignment.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.assignment.tutor&.tutor_info&.hourly_rate&.to_s %>
         </strong>.
       </p>
-    </div>
+    </div> -->
 
   <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal col-md-9", id: "client-payment" do |f| %>
 
@@ -26,11 +26,14 @@
       </div>
 
       <div class="form-group">
-        <label for="amount" class="col-sm-2 control-label col-sm-offset-2">Amount</label>
+        <label for="description" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
         <div class="col-sm-5">
-          <input type="number" class="form-control col-sm-3 input-sm" id="amount" name="payments[amount]" min="0" max="999999" required>
+          <input type="text" class="form-control col-sm-3 input-sm" id="hourly_rate"  name="payments[hourly_rate]"
+            value="<%#= current_user.is_student? ? current_user.assignment.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.assignment.tutor&.tutor_info&.hourly_rate&.to_s %>"
+            min="1" max="9999">
           </input>
         </div>
+        <span class="span-optional">(Optional)</span>
       </div>
 
       <div class="form-group">
@@ -43,22 +46,19 @@
       </div>
 
       <div class="form-group">
-        <label for="description" class="col-sm-2 control-label col-sm-offset-2" id="description">Description</label>
+        <label for="amount" class="col-sm-2 control-label col-sm-offset-2">Amount</label>
         <div class="col-sm-5">
-          <input type="text" class="form-control col-sm-3 input-sm"  name="payments[description]" id="description">
+          <input type="number" class="form-control col-sm-3 input-sm" id="amount" name="payments[amount]" min="0" max="999999" required>
           </input>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="description" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
+        <label for="description" class="col-sm-2 control-label col-sm-offset-2" id="description">Description</label>
         <div class="col-sm-5">
-          <input type="text" class="form-control col-sm-3 input-sm" id="hourly_rate"  name="payments[hourly_rate]"
-            value="<%= current_user.is_student? ? current_user.assignment.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.assignment.tutor&.tutor_info&.hourly_rate&.to_s %>"
-            min="1" max="9999">
+          <input type="text" class="form-control col-sm-3 input-sm"  name="payments[description]" id="description">
           </input>
         </div>
-        <span class="span-optional">(Optional)</span>
       </div>
 
     </fieldset>
