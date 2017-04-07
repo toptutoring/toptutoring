@@ -122,7 +122,8 @@
 																							</div>
 																							<div style="padding-top: 10px; padding-left: 30px;">Hello <%= @user.name %>,</div>
 																							<div style="padding-top: 10px; padding-left: 30px;">We are writing to let you know that <%= @new_user.name %>, with email <%= @new_user.email %> has just registered!</div>
-																							<div style="padding-top: 10px; padding-left: 30px;"> After the user sets up the account you will be able to assign a tutor.</div>
+																							<div style="padding-top: 10px; padding-left: 30px;"><strong>Subject:</strong> <%= @new_user.client_info.subject %></div>
+																							<div style="padding-top: 10px; padding-left: 30px;"><strong>Comments:</strong> <%= @new_user.client_info.comments %></div>
 																							<div style="padding-top: 10px; padding-left: 30px;">Regards,</div>
 																							<div style="padding-left: 30px;">Top Tutoring</div>
 																						</td>

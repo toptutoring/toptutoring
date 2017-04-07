@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170325182619) do
+ActiveRecord::Schema.define(version: 20170327191153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20170325182619) do
     t.string  "subject"
     t.integer "tutoring_for"
     t.integer "user_id"
+    t.string  "comments"
     t.index ["user_id"], name: "index_client_infos_on_user_id", using: :btree
   end
 
