@@ -74,8 +74,7 @@ feature 'Tutoring flow' do
 
     VCR.use_cassette('valid stripe card') do
       fill_in "hours", with: 3
-      expect(page).to have_field("amount", with: "60")
-      expect(page).to have_field("hourly_rate", with: "20.0")
+      fill_in "amount", with: 60
       click_on "Pay"
 
       expect(page).to have_content("Payment successfully made.")

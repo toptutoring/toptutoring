@@ -13,6 +13,7 @@ feature "Create payment as client" do
       sign_in(client)
 
       fill_in "hours", with: 2
+      fill_in "amount", with: 20
       click_on "Pay"
       expect(page).to have_content("Payment successfully made.")
       expect(page).to have_content("4.0 hrs balance")
