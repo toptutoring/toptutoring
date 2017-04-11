@@ -61,7 +61,6 @@ namespace :dev do
     director_info = TutorInfo.where(user_id: director.id).first_or_initialize
     director_info.subject = "Math"
     director_info.academic_type = "Test Prep"
-    director_info.director = true
     director_info.hourly_rate = 20
     director_info.save!
 
