@@ -3,11 +3,7 @@ class PaymentGatewayDwolla
 
   def initialize(payment)
     @payment = payment
-    if ENV.fetch("DWOLLA_ENVIRONMENT") == "production"
-      @payer = User.admin_payer.first
-    else
-      @payer = User.admin
-    end
+    @payer = User.admin
   end
 
   def create_transfer

@@ -6,7 +6,6 @@ namespace :dev do
     client.password = "password"
     client.customer_id = "cus_A45BGhlr4VjDcJ"
     client.access_state = "enabled"
-    client.demo = true
     client.roles = "client"
     client.save!
 
@@ -16,7 +15,6 @@ namespace :dev do
     student.email = "student@example.com"
     student.password = "password"
     student.access_state = "enabled"
-    student.demo = true
     student.roles = "student"
     student.save!
 
@@ -35,8 +33,7 @@ namespace :dev do
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
     tutor.balance = 2
-    tutor.demo = true
-    student.roles = "tutor"
+    tutor.roles = "tutor"
     tutor.save!
 
     tutor_info = TutorInfo.where(user_id: tutor.id).first_or_initialize
@@ -54,8 +51,7 @@ namespace :dev do
     director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
     director.balance = 2
-    director.demo = true
-    student.roles = "director"
+    director.roles = "director"
     director.save!
 
     director_info = TutorInfo.where(user_id: director.id).first_or_initialize
@@ -72,8 +68,7 @@ namespace :dev do
     admin.auth_uid = "8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"
     admin.token_expires_at = Time.current.to_i + 12.months.to_i
     admin.access_state = "enabled"
-    admin.demo = true
-    student.roles = "admin"
+    admin.roles = "admin"
     admin.save!
 
     # Update assignments
