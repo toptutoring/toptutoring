@@ -23,7 +23,7 @@
             </div>
           <% end %>
 
-          <% if current_user.admin %>
+          <% if current_user.has_role?("admin") %>
             <div class="form-group">
               <%= f.label :balance %>
               <%= f.number_field :balance, class:"form-control", min: "0", required: true%>

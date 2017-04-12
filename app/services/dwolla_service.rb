@@ -11,11 +11,7 @@ class DwollaService
                           "transfer_completed"].freeze
 
   def initialize
-    if ENV.fetch("DWOLLA_ENVIRONMENT") == "production"
-      @user = User.admin
-    else
-      @user =  User.with_admin_role.first
-    end
+    @user = User.admin
   end
 
   def funding_sources
