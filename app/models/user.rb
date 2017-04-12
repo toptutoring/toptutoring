@@ -11,10 +11,10 @@ class User < ActiveRecord::Base
   has_many :students, class_name: "User", foreign_key: "client_id"
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
-  has_many :assignments, class_name: "Assignment", foreign_key: "tutor_id"
-  has_one :assignment, class_name: "Assignment", foreign_key: "student_id"
-  has_many :invoices, class_name: "Invoice", foreign_key: "tutor_id"
-  has_many :emails, class_name: "Email", foreign_key: "tutor_id"
+  has_many :assignments, class_name: "Assignment", foreign_key: "tutor_id", dependent: :destroy
+  has_one :assignment, class_name: "Assignment", foreign_key: "student_id", dependent: :destroy
+  has_many :invoices, class_name: "Invoice", foreign_key: "tutor_id", dependent: :destroy
+  has_many :emails, class_name: "Email", foreign_key: "tutor_id", dependent: :destroy
   has_many :user_roles
   has_many :roles, through: :user_roles
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
