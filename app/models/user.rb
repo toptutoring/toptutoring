@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   scope :enabled, -> { where(access_state: "enabled") }
   scope :assigned, -> { joins(:assignment).merge(Assignment.active) }
   scope :admin_and_directors, -> { joins(:roles).where("roles.name = ? OR roles.name = ?", "admin", "director").distinct }
+  scope :all_without_admin, -> { joins(:roles).where("roles.name != ?", "admin").distinct }
 
   #### State Machine ####
   state_machine :access_state, :initial => :disabled do

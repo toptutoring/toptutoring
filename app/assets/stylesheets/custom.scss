@@ -482,3 +482,45 @@ legend {
 textarea {
   padding-top: 10px;
 }
+
+.media-body {
+  width: initial;
+}
+
+#admin-user-table {
+  thead {
+    tr {
+      th:nth-child(1) {
+        width: 5%;
+      }
+
+      th:nth-child(2) {
+        width: 15%;
+      }
+
+      th:nth-child(3) {
+        width: 15%;
+      }
+
+      th:nth-child(4) {
+        width: 15%;
+      }
+
+      th:nth-child(5) {
+        width: 10%;
+      }
+
+      th:nth-child(6) {
+        width: 10%;
+      }
+
+      th:nth-child(7) {
+        width: 10%;
+      }
+      th:nth-child(8) {
+
+        width: 10%;
+      }
+    }
+  }
+}

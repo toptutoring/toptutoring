@@ -1,45 +1,66 @@
 <div class="row">
   <div class="col-md-12">
     <div class="widget">
+
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Students</h3>
+        <h3 class="widget-title pull-left">Users</h3>
       </div>
+
       <div class="widget-body">
         <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Parent</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Subject</th>
-                <th class="text-center">Balance</th>
-                <th class="text-center">Tutor</th>
-                <th class="text-center"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @users.each do |user| %>
+          <table id="admin-user-table" style="width: 100%" class="table table-hover dt-responsive nowrap">
+              <thead>
                 <tr>
-                  <td><%= user.id %></td>
-                  <td><%= user.name %></td>
-                  <td><%= user.client.name %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.phone_number %></td>
-                  <td><%= user.student_info.subject %></td>
-                  <td class="text-center"><%= client_balance(user.client) %></td>
-                  <td class="text-center"><%= user.assignment.tutor.name %></td>
-                  <td class="text-center">
-                    <%= link_to edit_admin_user_path(user) do %>
-                      <button type="button" class="btn btn-outline btn-success">Edit</button>
-                    <% end %>
-                  </td>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Date Added</th>
+                  <th>Balance</th>
+                  <th>Access State</th>
+                  <th>Roles</th>
+                  <th>Action</th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <% @users.each do |user| %>
+                  <tr>
+                    <td><a href="javascript:;"><%= user.id %></a></td>
+                    <td>
+                      <div class="media">
+                        <div class="media-body">
+                          <h5 class="media-heading"><%= user.name.humanize %></h5>
+                          <p class="text-muted mb-0"><%= user.phone_number %></p>
+                        </div>
+                      </div>
+                    </td>
+                    <td><%= user.email.downcase %></td>
+                    <td><%= user.created_at.to_time.strftime('%B %e at %l:%M %p')%></td>
+                    <td>$<%= user.balance %></td>
+                    <td><%= user.access_state %></td>
+                    <td>
+                      <% user.roles.distinct.each do |role| %>
+                        <% if role.name == 'director' %>
+                          <span class="label label-outline label-purple">Director</span>
+                        <% end %>
+                        <% if role.name == 'client' %>
+                          <span class="label label-outline label-success">Client</span>
+                        <% end %>
+                        <% if role.name == 'tutor' %>
+                          <span class="label label-outline label-primary">Tutor</span>
+                        <% end %>
+                        <% if role.name == 'student' %>
+                          <span class="label label-outline label-danger">Student</span>
+                        <% end %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to "Edit", edit_admin_user_path(user), class: "btn btn-outline btn-success btn-sm" %>
+                    </td>
+                  </tr>         
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
