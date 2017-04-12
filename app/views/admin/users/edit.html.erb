@@ -7,23 +7,22 @@
       <div class="widget-body">
         <%= form_for(@user, url: admin_user_path(@user)) do |f| %>
           <div class="form-group">
-            <%= f.label :student_name %>
-            <%= f.text_field :name, autofocus: true, class:"form-control" %>
+            <%= f.label :name %>
+            <%= f.text_field :name, class: "form-control" %>
           </div>
-          <%= f.fields_for :student_info do |student_field| %>
-            <div class="form-group">
-              <%= student_field.label :subject %>
-              <%= student_field.text_field :subject, autofocus: true, class:"form-control" %>
-            </div>
+          
+          <div class="form-group">
+            <%= f.label :email %>
+            <%= f.text_field :email, class: "form-control" %>
+          </div>
 
-            <div class="form-group">
-              <%= student_field.label :academic_type %>
-              <%= student_field.text_field :academic_type, autofocus: true, class:"form-control" %>
-            </div>
-          <% end %>
+          <div class="form-group">
+            <%= f.label :phone_number %>
+            <%= f.telephone_field :phone_number, class: "form-control" %>
+          </div>
 
-          <div class="text-center">
-            <button type="submit" class="btn btn-outline btn-blue">Submit</button>
+          <div class="form-group">
+            <%= f.submit "Submit", class: "btn btn-outline btn-blue" %>
           </div>
         <% end %>
       </div>
