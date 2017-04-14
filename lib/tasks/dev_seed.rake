@@ -9,14 +9,15 @@ namespace :dev do
     client.roles = "client"
     client.save!
 
-    # Update student
+     # Update student
     student = User.where(email: "student@example.com").first_or_initialize
     student.name = "Student"
     student.email = "student@example.com"
     student.password = "password"
     student.access_state = "enabled"
     student.roles = "student"
-    student.save!
+    student.client_id = client.id
+    student.save! 
 
     # Update student info
     student_info = StudentInfo.where(user_id: student.id).first_or_initialize

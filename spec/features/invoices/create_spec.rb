@@ -31,15 +31,53 @@ feature 'Create Invoice' do
 
   scenario 'with valid params' do
     tutor = FactoryGirl.create(:tutor_user)
-    student = FactoryGirl.create(:student_user)
-    student.assignment.update(tutor_id: tutor.id)
+    sufficient_balance_student = FactoryGirl.create(:student_user, :balance => 5)
+    sufficient_balance_student.assignment.update(tutor_id: tutor.id, hourly_rate: 1)
+    sufficient_balance_student.client.update(balance: 2)
 
     sign_in(tutor)
+    
     visit tutors_students_path
     click_link "Log session"
 
     fill_in "invoice_hours", with: 0.5
     click_on "Submit"
+
     expect(page).to have_content('Session successfully logged!')
+  end
+
+  scenario 'low balance warning' do 
+    tutor   = FactoryGirl.create(:tutor_user)
+    client  = FactoryGirl.create(:client_user, balance: 2)
+
+    low_balance_student = FactoryGirl.create(:student_user, client_id: client.id)
+    low_balance_student.assignment.update(tutor_id: tutor.id, hourly_rate: 1)
+
+    sign_in(tutor)
+    
+    visit tutors_students_path
+    
+    click_link "Log session"
+
+    fill_in "invoice_hours", with: 1
+    click_on "Submit"
+
+    expect(page).to have_content('Session successfully logged!')
+    expect(page).to have_no_content('The session has been logged but the client 
+                    has a negative balance of hours. You may not be paid for this session 
+                    unless the client adds to his/her hourly balance.')
+
+    visit tutors_students_path
+
+    click_link "Log session"
+    
+    fill_in "invoice_hours", with: 2
+    click_on "Submit"
+
+    expect(page).to have_no_content('Session successfully logged!')
+    expect(page).to have_content('The session has been logged but the client 
+                    has a negative balance of hours. You may not be paid for this session 
+                    unless the client adds to his/her hourly balance.')
+    
   end
 end

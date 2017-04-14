@@ -8,14 +8,26 @@ class InvoicesController < ApplicationController
 
   def create
     @invoice = Invoice.new(invoice_params)
+
     if @invoice.save
       UpdateUserBalance.new(@invoice.amount, current_user.id).increase
       if @student.is_student?
         UpdateUserBalance.new(@invoice.amount, @student.id).decrease
+        @student.reload
       else
         UpdateUserBalance.new(@invoice.amount, @student.client.id).decrease
+        @student.client.reload
       end
-      redirect_to tutors_students_path, notice: 'Session successfully logged!'
+
+      balance = @student.is_student? ? @student.balance.to_f : @student.client.balance.to_f
+
+      if balance < 0
+        redirect_to tutors_students_path, alert: 'The session has been logged but the client 
+                      has a negative balance of hours. You may not be paid for this session 
+                      unless the client adds to his/her hourly balance.'
+      else 
+        redirect_to tutors_students_path, notice: 'Session successfully logged!'
+      end
     else
       redirect_back(fallback_location: (request.referer || root_path),
                     flash: { error: @invoice.errors.full_messages })
