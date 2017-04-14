@@ -46,7 +46,9 @@ feature 'Tutoring flow' do
     fill_in "invoice_hours", with: "3"
     fill_in "invoice_description", with: "Prep for math test"
     click_on "Submit"
-    expect(page).to have_content("Session successfully logged!")
+    expect(page).to have_content("The session has been logged but the client 
+                    has a negative balance of hours. You may not be paid for this session 
+                    unless the client adds to his/her hourly balance.")
 
     click_link "Send Email"
     expect(page).to have_content("Use this form to notify the client that their tutoring balance is low.")
