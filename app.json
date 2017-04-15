@@ -55,12 +55,6 @@
     },
     "REDIS_PROVIDER": {
       "required": true
-    },
-    "INTERCOM_APP_ID": {
-      "required": true
-    },
-    "INTERCOM_SECRET_KEY": {
-      "required": true
     }
   },
   "addons": [
