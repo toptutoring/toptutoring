@@ -7,20 +7,10 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.new(invoice_params)
-
-    if @invoice.save
-      UpdateUserBalance.new(@invoice.amount, current_user.id).increase
-      if @student.is_student?
-        UpdateUserBalance.new(@invoice.amount, @student.id).decrease
-        @student.reload
-      else
-        UpdateUserBalance.new(@invoice.amount, @student.client.id).decrease
-        @student.client.reload
-      end
-
-      balance = @student.is_student? ? @student.balance.to_f : @student.client.balance.to_f
-
+    result = CreateInvoiceService.process(invoice_params, params[:id], current_user.id)
+    status, balance = result
+    
+    if status == "success!"
       if balance < 0
         redirect_to tutors_students_path, alert: 'The session has been logged but the client 
                       has a negative balance of hours. You may not be paid for this session 

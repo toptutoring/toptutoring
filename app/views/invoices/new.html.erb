@@ -1,5 +1,4 @@
 <div class="row">
-  <%= render "low_balance_alert" %>
   <div class="col-md-6 col-md-offset-3">
     <div class="widget">
       <div class="widget-heading">
@@ -7,33 +6,7 @@
       </div>
       <div class="widget-body">
         <h5>Use this form to log future sessions with your students.</h5>
-        <%= form_for(@invoice) do |f| %>
-
-          <div class="form-group">
-            <%= f.label :student %>
-            <span class="form-info"><%= @student.name %></span>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :subject %>
-            <span class="form-info"><%= @student.assignment.subject %></span>
-          </div>
-
-          <div class="form-group">
-            <%= f.number_field :hours, class:"form-control", required: true, min:"0.5", pattern: "[0-9]", step: "0.5", placeholder: "Hours"%>
-          </div>
-
-          <div class="form-group">
-            <%= f.text_field :description, class:"form-control", placeholder: "Description" %>
-          </div>
-
-          <%= f.hidden_field :student_id, value: @student.id %>
-
-          <br />
-          <div class="text-center">
-            <button type="submit" class="btn btn-outline btn-blue">Submit</button>
-          </div>
-        <% end %>
+        <%= render 'form' %>
       </div>
     </div>
   </div>

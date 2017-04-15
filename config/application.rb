@@ -22,6 +22,7 @@ module BlankRails
       generate.view_specs false
     end
     config.autoload_paths += %W(#{config.root}/lib/cli)
+    config.autoload_paths += %W(#{config.root}/app/services)
     config.action_controller.action_on_unpermitted_parameters = :raise
     config.active_job.queue_adapter = :sidekiq
   end
