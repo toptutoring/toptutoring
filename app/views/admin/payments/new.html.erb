@@ -4,7 +4,7 @@
       <div class="widget-heading clearfix">
       </div>
       <div class="widget-body">
-        <%= form_for @payment, :url => admin_payments_path(@login), do |form| %>
+        <%= form_for @payment, :url => admin_payments_path(@login) do |form| %>
 
           <%= form.label :payee_id, "Tutor" %>
           <div class="select-option">
@@ -26,14 +26,14 @@
             <%= form.label :amount, "Amount:" %>
             <div class="input-group">
               <div class="input-group-addon">$</div>
-              <%= form.number_field :amount, class: "form-control no-padding", id: "payment_amount"%>
+              <%= form.number_field :amount, class: "form-control no-padding", id: "payment_amount" %>
               <div class="input-group-addon">.00</div>
             </div>
           </div>
 
           <div class="form-group">
             <%= form.label :description, "Description:" %>
-            <%= form.text_area :description, class: "form-control", rows: 3%>
+            <%= form.text_area :description, class: "form-control", rows: 3 %>
           </div>
 
           <%= form.hidden_field :payer_id, value: current_user.id %>
