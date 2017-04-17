@@ -7,9 +7,9 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    invoice_id = CreateInvoice.new(invoice_params).process!
-    if invoice_id
-      balance = ProcessInvoice.new(invoice_id).process!
+    @invoice = Invoice.new(invoice_params)
+    if @invoice.save
+      balance = ProcessInvoice.new(@invoice.id).process!
       if balance < 0
         redirect_to tutors_students_path, alert: 'The session has been logged but the client 
                       has a negative balance of hours. You may not be paid for this session 

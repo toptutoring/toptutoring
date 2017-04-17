@@ -5,8 +5,6 @@ feature 'Dashboard Index' do
     tutor = FactoryGirl.create(:tutor_user, access_token: nil)
 
     sign_in(tutor)
-    expect(page).to have_content('Authenticating with Dwolla')
-    expect(page).to have_link('Authenticate with Dwolla', href: "/auth/dwolla")
   end
 
   scenario "when user has external auth" do
@@ -24,7 +22,7 @@ feature 'Dashboard Index' do
 
     sign_in(tutor)
 
-    expect(page).to have_content('Assignments')
+    expect(page).to have_content('Your clients')
     expect(page).to have_content('Student Name')
     expect(page).to have_content('Subject')
     expect(page).to have_content('Academic Type')
@@ -44,7 +42,7 @@ feature 'Dashboard Index' do
 
     sign_in(tutor)
 
-    expect(page).to have_content('Assignments')
+    expect(page).to have_content('Your clients')
     expect(page).to have_content('Student Name')
     expect(page).to have_content('Subject')
     expect(page).to have_content('Academic Type')

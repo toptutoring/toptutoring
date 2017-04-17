@@ -7,7 +7,7 @@ class CreateInvoice
     if @invoice.save
       return @invoice.id
     else
-      return false
+      return @invoice
     end
   end
 end

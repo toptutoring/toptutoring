@@ -12,7 +12,6 @@ class DashboardsController < ApplicationController
 
   def tutor
     @assignments = current_user.assignments 
-    @assignments = []
     @student = @assignments.empty? ? nil : @assignments.first.student
     @students = @assignments.map(&:student)
     @invoice = Invoice.new

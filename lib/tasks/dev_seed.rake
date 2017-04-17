@@ -20,7 +20,7 @@ namespace :dev do
     student1.save! 
 
     # Update student info
-    student_info1 = StudentInfo.where(user_id: student.id).first_or_initialize
+    student_info1 = StudentInfo.where(user_id: student1.id).first_or_initialize
     student_info1.subject = "Academic"
     student_info1.academic_type = "Test Prep"
     student_info1.save!
@@ -92,9 +92,9 @@ namespace :dev do
     tutor.assignments.destroy_all
     assignment = Assignment.create(
       tutor_id: tutor.id,
-      student_id: student.id,
-      subject: student.student_info.subject,
-      academic_type: student.student_info.academic_type,
+      student_id: student1.id,
+      subject: student1.student_info.subject,
+      academic_type: student1.student_info.academic_type,
       hourly_rate: 20
     )
     assignment.enable!
