@@ -7,10 +7,9 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    result = CreateInvoiceService.process(invoice_params, params[:id], current_user.id)
-    status, balance = result
-    
-    if status == "success!"
+    invoice_id = CreateInvoice.process(invoice_params, params[:id], current_user.id)
+    if invoice_id
+      balance = ProcessInvoice.process(invoice_id, params[:id], current_user.id)
       if balance < 0
         redirect_to tutors_students_path, alert: 'The session has been logged but the client 
                       has a negative balance of hours. You may not be paid for this session 

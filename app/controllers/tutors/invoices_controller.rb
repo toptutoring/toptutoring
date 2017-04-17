@@ -1,23 +1,22 @@
 module Tutors
   class InvoicesController < ApplicationController
     before_action :require_login
-    before_action :set_student, only: :create
+    before_action :set_student, :authorize_tutor, only: :create
 
     def index
       @invoices = current_user.invoices
     end
 
     def create
-      result = CreateInvoiceService.process(invoice_params, @student.id, current_user.id)
-      status, balance = result
-      
-      if status == "success!"
+      invoice_id = CreateInvoice.process(invoice_params, @student.id, current_user.id)
+      if invoice_id
+        balance = ProcessInvoice.process(invoice_id, @student.id, current_user.id)
         if balance < 0
-          redirect_to dashboard_path, alert: 'The session has been logged but the client 
+          redirect_to tutors_students_path, alert: 'The session has been logged but the client 
                         has a negative balance of hours. You may not be paid for this session 
                         unless the client adds to his/her hourly balance.'
         else 
-          redirect_to dashboard_path, notice: 'Session successfully logged!'
+          redirect_to tutors_students_path, notice: 'Session successfully logged!'
         end
       else
         redirect_back(fallback_location: (request.referer || root_path),
@@ -33,6 +32,12 @@ module Tutors
 
     def set_student
       @student = User.find(params[:invoice][:student_id])
+    end
+
+    def authorize_tutor
+      if @student.assignment.nil? || @student.assignment.tutor_id != current_user.id
+        render file: "#{Rails.root}/public/404.html", layout: false, status: 404
+      end
     end
   end
 end

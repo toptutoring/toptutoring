@@ -1,7 +1,6 @@
 class DashboardsController < ApplicationController
   before_action :require_login
   before_action :build_student_for_client, only: [:client]
-  include ApplicationHelper
 
   def admin
     @assignments = Assignment.pending

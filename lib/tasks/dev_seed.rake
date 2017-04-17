@@ -10,20 +10,20 @@ namespace :dev do
     client.save!
 
      # Update student
-    student = User.where(email: "student1@example.com").first_or_initialize
-    student.name = "Student1"
-    student.email = "student2@example.com"
-    student.password = "password"
-    student.access_state = "enabled"
-    student.roles = "student"
-    student.client_id = client.id
-    student.save! 
+    student1 = User.where(email: "student1@example.com").first_or_initialize
+    student1.name = "Student1"
+    student1.email = "student1@example.com"
+    student1.password = "password"
+    student1.access_state = "enabled"
+    student1.roles = "student"
+    student1.client_id = client.id
+    student1.save! 
 
     # Update student info
-    student_info = StudentInfo.where(user_id: student.id).first_or_initialize
-    student_info.subject = "Academic"
-    student_info.academic_type = "Test Prep"
-    student_info.save!
+    student_info1 = StudentInfo.where(user_id: student.id).first_or_initialize
+    student_info1.subject = "Academic"
+    student_info1.academic_type = "Test Prep"
+    student_info1.save!
 
      # Update student
     student2 = User.where(email: "student2@example.com").first_or_initialize
