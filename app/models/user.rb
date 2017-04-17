@@ -97,8 +97,4 @@ class User < ActiveRecord::Base
   def email_optional?
     client_id.present?
   end
-
-  def students
-    User.where(id: self.assignments.pluck(:student_id).uniq)
-  end
 end

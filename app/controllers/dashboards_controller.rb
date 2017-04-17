@@ -11,8 +11,9 @@ class DashboardsController < ApplicationController
   end
 
   def tutor
-    @assignments  = current_user.assignments
-    @student      = current_user.students.first
+    @assignments  = current_user.assignments 
+    @student      = @assignments.empty? ? User.new : @assignments.first.student 
+    @students     = @assignments.map(&:student)
     @student_list = generate_student_dropdown_list
     @invoice      = Invoice.new
   end
@@ -23,15 +24,5 @@ class DashboardsController < ApplicationController
     if !current_user.is_student?
       current_user.students.build
     end
-  end
-
-  def generate_student_dropdown_list
-    student_ids  = current_user.assignments.pluck(:student_id)
-    student_list = [["Select student", "0"]]
-    student_ids.each do |id|
-      student = User.find(id)
-      student_list << ["#{student.name}", "#{id}"]
-    end
-    student_list
   end
 end
