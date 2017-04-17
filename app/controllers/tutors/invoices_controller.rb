@@ -10,7 +10,7 @@ module Tutors
     def create
       @invoice = Invoice.new(invoice_params)
       if @invoice.save
-        balance = ProcessInvoice.new(@invoice.id).process!
+        balance = BalanceUpdater.new(@invoice.id).process!
         if balance < 0
           redirect_to tutors_students_path, alert: 'The session has been logged but the client 
                         has a negative balance of hours. You may not be paid for this session 

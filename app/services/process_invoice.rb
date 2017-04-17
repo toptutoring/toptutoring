@@ -1,4 +1,4 @@
-class ProcessInvoice 
+class BalanceUpdater 
   def initialize(invoice_id)
     @invoice_id = invoice_id 
   end
