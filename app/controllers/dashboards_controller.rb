@@ -11,11 +11,11 @@ class DashboardsController < ApplicationController
   end
 
   def tutor
-    @assignments  = current_user.assignments 
-    @student      = @assignments.empty? ? User.new : @assignments.first.student 
-    @students     = @assignments.map(&:student)
-    @student_list = generate_student_dropdown_list
-    @invoice      = Invoice.new
+    @assignments = current_user.assignments 
+    @assignments = []
+    @student = @assignments.empty? ? nil : @assignments.first.student
+    @students = @assignments.map(&:student)
+    @invoice = Invoice.new
   end
 
   private

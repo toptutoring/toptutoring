@@ -1,13 +1,13 @@
 <%= form_for [:tutors, @invoice] do |f| %>
   <div class="form-group">
     <%= f.label :student_id %>
-    <%= f.select(:student_id, options_from_collection_for_select(@students, "id", "name", @student.id), { :class=>"student-select" }) %>
+    <%= f.select(:student_id, options_from_collection_for_select(@students, "id", "name"), { :class => "student-select" }, :required => true) %>
   </div>
   
   <div class="form-group">
     <%= f.label :subject %>
     <span class="form-info">
-      <%= @student.assignment.subject %>
+      <%= @student.assignment.subject if @student.present? %>
     </span>
   </div>
 

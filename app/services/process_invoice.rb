@@ -1,16 +1,9 @@
 class ProcessInvoice 
-  def initialize(invoice, student, user)
-    @invoice = invoice
-    @student = student
-    @current_user = user
+  def initialize(invoice_id)
+    @invoice = Invoice.find(invoice_id)
+    @student = @invoice.student
+    @current_user = @invoice.tutor
   end
-
-  def self.process(invoice_id, student_id, user_id)
-    student = User.find(student_id)
-    current_user = User.find(user_id)
-    invoice = Invoice.find(invoice_id)
-    ProcessInvoice.new(invoice, student, current_user).process!
-  end 
 
   def process!
     UpdateUserBalance.new(@invoice.amount, @current_user.id).increase
