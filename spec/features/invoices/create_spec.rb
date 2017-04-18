@@ -7,10 +7,7 @@ feature 'Create Invoice' do
     student.assignment.update(tutor_id: tutor.id)
 
     sign_in(tutor)
-    visit tutors_students_path
-    click_link "Log session"
 
-    expect(page).to have_content('Use this form to log future sessions with your students.')
     expect(page).to have_content(student.name)
     expect(page).to have_content(student.assignment.subject)
   end
@@ -21,8 +18,6 @@ feature 'Create Invoice' do
     student.assignment.update(tutor_id: tutor.id)
 
     sign_in(tutor)
-    visit tutors_students_path
-    click_link "Log session"
 
     fill_in "invoice_hours", with: 0
     click_on "Submit"
@@ -37,9 +32,6 @@ feature 'Create Invoice' do
 
     sign_in(tutor)
     
-    visit tutors_students_path
-    click_link "Log session"
-
     fill_in "invoice_hours", with: 0.5
     click_on "Submit"
 
@@ -55,10 +47,6 @@ feature 'Create Invoice' do
 
     sign_in(tutor)
     
-    visit tutors_students_path
-    
-    click_link "Log session"
-
     fill_in "invoice_hours", with: 1
     click_on "Submit"
 
@@ -66,11 +54,9 @@ feature 'Create Invoice' do
     expect(page).to have_no_content('The session has been logged but the client 
                     has a negative balance of hours. You may not be paid for this session 
                     unless the client adds to his/her hourly balance.')
+                      
+    visit dashboard_path 
 
-    visit tutors_students_path
-
-    click_link "Log session"
-    
     fill_in "invoice_hours", with: 2
     click_on "Submit"
 

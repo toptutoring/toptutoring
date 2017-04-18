@@ -15,6 +15,7 @@ class DashboardsController < ApplicationController
     @student = @assignments.empty? ? nil : @assignments.first.student
     @students = @assignments.map(&:student)
     @invoice = Invoice.new
+    @default_student = @student.present? ? @student.id : nil
   end
 
   private
