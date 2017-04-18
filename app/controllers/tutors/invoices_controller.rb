@@ -26,8 +26,9 @@ module Tutors
 
     private
     def invoice_params
-      params.require(:invoice).permit(:student_id, :hours, :description)
-      .merge(tutor_id: current_user.id, hourly_rate: @student.assignment.hourly_rate, assignment_id: @student.assignment.id)
+      params.require(:invoice)
+        .permit(:student_id, :hours, :description)
+        .merge(tutor_id: current_user.id, hourly_rate: @student.assignment.hourly_rate, assignment_id: @student.assignment.id)
     end
 
     def set_student

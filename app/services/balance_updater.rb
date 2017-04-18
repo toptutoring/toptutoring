@@ -4,7 +4,9 @@ class BalanceUpdater
   end
 
   def process!
-    increate_tutor_balance && decrease_user_balance && current_balance
+    increase_tutor_balance
+    decrease_user_balance
+    current_balance
   end 
 
   private
@@ -21,7 +23,7 @@ class BalanceUpdater
     @current_user ||= invoice.tutor
   end
 
-  def increate_tutor_balance
+  def increase_tutor_balance
     UpdateUserBalance.new(invoice.amount, current_user).increase
   end
 

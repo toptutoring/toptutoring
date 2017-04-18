@@ -1,13 +1,13 @@
 <%= form_for [:tutors, @invoice] do |f| %>
   <div class="form-group">
     <%= f.label :student_id %>
-    <%= f.select(:student_id, options_for_select(@students.map{ |student| [student.name, student.id, { 'data-tutor-type' => student.assignment.subject }] }, @default_student), { :class => "student-select" }, :required => true)%>
+    <%= f.select(:student_id, options_for_select(@students.map{ |student| [student.name, student.id, { 'data-tutor-type' => student.assignment.subject }] }, @invoice.student_id), { :class => "student-select" }, :required => true)%>
   </div>
 
   <div class="form-group">
     <%= f.label :subject %>
     <span class="form-info invoice-tutor-type">
-      <%= @student.assignment.subject if @student.present? %>
+      <%= @invoice.student.assignment.subject if @invoice.student.present? %>
     </span>
   </div>
 
