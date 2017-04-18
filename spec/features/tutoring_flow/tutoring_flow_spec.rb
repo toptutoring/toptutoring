@@ -35,9 +35,6 @@ feature 'Tutoring flow' do
     sign_out
     sign_in(tutor)
 
-    # expect(page).to have_content("The client has only 0 hrs left in their prepaid tutoring balance.		
-    # Please invoice the amount of additional hours you believe the student needs and send an email to notify the client.")		
-  
     fill_in "invoice_hours", with: "3"		
     fill_in "invoice_description", with: "Prep for math test"		
     click_on "Submit"		
