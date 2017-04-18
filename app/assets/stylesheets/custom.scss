@@ -524,3 +524,21 @@ textarea {
     }
   }
 }
+
+.invoice-form {
+  .widget-heading {
+    margin-top: 1rem;
+  }
+
+  .widget-hint {
+    margin-top: 2rem;
+  }
+
+  .form-group {
+    vertical-align: middle;
+  }
+
+  .control-label {
+    text-align: left!important;
+  }
+}

@@ -11,7 +11,9 @@ class DashboardsController < ApplicationController
   end
 
   def tutor
-    @assignments = current_user.assignments
+    @assignments = current_user.assignments 
+    @students = User.where(id: @assignments.pluck(:student_id))
+    @invoice = Invoice.new(student_id: @students.first.try(:id))
   end
 
   private

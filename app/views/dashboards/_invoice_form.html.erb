@@ -1,0 +1,43 @@
+<%= form_for [:tutors, @invoice], :html => { class: "form-horizontal" } do |f| %>
+  <div class="form-group">
+    <%= f.label :student_id, class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <%= f.select(:student_id, options_for_select(@students.map{ |student| [student.name, student.id, { 'data-tutor-type' => student.assignment.subject }] }, @invoice.student_id), { :class => "student-select form-control", 'aria-label' => "student_id" }, :required => true)%>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :subject, class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <span class="form-info invoice-tutor-type">
+        <%= @invoice.student.assignment.subject if @invoice.student.present? %>
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="txtFullName" class="col-md-3 col-sm-3 control-label">Full name</label>
+    <div class="col-md-9 col-sm-9">
+      <input id="txtFullName" type="text" class="form-control" aria-label="Full Name">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :hours, class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <%= f.number_field :hours, class:"form-control", required: true, min:"0.5", pattern: "[0-9]", step: "0.5", placeholder: "Hours", 'aria-labe' => 'hours' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description, class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <%= f.text_field :description, class:"form-control", placeholder: "Description", 'aria-label' => 'description' %>
+    </div>
+  </div>
+
+  <br />
+  <div class="text-center">
+    <button type="submit" class="btn btn-outline btn-blue" aria-label="submit">Submit</button>
+  </div>
+<% end %>
