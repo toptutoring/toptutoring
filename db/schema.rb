@@ -10,23 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412184922) do
+ActiveRecord::Schema.define(version: 20170418153853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "assignments", force: :cascade do |t|
-    t.integer  "tutor_id"
-    t.integer  "student_id"
-    t.string   "state",         default: "pending", null: false
-    t.string   "subject"
-    t.string   "academic_type"
-    t.integer  "hourly_rate"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.index ["student_id"], name: "index_assignments_on_student_id", using: :btree
-    t.index ["tutor_id"], name: "index_assignments_on_tutor_id", using: :btree
-  end
 
   create_table "client_infos", force: :cascade do |t|
     t.string  "subject"
@@ -47,6 +34,19 @@ ActiveRecord::Schema.define(version: 20170412184922) do
     t.index ["tutor_id"], name: "index_emails_on_tutor_id", using: :btree
   end
 
+  create_table "engagements", force: :cascade do |t|
+    t.integer  "tutor_id"
+    t.integer  "student_id"
+    t.string   "state",         default: "pending", null: false
+    t.string   "subject"
+    t.string   "academic_type"
+    t.integer  "hourly_rate"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["student_id"], name: "index_engagements_on_student_id", using: :btree
+    t.index ["tutor_id"], name: "index_engagements_on_tutor_id", using: :btree
+  end
+
   create_table "funding_sources", force: :cascade do |t|
     t.string  "funding_source_id"
     t.integer "user_id"
@@ -56,14 +56,14 @@ ActiveRecord::Schema.define(version: 20170412184922) do
   create_table "invoices", force: :cascade do |t|
     t.integer  "student_id"
     t.integer  "tutor_id"
-    t.integer  "assignment_id"
+    t.integer  "engagement_id"
     t.decimal  "hours",         precision: 10, scale: 2, default: "0.0", null: false
     t.integer  "hourly_rate"
     t.integer  "amount"
     t.string   "description"
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
-    t.index ["assignment_id"], name: "index_invoices_on_assignment_id", using: :btree
+    t.index ["engagement_id"], name: "index_invoices_on_engagement_id", using: :btree
     t.index ["student_id"], name: "index_invoices_on_student_id", using: :btree
     t.index ["tutor_id"], name: "index_invoices_on_tutor_id", using: :btree
   end

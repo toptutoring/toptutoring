@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :assignment do
+  factory :engagement do
     subject       { "Math" }
     academic_type { "Test Prep" }
     state         { "active" }

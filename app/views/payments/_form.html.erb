@@ -12,7 +12,7 @@
 <!--     <div class="row">
       <p class="col-sm-4 col-sm-offset-3">This tutor has an hourly rate of
         <strong>
-          $<%#= current_user.is_student? ? current_user.assignment.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.assignment.tutor&.tutor_info&.hourly_rate&.to_s %>
+          $<%#= current_user.is_student? ? current_user.engagement.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.engagement.tutor&.tutor_info&.hourly_rate&.to_s %>
         </strong>.
       </p>
     </div> -->
@@ -29,7 +29,7 @@
         <label for="description" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
         <div class="col-sm-5">
           <input type="text" class="form-control col-sm-3 input-sm" id="hourly_rate"  name="payments[hourly_rate]"
-            value="<%#= current_user.is_student? ? current_user.assignment.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.assignment.tutor&.tutor_info&.hourly_rate&.to_s %>"
+            value="<%#= current_user.is_student? ? current_user.engagement.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.engagement.tutor&.tutor_info&.hourly_rate&.to_s %>"
             min="1" max="9999">
           </input>
         </div>

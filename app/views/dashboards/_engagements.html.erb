@@ -1,7 +1,7 @@
 <div class="col-md-7">
   <div class="widget">
     <div class="widget-heading clearfix">
-      <h3 class="widget-title pull-left">Pending Assignments</h3>
+      <h3 class="widget-title pull-left">Pending Engagements</h3>
     </div>
     <div class="widget-body">
       <div class="table-responsive">
@@ -16,26 +16,26 @@
             </tr>
           </thead>
           <tbody>
-            <% @assignments.each do |assignment| %>
+            <% @engagements.each do |engagement| %>
               <tr>
-                <td><%= assignment.student.name %></td>
-                <td class="text-center"><%= assignment.subject %></td>
-                <td class="text-center"><%= assignment.academic_type %></td>
-                <td class="text-center"><span class="label label-outline label-warning"><%= assignment.state %></span></td>
+                <td><%= engagement.student.name %></td>
+                <td class="text-center"><%= engagement.subject %></td>
+                <td class="text-center"><%= engagement.academic_type %></td>
+                <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
                 <td class="text-center">
-                  <%= link_to edit_assignment_path(assignment) do %>
+                  <%= link_to edit_engagement_path(engagement) do %>
                     <button type="button" class="btn btn-outline btn-primary">Edit</button>
                   <% end %>
                 </td>
-                <% if assignment.updated? && assignment.pending? %>
+                <% if engagement.updated? && engagement.pending? %>
                   <td class="text-center">
-                    <%= link_to enable_assignment_path(assignment) do %>
+                    <%= link_to enable_engagement_path(engagement) do %>
                       <button type="button" class="btn btn-outline btn-success">Enable</button>
                     <% end %>
                   </td>
-                <% elsif assignment.active? %>
+                <% elsif engagement.active? %>
                   <td class="text-center">
-                    <%= link_to disable_assignment_path(assignment) do %>
+                    <%= link_to disable_engagement_path(engagement) do %>
                       <button type="button" class="btn btn-outline btn-danger">Disable</button>
                     <% end %>
                   </td>

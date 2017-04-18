@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <div class="widget">
         <div class="widget-heading clearfix">
-          <h3 class="widget-title pull-left">Assignments</h3>
+          <h3 class="widget-title pull-left">Engagements</h3>
         </div>
         <div class="widget-body">
           <div class="table-responsive">
@@ -21,8 +21,8 @@
                 </tr>
               </thead>
               <tbody>
-                <% @assignments.each do |assignment|
-                  representer = AssignmentPresenter.new(assignment) %>
+                <% @engagements.each do |engagement|
+                  representer = EngagementPresenter.new(engagement) %>
                   <tr>
                     <td><%= representer.id %></td>
                     <td><%= representer.student_name %></td>
@@ -32,19 +32,19 @@
                     <td class="text-center"><%= "$#{representer.hourly_rate}" if representer.hourly_rate %></td>
                     <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
                     <td class="text-center">
-                      <%= link_to edit_assignment_path(representer.id) do %>
+                      <%= link_to edit_engagement_path(representer.id) do %>
                         <button type="button" class="btn btn-outline btn-success">Edit</button>
                       <% end %>
                     </td>
                     <% if representer.updated? && representer.pending? %>
                       <td class="text-center">
-                        <%= link_to enable_assignment_path(representer) do %>
+                        <%= link_to enable_engagement_path(representer) do %>
                           <button type="button" class="btn btn-outline btn-primary">Enable</button>
                         <% end %>
                       </td>
                     <% elsif representer.active? %>
                       <td class="text-center">
-                        <%= link_to disable_assignment_path(representer.id) do %>
+                        <%= link_to disable_engagement_path(representer.id) do %>
                           <button type="button" class="btn btn-outline btn-danger">Disable</button>
                         <% end %>
                       </td>

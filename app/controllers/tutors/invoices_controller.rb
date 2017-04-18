@@ -28,7 +28,7 @@ module Tutors
     def invoice_params
       params.require(:invoice)
         .permit(:student_id, :hours, :description)
-        .merge(tutor_id: current_user.id, hourly_rate: @student.assignment.hourly_rate, assignment_id: @student.assignment.id)
+        .merge(tutor_id: current_user.id, hourly_rate: @student.engagement.hourly_rate, engagement_id: @student.engagement.id)
     end
 
     def set_student
@@ -36,7 +36,7 @@ module Tutors
     end
 
     def authorize_tutor
-      if @student.assignment.nil? || @student.assignment.tutor_id != current_user.id
+      if @student.engagement.nil? || @student.engagement.tutor_id != current_user.id
         render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       end
     end

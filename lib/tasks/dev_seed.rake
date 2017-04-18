@@ -88,25 +88,25 @@ namespace :dev do
     admin.roles = "admin"
     admin.save!
 
-    # Update assignments
-    tutor.assignments.destroy_all
-    assignment = Assignment.create(
+    # Update engagements
+    tutor.engagements.destroy_all
+    engagement = Engagement.create(
       tutor_id: tutor.id,
       student_id: student1.id,
       subject: student1.student_info.subject,
       academic_type: student1.student_info.academic_type,
       hourly_rate: 20
     )
-    assignment.enable!
+    engagement.enable!
 
-    assignment = Assignment.create(
+    engagement = Engagement.create(
       tutor_id: tutor.id,
       student_id: student2.id,
       subject: student2.student_info.subject,
       academic_type: student2.student_info.academic_type,
       hourly_rate: 20
     )
-    assignment.enable!
+    engagement.enable!
 
     # Update invoices
     tutor.invoices.destroy_all

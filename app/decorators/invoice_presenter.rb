@@ -6,14 +6,14 @@ class InvoicePresenter < SimpleDelegator
   end
 
   def academic_type
-    @invoice.assignment.academic_type
+    @invoice.engagement.academic_type
   end
 
   def subject
-    @invoice.assignment.subject
+    @invoice.engagement.subject
   end
 
   def student_name
-    @invoice.assignment.student.name
+    @invoice.engagement.student.name
   end
 end

@@ -5,7 +5,7 @@ class EmailsController < ApplicationController
 
   def new
     @email = Email.new
-    @invoice = @student.assignment.invoices.last
+    @invoice = @student.engagement.invoices.last
   end
 
   def create
@@ -42,7 +42,7 @@ class EmailsController < ApplicationController
   end
 
   def authorize_tutor
-    if @student.assignment.nil? || @student.assignment.tutor_id != current_user.id
+    if @student.engagement.nil? || @student.engagement.tutor_id != current_user.id
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
     end
   end
