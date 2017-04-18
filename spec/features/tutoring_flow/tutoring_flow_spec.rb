@@ -24,11 +24,11 @@ feature 'Tutoring flow' do
     sign_out
     sign_in(director)
 
-    expect(page).to have_content("Pending Assignments")
+    expect(page).to have_content("Pending Engagements")
     click_link "Edit"
 
-    select "Tutor", from: "assignment_tutor_id"
-    fill_in "assignment_hourly_rate", with: "20"
+    select "Tutor", from: "engagement_tutor_id"
+    fill_in "engagement_hourly_rate", with: "20"
     click_on "Submit"
     click_link "Enable"
 

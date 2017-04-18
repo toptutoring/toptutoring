@@ -2,10 +2,10 @@
   <div class="col-md-6 col-md-offset-3">
     <div class="widget">
       <div class="widget-heading">
-        <h3 class="widget-title text-center">Assignment</h3>
+        <h3 class="widget-title text-center">Engagement</h3>
       </div>
       <div class="widget-body">
-        <%= form_for(@assignment) do |f| %>
+        <%= form_for(@engagement) do |f| %>
 
           <%= f.label :tutor_id, "Tutor" %>
           <div class="select-option">
@@ -15,22 +15,22 @@
 
           <div class="form-group">
             <%= f.label :hourly_rate %>
-            <%= f.number_field :hourly_rate, value: @assignment.hourly_rate, class: "form-control", required: :true, min: 0 %>
+            <%= f.number_field :hourly_rate, value: @engagement.hourly_rate, class: "form-control", required: :true, min: 0 %>
           </div>
 
           <div class="form-group">
             <%= f.label :student_id %>
-            <%= f.text_field :student_id, value: @assignment.student.name, class:"form-control", disabled: true %>
+            <%= f.text_field :student_id, value: @engagement.student.name, class:"form-control", disabled: true %>
           </div>
 
           <div class="form-group">
             <%= f.label :subject %>
-            <%= f.text_field :subject, value: @assignment.subject, class:"form-control" %>
+            <%= f.text_field :subject, value: @engagement.subject, class:"form-control" %>
           </div>
 
           <div class="form-group">
             <%= f.label :academic_type %>
-            <%= f.text_field :academic_type, value: @assignment.academic_type, class:"form-control" %>
+            <%= f.text_field :academic_type, value: @engagement.academic_type, class:"form-control" %>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-outline btn-blue">Submit</button>

@@ -6,7 +6,7 @@ feature "Create payment as client" do
       set_roles
       tutor = FactoryGirl.create(:tutor_user)
       student = FactoryGirl.create(:student_user)
-      student.assignment.update(tutor_id: tutor.id)
+      student.engagement.update(tutor_id: tutor.id)
       client = student.client
       client.update(customer_id: "cus_A45BGhlr4VjDcJ", balance: 30)
 

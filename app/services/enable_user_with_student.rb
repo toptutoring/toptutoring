@@ -5,7 +5,7 @@ class EnableUserWithStudent
 
   def perform
     enable_users
-    create_assignment
+    create_engagement
   end
 
   private
@@ -15,8 +15,8 @@ class EnableUserWithStudent
     @user.students.last.enable!
   end
 
-  def create_assignment
-    Assignment.create(
+  def create_engagement
+    Engagement.create(
       student_id: @user.students.last.id,
       subject: @user.students.last.student_info.subject)
   end

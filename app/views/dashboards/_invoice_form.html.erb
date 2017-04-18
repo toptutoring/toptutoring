@@ -2,7 +2,7 @@
   <div class="form-group">
     <%= f.label :student_id, class: "col-md-3 col-sm-3 control-label" %>
     <div class="col-md-9 col-sm-9">
-      <%= f.select(:student_id, options_for_select(@students.map{ |student| [student.name, student.id, { 'data-tutor-type' => student.assignment.subject }] }, @invoice.student_id), { :class => "student-select form-control", 'aria-label' => "student_id" }, :required => true)%>
+      <%= f.select(:student_id, options_for_select(@students.map{ |student| [student.name, student.id, { 'data-tutor-type' => student.engagement.subject }] }, @invoice.student_id), { :class => "student-select form-control", 'aria-label' => "student_id" }, :required => true)%>
     </div>
   </div>
 
@@ -10,7 +10,7 @@
     <%= f.label :subject, class: "col-md-3 col-sm-3 control-label" %>
     <div class="col-md-9 col-sm-9">
       <span class="form-info invoice-tutor-type">
-        <%= @invoice.student.assignment.subject if @invoice.student.present? %>
+        <%= @invoice.student.engagement.subject if @invoice.student.present? %>
       </span>
     </div>
   </div>

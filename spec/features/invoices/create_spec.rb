@@ -4,18 +4,18 @@ feature 'Create Invoice' do
   scenario 'has valid form' do
     tutor = FactoryGirl.create(:tutor_user)
     student = FactoryGirl.create(:student_user)
-    student.assignment.update(tutor_id: tutor.id)
+    student.engagement.update(tutor_id: tutor.id)
 
     sign_in(tutor)
 
     expect(page).to have_content(student.name)
-    expect(page).to have_content(student.assignment.subject)
+    expect(page).to have_content(student.engagement.subject)
   end
 
   scenario 'with invalid params' do
     tutor = FactoryGirl.create(:tutor_user)
     student = FactoryGirl.create(:student_user)
-    student.assignment.update(tutor_id: tutor.id)
+    student.engagement.update(tutor_id: tutor.id)
 
     sign_in(tutor)
 
@@ -27,7 +27,7 @@ feature 'Create Invoice' do
   scenario 'with valid params' do
     tutor = FactoryGirl.create(:tutor_user)
     sufficient_balance_student = FactoryGirl.create(:student_user, :balance => 5)
-    sufficient_balance_student.assignment.update(tutor_id: tutor.id, hourly_rate: 1)
+    sufficient_balance_student.engagement.update(tutor_id: tutor.id, hourly_rate: 1)
     sufficient_balance_student.client.update(balance: 2)
 
     sign_in(tutor)
@@ -43,7 +43,7 @@ feature 'Create Invoice' do
     client  = FactoryGirl.create(:client_user, balance: 2)
 
     low_balance_student = FactoryGirl.create(:student_user, client_id: client.id)
-    low_balance_student.assignment.update(tutor_id: tutor.id, hourly_rate: 1)
+    low_balance_student.engagement.update(tutor_id: tutor.id, hourly_rate: 1)
 
     sign_in(tutor)
     

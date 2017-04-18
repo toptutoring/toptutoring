@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-feature "Index assignments" do
+feature "Index engagements" do
   context "when user is director" do
-    scenario "should see assignments" do
+    scenario "should see engagements" do
       director = FactoryGirl.create(:director_user)
       tutor = FactoryGirl.create(:tutor_user)
       student = FactoryGirl.create(:student_user)
-      assignment = FactoryGirl.create(:assignment, tutor: tutor, student: student)
+      engagement = FactoryGirl.create(:engagement, tutor: tutor, student: student)
 
       sign_in(director)
-      visit assignments_path
-      expect(page).to have_content("Assignments")
+      visit engagements_path
+      expect(page).to have_content("Engagements")
       expect(page).to have_content("#")
       expect(page).to have_content("Student")
       expect(page).to have_content("Tutor")
@@ -18,27 +18,27 @@ feature "Index assignments" do
       expect(page).to have_content("Academic Type")
       expect(page).to have_content("Hourly Rate")
       expect(page).to have_content("Status")
-      expect(page).to have_content(assignment.id)
-      expect(page).to have_content(assignment.student.name)
-      expect(page).to have_content(assignment.subject)
-      expect(page).to have_content(assignment.academic_type)
-      expect(page).to have_content(assignment.hourly_rate)
-      expect(page).to have_content(assignment.state)
+      expect(page).to have_content(engagement.id)
+      expect(page).to have_content(engagement.student.name)
+      expect(page).to have_content(engagement.subject)
+      expect(page).to have_content(engagement.academic_type)
+      expect(page).to have_content(engagement.hourly_rate)
+      expect(page).to have_content(engagement.state)
       expect(page).to have_link("Edit")
       expect(page).to have_link("Disable")
     end
   end
 
   context "when user is admin" do
-    scenario "should see assignments" do
+    scenario "should see engagements" do
       admin = FactoryGirl.create(:admin_user)
       tutor = FactoryGirl.create(:tutor_user)
       student = FactoryGirl.create(:student_user)
-      assignment = FactoryGirl.create(:assignment, tutor: tutor, student: student)
+      engagement = FactoryGirl.create(:engagement, tutor: tutor, student: student)
 
       sign_in(admin)
-      visit assignments_path
-      expect(page).to have_content("Assignments")
+      visit engagements_path
+      expect(page).to have_content("Engagement")
       expect(page).to have_content("#")
       expect(page).to have_content("Student")
       expect(page).to have_content("Tutor")
@@ -46,12 +46,12 @@ feature "Index assignments" do
       expect(page).to have_content("Academic Type")
       expect(page).to have_content("Hourly Rate")
       expect(page).to have_content("Status")
-      expect(page).to have_content(assignment.id)
-      expect(page).to have_content(assignment.student.name)
-      expect(page).to have_content(assignment.subject)
-      expect(page).to have_content(assignment.academic_type)
-      expect(page).to have_content(assignment.hourly_rate)
-      expect(page).to have_content(assignment.state)
+      expect(page).to have_content(engagement.id)
+      expect(page).to have_content(engagement.student.name)
+      expect(page).to have_content(engagement.subject)
+      expect(page).to have_content(engagement.academic_type)
+      expect(page).to have_content(engagement.hourly_rate)
+      expect(page).to have_content(engagement.state)
       expect(page).to have_link("Edit")
       expect(page).to have_link("Disable")
     end

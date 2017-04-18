@@ -14,7 +14,7 @@ class StudentsController < ApplicationController
         @user.forgot_password!
         SetStudentPasswordMailer.set_password(@user).deliver_now
       end
-      Assignment.create(
+      Engagement.create(
         student_id: @user.id,
         subject: @user.student_info.subject)
         redirect_to students_path, notice: 'Student successfully created'

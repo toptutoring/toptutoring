@@ -87,10 +87,10 @@ Rails.application.routes.draw do
     resources :tutors, only: [:new, :create]
   end
 
-  resources :assignments do
+  resources :engagements do
     member do
-      get '/enable' => "assignments#enable"
-      get '/disable' => "assignments#disable"
+      get '/enable' => "engagements#enable"
+      get '/disable' => "engagements#disable"
     end
   end
 

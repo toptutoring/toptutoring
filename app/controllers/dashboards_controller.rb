@@ -3,16 +3,16 @@ class DashboardsController < ApplicationController
   before_action :build_student_for_client, only: [:client]
 
   def admin
-    @assignments = Assignment.pending
+    @engagements = Engagement.pending
   end
 
   def director
-    @assignments = Assignment.pending
+    @engagements = Engagement.pending
   end
 
   def tutor
-    @assignments = current_user.assignments 
-    @students = User.where(id: @assignments.pluck(:student_id))
+    @engagements = current_user.engagements
+    @students = User.where(id: @engagements.pluck(:student_id))
     @invoice = Invoice.new(student_id: @students.first.try(:id))
   end
 

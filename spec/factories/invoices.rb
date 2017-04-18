@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :invoice do
     tutor         { FactoryGirl.create(:tutor_user) }
-    assignment    { FactoryGirl.create(:assignment, tutor: tutor) }
+    engagement    { FactoryGirl.create(:engagement, tutor: tutor) }
     hours         { 2 }
     amount        { 40 }
   end

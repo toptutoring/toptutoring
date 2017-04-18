@@ -4,8 +4,8 @@ feature 'Invoices Index' do
   scenario 'when user is tutor' do
     tutor = FactoryGirl.create(:tutor_user)
     student = FactoryGirl.create(:student_user)
-    assignment = FactoryGirl.create(:assignment, tutor: tutor, student: student)
-    invoice = FactoryGirl.create(:invoice, tutor: tutor, assignment: assignment)
+    engagement = FactoryGirl.create(:engagement, tutor: tutor, student: student)
+    invoice = FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement)
 
     sign_in(tutor)
     visit tutors_invoices_path
@@ -19,9 +19,9 @@ feature 'Invoices Index' do
     expect(page).to have_content('Hours')
     expect(page).to have_content('Hourly Rate')
     expect(page).to have_content('Amount')
-    expect(page).to have_content(invoice.assignment.student.name)
-    expect(page).to have_content(invoice.assignment.subject)
-    expect(page).to have_content(invoice.assignment.academic_type)
+    expect(page).to have_content(invoice.engagement.student.name)
+    expect(page).to have_content(invoice.engagement.subject)
+    expect(page).to have_content(invoice.engagement.academic_type)
     expect(page).to have_content(invoice.created_at)
     expect(page).to have_content(invoice.description)
     expect(page).to have_content(invoice.hours)

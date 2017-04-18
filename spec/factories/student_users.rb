@@ -6,7 +6,7 @@ FactoryGirl.define do
     roles        { "student" }
     student_info { FactoryGirl.create(:student_info) }
     access_state { "enabled" }
-    assignment   { FactoryGirl.create(:assignment) }
+    engagement   { FactoryGirl.create(:engagement) }
     client       { FactoryGirl.create(:client_user)}
   end
 end
