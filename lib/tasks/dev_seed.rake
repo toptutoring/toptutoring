@@ -10,20 +10,36 @@ namespace :dev do
     client.save!
 
      # Update student
-    student = User.where(email: "student@example.com").first_or_initialize
-    student.name = "Student"
-    student.email = "student@example.com"
-    student.password = "password"
-    student.access_state = "enabled"
-    student.roles = "student"
-    student.client_id = client.id
-    student.save! 
+    student1 = User.where(email: "student1@example.com").first_or_initialize
+    student1.name = "Student1"
+    student1.email = "student1@example.com"
+    student1.password = "password"
+    student1.access_state = "enabled"
+    student1.roles = "student"
+    student1.client_id = client.id
+    student1.save! 
 
     # Update student info
-    student_info = StudentInfo.where(user_id: student.id).first_or_initialize
-    student_info.subject = "Math"
-    student_info.academic_type = "Test Prep"
-    student_info.save!
+    student_info1 = StudentInfo.where(user_id: student1.id).first_or_initialize
+    student_info1.subject = "Academic"
+    student_info1.academic_type = "Test Prep"
+    student_info1.save!
+
+     # Update student
+    student2 = User.where(email: "student2@example.com").first_or_initialize
+    student2.name = "Student2"
+    student2.email = "student2@example.com"
+    student2.password = "password"
+    student2.access_state = "enabled"
+    student2.roles = "student"
+    student2.client_id = client.id
+    student2.save! 
+
+    # Update student info
+    student_info2 = StudentInfo.where(user_id: student2.id).first_or_initialize
+    student_info2.subject = "Math"
+    student_info2.academic_type = "Test Prep"
+    student_info2.save!
 
     # Update tutor
     tutor = User.where(email: "tutor@example.com").first_or_initialize
@@ -76,9 +92,18 @@ namespace :dev do
     tutor.assignments.destroy_all
     assignment = Assignment.create(
       tutor_id: tutor.id,
-      student_id: student.id,
-      subject: student.student_info.subject,
-      academic_type: student.student_info.academic_type,
+      student_id: student1.id,
+      subject: student1.student_info.subject,
+      academic_type: student1.student_info.academic_type,
+      hourly_rate: 20
+    )
+    assignment.enable!
+
+    assignment = Assignment.create(
+      tutor_id: tutor.id,
+      student_id: student2.id,
+      subject: student2.student_info.subject,
+      academic_type: student2.student_info.academic_type,
       hourly_rate: 20
     )
     assignment.enable!
