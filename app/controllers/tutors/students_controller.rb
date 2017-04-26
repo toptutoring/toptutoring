@@ -3,7 +3,7 @@ module Tutors
     before_action :require_login
 
     def index
-      @students = current_user.engagements.map(&:student).uniq.compact
+      @students = User.where(id: current_user.tutor_engagements.pluck(:student_id).uniq)
     end
   end
 end

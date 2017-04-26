@@ -1,7 +1,9 @@
 class Engagement < ActiveRecord::Base
   # Associations
   belongs_to :student, class_name: "User", foreign_key: "student_id"
+  belongs_to :client, class_name: "User", foreign_key: "client_id"
   belongs_to :tutor, class_name: "User", foreign_key: "tutor_id"
+  
   has_many :invoices
 
   #### Scopes ####
@@ -22,6 +24,6 @@ class Engagement < ActiveRecord::Base
   end
 
   def updated?
-    hourly_rate && tutor
+    tutor
   end
 end

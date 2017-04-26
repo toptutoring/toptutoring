@@ -4,15 +4,16 @@ class User < ActiveRecord::Base
   # Associations
   has_one :student_info, dependent: :destroy
   accepts_nested_attributes_for :student_info
-  has_one :tutor_info, dependent: :destroy
-  accepts_nested_attributes_for :tutor_info
+  has_one :contract, dependent: :destroy
+  accepts_nested_attributes_for :contract
   has_one :client_info, dependent: :destroy
   accepts_nested_attributes_for :client_info
   has_many :students, class_name: "User", foreign_key: "client_id"
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
-  has_many :engagements, class_name: "Engagement", foreign_key: "tutor_id", dependent: :destroy
-  has_one :engagement, class_name: "Engagement", foreign_key: "student_id", dependent: :destroy
+  has_many :tutor_engagements, class_name: "Engagement", foreign_key: "tutor_id", dependent: :destroy
+  has_many :student_engagements, class_name: "Engagement", foreign_key: "student_id", dependent: :destroy
+  has_many :client_engagements, class_name: "Engagement", foreign_key: "client_id", dependent: :destroy
   has_many :invoices, class_name: "Invoice", foreign_key: "tutor_id", dependent: :destroy
   has_many :emails, class_name: "Email", foreign_key: "tutor_id", dependent: :destroy
   has_many :user_roles
@@ -75,18 +76,12 @@ class User < ActiveRecord::Base
     Time.zone.at(token_expires_at) > Time.current
   end
 
-  def currency_balance
-    balance * tutor_info.hourly_rate
+  def outstanding_balance
+    self.invoices.present? ? Invoice.sum(:amount, :conditions => {:id => self.invoices.pluck(:id)}) : 0
   end
 
-  def hourly_balance(student)
-    if is_student?
-      if engagement && engagement.active?
-        balance.to_f / engagement.hourly_rate
-      end
-    elsif student.engagement && student.engagement.active?
-      balance.to_f / student.engagement.hourly_rate
-    end
+  def credit_status(invoice)
+    invoice.engagement.academic_type.casecmp("academic") == 0 ? academic_credit : test_prep_credit
   end
 
   def is_student?

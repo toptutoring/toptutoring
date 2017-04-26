@@ -9,7 +9,7 @@
         <% if current_user.has_role?("client") %>
           <div class="dropdown">
             <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
-              <%= client_balance(current_user) %>
+              <%= client_credit(current_user) %>
             </a>
             <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
             </ul>
@@ -17,7 +17,7 @@
         <% elsif current_user.has_role?("tutor") %>
           <div class="dropdown">
             <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
-              <%= tutor_balance(current_user) %>
+              <%= tutor_outstanding_balance(current_user) %>
             </a>
             <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
             </ul>

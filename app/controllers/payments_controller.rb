@@ -5,6 +5,7 @@ class PaymentsController < ApplicationController
     if !current_user.is_customer?
       redirect_to one_time_payment_path
     end
+    @payment = Payment.new
   end
 
   def index
@@ -13,24 +14,18 @@ class PaymentsController < ApplicationController
 
   def create
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
-    @amount = params[:payments][:amount]
-    @amount = Float(@amount).round(2)
-    @amount = (@amount * 100).to_i
+    @amount = payment_params[:amount].extract_value
+    payment_service = PaymentService.new(current_user.id, @amount, 'usd', payment_params[:description], nil)
 
-    if current_user.customer_id == nil
+    if current_user.customer_id.empty?
       flash[:danger] = "You must provide your card information before making a payment."
       render :new
     else
       begin
-        payment = Stripe::Charge.create(
-          amount: @amount,
-          currency: 'usd',
-          customer: current_user.customer_id,
-          description: params[:payments][:description])
-
-          PaymentService.new.perform(payment, current_user.id)
-          flash[:notice] = 'Payment successfully made.'
-          redirect_back(fallback_location: (request.referer || root_path))
+        payment = payment_service.create_charge_with_customer
+        payment_service.process!(payment)
+        flash[:notice] = 'Payment successfully made.'
+        redirect_back(fallback_location: (request.referer || root_path))
       rescue Stripe::CardError => e
         flash[:danger] = e.message
         render :new
@@ -38,4 +33,8 @@ class PaymentsController < ApplicationController
     end
   end
 
+  private
+  def payment_params
+    params.require(:payment).permit(:hours, :amount, :description)
+  end
 end

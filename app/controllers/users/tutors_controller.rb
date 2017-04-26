@@ -5,7 +5,7 @@ module Users
 
     def new
       @user = User.new
-      @user.build_tutor_info
+      @user.build_contract
     end
 
     def create
@@ -23,7 +23,9 @@ module Users
     private
 
     def signups_params
-      params.require(:user).permit(:name, :email, :password, tutor_info_attributes: [:academic_type]).merge(access_state: "enabled", roles: :tutor)
+      params.require(:user)
+        .permit(:name, :email, :password, contract_attributes: [:hourly_rate])
+        .merge(access_state: "enabled", roles: :tutor)
     end
 
     def redirect_to_root

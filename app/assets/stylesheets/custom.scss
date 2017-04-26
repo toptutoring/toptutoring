@@ -525,7 +525,16 @@ textarea {
   }
 }
 
+form {
+  .control-label {
+    text-align: left!important;
+  }
+}
+
 .invoice-form {
+  input {
+    margin-bottom: 0px;  
+  }
   .widget-heading {
     margin-top: 1rem;
   }
@@ -537,8 +546,10 @@ textarea {
   .form-group {
     vertical-align: middle;
   }
+}
 
-  .control-label {
-    text-align: left!important;
+.payment-form {
+  .payment-submit {
+    margin-top: 3rem;
   }
 }

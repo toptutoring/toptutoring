@@ -17,14 +17,27 @@
       <div class="form-group">
         <div class="col-sm-2"></div>
         <span class="payment-errors alert-danger col-sm-7"></span>
+      </div>  
+
+      <div class="form-group">
+        <label for="hourly-rate" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control col-sm-3 input-sm hourly-rate" data-academic="<%= current_user.academic_rate%>" data-test-prep="<%= current_user.test_prep_rate %>" name="payment[hourly_rate]" min="1" max="9999" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
+        </div>
       </div>
 
+      <div class="form-group">
+        <label for="hours" class="col-sm-2 control-label col-sm-offset-2">Hours</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control col-sm-3 input-sm hours" name="payment[hours]" min="0.5" max="9999" step="0.5" placeholder="Hours" aria-label="Hours"/>
+        </div>
+      </div>
+     
       <div class="form-group">
         <div class="col-sm-2"></div>
         <label for="amount" class="col-sm-2 control-label">Amount</label>
         <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm" name="payments[amount]" min="0" id="amount" max="999999" required>
-          </input>
+          <input type="number" class="form-control col-sm-3 input-sm amount" name="payment[amount]" min="0" id="amount" max="999999" placeholder="Amount" aria-label="Amount" required/>
         </div>
       </div>
 
@@ -32,8 +45,10 @@
         <div class="col-sm-2"></div>
         <label for="description" class="col-sm-2 control-label">Description</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control col-sm-3 input-sm"  name="payments[description]" id="description">
-          </input>
+          <select name="payment[description]" id="payment_description" class="description">
+            <option value="Academic" data-academic="<%= current_user.academic_rate %>">Academic</option>
+            <option value="Test_Prep" data-test-prep="<%= current_user.test_prep_rate %>">Test Preparation</option>
+          </select>
         </div>
       </div>
 
@@ -41,17 +56,15 @@
         <div class="col-sm-2"></div>
         <label for="card-holder-name" class="col-sm-2 control-label">Card Holder's Name</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control col-sm-3 input-sm"  data-stripe="name" title="This is the name as written on your credit card." id="name">
-          </input>
+          <input type="text" class="form-control col-sm-3 input-sm"  placeholder="Card Holder's Name" data-stripe="name" title="This is the name as written on your credit card." id="name"/>
         </div>
       </div>
 
       <div class="form-group">
         <div class="col-sm-2"></div>
-      <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
+        <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
         <div class="col-sm-3">
-          <input type="text" class="form-control col-sm-3 input-sm"  data-stripe="number" title="Fill in your credit card number." maxlength="19" required id="credit-card">
-          </input>
+          <input type="text" class="form-control col-sm-3 input-sm" placeholder="Credit Card" data-stripe="number" title="Fill in your credit card number." maxlength="19" required id="credit-card"/>
         </div>
         <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
       </div>
@@ -60,19 +73,15 @@
         <div class="col-sm-2"></div>
         <label for="exp" class="col-sm-2 control-label">Expiration</label>
         <div class="controls">
-
           <div class="col-sm-2">
             <i class="ion-chevron-down"></i>
             <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}) %>
           </div>
-
-          <div class="col-sm-1">
+          <div class="col-sm-2">
             <i class="ion-chevron-down"></i>
             <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, data: {stripe: "exp-year"}) %>
           </div>
-
           <%= hidden_field_tag :token %>
-
         </div>
       </div>
 
@@ -80,7 +89,7 @@
         <div class="col-sm-2"></div>
         <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
         <div class="col-sm-2 col-cvv-fixed-width">
-          <input type="text" class="form-control input-sm"  data-stripe="cvc" size="4"></input required>
+          <input type="text" class="form-control input-sm" placeholder="CVV" data-stripe="cvc" size="4" required/>
         </div>
 
         <script>
@@ -93,7 +102,6 @@
 
         <a id="cvv" class="col-sm-2" data-content="<strong>Visa®, Mastercard®, and Discover® cardholders:</strong><p>Turn your card over and look at the signature box. You should see either the entire 16-digit credit card number or
   just the last four digits followed by a special 3-digit code. This 3-digit code is your CVV number / Card Security Code.</p><strong> American Express® cardholders:</strong><p>Look for the 4-digit code printed on the front of your card just above and to the right of your main credit card number. This 4-digit code is your Card Identification Number (CID). The CID is the four-digit code printed just above the Account Number.</p>" data-placement="right" data-toggle="popover" class="btn" data-original-title="Card Verification Number" data-html="true" style="font-size:11px">What is my CVV code?</a>
-
       </div>
     </fieldset>
 

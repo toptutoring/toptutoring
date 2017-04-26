@@ -15,6 +15,7 @@ module Admin
 
     def new
       @payment = Payment.new
+      @tutors = User.with_tutor_role
     end
 
     def create
@@ -36,8 +37,9 @@ module Admin
     private
 
     def payment_params
-      params.require(:payment).permit(:amount, :source, :description, :destination,
-      :payee_id, :payer_id).merge(source: @funding_source.funding_source_id)
+      params.require(:payment)
+        .permit(:amount, :source, :description, :destination, :payee_id, :payer_id)
+        .merge(source: @funding_source.funding_source_id)
     end
 
     def set_funding_source
@@ -47,7 +49,7 @@ module Admin
     def validate_funding_source
       if @funding_source.nil?
         if current_user.has_role?("director")
-          flash[:danger] = "Something went wrong! Please contact your administrator."
+          flash[:danger] = "Funding source isn't set yet. Please check your dwolla account."
         else
           flash[:danger] = "You must authenticate with Dwolla and select a funding source before making a payment."
         end
@@ -61,7 +63,7 @@ module Admin
 
     def validate_payment
       if current_user.has_role?("director")
-        if @payee.currency_balance < payment_params[:amount].to_f
+        if @payee.outstanding_balance < payment_params[:amount].to_f
           flash[:danger] = 'This exceeds the maximum payment for this tutor.
             Please contact an administrator if you have any questions'
             redirect_back(fallback_location: (request.referer || root_path))

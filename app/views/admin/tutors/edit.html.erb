@@ -2,38 +2,10 @@
   <div class="col-md-6 col-md-offset-3">
     <div class="widget">
       <div class="widget-heading">
-        <h3 class="widget-title text-center"><%= @user.name %></h3>
+        <h3 class="widget-title text-center"><%= @tutor.name %></h3>
       </div>
       <div class="widget-body">
-        <%= form_for(@user, url: admin_tutor_path(@user)) do |f| %>
-          <%= f.fields_for :tutor_info do |tutor_field| %>
-            <div class="form-group">
-              <%= tutor_field.label :subject %>
-              <%= tutor_field.text_field :subject, class:"form-control" %>
-            </div>
-
-            <div class="form-group">
-              <%= tutor_field.label :academic_type %>
-              <%= tutor_field.text_field :academic_type, class:"form-control" %>
-            </div>
-
-            <div class="form-group">
-              <%= tutor_field.label :hourly_rate %>
-              <%= tutor_field.number_field :hourly_rate, class:"form-control", min: "0", required: true%>
-            </div>
-          <% end %>
-
-          <% if current_user.has_role?("admin") %>
-            <div class="form-group">
-              <%= f.label :balance %>
-              <%= f.number_field :balance, class:"form-control", min: "0", required: true%>
-            </div>
-          <% end %>
-
-          <div class="text-center">
-            <button type="submit" class="btn btn-outline btn-blue">Submit</button>
-          </div>
-        <% end %>
+        <%= render "form" %>
       </div>
     </div>
   </div>

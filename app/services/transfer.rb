@@ -8,7 +8,11 @@ class Transfer
   def perform
     create_transfer
     if !@gateway.error
-      UpdateUserBalance.new(hourly_amount, tutor_id).decrease
+      tutor.invoices.each do |invoice|
+        invoice.paid!
+      end
+      tutor.out_standing_balance = 0.0
+      tutor.save
     else
       @error = @gateway.error
     end
@@ -31,13 +35,5 @@ class Transfer
 
   def tutor_id
     tutor.id
-  end
-
-  def tutor_hourly_rate
-    tutor.tutor_info.hourly_rate
-  end
-
-  def hourly_amount
-    @payment.amount.to_f / tutor_hourly_rate
   end
 end

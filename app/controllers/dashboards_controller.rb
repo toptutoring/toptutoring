@@ -11,7 +11,7 @@ class DashboardsController < ApplicationController
   end
 
   def tutor
-    @engagements = current_user.engagements
+    @engagements = current_user.tutor_engagements
     @students = User.where(id: @engagements.pluck(:student_id))
     @invoice = Invoice.new(student_id: @students.first.try(:id))
   end

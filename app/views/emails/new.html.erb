@@ -15,7 +15,7 @@
 
           <div class="form-group">
             <%= f.label :body %>
-            <%= f.text_area :body, value: @email.email_body(@invoice, @client, @student), class:"form-control", rows: "4", required: true, readonly: "readonly" %>
+            <%= f.text_area :body, value: @email.email_body(@invoice, @client), class:"form-control", rows: "4", required: true, readonly: "readonly" %>
           </div>
 
           <%= f.hidden_field :client_id, value: @client.id %>

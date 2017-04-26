@@ -1,0 +1,22 @@
+<%= form_for(@student, url: students_path) do |f| %>
+  <div class="form-group">
+    <%= f.text_field :name, class:"form-control", required: true, placeholder: "Full Name" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.email_field :email, class:"form-control", placeholder: "Email" %>
+  </div>
+
+  <%= f.fields_for :student_info do |student_field| %>
+    <div class="form-group">
+      <%= student_field.text_field :subject, class:"form-control", required: true, placeholder: "Subject" %>
+    </div>
+    <div class="form-group">
+      <%= student_field.select :academic_type, options_for_select([['Academic', 'Academic'], ['Test_Prep', 'Test Prep']]), class:"form-control", required: true  %>
+    </div>
+  <% end %>
+
+  <div class="text-center">
+    <%= f.submit "Submit", class: "btn btn-outline btn-blue" %>
+  </div>
+<% end %>
