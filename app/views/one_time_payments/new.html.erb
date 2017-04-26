@@ -22,7 +22,7 @@
       <div class="form-group">
         <label for="hourly-rate" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
         <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm hourly-rate" data-academic="<%= current_user.academic_rate%>" data-test-prep="<%= current_user.test_prep_rate %>" name="payment[hourly_rate]" min="1" max="9999" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
+          <input type="number" class="form-control col-sm-3 input-sm hourly-rate" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" name="payment[hourly_rate]" min="1" max="9999" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
         </div>
       </div>
 
@@ -46,8 +46,8 @@
         <label for="description" class="col-sm-2 control-label">Description</label>
         <div class="col-sm-3">
           <select name="payment[description]" id="payment_description" class="description">
-            <option value="Academic" data-academic="<%= current_user.academic_rate %>">Academic</option>
-            <option value="Test_Prep" data-test-prep="<%= current_user.test_prep_rate %>">Test Preparation</option>
+            <option value="Academic" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Academic</option>
+            <option value="Test_Prep" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Test Preparation</option>
           </select>
         </div>
       </div>

@@ -61,9 +61,9 @@ class PaymentService
   def update_client_credit(amount, payer_id, description)
     client = User.find(payer_id)
     if description.casecmp("Academic") == 0
-      client.academic_credit += amount / client.academic_rate
+      client.academic_credit += amount / MultiCurrencyAmount.from_cent(client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
     else
-      client.test_prep_credit += amount / client.test_prep_rate
+      client.test_prep_credit += amount / MultiCurrencyAmount.from_cent(client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
     end
     client.save
   end

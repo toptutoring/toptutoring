@@ -31,9 +31,9 @@ class EngagementPresenter < SimpleDelegator
 
   def hourly_rate
     if self.academic_type.casecmp('academic') == 0
-      self.client.academic_rate
+      MultiCurrencyAmount.from_cent(self.client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
     else
-      self.client.test_prep_rate
+      MultiCurrencyAmount.from_cent(self.client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
     end
   end
 end

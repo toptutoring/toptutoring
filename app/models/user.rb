@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
   scope :admin_and_directors, -> { joins(:roles).where("roles.name = ? OR roles.name = ?", "admin", "director").distinct }
   scope :all_without_admin, -> { joins(:roles).where("roles.name != ?", "admin").distinct }
 
+  # Monetize Implementation for client 
+  monetize :academic_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }
+  monetize :test_prep_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }
+
   #### State Machine ####
   state_machine :access_state, :initial => :disabled do
     event :enable do

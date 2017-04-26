@@ -28,9 +28,9 @@ module Tutors
     private
     def invoice_params
       if params[:academic_type].casecmp('academic') == 0
-        hourly_rate = @student.client.academic_rate
+        hourly_rate = MultiCurrencyAmount.from_cent(@student.client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
       else
-        hourly_rate = @student.client.test_prep_rate
+        hourly_rate = MultiCurrencyAmount.from_cent(@student.client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
       end
       params.require(:invoice)
         .permit(:student_id, :hours, :subject, :description)

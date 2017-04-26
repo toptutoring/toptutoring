@@ -8,9 +8,10 @@ class Transfer
   def perform
     create_transfer
     if !@gateway.error
-      tutor.invoices.each do |invoice|
-        invoice.paid!
-      end
+      # temporarily comment this code because admin should select invoices to be paid manually
+      # tutor.invoices.each do |invoice|
+      #   invoice.paid!
+      # end
       tutor.outstanding_balance = 0.0
       tutor.save
     else
