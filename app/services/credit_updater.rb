@@ -35,7 +35,7 @@ class CreditUpdater
     end
     client.save
 
-    tutor.out_standing_balance += invoice.hours
+    tutor.outstanding_balance += invoice.hours
     tutor.save
 
     engagement.academic_type.casecmp('academic') == 0 ? client.academic_credit : client.test_prep_credit

@@ -76,10 +76,6 @@ class User < ActiveRecord::Base
     Time.zone.at(token_expires_at) > Time.current
   end
 
-  def outstanding_balance
-    self.invoices.present? ? Invoice.sum(:amount, :conditions => {:id => self.invoices.pluck(:id)}) : 0
-  end
-
   def credit_status(invoice)
     invoice.engagement.academic_type.casecmp("academic") == 0 ? academic_credit : test_prep_credit
   end

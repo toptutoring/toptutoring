@@ -33,7 +33,7 @@ $(function() {
     }));
     $('.academic_type').append($('<option>', {
       value: "Test_Prep",
-      text : "Test PreParation - " + creditTestPrep + "hours"
+      text : "Test Preparation - " + creditTestPrep + "hours"
     }));
   }
 

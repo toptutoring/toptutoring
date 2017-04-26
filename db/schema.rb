@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170426140612) do
+ActiveRecord::Schema.define(version: 20170426154633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,9 +133,9 @@ ActiveRecord::Schema.define(version: 20170426140612) do
     t.integer  "client_id"
     t.decimal  "academic_credit",                        precision: 10, scale: 2, default: "0.0",      null: false
     t.decimal  "test_prep_credit",                       precision: 10, scale: 2, default: "0.0",      null: false
-    t.integer  "academic_rate",                                                   default: 20
-    t.integer  "test_prep_rate",                                                  default: 20
-    t.decimal  "out_standing_balance",                   precision: 10, scale: 2, default: "0.0",      null: false
+    t.decimal  "academic_rate",                          precision: 10, scale: 2, default: "20.0"
+    t.decimal  "test_prep_rate",                         precision: 10, scale: 2, default: "20.0"
+    t.decimal  "outstanding_balance",                    precision: 10, scale: 2, default: "0.0",      null: false
     t.index ["email"], name: "index_users_on_email", using: :btree
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end

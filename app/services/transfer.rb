@@ -11,7 +11,7 @@ class Transfer
       tutor.invoices.each do |invoice|
         invoice.paid!
       end
-      tutor.out_standing_balance = 0.0
+      tutor.outstanding_balance = 0.0
       tutor.save
     else
       @error = @gateway.error

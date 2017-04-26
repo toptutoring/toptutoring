@@ -49,7 +49,7 @@ module Admin
     def validate_funding_source
       if @funding_source.nil?
         if current_user.has_role?("director")
-          flash[:danger] = "Funding source isn't set yet. Please check your dwolla account."
+          flash[:danger] = "Funding source isn't set yet. Please check your Dwolla account."
         else
           flash[:danger] = "You must authenticate with Dwolla and select a funding source before making a payment."
         end
