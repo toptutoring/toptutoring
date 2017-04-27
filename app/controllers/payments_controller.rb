@@ -15,7 +15,7 @@ class PaymentsController < ApplicationController
   def create
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
     @amount = payment_params[:amount].extract_value
-    payment_service = PaymentService.new(current_user.id, @amount, 'usd', payment_params[:description], nil)
+    payment_service = PaymentService.new(current_user.id, @amount, 'usd', payment_params[:description], nil, payment_params[:hours])
 
     if current_user.customer_id.empty?
       flash[:danger] = "You must provide your card information before making a payment."

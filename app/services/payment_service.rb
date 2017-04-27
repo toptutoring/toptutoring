@@ -1,10 +1,11 @@
 class PaymentService
-  def initialize(user_id, amount, currency, description, token)
+  def initialize(user_id, amount, currency, description, token, hours)
     @user_id = user_id
     @description = description 
     @amount = amount
     @currency = currency 
     @token = token
+    @hours = hours.to_f
   end
 
   def retrieve_customer 
@@ -38,7 +39,7 @@ class PaymentService
 
   def process!(payment)
     if new_payment = create_payment(payment, user.id)
-      update_client_credit(new_payment.amount/100, user.id, @description) if new_payment.valid?
+      update_client_credit(new_payment.amount, user.id, @description) if new_payment.valid?
     end
   end
 
@@ -58,13 +59,17 @@ class PaymentService
       created_at:   Time.now)
   end
 
-  def update_client_credit(amount, payer_id, description)
+  def update_client_credit(amount_cents, payer_id, description)
     client = User.find(payer_id)
     if description.casecmp("Academic") == 0
-      client.academic_credit += amount / MultiCurrencyAmount.from_cent(client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
+      client.academic_credit += @hours if payment_valid?(amount_cents, @hours, client.academic_rate)
     else
-      client.test_prep_credit += amount / MultiCurrencyAmount.from_cent(client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
+      client.test_prep_credit += @hours if payment_valid?(amount_cents, @hours, client.test_prep_rate)
     end
     client.save
+  end
+
+  def payment_valid?(amount_cents, hours, rate)
+    (hours * rate.cents).round == amount_cents ? true : false
   end
 end
