@@ -105,6 +105,10 @@ ActiveRecord::Schema.define(version: 20170426171727) do
     t.index ["user_id"], name: "index_student_infos_on_user_id", using: :btree
   end
 
+  create_table "subjects", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"

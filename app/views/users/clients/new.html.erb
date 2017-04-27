@@ -43,11 +43,12 @@
 
           <%= form.fields_for :client_info do |client_field| %>
             <div class="col-md-12">
-              <%= client_field.text_field :subject, placeholder: "TUTORING SUBJECT" %>
+              <%= client_field.select :subject, options_from_collection_for_select(Subject.all, "id", "name"), prompt: "Subject", class:"wpcf7-form-control wpcf7-select subject-select" %>
             </div>
 
+          </br>
             <div class="col-md-12">
-              <%= client_field.text_area :comments, placeholder: "COMMENTS", rows: "3", style: "height:100px;" %>
+              <%= client_field.text_area :comments, placeholder: "COMMENTS", rows: "3", style: "height:100px; margin-top: 25px;" %>
             </div>
           <% end %>
 
