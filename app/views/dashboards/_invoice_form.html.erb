@@ -3,7 +3,9 @@
   <div class="form-group">
     <label for="student" class="col-md-3 col-sm-3 control-label">Student</label>
     <div class="col-md-9 col-sm-9">
-      <%= f.select(:student_id, options_for_select(@students.map{ |student| [student.name, student.id, { 'data-test-prep' => student.client.test_prep_credit, 'data-academic' => student.client.academic_credit }]}), {}, { class: "student", required: true }) %>
+      <%= f.select(:student_id, 
+        options_for_select(@students.map{ |student| [student.name, student.id, { 'data-test-prep' => student.client.test_prep_credit, 'data-academic' => student.client.academic_credit }]}), 
+        {}, { class: "student", required: true }) %>
     </div>
   </div>
 

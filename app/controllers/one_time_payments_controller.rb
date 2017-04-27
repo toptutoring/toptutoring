@@ -12,7 +12,7 @@ class OneTimePaymentsController < ApplicationController
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
     token = params[:stripeToken]
     @amount = params[:payment][:amount].extract_value
-    payment_service = PaymentService.new(current_user.id, @amount, 'usd', params[:payment][:description], token, params[:payment][:hours])
+    payment_service = PaymentService.new(current_user.id, @amount, 'usd', token, one_time_payment_params)
 
     begin
       if params[:save_payment_info] && current_user
@@ -30,5 +30,10 @@ class OneTimePaymentsController < ApplicationController
       flash[:danger] = e.message
       render :new
     end
+  end
+
+  private
+  def one_time_payment_params
+    params.require(:payment).permit(:description, :hours, :academic_type, :amount)
   end
 end

@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Client Payments</h3>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">Description</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @client_payments.each do |payment| %>
+                <tr>
+                  <td><%= payment.payer.name  %></td>
+                  <td class="text-center"><%= payment.amount %></td>
+                  <td class="text-center"><%= payment.description %></td>
+                  <td class="text-center"><%= payment.status %></td>
+                  <td class="text-center"><%= payment.created_at %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Tutor Payments</h3>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Payer</th>
+                <th>Payee</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">Description</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @tutor_payments.each do |payment| %>
+                <tr>
+                  <td><%= payment.payer.name  %></td>
+                  <td><%= payment.payee.name  %></td>
+                  <td class="text-center"><%= payment.amount %></td>
+                  <td class="text-center"><%= payment.description %></td>
+                  <td class="text-center"><%= payment.status %></td>
+                  <td class="text-center"><%= payment.created_at %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

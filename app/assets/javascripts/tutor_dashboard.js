@@ -1,6 +1,4 @@
 $(function() {
-  'use strict'
-
   setHoursDropDown();
   processTutorType();
 
@@ -8,11 +6,11 @@ $(function() {
     $('.hours').empty();
     $('.hours').append($('<option>', {
       value: 0,
-      text : "24 hour Cancelation"
+      text : "24 hour Cancelation(No hour is charged)"
     }));
     $('.hours').append($('<option>', {
       value: 0.5,
-      text : "No show"
+      text : "No show(Client will be charged for 30 mins)"
     }));
     for(var i = 1; i <= 5; i+= 0.5) {
       $('.hours').append($('<option>', {

@@ -1,0 +1,17 @@
+<%= form_for(@tutor, url: admin_tutor_path(@tutor), :html => { class: "form-horizontal" }) do |f| %>
+  <div class="form-group">
+    <%= f.label :name, class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <%= f.text_field :name, :class => "col-md-9 col-sm-9", :required => true, :placeholder => "Name", :required => true %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email, class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <%= f.text_field :email, :class => "col-md-9 col-sm-9", :required => true, :placeholder => "Email", :required => true %>
+    </div>
+  </div>
+
+  <%= f.submit "Submit", class: "btn btn-outline btn-blue" %>
+<% end %>

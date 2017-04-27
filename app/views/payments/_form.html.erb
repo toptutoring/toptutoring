@@ -6,14 +6,23 @@
       </div>
 
       <div class="form-group">
-        <label for="payment[hourly_rate]" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
-        <div class="col-sm-5">
-          <input type="text" class="form-control col-sm-3 input-sm hourly-rate" 
+        <label for="hourly-rate" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
+        <div class="col-sm-3">
+          <p class="col-sm-3 hourly-rate" 
             data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" 
             data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" 
-            name="payment[hourly_rate]" min="1" max="9999" placeholder="Hourly Rate" aria-label="Hourly Rate" disabled/>
+            name="hourly_rate" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
         </div>
       </div>
+
+      <div class="form-group">
+        <%= f.label :amount, "Total Amount", class: "col-sm-2 control-label col-sm-offset-2" %>
+        <div class="col-sm-5">
+          <%= f.text_field :amount, placeholder: "Amount", "aria-label": "Amount", class: "amount" %>
+        </div>
+      </div>
+
+      <div class="separator col-md-8 col-md-offset-2 clearfix"></div>
 
       <div class="form-group">
         <label for="hours" class="col-sm-2 control-label col-sm-offset-2">Hours</label>
@@ -24,16 +33,21 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :amount, class: "col-sm-2 control-label col-sm-offset-2" %>
+        <div class="col-sm-2"></div>
+        <label for="payment_academic_type" class="col-sm-2 control-label">Tutoring Type</label>
         <div class="col-sm-5">
-          <%= f.text_field :amount, placeholder: "Amount", "aria-label": "Amount", class: "amount" %>
+          <select name="payment[academic_type]" id="payment_academic_type" class="payment-academic-type">
+            <option value="Academic" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Academic</option>
+            <option value="Test_Prep" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Test Preparation</option>
+          </select>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :description, class: "col-sm-2 control-label col-sm-offset-2" %>
+        <div class="col-sm-2"></div>
+        <label for="payment_description" class="col-sm-2 control-label">Description</label>
         <div class="col-sm-5">
-          <%= f.select(:description, [['Academic', 'Academic'], ['Test Preparation', 'Test_Prep']], {}, { class: "description"}) %>
+          <textarea type="text" class="form-control col-sm-3 input-sm" placeholder="Description" name="payment[description]" rows="3"></textarea>
         </div>
       </div>
 

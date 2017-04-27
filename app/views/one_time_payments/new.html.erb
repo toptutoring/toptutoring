@@ -1,127 +1,144 @@
-<section class="payment-section col-md-offset-1">
+<section class="payment-section col-md-offset-2">
+  
+<%= form_tag url_for(:controller => 'one_time_payments', :action => 'create', method: :post), class: "form-horizontal payment-form", id: "payment-form" do |f| %>
 
-    <div class="row">
-      <legend class="col-sm-6 col-sm-offset-4"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
-    </div>
-    <div class="row">
-      <p class="col-sm-2 col-sm-offset-4">Note: All fields are required.</p>
-    </div>
-    <div class="row">
-      <p class="col-sm-4 col-sm-offset-4">This page is protected through secure SSL encrypted payment.</p>
-    </div>
-
-  <%= form_tag url_for(:controller => 'one_time_payments', :action => 'create', method: :post), class: "form-horizontal payment-form", id: "payment-form" do |f| %>
-
-    <fieldset class="credit_card">
-
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <span class="payment-errors alert-danger col-sm-7"></span>
-      </div>  
-
-      <div class="form-group">
-        <label for="hourly-rate" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
-        <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm hourly-rate" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" name="payment[hourly_rate]" min="1" max="9999" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="hours" class="col-sm-2 control-label col-sm-offset-2">Hours</label>
-        <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm hours" name="payment[hours]" min="0.5" max="9999" step="0.5" placeholder="Hours" aria-label="Hours"/>
-        </div>
-      </div>
-     
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <label for="amount" class="col-sm-2 control-label">Amount</label>
-        <div class="col-sm-3">
-          <input type="number" class="form-control col-sm-3 input-sm amount" name="payment[amount]" min="0" id="amount" max="999999" placeholder="Amount" aria-label="Amount" required/>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <label for="description" class="col-sm-2 control-label">Description</label>
-        <div class="col-sm-3">
-          <select name="payment[description]" id="payment_description" class="description">
-            <option value="Academic" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Academic</option>
-            <option value="Test_Prep" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Test Preparation</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <label for="card-holder-name" class="col-sm-2 control-label">Card Holder's Name</label>
-        <div class="col-sm-3">
-          <input type="text" class="form-control col-sm-3 input-sm"  placeholder="Card Holder's Name" data-stripe="name" title="This is the name as written on your credit card." id="name"/>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
-        <div class="col-sm-3">
-          <input type="text" class="form-control col-sm-3 input-sm" placeholder="Credit Card" data-stripe="number" title="Fill in your credit card number." maxlength="19" required id="credit-card"/>
-        </div>
-        <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
-      </div>
-
-      <div class="form-group select-option">
-        <div class="col-sm-2"></div>
-        <label for="exp" class="col-sm-2 control-label">Expiration</label>
-        <div class="controls">
-          <div class="col-sm-2">
-            <i class="ion-chevron-down"></i>
-            <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}) %>
-          </div>
-          <div class="col-sm-2">
-            <i class="ion-chevron-down"></i>
-            <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, data: {stripe: "exp-year"}) %>
-          </div>
-          <%= hidden_field_tag :token %>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
-        <div class="col-sm-2 col-cvv-fixed-width">
-          <input type="text" class="form-control input-sm" placeholder="CVV" data-stripe="cvc" size="4" required/>
-        </div>
-
-        <script>
-        $(function ()
-        { $("#cvv").popover({
-          trigger: 'hover'
-          });
-        });
-        </script>
-
-        <a id="cvv" class="col-sm-2" data-content="<strong>Visa®, Mastercard®, and Discover® cardholders:</strong><p>Turn your card over and look at the signature box. You should see either the entire 16-digit credit card number or
-  just the last four digits followed by a special 3-digit code. This 3-digit code is your CVV number / Card Security Code.</p><strong> American Express® cardholders:</strong><p>Look for the 4-digit code printed on the front of your card just above and to the right of your main credit card number. This 4-digit code is your Card Identification Number (CID). The CID is the four-digit code printed just above the Account Number.</p>" data-placement="right" data-toggle="popover" class="btn" data-original-title="Card Verification Number" data-html="true" style="font-size:11px">What is my CVV code?</a>
-      </div>
-    </fieldset>
-
-    <% if current_user %>
-      <div class="form-group">
-        <div class="col-sm-offset-4">
-          <%= check_box_tag 'save_payment_info'  %>
-          <label>Save card information</label>
-        </div>
-      </div>
-    <% end %>
+  <fieldset class="credit_card">
+    
+    <div class="form-group">
+      <div class="col-sm-2"></div>
+      <span class="payment-errors alert-danger col-sm-7"></span>
+    </div>  
 
     <div class="form-group">
-      <div class="col-xs-3 col-xs-offset-4">
-        <input type="submit" value="Pay" class="btn btn-block payment_submit">
+      <label for="hourly-rate" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
+      <div class="col-sm-3">
+        <p class="col-sm-3 hourly-rate" 
+          data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" 
+          data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" 
+          name="hourly_rate" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
       </div>
     </div>
 
-    <%= hidden_field_tag :stripe_publishable_key, ENV['STRIPE_PUBLISHABLE_KEY'] %>
+    <div class="form-group">
+      <div class="col-sm-2"></div>
+      <label for="amount" class="col-sm-2 control-label">Amount</label>
+      <div class="col-sm-3">
+        <input type="number" class="form-control col-sm-3 input-sm amount" name="payment[amount]" 
+          min="0" id="amount" step="any" max="999999" placeholder="Amount" aria-label="Amount" required/>
+      </div>
+    </div>
 
+    <div class="separator col-md-6 col-md-offset-2 clearfix"></div>
+
+    <div class="form-group">
+      <label for="hours" class="col-sm-2 control-label col-sm-offset-2">Hours</label>
+      <div class="col-sm-3">
+        <input type="number" class="form-control col-sm-3 input-sm hours" name="payment[hours]" min="0.5" max="9999" step="0.5" placeholder="Hours" aria-label="Hours"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-2"></div>
+      <label for="payment_academic_type" class="col-sm-2 control-label">Tutoring Type</label>
+      <div class="col-sm-3">
+        <select name="payment[academic_type]" id="payment_academic_type" class="payment-academic-type">
+          <option value="Academic" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Academic</option>
+          <option value="Test_Prep" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Test Preparation</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-2"></div>
+      <label for="payment_description" class="col-sm-2 control-label">Description</label>
+      <div class="col-sm-3">
+        <textarea type="text" class="form-control col-sm-3 input-sm" placeholder="Description" name="payment[description]" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="separator col-md-6 col-md-offset-2 clearfix"></div>
+
+    <div class="row">
+      <legend class="col-sm-6 col-sm-offset-2"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
+    </div>
+    
+    <div class="row">
+      <p class="col-sm-2 col-sm-offset-2">Note: All fields are required.</p>
+    </div>
+    <div class="row">
+      <p class="col-sm-4 col-sm-offset-2">This page is protected through secure SSL encrypted payment.</p>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-2"></div>
+      <label for="card-holder-name" class="col-sm-2 control-label">Card Holder's Name</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control col-sm-3 input-sm"  placeholder="Card Holder's Name" data-stripe="name" title="This is the name as written on your credit card." id="name"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-2"></div>
+      <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control col-sm-3 input-sm" placeholder="Credit Card" data-stripe="number" title="Fill in your credit card number." maxlength="19" required id="credit-card"/>
+      </div>
+      <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
+    </div>
+
+    <div class="form-group select-option">
+      <div class="col-sm-2"></div>
+      <label for="exp" class="col-sm-2 control-label">Expiration</label>
+      <div class="controls">
+        <div class="col-sm-2">
+          <i class="ion-chevron-down"></i>
+          <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}) %>
+        </div>
+        <div class="col-sm-2">
+          <i class="ion-chevron-down"></i>
+          <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, data: {stripe: "exp-year"}) %>
+        </div>
+        <%= hidden_field_tag :token %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-2"></div>
+      <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
+      <div class="col-sm-2 col-cvv-fixed-width">
+        <input type="text" class="form-control input-sm" placeholder="CVV" data-stripe="cvc" size="4" required/>
+      </div>
+
+      <script>
+      $(function ()
+      { $("#cvv").popover({
+        trigger: 'hover'
+        });
+      });
+      </script>
+
+      <a id="cvv" class="col-sm-2" data-content="<strong>Visa®, Mastercard®, and Discover® cardholders:</strong><p>Turn your card over and look at the signature box. You should see either the entire 16-digit credit card number or
+just the last four digits followed by a special 3-digit code. This 3-digit code is your CVV number / Card Security Code.</p><strong> American Express® cardholders:</strong><p>Look for the 4-digit code printed on the front of your card just above and to the right of your main credit card number. This 4-digit code is your Card Identification Number (CID). The CID is the four-digit code printed just above the Account Number.</p>" data-placement="right" data-toggle="popover" class="btn" data-original-title="Card Verification Number" data-html="true" style="font-size:11px">What is my CVV code?</a>
+    </div>
+  </fieldset>
+
+  <% if current_user %>
+    <div class="form-group">
+      <div class="col-sm-offset-4">
+        <%= check_box_tag 'save_payment_info'  %>
+        <label>Save card information</label>
+      </div>
+    </div>
   <% end %>
+
+  <div class="form-group">
+    <div class="col-xs-3 col-xs-offset-4">
+      <input type="submit" value="Pay" class="btn btn-block payment_submit">
+    </div>
+  </div>
+
+  <%= hidden_field_tag :stripe_publishable_key, ENV['STRIPE_PUBLISHABLE_KEY'] %>
+
+<% end %>
 </section>
 <%= javascript_include_tag "#{STRIPE_JS_HOST}/v2/" %>

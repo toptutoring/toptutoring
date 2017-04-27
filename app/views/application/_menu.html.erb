@@ -30,19 +30,34 @@
         <%= render "application/menu_links/client" %>
       <% elsif current_user.has_role?("admin") || current_user.has_role?("director") %>
       <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
-      <li class="panel"><a href="/admin/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payments</span></a></li>
+      <% if current_user.has_role?("admin") %>
+        <li class="panel"><a href="/admin/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Admin Payments</span></a></li>
+      <% end %>
+      <% if current_user.has_role?("director") %>
+        <li class="panel"><a href="/director/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Director Payments</span></a></li>
+      <% end %>
       <li class="panel">
         <%= link_to engagements_path do %>
           <i class="icon ion-ios-contact bg-primary"></i>
           <span class="sidebar-title">Engagements</span>
         <% end %>
       </li>
+      <% if current_user.has_role?("admin") %>
       <li class="panel">
         <%= link_to admin_tutors_path do %>
           <i class="icon ion-ios-contact bg-purple"></i>
           <span class="sidebar-title">Tutors</span>
         <% end %>
       </li>
+      <% end %>
+      <% if current_user.has_role?("director") %>
+      <li class="panel">
+        <%= link_to director_tutors_path do %>
+          <i class="icon ion-ios-contact bg-purple"></i>
+          <span class="sidebar-title">Tutors</span>
+        <% end %>
+      </li>
+      <% end %>
       <% elsif current_user.has_role?("tutor") %>
         <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
       <% end %>

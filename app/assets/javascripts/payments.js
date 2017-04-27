@@ -1,18 +1,17 @@
 jQuery(function($) {
-  `use strict`
   setHourlyRate();
 
   // Client Payment page 
   function setHourlyRate() {
-    var type = $('.description').val();
+    var type = $('.payment-academic-type').val();
     if (type == 'Academic') {
-      $('.hourly-rate').val($('.hourly-rate').data('academic'));
+      $('.hourly-rate').text($('.hourly-rate').data('academic'));
     } else {
-      $('.hourly-rate').val($('.hourly-rate').data('test-prep'));
+      $('.hourly-rate').text($('.hourly-rate').data('test-prep'));
     }
   }
 
-  $('.description').on('change', function() {
+  $('.payment-academic-type').on('change', function() {
     setHourlyRate();
   })
 
@@ -38,6 +37,8 @@ jQuery(function($) {
     return false;
   });
 
+  // Global payment side 
+  
   $('.amount').on('keyup', function(e) {
     var hourly_rate = parseFloat($('.hourly-rate').val());
     if (!!hourly_rate) {
@@ -47,7 +48,11 @@ jQuery(function($) {
   });
 
   $('.hours').on('keyup', function(e) {
-    var hourly_rate = $('.hourly-rate').val();
+    if (!!$('.hourly-rate').text()) {
+      var hourly_rate = $('.hourly-rate').text();
+    } else {
+      var hourly_rate = $('.hourly-rate').val();
+    }
     if (!!hourly_rate) {
       var total = parseFloat($(this).val()) * parseFloat(hourly_rate);
       $('.amount').val(total);

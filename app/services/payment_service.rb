@@ -1,11 +1,12 @@
 class PaymentService
-  def initialize(user_id, amount, currency, description, token, hours)
+  def initialize(user_id, amount, currency, token, params)
     @user_id = user_id
-    @description = description 
+    @description = params[:description]
     @amount = amount
     @currency = currency 
     @token = token
-    @hours = hours.to_f
+    @hours = params[:hours].to_f
+    @academic_type = params[:academic_type]
   end
 
   def retrieve_customer 
@@ -39,7 +40,7 @@ class PaymentService
 
   def process!(payment)
     if new_payment = create_payment(payment, user.id)
-      update_client_credit(new_payment.amount, user.id, @description) if new_payment.valid?
+      update_client_credit(new_payment.amount, user.id, @academic_type) if new_payment.valid?
     end
   end
 
@@ -59,9 +60,9 @@ class PaymentService
       created_at:   Time.now)
   end
 
-  def update_client_credit(amount_cents, payer_id, description)
+  def update_client_credit(amount_cents, payer_id, academic_type)
     client = User.find(payer_id)
-    if description.casecmp("Academic") == 0
+    if academic_type.casecmp("Academic") == 0
       client.academic_credit += @hours if payment_valid?(amount_cents, @hours, client.academic_rate)
     else
       client.test_prep_credit += @hours if payment_valid?(amount_cents, @hours, client.test_prep_rate)
