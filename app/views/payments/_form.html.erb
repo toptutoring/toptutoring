@@ -16,9 +16,12 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :amount, "Total Amount", class: "col-sm-2 control-label col-sm-offset-2" %>
+        <%= f.label :amount, "Amount:", class: "col-md-2 col-sm-2 col-sm-offset-2 control-label" %>
         <div class="col-sm-5">
-          <%= f.text_field :amount, placeholder: "Amount", "aria-label": "Amount", class: "amount" %>
+          <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <%= f.number_field :amount, class: "form-control no-padding amount", min: 0, max: 9999999, id: "payment_amount" %>
+          </div>
         </div>
       </div>
 

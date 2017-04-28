@@ -6,11 +6,11 @@ $(function() {
     $('.hours').empty();
     $('.hours').append($('<option>', {
       value: 0,
-      text : "24 hour Cancelation(No hour is charged)"
+      text : "24 hour Cancelation (No hours are charged)"
     }));
     $('.hours').append($('<option>', {
       value: 0.5,
-      text : "No show(Client will be charged for 30 mins)"
+      text : "No show (Client will be charged for 30 mins)"
     }));
     for(var i = 1; i <= 5; i+= 0.5) {
       $('.hours').append($('<option>', {
@@ -27,11 +27,11 @@ $(function() {
     $('.academic_type').empty();
     $('.academic_type').append($('<option>', {
       value: "Academic",
-      text : "Academic - " + creditAcademic + "hours"
+      text : "Academic - " + creditAcademic + " hours"
     }));
     $('.academic_type').append($('<option>', {
       value: "Test_Prep",
-      text : "Test Preparation - " + creditTestPrep + "hours"
+      text : "Test Preparation - " + creditTestPrep + " hours"
     }));
   }
 
