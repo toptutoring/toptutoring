@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170426171727) do
+ActiveRecord::Schema.define(version: 20170430232009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,11 +45,10 @@ ActiveRecord::Schema.define(version: 20170426171727) do
   create_table "engagements", force: :cascade do |t|
     t.integer  "tutor_id"
     t.integer  "student_id"
-    t.string   "state",         default: "pending", null: false
+    t.string   "state",      default: "pending", null: false
     t.string   "subject"
-    t.string   "academic_type"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "client_id"
     t.index ["client_id"], name: "index_engagements_on_client_id", using: :btree
     t.index ["student_id"], name: "index_engagements_on_student_id", using: :btree
@@ -107,6 +106,7 @@ ActiveRecord::Schema.define(version: 20170426171727) do
 
   create_table "subjects", force: :cascade do |t|
     t.string "name"
+    t.string "academic_type"
   end
 
   create_table "user_roles", force: :cascade do |t|
