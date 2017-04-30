@@ -7,6 +7,10 @@ module Admin
       @users = User.all_without_admin.order(:id)
     end
 
+    def edit
+      @user_role = @user.roles.first.name.capitalize 
+    end
+
     def update
       if @user.update_attributes(user_params)
         redirect_to admin_users_path, notice: 'User successfully updated!'
