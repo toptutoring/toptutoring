@@ -5,13 +5,18 @@ feature "List all users" do
     set_roles
   end
 
+  let(:admin) { FactoryGirl.create(:admin_user) }
+  let(:student) { FactoryGirl.create(:student_user) }
+  let(:tutor) { FactoryGirl.create(:tutor_user) }
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:director) { FactoryGirl.create(:director_user) }
+
   context "when user is admin" do
     scenario "should see user info" do
-      admin    = FactoryGirl.create(:admin_user)
-      student  = FactoryGirl.create(:student_user)
-      client   = FactoryGirl.create(:client_user)
-      director = FactoryGirl.create(:director_user)
-      tutor    = FactoryGirl.create(:tutor_user)
+      director
+      student
+      tutor
+      client
 
       sign_in(admin)
 
@@ -19,8 +24,7 @@ feature "List all users" do
 
       expect(page).to have_content("Name")
       expect(page).to have_content("Email")
-      expect(page).to have_content("Date Added")      
-      expect(page).to have_content("Balance")
+      expect(page).to have_content("Date Added")
       expect(page).to have_content("Access State")
       expect(page).to have_content("Roles")
       expect(page).to have_content("Action")
@@ -28,7 +32,6 @@ feature "List all users" do
       expect(page).to have_content(student.name)
       expect(page).to have_content(student.email)
       expect(page).to have_content(student.phone_number)
-      expect(page).to have_content(student.balance)
       expect(page).to have_content(student.access_state)
       student.roles.distinct.pluck(:name).each do |role|
         expect(page).to have_content(role.humanize)
@@ -37,7 +40,6 @@ feature "List all users" do
       expect(page).to have_content(director.name)
       expect(page).to have_content(director.email)
       expect(page).to have_content(director.phone_number)
-      expect(page).to have_content(director.balance)
       expect(page).to have_content(director.access_state)
       director.roles.distinct.pluck(:name).each do |role|
         expect(page).to have_content(role.humanize)
@@ -46,7 +48,6 @@ feature "List all users" do
       expect(page).to have_content(tutor.name)
       expect(page).to have_content(tutor.email)
       expect(page).to have_content(tutor.phone_number)
-      expect(page).to have_content(tutor.balance)
       expect(page).to have_content(tutor.access_state)
       tutor.roles.distinct.pluck(:name).each do |role|
         expect(page).to have_content(role.humanize)
@@ -55,7 +56,6 @@ feature "List all users" do
       expect(page).to have_content(client.name)
       expect(page).to have_content(client.email)
       expect(page).to have_content(client.phone_number)
-      expect(page).to have_content(client.balance)
       expect(page).to have_content(client.access_state)
       student.roles.distinct.pluck(:name).each do |role|
         expect(page).to have_content(role.humanize)

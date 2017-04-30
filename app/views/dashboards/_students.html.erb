@@ -12,7 +12,7 @@
               <th class="text-center">Subject</th>
               <th class="text-center">Academic Type</th>
               <th class="text-center">Status</th>
-              <th class="text-center">Balance</th>
+              <th class="text-center">Credit</th>
             </tr>
           </thead>
             <tbody>
@@ -21,9 +21,9 @@
                 <tr>
                 <td><%= representer.student_name %></td>
                 <td class="text-center"><%= representer.student_subject %></td>
-                <td class="text-center"><%= representer.student_academic_type %></td>
+                <td class="text-center"><%= representer.engagement_academic_type %></td>
                 <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
-                <td class="text-center"><%= representer.student.balance %> hrs</td>
+                <td class="text-center"><%= representer.student_credit %> hrs</td>
               </tr>
             <% end %>
           </tbody>

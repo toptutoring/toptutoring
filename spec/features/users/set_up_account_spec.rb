@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 feature 'Set up account' do
+  let(:client) { FactoryGirl.create(:client_user, access_state: "disabled") }
+
   scenario "has user inputs prefilled correctly" do
     set_roles
-    client = FactoryGirl.create(:client_user, engagement: nil, access_state: "disabled")
+
     sign_in(client)
 
     expect(page).to have_field("user_name", with: client.name)
@@ -12,7 +14,7 @@ feature 'Set up account' do
 
   scenario "with valid params", js: true do
     set_roles
-    client = FactoryGirl.create(:client_user, engagement: nil, access_state: "disabled")
+
     sign_in(client)
 
     fill_in "user_phone_number", with: "0000000000"

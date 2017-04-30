@@ -17,6 +17,9 @@ class EnableUserAsStudent
   def create_engagement
     Engagement.create(
       student_id: @user.id,
-      subject: @user.client_info.subject)
+      subject: @user.client_info.subject,
+      client_id: @user.id,
+      academic_type: @user.client_info.subject
+    )
   end
 end

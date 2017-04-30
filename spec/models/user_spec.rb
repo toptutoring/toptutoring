@@ -7,10 +7,10 @@ RSpec.describe User, type: :model do
 
   context "when user is tutor" do
     before {
-      allow(subject).to receive(:tutor_info).and_return(FactoryGirl.create(:tutor_info))
+      allow(subject).to receive(:contract).and_return(FactoryGirl.create(:contract))
     }
-    it { should have_one(:tutor_info) }
-    it { should accept_nested_attributes_for(:tutor_info) }
+    it { should have_one(:contract) }
+    it { should accept_nested_attributes_for(:contract) }
   end
 
 end

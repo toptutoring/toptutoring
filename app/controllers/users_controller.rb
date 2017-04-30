@@ -10,7 +10,7 @@ class UsersController < Clearance::SessionsController
   def update
     if current_user.update_attributes(user_params)
       if !current_user.is_student?
-        current_user.students.last.create_student_info(subject: current_user.client_info.subject)
+        current_user.students.last.create_student_info(subject: current_user.client_info.subject, academic_type: student_academic_type)
       end
     else redirect_back(fallback_location: (request.referer || root_path),
                       flash: { error: current_user.errors.full_messages })
@@ -46,6 +46,10 @@ class UsersController < Clearance::SessionsController
   def client_with_student_params
     params[:user][:students_attributes]["0"][:password] = rand(36**4).to_s(36)
     params.require(:user).permit(:name, :email, :phone_number, :password, students_attributes: [:id, :name, :email, :phone_number, :password, :subject])
+  end
+
+  def student_academic_type
+    params[:student_academic_type]
   end
 
   def client_as_student_params

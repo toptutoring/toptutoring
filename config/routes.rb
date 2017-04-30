@@ -22,13 +22,17 @@ Rails.application.routes.draw do
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
     namespace :admin do
       resources :users, only: [:index, :edit, :update]
-    end 
+    end
     mount Sidekiq::Web, at: '/sidekiq'
     get "/dashboard" => "dashboards#admin"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("director") } do
     get "/dashboard" => "dashboards#director"
+    namespace :director do
+      resources :payments, only: [:new, :create, :index]
+      resources :tutors, only: [:index, :edit, :update]
+    end
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") || user.has_role?("director") } do

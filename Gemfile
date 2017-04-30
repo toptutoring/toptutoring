@@ -34,6 +34,7 @@ gem 'state_machines-activerecord'
 gem 'activemodel-serializers-xml'
 gem "intercom-rails"
 gem 'cancancan', '~> 1.16'
+gem 'money-rails', '~> 1'
 
 group :development do
   gem "listen"
@@ -70,6 +71,7 @@ group :test do
   gem 'sinatra', '~> 2.0.0.rc2', require: false
   gem "vcr"
   gem "rspec-rails", "~> 3.5.0.beta4"
+  gem "m"
 end
 
 group :staging, :production do

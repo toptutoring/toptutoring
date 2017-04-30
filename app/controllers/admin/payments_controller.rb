@@ -2,19 +2,16 @@ module Admin
   class PaymentsController < ApplicationController
     before_action :require_login
     before_action :set_auth_tutor, only: :new
-    before_action :set_funding_source, :validate_funding_source, :set_payee, :validate_payment, only: :create
+    before_action :set_funding_source, :validate_funding_source, :set_payee, only: :create
 
     def index
       @client_payments = Payment.from_clients
-      if current_user.has_role?("admin")
-        @tutor_payments = Payment.to_tutor
-      elsif current_user.has_role?("director")
-        @tutor_payments = Payment.from_user(current_user.id)
-      end
+      @tutor_payments = Payment.to_tutor
     end
 
     def new
       @payment = Payment.new
+      @tutors = User.with_tutor_role
     end
 
     def create
@@ -36,8 +33,9 @@ module Admin
     private
 
     def payment_params
-      params.require(:payment).permit(:amount, :source, :description, :destination,
-      :payee_id, :payer_id).merge(source: @funding_source.funding_source_id)
+      params.require(:payment)
+        .permit(:amount, :source, :description, :destination, :payee_id, :payer_id)
+        .merge(source: @funding_source.funding_source_id)
     end
 
     def set_funding_source
@@ -46,27 +44,13 @@ module Admin
 
     def validate_funding_source
       if @funding_source.nil?
-        if current_user.has_role?("director")
-          flash[:danger] = "Something went wrong! Please contact your administrator."
-        else
-          flash[:danger] = "You must authenticate with Dwolla and select a funding source before making a payment."
-        end
+        flash[:danger] = "You must authenticate with Dwolla and select a funding source before making a payment."
         redirect_to new_admin_payment_path
       end
     end
 
     def set_auth_tutor
       @tutors = User.tutors_with_external_auth
-    end
-
-    def validate_payment
-      if current_user.has_role?("director")
-        if @payee.currency_balance < payment_params[:amount].to_f
-          flash[:danger] = 'This exceeds the maximum payment for this tutor.
-            Please contact an administrator if you have any questions'
-            redirect_back(fallback_location: (request.referer || root_path))
-        end
-      end
     end
 
     def perform_transfer

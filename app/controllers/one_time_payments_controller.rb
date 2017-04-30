@@ -11,39 +11,29 @@ class OneTimePaymentsController < ApplicationController
   def create
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
     token = params[:stripeToken]
-    @amount = params[:payments][:amount]
-    @amount = Float(@amount).round(2)
-    @amount = (@amount * 100).to_i
+    @amount = params[:payment][:amount].extract_value
+    payment_service = PaymentService.new(current_user.id, @amount, 'usd', token, one_time_payment_params)
 
     begin
       if params[:save_payment_info] && current_user
-        customer = Stripe::Customer.create(
-          source: token,
-          email: current_user.email)
-
+        customer = payment_service.retrieve_customer
         current_user.customer_id = customer.id
         current_user.save!
-        payment = Stripe::Charge.create(
-          amount: @amount,
-          currency: 'usd',
-          customer: current_user.customer_id,
-          description: params[:payments][:description])
+        payment = payment_service.create_charge_with_customer
       else
-        payment = Stripe::Charge.create(
-          amount: @amount,
-          currency: 'usd',
-          source: token,
-          description: params[:payments][:description])
+        payment = payment_service.create_charge_with_token
       end
 
-      if current_user
-        PaymentService.new.perform(payment, current_user.id)
-      end
-
+      payment_service.process!(payment) if current_user
       redirect_to confirmation_path
     rescue Stripe::CardError => e
       flash[:danger] = e.message
       render :new
     end
+  end
+
+  private
+  def one_time_payment_params
+    params.require(:payment).permit(:description, :hours, :academic_type, :amount)
   end
 end

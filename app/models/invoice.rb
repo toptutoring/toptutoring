@@ -5,7 +5,9 @@ class Invoice < ActiveRecord::Base
   belongs_to :engagement
   before_save :set_amount_value
 
-  validates :hours, presence: true, numericality: { greater_than_or_equal_to: 0.5 }
+  enum status: [:pending, :paid, :cancelled]
+
+  validates :hours, presence: true
 
   private
 

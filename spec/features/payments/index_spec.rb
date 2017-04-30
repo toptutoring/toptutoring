@@ -1,11 +1,14 @@
 require 'spec_helper'
 
 feature "Index Payments" do
-  scenario "show all user's past payments" do
-    student = FactoryGirl.create(:student_user)
-    payment = FactoryGirl.create(:payment, payer: student.client, amount: 20000)
-    sign_in(student.client)
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:payment) { FactoryGirl.create(:payment, payee_id: client, amount: 200,
+                              status: "paid", description: "initial payment") }
 
+  scenario "show all user's past payments" do
+    payment
+
+    sign_in(client)
     visit payments_path
 
     expect(page).to have_content(payment.created_at)

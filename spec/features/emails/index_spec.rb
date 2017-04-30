@@ -1,13 +1,15 @@
 require 'spec_helper'
 
 feature 'Emails Index' do
+  let(:tutor) { FactoryGirl.create(:tutor_user) }
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:student) { FactoryGirl.create(:student_user, client: client) }
+  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student: student) }
+  let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement, student: student) }
+  let(:email) { FactoryGirl.create(:email, tutor: tutor, client: client) }
+
   scenario 'when user is tutor' do
-    tutor = FactoryGirl.create(:tutor_user)
-    student = FactoryGirl.create(:student_user)
-    student.engagement.update(tutor_id: tutor.id)
-    invoice = FactoryGirl.create(:invoice, tutor: tutor, engagement: student.engagement)
-    invoice.update(student_id: student.id)
-    email = FactoryGirl.create(:email, tutor: tutor, client: student.client)
+    email
 
     sign_in(tutor)
     visit tutors_emails_path
