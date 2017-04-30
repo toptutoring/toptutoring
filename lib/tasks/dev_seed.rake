@@ -80,7 +80,7 @@ namespace :dev do
     # Update admin
     admin = User.where(email: "admin@example.com").first_or_initialize
     admin.name = "Admin"
-    admin.password = "adminpassword123"
+    admin.password = "password"
     admin.auth_provider = "dwolla"
     admin.auth_uid = "8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"
     admin.token_expires_at = Time.current.to_i + 12.months.to_i
@@ -124,3 +124,4 @@ namespace :dev do
       payee_id: tutor.id)
   end
 end
+
