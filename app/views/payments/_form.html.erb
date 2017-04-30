@@ -1,24 +1,4 @@
-<div class="container">
-
-    <div class="row">
-      <legend class="col-sm-6 col-sm-offset-3"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
-    </div>
-    <div class="row">
-      <p class="col-sm-3 col-sm-offset-3">Note: All fields are required.</p>
-    </div>
-    <div class="row">
-      <p class="col-sm-5 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
-    </div>
-<!--     <div class="row">
-      <p class="col-sm-4 col-sm-offset-3">This tutor has an hourly rate of
-        <strong>
-          $<%#= current_user.is_student? ? current_user.engagement.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.engagement.tutor&.tutor_info&.hourly_rate&.to_s %>
-        </strong>.
-      </p>
-    </div> -->
-
-  <%= form_tag url_for(:controller => 'payments', :action => 'create', method: :post), class: "form-horizontal col-md-9", id: "client-payment" do |f| %>
-
+  <%= form_for @payment, :html => { :class => "form-horizontal col-md-9 payment-form" } do |f| %>
     <fieldset class="credit_card">
 
       <div class="form-group">
@@ -26,49 +6,62 @@
       </div>
 
       <div class="form-group">
-        <label for="description" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
-        <div class="col-sm-5">
-          <input type="text" class="form-control col-sm-3 input-sm" id="hourly_rate"  name="payments[hourly_rate]"
-            value="<%#= current_user.is_student? ? current_user.engagement.tutor&.tutor_info&.hourly_rate&.to_s : current_user.students.last.engagement.tutor&.tutor_info&.hourly_rate&.to_s %>"
-            min="1" max="9999">
-          </input>
+        <label for="hourly-rate" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
+        <div class="col-sm-3">
+          <p class="col-sm-3 hourly-rate" 
+            data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" 
+            data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>" 
+            name="hourly_rate" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
         </div>
-        <span class="span-optional">(Optional)</span>
       </div>
+
+      <div class="form-group">
+        <%= f.label :amount, "Amount:", class: "col-md-2 col-sm-2 col-sm-offset-2 control-label" %>
+        <div class="col-sm-5">
+          <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <%= f.number_field :amount, class: "form-control no-padding amount", min: 0, max: 9999999, id: "payment_amount" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="separator col-md-8 col-md-offset-2 clearfix"></div>
 
       <div class="form-group">
         <label for="hours" class="col-sm-2 control-label col-sm-offset-2">Hours</label>
         <div class="col-sm-5">
-          <input type="number" class="form-control col-sm-3 input-sm" id="hours"  name="payments[hours]" min="0.5" max="9999" step="0.5">
-        </input>
-        </div>
-        <span class="span-optional">(Optional)</span>
-      </div>
-
-      <div class="form-group">
-        <label for="amount" class="col-sm-2 control-label col-sm-offset-2">Amount</label>
-        <div class="col-sm-5">
-          <input type="number" class="form-control col-sm-3 input-sm" id="amount" name="payments[amount]" min="0" max="999999" required>
-          </input>
+          <input type="number" class="form-control col-sm-3 input-sm hours" name="payment[hours]" 
+            min="0.5" max="9999" step="0.5" placeholder="Hours" aria-label="Hours"/>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="description" class="col-sm-2 control-label col-sm-offset-2" id="description">Description</label>
+        <div class="col-sm-2"></div>
+        <label for="payment_academic_type" class="col-sm-2 control-label">Tutoring Type</label>
         <div class="col-sm-5">
-          <input type="text" class="form-control col-sm-3 input-sm"  name="payments[description]" id="description">
-          </input>
+          <select name="payment[academic_type]" id="payment_academic_type" class="payment-academic-type">
+            <option value="Academic" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Academic</option>
+            <option value="Test_Prep" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Test Preparation</option>
+          </select>
         </div>
       </div>
 
+      <div class="form-group">
+        <div class="col-sm-2"></div>
+        <label for="payment_description" class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-5">
+          <textarea type="text" class="form-control col-sm-3 input-sm" placeholder="Description" name="payment[description]" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-xs-3 col-xs-offset-5">
+          <%= f.submit "Pay", class: "btn btn-block btn-blue payment-submit" %>
+        </div>
+      </div>
     </fieldset>
-
-      <div class="col-xs-3 col-xs-offset-5">
-        <input type="submit" value="Pay" class="btn btn-block btn-blue payment_submit">
-      </div>
 
     <%= hidden_field_tag :stripe_publishable_key, ENV['STRIPE_PUBLISHABLE_KEY'] %>
     <%= hidden_field_tag :payer_email, current_user.email %>
 
   <% end %>
-</div>

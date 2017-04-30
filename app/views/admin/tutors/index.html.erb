@@ -12,26 +12,19 @@
               <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Subject</th>
-                <th>Academic Type</th>
                 <th class="text-center">Balance</th>
-                <th class="text-center">Hourly Rate</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <% @users.each do |user| %>
+              <% @tutors.each do |tutor| %>
                 <tr>
-                  <td><%= user.name %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.tutor_info.subject %></td>
-                  <td><%= user.tutor_info.academic_type %></td>
-                  <td class="text-center"><%= tutor_balance(user)%></td>
-                  <td class="text-center"><%= user.tutor_info.hourly_rate %></td>
+                  <td><%= tutor.name %></td>
+                  <td><%= tutor.email %></td>
+                  <td class="text-center"><%= tutor_outstanding_balance(tutor)%></td>
                   <% if current_user.has_role?("admin") || current_user.has_role?("director") %>
-                    <td class="text-center">
-                      <%= link_to edit_admin_tutor_path(user) do %>
-                        <button type="button" class="btn btn-outline btn-success">Edit</button>
-                      <% end %>
+                    <td class="text-left">
+                      <%= link_to "Edit", edit_admin_tutor_path(tutor), class: "btn btn-outline btn-success" %>
                     </td>
                   <% end %>
                 </tr>

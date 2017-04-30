@@ -1,8 +1,32 @@
 jQuery(function($) {
+  setHourlyRate();
+
+  // Client Payment page 
+  function setHourlyRate() {
+    var type = $('.payment-academic-type').val();
+    if (type == 'Academic') {
+      $('.hourly-rate').text($('.hourly-rate').data('academic'));
+    } else {
+      $('.hourly-rate').text($('.hourly-rate').data('test-prep'));
+    }
+  }
+
+  $('.payment-academic-type').on('change', function() {
+    setHourlyRate();
+  })
+
+  // Admin/Director Payment page
+
+  $('.tutor').on('change', function() {
+    var rate = $('.tutor').find(":selected").data('hourly-rate');
+    $('.hourly-rate').val(rate);
+  })
+
   $('.payment-form').submit(function(event) {
     var publishable_key = $(this).find('#stripe_publishable_key').val();
     Stripe.setPublishableKey(publishable_key);
     var $form = $(this);
+    
     // Disable the submit button to prevent repeated clicks
     $form.find('.payment_submit').prop('disabled', true);
 
@@ -13,22 +37,25 @@ jQuery(function($) {
     return false;
   });
 
-  $('#amount').on('keyup', function(e) {
-    var hours = parseFloat($('#amount').val()) / parseFloat($('#hourly_rate').val());
-    $('#hours').val(hours);
-  });
-
-  $('#hours').on('keyup', function(e) {
-    if ($('#hourly_rate').val() != '') {
-      var total = parseFloat($('#hours').val()) * parseFloat($('#hourly_rate').val());
-      $('#amount').val(total);
+  // Global payment side 
+  
+  $('.amount').on('keyup', function(e) {
+    var hourly_rate = parseFloat($('.hourly-rate').val());
+    if (!!hourly_rate) {
+      var hours = parseFloat($(this).val()) / hourly_rate;
+      $('.hours').val(hours);
     }
   });
 
-  $('#hourly_rate').on('keyup', function(e) {
-    if ($('#hours').val() != '') {
-      var total = parseInt($('#hours').val()) * parseInt($('#hourly_rate').val());
-      $('#amount').val(total);
+  $('.hours').on('keyup', function(e) {
+    if (!!$('.hourly-rate').text()) {
+      var hourly_rate = $('.hourly-rate').text();
+    } else {
+      var hourly_rate = $('.hourly-rate').val();
+    }
+    if (!!hourly_rate) {
+      var total = parseFloat($(this).val()) * parseFloat(hourly_rate);
+      $('.amount').val(total);
     }
   });
 });

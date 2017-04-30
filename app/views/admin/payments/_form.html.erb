@@ -1,0 +1,30 @@
+<%= form_for @payment, :url => admin_payments_path(@login), :html => { class: "form-horizontal" } do |f| %>
+  <div class="form-group">
+    <%= f.label :payee_id, "Tutor", :class => "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9 select-option">
+      <i class="ion-chevron-down"></i>
+      <%= f.select(:payee_id, options_for_select(@tutors.map{ |tutor| [tutor.name, tutor.id, { 'data-hourly-rate' => tutor.contract.hourly_rate }]}), {}, { class: "tutor", required: true }) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :amount, "Amount:", class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <div class="input-group">
+        <div class="input-group-addon">$</div>
+        <%= f.number_field :amount, class: "form-control no-padding amount", min: 0, max: 9999999, id: "payment_amount" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description, "Description:", class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <%= f.text_area :description, class: "form-control", rows: 3 %>
+    </div>
+  </div>
+
+  <%= f.hidden_field :payer_id, value: current_user.id %>
+
+  <%= f.submit "Send Payment", class: "btn btn-blue margin-top-md center-block", date: {dismiss: "modal"}%>
+<% end %>

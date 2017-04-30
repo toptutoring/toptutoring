@@ -15,7 +15,6 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Date Added</th>
-                  <th>Balance</th>
                   <th>Access State</th>
                   <th>Roles</th>
                   <th>Action</th>
@@ -35,7 +34,6 @@
                     </td>
                     <td><%= user.email.downcase %></td>
                     <td><%= user.created_at.to_time.strftime('%B %e at %l:%M %p')%></td>
-                    <td>$<%= user.balance %></td>
                     <td><%= user.access_state %></td>
                     <td>
                       <% user.roles.distinct.each do |role| %>

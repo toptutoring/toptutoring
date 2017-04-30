@@ -34,6 +34,7 @@ gem 'state_machines-activerecord'
 gem 'activemodel-serializers-xml'
 gem "intercom-rails"
 gem 'cancancan', '~> 1.16'
+gem 'money-rails', '~> 1'
 
 group :development do
   gem "listen"
