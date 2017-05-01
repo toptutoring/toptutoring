@@ -16,6 +16,7 @@ class UsersController < Clearance::SessionsController
                       flash: { error: current_user.errors.full_messages })
       return
     end
+
     enable_user
     redirect_to dashboard_path
     return
@@ -25,7 +26,7 @@ class UsersController < Clearance::SessionsController
 
   def enable_user
     if current_user.is_student?
-      EnableUserAsStudent.new(current_user).perform
+      EnableUserAsStudent.new(current_user, params).perform
     else
       EnableUserWithStudent.new(current_user).perform
       if current_user.students.last.email.present?
@@ -53,6 +54,6 @@ class UsersController < Clearance::SessionsController
   end
 
   def client_as_student_params
-    params.require(:user).permit(:name, :email, :phone_number, :password, client_info_attributes: [:id, :subject])
+    params.require(:user).permit(:name, :email, :phone_number, :password, client_info_attributes: [:id])
   end
 end
