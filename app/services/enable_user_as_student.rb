@@ -1,7 +1,8 @@
 class EnableUserAsStudent
-  def initialize(user, params)
+  def initialize(user, academic_type, subject)
     @user = user
-    @params = params
+    @academic_type = academic_type
+    @subject = subject
   end
 
   def perform
@@ -18,9 +19,9 @@ class EnableUserAsStudent
   def create_engagement
     Engagement.create(
       student_id: @user.id,
-      subject: @params[:subject],
+      subject: @subject,
       client_id: @user.id,
-      academic_type: @params[:academic_type]
+      academic_type: @academic_type
     )
   end
 end

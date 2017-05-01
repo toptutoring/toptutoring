@@ -26,7 +26,7 @@ class UsersController < Clearance::SessionsController
 
   def enable_user
     if current_user.is_student?
-      EnableUserAsStudent.new(current_user, params).perform
+      EnableUserAsStudent.new(current_user, params[:student_academic_type], params[:subject]).perform
     else
       EnableUserWithStudent.new(current_user).perform
       if current_user.students.last.email.present?
