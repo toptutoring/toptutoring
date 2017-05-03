@@ -24,19 +24,26 @@ $(function() {
     var $selectedOption = $('.student').find(":selected");
     var creditAcademic  = $selectedOption.data('academic');
     var creditTestPrep  = $selectedOption.data('test-prep');
+    var assigned        = $selectedOption.data('assigned');
+
     $('.academic_type').empty();
-    $('.academic_type').append($('<option>', {
-      value: "Academic",
-      text : "Academic - " + creditAcademic + " hours"
-    }));
-    $('.academic_type').append($('<option>', {
-      value: "Test_Prep",
-      text : "Test Preparation - " + creditTestPrep + " hours"
-    }));
+
+    if(assigned == 'Academic') {
+      $('.academic_type').append($('<option>', {
+        value: "Academic",
+        text : "Academic - " + creditAcademic + " hours"
+      }));
+    }
+
+    if(assigned == 'Test_Prep') {
+      $('.academic_type').append($('<option>', {
+        value: "Test_Prep",
+        text : "Test Preparation - " + creditTestPrep + " hours"
+      }));
+    }
   }
 
   $(document).on('change', '.student', function() {
     processTutorType();
   });
-
 })

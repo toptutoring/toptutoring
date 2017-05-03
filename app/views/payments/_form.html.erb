@@ -20,7 +20,7 @@
       <div class="col-sm-5">
         <div class="input-group">
           <div class="input-group-addon">$</div>
-          <%= f.number_field :amount, class: "form-control no-padding amount", min: 0, max: 9999999, id: "payment_amount" %>
+          <%= f.number_field :amount, class: "form-control no-padding amount", min: 0, max: 9999999, step: "any", id: "payment_amount", readonly: true %>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
       <label for="hours" class="col-sm-2 control-label col-sm-offset-2">Hours</label>
       <div class="col-sm-5">
         <input type="number" class="form-control col-sm-3 input-sm hours" name="payment[hours]"
-          min="0.5" max="9999" step="0.5" placeholder="Hours" aria-label="Hours"/>
+          min="0.1" max="9999" step="any" placeholder="Hours" aria-label="Hours"/>
       </div>
     </div>
 

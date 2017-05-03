@@ -41,24 +41,6 @@ feature 'Create Invoice', js: true do
     sign_out
   end
 
-  scenario 'with invalid params' do
-    set_roles
-    student
-    engagement
-
-    sign_in(tutor)
-
-    find('.student').find(:xpath, 'option[2]').select_option
-    find('.hours').find(:xpath, 'option[1]').select_option
-    find('.academic_type').find(:xpath, 'option[2]').select_option
-    fill_in "invoice[subject]", with: "Mathmatics"
-    fill_in "Description", with: "for this weeks payment"
-
-    click_on "Submit"
-
-    expect(page).to have_content("Engagement not present!")
-  end
-
   scenario 'low balance warning' do
     set_roles
     student
@@ -68,7 +50,7 @@ feature 'Create Invoice', js: true do
     sign_in(tutor)
 
     find('.student').find(:xpath, 'option[2]').select_option
-    find('.hours').find(:xpath, 'option[1]').select_option
+    find('.hours').find(:xpath, 'option[2]').select_option
     find('.academic_type').find(:xpath, 'option[1]').select_option
     fill_in "invoice[subject]", with: "Mathmatics"
     fill_in "Description", with: "for this weeks payment"

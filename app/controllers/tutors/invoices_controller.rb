@@ -12,7 +12,7 @@ module Tutors
       if @invoice.save
         @invoice.cancelled! if @invoice.hours == 0
         credit = CreditUpdater.new(@invoice.id).process!
-        if credit <= 0.5
+        if credit <= 0.5 && @invoice.hours != 0
           redirect_to tutors_students_path, alert: 'The session has been logged but the client
                         has a negative balance of hours. You may not be paid for this session
                         unless the client adds to his/her hourly balance.' and return
@@ -43,7 +43,6 @@ module Tutors
 
     def set_engagement
       @engagement = Engagement.find_by(tutor_id: current_user.id, student_id: @student.id, academic_type: params[:academic_type])
-      redirect_to dashboard_path, alert: 'Engagement not present!' and return if @engagement.blank?
     end
 
     def authorize_tutor

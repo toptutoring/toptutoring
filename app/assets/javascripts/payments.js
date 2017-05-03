@@ -40,7 +40,7 @@ jQuery(function($) {
   // Global payment side
 
   $('.amount').on('keyup', function(e) {
-    var hourly_rate = parseFloat($('.hourly-rate').val());
+    var hourly_rate = parseFloat($('.hourly-rate').val() || $('.hourly-rate').text());
     if (!!hourly_rate) {
       var hours = parseFloat($(this).val()) / hourly_rate;
       $('.hours').val(hours);

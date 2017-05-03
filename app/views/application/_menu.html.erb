@@ -36,12 +36,23 @@
       <% if current_user.has_role?("director") %>
         <li class="panel"><a href="/director/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payment History</span></a></li>
       <% end %>
+
       <li class="panel">
         <%= link_to engagements_path do %>
           <i class="icon ion-ios-contact bg-primary"></i>
           <span class="sidebar-title">Engagements</span>
         <% end %>
       </li>
+
+      <% if current_user.has_role?("director") %>
+        <li class="panel">
+          <%= link_to director_users_path do %>
+            <i class="icon ion-ios-contact bg-danger"></i>
+            <span class="sidebar-title">Clients</span>
+          <% end %>
+        </li>
+      <% end %>
+
       <% if current_user.has_role?("admin") %>
       <li class="panel">
         <%= link_to admin_tutors_path do %>

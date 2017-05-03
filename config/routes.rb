@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     namespace :director do
       resources :payments, only: [:new, :create, :index]
       resources :tutors, only: [:index, :edit, :update]
+      resources :users, only: [:index, :edit, :update]
     end
   end
 
