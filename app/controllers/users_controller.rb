@@ -12,7 +12,9 @@ class UsersController < Clearance::SessionsController
       if !current_user.is_student? && !current_user.is_tutor?
         current_user.students.last.create_student_info(subject: current_user.client_info.subject, academic_type: student_academic_type)
       end
-      if current_user.is_tutor?
+
+      #get the Subject associated with each checked box and add each one to the current_user
+      if current_user.is_tutor? && params[:tutor_subjects]
         (params[:tutor_subjects]).each do |subject_id|
           current_user.subjects << Subject.find(subject_id.to_i)
         end
@@ -34,7 +36,7 @@ class UsersController < Clearance::SessionsController
     if current_user.is_student?
       EngagementCreator.new(current_user, client_as_student_info_params, false).perform
     elsif current_user.has_role?("tutor")
-
+      #enable the tutor here if doing it through tutor_params is unsafe or incorrect
     else
       EngagementCreator.new(current_user, nil, true).perform
       if current_user.students.last.email.present?
@@ -47,7 +49,7 @@ class UsersController < Clearance::SessionsController
   def user_params
     if current_user.is_student?
       client_as_student_params
-    elsif current_user.has_role?("tutor")
+    elsif current_user.is_tutor?
       tutor_params
     else
       client_with_student_params

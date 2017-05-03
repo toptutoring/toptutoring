@@ -6,10 +6,8 @@
       <% Subject.all.each do |subject| %>
       <div class="col-md-4">
         <div class="form-group">
-          <%= subject_field.label :name do %>
             <%= check_box_tag "tutor_subjects[]", subject.id %>
             <span><%= subject.name %></span>
-          <% end %>
         </div>
       </div>
       <% end %>

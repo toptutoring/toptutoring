@@ -1,5 +1,5 @@
 <%= render "menu" %>
-<% if !current_user.enabled? %>
+<% unless current_user.enabled? %>
   <%= render "new_user_message" %>
 <% else %>
 <div class="row">
