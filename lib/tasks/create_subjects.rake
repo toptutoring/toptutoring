@@ -15,7 +15,7 @@ namespace :data do
       CSV.parse(open(args[:csv_url]), row_sep: :auto, headers: :first_row) do |csv|
         title = csv["Name"].strip
         STDOUT.puts("Creating the subject: #{title}...")
-        Subject.create!(name: title)
+        Subject.create(name: title)
       end
       STDOUT.puts("Finished creating subjects for #{args[:csv_url]}")
     else

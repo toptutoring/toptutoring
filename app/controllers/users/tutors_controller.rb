@@ -25,7 +25,7 @@ module Users
     def signups_params
       params.require(:user)
         .permit(:name, :email, :password, contract_attributes: [:hourly_rate])
-        .merge(access_state: "enabled", roles: :tutor)
+        .merge(roles: "tutor")
     end
 
     def redirect_to_root

@@ -22,7 +22,7 @@ class SessionsController < Clearance::SessionsController
   private
 
   def url_after_create
-    if current_user.has_role?("client") && current_user.enabled?
+    if current_user.has_role?("client") && current_user.enabled? 
       new_payment_path
     else
       dashboard_path

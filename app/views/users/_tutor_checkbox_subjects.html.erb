@@ -1,0 +1,18 @@
+<h3>Tutoring Subjects</h3>
+<fieldset>
+  <%= f.fields_for :subject do |subject_field| %>
+    <div class="row">
+      <h3>Please take a moment to select what subjects you will be tutoring</h3>
+      <% Subject.all.each do |subject| %>
+      <div class="col-md-4">
+        <div class="form-group">
+          <%= subject_field.label :name do %>
+            <%= check_box_tag "tutor_subjects[]", subject.id %>
+            <span><%= subject.name %></span>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  <% end %>
+</fieldset>

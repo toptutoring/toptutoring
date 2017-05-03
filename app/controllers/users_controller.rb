@@ -9,9 +9,15 @@ class UsersController < Clearance::SessionsController
 
   def update
     if current_user.update_attributes(user_params)
-      if !current_user.is_student?
+      if !current_user.is_student? && !current_user.is_tutor?
         current_user.students.last.create_student_info(subject: current_user.client_info.subject, academic_type: student_academic_type)
       end
+      if current_user.is_tutor?
+        (params[:tutor_subjects]).each do |subject_id|
+          current_user.subjects << Subject.find(subject_id.to_i)
+        end
+      end
+
     else redirect_back(fallback_location: (request.referer || root_path),
                       flash: { error: current_user.errors.full_messages })
       return
@@ -27,6 +33,8 @@ class UsersController < Clearance::SessionsController
   def enable_user
     if current_user.is_student?
       EngagementCreator.new(current_user, client_as_student_info_params, false).perform
+    elsif current_user.has_role?("tutor")
+
     else
       EngagementCreator.new(current_user, nil, true).perform
       if current_user.students.last.email.present?
@@ -39,6 +47,8 @@ class UsersController < Clearance::SessionsController
   def user_params
     if current_user.is_student?
       client_as_student_params
+    elsif current_user.has_role?("tutor")
+      tutor_params
     else
       client_with_student_params
     end
@@ -60,4 +70,9 @@ class UsersController < Clearance::SessionsController
   def client_as_student_params
     params.require(:user).permit(:name, :email, :phone_number, :password, client_info_attributes: [:id])
   end
+
+  def tutor_params
+    params.require(:user).permit(:name, :email, :phone_number, :password).merge(access_state: "enabled")
+  end
+  
 end
