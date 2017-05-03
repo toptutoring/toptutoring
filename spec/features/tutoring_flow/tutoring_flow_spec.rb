@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 feature 'Tutoring flow' do
-  scenario "client signup and set up account", js: true do
-    director = FactoryGirl.create(:director_user)
-    tutor = FactoryGirl.create(:tutor_user)
+  let(:director) { FactoryGirl.create(:director_user) }
+  let!(:tutor) { FactoryGirl.create(:tutor_user) }
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:student) { FactoryGirl.create(:student_user, client: client) }
 
+  scenario "client signup and set up account", js: true do
     visit new_users_client_path
 
     fill_in "user_name", with: "Client"
@@ -22,30 +24,39 @@ feature 'Tutoring flow' do
     click_link "Finish"
 
     sign_out
+
     sign_in(director)
 
     expect(page).to have_content("Pending Engagements")
     click_link "Edit"
 
     select "Tutor", from: "engagement_tutor_id"
-    fill_in "engagement_hourly_rate", with: "20"
     click_on "Submit"
     click_link "Enable"
 
     sign_out
-    sign_in(tutor)
 
-    fill_in "invoice_hours", with: "3"		
-    fill_in "invoice_description", with: "Prep for math test"		
-    click_on "Submit"		
-    expect(page).to have_content("The session has been logged but the client 		
-                    has a negative balance of hours. You may not be paid for this session 		
-                    unless the client adds to his/her hourly balance.")		
- 
+    sign_in tutor
+
+    select "Student", from: "invoice_student_id"
+    select "Academic", from: "academic_type"
+    select "0", from: "invoice_hours"
+    fill_in "invoice[subject]", with: "Mathmatics"
+    fill_in "Description", with: "for this weeks payment"
+
+    click_on "Submit"
+
+    expect(page).to have_content("The session has been logged but the client
+                  has a negative balance of hours. You may not be paid for this session
+                  unless the client adds to his/her hourly balance.")
+
+    visit tutors_students_path
+
     click_link "Students"
     click_link "Send Email"
+
     expect(page).to have_content("Use this form to notify the client that their tutoring balance is low.")
-    expect(page).to have_field("email_body", with: "Tutor has invoiced 3.0 hours of tutoring for Math. You have 0 hours left in your hourly balance and payments must be made in advance before the next tutoring sessions.")
+
     click_on "Submit"
     sign_out
 
@@ -53,7 +64,7 @@ feature 'Tutoring flow' do
     fill_in 'Email', with: "client@example.com"
     fill_in 'Password', with: "password"
     click_button 'Login'
-    expect(page).to have_content("-3.0 hrs balance")
+    expect(page).to have_content("-0.5 hrs credit")
 
     VCR.use_cassette('one time payment') do
       fill_in "amount", with: 60
@@ -63,17 +74,6 @@ feature 'Tutoring flow' do
       click_on "Pay"
 
       expect(page).to have_content("Payment successfully made!")
-    end
-
-    visit new_payment_path
-
-    VCR.use_cassette('valid stripe card') do
-      fill_in "hours", with: 3
-      fill_in "amount", with: 60
-      click_on "Pay"
-
-      expect(page).to have_content("Payment successfully made.")
-      expect(page).to have_content("-2.0 hrs balance")
     end
   end
 end

@@ -1,16 +1,19 @@
 class Transfer
-  attr_reader :error
-
   def initialize(payment)
     @payment = payment
   end
 
   def perform
     create_transfer
-    if !@gateway.error
-      UpdateUserBalance.new(hourly_amount, tutor_id).decrease
+    if @gateway.error
+      false
     else
-      @error = @gateway.error
+      # temporarily comment this code because admin should select invoices to be paid manually
+      # tutor.invoices.each do |invoice|
+      #   invoice.paid!
+      # end
+      tutor.outstanding_balance = 0.0
+      tutor.save
     end
   end
 
@@ -31,13 +34,5 @@ class Transfer
 
   def tutor_id
     tutor.id
-  end
-
-  def tutor_hourly_rate
-    tutor.tutor_info.hourly_rate
-  end
-
-  def hourly_amount
-    @payment.amount.to_f / tutor_hourly_rate
   end
 end

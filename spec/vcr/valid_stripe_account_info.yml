@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: UTF-8
-      string: email=client%40test.com
+      string: email=client%40example.com
     headers:
       Accept:
       - "*/*"
@@ -69,7 +69,7 @@ http_interactions:
           "delinquent": false,
           "description": null,
           "discount": null,
-          "email": "client@test.com",
+          "email": "client@example.com",
           "livemode": false,
           "metadata": {},
           "shipping": null,

@@ -19,12 +19,16 @@
               </tr>
             </thead>
             <tbody>
-              <% @students.each do |user| %>
+              <% @students.each do |student| %>
                 <tr>
-                  <td><%= user.name %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.engagement&.tutor&.name %></td>
-                  <td><%= user.is_student? ? user.client_info&.subject : user.student_info&.subject %></td>
+                  <td><%= student.name %></td>
+                  <td><%= student.email %></td>
+                  <td>
+                    <% student.student_engagements.each do |engagement| %>
+                      <%= engagement&.tutor&.name %>
+                    <% end %>
+                  </td>
+                  <td><%= student.is_student? ? student.client_info&.subject : student.student_info&.subject %></td>
                 </tr>
               <% end %>
             </tbody>

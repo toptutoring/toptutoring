@@ -2,10 +2,10 @@ class EmailsController < ApplicationController
   before_action :require_login
   before_action :set_student, :set_client, :authorize_tutor, only: [:new, :create]
   before_action :check_client, only: [:create]
+  before_action :set_invoice, only: [:new]
 
   def new
     @email = Email.new
-    @invoice = @student.engagement.invoices.last
   end
 
   def create
@@ -30,8 +30,12 @@ class EmailsController < ApplicationController
     @student = User.find(params[:id])
   end
 
+  def set_invoice
+    @invoice = current_user.invoices.where(student_id: @student.id).last
+  end
+
   def set_client
-    @client = @student.is_student? ? @student : @student.client
+    @client = @student.client
   end
 
   def check_client
@@ -42,7 +46,7 @@ class EmailsController < ApplicationController
   end
 
   def authorize_tutor
-    if @student.engagement.nil? || @student.engagement.tutor_id != current_user.id
+    if @student.student_engagements.blank? || @student.student_engagements.pluck(:tutor_id).exclude?(current_user.id)
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
     end
   end

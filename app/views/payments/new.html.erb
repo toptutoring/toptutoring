@@ -1,5 +1,19 @@
 <% if current_user.enabled? %>
-  <%= render "form" %>
+  <div class="container">
+    <div class="row">
+      <legend class="col-sm-6 col-sm-offset-3"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
+    </div>
+    <div class="row">
+      <p class="col-sm-3 col-sm-offset-3">Note: All fields are required.</p>
+    </div>
+    <div class="row">
+      <p class="col-sm-5 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
+    </div>
+    <div class="row">
+      <p class="col-sm-5 col-sm-offset-3">We have stored your credit information into our db. So you can make payment easily.</p>
+    </div>
+    <%= render "payment_form" %>
+  </div>
 <% else %>
   <div class="container">
     <div class="row text-center">

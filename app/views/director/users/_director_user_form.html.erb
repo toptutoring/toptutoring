@@ -1,0 +1,25 @@
+<%= form_for(@user, url: director_user_path(@user)) do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.text_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :academic_rate_cents, "Academic Rate(in cents)" %>
+    <%= f.text_field :academic_rate_cents, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :test_prep_rate_cents, "Test Preparation Rate(in cents)" %>
+    <%= f.text_field :test_prep_rate_cents, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Submit", class: "btn btn-outline btn-blue" %>
+  </div>
+<% end %>

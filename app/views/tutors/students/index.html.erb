@@ -14,7 +14,7 @@
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Subject</th>
-                <th class="text-center">Balance</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -25,12 +25,9 @@
                   <td><%= student.email %></td>
                   <td><%= student.phone_number %></td>
                   <td><%= student.is_student? ? student.client_info.subject : student.student_info.subject %></td>
-                  <td class="text-center"><%= student.is_student? ? student.hourly_balance(student) : student.client.hourly_balance(student) %> hrs</td>
                   <% if can_send_email?(student) %>
-                    <td class="text-center">
-                      <%= link_to new_email_path(student) do %>
-                        <button type="button" class="btn btn-outline btn-primary">Send Email</button>
-                      <% end %>
+                    <td>
+                      <%= link_to "Send Email", new_email_path(student), class: "btn btn-outline btn-primary" %>
                     </td>
                   <% end %>
                 </tr>

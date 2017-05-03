@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :auth_admin_user, class: User do
     name             { "Admin" }
-    email            { "admin@test.com" }
+    email            { "admin@example.com" }
     password         { "password" }
     roles            { "admin" }
     access_token     { "QDNYpjlWQJyvtgxqj2LYcCNlJUVdISlcdUPwsW83ueXEIuuu7v" }

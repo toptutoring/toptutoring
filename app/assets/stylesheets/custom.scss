@@ -475,10 +475,6 @@ legend {
   padding-top: 0px;
 }
 
-.payment-section {
-  padding-top: 65px;
-}
-
 textarea {
   padding-top: 10px;
 }
@@ -525,7 +521,21 @@ textarea {
   }
 }
 
+form {
+  .control-label {
+    text-align: left!important;
+  }
+
+  .form-group {
+    margin: 7px!important;
+    clear: both;
+  }
+}
+
 .invoice-form {
+  input {
+    margin-bottom: 0px;
+  }
   .widget-heading {
     margin-top: 1rem;
   }
@@ -537,8 +547,33 @@ textarea {
   .form-group {
     vertical-align: middle;
   }
+}
 
-  .control-label {
-    text-align: left!important;
+.payment-form {
+  .payment-submit {
+    margin-top: 3rem;
   }
+
+  .widget {
+    margin: 0px 5px;
+  }
+}
+
+.separator {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  clear: both;
+}
+
+.payment-section {
+  margin-top: 20px;
+}
+
+.email-section {
+  margin-top: 20px;
+}
+
+.one-time-payment {
+  padding-top: 60px;
 }

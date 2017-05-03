@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418153853) do
+ActiveRecord::Schema.define(version: 20170426171727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(version: 20170418153853) do
     t.integer "user_id"
     t.string  "comments"
     t.index ["user_id"], name: "index_client_infos_on_user_id", using: :btree
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.decimal  "hourly_rate", precision: 10, scale: 2, default: "0.0", null: false
+    t.integer  "user_id"
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.index ["user_id"], name: "index_contracts_on_user_id", using: :btree
   end
 
   create_table "emails", force: :cascade do |t|
@@ -40,9 +48,10 @@ ActiveRecord::Schema.define(version: 20170418153853) do
     t.string   "state",         default: "pending", null: false
     t.string   "subject"
     t.string   "academic_type"
-    t.integer  "hourly_rate"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.integer  "client_id"
+    t.index ["client_id"], name: "index_engagements_on_client_id", using: :btree
     t.index ["student_id"], name: "index_engagements_on_student_id", using: :btree
     t.index ["tutor_id"], name: "index_engagements_on_tutor_id", using: :btree
   end
@@ -63,6 +72,8 @@ ActiveRecord::Schema.define(version: 20170418153853) do
     t.string   "description"
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
+    t.integer  "status"
+    t.string   "subject"
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id", using: :btree
     t.index ["student_id"], name: "index_invoices_on_student_id", using: :btree
     t.index ["tutor_id"], name: "index_invoices_on_tutor_id", using: :btree
@@ -94,14 +105,6 @@ ActiveRecord::Schema.define(version: 20170418153853) do
     t.index ["user_id"], name: "index_student_infos_on_user_id", using: :btree
   end
 
-  create_table "tutor_infos", force: :cascade do |t|
-    t.string  "subject"
-    t.string  "academic_type"
-    t.integer "user_id"
-    t.decimal "hourly_rate",   precision: 10, scale: 2, default: "0.0", null: false
-    t.index ["user_id"], name: "index_tutor_infos_on_user_id", using: :btree
-  end
-
   create_table "user_roles", force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
@@ -127,15 +130,21 @@ ActiveRecord::Schema.define(version: 20170418153853) do
     t.string   "encrypted_refresh_token_iv"
     t.integer  "token_expires_at"
     t.string   "access_state",                                                    default: "disabled", null: false
-    t.decimal  "balance",                                precision: 10, scale: 2, default: "0.0",      null: false
     t.integer  "client_id"
+    t.decimal  "academic_credit",                        precision: 10, scale: 2, default: "0.0",      null: false
+    t.decimal  "test_prep_credit",                       precision: 10, scale: 2, default: "0.0",      null: false
+    t.decimal  "outstanding_balance",                    precision: 10, scale: 2, default: "0.0",      null: false
+    t.integer  "academic_rate_cents",                                             default: 2999,       null: false
+    t.string   "academic_rate_currency",                                          default: "USD",      null: false
+    t.integer  "test_prep_rate_cents",                                            default: 5999,       null: false
+    t.string   "test_prep_rate_currency",                                         default: "USD",      null: false
     t.index ["email"], name: "index_users_on_email", using: :btree
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end
 
   add_foreign_key "client_infos", "users"
+  add_foreign_key "contracts", "users"
   add_foreign_key "payments", "users", column: "payee_id"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "student_infos", "users"
-  add_foreign_key "tutor_infos", "users"
 end

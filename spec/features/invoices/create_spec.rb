@@ -1,69 +1,64 @@
 require 'spec_helper'
 
-feature 'Create Invoice' do
-  scenario 'has valid form' do
-    tutor = FactoryGirl.create(:tutor_user)
-    student = FactoryGirl.create(:student_user)
-    student.engagement.update(tutor_id: tutor.id)
+feature 'Create Invoice', js: true do
+  let(:tutor) { FactoryGirl.create(:tutor_user) }
+  let(:client) { FactoryGirl.create(:client_user, academic_credit: 50, test_prep_credit: 50) }
+  let(:student) { FactoryGirl.create(:student_user, client: client) }
+  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student: student, academic_type: "Academic", client: client) }
+  let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement, student: student) }
+  let(:email) { FactoryGirl.create(:email, tutor: tutor, client: client) }
 
+  scenario 'has invoice form' do
+    set_roles
     sign_in(tutor)
 
-    expect(page).to have_content(student.name)
-    expect(page).to have_content(student.engagement.subject)
+    expect(page).to have_content("Invoice session")
+    expect(page).to have_content("Use this form to log past sessions with your students")
+    expect(page).to have_content("Student")
+    expect(page).to have_content("Type of Tutoring")
+    expect(page).to have_content("Hours")
+    expect(page).to have_content("Main Subject Covered")
+    expect(page).to have_content("Description")
   end
 
-  scenario 'with invalid params' do
-    tutor = FactoryGirl.create(:tutor_user)
-    student = FactoryGirl.create(:student_user)
-    student.engagement.update(tutor_id: tutor.id)
+  scenario 'with valid invoice params' do
+    set_roles
+    student
+    engagement
 
     sign_in(tutor)
 
-    fill_in "invoice_hours", with: 0
+    find('.student').find(:xpath, 'option[2]').select_option
+    find('.hours').find(:xpath, 'option[1]').select_option
+    find('.academic_type').find(:xpath, 'option[1]').select_option
+    fill_in "invoice[subject]", with: "Mathmatics"
+    fill_in "Description", with: "for this weeks payment"
+
     click_on "Submit"
-    expect(page).to have_content('Hours must be greater than or equal to 0.5')
+
+    expect(page).to have_content("Session successfully logged!")
+
+    sign_out
   end
 
-  scenario 'with valid params' do
-    tutor = FactoryGirl.create(:tutor_user)
-    sufficient_balance_student = FactoryGirl.create(:student_user, :balance => 5)
-    sufficient_balance_student.engagement.update(tutor_id: tutor.id, hourly_rate: 1)
-    sufficient_balance_student.client.update(balance: 2)
+  scenario 'low balance warning' do
+    set_roles
+    student
+    engagement
+    engagement.client.update(academic_credit: 0.0)
 
     sign_in(tutor)
-    
-    fill_in "invoice_hours", with: 0.5
+
+    find('.student').find(:xpath, 'option[2]').select_option
+    find('.hours').find(:xpath, 'option[2]').select_option
+    find('.academic_type').find(:xpath, 'option[1]').select_option
+    fill_in "invoice[subject]", with: "Mathmatics"
+    fill_in "Description", with: "for this weeks payment"
+
     click_on "Submit"
 
-    expect(page).to have_content('Session successfully logged!')
-  end
-
-  scenario 'low balance warning' do 
-    tutor   = FactoryGirl.create(:tutor_user)
-    client  = FactoryGirl.create(:client_user, balance: 2)
-
-    low_balance_student = FactoryGirl.create(:student_user, client_id: client.id)
-    low_balance_student.engagement.update(tutor_id: tutor.id, hourly_rate: 1)
-
-    sign_in(tutor)
-    
-    fill_in "invoice_hours", with: 1
-    click_on "Submit"
-
-    expect(page).to have_content('Session successfully logged!')
-    expect(page).to have_no_content('The session has been logged but the client 
-                    has a negative balance of hours. You may not be paid for this session 
-                    unless the client adds to his/her hourly balance.')
-                      
-    visit dashboard_path 
-
-    fill_in "invoice_hours", with: 2
-    click_on "Submit"
-
-    expect(page).to have_no_content('Session successfully logged!')
-    expect(page).to have_content('The session has been logged but the client 
-                    has a negative balance of hours. You may not be paid for this session 
-                    unless the client adds to his/her hourly balance.')
-    
+    expect(page).to have_content("The session has been logged but
+              the client has a negative balance of hours. You may not be paid
+              for this session unless the client adds to his/her hourly balance")
   end
 end

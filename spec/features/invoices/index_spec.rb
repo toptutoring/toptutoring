@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 feature 'Invoices Index' do
+  let(:tutor) { FactoryGirl.create(:tutor_user) }
+  let(:student) { FactoryGirl.create(:student_user) }
+  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student) }
+  let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement) }
+
   scenario 'when user is tutor' do
-    tutor = FactoryGirl.create(:tutor_user)
-    student = FactoryGirl.create(:student_user)
-    engagement = FactoryGirl.create(:engagement, tutor: tutor, student: student)
-    invoice = FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement)
+    invoice
 
     sign_in(tutor)
     visit tutors_invoices_path
@@ -19,6 +21,7 @@ feature 'Invoices Index' do
     expect(page).to have_content('Hours')
     expect(page).to have_content('Hourly Rate')
     expect(page).to have_content('Amount')
+
     expect(page).to have_content(invoice.engagement.student.name)
     expect(page).to have_content(invoice.engagement.subject)
     expect(page).to have_content(invoice.engagement.academic_type)

@@ -9,6 +9,15 @@ namespace :dev do
     client.roles = "client"
     client.save!
 
+      # New client
+    client_new = User.where(email: "clientnew@example.com").first_or_initialize
+    client_new.name = "Client"
+    client_new.password = "password"
+    client_new.customer_id = ""
+    client_new.access_state = "enabled"
+    client_new.roles = "client"
+    client_new.save!
+
      # Update student
     student1 = User.where(email: "student1@example.com").first_or_initialize
     student1.name = "Student1"
@@ -17,12 +26,12 @@ namespace :dev do
     student1.access_state = "enabled"
     student1.roles = "student"
     student1.client_id = client.id
-    student1.save! 
+    student1.save!
 
     # Update student info
     student_info1 = StudentInfo.where(user_id: student1.id).first_or_initialize
     student_info1.subject = "Academic"
-    student_info1.academic_type = "Test Prep"
+    student_info1.academic_type = "Test_Prep"
     student_info1.save!
 
      # Update student
@@ -33,12 +42,12 @@ namespace :dev do
     student2.access_state = "enabled"
     student2.roles = "student"
     student2.client_id = client.id
-    student2.save! 
+    student2.save!
 
     # Update student info
     student_info2 = StudentInfo.where(user_id: student2.id).first_or_initialize
-    student_info2.subject = "Math"
-    student_info2.academic_type = "Test Prep"
+    student_info2.subject = "Test Preparation"
+    student_info2.academic_type = "Test_Prep"
     student_info2.save!
 
     # Update tutor
@@ -49,15 +58,12 @@ namespace :dev do
     tutor.auth_uid = "854f5ac8-e728-4959-b6e0-13917cd2cf60"
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
-    tutor.balance = 2
-    tutor.roles = "tutor"
+    tutor.roles = ["tutor"]
     tutor.save!
 
-    tutor_info = TutorInfo.where(user_id: tutor.id).first_or_initialize
-    tutor_info.subject = "Math"
-    tutor_info.academic_type = "Test Prep"
-    tutor_info.hourly_rate = 20
-    tutor_info.save!
+    contract = Contract.where(user_id: tutor.id).first_or_initialize
+    contract.hourly_rate = 40
+    contract.save!
 
     # Update director
     director = User.where(email: "director@example.com").first_or_initialize
@@ -67,15 +73,8 @@ namespace :dev do
     director.auth_uid = "eef71d60-c133-4eed-af14-77dd2e4b9950"
     director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
-    director.balance = 2
-    director.roles = "director"
+    director.roles = ["tutor", "director"]
     director.save!
-
-    director_info = TutorInfo.where(user_id: director.id).first_or_initialize
-    director_info.subject = "Math"
-    director_info.academic_type = "Test Prep"
-    director_info.hourly_rate = 20
-    director_info.save!
 
     # Update admin
     admin = User.where(email: "admin@example.com").first_or_initialize
@@ -89,22 +88,22 @@ namespace :dev do
     admin.save!
 
     # Update engagements
-    tutor.engagements.destroy_all
+    tutor.tutor_engagements.destroy_all
     engagement = Engagement.create(
       tutor_id: tutor.id,
       student_id: student1.id,
+      client_id: client.id,
       subject: student1.student_info.subject,
-      academic_type: student1.student_info.academic_type,
-      hourly_rate: 20
+      academic_type: student1.student_info.academic_type
     )
     engagement.enable!
 
     engagement = Engagement.create(
       tutor_id: tutor.id,
       student_id: student2.id,
+      client_id: client.id,
       subject: student2.student_info.subject,
-      academic_type: student2.student_info.academic_type,
-      hourly_rate: 20
+      academic_type: student2.student_info.academic_type
     )
     engagement.enable!
 
@@ -122,6 +121,13 @@ namespace :dev do
       customer_id: client.customer_id,
       payer_id: client.id,
       payee_id: tutor.id)
+    #Set the client default information for existing clients
+    User.with_client_role.each do |client|
+      client.academic_rate_cents = 2999
+      client.test_prep_rate_cents = 5999
+      client.academic_credit = 0.0
+      client.test_prep_credit = 0.0
+      client.save
+    end
   end
 end
-
