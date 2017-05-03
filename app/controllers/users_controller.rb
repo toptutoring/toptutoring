@@ -26,9 +26,9 @@ class UsersController < Clearance::SessionsController
 
   def enable_user
     if current_user.is_student?
-      EnableUserAsStudent.new(current_user, params[:student_academic_type], params[:subject]).perform
+      EngagementCreator.new(current_user, client_as_student_info_params, false).perform
     else
-      EnableUserWithStudent.new(current_user).perform
+      EngagementCreator.new(current_user, nil, true).perform
       if current_user.students.last.email.present?
         current_user.students.last.forgot_password!
         SetStudentPasswordMailer.set_password(current_user.students.last).deliver_now
@@ -42,6 +42,10 @@ class UsersController < Clearance::SessionsController
     else
       client_with_student_params
     end
+  end
+
+  def client_as_student_info_params
+    params.require(:info).permit(:academic_type, :subject)
   end
 
   def client_with_student_params

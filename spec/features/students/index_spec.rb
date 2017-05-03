@@ -3,12 +3,11 @@ require 'spec_helper'
 feature 'Students Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 20) }
   let(:student) { FactoryGirl.create(:student_user) }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student) }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student) }  
 
   scenario 'when user is tutor' do
-    engagement
+    sign_in tutor
 
-    sign_in(tutor)
     visit tutors_students_path
 
     expect(page).to have_content('Students')

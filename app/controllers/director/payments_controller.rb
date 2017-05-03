@@ -64,7 +64,6 @@ module Director
     def perform_transfer
       @transfer = Transfer.new(@payment)
       @transfer.perform
-      @transfer.error ? false : true
     end
 
     def transfer_error

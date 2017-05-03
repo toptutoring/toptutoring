@@ -42,7 +42,7 @@ jQuery(function($) {
   $('.amount').on('keyup', function(e) {
     var hourly_rate = parseFloat($('.hourly-rate').val() || $('.hourly-rate').text());
     if (!!hourly_rate) {
-      var hours = parseFloat($(this).val()) / hourly_rate;
+      var hours = (parseFloat($(this).val()) / hourly_rate) || 0;
       $('.hours').val(hours);
     }
   });

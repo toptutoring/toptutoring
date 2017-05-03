@@ -28,10 +28,8 @@ class CreditUpdater
   def decrease_client_credit
     if engagement.academic_type.casecmp('academic') == 0
       client.academic_credit -= invoice.hours
-      client.academic_credit
     else
       client.test_prep_credit -= invoice.hours
-      client.academic_credit
     end
     client.save
 

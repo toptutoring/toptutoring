@@ -58,7 +58,7 @@ namespace :dev do
     tutor.auth_uid = "854f5ac8-e728-4959-b6e0-13917cd2cf60"
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
-    tutor.roles = "tutor"
+    tutor.roles = ["tutor"]
     tutor.save!
 
     contract = Contract.where(user_id: tutor.id).first_or_initialize
@@ -73,13 +73,13 @@ namespace :dev do
     director.auth_uid = "eef71d60-c133-4eed-af14-77dd2e4b9950"
     director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
-    director.roles = "director"
+    director.roles = ["tutor", "director"]
     director.save!
 
     # Update admin
     admin = User.where(email: "admin@example.com").first_or_initialize
     admin.name = "Admin"
-    admin.password = "adminpassword123"
+    admin.password = "password"
     admin.auth_provider = "dwolla"
     admin.auth_uid = "8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"
     admin.token_expires_at = Time.current.to_i + 12.months.to_i
@@ -121,5 +121,13 @@ namespace :dev do
       customer_id: client.customer_id,
       payer_id: client.id,
       payee_id: tutor.id)
+    #Set the client default information for existing clients
+    User.with_client_role.each do |client|
+      client.academic_rate_cents = 2999
+      client.test_prep_rate_cents = 5999
+      client.academic_credit = 0.0
+      client.test_prep_credit = 0.0
+      client.save
+    end
   end
 end

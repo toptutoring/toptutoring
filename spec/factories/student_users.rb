@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :student_user, class: User do
     name                  { "Student" }
-    email                 { "student@test.com" }
+    email                 { "student@example.com" }
     password              { "password" }
     roles                 { "student" }
     student_info          { FactoryGirl.create(:student_info) }

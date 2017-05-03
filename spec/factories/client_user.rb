@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :client_user, class: User do
     name          { "Client" }
-    sequence(:email) { |n| "client_#{n}@test.com" }
+    sequence(:email) { |n| "client_#{n}@example.com" }
     password      { "password" }
     roles         { "client" }
     access_state  { "enabled" }

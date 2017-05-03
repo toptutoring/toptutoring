@@ -2,13 +2,11 @@ require 'spec_helper'
 
 feature 'Tutoring flow' do
   let(:director) { FactoryGirl.create(:director_user) }
-  let(:tutor) { FactoryGirl.create(:tutor_user) }
+  let!(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
 
   scenario "client signup and set up account", js: true do
-    tutor
-
     visit new_users_client_path
 
     fill_in "user_name", with: "Client"
@@ -38,7 +36,7 @@ feature 'Tutoring flow' do
 
     sign_out
 
-    sign_in(tutor)
+    sign_in tutor
 
     select "Student", from: "invoice_student_id"
     select "Academic", from: "academic_type"

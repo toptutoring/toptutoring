@@ -17,7 +17,7 @@ feature 'User logs in' do
   scenario 'with invalid email' do
     visit login_path
 
-    fill_in 'Email', with: "test@test.com"
+    fill_in 'Email', with: "test@example.com"
     fill_in 'Password', with: user.password
     click_button 'Login'
 

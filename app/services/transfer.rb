@@ -1,21 +1,19 @@
 class Transfer
-  attr_reader :error
-
   def initialize(payment)
     @payment = payment
   end
 
   def perform
     create_transfer
-    if !@gateway.error
+    if @gateway.error
+      false
+    else
       # temporarily comment this code because admin should select invoices to be paid manually
       # tutor.invoices.each do |invoice|
       #   invoice.paid!
       # end
       tutor.outstanding_balance = 0.0
       tutor.save
-    else
-      @error = @gateway.error
     end
   end
 

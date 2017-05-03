@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :tutor_user, class: User do
     name                { "Tutor" }
-    email               { "tutor@test.com" }
+    sequence(:email) { |n| "tutor_#{n}@example.com" }
     password            { "password" }
     roles               { "tutor" }
     auth_uid            { "xxx-xxx" }
