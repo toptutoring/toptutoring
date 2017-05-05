@@ -1,0 +1,29 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-md-5">
+        <h4 class="uppercase">New Tutor Sign Up</h4>
+        <p>Once you have been properly vetted by our team, sign up for your new account here
+          to kickstart your new career as a TopTutor.
+        </p>
+        <%= image_tag("yellownotebook.jpg", class: "contact-us-image") %>
+        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br></p>
+        <p> Already have an account?
+          <%= link_to "Sign in", sign_in_path %>
+        </p>
+      </div>
+      <div class="col-sm-6 col-md-6 col-md-offset-1">
+        <h5 class="uppercase">UC Berkeley Students and Graduates Only</h5>
+        <%= link_to "Sign up", new_users_tutor_path, class: "btn btn-lg btn-blue btn-block" %>
+        <div class="col-md-12">
+          <p class="note text-center">
+            By signing up, you agree to our
+              <a href="https://toptutoring.com/terms_of_service/">terms of service</a>
+            and
+              <a href="https://toptutoring.com/privacy_policy/">privacy policy</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

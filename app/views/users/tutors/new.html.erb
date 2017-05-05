@@ -1,25 +1,36 @@
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 col-md-5">
-        <h4 class="uppercase">Sign Up</h4>
-        <p> Already have an account?
-          <%= link_to "Sign in", sign_in_path %>
-        </p>
-        <%= image_tag("yellownotebook.jpg", class: "contact-us-image") %>
-        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br></p>
-      </div>
-      <div class="col-sm-6 col-md-6 col-md-offset-1">
-        <%= render "form" %>
-        <div class="col-md-12">
-          <p class="note text-center">
-            By signing up, you agree to our
-              <a href="https://toptutoring.com/terms_of_service/">terms of service</a>
-            and
-              <a href="https://toptutoring.com/privacy_policy/">privacy policy</a>.
-          </p>
-        </div>
-      </div>
+<div class="col-md-12 col-md-offset-3 set-up-account">
+  <div class="widget col-md-offset-3">
+    <div class="widget-heading">
+      Thanks for choosing Top Tutoring. We provide excellent online tutoring
+      to people all over the world.
+    </br></br>
+      <p>
+        Please take a second to complete your account and get full access to our application.
+      </p>
+    </div>
+    <div class="widget-body">
+      <%= form_for(@user, url: users_tutors_path(@user), html: { method: :post, id: "form-vertical" }) do |f| %>
+        <h3>New Tutor Information</h3>
+        <fieldset>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :name %>
+                <%= f.text_field :name, type: "text", placeholder: "FULL NAME", required: true %>
+
+                <%= f.label :email %>
+                <%= f.email_field :email, type: "text", placeholder: "YOUR UC BERKELEY EMAIL", required: true %>
+
+                <%= f.label :password %>
+                <%= f.password_field :password, placeholder: "PASSWORD", required: true %>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <%= render "tutor_checkbox_subjects", f: f %>
+        <%= f.submit "", class:"hidden-submit" %>
+      <% end %>
     </div>
   </div>
-</section>
+</div>
