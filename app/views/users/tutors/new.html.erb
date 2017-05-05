@@ -1,36 +1,7 @@
-<div class="col-md-12 col-md-offset-3 set-up-account">
-  <div class="widget col-md-offset-3">
-    <div class="widget-heading">
-      Thanks for choosing Top Tutoring. We provide excellent online tutoring
-      to people all over the world.
-    </br></br>
-      <p>
-        Please take a second to complete your account and get full access to our application.
-      </p>
-    </div>
-    <div class="widget-body">
-      <%= form_for(@user, url: users_tutors_path(@user), html: { method: :post, id: "form-vertical" }) do |f| %>
-        <h3>New Tutor Information</h3>
-        <fieldset>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <%= f.label :name %>
-                <%= f.text_field :name, type: "text", placeholder: "FULL NAME", required: true %>
-
-                <%= f.label :email %>
-                <%= f.email_field :email, type: "text", placeholder: "YOUR UC BERKELEY EMAIL", required: true %>
-
-                <%= f.label :password %>
-                <%= f.password_field :password, placeholder: "PASSWORD", required: true %>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-
-        <%= render "tutor_checkbox_subjects", f: f %>
-        <%= f.submit "", class:"hidden-submit" %>
-      <% end %>
+<section>
+  <div class="container">
+    <div class="row">
+        <%= render "form" %>
     </div>
   </div>
-</div>
+</section>
