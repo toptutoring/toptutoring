@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   has_many :emails, class_name: "Email", foreign_key: "tutor_id", dependent: :destroy
   has_many :user_roles
   has_many :roles, through: :user_roles
+  has_many :subjects
+  accepts_nested_attributes_for :subjects
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
 
@@ -88,6 +90,9 @@ class User < ActiveRecord::Base
     client_info&.tutoring_for == 0
   end
 
+  def is_tutor?
+    has_role?("tutor")
+  end
   # Overide clearance email validation
   def email_optional?
     client_id.present?

@@ -90,6 +90,7 @@ Rails.application.routes.draw do
   namespace :users do
     resources :clients, only: [:new, :create]
     resources :tutors, only: [:new, :create]
+    get "tutors/signup" => "tutors#signup"
   end
 
   resources :engagements do

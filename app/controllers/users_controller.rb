@@ -12,6 +12,7 @@ class UsersController < Clearance::SessionsController
       if !current_user.is_student?
         current_user.students.last.create_student_info(subject: current_user.client_info.subject, academic_type: student_academic_type)
       end
+
     else redirect_back(fallback_location: (request.referer || root_path),
                       flash: { error: current_user.errors.full_messages })
       return
@@ -44,7 +45,7 @@ class UsersController < Clearance::SessionsController
     end
   end
 
-  def client_as_student_info_params
+def client_as_student_info_params
     params.require(:info).permit(:academic_type, :subject)
   end
 
@@ -60,4 +61,5 @@ class UsersController < Clearance::SessionsController
   def client_as_student_params
     params.require(:user).permit(:name, :email, :phone_number, :password, client_info_attributes: [:id])
   end
+
 end

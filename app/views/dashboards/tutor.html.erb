@@ -1,4 +1,7 @@
 <%= render "menu" %>
+<% unless current_user.enabled? %>
+  <%= render "new_user_message" %>
+<% else %>
 <div class="row">
   <%= render "students" %>
   <div class="col-md-8 col-md-offset-2 invoice-form">
@@ -15,3 +18,4 @@
     </div>
   </div>
 </end>
+<% end %>

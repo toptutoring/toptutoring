@@ -1,23 +1,31 @@
-<%= form_for @user, url: users_tutors_path(@user), html: { class: "signup-form", id: "tutor-signup" } do |f| %>
-  <div class="col-md-12">
-    <%= f.text_field :name, type: "text", placeholder: "FULL NAME", required: true %>
-  </div>
-
-  <div class="col-md-12">
-    <%= f.email_field :email, type: "text", placeholder: "YOUR EMAIL", required: true %>
-  </div>
-
-  <div class="col-md-12">
-    <%= f.password_field :password, placeholder: "PASSWORD", required: true %>
-  </div>
-
-  <%= f.fields_for :contract do |contract| %>
+<div class="col-md-12">
+  <h1>New Tutor Signup</h1>
+  <p>
+    Thanks for choosing Top Tutoring. We provide excellent online tutoring
+    to people all over the world.
+  </p>
+  <%= form_for @user, url: users_tutors_path(@user), html: { class: "signup-form", id: "tutor-signup" } do |f| %>
     <div class="col-md-12">
-      <%= contract.number_field :hourly_rate, type: "text", placeholder: "Hourly Rate", required: true %>
+      <%= f.label :name %>
+      <%= f.text_field :name, type: "text", placeholder: "FULL NAME", required: true %>
+    </div>
+
+    <div class="col-md-12">
+      <%= f.label :email %>
+      <%= f.email_field :email, type: "text", placeholder: "YOUR UC BERKELEY EMAIL", required: true %>
+    </div>
+
+    <div class="col-md-12">
+      <%= f.label :password %>
+      <%= f.password_field :password, placeholder: "PASSWORD", required: true %>
+    </div>
+
+    <div class="col-md-12" style="margin-top:60px;">
+      <%= render "tutor_checkbox_subjects", f: f %>
+    </div>
+
+    <div class="col-md-12" style="margin-top:60px;">
+      <%= f.submit "Sign up", class: "btn btn-lg btn-blue" %>
     </div>
   <% end %>
-
-  <div class="col-md-12">
-    <%= f.submit "Sign up", class: "btn btn-lg btn-blue" %>
-  </div>
-<% end %>
+</div>

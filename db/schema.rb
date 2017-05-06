@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170426171727) do
+ActiveRecord::Schema.define(version: 20170502162940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,25 @@ ActiveRecord::Schema.define(version: 20170426171727) do
     t.index ["user_id"], name: "index_student_infos_on_user_id", using: :btree
   end
 
+  create_table "subjects", force: :cascade do |t|
+    t.string  "name"
+    t.string  "academic_type"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_subjects_on_user_id", using: :btree
+  end
+
+  create_table "tutor_infos", force: :cascade do |t|
+    t.string  "subject"
+    t.string  "academic_type"
+    t.integer "user_id"
+    t.decimal "hourly_rate",   precision: 10, scale: 2, default: "0.0", null: false
+    t.index ["user_id"], name: "index_tutor_infos_on_user_id", using: :btree
+  end
+
+  create_table "tutoring_types", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
@@ -147,4 +166,5 @@ ActiveRecord::Schema.define(version: 20170426171727) do
   add_foreign_key "payments", "users", column: "payee_id"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "student_infos", "users"
+  add_foreign_key "subjects", "users"
 end

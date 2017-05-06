@@ -92,7 +92,7 @@ a, a:hover, a:visited, a.focus {
   outline: none;
 }
 
-input, button, select, textarea {
+input, button, select, span, textarea {
   font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -107,13 +107,13 @@ input[type="text"], input[type="password"], input[type="email"], input[type="num
   border-radius: 0;
 }
 
-input[type="text"], button, textarea, select, input[type="password"], input[type="email"], input[type="number"], textarea {
+input[type="text"], button, textarea, select, span, input[type="password"], input[type="email"], input[type="number"], textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
 
-.select-option {
+.select-option, .select2 {
   position: relative;
   cursor: pointer;
   height: 50px;
@@ -121,7 +121,7 @@ input[type="text"], button, textarea, select, input[type="password"], input[type
   margin-bottom: 24px;
 }
 
-.select-option i {
+.select-option i, .select2 i {
   position: absolute;
   font-size: 18px;
   right: 20px;
@@ -135,7 +135,7 @@ input[type="text"], button, textarea, select, input[type="password"], input[type
   right: 30px;
 }
 
-select {
+select, .select2 {
   height: 50px;
   background: #f5f5f5;
   width: 100%;
@@ -577,3 +577,28 @@ form {
 .one-time-payment {
   padding-top: 60px;
 }
+
+.select2-container--default .select2-selection--single {
+  background-color: inherit !important;
+  border: 0 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: inherit !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-left: inherit !important;
+  padding-top: 10px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 10px !important;
+}
+
+.select2-container .select2-selection--single {
+  height: 50px !important;
+  padding-left: 0 !important;
+  outline: none;
+}
+
