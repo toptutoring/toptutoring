@@ -1,11 +1,10 @@
 <div class="col-md-12 set-up-account">
   <div class="widget">
     <div class="widget-heading">
-      Thanks for using Top Tutoring. We provide excellent online tutoring
-      to people all over the world.
-    </br></br>
+      <h4>Thanks for using Top Tutoring! We provide excellent online tutoring
+      to people all over the world.</h4>
       <p>
-        Please take a second to complete your account and get full access to our application.
+        Just a couple more things and your account will be ready to use.
       </p>
     </div>
     <div class="widget-body">
@@ -15,23 +14,12 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <%= f.label :name %>
-                <%= f.text_field :name, value: current_user.name, class:"form-control", required: true, readonly: true %>
+                <h5>Phone Number</h5>
+                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), class:"form-control", placeholder: "(XXX)-XXX-XXXX"%>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <%= f.label :email %>
-                <%= f.text_field :email, value: current_user.email, class:"form-control", required: true, readonly: true %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <%= f.label :phone_number %>
-                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), class:"form-control" %>
-              </div>
+              <p>Phone numbers are completely secure with us and we use them to provide a better experience for you.</p>
             </div>
           </div>
         </fieldset>

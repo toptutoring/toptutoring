@@ -4,21 +4,15 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <%= student_field.label :student_name %>
+          <h4>Please tell us about the student that you are creating the account for.</h4><br>
+          <h5>Student's Name</h5>
           <%= student_field.text_field :name, class:"form-control", required: true %>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= student_field.label :student_email %>
+
+          <h5>Student's Email</h5>
           <%= student_field.email_field :email, class:"form-control" %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="student_academic_type" class="control-label">Type of Tutoring</label>
+
+          <!--<label for="student_academic_type" class="control-label">Type of Tutoring</label>-->
+          <h5>Are you interested in hiring a tutor for help in a general academic area or specifically for test preparation?</h5>
           <select name="student_academic_type" class="students-academic-type">
             <option value="Academic">ACADEMIC</option>
             <option value="Test_Prep">Test Preparation</option>

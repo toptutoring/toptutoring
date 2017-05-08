@@ -1,9 +1,9 @@
-<h3>Tutoring Information</h3>
-<fieldset>
+
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <label for="info_academic_type">Tutoring Type</label>
+        <h5>Are you interested in hiring a tutor for help in a general academic area or specifically for test preparation?</h5>
+        <!--<label for="info_academic_type">Tutoring Type</label>-->
         <select required="required" name="info[academic_type]" id="info_academic_type">
           <option value="">Please select tutoring type here</option>
           <option value="Academic">Academic</option>
@@ -11,22 +11,3 @@
         </select>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="info_subject">Subject</label>
-        <input type="text" requried="required" name="info[subject]"></input>
-      </div>
-    </div>
-  </div>
-
-  <%= f.fields_for :client_info do |client_info| %>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= client_info.label :subject, class: "hidden" %>
-          <%= client_info.select :subject, options_for_select({}), {}, class: "hidden" %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</fieldset>
