@@ -16,6 +16,8 @@ class UsersController < Clearance::SessionsController
   end
 
   def update
+    student_name = user_params[:student][:name]
+    student_email = user_params[:student][:email]
     current_user.update(
       name: user_params[:name],
       email: user_params[:email],
@@ -60,6 +62,9 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile
+    if(params[:dwolla_error])
+      @dwolla_error = "Please authenticate with our payment processor Dwolla to ensure payment."
+    end
   end
 
   private
