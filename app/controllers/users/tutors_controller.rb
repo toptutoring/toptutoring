@@ -45,7 +45,7 @@ module Users
     #Add each subject that was selected on signup to the tutor
     def add_subjects
       if !tutor_subject_params.blank?
-        ((tutor_subject_params).first[1]).each do |subject_id|
+        ((tutor_subject_params)[:subjects]).each do |subject_id|
           @user.subjects << Subject.find(subject_id.to_i)
         end
       end

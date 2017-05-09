@@ -58,6 +58,7 @@ class UsersController < Clearance::SessionsController
     else
       redirect_back(fallback_location: (request.referer || root_path),
                       flash: { error: current_user.errors.full_messages })
+      return
     end
   end
 
