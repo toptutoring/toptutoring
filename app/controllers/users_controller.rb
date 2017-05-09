@@ -16,8 +16,12 @@ class UsersController < Clearance::SessionsController
   end
 
   def update
-    current_user.update_attribute(
-      :phone_number, user_params[:phone_number])
+    student_name = user_params[:student][:name]
+    student_email = user_params[:student][:email]
+    current_user.update(
+      name: user_params[:name],
+      email: user_params[:email],
+      phone_number: user_params[:phone_number])
 
     if student_email_provided?
       student_name = user_params[:student][:name]
@@ -64,7 +68,13 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile
+<<<<<<< 4fac25bb902c54de1df6c1003a193700a801e0c4
     @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
+=======
+    if(params[:dwolla_error])
+      @dwolla_error = "Please authenticate with our payment processor Dwolla to ensure payment."
+    end
+>>>>>>> Remove client/student duplicate email error on signup.
   end
 
   private
