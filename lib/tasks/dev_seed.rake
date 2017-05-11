@@ -1,5 +1,12 @@
 namespace :dev do
   task seed: :environment do
+    # Create roles
+    Role.create(name: "admin")
+    Role.create(name: "director")
+    Role.create(name: "tutor")
+    Role.create(name: "client")
+    Role.create(name: "student")
+
     # Update client
     client = User.where(email: "client@example.com").first_or_initialize
     client.name = "Client"
