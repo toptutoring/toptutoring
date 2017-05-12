@@ -107,21 +107,8 @@ ActiveRecord::Schema.define(version: 20170502162940) do
 
   create_table "subjects", force: :cascade do |t|
     t.string  "name"
-    t.string  "academic_type"
     t.integer "user_id"
     t.index ["user_id"], name: "index_subjects_on_user_id", using: :btree
-  end
-
-  create_table "tutor_infos", force: :cascade do |t|
-    t.string  "subject"
-    t.string  "academic_type"
-    t.integer "user_id"
-    t.decimal "hourly_rate",   precision: 10, scale: 2, default: "0.0", null: false
-    t.index ["user_id"], name: "index_tutor_infos_on_user_id", using: :btree
-  end
-
-  create_table "tutoring_types", force: :cascade do |t|
-    t.string "name"
   end
 
   create_table "user_roles", force: :cascade do |t|
