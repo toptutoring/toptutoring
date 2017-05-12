@@ -6,13 +6,11 @@ feature "Index engagements" do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, client: client, state: "active", academic_type: "Academic") }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, client: client, state: "active", academic_type: "Academic") }
   let(:presenter) { EngagementPresenter.new(engagement) }
 
   context "when user is director" do
     scenario "should see engagements" do
-      engagement
-
       sign_in(director)
       visit engagements_path
 
@@ -38,8 +36,6 @@ feature "Index engagements" do
 
   context "when user is admin" do
     scenario "should see engagements" do
-      engagement
-
       sign_in(admin)
       visit engagements_path
       expect(page).to have_content("Engagement")

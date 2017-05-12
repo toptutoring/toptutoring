@@ -6,8 +6,8 @@ namespace :data do
      This populates the subjects based upon a local or remote CSV file.
 
       Examples:
-      rake data:populate_subjects[path/to/local/file.csv]
-      rake data:populate_subjects[http://example.com/some.csv]
+      rake 'data:populate_subjects[path/to/local/file.csv]'
+      rake 'data:populate_subjects[http://example.com/some.csv]'
   DESC
 
   task :populate_subjects, [:csv_url] => [:environment] do |_, args|
