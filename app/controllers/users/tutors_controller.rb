@@ -5,12 +5,12 @@ module Users
 
     def new
       @user = User.new
-      @user.build_contract
     end
 
     def create
       @user = Clearance.configuration.user_model.new(signups_params)
       add_subjects
+      @user.build_contract
 
       if @user.save
         NewTutorNotifierMailer.welcome(@user, User.admin_and_directors).deliver_now

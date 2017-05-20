@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170513013142) do
+ActiveRecord::Schema.define(version: 20170519042726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,10 +24,12 @@ ActiveRecord::Schema.define(version: 20170513013142) do
   end
 
   create_table "contracts", force: :cascade do |t|
-    t.decimal  "hourly_rate", precision: 10, scale: 2, default: "0.0", null: false
+    t.integer  "hourly_rate",          default: 1500,  null: false
     t.integer  "user_id"
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "hourly_rate_cents",    default: 1500,  null: false
+    t.string   "hourly_rate_currency", default: "USD", null: false
     t.index ["user_id"], name: "index_contracts_on_user_id", using: :btree
   end
 
