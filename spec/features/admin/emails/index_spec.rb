@@ -4,7 +4,7 @@ feature 'Emails Index' do
   scenario 'when user is admin' do
     admin = FactoryGirl.create(:admin_user)
     tutor = FactoryGirl.create(:tutor_user)
-    client = FactoryGirl.create(:client_user) 
+    client = FactoryGirl.create(:client_user)
     student = FactoryGirl.create(:student_user, client: client)
     engagement = FactoryGirl.create(:engagement,
       client: client,

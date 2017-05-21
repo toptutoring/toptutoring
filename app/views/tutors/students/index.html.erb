@@ -25,7 +25,7 @@
                   <td><%= student.email %></td>
                   <td><%= student.phone_number %></td>
                   <td><%= student.is_student? ? student.client_info.subject : student.student_info.subject %></td>
-                  <% if can_send_email?(student) %>
+                  <% if can_send_email?(student.client_id ? student.client : student) %>
                     <td>
                       <%= link_to "Send Email", new_email_path(student), class: "btn btn-outline btn-primary" %>
                     </td>

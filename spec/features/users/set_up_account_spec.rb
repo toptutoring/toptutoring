@@ -20,8 +20,8 @@ feature 'Set up account' do
     fill_in "user_phone_number", with: "0000000000"
     click_link "Next"
 
-    fill_in "user_students_attributes_0_name", with: "Student"
-    fill_in "user_students_attributes_0_email", with: "student@example.com"
+    fill_in "user_student_name", with: "Student"
+    fill_in "user_student_email", with: "student@example.com"
     click_link "Finish"
 
     expect(page).to have_content("Make payment")
