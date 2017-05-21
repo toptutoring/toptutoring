@@ -26,6 +26,12 @@
       </div>
     </div>
     <ul class="list-unstyled navigation mb-0">
+      <li class="panel">
+        <%= link_to profile_path do %>
+          <i class="icon ion-ios-contact bg-warning"></i>
+          <span class="sidebar-title">Profile</span>
+        <% end %>
+      </li>
       <% if current_user.has_role?("client") %>
         <%= render "application/menu_links/client" %>
       <% elsif current_user.has_role?("admin") || current_user.has_role?("director") %>

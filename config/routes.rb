@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   post "/payments/one_time" => "one_time_payments#create"
   get "/confirmation" => "one_time_payments#confirmation"
   get "payment" => "pages#payment"
+  get "/profile" => "users#profile"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"
