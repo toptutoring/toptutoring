@@ -3,9 +3,10 @@ require 'spec_helper'
 feature 'Invoices Index' do
   scenario 'when user is admin' do
     tutor = FactoryGirl.create(:tutor_user)
-    student = FactoryGirl.create(:student_user)
+    client = FactoryGirl.create(:client_user)
+    student = FactoryGirl.create(:student_user, client: client)
     admin = FactoryGirl.create(:admin_user)
-    engagement = FactoryGirl.create(:engagement, tutor: tutor, student: student)
+    engagement = FactoryGirl.create(:engagement, tutor: tutor, student: student, client: client)
     invoice = FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement)
 
     sign_in(admin)

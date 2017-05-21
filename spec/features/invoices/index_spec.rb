@@ -2,8 +2,9 @@ require 'spec_helper'
 
 feature 'Invoices Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:student) { FactoryGirl.create(:student_user) }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student) }
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:student) { FactoryGirl.create(:student_user, client: client) }
+  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, client: client) }
   let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement) }
 
   scenario 'when user is tutor' do

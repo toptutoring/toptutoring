@@ -4,8 +4,9 @@ feature 'Emails Index' do
   scenario 'when user is admin' do
     admin = FactoryGirl.create(:admin_user)
     tutor = FactoryGirl.create(:tutor_user)
-    student = FactoryGirl.create(:student_user)
-    engagement = FactoryGirl.create(:engagement, :student => student, :tutor => tutor)
+    client = FactoryGirl.create(:client_user) 
+    student = FactoryGirl.create(:student_user, client: client)
+    engagement = FactoryGirl.create(:engagement, student: student, tutor: tutor, client: client)
     student.student_engagements.first.update(tutor_id: tutor.id)
     invoice = FactoryGirl.create(:invoice, tutor: tutor, engagement: student.student_engagements.first)
     invoice.update(student_id: student.id)
