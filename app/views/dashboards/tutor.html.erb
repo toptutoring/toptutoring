@@ -1,6 +1,6 @@
 <%= render "menu" %>
 <% unless current_user.enabled? %>
-  <%= render "new_user_message" %>
+  <%= render "users/set_up_account" %>
 <% else %>
 <div class="row">
   <%= render "students" %>

@@ -94,8 +94,4 @@ class User < ActiveRecord::Base
   def is_tutor?
     has_role?("tutor")
   end
-  # Overide clearance email validation
-  def email_optional?
-    client_id.present?
-  end
 end

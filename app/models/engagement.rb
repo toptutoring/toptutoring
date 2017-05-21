@@ -11,6 +11,9 @@ class Engagement < ActiveRecord::Base
   scope :pending, -> { where(state: :pending).order('created_at DESC') }
   scope :active, -> { where(state: :active) }
 
+  #### Validations ####
+  validates_presence_of :student_name
+
   #### State Machine ####
 
   state_machine :state, :initial => :pending do

@@ -27,7 +27,7 @@ class StudentsController < ApplicationController
   end
 
   def index
-    @students = current_user.students
+    @engagements = current_user.client_engagements
   end
 
   private
@@ -35,5 +35,4 @@ class StudentsController < ApplicationController
   def student_params
     params.require(:user).permit(:name, :email, :phone_number, student_info_attributes: [:id, :subject, :academic_type]).merge(password: rand(36**4).to_s(36), roles: "student")
   end
-
 end

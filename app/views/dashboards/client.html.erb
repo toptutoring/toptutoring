@@ -1,6 +1,6 @@
 <%= render "menu" %>
 <% unless current_user.enabled? %>
-  <%= render "new_user_message" %>
+  <%= render "users/set_up_account" %>
 <% end %>
 <% if current_user.enabled? %>
   <% if !current_user.is_student? && current_user.students.first.student_engagements&.first&.pending? %>

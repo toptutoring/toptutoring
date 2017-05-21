@@ -9,7 +9,7 @@ class PaymentsController < ApplicationController
   end
 
   def index
-    @payments = Payment.from_customer(current_user.customer_id)
+    @payments = Payment.from_customer(current_user.id)
   end
 
   def create
