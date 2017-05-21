@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="widget">
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Students</h3>
+        <h3 class="widget-title pull-left">Tutoring Assignments</h3>
         <%= link_to new_student_path do %>
           <button type="button" class="btn btn-outline btn-primary inline-button">New student</button>
         <% end %>
@@ -12,23 +12,27 @@
           <table class="table mb-0">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>Student Name</th>
                 <th>Email</th>
                 <th>Tutor</th>
                 <th>Subject</th>
               </tr>
             </thead>
             <tbody>
-              <% @students.each do |student| %>
+              <% @engagements.each do |engagement| %>
                 <tr>
-                  <td><%= student.name %></td>
-                  <td><%= student.email %></td>
+                  <td><%= engagement.student_name %></td>
+                  <td><%= engagement.try(:student).email ? engagement.student.email : 'Not provided' %></td>
                   <td>
-                    <% student.student_engagements.each do |engagement| %>
-                      <%= engagement&.tutor&.name %>
+                    <% if engagement.tutor.present? %>
+                      <%= engagement.tutor.name %>
+                    <% else %>
+                      Matching tutor...
                     <% end %>
                   </td>
-                  <td><%= student.is_student? ? student.client_info&.subject : student.student_info&.subject %></td>
+                  <td>
+                    <%= engagement&.subject %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>
