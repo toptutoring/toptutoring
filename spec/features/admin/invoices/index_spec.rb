@@ -20,7 +20,7 @@ feature 'Invoices Index' do
     expect(page).to have_content('Hours')
     expect(page).to have_content('Hourly Rate')
     expect(page).to have_content('Amount')
-    expect(page).to have_content(invoice.engagement.student.name)
+    expect(page).to have_content(invoice.engagement.student_name)
     expect(page).to have_content(invoice.engagement.tutor.name)
     expect(page).to have_content(invoice.engagement.subject)
     expect(page).to have_content(invoice.engagement.academic_type)
