@@ -8,6 +8,8 @@ class DashboardsController < ApplicationController
 
   def director
     @engagements = Engagement.pending
+    @students = User.where(id: current_user.tutor_engagements.pluck(:student_id))
+    @invoice = Invoice.new(student_id: @students.first.try(:id))
   end
 
   def tutor
