@@ -22,7 +22,7 @@
               <% @engagements.each do |engagement| %>
                 <tr>
                   <td><%= engagement.student_name %></td>
-                  <td><%= engagement.try(:student).email ? engagement.student.email : 'Not provided' %></td>
+                  <td><%= engagement.try(:student).try(:email) ? engagement.student.email : 'Not provided' %></td>
                   <td>
                     <% if engagement.tutor.present? %>
                       <%= engagement.tutor.name %>

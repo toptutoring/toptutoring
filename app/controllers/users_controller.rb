@@ -34,7 +34,7 @@ class UsersController < Clearance::SessionsController
     current_user.enable!
 
     student_id = student.id if student
-    engagement = Engagement.create(
+    engagement = Engagement.new(
       student_id: student_id,
       student_name: student_name,
       # The below will be replaced by subject_id when client_info goes away
@@ -43,7 +43,7 @@ class UsersController < Clearance::SessionsController
       academic_type: params.require(:student_academic_type)
     )
 
-    if engagement
+    if engagement.save
       redirect_to dashboard_path
     else
       redirect_back(fallback_location: (request.referer || root_path),
