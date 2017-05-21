@@ -51,6 +51,12 @@ class UsersController < Clearance::SessionsController
     end
   end
 
+  def profile
+    if(params[:dwolla_error])
+      @dwolla_error = "Please authenticate with our payment processor Dwolla to ensure payment."
+    end
+  end
+
   private
 
   def user_params

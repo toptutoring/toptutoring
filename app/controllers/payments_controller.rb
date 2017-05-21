@@ -34,6 +34,7 @@ class PaymentsController < ApplicationController
   end
 
   private
+
   def payment_params
     params.require(:payment).permit(:hours, :amount, :description, :academic_type)
   end
