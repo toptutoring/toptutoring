@@ -98,6 +98,7 @@ namespace :dev do
     tutor.tutor_engagements.destroy_all
     engagement = Engagement.create(
       tutor_id: tutor.id,
+      student_name: student1.name,
       student_id: student1.id,
       client_id: client.id,
       subject: student1.student_info.subject,
@@ -107,6 +108,7 @@ namespace :dev do
 
     engagement = Engagement.create(
       tutor_id: tutor.id,
+      student_name: student2.name,
       student_id: student2.id,
       client_id: client.id,
       subject: student2.student_info.subject,
