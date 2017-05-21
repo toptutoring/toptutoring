@@ -11,7 +11,7 @@ class Payment < ActiveRecord::Base
 
   # Scopes #
   scope :from_clients, -> { where.not(customer_id: nil) }
-  scope :from_customer, ->(customer_id) { where(customer_id: customer_id) }
+  scope :from_customer, ->(customer_id) { from_clients.where(customer_id: customer_id) }
   scope :to_tutor, -> { where.not(destination: nil) }
   scope :from_user, ->(payer_id) { where(payer_id: payer_id) }
 
