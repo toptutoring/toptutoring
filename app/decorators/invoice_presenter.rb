@@ -13,7 +13,7 @@ class InvoicePresenter < SimpleDelegator
     @invoice.engagement.subject
   end
 
-  def student_name
-    @invoice.engagement.student.name
+  def client_name
+    @invoice.engagement.client.name
   end
 end

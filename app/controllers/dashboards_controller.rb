@@ -9,14 +9,14 @@ class DashboardsController < ApplicationController
 
   def director
     @engagements = Engagement.pending
-    @students = User.where(id: current_user.tutor_engagements.pluck(:student_id))
-    @invoice = Invoice.new(student_id: @students.first.try(:id))
+    @clients = User.where(id: current_user.tutor_engagements.pluck(:client_id))
+    @invoice = Invoice.new(client_id: @clients.first.try(:id))
   end
 
   def tutor
     @engagements = current_user.tutor_engagements
-    @students = User.where(id: @engagements.pluck(:student_id))
-    @invoice = Invoice.new(student_id: @students.first.try(:id))
+    @clients = User.where(id: @engagements.pluck(:client_id))
+    @invoice = Invoice.new(client_id: @clients.first.try(:id))
   end
 
   private

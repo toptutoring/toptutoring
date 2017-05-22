@@ -31,7 +31,7 @@ class EmailsController < ApplicationController
   end
 
   def set_invoice
-    @invoice = current_user.invoices.where(student_id: @student.id).last
+    @invoice = current_user.invoices.where(client_id: @client.id).last
   end
 
   def set_client
