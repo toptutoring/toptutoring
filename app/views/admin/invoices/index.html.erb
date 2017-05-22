@@ -10,7 +10,7 @@
             <table class="table mb-0">
               <thead>
                 <tr>
-                  <th>Student</th>
+                  <th>Client</th>
                   <th>Tutor</th>
                   <th>Subject</th>
                   <th class="text-center">Academic Type</th>
@@ -24,7 +24,7 @@
                 <% @invoices.each do |invoice|
                   presenter = InvoicePresenter.new(invoice) %>
                   <tr>
-                    <td><%= presenter.student_name %></td>
+                    <td><%= presenter.client_name %></td>
                     <td><%= presenter.tutor.name %></td>
                     <td><%= presenter.subject %></td>
                     <td class="text-center"><%= presenter.academic_type %></td>

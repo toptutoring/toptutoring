@@ -1,13 +1,13 @@
 <%= form_for [:tutors, @invoice], :html => { class: "form-horizontal" } do |f| %>
 
   <div class="form-group">
-    <label for="student" class="col-md-3 col-sm-3 control-label">Student</label>
+    <label for="student" class="col-md-3 col-sm-3 control-label">Client</label>
     <div class="col-md-9 col-sm-9">
-      <%= f.select(:student_id,
-        options_for_select(@students.map{ |student| [student.name, student.id, {
-          'data-test-prep' => student.client.test_prep_credit,
-          'data-academic'  => student.client.academic_credit,
-          'data-assigned'  => student.student_engagements.pluck(:academic_type).uniq
+      <%= f.select(:client_id,
+        options_for_select(@clients.map{ |client| [client.name, client.id, {
+          'data-test-prep' => client.test_prep_credit,
+          'data-academic'  => client.academic_credit,
+          'data-assigned'  => client.client_engagements.pluck(:academic_type).uniq
         }]}),
         {}, { class: "student", required: true }) %>
     </div>

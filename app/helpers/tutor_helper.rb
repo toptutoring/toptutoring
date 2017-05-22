@@ -3,7 +3,7 @@ module TutorHelper
     "#{tutor.outstanding_balance} hrs of tutoring"
   end
 
-  def can_send_email?(student)
-    Invoice.where(student_id: student.id).any?
+  def can_send_email?(client)
+    Invoice.where(client_id: client.id).any?
   end
 end

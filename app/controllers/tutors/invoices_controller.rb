@@ -1,7 +1,7 @@
 module Tutors
   class InvoicesController < ApplicationController
     before_action :require_login
-    before_action :set_student, :set_engagement, :authorize_tutor, only: :create
+    before_action :set_client, :set_engagement, :authorize_tutor, only: :create
 
     def index
       @invoices = current_user.invoices
@@ -28,25 +28,25 @@ module Tutors
     private
     def invoice_params
       if params[:academic_type].casecmp('academic') == 0
-        hourly_rate = MultiCurrencyAmount.from_cent(@student.client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
+        hourly_rate = MultiCurrencyAmount.from_cent(@client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
       else
-        hourly_rate = MultiCurrencyAmount.from_cent(@student.client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
+        hourly_rate = MultiCurrencyAmount.from_cent(@client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
       end
       params.require(:invoice)
-        .permit(:student_id, :hours, :subject, :description)
+        .permit(:client_id, :hours, :subject, :description)
         .merge(tutor_id: current_user.id, hourly_rate: hourly_rate, engagement_id: @engagement.id)
     end
 
-    def set_student
-      @student = User.find(params[:invoice][:student_id])
+    def set_client
+      @client = User.find(params[:invoice][:client_id])
     end
 
     def set_engagement
-      @engagement = Engagement.find_by(tutor_id: current_user.id, student_id: @student.id, academic_type: params[:academic_type])
+      @engagement = Engagement.find_by(tutor_id: current_user.id, client_id: @client.id, academic_type: params[:academic_type])
     end
 
     def authorize_tutor
-      if @student.student_engagements.blank? || @student.student_engagements.pluck(:tutor_id).exclude?(current_user.id)
+      if @client.client_engagements.blank? || @client.client_engagements.pluck(:tutor_id).exclude?(current_user.id)
         render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       end
     end

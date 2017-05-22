@@ -1,7 +1,7 @@
 class Invoice < ActiveRecord::Base
   # Associations
   belongs_to :tutor, class_name: "User", foreign_key: "tutor_id"
-  belongs_to :student, class_name: "User", foreign_key: "student_id"
+  belongs_to :client, class_name: "User", foreign_key: "client_id"
   belongs_to :engagement
   before_save :set_amount_value
 

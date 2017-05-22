@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170520230713) do
+ActiveRecord::Schema.define(version: 20170522182422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 20170520230713) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.integer  "student_id"
     t.integer  "tutor_id"
     t.integer  "engagement_id"
     t.decimal  "hours",         precision: 10, scale: 2, default: "0.0", null: false
@@ -77,8 +76,9 @@ ActiveRecord::Schema.define(version: 20170520230713) do
     t.datetime "updated_at",                                             null: false
     t.integer  "status"
     t.string   "subject"
+    t.integer  "client_id"
+    t.index ["client_id"], name: "index_invoices_on_client_id", using: :btree
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id", using: :btree
-    t.index ["student_id"], name: "index_invoices_on_student_id", using: :btree
     t.index ["tutor_id"], name: "index_invoices_on_tutor_id", using: :btree
   end
 
