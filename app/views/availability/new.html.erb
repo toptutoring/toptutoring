@@ -1,0 +1,65 @@
+<div>
+  <div class="row">
+    <div class="col-md-offset-1">
+      <!-- should be list of students -->
+      <h2>Availability for <%= current_user.name %> </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-offset-1">
+      <div class="col-md-1 col"><h3>Day</h3></div>
+      <div class="col-md-4"><h3>From</h3></div>
+      <div class="col-md-4"><h3>To</h3></div>
+    </div>
+  </div>
+  <hr>
+  <% 7.times do |day| %>
+    <div class="row">
+
+        <div class="col-md-1 col-md-offset-1">
+          <h5><%= @days[day] %></h5>
+        </div>
+
+        <div class="col-md-3">
+          <select name="info[<%=@days[day]%>_from]">
+            <%= 12.times do |hour| %>
+              <option value="<%= hour+1 %>:00"><%= hour+1 %>:00</option>
+              <option value="<%= hour+1 %>:30"><%= hour+1 %>:30</option>
+            <% end %>
+            <option value="N/a">N/a</option>
+          </select>
+        </div>
+
+        <div class="col-md-1">
+          <select name="info[<%=@days[day]%>_from_am_pm]">
+            <option value="Academic">am</option>
+            <option value="Test_Prep">pm</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <select name="info[<%=@days[day]%>_to]">
+            <%= 12.times do |hour| %>
+              <option value="<%= hour+1 %>:00"><%= hour+1 %>:00</option>
+              <option value="<%= hour+1 %>:30"><%= hour+1 %>:30</option>
+            <% end %>
+            <option value="N/a">N/a</option>
+          </select>
+        </div>
+
+        <div class="col-md-1">
+          <select name="info[<%=@days[day]%>_to_am_pm]">
+            <option value="Academic">am</option>
+            <option value="Test_Prep">pm</option>
+          </select>
+        </div>
+    </div>
+    <br>
+  <% end %>
+  <h5>*All times are in (PST). Timezones can be updated in your <%= link_to "profile", profile_path %>.</h5>
+  <div class="row">
+    <div class="col-md-2 col-md-offset-8">
+      <%= submit_tag "Submit" %>
+    </div>
+  </div>
+</div>

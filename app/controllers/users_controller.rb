@@ -68,6 +68,9 @@ class UsersController < Clearance::SessionsController
     end
   end
 
+  def availability
+  end
+
   private
 
   def student_email_provided?
