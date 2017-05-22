@@ -78,6 +78,9 @@ class UsersController < Clearance::SessionsController
 >>>>>>> Remove client/student duplicate email error on signup.
   end
 
+  def availability
+  end
+
   private
 
   def student_email_provided?
