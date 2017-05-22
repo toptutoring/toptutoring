@@ -163,5 +163,4 @@ ActiveRecord::Schema.define(version: 20170618085905) do
   add_foreign_key "payments", "users", column: "payee_id"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "student_infos", "users"
-  add_foreign_key "subjects", "users"
 end
