@@ -13,7 +13,7 @@ class StudentsController < ApplicationController
     if @student.save
       if @student.email.present?
         @student.forgot_password!
-        SetStudentPasswordMailer.set_password(@student).deliver_now
+        #SetStudentPasswordMailer.set_password(@student).deliver_now
       end
       engagement = Engagement.new(
         student_id: @student.id,
