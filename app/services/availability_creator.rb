@@ -3,10 +3,10 @@ class AvailabilityCreator
   DAYS = %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday)
   DAYS_IN_A_WEEK = 7
 
-  def initialize(params, availabilities)
+  def initialize(params)
     @params = params
-    @availabilities = availabilities
     @engagement = @engagement = Engagement.find((params[:current_engagement]).to_i)
+    @availabilities = []
     @days = DAYS
     @day_hash = [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
   end
@@ -29,6 +29,7 @@ class AvailabilityCreator
 
   end
 
+<<<<<<< e8e862a478a4f0453d2a7c53bbbdb13c732b0429
   def update_availabilities
 
     @availabilities.each do |availability|
@@ -45,6 +46,8 @@ class AvailabilityCreator
 
   end
 
+=======
+>>>>>>> Refactor availability and add strong params.
   private
 
   def populate_engagement_with_new_availabilities
@@ -58,12 +61,15 @@ class AvailabilityCreator
     availability.update_attribute(:to, availability.to.beginning_of_week(start_day = @day_hash[index]))
   end
 
+<<<<<<< e8e862a478a4f0453d2a7c53bbbdb13c732b0429
 
   def set_availability_week_day(availability, index)
     availability.update_attribute(:from, availability.from.beginning_of_week(start_day = @day_hash[index]))
     availability.update_attribute(:to, availability.to.beginning_of_week(start_day = @day_hash[index]))
   end
 
+=======
+>>>>>>> Refactor availability and add strong params.
   def set_availability_time_interval(availability, index)
 
     from_time_numbers_string = @params["#{(@days[index])}_from"]
