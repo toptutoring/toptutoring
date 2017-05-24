@@ -2,7 +2,9 @@
   <div class="col-md-12">
     <div class="widget">
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Availability for</h3>
+        <h2 class="widget-title pull-left">
+          Student Availability
+        </h2>
       </div>
       <div class="widget-body">
         <div class="table-responsive">
@@ -17,6 +19,14 @@
             </thead>
             <tbody>
               <%= form_tag availability_index_path do %>
+                <div class="col-md-3">
+                  Availability for
+                  <select name="info[current_engagement]">
+                    <% @engagements.each do |engagement| %>
+                      <option value="<%= engagement.id %>"><%= User.find(engagement.student_id).name %> (Subject:<%= engagement.subject %>) </option>
+                    <% end %>
+                  </select>
+                </div>
                 <% @availabilities.each do |availability| %>
                   <%= fields_for 'availabilities[]', availability do |a| %>
                       <tr>

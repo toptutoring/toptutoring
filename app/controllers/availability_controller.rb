@@ -3,21 +3,29 @@ class AvailabilityController < ApplicationController
   DAYS = %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday)
 
   def new
-    @days = %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday)
+    @days = DAYS
     @availabilities = []
     7.times do
       @availabilities << Availability.new
     end
+
+    @engagements = Engagement.where(client_id: current_user.id)
   end
 
   def create
 
-    @days = %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday)
+    @days = DAYS
     @day_hash = [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
     @availabilities = []
 
+    @engagement = Engagement.find((params[:info][:current_engagement]).to_i)
+    #STDOUT.puts("#{params[:info][:current_engagement]}")
+
+    from_date_time = DateTime.new
+    to_date_time = DateTime.new
+
     7.times do
-      @availabilities << Availability.new(from: DateTime.new, to: DateTime.new)
+      @availabilities << @engagement.availabilities.build(from: DateTime.new, to: DateTime.new)
     end
 
     @availabilities.each do |a|
@@ -26,10 +34,6 @@ class AvailabilityController < ApplicationController
 
       a.update_attribute(:from, a.from.beginning_of_week(start_day = @day_hash[i]))
       a.update_attribute(:to, a.to.beginning_of_week(start_day = @day_hash[i]))
-
-      a.update_attribute(:from, a.from.beginning_of_week(start_day = @day_hash[i]))
-      a.update_attribute(:to, a.to.beginning_of_week(start_day = @day_hash[i]))
-
 
       from_time_sched = (params[:info]["#{(@days[i])}_from"]+params[:info]["#{(@days[i])}_from_am_pm"]).to_time
       to_time_sched = (params[:info]["#{(@days[i])}_to"]+params[:info]["#{(@days[i])}_to_am_pm"]).to_time
@@ -53,7 +57,6 @@ class AvailabilityController < ApplicationController
     redirect_to profile_path
   end
 
-#   private
 #
 #
 #  def availability_params
