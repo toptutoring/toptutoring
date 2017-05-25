@@ -23,7 +23,9 @@
                   Availability for
                   <select name="info[current_engagement]">
                     <% @engagements.each do |engagement| %>
-                      <option value="<%= engagement.id %>"><%= User.find(engagement.student_id).name %> (Subject:<%= engagement.subject %>) </option>
+                      <% student = User.find(engagement.student_id).name %>
+                      <% subject_name = Subject.find((engagement.subject).to_i).name %>
+                      <option value="<%= engagement.id %>"><%= student %> (Subject: <%= subject_name %>) </option>
                     <% end %>
                   </select>
                 </div>
