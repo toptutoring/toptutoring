@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "/confirmation" => "one_time_payments#confirmation"
   get "payment" => "pages#payment"
   get "/profile" => "users#profile"
+  get '/sign_up' => "users/clients#new", as: "client_sign_up"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"
@@ -89,10 +90,11 @@ Rails.application.routes.draw do
 
   # Users signup.
   namespace :users do
-    resources :clients, only: [:new, :create]
+    resources :clients, only: [:create]
     resources :tutors, only: [:new, :create]
     get "tutors/signup" => "tutors#signup"
   end
+
 
   resources :engagements do
     member do
