@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 feature 'Invoices Index' do
-  scenario 'when user is admin' do
-    tutor = FactoryGirl.create(:tutor_user)
-    client = FactoryGirl.create(:client_user)
-    student = FactoryGirl.create(:student_user, client: client)
-    admin = FactoryGirl.create(:admin_user)
-    engagement = FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client)
-    invoice = FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement)
+  let(:tutor) { FactoryGirl.create(:tutor_user) }
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:student) { FactoryGirl.create(:student_user, client: client) }
+  let(:admin) { FactoryGirl.create(:admin_user) }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client) }
+  let!(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement) }
 
+  scenario 'when user is admin' do
     sign_in(admin)
     visit admin_invoices_path
 

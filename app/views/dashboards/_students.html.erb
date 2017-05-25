@@ -16,7 +16,7 @@
             </tr>
           </thead>
             <tbody>
-              <% @engagements.each do |engagement|
+              <% @tutor_engagements.each do |engagement|
                 representer = EngagementPresenter.new(engagement) %>
                 <tr>
                 <td><%= representer.student_name %></td>
