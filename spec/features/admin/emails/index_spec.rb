@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Emails Index' do
   scenario 'when user is admin' do
@@ -6,11 +6,14 @@ feature 'Emails Index' do
     tutor = FactoryGirl.create(:tutor_user)
     client = FactoryGirl.create(:client_user) 
     student = FactoryGirl.create(:student_user, client: client)
-    engagement = FactoryGirl.create(:engagement, student: student, tutor: tutor, client: client)
-    student.student_engagements.first.update(tutor_id: tutor.id)
-    invoice = FactoryGirl.create(:invoice, tutor: tutor, engagement: student.student_engagements.first)
-    invoice.update(student_id: student.id)
-    email = FactoryGirl.create(:email, tutor: tutor, client: student.client)
+    engagement = FactoryGirl.create(:engagement,
+      client: client,
+      student_name: student.name,
+      student: student,
+      tutor: tutor
+    )
+    invoice = FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement, client: client)
+    email = FactoryGirl.create(:email, tutor: tutor, client: client)
 
     sign_in(admin)
     visit admin_emails_path

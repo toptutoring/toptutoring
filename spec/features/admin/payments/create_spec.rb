@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "Create payment for tutor" do
   let(:admin) { FactoryGirl.create(:admin_user) }
@@ -7,7 +7,7 @@ feature "Create payment for tutor" do
   let(:student) { FactoryGirl.create(:student_user, client: client) }
   let(:contract) { FactoryGirl.create(:contract, user_id: tutor.id, hourly_rate: 20) }
   let(:director) { FactoryGirl.create(:director_user) }
-  let(:engagement) { FactoryGirl.create(:engagement, student: student, tutor: tutor, client: client) }
+  let(:engagement) { FactoryGirl.create(:engagement, student: student, student_name: student.name, tutor: tutor, client: client) }
   let(:funding_source) { FactoryGirl.create(:funding_source, user_id: admin.id) }
 
   context "when user is admin" do

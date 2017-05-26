@@ -18,6 +18,13 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.infer_spec_type_from_file_location!
   config.use_transactional_fixtures = false
+  config.before(:all) do
+    FactoryGirl.create(:role, name: "admin")
+    FactoryGirl.create(:role, name: "director")
+    FactoryGirl.create(:role, name: "tutor")
+    FactoryGirl.create(:role, name: "client")
+    FactoryGirl.create(:role, name: "student")
+  end
 end
 
 Shoulda::Matchers.configure do |config|

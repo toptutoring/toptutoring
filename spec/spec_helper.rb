@@ -18,14 +18,6 @@ RSpec.configure do |config|
     expectations.syntax = :expect
   end
 
-  config.before(:all) do
-    FactoryGirl.create(:role, name: "admin")
-    FactoryGirl.create(:role, name: "director")
-    FactoryGirl.create(:role, name: "tutor")
-    FactoryGirl.create(:role, name: "client")
-    FactoryGirl.create(:role, name: "student")
-  end
-
   config.mock_with :rspec do |mocks|
     mocks.syntax = :expect
     mocks.verify_partial_doubles = true
