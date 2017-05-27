@@ -15,12 +15,12 @@
 
           <div class="form-group">
             <%= f.label :student_id %>
-            <%= f.text_field :student_id, value: @engagement.student_name, class:"form-control", disabled: true %>
+            <%= f.text_field :student_id, value: @engagement.student_name, class:"form-control", disabled: true, required: true %>
           </div>
 
           <div class="form-group">
             <%= f.label :client_id %>
-            <%= f.text_field :client_id, value: @engagement.client.name, class:"form-control", disabled: true %>
+            <%= f.text_field :client_id, value: @engagement.client.name, class:"form-control", disabled: true, required: true %>
           </div>
 
           <div class="form-group">
@@ -30,7 +30,7 @@
 
           <div class="form-group">
             <%= f.label :academic_type %>
-            <%= f.select :academic_type, options_for_select([['Academic', 'Academic'], ['Test_Prep', 'Test Prep']], @engagement.academic_type), class:"form-control" %>
+            <%= f.select :academic_type, options_for_select([['Academic', 'Academic'], ['Test_Prep', 'Test Prep']], @engagement.academic_type), class:"form-control", required: true %>
           </div>
 
           <div class="text-center">
