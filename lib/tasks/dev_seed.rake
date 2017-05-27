@@ -120,7 +120,7 @@ namespace :dev do
     tutor.invoices.destroy_all
 
     # Update payments
-    Payment.from_customer(client.customer_id).destroy_all
+    Payment.from_user(client.id).destroy_all
     Payment.where(payer_id: admin.id).destroy_all
     Payment.where(payer_id: director.id).destroy_all
     Payment.create(

@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 feature 'Edit funding source' do
+  let(:admin) { FactoryGirl.create(:auth_admin_user) }
+
   scenario 'redirects to edit and has valid form' do
     admin = FactoryGirl.create(:auth_admin_user)
     funding_source = FactoryGirl.create(:funding_source)

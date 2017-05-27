@@ -1,9 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Students Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 20) }
-  let(:student) { FactoryGirl.create(:student_user) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student) }  
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:student) { FactoryGirl.create(:student_user, client: client) }
+  let!(:engagement) { FactoryGirl.create(:engagement, client: student.client, tutor: tutor, student: student, student_name: student.name) }
 
   scenario 'when user is tutor' do
     sign_in tutor

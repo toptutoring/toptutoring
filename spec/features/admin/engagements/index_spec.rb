@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "Index engagements" do
   let(:admin) { FactoryGirl.create(:admin_user) }
@@ -6,7 +6,7 @@ feature "Index engagements" do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, client: client, state: "active", academic_type: "Academic") }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client, state: "active", academic_type: "Academic") }
   let(:presenter) { EngagementPresenter.new(engagement) }
 
   context "when user is director" do

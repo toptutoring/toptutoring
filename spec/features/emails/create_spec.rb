@@ -1,15 +1,14 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Create Email' do
   let(:director) { FactoryGirl.create(:director_user) }
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student: student) }
-  let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement, student: student) }
+  let(:engagement) { FactoryGirl.create(:engagement, client: client, tutor: tutor, state: "active", student: student, student_name: student.name) }
+  let!(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement, client: client) }
 
   scenario 'has valid form' do
-    invoice
     sign_in(tutor)
     visit tutors_students_path
     click_link "Send Email"
@@ -20,7 +19,6 @@ feature 'Create Email' do
   end
 
   scenario 'when I click submit' do
-    invoice
     sign_in(tutor)
     visit new_email_path(student)
 

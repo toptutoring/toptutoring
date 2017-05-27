@@ -22,7 +22,7 @@ class EngagementPresenter < SimpleDelegator
   end
 
   def engagement_academic_type
-    if @engagement.academic_type.casecmp('academic') == 0
+    if @engagement.academic_type && @engagement.academic_type.casecmp('academic') == 0
       'Academic'
     else
       'Test Preparation'

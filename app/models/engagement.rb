@@ -13,6 +13,9 @@ class Engagement < ActiveRecord::Base
 
   #### Validations ####
   validates_presence_of :student_name
+  validates_presence_of :student
+  validates_presence_of :client
+  validates_presence_of :academic_type
 
   #### State Machine ####
 
