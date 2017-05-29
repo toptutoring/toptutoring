@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-10">
     <div class="widget">
       <div class="widget-heading clearfix">
         <h2 class="widget-title pull-left">
@@ -46,7 +46,7 @@
                             </select>
                           </td>
 
-                          <td>
+                          <td width="100px;">
                             <select name="info[<%= @days[@availabilities.index(availability)] %>_from_am_pm]">
                               <option value="am">am</option>
                               <option value="pm">pm</option>
@@ -63,7 +63,7 @@
                             </select>
                           </td>
 
-                          <td>
+                          <td width="100px;">
                             <select name="info[<%= @days[@availabilities.index(availability)] %>_to_am_pm]">
                               <option value="am">am</option>
                               <option value="pm">pm</option>
@@ -73,8 +73,8 @@
                   <% end %>
                 <% end %>
                   <tr>
-                    <td></td><td></td><td></td><td></td>
-                    <td>
+                    <td></td><td></td><td></td>
+                    <td colspan="2">
                         <%= submit_tag "Submit", style: "color: #888888;" %>
                     </td>
                   </tr>
@@ -85,5 +85,13 @@
       </div>
     </div>
     <h5>*All times are in (PST). Timezones can be updated in your <%= link_to "profile", profile_path %>.</h5>
+  </div>
+  <div class="col-md-2">
+    <div class="widget"style="float: right; display: inline-block;">
+      <div class="widget-heading clearfix" style="background-color: #ffffee;">
+        Schedules change often, but indicating initial availability will help us match you with a tutor that fits your schedule.
+        Scheduling further sessions can be done between you and your tutor.
+      </div>
+    </div>
   </div>
 </div>
