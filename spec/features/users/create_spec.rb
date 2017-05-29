@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'Create user' do
   context "with valid params" do
     scenario 'when user is student' do
-      visit new_users_client_path
+      visit client_sign_up_path
 
       fill_in "user_name", with: 'student'
       fill_in "user_email", with: 'student@example.com'
@@ -28,7 +28,7 @@ feature 'Create user' do
 
   context "with invalid params" do
     scenario 'when user is student' do
-      visit new_users_client_path
+      visit client_sign_up_path
 
       fill_in "user_name", with: 'student'
       fill_in "user_email", with: 'student'

@@ -7,7 +7,7 @@ require 'spec_helper'
 #  let(:student) { FactoryGirl.create(:student_user, client: client) }
 #
 #  scenario "client signup and set up account", js: true do
-#    visit new_users_client_path
+#    visit client_sign_up_path
 #
 #    fill_in "user_name", with: "Client"
 #    fill_in "user_email", with: "client@example.com"
