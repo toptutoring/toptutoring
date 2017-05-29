@@ -1,15 +1,13 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Invoices Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
   let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client) }
-  let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement) }
+  let!(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement) }
 
   scenario 'when user is tutor' do
-    invoice
-
     sign_in(tutor)
     visit tutors_invoices_path
 
