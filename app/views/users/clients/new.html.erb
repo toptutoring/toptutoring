@@ -19,11 +19,11 @@
 
           <%= form.fields_for :client_info do |client_field| %>
             <div class="col-md-2 col-md-offset-2">
-              <%= client_field.radio_button :tutoring_for, 0 %>
+              <%= client_field.radio_button :student, true %>
               <%= label :tutoring_info_myself, 'Myself' %>
             </div>
             <div class="col-md-5 col-md-offset-2">
-              <%= client_field.radio_button :tutoring_for, 1, checked: true %>
+              <%= client_field.radio_button :student, false, checked: true %>
               <%= label :tutoring_info_someone_else, 'Someone else (My child)' %>
             </div>
             </br></br>

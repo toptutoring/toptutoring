@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
   end
 
   def is_student?
-    client_info&.tutoring_for == 0
+    client_info&.student
   end
 
   def is_tutor?

@@ -24,7 +24,7 @@ module Users
     private
 
     def signups_params
-      params.require(:user).permit(:name, :email, :password,  client_info_attributes: [:tutoring_for, :subject, :comments]).merge(roles: "client")
+      params.require(:user).permit(:name, :email, :password,  client_info_attributes: [:student, :subject, :comments]).merge(roles: "client")
     end
 
     def redirect_to_root

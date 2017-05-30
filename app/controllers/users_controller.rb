@@ -8,14 +8,14 @@ class UsersController < Clearance::SessionsController
   end
 
   def update
-    student_name = user_params[:student][:name]
-    student_email = user_params[:student][:email]
     current_user.update(
       name: user_params[:name],
       email: user_params[:email],
       phone_number: user_params[:phone_number])
 
-    if student_email != user_params[:email]
+    if student_email_provided?
+      student_name = user_params[:student][:name]
+      student_email = user_params[:student][:email]
       student = User.create(
         email: student_email,
         name: student_name,
@@ -40,7 +40,7 @@ class UsersController < Clearance::SessionsController
       # The below will be replaced by subject_id when client_info goes away
       subject: current_user.client_info.subject,
       client_id: current_user.id,
-      academic_type: params.require(:student_academic_type)
+      academic_type: user_academic_type
     )
 
     if engagement.save
@@ -59,6 +59,13 @@ class UsersController < Clearance::SessionsController
 
   private
 
+  def student_email_provided?
+    # If client has a student and if a student email has been given
+    user_params[:student] &&
+    user_params[:student][:email].present? &&
+    user_params[:student][:email] != user_params[:email]
+  end
+
   def user_params
     if current_user.is_student?
       client_as_student_params
@@ -75,9 +82,12 @@ class UsersController < Clearance::SessionsController
     params.require(:user).permit(:name, :email, :phone_number, :password, student: [:id, :name, :email, :phone_number, :password, :subject])
   end
 
-
-  def student_academic_type
-    params[:student_academic_type]
+  def user_academic_type
+    if current_user.is_student?
+      client_as_student_info_params[:academic_type]
+    else
+      params[:student_academic_type]
+    end
   end
 
   def client_as_student_params
