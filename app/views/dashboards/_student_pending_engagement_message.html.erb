@@ -43,11 +43,9 @@
     </div>
 
     <div class="widget-body">
-      <%= form_for users_clients_path(current_user) do |form| %>
-        <%= form.fields_for :client_info do |client_field| %>
-          <%= client_field.text_area :comments, placeholder: "COMMENTS", rows: "3", style: "height:100px; margin-top: 25px;" %>
-        <% end %>
-          <button type="submit" style="color: #888888;">Send comment</button>
+      <%= form_for current_user.feedbacks.build, url: dashboard_feedback_path do |form| %>
+          <%= form.text_area :comments, placeholder: "COMMENTS", rows: "3", style: "height:100px; margin-top: 25px;", required: true %>
+          <%= form.submit "Send Comment", style:"color: #888888;" %>
       <% end %>
     </div>
   </div>
