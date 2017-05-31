@@ -4,19 +4,18 @@ class DashboardsController < ApplicationController
   before_action :check_dwolla_authentication
 
   def admin
-    @engagements = Engagement.pending
+    @pending_engagements = Engagement.pending
   end
 
   def director
-    @engagements = Engagement.pending
-    @clients = User.where(id: current_user.tutor_engagements.pluck(:client_id))
-    @invoice = Invoice.new(client_id: @clients.first.try(:id))
+    @pending_engagements = Engagement.pending
+    @tutor_engagements = current_user.tutor_engagements
+    @invoice = Invoice.new()
   end
 
   def tutor
-    @engagements = current_user.tutor_engagements
-    @clients = User.where(id: @engagements.pluck(:client_id))
-    @invoice = Invoice.new(client_id: @clients.first.try(:id))
+    @tutor_engagements = current_user.tutor_engagements
+    @invoice = Invoice.new()
   end
 
   private

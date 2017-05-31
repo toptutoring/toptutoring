@@ -21,7 +21,7 @@
               <% @students.each do |student| %>
                 <tr>
                   <td><%= student.name %></td>
-                  <td><%= student.name %></td>
+                  <td><%= student.client_id ? student.client.name : student.name %></td>
                   <td><%= student.email %></td>
                   <td><%= student.phone_number %></td>
                   <td><%= student.is_student? ? student.client_info.subject : student.student_info.subject %></td>
