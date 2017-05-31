@@ -18,7 +18,6 @@ feature 'Invoices Index' do
     expect(page).to have_content('Date')
     expect(page).to have_content('Description')
     expect(page).to have_content('Hours')
-    expect(page).to have_content('Amount')
 
     expect(page).to have_content(invoice.engagement.student.name)
     expect(page).to have_content(invoice.engagement.subject)
@@ -26,6 +25,5 @@ feature 'Invoices Index' do
     expect(page).to have_content(invoice.created_at)
     expect(page).to have_content(invoice.description)
     expect(page).to have_content(invoice.hours)
-    expect(page).to have_content(invoice.amount)
     end
 end
