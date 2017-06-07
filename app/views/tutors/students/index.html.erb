@@ -18,17 +18,30 @@
               </tr>
             </thead>
             <tbody>
-              <% @students.each do |student| %>
+              <% @student_tutor_engagements.each do |engagement| %>
                 <tr>
-                  <td><%= student.name %></td>
-                  <td><%= student.client_id ? student.client.name : student.name %></td>
-                  <td><%= student.email %></td>
-                  <td><%= student.phone_number %></td>
-                  <td><%= student.is_student? ? student.client_info.subject : student.student_info.subject %></td>
-                  <% if can_send_email?(student.client_id ? student.client : student) %>
-                    <td>
-                      <%= link_to "Send Email", new_email_path(student), class: "btn btn-outline btn-primary" %>
-                    </td>
+                  <% client = User.find(engagement.client_id) %>
+                  <td><%= engagement.student_name %></td>
+                  <td><%= client.name %></td>
+                  <% if !engagement.student_id.nil? %>
+                    <% student = User.find(engagement.student_id) %>
+                    <td><%= student.email %></td>
+                    <td><%= student.phone_number %></td>
+                    <td><%= student.student_info.subject %></td>
+                    <% if can_send_email?(client) %>
+                      <td>
+                        <%= link_to "Send Email", new_email_path(student), class: "btn btn-outline btn-primary" %>
+                      </td>
+                    <% end %>
+                  <% else %>
+                    <td><%= client.email %></td>
+                    <td><%= client.phone_number %></td>
+                    <td><%= client.client_info.subject %></td>
+                      <% if can_send_email?(client) %>
+                        <td>
+                          <%= link_to "Send Email", new_email_path(client), class: "btn btn-outline btn-primary" %>
+                        </td>
+                      <% end %>
                   <% end %>
                 </tr>
               <% end %>
