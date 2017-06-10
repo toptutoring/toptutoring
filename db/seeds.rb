@@ -8,3 +8,6 @@
 
 Rake::Task['dev:seed'].invoke
 
+Subject.create(name: 'Biology')
+Subject.create(name: 'Algebra')
+Subject.create(name: 'English Literature')
