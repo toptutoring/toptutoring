@@ -3,7 +3,7 @@
   <%= render "users/set_up_account" %>
 <% end %>
 <% if current_user.enabled? %>
-  <% if !current_user.is_student? && current_user.students.first.student_engagements&.first&.pending? %>
+  <% if !current_user.is_student? && current_user.client_engagements&.first&.pending? %>
     <%= render "student_pending_engagement_message" %>
   <% end %>
   <% if current_user.is_student? && current_user.student_engagements&.first&.pending? %>
