@@ -54,11 +54,11 @@ ActiveRecord::Schema.define(version: 20170529221503) do
   create_table "engagements", force: :cascade do |t|
     t.integer  "tutor_id"
     t.integer  "student_id"
-    t.string   "state",         default: "pending", null: false
+    t.string   "state",                default: "pending", null: false
     t.string   "subject"
     t.string   "academic_type"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "client_id"
     t.string   "student_name"
     t.datetime "preferred_start_date"

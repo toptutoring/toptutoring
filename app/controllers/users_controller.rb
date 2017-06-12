@@ -35,7 +35,7 @@ class UsersController < Clearance::SessionsController
       if current_user.save
         student.enable!
         student.forgot_password!
-        #SetStudentPasswordMailer.set_password(student).deliver_now
+        SetStudentPasswordMailer.set_password(student).deliver_now
       end
     else
       #Do not create student but save engagement info
@@ -56,7 +56,6 @@ class UsersController < Clearance::SessionsController
     else
       redirect_back(fallback_location: (request.referer || root_path),
                       flash: { error: current_user.errors.full_messages })
-      return
     end
   end
 
