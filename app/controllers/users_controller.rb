@@ -26,6 +26,10 @@ class UsersController < Clearance::SessionsController
     if student_email_provided?
       student_name = user_params[:student][:name]
       student_email = user_params[:student][:email]
+    end
+    current_user.update(phone_number: user_params[:phone_number])
+
+    if student_email != user_params[:email]
       student = User.create(
         email: student_email,
         name: student_name,
@@ -34,6 +38,7 @@ class UsersController < Clearance::SessionsController
       current_user.students << student
       if current_user.save
         student.enable!
+        current_user.enable!
         student.forgot_password!
         SetStudentPasswordMailer.set_password(student).deliver_now
       end
