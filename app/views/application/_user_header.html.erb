@@ -1,6 +1,6 @@
 <header>
   <a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
-  <% if ENV["DWOLLA_ENVIRONMENT"] == "production" %>
+  <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
     <script>
       FS.identify('<%= current_user.id %>', {
         displayName: '<%= current_user.name %>',
