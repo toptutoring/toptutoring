@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618085905) do
+ActiveRecord::Schema.define(version: 20170618183233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(version: 20170618085905) do
     t.integer  "hourly_rate_cents",    default: 1500,  null: false
     t.string   "hourly_rate_currency", default: "USD", null: false
     t.index ["user_id"], name: "index_contracts_on_user_id", using: :btree
+  end
+
+  create_table "credit_cards", force: :cascade do |t|
+    t.string  "customer_id"
+    t.boolean "confirmed",   default: false
+    t.boolean "primary",     default: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_credit_cards_on_user_id", using: :btree
   end
 
   create_table "emails", force: :cascade do |t|
@@ -158,6 +166,7 @@ ActiveRecord::Schema.define(version: 20170618085905) do
 
   add_foreign_key "client_infos", "users"
   add_foreign_key "contracts", "users"
+  add_foreign_key "credit_cards", "users"
   add_foreign_key "payments", "users", column: "payee_id"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "student_infos", "users"

@@ -6,7 +6,7 @@ FactoryGirl.define do
     roles         { "client" }
     access_state  { "enabled" }
     client_info   { FactoryGirl.create(:client_info) }
-    customer_id   { "xxx" }
+    credit_cards  { [FactoryGirl.create(:credit_card)] }
     academic_rate     { 20 }
     test_prep_rate    { 20 }
     academic_credit   { 20 }

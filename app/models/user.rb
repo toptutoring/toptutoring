@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   has_many :tutor_profiles
   has_many :subjects, through: :tutor_profiles
   accepts_nested_attributes_for :subjects
+  has_many :credit_cards, dependent: :destroy
+
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
 
@@ -72,7 +74,11 @@ class User < ActiveRecord::Base
   end
 
   def is_customer?
-    customer_id.present?
+    credit_cards.any?
+  end
+
+  def primary_credit_card
+    credit_cards.where(primary: true).first
   end
 
   def has_external_auth?

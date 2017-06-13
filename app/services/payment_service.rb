@@ -10,8 +10,8 @@ class PaymentService
   end
 
   def retrieve_customer
-    customer = if user.customer_id
-                  Stripe::Customer.retrieve user.customer_id
+    customer = if user.credit_cards.any?
+                  Stripe::Customer.retrieve user.primary_credit_card.customer_id
                else
                   customer = Stripe::Customer.create(
                                source: @token,
@@ -24,7 +24,7 @@ class PaymentService
     payment = Stripe::Charge.create(
       amount: @amount,
       currency: @currency,
-      customer: user.customer_id,
+      customer: user.primary_credit_card.customer_id,
       description: @description
     )
   end

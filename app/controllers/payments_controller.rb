@@ -17,7 +17,7 @@ class PaymentsController < ApplicationController
     @amount = payment_params[:amount].extract_value
     payment_service = PaymentService.new(current_user.id, @amount, 'usd', nil, payment_params)
 
-    if current_user.customer_id.empty?
+    if current_user.credit_cards.empty?
       flash[:danger] = "You must provide your card information before making a payment."
       render :new
     else

@@ -11,7 +11,6 @@ namespace :dev do
     client = User.where(email: "client@example.com").first_or_initialize
     client.name = "Client"
     client.password = "password"
-    client.customer_id = "cus_A45BGhlr4VjDcJ"
     client.access_state = "enabled"
     client.roles = "client"
     client.save!
@@ -20,10 +19,26 @@ namespace :dev do
     client_new = User.where(email: "clientnew@example.com").first_or_initialize
     client_new.name = "Client"
     client_new.password = "password"
-    client_new.customer_id = ""
     client_new.access_state = "enabled"
     client_new.roles = "client"
     client_new.save!
+
+    # Update client cards
+    client.credit_cards.destroy_all
+    CreditCard.create(
+      customer_id: 'cus_A45BGhlr4VjDcJ',
+      confirmed: true,
+      primary: true,
+      user_id: client.id
+    )
+
+    client_new.credit_cards.destroy_all
+    CreditCard.create(
+      customer_id: 'cus_A45BGhlr4VjDcJ',
+      confirmed: true,
+      primary: true,
+      user_id: client_new.id
+    )
 
      # Update student
     student1 = User.where(email: "student1@example.com").first_or_initialize
@@ -130,7 +145,8 @@ namespace :dev do
       customer_id: client.customer_id,
       payer_id: client.id,
       payee_id: tutor.id)
-    #Set the client default information for existing clients
+
+    # Set the client default information for existing clients
     User.with_client_role.each do |client|
       client.academic_rate_cents = 2999
       client.test_prep_rate_cents = 5999

@@ -17,7 +17,12 @@ class OneTimePaymentsController < ApplicationController
     begin
       if params[:save_payment_info] && current_user
         customer = payment_service.retrieve_customer
-        current_user.customer_id = customer.id
+        CreditCard.create(
+          user_id: current_user.id,
+          customer_id: customer.id,
+          primary: true,
+          confirmed: true
+        );
         current_user.save!
         payment = payment_service.create_charge_with_customer
       else
