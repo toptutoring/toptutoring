@@ -13,6 +13,7 @@ class AvailabilityController < ApplicationController
   end
 
   def create
+
     availabilityCreator = AvailabilityCreator.new(availability_params)
     availabilityCreator.create_availabilities
 
