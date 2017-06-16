@@ -68,6 +68,8 @@ class UsersController < Clearance::SessionsController
     if(params[:dwolla_error])
       @dwolla_error = "Please authenticate with our payment processor Dwolla to ensure payment."
     end
+
+    @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
   end
 
   private

@@ -3,10 +3,10 @@ class AvailabilityCreator
   DAYS = %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday)
   DAYS_IN_A_WEEK = 7
 
-  def initialize(params)
+  def initialize(params, availabilities)
     @params = params
+    @availabilities = availabilities
     @engagement = @engagement = Engagement.find((params[:current_engagement]).to_i)
-    @availabilities = []
     @days = DAYS
     @day_hash = [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
   end
@@ -29,6 +29,22 @@ class AvailabilityCreator
 
   end
 
+  def update_availabilities
+
+    @availabilities.each do |availability|
+
+      current_availability_index = @availabilities.index(availability)
+      set_availability_week_day(availability, current_availability_index)
+      set_availability_time_interval(availability, current_availability_index)
+
+      if !availability.save
+        flash[:danger] = "There was an error in your submission."
+        render 'new'
+      end
+    end
+
+  end
+
   private
 
   def populate_engagement_with_new_availabilities
@@ -36,6 +52,12 @@ class AvailabilityCreator
       @availabilities << @engagement.availabilities.build(from: DateTime.new, to: DateTime.new)
     end
   end
+
+  def set_availability_week_day(availability, index)
+    availability.update_attribute(:from, availability.from.beginning_of_week(start_day = @day_hash[index]))
+    availability.update_attribute(:to, availability.to.beginning_of_week(start_day = @day_hash[index]))
+  end
+
 
   def set_availability_week_day(availability, index)
     availability.update_attribute(:from, availability.from.beginning_of_week(start_day = @day_hash[index]))

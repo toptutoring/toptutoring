@@ -14,13 +14,28 @@ class AvailabilityController < ApplicationController
 
   def create
 
-    availabilityCreator = AvailabilityCreator.new(availability_params)
+    availabilityCreator = AvailabilityCreator.new(availability_params, [])
     availabilityCreator.create_availabilities
 
     flash[:notice] = "Your submission for availability was successful."
     redirect_to profile_path
   end
 
+  def edit
+    @days = DAYS
+    @availabilities = current_user&.student_engagements&.first&.availabilities || current_user&.client_engagements&.first&.availabilities
+    @engagements = Engagement.where(client_id: current_user.id)
+  end
+
+  def update
+
+    @availabilities = (Availability.find(params[:id])).engagement.availabilities
+    availabilityCreator = AvailabilityCreator.new(availability_params, @availabilities)
+    availabilityCreator.update_availabilities
+
+    flash[:notice] = "Your availability was successfully updated."
+    redirect_to profile_path
+  end
 
   private
 
