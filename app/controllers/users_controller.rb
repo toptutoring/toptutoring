@@ -71,13 +71,11 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile
-<<<<<<< 4fac25bb902c54de1df6c1003a193700a801e0c4
-    @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
-=======
     if(params[:dwolla_error])
       @dwolla_error = "Please authenticate with our payment processor Dwolla to ensure payment."
     end
->>>>>>> Remove client/student duplicate email error on signup.
+
+    @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
   end
 
   private
