@@ -20,14 +20,13 @@
       <ul aria-labelledby="dropdownMenu2" class="dropdown-menu dropdown-menu-right fadeInUp icon animated" style="animation-duration: 0.2s; animation-delay: 0s; animation-timing-function: linear; animation-iteration-count: 1;">
         <li>
           <%= link_to profile_path do %>
-            <i class="ion-person mr-5"></i>
-            <span class="sidebar-title">Profile</span>
+            <i class="ion-person mr-5"></i>Profile
           <% end %>
         </li>
         <li>
           <%= link_to sign_out_path, method: :delete, id: 'sign-out' do %>
             <i class="ion-unlocked mr-5"></i>Logout
-            <% end %>
+          <% end %>
         </li>
       </ul>
     </li>
