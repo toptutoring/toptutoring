@@ -43,25 +43,29 @@
                               <option selected="selected"></option>
                               <option value="N/a">Not Available</option>
 
-                              <%= 12.times do |hour| %>
+                              <%= (1..12).each do |hour| %>
                                 <% availability_hour = availability.from.time.hour %>
-                                <% if (availability_hour == 0 || availability_hour == 12) && hour == 11 %>
+                                <% if (availability_hour == 0 || availability_hour == 12) && hour == 12 %>
                                   <% if availability.from.time.min == 30 %>
+                                    <option value="12:00">12:00</option>
                                     <option value="12:30" selected>12:30</option>
                                   <% else %>
                                     <option value="12:00" selected>12:00</option>
+                                    <option value="12:30">12:30</option>
                                   <% end %>
                                 <% else %>
                                   <% if availability_hour >= 12 %>
                                     <% availability_hour = availability_hour-12 %>
                                   <% end %>
                                   <% if availability_hour == hour && availability.from.time.min == 30 %>
+                                    <option value="<%= hour %>:00"><%= hour %>:00</option>
                                     <option value="<%= hour %>:30" selected><%= hour %>:30</option>
                                   <% elsif availability_hour == hour %>
                                     <option value="<%= hour %>:00" selected><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30"><%= hour %>:30</option>
                                   <% else %>
-                                    <option value="<%= hour+1 %>:00"><%= hour+1 %>:00</option>
-                                    <option value="<%= hour+1 %>:30"><%= hour+1 %>:30</option>
+                                    <option value="<%= hour %>:00"><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30"><%= hour %>:30</option>
                                   <% end %>
                                 <% end %>
                               <% end %>
@@ -87,25 +91,29 @@
                             <select name="info[<%= @days[@availabilities.index(availability)] %>_to]" required="required" id="timeFrame2-<%=loopCount%>">
                               <option selected="selected"></option>
                               <option value="N/a">Not Available</option>
-                              <%= 12.times do |hour| %>
+                              <%= (1..12).each do |hour| %>
                                 <% availability_hour = availability.to.time.hour %>
-                                <% if (availability_hour == 0 || availability_hour == 12) && hour == 11 %>
+                                <% if (availability_hour == 0 || availability_hour == 12) && hour == 12 %>
                                   <% if availability.to.time.min == 30 %>
+                                    <option value="12:00">12:00</option>
                                     <option value="12:30" selected>12:30</option>
                                   <% else %>
                                     <option value="12:00" selected>12:00</option>
+                                    <option value="12:30">12:30</option>
                                   <% end %>
                                 <% else %>
                                   <% if availability_hour >= 12 %>
                                     <% availability_hour = availability_hour-12 %>
                                   <% end %>
                                   <% if availability_hour == hour && availability.to.time.min == 30 %>
+                                    <option value="<%= hour %>:00"><%= hour %>:00</option>
                                     <option value="<%= hour %>:30" selected><%= hour %>:30</option>
                                   <% elsif availability_hour == hour %>
                                     <option value="<%= hour %>:00" selected><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30"><%= hour %>:30</option>
                                   <% else %>
-                                    <option value="<%= hour+1 %>:00"><%= hour+1 %>:00</option>
-                                    <option value="<%= hour+1 %>:30"><%= hour+1 %>:30</option>
+                                    <option value="<%= hour %>:00"><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30"><%= hour %>:30</option>
                                   <% end %>
                                 <% end %>
                               <% end %>
@@ -156,7 +164,6 @@
 
 <script type="text/javascript">
 
-
   function changeAMPM(id) {
     var lastCharacterOfId = id.slice(-1);
 
@@ -170,11 +177,25 @@
     var changedTimeElement = document.getElementById('timeFrame1-'+lastCharacterOfId);
     var timeElementToChange = document.getElementById('timeFrame2-'+lastCharacterOfId);
 
+    //If the user has previously selected a value in the second dropdown, store it's text value here
+    var timeElementToChangeText = timeElementToChange.options[timeElementToChange.selectedIndex].text;
+    var changedTimeElementText = changedTimeElement.options[changedTimeElement.selectedIndex].text
+
+    if (changedTimeElementText == "Not Available") {
+      return;
+    }
+    repopulateSecondDropdown(changedTimeElement, timeElementToChange);
+
+    //shorten the list if pm
     if(changedAMPMElement.options[changedAMPMElement.selectedIndex].text == 'pm') {
-      for(var i=changedTimeElement.selectedIndex-1; i>0; i--){
-          timeElementToChange.options[i] = null;
+      if(changedTimeElementText != '12:00' && changedTimeElementText != '12:30') {
+        for(var i=changedTimeElement.selectedIndex; i>0; i--){
+            timeElementToChange.options[i] = null;
+        }
+
       }
     }
+    keepSecondDropdownAtPreviousValue(timeElementToChange, timeElementToChangeText)
   }
 
   //this function is here just in case the customer presses PM before choosing a time
@@ -184,11 +205,48 @@
     var changedTimeElement = document.getElementById('timeFrame1-'+lastCharacterOfId);
     var timeElementToChange = document.getElementById('timeFrame2-'+lastCharacterOfId);
 
+    var timeElementToChangeText = timeElementToChange.options[timeElementToChange.selectedIndex].text;
+    var changedTimeElementText = changedTimeElement.options[changedTimeElement.selectedIndex].text
+
+    if (changedTimeElementText == "Not Available") {
+      timeElementToChange.selectedIndex = 1;
+      return;
+    }
+
     var correspondingAMPMElement = document.getElementById('ampm1-'+lastCharacterOfId);
 
+    repopulateSecondDropdown(changedTimeElement, timeElementToChange);
+
+    //shorten list if pm
     if(correspondingAMPMElement.options[correspondingAMPMElement.selectedIndex].text == 'pm') {
-      for(var i=changedTimeElement.selectedIndex-1; i>0; i--){
-        timeElementToChange.options[i] = null;
+      if(changedTimeElementText != '12:00' && changedTimeElementText != '12:30') {
+        for(var i=changedTimeElement.selectedIndex; i>0; i--){
+            timeElementToChange.options[i] = null;
+        }
+      }
+    }
+    keepSecondDropdownAtPreviousValue(timeElementToChange, timeElementToChangeText)
+  }
+
+  //Repopulate the second dropdown each time just incase the user changes their mind about the first dropdown
+  function repopulateSecondDropdown(changedTimeElement, timeElementToChange) {
+    while(timeElementToChange.firstChild) {
+      timeElementToChange.removeChild(timeElementToChange.firstChild)
+    }
+
+    for(var i =0; i<26; i++) {
+      var newElement = document.createElement("option");
+      newElement.value = changedTimeElement[i].value;
+      newElement.text = changedTimeElement[i].text;
+      timeElementToChange.append(newElement);
+    }
+  }
+
+  //If there is already a value selected in the second dropdown, make sure it stays selected if the first dropdown changes
+  function keepSecondDropdownAtPreviousValue(timeElementToChange, compareText) {
+    for(var j=0; j<timeElementToChange.options.length; j++) {
+      if(timeElementToChange.options[j].text == compareText) {
+        timeElementToChange.selectedIndex = j;
       }
     }
   }
@@ -208,5 +266,4 @@
     oReq.open("POST", "<%= availability_dropdown_change_path %>", true);
     oReq.send("engagement_id="+e_id);
   }
-
 </script>
