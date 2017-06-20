@@ -72,6 +72,7 @@ Rails.application.routes.draw do
     resources :students, only: [:index, :new, :create]
     get "/dashboard" => "dashboards#client"
     resources :availability, only: [:new, :create, :update, :edit]
+    post "/availability/dropdown_change" => "availability#dropdown_change"
     post "/dashboard/feedback" => "feedback#create"
   end
 
