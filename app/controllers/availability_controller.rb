@@ -5,15 +5,29 @@ class AvailabilityController < ApplicationController
 
   def new
     @days = DAYS
-    @availabilities = []
-    DAYS_IN_A_WEEK.times do
-      @availabilities << Availability.new
-    end
     @engagements = Engagement.where(client_id: current_user.id)
+    @next_engagement = Engagement.find_by(id: params[:engagement_id])
+    if @next_engagement.nil?
+      @availabilities = []
+      DAYS_IN_A_WEEK.times do
+        @availabilities << Availability.new
+      end
+    else
+      @availabilities = @next_engagement.availabilities
+      if @availabilities.empty?
+        @availabilities = []
+        DAYS_IN_A_WEEK.times do
+          @availabilities << Availability.new
+        end
+        @engagements = @engagements.to_a
+        put_next_engagement_at_front(@engagements, @next_engagement)
+      else
+        redirect_to edit_availability_path(id: @next_engagement.availabilities.first.id, engagement_id: @next_engagement.id)
+      end
+    end
   end
 
   def create
-
     availabilityCreator = AvailabilityCreator.new(availability_params, [])
     availabilityCreator.create_availabilities
 
@@ -23,12 +37,21 @@ class AvailabilityController < ApplicationController
 
   def edit
     @days = DAYS
-    @availabilities = current_user&.student_engagements&.first&.availabilities || current_user&.client_engagements&.first&.availabilities
     @engagements = Engagement.where(client_id: current_user.id)
+    @next_engagement = Engagement.find_by(id: params[:engagement_id])
+    if @next_engagement.nil?
+      @availabilities = current_availabilities
+    else
+      @availabilities = @next_engagement.availabilities
+      if @availabilities.empty?
+        redirect_to new_availability_path(engagement_id: @next_engagement.id)
+      end
+      @engagements = @engagements.to_a
+      put_next_engagement_at_front(@engagements, @next_engagement)
+    end
   end
 
   def update
-
     @availabilities = (Availability.find(params[:id])).engagement.availabilities
     availabilityCreator = AvailabilityCreator.new(availability_params, @availabilities)
     availabilityCreator.update_availabilities
@@ -37,7 +60,8 @@ class AvailabilityController < ApplicationController
     redirect_to profile_path
   end
 
-  private
+  def dropdown_change
+  end
 
   def availability_params
     return params.require(:info).permit(permit_symbols_for_availability_params, :current_engagement)
@@ -55,5 +79,14 @@ class AvailabilityController < ApplicationController
 
     permit_symbols = permit_strings.map &:to_sym
     return permit_symbols
+  end
+
+  def put_next_engagement_at_front(engagements, next_engagement)
+    swap_index = engagements.index(next_engagement)
+    engagements[0], engagements[swap_index] = engagements[swap_index], engagements[0]
+  end
+
+  def current_availabilities
+    current_user&.student_engagements&.first&.availabilities || current_user&.client_engagements&.first&.availabilities
   end
 end

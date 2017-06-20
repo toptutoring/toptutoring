@@ -40,7 +40,7 @@ class UsersController < Clearance::SessionsController
         student.enable!
         current_user.enable!
         student.forgot_password!
-        SetStudentPasswordMailer.set_password(student).deliver_now
+        #SetStudentPasswordMailer.set_password(student).deliver_now
       end
     else
       #Do not create student but save engagement info

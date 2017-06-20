@@ -21,9 +21,9 @@
               <%= form_tag availability_index_path do %>
                 <div class="col-md-3">
                   Availability for
-                  <select name="info[current_engagement]">
+                  <select name="info[current_engagement]" id="selectedEngagement" onChange="reloadForm(this.id);">
                     <% @engagements.each do |engagement| %>
-                      <% student = current_user.students&.first&.student_engagements&.first&.student_name || current_user.client_engagements&.first&.student_name %>
+                      <% student = engagement.student_name %>
                       <% subject_name = Subject.find((engagement.subject).to_i).name %>
                       <option value="<%= engagement.id %>"><%= student %> (Subject: <%= subject_name %>) </option>
                     <% end %>
@@ -139,6 +139,22 @@
         timeElementToChange.options[i] = null;
       }
     }
+  }
+
+  function reloadForm(id) {
+
+    var currentEngagementSelectElement = document.getElementById(id);
+    var e_id = currentEngagementSelectElement.options[currentEngagementSelectElement.selectedIndex].value;
+
+    var oReq = new XMLHttpRequest();
+
+    function reqListener() {
+      window.location.search += '&engagement_id='+e_id;
+    }
+
+    oReq.addEventListener("load", reqListener);
+    oReq.open("POST", "<%= availability_dropdown_change_path %>", true);
+    oReq.send("engagement_id="+e_id);
   }
 
 </script>
