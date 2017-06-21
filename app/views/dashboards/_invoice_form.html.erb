@@ -45,5 +45,12 @@
     </div>
   </div>
 
-  <%= f.submit "Submit", class: "btn btn-outline btn-blue" %>
+  <div class="form-group">
+    <label for="suggest" class="col-md-3 col-sm-3 control-label">Suggest Hours</label>
+    <div class="col-md-9 col-sm-9">
+      <input type="text" name="invoice[suggest]" class="subject form-control" placeholder="Optional"/>
+    </div>
+  </div>
+
+  <%= f.submit "Submit", class: "btn btn-outline btn-blue mt-20" %>
 <% end %>
