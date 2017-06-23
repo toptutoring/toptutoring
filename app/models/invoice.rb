@@ -7,7 +7,7 @@ class Invoice < ActiveRecord::Base
 
   enum status: [:pending, :paid, :cancelled]
 
-  validates :hours, presence: true
+  validates :hours, presence: true, numericality: {greater_than: 0}
 
   private
 

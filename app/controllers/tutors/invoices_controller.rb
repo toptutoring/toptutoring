@@ -14,7 +14,7 @@ module Tutors
         @suggestion = Suggestion.new(suggestion_params)
         unless @suggestion.save
           redirect_back(fallback_location: (request.referer || root_path),
-                        flash: { error: [@suggestion.errors.full_messages, ". Invoice was not created."].join(' ') }) and return
+                        flash: { error: [@suggestion.errors.full_messages, "- Invoice was not created."].join(' ') }) and return
         end
       end
 
@@ -22,7 +22,7 @@ module Tutors
         @invoice.cancelled! if @invoice.hours == 0
         credit = CreditUpdater.new(@invoice.id).process!
         if credit <= 0.5 && @invoice.hours != 0
-          redirect_to tutors_students_path, alert: 'The session has been logged but the client
+          redirect_to tutors_invoices_path, alert: 'The session has been logged but the client
                         has a negative balance of hours. You may not be paid for this session
                         unless the client adds to his/her hourly balance.' and return
         else
