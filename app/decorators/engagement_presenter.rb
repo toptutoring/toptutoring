@@ -10,7 +10,7 @@ class EngagementPresenter < SimpleDelegator
   end
 
   def student_name
-    @engagement.student_name
+    @engagement.student.try(:name)
   end
 
   def tutor_name
