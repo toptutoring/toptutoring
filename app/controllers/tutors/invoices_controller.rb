@@ -1,7 +1,7 @@
 module Tutors
   class InvoicesController < ApplicationController
     before_action :require_login
-    before_action :set_client, :set_engagement, :authorize_tutor, only: :create
+    before_action :set_engagement, :set_client, only: :create
 
     def index
       @invoices = current_user.invoices
@@ -42,8 +42,8 @@ module Tutors
         hourly_rate = MultiCurrencyAmount.from_cent(@client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
       end
       params.require(:invoice)
-        .permit(:client_id, :hours, :engagement_id, :subject, :description)
-        .merge(tutor_id: current_user.id, hourly_rate: hourly_rate)
+        .permit(:hours, :engagement_id, :subject, :description)
+        .merge(client_id: @client.id, tutor_id: current_user.id, hourly_rate: hourly_rate)
     end
 
     def suggestion_params
@@ -52,18 +52,12 @@ module Tutors
         .merge(engagement_id: @engagement.id)
     end
 
-    def set_client
-      @client = User.find(params[:invoice][:client_id])
-    end
-
     def set_engagement
-      @engagement = Engagement.find_by(id: params[:invoice][:engagement_id])
+      @engagement = Engagement.find(params[:invoice][:engagement_id])
     end
 
-    def authorize_tutor
-      if @client.client_engagements.blank? || @client.client_engagements.pluck(:tutor_id).exclude?(current_user.id)
-        render file: "#{Rails.root}/public/404.html", layout: false, status: 404
-      end
+    def set_client
+      @client = User.find(@engagement.client_id)
     end
   end
 end
