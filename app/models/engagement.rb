@@ -32,4 +32,8 @@ class Engagement < ActiveRecord::Base
   def updated?
     tutor
   end
+
+  def academic?
+    self.academic_type == 'Academic'
+  end
 end
