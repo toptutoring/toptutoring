@@ -10,7 +10,7 @@ module Tutors
     def create
       @invoice = Invoice.new(invoice_params)
       
-      if params[:suggestion][:number_of_hours] != ''
+      if suggestion?
         @suggestion = Suggestion.new(suggestion_params)
         unless @suggestion.save
           redirect_back(fallback_location: (request.referer || root_path),
@@ -36,7 +36,7 @@ module Tutors
 
     private
     def invoice_params
-      if @engagement.academic_type == 'Academic'
+      if academic?
         hourly_rate = MultiCurrencyAmount.from_cent(@client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
       else
         hourly_rate = MultiCurrencyAmount.from_cent(@client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
@@ -58,6 +58,14 @@ module Tutors
 
     def set_client
       @client = User.find(@engagement.client_id)
+    end
+
+    def suggestion?
+      params[:suggestion][:number_of_hours] != ''
+    end
+
+    def academic?
+      @engagement.academic_type == 'Academic'
     end
   end
 end
