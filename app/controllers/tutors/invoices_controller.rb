@@ -54,6 +54,10 @@ module Tutors
 
     def set_engagement
       @engagement = Engagement.find(params[:invoice][:engagement_id])
+      unless current_user.engagements.include?(@engagement)
+        redirect_back(fallback_location: (request.referer || root_path),
+                      flash: { error: "You do not have access to create this Invoice." }) and return
+      end
     end
 
     def set_client
