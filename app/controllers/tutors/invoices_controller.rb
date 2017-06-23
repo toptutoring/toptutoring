@@ -36,7 +36,7 @@ module Tutors
 
     private
     def invoice_params
-      if academic?
+      if @engagement.academic?
         hourly_rate = MultiCurrencyAmount.from_cent(@client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
       else
         hourly_rate = MultiCurrencyAmount.from_cent(@client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
@@ -62,10 +62,6 @@ module Tutors
 
     def suggestion?
       params[:suggestion][:number_of_hours] != ''
-    end
-
-    def academic?
-      @engagement.academic_type == 'Academic'
     end
   end
 end
