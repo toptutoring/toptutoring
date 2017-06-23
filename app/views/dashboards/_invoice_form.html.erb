@@ -1,26 +1,8 @@
 <%= form_for [:tutors, @invoice], :html => { class: "form-horizontal" } do |f| %>
-
   <div class="form-group">
     <label for="student" class="col-md-3 col-sm-3 control-label">Student</label>
     <div class="col-md-9 col-sm-9">
-      <%= f.select(:client_id,
-        options_for_select(@tutor_engagements.map{ |engagement|
-          student = engagement.student ? engagement.student : engagement.client
-          presenter = StudentPresenter.new(student)
-          [engagement.student_name, engagement.client_id, {
-          'data-test-prep' => presenter.test_prep_credit,
-          'data-academic'  => presenter.academic_credit,
-          'data-assigned'  => presenter.academic_type
-        }]}, @tutor_engagements.first.try(:client_id)),
-        {}, { class: "student", required: true}) %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="academic_type" class="col-md-3 col-sm-3 control-label">Type of Tutoring</label>
-    <div class="col-md-9 col-sm-9">
-      <select name="academic_type" class="academic_type">
-      </select>
+      <%= f.select(:engagement_id, grouped_options_for_select(create_select_options_for_invoice), {}, { class: "student" }) %>
     </div>
   </div>
 
@@ -45,5 +27,12 @@
     </div>
   </div>
 
-  <%= f.submit "Submit", class: "btn btn-outline btn-blue" %>
+  <div class="form-group">
+    <label for="suggest" class="col-md-3 col-sm-3 control-label">Suggest Hours</label>
+    <div class="col-md-9 col-sm-9">
+      <input type="text" name="suggestion[number_of_hours]" class="subject form-control" placeholder="Optional"/>
+    </div>
+  </div>
+
+  <%= f.submit "Submit", class: "btn btn-outline btn-blue mt-20" %>
 <% end %>
