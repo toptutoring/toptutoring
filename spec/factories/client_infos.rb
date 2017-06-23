@@ -1,6 +1,10 @@
 FactoryGirl.define do
   factory :client_info do
-    subject       { "Math" }
-    tutoring_for  { 1 }
+    subject  { "Math" }
+    student  { false }
+
+    trait :as_student do
+      student { true }
+    end
   end
 end

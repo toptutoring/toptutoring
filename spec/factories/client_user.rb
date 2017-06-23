@@ -11,5 +11,9 @@ FactoryGirl.define do
     test_prep_rate    { 20 }
     academic_credit   { 20 }
     test_prep_credit  { 20 }
+
+    trait :as_student do
+      client_info   { FactoryGirl.create(:client_info, :as_student) }
+    end
   end
 end
