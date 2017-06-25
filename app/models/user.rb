@@ -76,7 +76,10 @@ class User < ActiveRecord::Base
   end
 
   def has_external_auth?
-    access_token.present? && refresh_token.present?
+    begin
+      access_token.present? && refresh_token.present?
+    rescue OpenSSL::Cipher::CipherError
+    end
   end
 
   def valid_token?
