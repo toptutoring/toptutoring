@@ -7,6 +7,17 @@ class UsersController < Clearance::SessionsController
     end
   end
 
+  def profile_edit
+    if params[:id].to_i != current_user.id
+      redirect_back(fallback_location: (request.referer || root_path),
+                    flash: { error: "The page you are looking for does not exist." }) and return
+    end
+  end
+
+  def profile_update
+    redirect_to profile_path
+  end
+
   def update
     current_user.update(
       name: user_params[:name],
@@ -52,9 +63,6 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile
-    if(params[:dwolla_error])
-      @dwolla_error = "Please authenticate with our payment processor Dwolla to ensure payment."
-    end
   end
 
   private
