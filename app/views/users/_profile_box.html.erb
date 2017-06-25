@@ -1,65 +1,65 @@
-<div class="col-lg-4">
-  <div class="widget">
-    <div class="widget-heading">
-      <div class="col-lg-6">
-        <h2 class="widget-title">Profile</h2>
+<div class="row">
+  <div class="col-lg-4">
+    <div class="widget">
+      <div class="widget-heading">
+        <h3 class="widget-title">Profile</h3><span class="inline"><%= link_to "Edit", profile_edit_path(current_user)%></span>
       </div>
-      <div class="col-lg-6">
-        <a class="pull-right" href="/profile/edit"><i class="ion-edit fs-18"></i></a>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-    <div class="widget-body">
-      <ul class="list-unstyled icon mb-0 pl-20 pr-20">
-        <li class="media">
-          <div class="media-left"><i class="ion-ios-person"></i></div>
-          <div class="media-body">
-            <p>Name: <%= current_user.name %></p>
-          </div>
-        </li>
-        <li class="media">
-          <div class="media-left"><i class="ion-calendar"></i></div>
-          <div class="media-body">
-            <p>Date joined: <%= current_user.created_at.strftime("%B %e, %Y") %></p>
-          </div>
-        </li>
-        <li class="media">
-          <div class="media-left"><i class="ion-email"></i></div>
-          <div class="media-body">
-            <p>Email: <%= current_user.email %></p>
-          </div>
-        </li>
-        <li class="media">
-          <div class="media-left"><i class="ion-iphone"></i></div>
-          <div class="media-body">
-            <p>Phone: <%= current_user.phone_number %></p>
-          </div>
-        </li>
-        <% if current_user.has_role?('tutor') %>
+      <div class="widget-body">
+        <ul class="list-unstyled icon mb-0 pull-left">
+          <li class="media">
+            <div class="media-left"><i class="ion-ios-person"></i></div>
+            <div class="media-body">
+              <p>Name: <%= current_user.name %></p>
+            </div>
+          </li>
+          <li class="media">
+            <div class="media-left"><i class="ion-calendar"></i></div>
+            <div class="media-body">
+              <p>Date joined: <%= current_user.created_at.strftime("%B %e, %Y") %></p>
+            </div>
+          </li>
+          <li class="media">
+            <div class="media-left"><i class="ion-email"></i></div>
+            <div class="media-body">
+              <p>Email: <%= current_user.email %></p>
+            </div>
+          </li>
+          <li class="media">
+            <div class="media-left"><i class="ion-iphone"></i></div>
+            <div class="media-body">
+              <p>Phone: <%= current_user.phone_number %></p>
+            </div>
+          </li>
           <li class="media">
             <div class="media-left"><i class="ion-ios-bookmarks"></i></div>
             <div class="media-body">
-              <% if current_user.subjects.empty? %>
-                <p>Subjects Listed: None</p>
+              <p>Subjects Listed: <%= current_user.subjects.pluck(:name).join(", ") %></p>
+            </div>
+          </li>
+          <li class="media">
+            <div class="media-left"><i class="ion-cash"></i></div>
+            <div class="media-body">
+              <% if current_user.has_external_auth? %>
+                <p>Dwolla: Authentication</p>
               <% else %>
-                <p>Subjects Listed: <%= current_user.subjects.pluck(:name).join(", ") %></p>
+                <a href="/auth/dwolla">Dwolla: Please Authenticate</a>
               <% end %>
             </div>
           </li>
-        <% end %>
-        <li class="media">
-          <div class="media-left"><i class="ion-cash"></i></div>
-          <div class="media-body">
-            <p>Dwolla:
-            <% if current_user.has_valid_dwolla? %>
-               Authenticated, but feel free to <a href="/auth/dwolla">authenticate again.</a>
-            <% else %>
-              <a href="/auth/dwolla">Please Authenticate</a>
-            <% end %>
-            </p>
-          </div>
-        </li>
-      </ul>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
     </div>
+  </div>
+  <div class="col-lg-8 text-center" style="display:block">
+    <div class="widget">
+      <div class="widget-head">
+      </div>
+      <div class="widget-body">
+        <img src="<%=  %>" width="100" alt="Profile Image" class="img-circle">
+        <h4 class="mt-20 mb-5 text-black"><%= current_user.name %></h4>
+        <p class="fs-12 text-uppercase text-muted"><%= current_user.phone_number %></p>
+        <p><%= current_user.email %></p>
+      </div>
   </div>
 </div>
