@@ -2,7 +2,7 @@
   <div class="col-lg-4">
     <div class="widget">
       <div class="widget-heading">
-        <h3 class="widget-title">Profile</h3><span class="inline"><%= link_to "Edit", profile_edit_path(current_user)%></span>
+        <h3 class="widget-title">Profile</h3><span class="inline"><%= link_to "Edit", profile_edit_path %></span>
       </div>
       <div class="widget-body">
         <ul class="list-unstyled icon mb-0 pull-left">
@@ -30,12 +30,18 @@
               <p>Phone: <%= current_user.phone_number %></p>
             </div>
           </li>
-          <li class="media">
-            <div class="media-left"><i class="ion-ios-bookmarks"></i></div>
-            <div class="media-body">
-              <p>Subjects Listed: <%= current_user.subjects.pluck(:name).join(", ") %></p>
-            </div>
-          </li>
+          <% if current_user.has_role?('tutor') %>
+            <li class="media">
+              <div class="media-left"><i class="ion-ios-bookmarks"></i></div>
+              <div class="media-body">
+                <% if current_user.subjects.empty? %>
+                  <p>Subjects Listed: None</p>
+                <% else %>
+                  <p>Subjects Listed: <%= current_user.subjects.pluck(:name).join(", ") %></p>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
           <li class="media">
             <div class="media-left"><i class="ion-cash"></i></div>
             <div class="media-body">
