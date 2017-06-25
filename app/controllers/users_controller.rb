@@ -8,13 +8,6 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile_edit
-<<<<<<< 660236aa4826868504d2d477693ff8a9c566a309
-  end
-
-  def profile_update
-    User.find(current_user.id).update(update_params)
-    redirect_to profile_path, flash: { success: "Your profile has been updated." } and return
-=======
     if params[:id].to_i != current_user.id
       redirect_back(fallback_location: (request.referer || root_path),
                     flash: { error: "The page you are looking for does not exist." }) and return
@@ -23,7 +16,6 @@ class UsersController < Clearance::SessionsController
 
   def profile_update
     redirect_to profile_path
->>>>>>> Added logic for profile update and profile path
   end
 
   def update
@@ -75,10 +67,7 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile
-<<<<<<< 660236aa4826868504d2d477693ff8a9c566a309
     @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
-=======
->>>>>>> Added logic for profile update and profile path
   end
 
   private
