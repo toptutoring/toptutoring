@@ -15,7 +15,12 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile_update
-    redirect_to profile_path
+    if params[:id].to_i != current_user.id
+      redirect_back(fallback_location: (request.referer || root_path),
+                    flash: { error: "You do not have access to edit this profile." }) and return
+    end
+    User.find(params[:id]).update(update_params)
+    redirect_to profile_path, flash: { success: "Your profile has been updated." } and return
   end
 
   def update
@@ -100,5 +105,9 @@ class UsersController < Clearance::SessionsController
 
   def client_as_student_params
     params.require(:user).permit(:name, :email, :phone_number, :password, client_info_attributes: [:id])
+  end
+
+  def update_params
+    params.require(:user).permit(:name, :phone_number, :email)
   end
 end
