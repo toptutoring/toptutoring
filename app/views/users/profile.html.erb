@@ -1,18 +1,1 @@
-<% if @dwolla_error %>
-  <div class="social-btns col-md-5 col-md-offset-3">
-    <div class="widget">
-      <div class="widget-heading clearfix">
-      </div>
-      <div class="widget-body">
-        <div class="media">
-          <div class="media-body text-center">
-            <p class="error-message">
-              <%= @dwolla_error %>
-            </p>
-            <a href="/auth/dwolla", class="btn btn-block social-btn btn-blue">Authenticate with Dwolla</a>
-        </div>
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>
+<%= render "profile_box" %>
