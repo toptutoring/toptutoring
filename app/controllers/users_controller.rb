@@ -8,18 +8,10 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile_edit
-    if params[:id].to_i != current_user.id
-      redirect_back(fallback_location: (request.referer || root_path),
-                    flash: { error: "The page you are looking for does not exist." }) and return
-    end
   end
 
   def profile_update
-    if params[:id].to_i != current_user.id
-      redirect_back(fallback_location: (request.referer || root_path),
-                    flash: { error: "You do not have access to edit this profile." }) and return
-    end
-    User.find(params[:id]).update(update_params)
+    User.find(current_user.id).update(update_params)
     redirect_to profile_path, flash: { success: "Your profile has been updated." } and return
   end
 
