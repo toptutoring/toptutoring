@@ -76,10 +76,11 @@ class User < ActiveRecord::Base
     customer_id.present?
   end
 
-  def has_external_auth?
+  def has_valid_dwolla?
     begin
       access_token.present? && refresh_token.present?
     rescue OpenSSL::Cipher::CipherError
+      false
     end
   end
 
