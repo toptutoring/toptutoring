@@ -5,7 +5,10 @@
 <div class="row">
   <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
   <%= render "students" %>
-  <div class="col-md-8 col-md-offset-2 invoice-form">
+</div>
+
+<div class="row">
+  <div class="col-md-6 center-block">
     <div class="col-md-12">
       <div class="widget">
         <div class="widget-heading clearfix">
@@ -18,5 +21,10 @@
       </div>
     </div>
   </div>
-</end>
+
+  <% if current_user.roles.pluck(:name).include?("employee") %>
+    <%= render "timesheet_form" %>
+  <% end %>
+
+</div>
 <% end %>
