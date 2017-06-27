@@ -1,17 +1,9 @@
-module Employees
+module Admin
   class TimesheetsController < ApplicationController
     before_action :require_login
 
-    def new
-
-    end
-
-    def create
-
-    end
-
     def index
-
+      @timesheets = Timesheet.all
     end
 
     def edit
