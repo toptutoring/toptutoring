@@ -120,6 +120,14 @@
             <% end %>
           </li>
         <% end %>
+        <% if current_user.has_role?("employee") %>
+          <li class="panel">
+            <%= link_to employees_timesheets_path do %>
+              <i class="icon ion-cash bg-success"></i>
+              <span class="sidebar-title">Timesheets</span>
+            <% end %>
+          </li>
+        <% end %>
         <li class="panel">
           <%= link_to tutors_emails_path do %>
             <i class="icon ion-ios-email-outline bg-danger"></i>

@@ -8,22 +8,10 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6 center-block">
-    <div class="col-md-12">
-      <div class="widget">
-        <div class="widget-heading clearfix">
-          <h3 class="widget-title text-center">Invoice session</h3>
-          <p class="widget-hint pull-left">Use this form to log past sessions with your students</p>
-        </div>
-        <div class="widget-body">
           <%= render "invoice_form" %>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <% if current_user.roles.pluck(:name).include?("employee") %>
-    <%= render "timesheet_form" %>
+    <%= render "employees/timesheet_form" %>
   <% end %>
 
 </div>
