@@ -1,11 +1,13 @@
 class PaymentsController < ApplicationController
   before_action :require_login
+  before_action :set_stripe_key, only: [:new, :create]
 
   def new
     if !current_user.is_customer?
       redirect_to one_time_payment_path
     end
     @payment = Payment.new
+    @customer = StripeService.new(current_user.id).retrieve_customer
   end
 
   def index
@@ -13,7 +15,6 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
     @amount = payment_params[:amount].extract_value
     payment_service = PaymentService.new(current_user.id, @amount, 'usd', nil, payment_params)
 
@@ -37,5 +38,9 @@ class PaymentsController < ApplicationController
 
   def payment_params
     params.require(:payment).permit(:hours, :amount, :description, :academic_type)
+  end
+
+  def set_stripe_key
+    Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
   end
 end

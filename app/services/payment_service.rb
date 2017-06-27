@@ -18,6 +18,7 @@ class PaymentService
                                email: user.email
                              )
                end
+    customer
   end
 
   def create_charge_with_customer
@@ -45,8 +46,9 @@ class PaymentService
   end
 
   private
+
   def user
-    @user = User.find(@user_id)
+    @user ||= User.find(@user_id)
   end
 
   def create_payment(payment, payer_id)

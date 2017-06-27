@@ -10,7 +10,7 @@
       <p class="col-sm-5 col-sm-offset-3">This page is protected through secure SSL encrypted payment.</p>
     </div>
     <div class="row">
-      <p class="col-sm-5 col-sm-offset-3">We have stored your credit information into our db. So you can make payment easily.</p>
+      <p class="col-sm-5 col-sm-offset-3">Payment method: <%= "****#{@customer.sources.data.first.last4}" %> <%= link_to "Change" "/" %></p>
     </div>
     <%= render "payment_form" %>
   </div>
