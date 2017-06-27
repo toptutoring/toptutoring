@@ -100,6 +100,6 @@ class UsersController < Clearance::SessionsController
   end
 
   def update_params
-    params.require(:user).permit(:name, :phone_number, :email)
+    params.require(:user).permit(:name, :phone_number)
   end
 end
