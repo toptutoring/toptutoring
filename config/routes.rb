@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
     namespace :admin do
       resources :users, only: [:index, :edit, :update]
-      resource :timesheets
+      resources :timesheets
     end
     mount Sidekiq::Web, at: "/sidekiq"
     get "/dashboard" => "dashboards#admin"
