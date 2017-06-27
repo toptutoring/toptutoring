@@ -12,7 +12,7 @@ module Employees
         end
       else
           redirect_back(fallback_location: (request.referer || root_path),
-                        flash: { error: "PLease input valid hours in order to submit your timesheet." }) and return
+                        flash: { error: "Please input valid hours in order to submit your timesheet." }) and return
       end
     end
 
@@ -21,11 +21,15 @@ module Employees
     end
 
     def edit
-      @timesheet = current_user.timesheets.find(params[:id])
+      if not_paid?
+        @timesheet = current_user.timesheets.find(params[:id])
+      else
+        redirect_to(employees_timesheets_path, notice: 'This invoice is already paid and can not be updated.') and return
+      end
     end
 
     def update
-      if hours_valid? && date_valid?
+      if hours_valid? && date_valid? && not_paid?
         @timesheet = current_user.timesheets.find(params[:id])
         if @timesheet.update(timesheet_params)
           redirect_to(employees_timesheets_path, notice: 'Your timesheet has been updated') and return
@@ -35,7 +39,7 @@ module Employees
         end
       else
           redirect_back(fallback_location: (request.referer || root_path),
-                        flash: { error: "PLease input valid hours in order to update your timesheet." }) and return
+                        flash: { error: "Please input valid hours in order to update your timesheet." }) and return
       end
     end
     
@@ -65,6 +69,10 @@ module Employees
 
     def date_valid?
       params[:timesheet][:date].to_date <= Date.today
+    end
+
+    def not_paid?
+      current_user.timesheets.find(params[:id]).status != "paid"
     end
   end
 end
