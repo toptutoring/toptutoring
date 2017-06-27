@@ -69,9 +69,8 @@
                   <td><%= t.status %></td>
                   <td>
                     <% if t.status != "paid" %>
-                      <%= link_to "Edit", edit_employees_timesheet_path(t) %> / 
+                      <%= link_to "Update", edit_employees_timesheet_path(t) %>
                     <% end %>
-                    <%= link_to "Delete", employees_timesheet_path(t), method: :delete, data: { confirm: "Are you sure?" } %>
                   </td>
                 </tr>
               <% end %>
