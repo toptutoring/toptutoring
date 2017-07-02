@@ -1,7 +1,13 @@
 <div class="col-lg-4">
   <div class="widget">
     <div class="widget-heading">
-      <h2 class="widget-title">Profile</h2><span class="inline"><%= link_to "Edit", profile_edit_path %></span>
+      <div class="col-lg-6">
+        <h2 class="widget-title">Profile</h2>
+      </div>
+      <div class="col-lg-6">
+        <a class="pull-right" href="/profile/edit"><i class="ion-edit fs-18"></i></a>
+      </div>
+      <div class="clearfix"></div>
     </div>
     <div class="widget-body">
       <ul class="list-unstyled icon mb-0 pl-20 pr-20">
@@ -44,11 +50,13 @@
         <li class="media">
           <div class="media-left"><i class="ion-cash"></i></div>
           <div class="media-body">
+            <p>Dwolla:
             <% if current_user.has_valid_dwolla? %>
-              <p>Dwolla: Authentication</p>
+               Authenticated
             <% else %>
-              <a href="/auth/dwolla">Dwolla: Please Authenticate</a>
+              <a href="/auth/dwolla">Please Authenticate</a>
             <% end %>
+            </p>
           </div>
         </li>
       </ul>
