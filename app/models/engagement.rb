@@ -6,7 +6,7 @@ class Engagement < ActiveRecord::Base
 
   has_many :invoices
   has_many :availabilities
-  
+
   #### Scopes ####
 
   scope :pending, -> { where(state: :pending).order('created_at DESC') }
