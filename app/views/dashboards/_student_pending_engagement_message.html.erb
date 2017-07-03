@@ -16,7 +16,12 @@
     <div class="widget-body">
       <ul>
         <li>
-          <%= link_to "Tell us your availability!", new_availability_path %> This can speed up the process of finding
+          <% if @availability_engagement.availabilities.empty? %>
+            <%= link_to "Tell us your availability!", new_availability_path %>
+          <% else %>
+            <%= link_to "Tell us your availability!", edit_availability_path(@availability_engagement.availabilities.first.id) %>
+          <% end %>
+          This can speed up the process of finding
           you a tutor and will help us pick a tutor that is a perfect fit for your schedule.
         </li>
         <li>

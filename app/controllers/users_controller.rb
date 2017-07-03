@@ -16,20 +16,12 @@ class UsersController < Clearance::SessionsController
   end
 
   def update
-    student_name = user_params[:student][:name]
-    student_email = user_params[:student][:email]
-    current_user.update(
-      name: user_params[:name],
-      email: user_params[:email],
-      phone_number: user_params[:phone_number])
+    current_user.update_attribute(
+      :phone_number, user_params[:phone_number])
 
     if student_email_provided?
       student_name = user_params[:student][:name]
       student_email = user_params[:student][:email]
-    end
-    current_user.update(phone_number: user_params[:phone_number])
-
-    if student_email != user_params[:email]
       student = User.create(
         email: student_email,
         name: student_name,
@@ -38,9 +30,8 @@ class UsersController < Clearance::SessionsController
       current_user.students << student
       if current_user.save
         student.enable!
-        current_user.enable!
         student.forgot_password!
-        #SetStudentPasswordMailer.set_password(student).deliver_now
+        SetStudentPasswordMailer.set_password(student).deliver_now
       end
     else
       #Do not create student but save engagement info
@@ -51,6 +42,8 @@ class UsersController < Clearance::SessionsController
       end
       student_id = current_user.id
     end
+
+    current_user.enable!
 
     student_id = student.id if student
     engagement = Engagement.new(
@@ -71,10 +64,6 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile
-    if(params[:dwolla_error])
-      @dwolla_error = "Please authenticate with our payment processor Dwolla to ensure payment."
-    end
-
     @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
   end
 
