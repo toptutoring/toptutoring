@@ -1,0 +1,65 @@
+<div class="col-lg-4">
+  <div class="widget">
+    <div class="widget-heading">
+      <div class="col-lg-6">
+        <h2 class="widget-title">Profile</h2>
+      </div>
+      <div class="col-lg-6">
+        <a class="pull-right" href="/profile/edit"><i class="ion-edit fs-18"></i></a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="widget-body">
+      <ul class="list-unstyled icon mb-0 pl-20 pr-20">
+        <li class="media">
+          <div class="media-left"><i class="ion-ios-person"></i></div>
+          <div class="media-body">
+            <p>Name: <%= current_user.name %></p>
+          </div>
+        </li>
+        <li class="media">
+          <div class="media-left"><i class="ion-calendar"></i></div>
+          <div class="media-body">
+            <p>Date joined: <%= current_user.created_at.strftime("%B %e, %Y") %></p>
+          </div>
+        </li>
+        <li class="media">
+          <div class="media-left"><i class="ion-email"></i></div>
+          <div class="media-body">
+            <p>Email: <%= current_user.email %></p>
+          </div>
+        </li>
+        <li class="media">
+          <div class="media-left"><i class="ion-iphone"></i></div>
+          <div class="media-body">
+            <p>Phone: <%= current_user.phone_number %></p>
+          </div>
+        </li>
+        <% if current_user.has_role?('tutor') %>
+          <li class="media">
+            <div class="media-left"><i class="ion-ios-bookmarks"></i></div>
+            <div class="media-body">
+              <% if current_user.subjects.empty? %>
+                <p>Subjects Listed: None</p>
+              <% else %>
+                <p>Subjects Listed: <%= current_user.subjects.pluck(:name).join(", ") %></p>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+        <li class="media">
+          <div class="media-left"><i class="ion-cash"></i></div>
+          <div class="media-body">
+            <p>Dwolla:
+            <% if current_user.has_valid_dwolla? %>
+               Authenticated
+            <% else %>
+              <a href="/auth/dwolla">Please Authenticate</a>
+            <% end %>
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

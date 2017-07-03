@@ -3,7 +3,7 @@
   <%= render "users/set_up_account" %>
 <% else %>
 <div class="row">
-  <%= render "dwolla_login" if !current_user.has_external_auth? %>
+  <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
   <%= render "students" %>
   <div class="col-md-8 col-md-offset-2 invoice-form">
     <div class="col-md-12">

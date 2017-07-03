@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   get "/confirmation" => "one_time_payments#confirmation"
   get "payment" => "pages#payment"
   get "/profile" => "users#profile"
-  get '/sign_up' => "users/clients#new", as: "client_sign_up"
+  get "/sign_up" => "users/clients#new", as: "client_sign_up"
+  get "profile/edit" => "users#profile_edit", as: "profile_edit"
+  patch "profile/edit" => "users#profile_update", as: "profile_update"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"
@@ -25,7 +27,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :users, only: [:index, :edit, :update]
     end
-    mount Sidekiq::Web, at: '/sidekiq'
+    mount Sidekiq::Web, at: "/sidekiq"
     get "/dashboard" => "dashboards#admin"
   end
 
@@ -77,11 +79,11 @@ Rails.application.routes.draw do
 
   # API
   namespace :api do
-    namespace :signups, defaults: { format: 'json' } do
+    namespace :signups, defaults: { format: "json" } do
       resources :users, only: :create
-      match '/users' => "users#create", via: :options
+      match "/users" => "users#create", via: :options
       resources :tutors, only: :create
-      match '/tutors' => "tutors#create", via: :options
+      match "/tutors" => "tutors#create", via: :options
     end
   end
 
@@ -98,8 +100,8 @@ Rails.application.routes.draw do
 
   resources :engagements do
     member do
-      get '/enable' => "engagements#enable"
-      get '/disable' => "engagements#disable"
+      get "/enable" => "engagements#enable"
+      get "/disable" => "engagements#disable"
     end
   end
 

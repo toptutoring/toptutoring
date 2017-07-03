@@ -7,6 +7,14 @@ class UsersController < Clearance::SessionsController
     end
   end
 
+  def profile_edit
+  end
+
+  def profile_update
+    User.find(current_user.id).update(update_params)
+    redirect_to profile_path, flash: { success: "Your profile has been updated." } and return
+  end
+
   def update
     current_user.update(
       name: user_params[:name],
@@ -52,9 +60,6 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile
-    if(params[:dwolla_error])
-      @dwolla_error = "Please authenticate with our payment processor Dwolla to ensure payment."
-    end
   end
 
   private
@@ -92,5 +97,9 @@ class UsersController < Clearance::SessionsController
 
   def client_as_student_params
     params.require(:user).permit(:name, :email, :phone_number, :password, client_info_attributes: [:id])
+  end
+
+  def update_params
+    params.require(:user).permit(:name, :phone_number)
   end
 end
