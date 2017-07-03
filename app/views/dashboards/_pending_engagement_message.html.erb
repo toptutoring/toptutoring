@@ -1,7 +1,57 @@
 <div class="col-md-8">
   <div class="widget">
     <div class="widget-heading">
-      We have received your information and we are in the process of finding the best tutor for you!
+      <h5>We have received your information and we are in the process of finding the best tutor for you!</h5>
+    </div>
+    <div class="widget-body">
+      An expert tutor director will reach out to you within the next <b>24 hours</b>,
+      by phone or by email, and get you connected with your new tutor.
+    </div>
+  </div>
+
+  <div class="widget">
+    <div class="widget-heading">
+      <h5>There's still plenty you can do while you wait!</h5>
+    </div>
+    <div class="widget-body">
+      <ul>
+        <li>
+          <% if @availability_engagement.availabilities.empty? %>
+            <%= link_to "Tell us your availability!", new_availability_path %>
+          <% else %>
+            <%= link_to "Tell us your availability!", edit_availability_path(@availability_engagement.availabilities.first.id) %>
+          <% end %>
+          This can speed up the process of finding
+          you a tutor and will help us pick a tutor that is a perfect fit for your schedule.
+        </li>
+        <li>
+          Check out the <%= link_to "Top Tutoring Blog", 'https://toptutoring.com/blog/' %>. We talk about current news
+          in the learning world, tips and tricks to help you get the most out of your tutoring sessions, and some great
+          advice from tutors and students who want to help you succeed. Everything is written
+          by our very own <b>Top Tutoring</b> gurus with years of experience in the world of tutoring.
+        </li>
+        <li>
+          Pre-pay for your first hour with your tutor. Pre-Paying for your first hour with your tutor will speed up the
+          sign-up process and keeps <b>Top Tutoring</b> and its clients safe from illegitimate transactions. If you'd like
+          to get a head-start, check out our pre-payment options over <%= link_to "here", one_time_payment_path %>.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="widget">
+    <div class="widget-heading">
+      <h5>Have any more questions or concerns?</h5>
+      Please let us know!
+
+      If necessary, a more detailed and formal message can be sent to us <%= link_to "here", 'https://toptutoring.com/contact/' %>.
+    </div>
+
+    <div class="widget-body">
+      <%= form_for current_user.feedbacks.build, url: dashboard_feedback_path do |form| %>
+          <%= form.text_area :comments, placeholder: "COMMENTS", rows: "3", style: "height:100px; margin-top: 25px;", required: true %>
+          <%= form.submit "Send Comment", class: "btn-success" %>
+      <% end %>
     </div>
   </div>
 </div>

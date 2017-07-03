@@ -16,10 +16,8 @@ class UsersController < Clearance::SessionsController
   end
 
   def update
-    current_user.update(
-      name: user_params[:name],
-      email: user_params[:email],
-      phone_number: user_params[:phone_number])
+    current_user.update_attribute(
+      :phone_number, user_params[:phone_number])
 
     if student_email_provided?
       student_name = user_params[:student][:name]
@@ -37,6 +35,12 @@ class UsersController < Clearance::SessionsController
       end
     else
       #Do not create student but save engagement info
+      if current_user.is_student?
+        student_name = current_user.name
+      else
+        student_name = user_params[:student][:name]
+      end
+      student_id = current_user.id
     end
 
     current_user.enable!
@@ -60,6 +64,7 @@ class UsersController < Clearance::SessionsController
   end
 
   def profile
+    @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
   end
 
   private
@@ -91,7 +96,7 @@ class UsersController < Clearance::SessionsController
     if current_user.is_student?
       client_as_student_info_params[:academic_type]
     else
-      params[:student_academic_type]
+      params[:info][:academic_type]
     end
   end
 

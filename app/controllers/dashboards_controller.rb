@@ -17,6 +17,10 @@ class DashboardsController < ApplicationController
     @invoice = Invoice.new()
   end
 
+  def client
+    @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
+  end
+
   private
 
   def build_student_for_client

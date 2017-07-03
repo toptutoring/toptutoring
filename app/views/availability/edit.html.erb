@@ -1,0 +1,269 @@
+<div class="row">
+  <div class="col-md-10">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h2 class="widget-title pull-left">
+          Student Availability
+        </h2>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>From</th>
+                <th></th>
+                <th>To</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= form_tag availability_path(@availabilities.first), method:"patch" do %>
+                <div class="col-md-3">
+                  Availability for
+                  <select name="info[current_engagement]" id="selectedEngagement" onChange="reloadForm(this.id)">
+                    <% @engagements.each do |engagement| %>
+                      <% student = engagement.student_name %>
+                      <% subject_name = Subject.find((engagement.subject).to_i).name %>
+                      <option value="<%= engagement.id %>"><%= student %> (Subject: <%= subject_name %>) </option>
+                    <% end %>
+                  </select>
+                </div>
+
+                <% loopCount = 0 %>
+                <% @availabilities.each do |availability, index| %>
+                  <%= fields_for 'availabilities[]', availability do |a| %>
+                      <tr>
+                          <td>
+                            <h5><%= @days[@availabilities.index(availability)] %></h5>
+                          </td>
+
+                          <td>
+                            <select name="info[<%= @days[@availabilities.index(availability)] %>_from]" required="required" id="timeFrame1-<%=loopCount%>" onChange="changeTimeFrame(this.id)">
+                              <option selected="selected"></option>
+                              <option value="N/a">Not Available</option>
+
+                              <%= (1..12).each do |hour| %>
+                                <% availability_hour = availability.from.time.hour %>
+                                <% if (availability_hour == 0 || availability_hour == 12) && hour == 12 %>
+                                  <% if availability.from.time.min == 30 %>
+                                    <option value="12:00">12:00</option>
+                                    <option value="12:30" selected>12:30</option>
+                                  <% else %>
+                                    <option value="12:00" selected>12:00</option>
+                                    <option value="12:30">12:30</option>
+                                  <% end %>
+                                <% else %>
+                                  <% if availability_hour >= 12 %>
+                                    <% availability_hour = availability_hour-12 %>
+                                  <% end %>
+                                  <% if availability_hour == hour && availability.from.time.min == 30 %>
+                                    <option value="<%= hour %>:00"><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30" selected><%= hour %>:30</option>
+                                  <% elsif availability_hour == hour %>
+                                    <option value="<%= hour %>:00" selected><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30"><%= hour %>:30</option>
+                                  <% else %>
+                                    <option value="<%= hour %>:00"><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30"><%= hour %>:30</option>
+                                  <% end %>
+                                <% end %>
+                              <% end %>
+
+                              <% if availability.from.time.hour == 0 && availability.to.time.hour == 0 && availability.to.time.hour !=30 %>
+                                <option value="N/a" selected>Not Available</option>
+                              <% end %>
+                            </select>
+                          </td>
+
+                          <td width="100px;">
+                            <select name="info[<%= @days[@availabilities.index(availability)] %>_from_am_pm]" required="required" id="ampm1-<%=loopCount%>" onChange="changeAMPM(this.id)" >
+                              <option value="am">am</option>
+                              <% if availability.from.time.hour >= 12 %>
+                                <option value="pm" selected>pm</option>
+                              <% else %>
+                                <option value="pm">pm</option>
+                              <% end %>
+                            </select>
+                          </td>
+
+                          <td>
+                            <select name="info[<%= @days[@availabilities.index(availability)] %>_to]" required="required" id="timeFrame2-<%=loopCount%>">
+                              <option selected="selected"></option>
+                              <option value="N/a">Not Available</option>
+                              <%= (1..12).each do |hour| %>
+                                <% availability_hour = availability.to.time.hour %>
+                                <% if (availability_hour == 0 || availability_hour == 12) && hour == 12 %>
+                                  <% if availability.to.time.min == 30 %>
+                                    <option value="12:00">12:00</option>
+                                    <option value="12:30" selected>12:30</option>
+                                  <% else %>
+                                    <option value="12:00" selected>12:00</option>
+                                    <option value="12:30">12:30</option>
+                                  <% end %>
+                                <% else %>
+                                  <% if availability_hour >= 12 %>
+                                    <% availability_hour = availability_hour-12 %>
+                                  <% end %>
+                                  <% if availability_hour == hour && availability.to.time.min == 30 %>
+                                    <option value="<%= hour %>:00"><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30" selected><%= hour %>:30</option>
+                                  <% elsif availability_hour == hour %>
+                                    <option value="<%= hour %>:00" selected><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30"><%= hour %>:30</option>
+                                  <% else %>
+                                    <option value="<%= hour %>:00"><%= hour %>:00</option>
+                                    <option value="<%= hour %>:30"><%= hour %>:30</option>
+                                  <% end %>
+                                <% end %>
+                              <% end %>
+
+                              <% if availability.from.time.hour == 0 && availability.to.time.hour == 0 && availability.to.time.hour !=30 %>
+                                <option value="N/a" selected>Not Available</option>
+                              <% end %>
+                            </select>
+                          </td>
+
+                          <td width="100px;">
+                            <select name="info[<%= @days[@availabilities.index(availability)] %>_to_am_pm]" required="required" id="ampm2-<%=loopCount%>">
+                              <option value="am">am</option>
+                              <% if availability.to.time.hour >= 12 %>
+                                <option value="pm" selected>pm</option>
+                              <% else %>
+                                <option value="pm">pm</option>
+                              <% end %>
+                            </select>
+                          </td>
+                        </tr>
+                  <% end %>
+                  <% loopCount+=1 %>
+                <% end %>
+                  <tr>
+                    <td></td><td></td><td></td>
+                    <td colspan="2">
+                        <%= submit_tag "Submit", class:"btn-success" %>
+                    </td>
+                  </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <h5>*All times are in (PST). Timezones can be updated in your <%= link_to "profile", profile_path %>.</h5>
+  </div>
+  <div class="col-md-2" id="feedbackStuff">
+    <div class="widget"style="float: right; display: inline-block;">
+      <div class="widget-heading clearfix" style="background-color: #ffffee;">
+        Schedules change often, but indicating initial availability will help us match you with a tutor that fits your schedule.
+        Scheduling further sessions can be done between you and your tutor.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  function changeAMPM(id) {
+    var lastCharacterOfId = id.slice(-1);
+
+    var changedAMPMElement = document.getElementById(id);
+    var AMPMElementToChange = document.getElementById('ampm2-'+lastCharacterOfId);
+
+    if(changedAMPMElement.options[changedAMPMElement.selectedIndex].text == 'pm') {
+      AMPMElementToChange.selectedIndex = 1;
+    }
+
+    var changedTimeElement = document.getElementById('timeFrame1-'+lastCharacterOfId);
+    var timeElementToChange = document.getElementById('timeFrame2-'+lastCharacterOfId);
+
+    //If the user has previously selected a value in the second dropdown, store it's text value here
+    var timeElementToChangeText = timeElementToChange.options[timeElementToChange.selectedIndex].text;
+    var changedTimeElementText = changedTimeElement.options[changedTimeElement.selectedIndex].text
+
+    if (changedTimeElementText == "Not Available") {
+      return;
+    }
+    repopulateSecondDropdown(changedTimeElement, timeElementToChange);
+
+    //shorten the list if pm
+    if(changedAMPMElement.options[changedAMPMElement.selectedIndex].text == 'pm') {
+      if(changedTimeElementText != '12:00' && changedTimeElementText != '12:30') {
+        for(var i=changedTimeElement.selectedIndex; i>0; i--){
+            timeElementToChange.options[i] = null;
+        }
+
+      }
+    }
+    keepSecondDropdownAtPreviousValue(timeElementToChange, timeElementToChangeText)
+  }
+
+  //this function is here just in case the customer presses PM before choosing a time
+  function changeTimeFrame(id) {
+    var lastCharacterOfId = id.slice(-1);
+
+    var changedTimeElement = document.getElementById('timeFrame1-'+lastCharacterOfId);
+    var timeElementToChange = document.getElementById('timeFrame2-'+lastCharacterOfId);
+
+    var timeElementToChangeText = timeElementToChange.options[timeElementToChange.selectedIndex].text;
+    var changedTimeElementText = changedTimeElement.options[changedTimeElement.selectedIndex].text
+
+    if (changedTimeElementText == "Not Available") {
+      timeElementToChange.selectedIndex = 1;
+      return;
+    }
+
+    var correspondingAMPMElement = document.getElementById('ampm1-'+lastCharacterOfId);
+
+    repopulateSecondDropdown(changedTimeElement, timeElementToChange);
+
+    //shorten list if pm
+    if(correspondingAMPMElement.options[correspondingAMPMElement.selectedIndex].text == 'pm') {
+      if(changedTimeElementText != '12:00' && changedTimeElementText != '12:30') {
+        for(var i=changedTimeElement.selectedIndex; i>0; i--){
+            timeElementToChange.options[i] = null;
+        }
+      }
+    }
+    keepSecondDropdownAtPreviousValue(timeElementToChange, timeElementToChangeText)
+  }
+
+  //Repopulate the second dropdown each time just incase the user changes their mind about the first dropdown
+  function repopulateSecondDropdown(changedTimeElement, timeElementToChange) {
+    while(timeElementToChange.firstChild) {
+      timeElementToChange.removeChild(timeElementToChange.firstChild)
+    }
+
+    for(var i =0; i<26; i++) {
+      var newElement = document.createElement("option");
+      newElement.value = changedTimeElement[i].value;
+      newElement.text = changedTimeElement[i].text;
+      timeElementToChange.append(newElement);
+    }
+  }
+
+  //If there is already a value selected in the second dropdown, make sure it stays selected if the first dropdown changes
+  function keepSecondDropdownAtPreviousValue(timeElementToChange, compareText) {
+    for(var j=0; j<timeElementToChange.options.length; j++) {
+      if(timeElementToChange.options[j].text == compareText) {
+        timeElementToChange.selectedIndex = j;
+      }
+    }
+  }
+
+  function reloadForm(id) {
+
+    var currentEngagementSelectElement = document.getElementById(id);
+    var e_id = currentEngagementSelectElement.options[currentEngagementSelectElement.selectedIndex].value;
+
+    var oReq = new XMLHttpRequest();
+
+    function reqListener() {
+      window.location.search += '&engagement_id='+e_id;
+    }
+
+    oReq.addEventListener("load", reqListener);
+    oReq.open("POST", "<%= availability_dropdown_change_path %>", true);
+    oReq.send("engagement_id="+e_id);
+  }
+</script>

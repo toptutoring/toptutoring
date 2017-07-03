@@ -5,6 +5,7 @@ class Engagement < ActiveRecord::Base
   belongs_to :tutor, class_name: "User", foreign_key: "tutor_id"
 
   has_many :invoices
+  has_many :availabilities
 
   #### Scopes ####
 

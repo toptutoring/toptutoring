@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :roles, through: :user_roles
   has_many :tutor_profiles
   has_many :subjects, through: :tutor_profiles
+  has_many :feedbacks
   accepts_nested_attributes_for :subjects
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
