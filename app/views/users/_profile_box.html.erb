@@ -52,7 +52,7 @@
           <div class="media-body">
             <p>Dwolla:
             <% if current_user.has_valid_dwolla? %>
-               Authenticated
+               Authenticated, but feel free to <a href="/auth/dwolla">authenticate again.</a>
             <% else %>
               <a href="/auth/dwolla">Please Authenticate</a>
             <% end %>
