@@ -21,7 +21,7 @@
               <% @timesheets.where(status: "pending").each do |t| %>
                 <tr>
                   <td><%= t.updated_at.strftime("%-m/%e/%y") %></td>
-                  <td><%= t.date.strftime("%-m/%e/%y") %></td>
+                  <td><%= t.date.strftime("%-m/%-e/%y") %></td>
                   <td><%= t.hours / 60.0 %></td>
                   <td><%= t.description %></td>
                   <td><%= t.status %></td>
@@ -58,7 +58,7 @@
             <tbody>
               <% @timesheets.where("status != 'pending'").order(:status).each do |t| %>
                 <tr>
-                  <td><%= t.updated_at.strftime("%-m/%e/%y") %></td>
+                  <td><%= t.updated_at.strftime("%-m/%-e/%y") %></td>
                   <td><%= t.date.strftime("%-m/%e/%y") %></td>
                   <td><%= t.hours / 60.0 %></td>
                   <td><%= t.description %></td>
@@ -66,8 +66,8 @@
                   <td>
                     <% if t.status != "paid" %>
                       <%= link_to "Edit", edit_employees_timesheet_path(t) %> / 
+                      <%= link_to "Delete", employees_timesheet_path(t), method: :delete, data: { confirm: "Are you sure?" } %>
                     <% end %>
-                    <%= link_to "Delete", employees_timesheet_path(t), method: :delete, data: { confirm: "Are you sure?" } %>
                   </td>
                 </tr>
               <% end %>
