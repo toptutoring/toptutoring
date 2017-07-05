@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
 
   def has_valid_dwolla?
     begin
-      access_token.present? && refresh_token.present?
+      access_token && refresh_token
     rescue OpenSSL::Cipher::CipherError
       false
     end
