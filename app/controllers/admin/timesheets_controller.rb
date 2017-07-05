@@ -5,17 +5,5 @@ module Admin
     def index
       @timesheets = Timesheet.all
     end
-
-    def edit
-
-    end
-
-    def update
-
-    end
-    
-    def destroy
-
-    end
   end
 end
