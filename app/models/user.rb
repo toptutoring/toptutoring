@@ -22,7 +22,6 @@ class User < ActiveRecord::Base
   has_many :subjects, through: :tutor_profiles
   has_many :feedbacks
   has_many :timesheets
->>>>>>> Added correct relation to user
   accepts_nested_attributes_for :subjects
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
