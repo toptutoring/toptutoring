@@ -34,7 +34,7 @@ feature 'Create Invoice', js: true do
     fill_in "invoice[subject]", with: "Mathmatics"
     fill_in "Description", with: "for this weeks payment"
 
-    click_on "Submit"
+    click_on "Create Invoice"
 
     expect(page).to have_content("Session successfully logged!")
 
@@ -55,7 +55,7 @@ feature 'Create Invoice', js: true do
     fill_in "invoice[subject]", with: "Mathmatics"
     fill_in "Description", with: "for this weeks payment"
 
-    click_on "Submit"
+    click_on "Create Invoice"
 
     expect(page).to have_content("The session has been logged but
               the client has a negative balance of hours. You may not be paid
