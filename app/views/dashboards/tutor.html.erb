@@ -2,17 +2,16 @@
 <% unless current_user.enabled? %>
   <%= render "users/set_up_account" %>
 <% else %>
-<div class="row">
-  <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
-  <%= render "students" %>
-</div>
+  <div class="row">
+    <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
+    <%= render "students" %>
+  </div>
 
-<div class="row">
-          <%= render "invoice_form" %>
+  <div class="row">
+    <%= render "invoice_form" %>
+    <% if current_user.roles.pluck(:name).include?("employee") %>
+      <%= render "employees/timesheet_form" %>
+    <% end %>
 
-  <% if current_user.roles.pluck(:name).include?("employee") %>
-    <%= render "employees/timesheet_form" %>
-  <% end %>
-
-</div>
+  </div>
 <% end %>
