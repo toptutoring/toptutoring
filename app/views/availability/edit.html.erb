@@ -24,8 +24,7 @@
                   <select name="info[current_engagement]" id="selectedEngagement" onChange="reloadForm(this.id)">
                     <% @engagements.each do |engagement| %>
                       <% student = engagement.student_name %>
-                      <% subject_name = Subject.find((engagement.subject).to_i).name %>
-                      <option value="<%= engagement.id %>"><%= student %> (Subject: <%= subject_name %>) </option>
+                      <option value="<%= engagement.id %>"><%= student %>: <%= get_subject_name(engagement.subject) %> </option>
                     <% end %>
                   </select>
                 </div>

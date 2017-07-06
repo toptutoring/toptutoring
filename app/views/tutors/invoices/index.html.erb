@@ -23,7 +23,7 @@
                   presenter = InvoicePresenter.new(invoice) %>
                   <tr>
                     <td><%= presenter.client_name %></td>
-                    <td><%= presenter.subject %></td>
+                    <td><%= get_subject_name(presenter.subject) %></td>
                     <td class="text-center"><%= presenter.academic_type %></td>
                     <td class="text-center"><%= presenter.created_at %></td>
                     <td class="text-center"><%= presenter.description %></td>
