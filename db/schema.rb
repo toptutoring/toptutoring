@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 20170627011243) do
 
   create_table "timesheets", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "hours"
+    t.integer  "minutes"
     t.text     "description"
     t.date     "date"
     t.string   "status"
