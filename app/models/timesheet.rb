@@ -1,13 +1,22 @@
 class Timesheet < ApplicationRecord
   belongs_to :users
-  validate :hours_must_be_quarter_hours, :date_must_be_before_today
+  validate :minutes_must_be_quarter_hours, :date_must_be_before_today,
+           :minutes_must_be_greater_or_equal_to_one
+  validates :minutes, numericality: { only_integer: true }
 
-  def hours_must_be_quarter_hours
-    hours_divided = hours.to_f * 4
-    errors.add(:hours, "must be in quarter hours") unless hours_divided == hours_divided.to_i
+  def minutes_must_be_quarter_hours
+    errors.add(:hours, "must be in quarter hours") unless (minutes % 15).zero?
+  end
+
+  def minutes_must_be_greater_or_equal_to_one
+    errors.add(:hours, "must be greater or equal to 1") unless minutes >= 1
   end
 
   def date_must_be_before_today
-    errors.add(:date, "may not be in the future.") unless date.to_date <= Date.today.end_of_day
+    input_date = date.to_date
+    today = Date.today.end_of_dayif input_date >= today
+    return unless input_date >= today
+    date_string = today.strftime("%-m/%-e/%y")
+    errors.add(:date, "must be on or before #{date_string}")
   end
 end
