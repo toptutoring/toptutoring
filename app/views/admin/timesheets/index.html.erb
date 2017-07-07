@@ -22,9 +22,9 @@
               <% @timesheets.where(status: "pending").each do |t| %>
                 <tr>
                   <td><%= User.find(t.user_id).name %></td>
-                  <td><%= t.updated_at.strftime("%-m/%e/%y") %></td>
-                  <td><%= t.date.strftime("%-m/%e/%y") %></td>
-                  <td><%= t.hours / 60.0 %></td>
+                  <td><%= t.updated_at.strftime("%-m/%-e/%y") %></td>
+                  <td><%= t.date.strftime("%-m/%-e/%y") %></td>
+                  <td><%= t.minutes / 60.0 %></td>
                   <td><%= t.description %></td>
                   <td><%= t.status %></td>
                   <td><%= link_to "Pay", edit_admin_timesheet_path(t) %></td>
@@ -62,9 +62,9 @@
               <% @timesheets.where("status != 'pending'").order(:status).each do |t| %>
                 <tr>
                   <td><%= User.find(t.user_id).name %></td>
-                  <td><%= t.updated_at.strftime("%-m/%e/%y") %></td>
-                  <td><%= t.date.strftime("%-m/%e/%y") %></td>
-                  <td><%= t.hours / 60.0 %></td>
+                  <td><%= t.updated_at.strftime("%-m/%-e/%y") %></td>
+                  <td><%= t.date.strftime("%-m/%-e/%y") %></td>
+                  <td><%= t.minutes / 60.0 %></td>
                   <td><%= t.description %></td>
                   <td><%= t.status %></td>
                   <td>

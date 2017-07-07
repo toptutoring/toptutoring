@@ -4,11 +4,12 @@ module Employees
     before_action :check_if_update_possible, only: [:update, :destroy]
 
     def create
-      if current_user.timesheets.create(timesheet_params)
+      @timesheet = current_user.timesheets.new(timesheet_params) 
+      if @timesheet.save
         redirect_to employees_timesheets_path, notice: 'Thank you for submitting your timesheet.' and return
       else
         redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: @invoice.errors.full_messages }) and return
+                      flash: { error: @timesheet.errors.full_messages }) and return
       end
     end
 
@@ -26,7 +27,7 @@ module Employees
         redirect_to(employees_timesheets_path, notice: 'Your timesheet has been updated') and return
       else
         redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: @invoice.errors.full_messages }) and return
+                      flash: { error: @timesheet.errors.full_messages }) and return
       end
     end
 
@@ -35,16 +36,16 @@ module Employees
         redirect_to(employees_timesheets_path, notice: 'Your timesheet has been deleted.') and return
       else
         redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: @invoice.errors.full_messages }) and return
+                      flash: { error: @timesheet.errors.full_messages }) and return
       end
     end
 
     private
 
     def timesheet_params
-      params[:timesheet][:hours] = (params[:timesheet][:hours].to_f * 60).to_i
+      params[:timesheet][:minutes] = (params[:timesheet][:minutes].to_f * 60).to_i
       params.require(:timesheet)
-            .permit(:hours, :date, :description)
+            .permit(:minutes, :date, :description)
             .merge(status: "pending")
     end
     
@@ -55,7 +56,7 @@ module Employees
     def check_if_update_possible
         @timesheet = current_user.timesheets.find(params[:id])
         if @timesheet.status == "paid"
-          redirect_to(employees_timesheets_path, notice: 'This invoice is already paid and can not be updated.') and return
+          redirect_to(employees_timesheets_path, notice: 'This timesheet is already paid and can not be updated.') and return
         end
     end
   end
