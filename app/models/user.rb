@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   scope :with_tutor_role, -> { joins(:roles).where("roles.name = ?", "tutor").distinct }
   scope :with_client_role, -> { joins(:roles).where("roles.name = ?", "client").distinct }
   scope :with_student_role, -> { joins(:roles).where("roles.name = ?", "student").distinct }
-  scope :admin, -> { joins(:roles).where("roles.name = ?", "admin").distinct.first }
+  scope :admin, -> { joins(:roles).where("roles.name = ?", "admin").distinct.first || [] }
   scope :with_external_auth, -> { where.not(encrypted_access_token: nil) & where.not(encrypted_refresh_token: nil) }
   scope :tutors_with_external_auth, -> { with_tutor_role.with_external_auth }
   scope :enabled, -> { where(access_state: "enabled") }

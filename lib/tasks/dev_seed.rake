@@ -83,6 +83,10 @@ namespace :dev do
     director.roles = ["tutor", "director"]
     director.save!
 
+    contract = Contract.where(user_id: director.id).first_or_initialize
+    contract.hourly_rate = 40
+    contract.save!
+
     # Update admin
     admin = User.where(email: "admin@example.com").first_or_initialize
     admin.name = "Admin"
