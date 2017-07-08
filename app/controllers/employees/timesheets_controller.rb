@@ -43,10 +43,10 @@ module Employees
     private
 
     def timesheet_params
-      params[:timesheet][:minutes] = (params[:timesheet][:minutes].to_f * 60).to_i
-      params.require(:timesheet)
+      minutes = (params[:timesheet][:hours].to_f * 60).to_i
+      params.require(:timesheet).except(:hours)
             .permit(:minutes, :date, :description)
-            .merge(status: "pending")
+            .merge(status: "pending", minutes: minutes)
     end
     
     def not_paid?
