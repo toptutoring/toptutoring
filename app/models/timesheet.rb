@@ -14,7 +14,7 @@ class Timesheet < ApplicationRecord
 
   def date_must_be_before_today
     input_date = date.to_date
-    today = Date.today.end_of_dayif input_date >= today
+    today = Date.today.end_of_day
     return unless input_date >= today
     date_string = today.strftime("%-m/%-e/%y")
     errors.add(:date, "must be on or before #{date_string}")
