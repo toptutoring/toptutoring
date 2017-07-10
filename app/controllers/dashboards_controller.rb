@@ -15,6 +15,7 @@ class DashboardsController < ApplicationController
   def tutor
     @tutor_engagements = current_user.tutor_engagements
     @invoice = Invoice.new()
+    @timesheet = Timesheet.new()
   end
 
   def client
