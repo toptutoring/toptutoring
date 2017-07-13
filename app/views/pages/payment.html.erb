@@ -1,20 +1,132 @@
-</br>
-<div class="payment-container text-center">
-  <h5 class="confirmation-title">Thank you for trying to make a payment.  We have moved your payment page into your dashboard after you log in.</h5>
+</br></br></br>
+<div class="row">
+  <% if @invoices.empty? %>
+    <div>
+      <%= render "payment_form" %>
+    </div>
+  <% else %>
+    <div class="col-md-5 col-md-offset-2">
+
+      <div class="row">
+        <h3><i class="glyphicon glyphicon-alert" style="color:#ff4444;"></i> You have unpaid first tutoring sessions</h3>
+        <% @invoices.each do |invoice| %>
+          </br>
+          <h5><%= invoice.engagement.student_name %>'s first session: </h5>
+          <div>
+            <span class="col-md-8"><b>Notes:</b> <%= invoice.description %></span>
+            <span class="pull-right"><%= link_to("Pay", {controller: "pages", action: "first_session_payment", invoice: invoice},
+              class: "btn btn-block payment_submit", remote: true, method: "post") %></span>
+            <span class="pull-right" style="padding-right: 25px;"><h4>Price: $<%= invoice.hours * invoice.hourly_rate %></h4></span>
+          </div>
+        <% end %>
+      </div>
+
+      <% if current_user.academic_credit < 0.5 || current_user.test_prep_credit < 0.5 %>
+        </br>
+        <div class="separator clearfix"></div>
+        <div class="row">
+          <h3><i class="glyphicon glyphicon-alert" style="color:#ff4444;"></i> Your balance is low</h3>
+            </br>
+            <% if @total_suggested_hours != 0 %>
+              <h5 style="display:inline;">Total Suggested number of hours:</h5> <h4 style="color:#004444; display: inline;"> <%= @total_suggested_hours %> hours</h4><h5 style="display:inline;"> of Academic/Test Prep credit</h5>
+              </br>
+              <div class="col-md-8">Your balance is low. Your tutor has suggested this many hours of tutoring. Please purchase these
+                number of hours in order for the tutor to schedule additional sessions.
+              </div>
+            <% else %>
+            <div class="col-md-8">Your balance is running low! We recommend that you purchase more hours
+              in order for the tutor to schedule additional sessions. This will help interactions
+              with your tutor run smoothly. Thank you.
+
+              </br></br>Have a question about this? <%= link_to "Please ask us!", "#" %>
+            </div>
+            <span class="col-md-3 pull-right"><%= link_to("Purchase more hours", "#", class: "btn btn-block payment_submit") %></span>
+            <% end %>
+        </div>
+      <% end %>
+
+      <% if @total_suggested_hours != 0 %>
+        <br>
+        <div class="row">
+          <table class="table mb-0">
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Suggested Hours</th>
+            <th>Tutoring Type</th>
+            <th>Total</th>
+
+            <% @invoices.each do |invoice| %>
+              <tr>
+                <td><%= invoice.tutor.name %></td>
+                <td><%= invoice.engagement.student_name %></td>
+                <td><%= invoice.suggested_hours %> hours</td>
+                <td><%= invoice.engagement.academic_type %></td>
+                <td>$<%= invoice.suggested_hours*invoice.hourly_rate %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      <% end %>
+
+    <% if @total_suggested_hours != 0 %>
+      </br></br>
+        <div class="separator clearfix"></div>
+
+          <% count = 1 %>
+          <div class="row">
+            <% @invoices.each do |invoice| %>
+              <div class="form-group">
+                <h6 id="tutoring_rate-<%= count %>">Tutor's hourly rate: $<%= invoice.hourly_rate %></h6>
+                <div class="col-sm-3">
+                  <div class="input-group">
+                    <input type="number" class="form-control col-sm-3 input-sm amount" name="payment[amount]"
+                      min="0" id="amount-<%= count %>" step="any" max="999999" placeholder="Amount" aria-label="Amount" onChange="calculateProduct(this.id);"/>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 style="display:inline;">
+                  hours for <%= invoice.engagement.student_name %> X $<%= invoice.hourly_rate %>
+                  = $<h3 style="display:inline" id="product-<%= count %>">0</h3>
+                </h4>
+                <span class="pull-right" style="visibility: hidden;" id="pay-button-<%= count %>">
+                  <%= link_to("Pay", {controller: 'pages', action: 'low_balance_payment', invoice: invoice},
+                  class: "btn btn-block payment_submit", remote: true, method: "post") %>
+                </span>
+              </div>
+              <% count = count + 1 %>
+            <% end %>
+          </div>
+    <% end %>
+
+
+    </div>
+  <% end %> <!-- first if statement -->
+
+  <div id="payment_section">
+  </div>
+
 </div>
 
-</br>
-<div class="payment-container text-center">
-  <h5 class="confirmation-title">
-    Please
-    <%= link_to "log in", sign_in_path %>.
-    If this is your first time logging in, you may need to <%= link_to "reset your password", reset_password_path %>.
-  </h5>
-</div>
+<script>
+  function calculateProduct(id) {
+    var currentCount = id.slice(-1);
+    var input = document.getElementById("amount-"+currentCount);
+    var output = document.getElementById("product-"+currentCount);
+    var payButton = document.getElementById("pay-button-"+currentCount);
+    var tutoring_rate_string = document.getElementById("tutoring_rate-"+currentCount).textContent
 
-</br>
-<div class="payment-container text-center">
-  <h5 class="confirmation-title">
-    In the future, you can log in at any time with the 'Sign In' link at the top of the page.
-  </h5>
-</div>
+    var tutoring_rate = tutoring_rate_string.match(/\d+$/)[0];
+
+    var product = input.value*tutoring_rate
+
+    if(product != 0) {
+      payButton.style.visibility = "visible";
+    }
+    else {
+      payButton.style.visibility = "hidden";
+    }
+    output.textContent = product;
+  }
+</script>
