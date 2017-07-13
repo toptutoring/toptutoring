@@ -81,8 +81,8 @@ Rails.application.routes.draw do
     get "/dashboard" => "dashboards#student"
   end
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("employee") } do
-    namespace :employees do
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("contractor") } do
+    namespace :contractors do
       resources :timesheets
     end
   end

@@ -1,9 +1,3 @@
-<style>
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-   opacity: 1;
-}
-</style>
 <div class="col-md-6 center-block invoice-form">
   <div class="widget">
     <div class="widget-heading clearfix">
@@ -12,7 +6,7 @@ input[type=number]::-webkit-outer-spin-button {
     </div>
     <div class="widget-body">
 
-      <%= form_for [:employees, @timesheet], :html => { class: "form-horizontal" } do |f| %>
+      <%= form_for [:contractors, @timesheet], :html => { class: "form-horizontal" } do |f| %>
 
         <div class="form-group">
           <label for="minutes" class="col-md-3 col-sm-3 control-label">Hours</label>
