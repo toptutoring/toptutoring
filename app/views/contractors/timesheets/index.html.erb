@@ -25,7 +25,7 @@
                   <td><%= t.minutes / 60.0 %></td>
                   <td><%= t.description %></td>
                   <td><%= t.status %></td>
-                  <td><%= link_to "Edit", edit_employees_timesheet_path(t) %> / <%= link_to "Delete", employees_timesheet_path(t), method: :delete, data: { confirm: "Are you sure?" } %></td>
+                  <td><%= link_to "Edit", edit_contractors_timesheet_path(t) %> / <%= link_to "Delete", contractors_timesheet_path(t), method: :delete, data: { confirm: "Are you sure?" } %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -65,8 +65,8 @@
                   <td><%= t.status %></td>
                   <td>
                     <% if t.status != "paid" %>
-                      <%= link_to "Edit", edit_employees_timesheet_path(t) %> / 
-                      <%= link_to "Delete", employees_timesheet_path(t), method: :delete, data: { confirm: "Are you sure?" } %>
+                      <%= link_to "Edit", edit_contractors_timesheet_path(t) %> / 
+                      <%= link_to "Delete", contractors_timesheet_path(t), method: :delete, data: { confirm: "Are you sure?" } %>
                     <% end %>
                   </td>
                 </tr>

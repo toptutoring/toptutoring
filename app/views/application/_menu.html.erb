@@ -126,9 +126,9 @@
             <% end %>
           </li>
         <% end %>
-        <% if current_user.has_role?("employee") %>
+        <% if current_user.has_role?("contractor") %>
           <li class="panel">
-            <%= link_to employees_timesheets_path do %>
+            <%= link_to contractors_timesheets_path do %>
               <i class="icon ion-cash bg-success"></i>
               <span class="sidebar-title">Timesheets</span>
             <% end %>
