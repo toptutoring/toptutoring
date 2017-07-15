@@ -14,22 +14,36 @@
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Subject</th>
-                <th>Action</th>
+                <th>Tutoring Type</th>
+                <th>Credits</th>
               </tr>
             </thead>
             <tbody>
-              <% @students.each do |student| %>
+              <% @tutor_engagements.each do |engagement| %>
                 <tr>
-                  <td><%= student.name %></td>
-                  <td><%= student.client_id ? student.client.name : student.name %></td>
-                  <td><%= student.email %></td>
-                  <td><%= student.phone_number %></td>
-                  <td><%= student.is_student? ? student.client_info.subject : student.student_info.subject %></td>
-                  <% if can_send_email?(student.client_id ? student.client : student) %>
-                    <td>
-                      <%= link_to "Send Email", new_email_path(student), class: "btn btn-outline btn-primary" %>
-                    </td>
+                  <% client = User.find(engagement.client_id) %>
+                  <td><%= engagement.student_name %></td>
+                  <td><%= client.name %></td>
+                  <td><%= client.email %></td>
+                  <td><%= client.phone_number %></td>
+                  <td><%= engagement.subject %></td>
+                  <td><%= engagement.academic_type %></td>
+                  <% if engagement.academic_type == "Test_Prep" %>
+                    <td><%= client.test_prep_credit %></td>
+                  <% else %>
+                    <td><%= client.academic_credit %></td>
                   <% end %>
+                </tr>
+                <tr>
+                  <td colspan="7" class="text-right">
+                    <% pending_suggestion = engagement.suggestions.where(status: "pending").take %>
+                    <% if pending_suggestion %>
+                      <%= "\"#{pending_suggestion.description}\"" %><br/>
+                      <%= "You have suggested #{pending_suggestion.hours} hours for #{engagement.student_name}." %> <%= link_to "Edit your suggestion.", edit_tutors_suggestion_path(pending_suggestion.id) %>
+                    <% else %>
+                      You have no pending suggestions for <%= engagement.student_name %>. <%= link_to "Make a Suggestion.", new_tutors_suggestion_path(id: engagement) %>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>
