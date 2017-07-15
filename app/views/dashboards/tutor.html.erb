@@ -7,12 +7,24 @@
     <%= render "students" %>
   </div>
 
-  <div class="row">
-    <% if current_user.roles.pluck(:name).include?("contractor") %>
-      <%= render partial: "invoice_form", locals: { center: false } %>
-      <%= render "contractors/timesheet_form" %>
+    <% if @low_balance_engagements %>
+      <div class="row">
+        <%= render "tutors/suggestions/suggestion_dashboard_form" %>
+        <%= render partial: "invoice_form", locals: { center: false } %>
+      </div>
+      <% if current_user.roles.pluck(:name).include?("employee") %>
+        <div class="row">
+          <%= render partial: "contractors/timesheet_form", locals: { center: true } %>
+        </div>
+      <% end %>
     <% else %>
-      <%= render partial: "invoice_form", locals: { center: true } %>
+      <div class="row">
+      <% if current_user.roles.pluck(:name).include?("employee") %>
+        <%= render partial: "invoice_form", locals: { center: false } %>
+        <%= render partial: "contractors/timesheet_form", locals: { center: false } %>
+      <% else %>
+        <%= render partial: "invoice_form", locals: { center: true } %>
+      <% end %>
+      </div>
     <% end %>
-  </div>
-<% end %>
+  <% end %>

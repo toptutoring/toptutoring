@@ -57,6 +57,7 @@ Rails.application.routes.draw do
       resources :students, only: [:index]
       resources :invoices, only: [:index, :create]
       resources :emails, only: [:index]
+      resources :suggestions
     end
     resources :users do
       member do
