@@ -46,6 +46,7 @@ class PagesController < ApplicationController
   def low_balance_payment
 
     @invoice = Invoice.find(params[:invoice])
+    @count = params[:count]
 
     respond_to do |format|
       format.js { render :file => 'pages/low_balance_payment.js.erb' }

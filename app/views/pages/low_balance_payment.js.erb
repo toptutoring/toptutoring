@@ -1,8 +1,8 @@
 var payment_section = document.getElementById("payment_section");
 payment_section.innerHTML = ("<%= escape_javascript(render :partial => 'payment_form') %>");
 
-var product = document.getElementById("product-1");
-var amount = document.getElementById("amount-1");
+var product = document.getElementById("product-"+ <%= @count %>);
+var amount = document.getElementById("amount-"+ <%= @count %>);
 
 document.getElementById("amount").value = parseInt(product.textContent);
 document.getElementById("hours").value = amount.value;
