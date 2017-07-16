@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
     namespace :admin do
       resources :users, only: [:index, :edit, :update]
+      resources :timesheets
     end
     mount Sidekiq::Web, at: "/sidekiq"
     get "/dashboard" => "dashboards#admin"
@@ -78,6 +79,12 @@ Rails.application.routes.draw do
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("student") } do
     get "/dashboard" => "dashboards#student"
+  end
+
+  constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("contractor") } do
+    namespace :contractors do
+      resources :timesheets
+    end
   end
 
   # API

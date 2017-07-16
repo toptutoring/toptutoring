@@ -2,17 +2,11 @@
 <div class="row">
   <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
   <%= render "engagements" %>
-  <div class="col-md-8 col-md-offset-2 invoice-form">
-    <div class="col-md-12">
-      <div class="widget">
-        <div class="widget-heading clearfix">
-          <h3 class="widget-title text-center">Invoice session</h3>
-          <p class="widget-hint pull-left">Use this form to log past sessions with your students</p>
-        </div>
-        <div class="widget-body">
-          <%= render "invoice_form" %>
-        </div>
-      </div>
-    </div>
-  </div>
-</end>
+</div>
+<div class="row">
+  <% if current_user.roles.pluck(:name).include?("contractor") %>
+    <%= render "contractors/timesheet_form" %>
+    <%= render partial: "invoice_form", locals: { center: false } %>
+  <% else %>
+    <%= render partial: "invoice_form", locals: { center: true } %>
+  <% end %> </div>

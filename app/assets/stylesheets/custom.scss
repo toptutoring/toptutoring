@@ -1,5 +1,26 @@
+.unfloat {
+  float: none;
+}
+
 .fs-120 {
   font-size: 120px;
+}
+
+input[type="date"] {
+  height: 50px;
+  width: 100%;
+  background: #F5F5F4;
+  border: 0;
+  padding: 0 20px;
+}
+
+input[type=date]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  display: none;
+}
+
+input[type=date]::-webkit-calendar-picker-indicator {
+  font-size: 1.25em;
 }
 
 .btn {

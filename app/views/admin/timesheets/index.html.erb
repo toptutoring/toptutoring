@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Pending Timesheets</h3>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0 table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="col-lg-1 col-sm-1">Submitted By</th>
+                <th class="col-lg-1 col-sm-1">Date Submitted</th>
+                <th class="col-lg-1 col-sm-1">Date of Work</th>
+                <th class="col-lg-1 col-sm-1">Total Hours</th>
+                <th class="text-center">Description</th>
+                <th class="col-lg-1 col-sm-1">Status</th>
+                <th class="col-lg-2 col-sm-2"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @timesheets.where(status: "pending").each do |t| %>
+                <tr>
+                  <td><%= User.find(t.user_id).name %></td>
+                  <td><%= t.updated_at.strftime("%-m/%-e/%y") %></td>
+                  <td><%= t.date.strftime("%-m/%-e/%y") %></td>
+                  <td><%= t.minutes / 60.0 %></td>
+                  <td><%= t.description %></td>
+                  <td><%= t.status %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Processed Timesheets</h3>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0 table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="col-lg-2 col-sm-2">Submitted By</th>
+                <th class="col-lg-1 col-sm-1">Last updated</th>
+                <th class="col-lg-1 col-sm-1">Date of Work</th>
+                <th class="col-lg-1 col-sm-1">Total Hours</th>
+                <th class="text-center">Description</th>
+                <th class="col-lg-1 col-sm-1">Status</th>
+                <th class="col-lg-2 col-sm-2"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @timesheets.where("status != 'pending'").order(:status).each do |t| %>
+                <tr>
+                  <td><%= User.find(t.user_id).name %></td>
+                  <td><%= t.updated_at.strftime("%-m/%-e/%y") %></td>
+                  <td><%= t.date.strftime("%-m/%-e/%y") %></td>
+                  <td><%= t.minutes / 60.0 %></td>
+                  <td><%= t.description %></td>
+                  <td><%= t.status %></td>
+                  <td>
+                    <% if t.status != "paid" %>
+                      <%= link_to "Update", edit_contractors_timesheet_path(t) %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -59,7 +59,7 @@ module Admin
     end
 
     def transfer_error
-      @transfer.error
+      @transfer.instance_variable_get(:@gateway).error
     end
 
     def set_payee
