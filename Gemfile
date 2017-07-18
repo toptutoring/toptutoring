@@ -4,7 +4,6 @@ ruby "2.4.1"
 
 gem "autoprefixer-rails"
 gem "sidekiq"
-gem "honeybadger"
 gem "jquery-rails"
 gem "normalize-rails", "~> 3.0.0"
 gem "pg"
