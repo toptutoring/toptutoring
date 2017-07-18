@@ -80,8 +80,8 @@
                 <h6 id="tutoring_rate-<%= count %>">Tutor's hourly rate: $<%= invoice.hourly_rate %></h6>
                 <div class="col-sm-3">
                   <div class="input-group">
-                    <input type="number" class="form-control col-sm-3 input-sm amount" name="payment[amount]"
-                      min="0" id="amount-<%= count %>" step="any" max="999999" placeholder="Amount" aria-label="Amount" onChange="calculateProduct(this.id);"/>
+                    <input type="number" class="form-control col-sm-3 input-sm" name="payment[amount]"
+                      min="0" id="low_balance_hours-<%= count %>" step="any" max="999999" placeholder="Amount" aria-label="Amount" onChange="calculateProduct(this.id);"/>
                   </div>
                 </div>
               </div>
@@ -105,7 +105,8 @@
     </div>
   <% end %> <!-- first if statement -->
 
-  <div id="payment_section">
+  <div id="payment_section" style="visibility:hidden;">
+    <%= render "payment_form" %>
   </div>
 
 </div>
@@ -113,7 +114,7 @@
 <script>
   function calculateProduct(id) {
     var currentCount = id.slice(-1);
-    var input = document.getElementById("amount-"+currentCount);
+    var input = document.getElementById("low_balance_hours-"+currentCount);
     var output = document.getElementById("product-"+currentCount);
     var payButton = document.getElementById("pay-button-"+currentCount);
     var tutoring_rate_string = document.getElementById("tutoring_rate-"+currentCount).textContent
@@ -130,19 +131,4 @@
     }
     output.textContent = product;
   }
-
-  function onHoursToPayChanged() {
-    var hoursField = document.getElementById("hours");
-    var amountField = document.getElementById("amount");
-    var rateField = document.getElementById("rate");
-
-    var hours = hoursField.value;
-    var rate = parseFloat(rateField.textContent);
-
-    console.log(hours);
-    console.log(rate);
-
-    amountField.value = (rate*hours).toFixed(2);
-  }
-
 </script>
