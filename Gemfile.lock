@@ -123,7 +123,6 @@ GEM
       activesupport (>= 4.2.0)
     hashdiff (0.3.4)
     hashie (3.5.5)
-    honeybadger (3.1.2)
     i18n (0.8.4)
     intercom-rails (0.3.5)
       activesupport (> 3.0)
@@ -357,7 +356,6 @@ DEPENDENCIES
   factory_girl_rails
   fake_stripe
   formulaic
-  honeybadger
   intercom-rails
   jquery-rails
   launchy
