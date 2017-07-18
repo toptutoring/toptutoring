@@ -5,7 +5,7 @@
 <% end %>
   <div class="widget">
     <div class="widget-heading">
-      <h3 class="widget-title text-center">Invoice session</h3>
+      <h3 class="widget-title pb-10 text-center">Invoice session</h3>
       <p class="widget-hint pull-left">Use this form to log past sessions with your students</p>
     </div>
     <div class="widget-body">
@@ -14,25 +14,11 @@
         <div class="form-group">
           <label for="student" class="col-md-3 col-sm-3 control-label">Student</label>
           <div class="col-md-9 col-sm-9">
-            <%= f.select(:client_id,
-                         options_for_select(@tutor_engagements.map{ |engagement|
-              student = engagement.student ? engagement.student : engagement.client
-              presenter = StudentPresenter.new(student)
-              [engagement.student_name, engagement.client_id, {
-                'data-test-prep' => presenter.test_prep_credit,
-                'data-academic'  => presenter.academic_credit,
-                'data-assigned'  => presenter.academic_type
-              }]}, @tutor_engagements.first.try(:client_id)),
+            <%= f.select(:engagement_id, options_for_select(@tutor_engagements.map do |engagement|
+              ["#{engagement.student_name} for #{engagement.subject}", engagement.id]
+            end, @tutor_engagements.first ? @tutor_engagements.first.id : nil),
             {}, { class: "student", required: true}) %>
         </div>
-        </div>
-
-        <div class="form-group">
-          <label for="academic_type" class="col-md-3 col-sm-3 control-label">Type of Tutoring</label>
-          <div class="col-md-9 col-sm-9">
-            <select name="academic_type" class="academic_type">
-            </select>
-          </div>
         </div>
 
         <div class="form-group">

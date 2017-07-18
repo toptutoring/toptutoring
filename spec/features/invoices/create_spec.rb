@@ -15,7 +15,6 @@ feature 'Create Invoice', js: true do
     expect(page).to have_content("Invoice session")
     expect(page).to have_content("Use this form to log past sessions with your students")
     expect(page).to have_content("Student")
-    expect(page).to have_content("Type of Tutoring")
     expect(page).to have_content("Hours")
     expect(page).to have_content("Main Subject Covered")
     expect(page).to have_content("Description")
@@ -28,9 +27,7 @@ feature 'Create Invoice', js: true do
 
     sign_in(tutor)
 
-    find('.student').find(:xpath, 'option[2]').select_option
     find('.hours').find(:xpath, 'option[1]').select_option
-    find('.academic_type').find(:xpath, 'option[1]').select_option
     fill_in "invoice[subject]", with: "Mathmatics"
     fill_in "Description", with: "for this weeks payment"
 
@@ -49,9 +46,7 @@ feature 'Create Invoice', js: true do
 
     sign_in(tutor)
 
-    find('.student').find(:xpath, 'option[2]').select_option
-    find('.hours').find(:xpath, 'option[2]').select_option
-    find('.academic_type').find(:xpath, 'option[1]').select_option
+    find('.hours').find(:xpath, 'option[3]').select_option
     fill_in "invoice[subject]", with: "Mathmatics"
     fill_in "Description", with: "for this weeks payment"
 

@@ -16,9 +16,11 @@ feature 'Students Index' do
     expect(page).to have_content('Email')
     expect(page).to have_content('Phone Number')
     expect(page).to have_content('Subject')
-    expect(page).to have_content(engagement.student.name)
-    expect(page).to have_content(engagement.student.email)
-    expect(page).to have_content(engagement.student.phone_number)
+    expect(page).to have_content('Tutoring Type')
+    expect(page).to have_content('Credits')
+    expect(page).to have_content(engagement.student_name)
+    expect(page).to have_content(client.email)
+    expect(page).to have_content(client.phone_number)
     expect(page).to have_content(engagement.subject)
     end
 end

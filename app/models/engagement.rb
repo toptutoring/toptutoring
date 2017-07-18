@@ -6,6 +6,7 @@ class Engagement < ActiveRecord::Base
 
   has_many :invoices
   has_many :availabilities
+  has_many :suggestions
 
   #### Scopes ####
 

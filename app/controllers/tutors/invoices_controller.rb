@@ -1,7 +1,7 @@
 module Tutors
   class InvoicesController < ApplicationController
     before_action :require_login
-    before_action :set_client, :set_engagement, :authorize_tutor, only: :create
+    before_action :authorize_tutor, :set_engagement, :set_client, only: :create
 
     def index
       @invoices = current_user.invoices
@@ -17,7 +17,7 @@ module Tutors
                         has a negative balance of hours. You may not be paid for this session
                         unless the client adds to his/her hourly balance.' and return
         else
-          redirect_to tutors_students_path, notice: 'Session successfully logged!' and return
+          redirect_to tutors_invoices_path, notice: 'Session successfully logged!' and return
         end
       else
         redirect_back(fallback_location: (request.referer || root_path),
@@ -27,27 +27,28 @@ module Tutors
 
     private
     def invoice_params
-      if params[:academic_type].casecmp('academic') == 0
+      if @engagement.academic_type.casecmp('academic') == 0
         hourly_rate = MultiCurrencyAmount.from_cent(@client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
       else
         hourly_rate = MultiCurrencyAmount.from_cent(@client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
       end
       params.require(:invoice)
-        .permit(:client_id, :hours, :subject, :description)
-        .merge(tutor_id: current_user.id, hourly_rate: hourly_rate, engagement_id: @engagement.id)
+        .permit(:engagement_id, :hours, :subject, :description)
+        .merge(tutor_id: current_user.id, hourly_rate: hourly_rate)
     end
 
     def set_client
-      @client = User.find(params[:invoice][:client_id])
+      @client = User.find(@engagement.client_id)
     end
 
     def set_engagement
-      @engagement = Engagement.find_by(tutor_id: current_user.id, client_id: @client.id, academic_type: params[:academic_type])
+      @engagement = current_user.tutor_engagements.find(params[:invoice][:engagement_id])
     end
 
     def authorize_tutor
-      if @client.client_engagements.blank? || @client.client_engagements.pluck(:tutor_id).exclude?(current_user.id)
-        render file: "#{Rails.root}/public/404.html", layout: false, status: 404
+      unless current_user.tutor_engagements.where(state: "active").pluck(:id).include?(params[:invoice][:engagement_id].to_i)
+        redirect_back(fallback_location: (request.referer || root_path),
+                      flash: { error: "There was an error while processing your invoice." }) and return
       end
     end
   end

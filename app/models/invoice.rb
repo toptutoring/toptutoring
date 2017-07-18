@@ -7,8 +7,6 @@ class Invoice < ActiveRecord::Base
 
   enum status: [:pending, :paid, :cancelled]
 
-  validates :hours, presence: true
-
   private
 
   def set_amount_value
