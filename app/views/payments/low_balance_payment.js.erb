@@ -1,17 +1,19 @@
 document.getElementById("payment_section").style.visibility = "visible";
 
 var product = document.getElementById("product-"+ <%= @count %>);
-var amount = document.getElementById("low_balance_hours-"+ <%= @count %>);
+var lowBalanceHours = document.getElementById("low_balance_hours-"+ <%= @count %>);
 
-document.getElementById("amount").value = parseInt(product.textContent);
-document.getElementById("hours").value = amount.value;
+document.getElementById("payment_amount").value = parseFloat(product.textContent);
+document.getElementById("hours").value = lowBalanceHours.value;
+
+document.getElementById("payment_description").value = "";
 set_academic_type_dropdown();
 
 function set_academic_type_dropdown() {
   var academicTypeDropdown = document.getElementsByClassName("payment-academic-type")[0];
   var event = new Event('change');
 
-  if("<%= @invoice.engagement.academic_type %>" == "Academic") {
+  if("<%= @engagement.academic_type %>" == "Academic") {
     academicTypeDropdown.selectedIndex = "0";
     academicTypeDropdown.dispatchEvent(event);
   }

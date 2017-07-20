@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   get "/sign_up" => "users/clients#new", as: "client_sign_up"
   get "profile/edit" => "users#profile_edit", as: "profile_edit"
   patch "profile/edit" => "users#profile_update", as: "profile_update"
-  post "first_session_payment" => "pages#first_session_payment"
-  post "low_balance_payment" => "pages#low_balance_payment"
+  post "payments/first_session_payment" => "payments#first_session_payment"
+  post "payments/low_balance_payment" => "payments#low_balance_payment"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"

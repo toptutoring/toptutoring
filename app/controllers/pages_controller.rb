@@ -17,7 +17,8 @@ class PagesController < ApplicationController
   end
 
   def payment
-    @student_engagements = current_user.student_engagements
+
+    @student_engagements = get_student_engagements
     @invoices = []
 
     @total_suggested_hours = 0
@@ -26,7 +27,7 @@ class PagesController < ApplicationController
       if invoices.count == 1
         if invoices.first.status != "paid"
           @invoices << invoices.first
-          @total_suggested_hours += invoices.first.suggested_hours unless invoices.first.suggested_hours.nil?
+          @total_suggested_hours += engagement.suggestions.last.suggested_minutes/60.0
         end
       end
     end
@@ -35,9 +36,7 @@ class PagesController < ApplicationController
   end
 
   def first_session_payment
-
-    @invoice = Invoice.find(params[:invoice])
-
+    @engagement = Engagement.find(params[:engagement])
     respond_to do |format|
       format.js { render :file => 'pages/first_session_payment.js.erb' }
     end
@@ -45,11 +44,21 @@ class PagesController < ApplicationController
 
   def low_balance_payment
 
-    @invoice = Invoice.find(params[:invoice])
+    @engagement = Engagement.find(params[:engagement])
     @count = params[:count]
 
     respond_to do |format|
       format.js { render :file => 'pages/low_balance_payment.js.erb' }
+    end
+  end
+
+  private
+
+  def get_student_engagements
+    if !current_user.student_engagements.empty?
+      current_user.student_engagements
+    else
+      current_user.client_engagements
     end
   end
 end

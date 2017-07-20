@@ -2,16 +2,16 @@
 document.getElementById("payment_section").style.visibility = "visible";
 
 //prefill out the payment form
-document.getElementById("amount").value = <%= @invoice.hourly_rate*@invoice.hours %>;
-document.getElementById("hours").value = <%= @invoice.hours %>;
-document.getElementById("payment_description").value = "Payment for <%= @invoice.engagement.student_name %>'s first session.";
+document.getElementById("payment_amount").value = <%= ((@engagement.tutor.academic_rate_cents/100.0)*(@engagement.invoices.last.hours)) %>.toFixed(2);
+document.getElementById("hours").value = <%= @engagement.invoices.last.hours %>;
+document.getElementById("payment_description").value = "Payment for <%= @engagement.student_name %>'s first session.";
 set_academic_type_dropdown();
 
 function set_academic_type_dropdown() {
   var academicTypeDropdown = document.getElementsByClassName("payment-academic-type")[0];
   var event = new Event('change');
 
-  if("<%= @invoice.engagement.academic_type %>" == "Academic") {
+  if("<%= @engagement.academic_type %>" == "Academic") {
     academicTypeDropdown.selectedIndex = "0";
     academicTypeDropdown.dispatchEvent(event);
   }
