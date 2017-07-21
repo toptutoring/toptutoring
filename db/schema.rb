@@ -84,15 +84,16 @@ ActiveRecord::Schema.define(version: 20170719000627) do
   create_table "invoices", id: :bigserial, force: :cascade do |t|
     t.integer  "tutor_id"
     t.integer  "engagement_id"
-    t.decimal  "hours",         precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal  "hours",           precision: 10, scale: 2, default: "0.0", null: false
     t.integer  "hourly_rate"
     t.integer  "amount"
     t.string   "description"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.integer  "status"
     t.string   "subject"
     t.integer  "client_id"
+    t.decimal  "suggested_hours"
     t.index ["client_id"], name: "index_invoices_on_client_id", using: :btree
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id", using: :btree
     t.index ["tutor_id"], name: "index_invoices_on_tutor_id", using: :btree

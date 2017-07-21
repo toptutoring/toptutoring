@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   patch "profile/edit" => "users#profile_update", as: "profile_update"
   post "payments/first_session_payment" => "payments#first_session_payment"
   post "payments/low_balance_payment" => "payments#low_balance_payment"
+  post "payments/get_user_feedback" => "payments#get_user_feedback"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"

@@ -1,4 +1,6 @@
-</br></br></br>
+<div id="flash_message">
+</div>
+</br>
 <div class="row">
   <% if @invoices.empty? || @suggested_hours == 0 %>
     <div>
@@ -21,13 +23,13 @@
             </div>
           <% end %>
         </div>
+        <div class="separator clearfix"></div>
       <% end %>
 
       <% if current_user.academic_credit < 0.5 || current_user.test_prep_credit < 0.5 %>
+        <h3><i class="glyphicon glyphicon-alert" style="color:#ff4444;"></i> Your balance is low</h3>
         <% if @total_suggested_hours != 0 %>
-          <div class="separator clearfix"></div>
           <div class="row">
-            <h3><i class="glyphicon glyphicon-alert" style="color:#ff4444;"></i> Your balance is low</h3>
                 </br>
                 <h5 style="display:inline;">Total Suggested number of hours:</h5> <h4 style="color:#004444; display: inline;"> <%= @total_suggested_hours %> hours</h4><h5 style="display:inline;"> of Academic/Test Prep credit</h5>
                 </br>
@@ -69,7 +71,8 @@
                   <div class="col-sm-3">
                     <div class="input-group">
                       <input type="number" class="form-control col-sm-3 input-sm" name="payment[amount]"
-                        min="0" id="low_balance_hours-<%= count %>" step="any" max="999999" placeholder="Amount" aria-label="Amount" onChange="calculateProduct(this.id);"/>
+                        min="0" id="low_balance_hours-<%= count %>" step="any" max="999999" placeholder="Amount" aria-label="Amount"
+                        onChange="calculateProduct(this.id);" value="<%= get_suggested_hours(engagement) %>"/>
                     </div>
                   </div>
                 </div>
@@ -77,9 +80,9 @@
                 <div>
                   <h4 style="display:inline;">
                     hours for <%= engagement.student_name %> X $<%= get_tutor_rate(engagement) %>
-                    = $<h3 style="display:inline" id="product-<%= count %>">0</h3>
+                    = $<h3 style="display:inline" id="product-<%= count %>"><%= (get_suggested_hours(engagement)*get_tutor_rate(engagement)).floor(2) %></h3>
                   </h4>
-                  <span class="pull-right" style="visibility: hidden;" id="pay-button-<%= count %>">
+                  <span class="pull-right" id="pay-button-<%= count %>">
                     <%= link_to("Pay", {controller: 'payments', action: 'low_balance_payment', engagement: engagement, count: count},
                     class: "btn btn-block payment_submit", remote: true, method: "post") %>
                   </span>
@@ -92,12 +95,23 @@
             in order for the tutor to schedule additional sessions. This will help interactions
             with your tutor run smoothly. Thank you.
 
-            </br></br>Have a question about this? <%= link_to "Please ask us!", "#" %>
+          </br></br>Have a question about this? <a href="javascript:;" onClick="showUserFeedbackForm();">Please ask us!</a>
           </div>
-          <span class="col-md-3 pull-right"><%= link_to("Purchase more hours", "#", class: "btn btn-block payment_submit") %></span>
+          <span class="col-md-4 pull-right"><button type="button" class="btn btn-block payment_submit" onClick="showPaymentForm();">Purchase more hours</button></span>
+          <div style="visibility: hidden;" id="feedback_section">
+            <%= form_for(@feedback, url: {controller: "payments", action:"get_user_feedback"}, remote: true, method: "post")  do |f| %>
+              <div class="form-group">
+                <div>
+                <%= f.text_area :comments, placeholder:"Question or concern?", class:"form-control input-sm", rows: 4, id:"user_feedback"%>
+                </div>
+              </div>
+              <%= f.submit "Submit", class: "btn btn-success pull-right" %>
+            <% end %>
+          </div>
         <% end %>
+
       <% end %>
-    </div> <!--column div-->
+    </div>
 
     <div id="payment_section" style="visibility:hidden;">
       <%= render "payment_form" %>
@@ -106,6 +120,7 @@
 </div>
 
 <script>
+  //Calculates the product of chosen hours and tutoring rate in the low balance section
   function calculateProduct(id) {
     var currentCount = id.slice(-1);
     var input = document.getElementById("low_balance_hours-"+currentCount);
@@ -118,12 +133,15 @@
 
     var product = (input.value*tutoring_rate).toFixed(2);
 
-    if(product != 0) {
-      payButton.style.visibility = "visible";
-    }
-    else {
-      payButton.style.visibility = "hidden";
-    }
     output.textContent = product;
   }
+
+  function showPaymentForm() {
+    document.getElementById("payment_section").style.visibility = "visible";
+  }
+
+  function showUserFeedbackForm() {
+    document.getElementById("feedback_section").style.visibility = "visible";
+  }
+
 </script>

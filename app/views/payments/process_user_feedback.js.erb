@@ -1,0 +1,10 @@
+var flash = document.getElementById("flash_message");
+<% if @feedback_saved %>
+  flash.innerHTML = "<%= flash[:notice] %>";
+  flash.className = "alert alert-success alert-dismissible text-center";
+<% else %>
+  flash.innerHTML = "<%= flash[:danger] %>";
+  flash.className = "alert alert-danger alert-dismissible text-center";
+<% end %>
+
+document.getElementById("user_feedback").value = "";

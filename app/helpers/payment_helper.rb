@@ -9,6 +9,6 @@ module PaymentHelper
   end
 
   def get_suggested_hours(engagement)
-    engagement.suggestions.last.suggested_minutes/60.0
+      engagement.suggestions.last.suggested_minutes/60.0
   end
 end
