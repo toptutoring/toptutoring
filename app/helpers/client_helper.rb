@@ -6,7 +6,7 @@ module ClientHelper
   end
 
   def cleanup_phone_number number
-    if number.nil?
+    if number.nil? || number.empty?
       "No phone number listed."
     else
       extract_phone_number(number)

@@ -10,6 +10,8 @@ module TutorHelper
   def limit_suggestion_description_length(description)
     if description.length > 70
       "#{description[0..70]}..."
+    else
+      description
     end
   end
 end
