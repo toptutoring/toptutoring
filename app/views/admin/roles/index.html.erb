@@ -1,0 +1,47 @@
+<% @assignable_roles.each do |role| %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="widget-heading clearfix">
+          <h3 class="widget-title pull-left"><%= role.name.capitalize + 's' %></h3>
+        </div>
+        <div class="widget-body">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <tbody>
+                <tr>
+                  <th class="col-md-2">Name</th>
+                  <th class="col-md-3">Email</th>
+                  <th class="col-md-2">Phone Number</th>
+                  <th>Actions</th>
+                </tr>
+                <% User.where(id: UserRole.where(role_id: role.id).pluck(:user_id)).each do |user| %>
+                  <tr>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone_number %></td>
+                    <td>
+                      <% if role.name == "director" %>
+                        <% director_role = UserRole.where(user_id: user.id, role_id: role.id).take %>
+                        <%= link_to "Remove as Director", admin_role_path(director_role), method: :delete, class: "btn btn-sm btn-outline btn-danger" %>
+                      <% elsif role.name == "contractor" %>
+                        <% contractor_role = UserRole.where(user_id: user.id, role_id: role.id).take %>
+                        <%= link_to "Remove as Contractor", admin_role_path(contractor_role), method: :delete, class: "btn btn-sm btn-outline btn-danger" %>
+                      <% elsif role.name == "tutor" %>
+                        <% @assignable_roles.where.not(id: user.roles.pluck(:id)).each do |new_role| %>
+                          <%= link_to "Add as #{new_role.name}", admin_roles_path(user_id: user.id, role_id: new_role.id), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
