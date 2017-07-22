@@ -15,7 +15,7 @@
           <label for="student" class="col-md-3 col-sm-3 control-label">Student</label>
           <div class="col-md-9 col-sm-9">
             <%= f.select(:engagement_id, options_for_select(@tutor_engagements.map do |engagement|
-              ["#{engagement.student_name} for #{engagement.subject}", engagement.id]
+              ["#{engagement.student_name} for #{get_subject_name(engagement.subject)}", engagement.id]
             end, @tutor_engagements.first ? @tutor_engagements.first.id : nil),
             {}, { class: "student", required: true}) %>
         </div>
