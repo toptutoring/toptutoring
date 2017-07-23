@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
     begin
       access_token && refresh_token
     rescue OpenSSL::Cipher::CipherError
-      Bugsnag.notify(OpenSSL::Cipher::CipherError, "Invalid tokens for user ##{self.id}")
+      notify_bugsnag
       false
     end
   end
@@ -126,5 +126,11 @@ class User < ActiveRecord::Base
 
   def self.clients
     joins(:roles).where('roles.name' => 'client')
+  end
+
+  def notify_bugsnag
+    if Rails.env.production?
+      Bugsnag.notify("OpenSSL::Cipher::CipherError: Invalid tokens for user #{id}")
+    end
   end
 end
