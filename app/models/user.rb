@@ -59,6 +59,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  #### Setters ####
+
   def roles=(roles)
     if roles.is_a? Array
       roles.each do |role|
@@ -71,6 +73,18 @@ class User < ActiveRecord::Base
     end
   end
 
+  def dwolla_access_token=(value)
+    self.encrypted_access_token = nil
+    self.encrypted_access_token_iv = nil
+    self.access_token=value
+  end
+
+  def dwolla_refresh_token=(value)
+    self.encrypted_refresh_token = nil
+    self.encrypted_refresh_token_iv = nil
+    self.refresh_token=value
+  end
+
   def has_role?(role)
     roles.any? { |r| r.name == role }
   end
@@ -79,10 +93,12 @@ class User < ActiveRecord::Base
     customer_id.present?
   end
 
+
   def has_valid_dwolla?
     begin
       access_token && refresh_token
     rescue OpenSSL::Cipher::CipherError
+      Bugsnag.notify(OpenSSL::Cipher::CipherError, "Invalid tokens for user ##{self.id}")
       false
     end
   end
