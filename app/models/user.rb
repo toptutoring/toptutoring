@@ -100,4 +100,13 @@ class User < ActiveRecord::Base
   def is_tutor?
     has_role?("tutor")
   end
+
+  # Class methods to access all different types of Users
+  def self.tutors
+    joins(:roles).where('roles.name' => 'tutor')
+  end
+ 
+  def self.clients
+    joins(:roles).where('roles.name' => 'client')
+  end
 end

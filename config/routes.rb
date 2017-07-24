@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :users, only: [:index, :edit, :update]
       resources :timesheets
+      resources :roles
     end
     mount Sidekiq::Web, at: "/sidekiq"
     get "/dashboard" => "dashboards#admin"
