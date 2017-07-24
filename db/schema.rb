@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170708053526) do
+ActiveRecord::Schema.define(version: 20170719000627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "availabilities", force: :cascade do |t|
+  create_table "availabilities", id: :bigserial, force: :cascade do |t|
     t.datetime "from"
     t.datetime "to"
     t.integer  "engagement_id"
     t.index ["engagement_id"], name: "index_availabilities_on_engagement_id", using: :btree
   end
 
-  create_table "client_infos", force: :cascade do |t|
+  create_table "client_infos", id: :bigserial, force: :cascade do |t|
     t.string  "subject"
     t.boolean "student"
     t.integer "user_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20170708053526) do
     t.index ["user_id"], name: "index_client_infos_on_user_id", using: :btree
   end
 
-  create_table "contracts", force: :cascade do |t|
+  create_table "contracts", id: :bigserial, force: :cascade do |t|
     t.integer  "hourly_rate",          default: 1500,  null: false
     t.integer  "user_id"
     t.datetime "created_at",                           null: false
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20170708053526) do
     t.index ["user_id"], name: "index_contracts_on_user_id", using: :btree
   end
 
-  create_table "emails", force: :cascade do |t|
+  create_table "emails", id: :bigserial, force: :cascade do |t|
     t.string   "subject"
     t.string   "body"
     t.datetime "created_at", null: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20170708053526) do
     t.index ["tutor_id"], name: "index_emails_on_tutor_id", using: :btree
   end
 
-  create_table "engagements", force: :cascade do |t|
+  create_table "engagements", id: :bigserial, force: :cascade do |t|
     t.integer  "tutor_id"
     t.integer  "student_id"
     t.string   "state",                default: "pending", null: false
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20170708053526) do
     t.index ["tutor_id"], name: "index_engagements_on_tutor_id", using: :btree
   end
 
-  create_table "feedbacks", force: :cascade do |t|
+  create_table "feedbacks", id: :bigserial, force: :cascade do |t|
     t.text     "comments"
     t.integer  "user_id"
     t.datetime "created_at", null: false
@@ -75,13 +75,13 @@ ActiveRecord::Schema.define(version: 20170708053526) do
     t.index ["user_id"], name: "index_feedbacks_on_user_id", using: :btree
   end
 
-  create_table "funding_sources", force: :cascade do |t|
+  create_table "funding_sources", id: :bigserial, force: :cascade do |t|
     t.string  "funding_source_id"
     t.integer "user_id"
     t.index ["user_id"], name: "index_funding_sources_on_user_id", using: :btree
   end
 
-  create_table "invoices", force: :cascade do |t|
+  create_table "invoices", id: :bigserial, force: :cascade do |t|
     t.integer  "tutor_id"
     t.integer  "engagement_id"
     t.decimal  "hours",         precision: 10, scale: 2, default: "0.0", null: false
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 20170708053526) do
     t.index ["tutor_id"], name: "index_invoices_on_tutor_id", using: :btree
   end
 
-  create_table "payments", force: :cascade do |t|
+  create_table "payments", id: :bigserial, force: :cascade do |t|
     t.integer  "amount"
     t.string   "description"
     t.string   "status"
@@ -113,22 +113,22 @@ ActiveRecord::Schema.define(version: 20170708053526) do
     t.index ["payer_id"], name: "index_payments_on_payer_id", using: :btree
   end
 
-  create_table "roles", force: :cascade do |t|
+  create_table "roles", id: :bigserial, force: :cascade do |t|
     t.string "name"
   end
 
-  create_table "student_infos", force: :cascade do |t|
+  create_table "student_infos", id: :bigserial, force: :cascade do |t|
     t.string  "subject"
     t.string  "academic_type"
     t.integer "user_id"
     t.index ["user_id"], name: "index_student_infos_on_user_id", using: :btree
   end
 
-  create_table "subjects", force: :cascade do |t|
+  create_table "subjects", id: :bigserial, force: :cascade do |t|
     t.string "name"
   end
 
-  create_table "suggestions", force: :cascade do |t|
+  create_table "suggestions", id: :bigserial, force: :cascade do |t|
     t.integer "engagement_id"
     t.integer "suggested_minutes"
     t.text    "description"
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 20170708053526) do
     t.index ["engagement_id"], name: "index_suggestions_on_engagement_id", using: :btree
   end
 
-  create_table "timesheets", force: :cascade do |t|
+  create_table "timesheets", id: :bigserial, force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "minutes"
     t.text     "description"
@@ -147,21 +147,21 @@ ActiveRecord::Schema.define(version: 20170708053526) do
     t.index ["user_id"], name: "index_timesheets_on_user_id", using: :btree
   end
 
-  create_table "tutor_profiles", force: :cascade do |t|
+  create_table "tutor_profiles", id: :bigserial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "subject_id"
     t.index ["subject_id"], name: "index_tutor_profiles_on_subject_id", using: :btree
     t.index ["user_id"], name: "index_tutor_profiles_on_user_id", using: :btree
   end
 
-  create_table "user_roles", force: :cascade do |t|
+  create_table "user_roles", id: :bigserial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
     t.index ["role_id"], name: "index_user_roles_on_role_id", using: :btree
     t.index ["user_id"], name: "index_user_roles_on_user_id", using: :btree
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :bigserial, force: :cascade do |t|
     t.datetime "created_at",                                                                           null: false
     t.datetime "updated_at",                                                                           null: false
     t.string   "name",                                                                                 null: false
