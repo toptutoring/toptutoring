@@ -7,6 +7,8 @@ document.getElementById("hours").value = <%= @engagement.invoices.last.hours %>;
 document.getElementById("payment_description").value = "Payment for <%= @engagement.student_name %>'s first session.";
 set_academic_type_dropdown();
 
+document.getElementById("jump_to_payment_section").click();
+
 function set_academic_type_dropdown() {
   var academicTypeDropdown = document.getElementsByClassName("payment-academic-type")[0];
   var event = new Event('change');

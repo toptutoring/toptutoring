@@ -2,15 +2,12 @@ class PaymentsController < ApplicationController
   before_action :require_login
 
   def new
-    #if !current_user.is_customer?
-    #  redirect_to one_time_payment_path
-    #end
     @payment = Payment.new
     @feedback = current_user.feedbacks.build
     @student_engagements = get_student_engagements
     @invoices = []
     @total_suggested_hours = 0
-    
+
     @student_engagements.each do |engagement|
       invoices = Invoice.where(engagement_id: engagement.id)
       if invoices.count == 1
@@ -65,13 +62,10 @@ class PaymentsController < ApplicationController
 
   def get_user_feedback
     @feedback = current_user.feedbacks.build(feedback_params)
-    @feedback_saved = false
-    if @feedback.save
+    if (@feedback_saved = @feedback.save)
       flash.now[:notice] = "Your feedback has been received and we will reach out to you as soon as possible. Thank you!"
-      @feedback_saved = true
     else
       flash.now[:danger] = "There was an error handling your feedback. Try again later."
-      @feedback_saved = false
     end
 
     respond_to do |format|
@@ -89,7 +83,7 @@ class PaymentsController < ApplicationController
   private
 
   def get_student_engagements
-    if !current_user.student_engagements.empty?
+    if current_user.is_student?
       current_user.student_engagements
     else
       current_user.client_engagements

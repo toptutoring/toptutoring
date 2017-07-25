@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
   def self.tutors
     joins(:roles).where('roles.name' => 'tutor')
   end
- 
+
   def self.clients
     joins(:roles).where('roles.name' => 'client')
   end
