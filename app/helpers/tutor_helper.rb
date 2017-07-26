@@ -1,4 +1,7 @@
 module TutorHelper
+
+  SUGGESTION_DESCRIPTION_LENGTH_LIMIT = 70
+
   def tutor_outstanding_balance(tutor)
     "#{tutor.outstanding_balance} hrs of tutoring"
   end
@@ -8,8 +11,8 @@ module TutorHelper
   end
 
   def limit_suggestion_description_length(description)
-    if description.length > 70
-      "#{description[0..70]}..."
+    if description.length > SUGGESTION_DESCRIPTION_LENGTH_LIMIT
+      "#{description[0..SUGGESTION_DESCRIPTION_LENGTH_LIMIT]}..."
     else
       description
     end
