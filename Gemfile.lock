@@ -80,6 +80,9 @@ GEM
       bcrypt
       email_validator (~> 1.4)
       rails (>= 3.1)
+    clockwork (2.0.2)
+      activesupport
+      tzinfo
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
@@ -352,6 +355,7 @@ DEPENDENCIES
   cancancan (~> 1.16)
   capybara-webkit
   clearance
+  clockwork (~> 2.0)
   database_cleaner
   dotenv-rails
   dwolla_v2 (~> 1.0)

@@ -34,6 +34,7 @@ gem 'activemodel-serializers-xml'
 gem "intercom-rails"
 gem 'cancancan', '~> 1.16'
 gem 'money-rails', '~> 1'
+gem 'clockwork', '~> 2.0'
 
 group :development do
   gem "listen"

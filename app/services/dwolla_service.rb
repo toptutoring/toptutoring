@@ -36,9 +36,6 @@ class DwollaService
 
   def ensure_valid_token
     return if user.valid_token?
-    new_token = DWOLLA_CLIENT.auths.refresh(account_token)
-    user.update(access_token: new_token.access_token,
-                refresh_token: new_token.refresh_token,
-                token_expires_at: Time.current.to_i + new_token.expires_in)
+    DwollaTokenRefresh.new(user.id).perform
   end
 end

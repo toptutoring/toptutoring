@@ -85,6 +85,15 @@ class User < ActiveRecord::Base
     self.refresh_token=value
   end
 
+  def reset_dwolla_tokens
+    self.encrypted_refresh_token = nil
+    self.encrypted_refresh_token_iv = nil
+    self.encrypted_access_token = nil
+    self.encrypted_access_token_iv = nil
+    self.token_expires_at = nil
+    self.save!
+  end
+
   def has_role?(role)
     roles.any? { |r| r.name == role }
   end
@@ -104,7 +113,7 @@ class User < ActiveRecord::Base
   end
 
   def valid_token?
-    Time.zone.at(token_expires_at) > Time.current
+    token_expires_at && Time.zone.at(token_expires_at) > Time.current
   end
 
   def credit_status(invoice)
