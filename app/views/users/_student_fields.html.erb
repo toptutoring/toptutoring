@@ -9,16 +9,66 @@
           <%= student_field.text_field :name, class:"form-control", required: true %>
 
           <h5>Student's Email</h5>
-          <%= student_field.email_field :email, class:"form-control" %>
+          <div style="visibility:hidden; color: red;" class="email-error-msg"></div>
+          <%= student_field.email_field :email, class:"form-control", id: "student_email", style: "margin-bottom: -2px;", oninput: "checkIfEmailUnique(this.id);" %>
+          <label>
+            <input type="checkbox" name="info[email_not_provided]" class="email-checkbox" value="1" onChange="disableEmailField();"/>
+            I do not wish to provide an email address for my child.
+          </label>
 
-          <!--<label for="student_academic_type" class="control-label">Type of Tutoring</label>-->
+
+        </br></br>
           <h5>Are you interested in hiring a tutor for help in a general academic area or specifically for test preparation?</h5>
           <select name="info[academic_type]" class="students-academic-type">
-            <option value="Academic">ACADEMIC</option>
+            <option value="Academic">Academic</option>
             <option value="Test_Prep">Test Preparation</option>
           </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="widget">
+          <div class="widget-heading clearfix" style="background-color: #ffffee;">
+            If you do not provide an email address for your child, a separate user account will not be
+            created for them. All transactions and messages will be sent only to your account. This is recommended
+            for younger students.
+          </div>
         </div>
       </div>
     </div>
   <% end %>
 </fieldset>
+
+<script>
+  function disableEmailField() {
+    var emailField = document.getElementById("student_email");
+    var emailCheckBox = document.getElementsByClassName("email-checkbox")[0];
+    var finishButton = document.querySelector("a[href$='#finish']");
+
+    if(emailCheckBox.checked) {
+      emailField.value = "";
+      emailField.disabled = true;
+      finishButton.style.visibility = "visible";
+      document.getElementsByClassName("email-error-msg")[0].style.visibility = "hidden";
+    }
+    else {
+      emailField.disabled = false;
+    }
+  }
+
+  function checkIfEmailUnique(id) {
+
+    var inputEmail = document.getElementById(id).value;
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "text/javascript";
+
+    function requestListener() {
+      eval(xhr.responseText);
+    }
+
+    xhr.addEventListener("load", requestListener)
+    xhr.open('POST', '<%= users_email_is_unique_path %>', true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send('{"user_email":"'+inputEmail+'"}');
+  }
+
+</script>

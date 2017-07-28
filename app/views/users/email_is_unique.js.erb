@@ -1,0 +1,15 @@
+var finishButton = document.querySelector("a[href$='#finish']");
+var emailErrorMessage = document.getElementsByClassName("email-error-msg")[0];
+
+if (!<%= @email_unique %>) {
+  emailErrorMessage.innerHTML = "This email has already been taken!";
+  emailErrorMessage.style.visibility = "visible";
+  finishButton.style.visibility = "hidden";
+}
+else {
+  emailErrorMessage.innerHTML = "";
+  emailErrorMessage.style.visibility = "hidden";
+  finishButton.style.visibility = "visible";
+
+
+}
