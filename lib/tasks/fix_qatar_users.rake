@@ -10,7 +10,7 @@ namespace :update do
     tayba.client_id = nadjiba.id
     tayba.save!
 
-    if !tayba.client_engagements.nil?
+    if !tayba.client_engagements.empty?
       nadjiba_tayba_engagement = tayba.client_engagements.last
       nadjiba_tayba_engagement.client_id = nadjiba.id
       nadjiba_tayba_engagement.student_name = tayba.name
