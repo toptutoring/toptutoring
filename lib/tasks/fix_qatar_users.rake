@@ -26,14 +26,30 @@ namespace :update do
     melek_client_info.save!
 
     if melek.student_engagements.empty?
-      nadjiba_melek_client_engagement = Engagement.new
-      nadjiba_melek_client_engagement.student_id = melek.id
-      nadjiba_melek_client_engagement.student_name = melek.name
-      nadjiba_melek_client_engagement.subject = melek.client_info.subject
-      nadjiba_melek_client_engagement.client_id = nadjiba.id
-      nadjiba_melek_client_engagement.academic_type = "Academic"
-      nadjiba_melek_client_engagement.save!
+      nadjiba_melek_engagement = Engagement.new
+      nadjiba_melek_engagement.student_id = melek.id
+      nadjiba_melek_engagement.student_name = melek.name
+      nadjiba_melek_engagement.subject = melek.client_info.subject
+      nadjiba_melek_engagement.client_id = nadjiba.id
+      nadjiba_melek_engagement.academic_type = "Academic"
+      nadjiba_melek_engagement.save!
     end
 
+    iskandar = User.find(73)
+    iskandar.name = "Iskandar"
+    iskandar.client_id = nadjiba.id
+    iskandar.save!
+
+    if !iskandar.client_engagements.empty?
+      nadjiba_iskandar_engagement = iskandar.client_engagements.last
+      nadjiba_iskandar_engagement.client_id = nadjiba.id
+      nadjiba_iskandar_engagement.subject = "10th-grade Science"
+      nadjiba_iskandar_engagement.student_name = iskandar.name
+      nadjiba_iskandar_engagement.save!
+    end
+
+    iskandar_client_info = iskandar.client_info
+    iskandar_client_info.subject = "10th-grade Science"
+    iskandar_client_info.save!
   end
 end
