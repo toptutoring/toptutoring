@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "/sign_up" => "users/clients#new", as: "client_sign_up"
   get "profile/edit" => "users#profile_edit", as: "profile_edit"
   patch "profile/edit" => "users#profile_update", as: "profile_update"
+  get "/dashboard" => "dashboards#show"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"
@@ -29,11 +30,9 @@ Rails.application.routes.draw do
       resources :timesheets
     end
     mount Sidekiq::Web, at: "/sidekiq"
-    get "/dashboard" => "dashboards#admin"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("director") } do
-    get "/dashboard" => "dashboards#director"
     namespace :director do
       resources :payments, only: [:new, :create, :index]
       resources :tutors, only: [:index, :edit, :update]
@@ -52,7 +51,6 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("tutor") } do
-    get "/dashboard" => "dashboards#tutor"
     namespace :tutors do
       resources :students, only: [:index]
       resources :invoices, only: [:index, :create]
@@ -72,14 +70,12 @@ Rails.application.routes.draw do
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
     resources :students, only: [:index, :new, :create]
-    get "/dashboard" => "dashboards#client"
     resources :availability, only: [:new, :create, :update, :edit]
     post "/availability/dropdown_change" => "availability#dropdown_change"
     post "/dashboard/feedback" => "feedback#create"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("student") } do
-    get "/dashboard" => "dashboards#student"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("contractor") } do
