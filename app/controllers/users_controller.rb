@@ -120,10 +120,11 @@ class UsersController < Clearance::SessionsController
   end
 
   def student_email_unique?
-    if params[:student_email].downcase == current_user.email
+    student_email = params[:user_student_email]
+    if student_email.downcase == current_user.email
       true
     else
-      (User.where(email: params[:student_email]).first).nil?
+      (User.where(email: student_email).first).nil?
     end
   end
 end

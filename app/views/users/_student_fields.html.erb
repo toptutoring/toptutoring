@@ -9,7 +9,7 @@
           <%= student_field.text_field :name, class:"form-control", required: true %>
 
           <h5>Student's Email</h5>
-          <%= student_field.email_field :email, class:"form-control", id: "student_email", style: "margin-bottom: -2px;",
+          <%= student_field.email_field :email, class:"form-control", id: "user_student_email", style: "margin-bottom: -2px;",
             oninput: "checkIfEmailUnique(this.id);", onfocus: "showStudentEmailInfo();"%>
 
           <h5>Are you interested in hiring a tutor for help in a general academic area or specifically for test preparation?</h5>
@@ -51,11 +51,11 @@
     xhr.addEventListener("load", requestListener)
     xhr.open('POST', '<%= users_email_is_unique_path %>', true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send('{"student_email":"'+inputEmail+'"}');
+    xhr.send('{"user_student_email":"'+inputEmail+'"}');
   }
 
   function showStudentEmailInfo() {
-    document.getElementById("student_email_info").style.visibility = "visible";
+    document.getElementById("user_student_email_info").style.visibility = "visible";
   }
 
 </script>
