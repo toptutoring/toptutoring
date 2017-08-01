@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get "/sign_up" => "users/clients#new", as: "client_sign_up"
   get "profile/edit" => "users#profile_edit", as: "profile_edit"
   patch "profile/edit" => "users#profile_update", as: "profile_update"
+  post "payments/first_session_payment" => "payments#first_session_payment"
+  post "payments/low_balance_payment" => "payments#low_balance_payment"
+  post "payments/get_user_feedback" => "payments#get_user_feedback"
   get "/dashboard" => "dashboards#show"
 
   # Omniauth routes
@@ -28,6 +31,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :users, only: [:index, :edit, :update]
       resources :timesheets
+      resources :roles
     end
     mount Sidekiq::Web, at: "/sidekiq"
   end

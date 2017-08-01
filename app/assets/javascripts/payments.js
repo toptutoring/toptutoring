@@ -1,5 +1,6 @@
 jQuery(function($) {
   setHourlyRate();
+  calculateAmount();
 
   // Client Payment page
   function setHourlyRate() {
@@ -11,8 +12,20 @@ jQuery(function($) {
     }
   }
 
+  function calculateAmount() {
+    var hours = $('.hours').val();
+    var hourlyRate = parseFloat($('.hourly-rate').text());
+    var product = hours*hourlyRate;
+    $('.amount').val((hours*hourlyRate).toFixed(2));
+  }
+
   $('.payment-academic-type').on('change', function() {
     setHourlyRate();
+    calculateAmount();
+  })
+
+  $('.hours').on('change', function() {
+    calculateAmount();
   })
 
   // Admin/Director Payment page
