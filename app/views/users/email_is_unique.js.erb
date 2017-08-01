@@ -22,7 +22,7 @@ else {
   finishButton.style.visibility = "visible";
 }
 
-if(document.getElementById("student_email").value == "<%= current_user.email %>"){
+if(document.getElementById("user_student_email").value == "<%= current_user.email %>"){
   console.log("Student Email Info Content changed!");
   document.getElementById("student_email_info").innerHTML = studentEmailMatchesString;
 }
