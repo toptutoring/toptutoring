@@ -21,7 +21,7 @@ class UsersController < Clearance::SessionsController
     current_user.update_attribute(
       :phone_number, user_params[:phone_number])
 
-    if student_email_provided? && !(student_email_not_provided_params.nil?)
+    if student_email_provided? && !student_email_matches_client?
       student_name = user_params[:student][:name]
       student_email = user_params[:student][:email]
       student = User.create(
@@ -70,7 +70,7 @@ class UsersController < Clearance::SessionsController
   end
 
   def email_is_unique
-    @email_unique = (User.where(email: params[:user_email]).first).nil?
+    @email_unique = student_email_unique?
     render :file => "users/email_is_unique.js.erb"
   end
 
@@ -115,7 +115,15 @@ class UsersController < Clearance::SessionsController
     params.require(:user).permit(:name, :phone_number)
   end
 
-  def student_email_not_provided_params
-    params.require(:info).permit(:email_not_provided, :academic_type)
+  def student_email_matches_client?
+    user_params[:student][:email].downcase == current_user.email
+  end
+
+  def student_email_unique?
+    if params[:student_email].downcase == current_user.email
+      true
+    else
+      (User.where(email: params[:student_email]).first).nil?
+    end
   end
 end

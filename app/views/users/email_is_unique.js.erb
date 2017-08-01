@@ -1,15 +1,31 @@
 var finishButton = document.querySelector("a[href$='#finish']");
 var emailErrorMessage = document.getElementsByClassName("email-error-msg")[0];
 
+var studentEmailDoesNotMatchString = `<div class="widget-heading clearfix" style="background-color: #ffffee;">
+                                        If you do not wish to create a separate user account for your child, you may re-enter the email used to
+                                        create your account (<u><%= current_user.email %></u>) or just leave the field blank. All transactions and messages will
+                                        be sent only to your account. This is recommended for younger students.
+                                      </div>`;
+var studentEmailMatchesString      = `<div class="widget-heading clearfix" style="background-color: #ffffee;">
+                                        You have entered your own email. A separate account will not be created for your
+                                        child. You can manage all transactions and messages related to your child's tutoring
+                                        through your account.
+                                      </div>`;
+
+
 if (!<%= @email_unique %>) {
-  emailErrorMessage.innerHTML = "This email has already been taken!";
   emailErrorMessage.style.visibility = "visible";
   finishButton.style.visibility = "hidden";
 }
 else {
-  emailErrorMessage.innerHTML = "";
   emailErrorMessage.style.visibility = "hidden";
   finishButton.style.visibility = "visible";
+}
 
-
+if(document.getElementById("student_email").value == "<%= current_user.email %>"){
+  console.log("Student Email Info Content changed!");
+  document.getElementById("student_email_info").innerHTML = studentEmailMatchesString;
+}
+else {
+  document.getElementById("student_email_info").innerHTML = studentEmailDoesNotMatchString;
 }
