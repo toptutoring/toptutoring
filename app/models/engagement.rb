@@ -1,5 +1,4 @@
 class Engagement < ActiveRecord::Base
-
   include ShowSubjectName
 
   # Associations
