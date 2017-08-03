@@ -1,4 +1,7 @@
 class Engagement < ActiveRecord::Base
+
+  include ShowSubjectName
+
   # Associations
   belongs_to :student, class_name: "User", foreign_key: "student_id"
   belongs_to :client, class_name: "User", foreign_key: "client_id"
@@ -32,18 +35,5 @@ class Engagement < ActiveRecord::Base
 
   def updated?
     tutor
-  end
-
-  def subject
-    subject = self.read_attribute(:subject)
-    if is_numeric?(subject)
-      Subject.find(subject).name
-    else
-      subject
-    end
-  end
-
-  def is_numeric?(val)
-    true if Integer(val) rescue false
   end
 end
