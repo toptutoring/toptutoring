@@ -10,6 +10,8 @@ class DashboardsController < ApplicationController
       @pending_engagements = Engagement.pending
       @tutor_engagements = current_user.tutor_engagements
       @invoice = Invoice.new()
+      @timesheet = Timesheet.new()
+      @suggestion = Suggestion.new()
       render :director
     elsif current_user.has_role?("tutor")
       @tutor_engagements = current_user.tutor_engagements
