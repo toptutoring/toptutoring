@@ -4,9 +4,9 @@
   <%= render "engagements" %>
 </div>
 <div class="row">
-  <% if current_user.roles.pluck(:name).include?("contractor") %>
-    <%= render "contractors/timesheet_form" %>
+  <% if current_user.has_role? "contractor" %>
     <%= render partial: "invoice_form", locals: { center: false } %>
+    <%= render partial: "contractors/timesheet_form", locals: { center: false } %>
   <% else %>
     <%= render partial: "invoice_form", locals: { center: true } %>
   <% end %> </div>
