@@ -10,9 +10,9 @@ module Tutors
     def create
       @invoice = Invoice.new(invoice_params)
       if @invoice.save
-        @invoice.cancelled! if @invoice.hours == 0
-        credit = CreditUpdater.new(@invoice.id).process!
-        if credit <= 0.5 && @invoice.hours != 0
+        credit_update = CreditUpdater.new(@invoice.id)
+        credit_update.process!
+        if credit_update.client_balance < 0 && @invoice.hours != 0
           redirect_to tutors_students_path, alert: 'The session has been logged but the client
                         has a negative balance of hours. You may not be paid for this session
                         unless the client adds to his/her hourly balance.' and return
@@ -34,7 +34,7 @@ module Tutors
       end
       params.require(:invoice)
         .permit(:engagement_id, :hours, :subject, :description)
-        .merge(tutor_id: current_user.id, hourly_rate: hourly_rate)
+        .merge(tutor_id: current_user.id, hourly_rate: hourly_rate, status: "pending")
     end
 
     def set_client
