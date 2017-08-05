@@ -5,8 +5,8 @@ feature "Create payment for tutor" do
   let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 10) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:contract) { FactoryGirl.create(:contract, user_id: tutor.id, hourly_rate: 20) }
-  let(:director) { FactoryGirl.create(:director_user) }
+  let(:contract) { FactoryGirl.create(:contract, user_id: tutor.id) }
+  let(:director) { FactoryGirl.create(:director_user, outstanding_balance: 20) }
   let(:engagement) { FactoryGirl.create(:engagement, student: student, student_name: student.name, tutor: tutor, client: client) }
   let(:funding_source) { FactoryGirl.create(:funding_source, user_id: admin.id) }
 
@@ -18,7 +18,7 @@ feature "Create payment for tutor" do
       click_on "Pay tutor"
 
       find('.tutor').find(:xpath, 'option[1]').select_option
-      fill_in "payment_amount", with: 100
+      fill_in "amount", with: 100
       fill_in "payment_description", with: "Admin Payment description"
       click_button "Send Payment"
 
@@ -34,7 +34,7 @@ feature "Create payment for tutor" do
         click_on "Pay tutor"
 
         find('.tutor').find(:xpath, 'option[2]').select_option
-        fill_in "payment_amount", with: 10
+        fill_in "amount", with: 10
         fill_in "payment_description", with: "Director Payment description"
         click_button "Send Payment"
 
@@ -50,7 +50,7 @@ feature "Create payment for tutor" do
       click_on "Pay tutor"
 
       find('.tutor').find(:xpath, 'option[1]').select_option
-      fill_in "payment_amount", with: 100
+      fill_in "amount", with: 100
       fill_in "payment_description", with: "Payment description"
       click_button "Send Payment"
 
@@ -67,7 +67,7 @@ feature "Create payment for tutor" do
         click_on "Pay tutor"
 
         find('.tutor').find(:xpath, 'option[2]').select_option
-        fill_in "payment_amount", with: 100
+        fill_in "amount", with: 100
         fill_in "payment_description", with: "Payment description"
         click_button "Send Payment"
 
@@ -84,7 +84,7 @@ feature "Create payment for tutor" do
         click_on "Pay tutor"
 
         find('.tutor').find(:xpath, 'option[2]').select_option
-        fill_in "payment_amount", with: 420
+        fill_in "amount", with: 420
         fill_in "payment_description", with: "Payment description"
         click_button "Send Payment"
 
@@ -104,13 +104,13 @@ feature "Create payment for tutor" do
         click_on "Pay tutor"
 
         find('.tutor').find(:xpath, 'option[2]').select_option
-        fill_in "payment_amount", with: 200
+        fill_in "amount", with: 100
         fill_in "payment_description", with: "Payment description"
 
         click_button "Send Payment"
 
         expect(page).to have_content('Payment is being processed.')
-        expect(page).to have_content("200")
+        expect(page).to have_content("100")
       end
     end
   end
