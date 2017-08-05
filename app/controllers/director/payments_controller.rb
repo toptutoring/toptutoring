@@ -11,7 +11,7 @@ module Director
 
     def new
       @payment = Payment.new
-      @tutors = User.with_tutor_role
+      @tutors = User.tutors
     end
 
     def create

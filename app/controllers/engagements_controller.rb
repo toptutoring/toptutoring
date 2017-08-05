@@ -47,6 +47,6 @@ class EngagementsController < ApplicationController
   end
 
   def set_tutors
-    @tutors = User.with_tutor_role
+    @tutors = User.tutors
   end
 end

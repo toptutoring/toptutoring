@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   has_many :subjects, through: :tutor_profiles
   has_many :feedbacks
   has_many :timesheets
+  has_many :payments_received, class_name: "Payment", foreign_key: "payee_id"
+  has_many :payments_made, class_name: "Payment", foreign_key: "payer_id"
   accepts_nested_attributes_for :subjects
   attribute :access_token
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
@@ -33,12 +35,13 @@ class User < ActiveRecord::Base
 
   # Scopes #
   scope :customer, ->(customer_id) { where(customer_id: customer_id) }
-  scope :with_tutor_role, -> { joins(:roles).where("roles.name = ?", "tutor").distinct }
-  scope :with_client_role, -> { joins(:roles).where("roles.name = ?", "client").distinct }
-  scope :with_student_role, -> { joins(:roles).where("roles.name = ?", "student").distinct }
-  scope :admin, -> { joins(:roles).where("roles.name = ?", "admin").distinct.first || [] }
+  scope :tutors, -> { joins(:roles).where(roles: { name: "tutor" }).distinct }
+  scope :contractors, -> { joins(:roles).where(roles: { name: "contractor" }).distinct }
+  scope :clients, -> { joins(:roles).where(roles: { name: "client" }).distinct }
+  scope :students, -> { joins(:roles).where(roles: { name: "student" }).distinct }
+  scope :admin, -> { joins(:roles).where(roles: { name: "admin" }).distinct.first || [] }
   scope :with_external_auth, -> { where.not(encrypted_access_token: nil) & where.not(encrypted_refresh_token: nil) }
-  scope :tutors_with_external_auth, -> { with_tutor_role.with_external_auth }
+  scope :tutors_with_external_auth, -> { tutors.with_external_auth }
   scope :enabled, -> { where(access_state: "enabled") }
   scope :assigned, -> { joins(:engagement).merge(Engagement.active) }
   scope :admin_and_directors, -> { joins(:roles).where("roles.name = ? OR roles.name = ?", "admin", "director").distinct }
@@ -126,15 +129,6 @@ class User < ActiveRecord::Base
 
   def is_tutor?
     has_role?("tutor")
-  end
-
-  # Class methods to access all different types of Users
-  def self.tutors
-    joins(:roles).where('roles.name' => 'tutor')
-  end
-
-  def self.clients
-    joins(:roles).where('roles.name' => 'client')
   end
 
   def notify_bugsnag

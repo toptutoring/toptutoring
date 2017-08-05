@@ -4,7 +4,7 @@ module Director
     before_action :set_user, only: [:edit, :update]
 
     def index
-      @users = User.with_client_role.order(:id)
+      @users = User.clients.order(:name)
     end
 
     def edit
