@@ -7,12 +7,15 @@ class Invoice < ActiveRecord::Base
   validates :hours, numericality: { greater_than_or_equal_to: 0 }
 
   scope :pending, -> { where(status: 'pending') }
+  scope :newest_first, -> { order("created_at DESC").limit(100) }
 
   def tutor_pay
     tutor_pay_cents.to_f / 100
   end
 
-  scope :newest_first, -> { order("created_at DESC").limit(100) }
+  def to_payment
+    Payment.new(payment_params)
+  end
 
   private
 
@@ -22,5 +25,10 @@ class Invoice < ActiveRecord::Base
 
   def set_tutor_pay_cents
     self.tutor_pay_cents = (hours * User.find(tutor_id).contract.hourly_rate).to_i
+  end
+
+  def payment_params
+    { amount_in_cents: tutor_pay_cents, payee_id: tutor_id,
+      description: description }
   end
 end
