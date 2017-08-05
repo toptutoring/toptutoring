@@ -25,8 +25,7 @@ class PaymentsController < ApplicationController
 
   def create
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
-    @amount = payment_params[:amount].extract_value
-    payment_service = PaymentService.new(current_user.id, @amount, 'usd', nil, payment_params)
+    payment_service = PaymentService.new(current_user.id, amount_in_cents, 'usd', nil, payment_params)
 
     if current_user.customer_id.empty?
       flash[:danger] = "You must provide your card information before making a payment."
@@ -77,7 +76,7 @@ class PaymentsController < ApplicationController
   private
 
   def payment_params
-    params.require(:payment).permit(:hours, :amount, :description, :academic_type)
+    params.require(:payment).permit(:description, :hours, :academic_type)
   end
 
   private
@@ -92,5 +91,9 @@ class PaymentsController < ApplicationController
 
   def feedback_params
     params.require(:feedback).permit(:comments)
+  end
+
+  def amount_in_cents
+    (params[:amount].to_f * 100).to_i
   end
 end

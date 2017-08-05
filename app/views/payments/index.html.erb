@@ -21,7 +21,7 @@
                   <% @payments.each do |payment| %>
                     <tr>
                       <td><%= payment.created_at %></td>
-                      <td>$<%= payment.amount / 100 %></td>
+                      <td><%= number_to_currency(payment.amount) %></td>
                       <td class="text-center"><%= payment.description %></td>
                       <td class="text-center"><%= payment.status %></td>
                     </tr>

@@ -33,9 +33,10 @@ module Director
     private
 
     def payment_params
+      amount = params[:amount].to_f * 100
       params.require(:payment)
-        .permit(:amount, :source, :description, :destination, :payee_id, :payer_id)
-        .merge(source: @funding_source.funding_source_id)
+            .permit(:source, :description, :destination, :payee_id, :payer_id)
+        .merge(amount_in_cents: amount.to_i, source: @funding_source.funding_source_id)
     end
 
     def set_funding_source
@@ -54,7 +55,7 @@ module Director
     end
 
     def validate_payment
-      if @payee.outstanding_balance < payment_params[:amount].to_f / @payee.contract.hourly_rate
+      if @payee.outstanding_balance < params[:amount].to_f / (@payee.contract.hourly_rate / 100)
         flash[:danger] = 'This exceeds the maximum payment for this tutor.
           Please contact an administrator if you have any questions'
           redirect_back(fallback_location: (request.referer || root_path))
