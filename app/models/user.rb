@@ -59,6 +59,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  #### Setters ####
+
   def roles=(roles)
     if roles.is_a? Array
       roles.each do |role|
@@ -71,6 +73,27 @@ class User < ActiveRecord::Base
     end
   end
 
+  def dwolla_access_token=(value)
+    self.encrypted_access_token = nil
+    self.encrypted_access_token_iv = nil
+    self.access_token=value
+  end
+
+  def dwolla_refresh_token=(value)
+    self.encrypted_refresh_token = nil
+    self.encrypted_refresh_token_iv = nil
+    self.refresh_token=value
+  end
+
+  def reset_dwolla_tokens
+    self.encrypted_refresh_token = nil
+    self.encrypted_refresh_token_iv = nil
+    self.encrypted_access_token = nil
+    self.encrypted_access_token_iv = nil
+    self.token_expires_at = nil
+    self.save!
+  end
+
   def has_role?(role)
     roles.any? { |r| r.name == role }
   end
@@ -79,16 +102,18 @@ class User < ActiveRecord::Base
     customer_id.present?
   end
 
+
   def has_valid_dwolla?
     begin
       access_token && refresh_token
     rescue OpenSSL::Cipher::CipherError
+      notify_bugsnag
       false
     end
   end
 
   def valid_token?
-    Time.zone.at(token_expires_at) > Time.current
+    token_expires_at && Time.zone.at(token_expires_at) > Time.current
   end
 
   def credit_status(invoice)
@@ -110,5 +135,11 @@ class User < ActiveRecord::Base
 
   def self.clients
     joins(:roles).where('roles.name' => 'client')
+  end
+
+  def notify_bugsnag
+    if Rails.env.production?
+      Bugsnag.notify("OpenSSL::Cipher::CipherError: Invalid tokens for user #{id}")
+    end
   end
 end

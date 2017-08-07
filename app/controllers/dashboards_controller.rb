@@ -2,26 +2,27 @@ class DashboardsController < ApplicationController
   before_action :require_login
   before_action :build_student_for_client, only: [:client]
 
-  def admin
-    @pending_engagements = Engagement.pending
-  end
-
-  def director
-    @pending_engagements = Engagement.pending
-    @tutor_engagements = current_user.tutor_engagements
-    @invoice = Invoice.new()
-  end
-
-  def tutor
-    @tutor_engagements = current_user.tutor_engagements
-    @low_balance_engagements = low_balance_engagements?
-    @invoice = Invoice.new()
-    @timesheet = Timesheet.new()
-    @suggestion = Suggestion.new()
-  end
-
-  def client
-    @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
+  def show
+    if current_user.has_role?("admin")
+      @pending_engagements = Engagement.pending
+      render :admin
+    elsif current_user.has_role?("director")
+      @pending_engagements = Engagement.pending
+      @tutor_engagements = current_user.tutor_engagements
+      @invoice = Invoice.new()
+      render :director
+    elsif current_user.has_role?("tutor")
+      @tutor_engagements = current_user.tutor_engagements
+      @low_balance_engagements = low_balance_engagements?
+      @invoice = Invoice.new()
+      @timesheet = Timesheet.new()
+      @suggestion = Suggestion.new()
+      render :tutor
+    elsif current_user.has_role?("client")
+      @availability_engagement = current_user&.student_engagements&.first ||
+	      current_user&.client_engagements&.first
+      render :client
+    end
   end
 
   private

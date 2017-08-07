@@ -7,6 +7,11 @@ class PaymentGatewayDwolla
   end
 
   def create_transfer
+    unless payer.has_valid_dwolla?
+      payer.reset_dwolla_tokens
+      @error = "Admin must authenticate with Dwolla before making a payment"
+      return
+    end
     ensure_valid_token
     begin
       response = account_token.post("transfers", transfer_payload)
@@ -51,10 +56,7 @@ class PaymentGatewayDwolla
 
   def ensure_valid_token
     return if payer.valid_token?
-    new_token = DWOLLA_CLIENT.auths.refresh(account_token)
-    payer.update(access_token: new_token.access_token,
-                refresh_token: new_token.refresh_token,
-                token_expires_at: Time.current.to_i + new_token.expires_in)
+    DwollaTokenRefresh.new(payer.id).perform
   end
 
   def account_token
