@@ -35,8 +35,8 @@ class AuthHashService
       auth_uid: auth_hash["uid"],
       email: auth_hash["info"]["email"],
       name: auth_hash["info"]["name"],
-      access_token: auth_hash["credentials"]["token"],
-      refresh_token: auth_hash["credentials"]["refresh_token"],
+      dwolla_access_token: auth_hash["credentials"]["token"],
+      dwolla_refresh_token: auth_hash["credentials"]["refresh_token"],
       token_expires_at: auth_hash["credentials"]["expires_at"]
     )
   end
@@ -45,15 +45,15 @@ class AuthHashService
     return unless user
     user.update(auth_provider: auth_hash["provider"],
                 auth_uid: auth_hash["uid"],
-                access_token: auth_hash["credentials"]["token"],
-                refresh_token: auth_hash["credentials"]["refresh_token"],
+                dwolla_access_token: auth_hash["credentials"]["token"],
+                dwolla_refresh_token: auth_hash["credentials"]["refresh_token"],
                 token_expires_at: auth_hash["credentials"]["expires_at"])
   end
 
   def update_token_info(user)
     return unless user
-    user.update(access_token: auth_hash["credentials"]["token"],
-                refresh_token: auth_hash["credentials"]["refresh_token"],
+    user.update(dwolla_access_token: auth_hash["credentials"]["token"],
+                dwolla_refresh_token: auth_hash["credentials"]["refresh_token"],
                 token_expires_at: auth_hash["credentials"]["expires_at"])
   end
 end

@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://uat.dwolla.com/oauth/v2/token
+    body:
+      encoding: UTF-8
+      string: grant_type=refresh_token&refresh_token=CYojEe4hMnVzLeXbWbPEPJy2WF7kNvuNvzN6EAdIY5zTXJsvYU
+    headers:
+      User-Agent:
+      - dwolla-v2-ruby 1.1.2
+      Authorization:
+      - Basic ODU2aGhJcklDUUNSRms1eVM0U0JhdERtZmp2Znk5aTFNMWxDWGVBM1prN0dTM0MwTkw6bGxoWTNZc2JxRzR6aUFlaVdheDVtalMyQm9XZUYzejFEc2JLNEE5REp3NEZxeTd3S0g=
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 31 Jul 2017 18:34:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d0157cdba86dad669c4fd59980ba6b9c71501526098; expires=Tue, 31-Jul-18
+        18:34:58 GMT; path=/; domain=.dwolla.com; HttpOnly
+      - dtid=8dd5581e-2637-4388-b9ce-9f16f5d434be; expires=Sat, 31-Jul-2027 18:34:54
+        GMT; path=/; HttpOnly
+      Cache-Control:
+      - private
+      P3p:
+      - CP="CAO PSA OUR"
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Aspnetmvc-Version:
+      - '4.0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 3872a7a10c822926-OTP
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_links":{"account":{"href":"https://api-sandbox.dwolla.com/accounts/25565ecb-63d7-481d-89a9-9e169df22d8a"}},"access_token":"SPgfOVJVgARXDx8tLbzEOGiFJR82xhuTU6XsabNLFEEXcXxKvJ","expires_in":3604,"refresh_token":"PMmp9SF1kD0B2Sen2HU092LPFumw3Ro6JAkyIWSHvQTJbYAY8k","refresh_expires_in":5184004,"token_type":"bearer","scope":"accountinfofull|email|transactions|send|funding","account_id":"25565ecb-63d7-481d-89a9-9e169df22d8a"}'
+    http_version: 
+  recorded_at: Mon, 31 Jul 2017 18:35:01 GMT
+recorded_with: VCR 3.0.3
