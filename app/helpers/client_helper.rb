@@ -4,4 +4,6 @@ module ClientHelper
       "#{client.academic_credit + client.test_prep_credit} hrs credit"
     end
   end
+
+
 end

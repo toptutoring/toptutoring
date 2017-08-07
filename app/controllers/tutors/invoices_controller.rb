@@ -4,7 +4,7 @@ module Tutors
     before_action :authorize_tutor, :set_engagement, :set_client, only: :create
 
     def index
-      @invoices = current_user.invoices
+      @invoices = current_user.invoices.newest_first
     end
 
     def create

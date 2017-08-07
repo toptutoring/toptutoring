@@ -7,6 +7,8 @@ class Invoice < ActiveRecord::Base
 
   enum status: [:pending, :paid, :cancelled]
 
+  scope :newest_first, -> { order("created_at DESC").limit(100) }
+
   private
 
   def set_amount_value

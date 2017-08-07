@@ -8,7 +8,7 @@
         <i class="text-center icon ion-ios-person fs-120"></i>
         <!-- <img src="<%=  %>" width="100" alt="Profile Image" class="img-circle"> -->
         <h4 class="mt-20 mb-5 text-black"><%= current_user.name %></h4>
-        <p class="fs-12 text-uppercase text-muted"><%= current_user.phone_number %></p>
+        <p class="fs-12 text-uppercase text-muted"><%= cleanup_phone_number(current_user.phone_number) %></p>
         <p><%= current_user.email %></p>
       </div>
   </div>

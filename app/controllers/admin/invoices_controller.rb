@@ -3,7 +3,7 @@ module Admin
     before_action :require_login
 
     def index
-      @invoices = Invoice.all
+      @invoices = Invoice.all.newest_first
     end
   end
 end

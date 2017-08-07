@@ -25,7 +25,7 @@
                   <td><%= engagement.student_name %></td>
                   <td><%= client.name %></td>
                   <td><%= client.email %></td>
-                  <td><%= client.phone_number %></td>
+                  <td><%= cleanup_phone_number(client.phone_number) %></td>
                   <td><%= engagement.subject %></td>
                   <td><%= engagement.academic_type %></td>
                   <% if engagement.academic_type == "Test_Prep" %>
@@ -38,8 +38,8 @@
                   <td colspan="7" class="text-right">
                     <% pending_suggestion = engagement.suggestions.where(status: "pending").take %>
                     <% if pending_suggestion %>
-                      <%= "\"#{pending_suggestion.description}\"" %><br/>
-                      <%= "You have suggested #{pending_suggestion.hours} hours for #{engagement.student_name}." %> <%= link_to "Edit your suggestion.", edit_tutors_suggestion_path(pending_suggestion.id) %>
+                      <%= limit_suggestion_description_length("\"#{pending_suggestion.description}\"") %><br/>
+                      You have suggested <b><%= pending_suggestion.hours %> hours</b> for <%= engagement.student_name %>. <%= link_to "Edit your suggestion.", edit_tutors_suggestion_path(pending_suggestion.id) %>
                     <% else %>
                       You have no pending suggestions for <%= engagement.student_name %>. <%= link_to "Make a Suggestion.", new_tutors_suggestion_path(id: engagement) %>
                     <% end %>

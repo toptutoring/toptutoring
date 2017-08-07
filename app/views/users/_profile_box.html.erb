@@ -32,7 +32,7 @@
         <li class="media">
           <div class="media-left"><i class="ion-iphone"></i></div>
           <div class="media-body">
-            <p>Phone: <%= current_user.phone_number %></p>
+            <p>Phone: <%= cleanup_phone_number(current_user.phone_number) %></p>
           </div>
         </li>
         <% if current_user.has_role?('tutor') %>

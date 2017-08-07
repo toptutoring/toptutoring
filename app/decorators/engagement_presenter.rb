@@ -17,8 +17,8 @@ class EngagementPresenter < SimpleDelegator
     @engagement.tutor.try(:name)
   end
 
-  def student_subject
-    @engagement.student.student_info.subject
+  def subject
+    @engagement.subject
   end
 
   def engagement_academic_type
