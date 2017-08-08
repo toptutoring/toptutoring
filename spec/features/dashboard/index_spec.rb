@@ -24,9 +24,9 @@ feature 'Dashboard Index' do
 
     expect(page).to have_content(active_engagement.student.name)
     expect(page).to have_content(active_engagement.subject)
-    expect(page).to have_content(active_presenter.engagement_academic_type)
+    expect(page).to have_content(active_engagement.academic_type)
     expect(page).to have_content(active_engagement.state)
-    expect(page).to have_content(active_presenter.student_credit)
+    expect(page).to have_content(active_engagement.client.test_prep_credit)
   end
 
   scenario 'when user is director' do

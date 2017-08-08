@@ -16,14 +16,17 @@
             </tr>
           </thead>
             <tbody>
-              <% @tutor_engagements.each do |engagement|
-                representer = EngagementPresenter.new(engagement) %>
+              <% @tutor_engagements.each do |engagement| %>
                 <tr>
-                <td><%= representer.student_name %></td>
-                <td class="text-center"><%= representer.subject %></td>
-                <td class="text-center"><%= representer.engagement_academic_type %></td>
-                <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
-                <td class="text-center"><%= representer.student_credit %> hrs</td>
+                <td><%= engagement.student_name %></td>
+                <td class="text-center"><%= engagement.subject %></td>
+                <td class="text-center"><%= engagement.academic_type %></td>
+                <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
+                <% if engagement.academic_type == "Academic" %>
+                  <td class="text-center"><%= engagement.client.academic_credit %> hrs</td>
+                <% else %>
+                  <td class="text-center"><%= engagement.client.test_prep_credit %> hrs</td>
+                <% end %>
               </tr>
             <% end %>
           </tbody>
