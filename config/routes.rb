@@ -50,10 +50,13 @@ Rails.application.routes.draw do
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") || user.has_role?("director") } do
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
-      resources :invoices, only: [:index]
+      resources :invoices, only: [:index, :update]
       resources :tutors, only: [:index, :edit, :update]
       resources :funding_sources, only: [:new, :create, :edit, :update]
       resources :emails, only: [:index]
+      namespace :payments do
+        resources :pay_all
+      end
     end
   end
 

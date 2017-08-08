@@ -2,7 +2,7 @@ module Admin
   class PaymentsController < ApplicationController
     before_action :require_login
     before_action :set_auth_tutor, only: :new
-    before_action :set_funding_source, :validate_funding_source, :set_payee, only: :create
+    before_action :set_funding_source, :validate_funding_source, :set_payee, :check_dwolla, :set_invoice_or_timesheet, only: :create
 
     def index
       @client_payments = Payment.from_clients
@@ -11,31 +11,26 @@ module Admin
 
     def new
       @payment = Payment.new
-      @tutors = User.with_tutor_role
+      @tutors = User.tutors
     end
 
     def create
       @payment = Payment.new(payment_params)
       if @payment.valid?
-        if perform_transfer
-          @payment.save!
-          redirect_to admin_payments_path, notice: 'Payment is being processed.'
-        else
-          flash[:danger] = transfer_error
-          redirect_to new_admin_payment_path
-        end
+        process_payment
       else
         flash[:danger] = @payment.errors.full_messages
-        redirect_to new_admin_payment_path
       end
+      redirect_back(fallback_location: (request.referer || root_path)) and return
     end
 
     private
 
     def payment_params
+      amount = params[:amount].to_f * 100
       params.require(:payment)
-        .permit(:amount, :source, :description, :destination, :payee_id, :payer_id)
-        .merge(source: @funding_source.funding_source_id)
+            .permit(:source, :description, :payee_id, :payer_id)
+        .merge(amount_in_cents: amount.to_i, source: @funding_source.funding_source_id)
     end
 
     def set_funding_source
@@ -43,19 +38,24 @@ module Admin
     end
 
     def validate_funding_source
-      if @funding_source.nil?
-        flash[:danger] = "You must authenticate with Dwolla and select a funding source before making a payment."
-        redirect_to new_admin_payment_path
-      end
+      return unless @funding_source.nil?
+      flash[:danger] = "You must authenticate with Dwolla and select a funding source before making a payment."
+      redirect_back(fallback_location: (request.referer || root_path)) and return
     end
 
     def set_auth_tutor
       @tutors = User.tutors_with_external_auth
     end
 
-    def perform_transfer
+    def process_payment
       @transfer = Transfer.new(@payment)
-      @transfer.perform
+      if @transfer.perform
+        @payment.save!
+        @object_to_update_status.update(status: "paid") if @object_to_update_status
+        flash.notice = "Payment is being processed."
+      else
+        flash[:danger] = transfer_error
+      end
     end
 
     def transfer_error
@@ -64,6 +64,20 @@ module Admin
 
     def set_payee
       @payee = User.find(payment_params[:payee_id])
+    end
+
+    def check_dwolla
+      return if @payee.has_valid_dwolla?
+      flash[:danger] = "#{@payee.name} does not have Dwolla authenticated. Payment was cancelled."
+      redirect_back(fallback_location: (request.referer || root_path)) and return
+    end
+    
+    def set_invoice_or_timesheet
+      if params[:invoice]
+        @object_to_update_status = Invoice.find(params[:invoice].to_i)
+      elsif params[:timesheet]
+        @object_to_update_status = Timesheet.find(params[:timesheet].to_i)
+      end
     end
   end
 end

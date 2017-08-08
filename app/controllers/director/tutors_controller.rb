@@ -4,7 +4,7 @@ module Director
     before_action :set_tutor, only: [:edit, :update]
 
     def index
-      @tutors = User.with_tutor_role
+      @tutors = User.tutors
     end
 
     def update

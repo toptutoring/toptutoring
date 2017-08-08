@@ -1,5 +1,3 @@
-require "omniauth-oauth2"
-
 module OmniAuth
   module Strategies
     class Dwolla < OmniAuth::Strategies::OAuth2

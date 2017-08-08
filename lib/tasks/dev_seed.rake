@@ -128,14 +128,14 @@ namespace :dev do
     Payment.where(payer_id: admin.id).destroy_all
     Payment.where(payer_id: director.id).destroy_all
     Payment.create(
-      amount: 200,
+      amount_in_cents: 20000,
       description: "Payment for Tutor",
       status: "succeeded",
       customer_id: client.customer_id,
       payer_id: client.id,
       payee_id: tutor.id)
     #Set the client default information for existing clients
-    User.with_client_role.each do |client|
+    User.clients.each do |client|
       client.academic_rate_cents = 2999
       client.test_prep_rate_cents = 5999
       client.academic_credit = 0.0

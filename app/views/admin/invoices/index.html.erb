@@ -1,42 +1,102 @@
-<div class="page-content container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="widget">
-        <div class="widget-heading clearfix">
-          <h3 class="widget-title pull-left">Invoices</h3>
-        </div>
-        <div class="widget-body">
-          <div class="table-responsive">
-            <table class="table mb-0">
-              <thead>
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Pending Invoices</h3>
+        <% unless @invoices.pending.empty? %>
+          <% confirm_message = "This will pay all pending invoices for a total of #{number_to_currency(@total_for_all)}. Are you sure?" %>
+          <% link_title = "Pay All Invoices: #{number_to_currency(@total_for_all)}" %>
+          <% link_classes = "pull-right btn btn-sm btn-outline btn-primary" %>
+          <%= link_to link_title, admin_payments_pay_all_index_path(pay_type: 'invoice'), method: :post, class: link_classes, data: {confirm: confirm_message} %>
+        <% end %>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0 table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="col-lg-1 col-sm-1">Tutor</th>
+                <th class="col-lg-1 col-sm-1">Date Submitted</th>
+                <th class="col-lg-1 col-sm-1">Type</th>
+                <th class="col-lg-1 col-sm-1">Client</th>
+                <th class="col-lg-1 col-sm-1">Hours</th>
+                <th class="col-lg-1 col-sm-1">Client Charge</th>
+                <th class="text-center">Description</th>
+                <th class="col-lg-1 col-sm-1">Tutor Pay</th>
+                <th class="col-lg-2 col-sm-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @invoices.pending.order(:tutor_id).each do |i| %>
+                <% engagement = Engagement.find(i.engagement_id) %>
                 <tr>
-                  <th>Client</th>
-                  <th>Tutor</th>
-                  <th>Subject</th>
-                  <th class="text-center">Academic Type</th>
-                  <th class="text-center">Description</th>
-                  <th class="text-center">Hours</th>
-                  <th class="text-center">Hourly Rate</th>
-                  <th class="text-center">Amount</th>
+                  <td><%= name = User.find(i.tutor_id).name %></td>
+                  <td><%= i.updated_at.strftime("%-m/%-e/%y") %></td>
+                  <td><%= engagement.academic_type %></td>
+                  <td><%= engagement.client.name %></td>
+                  <td><%= i.hours.to_s %></td>
+                  <td><%= number_to_currency(i.amount) %></td>
+                  <td><%= description = i.description %></td>
+                  <td><%= number_to_currency(i.tutor_pay) %></td>
+                  <td>
+                    <%= link_to "Pay", admin_payments_path(invoice: i, payment: {payee_id: i.tutor_id, payer_id: current_user.id, amount: i.tutor_pay, description: "#{name} for: #{description}"}), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                    <%= link_to "Deny", admin_invoice_path(i, invoice: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                <% @invoices.each do |invoice|
-                  presenter = InvoicePresenter.new(invoice) %>
-                  <tr>
-                    <td><%= presenter.client_name %></td>
-                    <td><%= presenter.tutor.name %></td>
-                    <td><%= presenter.subject %></td>
-                    <td class="text-center"><%= presenter.academic_type %></td>
-                    <td class="text-center"><%= presenter.description %></td>
-                    <td class="text-center"><%= presenter.hours %></span></td>
-                    <td class="text-center"><%= presenter.hourly_rate %></span></td>
-                    <td class="text-center"><%= presenter.amount %></span></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Processed Invoices</h3>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0 table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="col-lg-1 col-sm-1">Tutor</th>
+                <th class="col-lg-1 col-sm-1">Date Submitted</th>
+                <th class="col-lg-1 col-sm-1">Type</th>
+                <th class="col-lg-1 col-sm-1">Client</th>
+                <th class="col-lg-1 col-sm-1">Hours</th>
+                <th class="col-lg-1 col-sm-1">Client Charge</th>
+                <th class="text-center">Description</th>
+                <th class="col-lg-1 col-sm-1">Tutor Pay</th>
+                <th class="col-lg-2 col-sm-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @invoices.where("status != 'pending'").order(:status, :tutor_id).each do |i| %>
+                <%  engagement = Engagement.find(i.engagement_id) %>
+                <tr>
+                  <td><%= User.find(i.tutor_id).name %></td>
+                  <td><%= i.updated_at.strftime("%-m/%-e/%y") %></td>
+                  <td><%= engagement.academic_type %></td>
+                  <td><%= engagement.client.name %></td>
+                  <td><%= i.hours %></td>
+                  <td><%= number_to_currency(i.amount) %></td>
+                  <td><%= i.description %></td>
+                  <td><%= number_to_currency(i.tutor_pay) %></td>
+                  <td>
+                    <% if i.status != "paid" %>
+                      <%= link_to "Move to pending", admin_invoice_path(i, invoice: {status: 'pending'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
+                    <% else %>
+                      <p>Paid</p>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
