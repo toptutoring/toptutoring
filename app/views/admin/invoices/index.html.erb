@@ -39,7 +39,7 @@
                   <td><%= description = i.description %></td>
                   <td><%= number_to_currency(i.tutor_pay) %></td>
                   <td>
-                    <%= link_to "Pay", admin_payments_path(invoice: i, payment: {payee_id: i.tutor_id, payer_id: current_user.id, amount: i.tutor_pay, description: "#{name} for: #{description}"}), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                    <%= link_to "Pay", admin_payments_path(invoice: i, payment: {payee_id: i.tutor_id, payer_id: current_user.id, description: "#{name} for: #{description}"}, amount: i.tutor_pay), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
                     <%= link_to "Deny", admin_invoice_path(i, invoice: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
                   </td>
                 </tr>
