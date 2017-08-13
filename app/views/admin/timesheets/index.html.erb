@@ -34,8 +34,8 @@
                   <td><%= description = t.description %></td>
                   <td><%= number_to_currency(t.amount) %></td>
                   <td>
-                    <% payment_params = {payee_id: t.user_id, payer_id: current_user.id, amount: t.amount, description: "#{name} for: #{description}"} %>
-                    <%= link_to "Pay", admin_payments_path(timesheet: t.id, payment: payment_params), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                    <% payment_params = {payee_id: t.user_id, payer_id: current_user.id, description: "#{name} for: #{description}"} %>
+                    <%= link_to "Pay", admin_payments_path(timesheet: t.id, payment: payment_params, amount: t.amount), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
                     <%= link_to "Deny", admin_timesheet_path(t, timesheet: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
                   </td>
                 </tr>
