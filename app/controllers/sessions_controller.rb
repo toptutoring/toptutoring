@@ -11,7 +11,7 @@ class SessionsController < Clearance::SessionsController
 
     sign_in(@user) do |status|
       if status.success?
-        redirect_back_or dashboard_path
+        redirect_back_or url_after_create
       else
         flash.now[:error] = "Invalid email or password."
         render template: "sessions/new", status: :unauthorized
@@ -20,7 +20,17 @@ class SessionsController < Clearance::SessionsController
   end
 
   private
-  
+
+  def url_after_create
+    if current_user.has_role?("client") &&
+        current_user.enabled? &&
+          !(current_user&.students&.first&.student_engagements&.first&.pending? || current_user&.client_engagements&.first&.pending?)
+      dashboard_path
+    else
+      dashboard_path
+    end
+  end
+
   def set_remember_me
     if params[:session][:remember_me]
       cookies.permanent[:remember_me] = true

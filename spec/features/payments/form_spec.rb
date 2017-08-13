@@ -6,6 +6,6 @@ feature "Navigate to payment as client" do
   scenario "with valid payment form" do
     sign_in(client)
 
-    expect(page.current_path).to eq new_payment_path
+    expect(page.current_path).to eq dashboard_path
   end
 end
