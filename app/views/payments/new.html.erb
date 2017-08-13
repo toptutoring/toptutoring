@@ -6,11 +6,11 @@
   <% if @invoices.empty? || @suggested_hours == 0 %>
     <div>
       <section class="payment-section col-md-8">
-      <%= render "payment_form" %>
+      <%= render :partial => "payment_form", :locals => {:render_alone => true} %>
       </section>
     </div>
   <% else %>
-    <div class="col-md-5 col-md-offset-1">
+    <div class="col-md-5" style="padding-left:15px;">
       <% if !@invoices.empty? %>
         <h3><i class="glyphicon glyphicon-alert" style="color:#ff4444;"></i> You have unpaid first tutoring sessions</h3>
           <% @student_engagements.each do |engagement| %>
@@ -116,7 +116,7 @@
 
     <div id="payment_section" style="visibility:hidden;">
       <section class="payment-section one-time-payment col-md-6">
-      <%= render "payment_form" %>
+      <%= render :partial => "payment_form", :locals => {:render_alone => false} %>
       </section>
     </div>
   <% end %>
