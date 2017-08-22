@@ -39,7 +39,7 @@
                   <td><%= description = i.description %></td>
                   <td><%= number_to_currency(i.tutor_pay) %></td>
                   <td>
-                    <%= link_to "Pay", admin_payments_path(invoice: i, payment: {payee_id: i.tutor_id, payer_id: current_user.id, amount: i.tutor_pay, description: "#{name} for: #{description}"}), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                    <%= link_to "Pay", admin_payments_path(invoice: i, payment: {payee_id: i.tutor_id, payer_id: current_user.id, description: "#{name} for: #{description}"}, amount: i.tutor_pay), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
                     <%= link_to "Deny", admin_invoice_path(i, invoice: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
                   </td>
                 </tr>
@@ -71,6 +71,7 @@
                 <th class="col-lg-1 col-sm-1">Client Charge</th>
                 <th class="text-center">Description</th>
                 <th class="col-lg-1 col-sm-1">Tutor Pay</th>
+                <th class="col-lg-1 col-sm-1">Status</th>
                 <th class="col-lg-2 col-sm-2">Actions</th>
               </tr>
             </thead>
@@ -86,13 +87,13 @@
                   <td><%= number_to_currency(i.amount) %></td>
                   <td><%= i.description %></td>
                   <td><%= number_to_currency(i.tutor_pay) %></td>
+                  <td><span class="label label-outline label-warning"><%= i.status %></span></td>
                   <td>
-                    <% if i.status != "paid" %>
-                      <%= link_to "Move to pending", admin_invoice_path(i, invoice: {status: 'pending'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
-                    <% else %>
-                      <p>Paid</p>
-                    <% end %>
-                  </td>
+                  <% if i.status != "paid" %>
+                    <%= link_to "Move to pending", admin_invoice_path(i, invoice: {status: 'pending'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
+                  <% else %>
+                    No action available.
+                  <% end %>
                 </tr>
               <% end %>
             </tbody>

@@ -71,7 +71,7 @@ module Admin
       flash[:danger] = "#{@payee.name} does not have Dwolla authenticated. Payment was cancelled."
       redirect_back(fallback_location: (request.referer || root_path)) and return
     end
-    
+
     def set_invoice_or_timesheet
       if params[:invoice]
         @object_to_update_status = Invoice.find(params[:invoice].to_i)
