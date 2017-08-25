@@ -19,11 +19,14 @@
         advice from tutors and students who want to help you succeed. Everything is written
         by our very own <b>Top Tutoring</b> gurus with years of experience in the world of tutoring.
       </li>
-      <li>
-        Pre-pay for your first hour with your tutor. Pre-Paying for your first hour with your tutor will speed up the
-        sign-up process and keeps <b>Top Tutoring</b> and its clients safe from illegitimate transactions. If you'd like
-        to get a head-start, check out our pre-payment options over <%= link_to "here", one_time_payment_path %>.
-      </li>
+
+      <% if current_user.payments_made.empty? %>
+        <li>
+          Pre-pay for your first hour with your tutor. Pre-Paying for your first hour with your tutor will speed up the
+          sign-up process and keeps <b>Top Tutoring</b> and its clients safe from illegitimate transactions. If you'd like
+          to get a head-start, check out our pre-payment options over <%= link_to "here", new_payment_path %>.
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>
