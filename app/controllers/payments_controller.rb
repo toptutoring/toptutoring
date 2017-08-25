@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
   before_action :require_login
+  before_action :set_stripe_key, only: :create
 
   def new
     @payment = Payment.new
@@ -24,23 +25,10 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
-    payment_service = PaymentService.new(current_user.id, amount_in_cents, 'usd', nil, payment_params)
-
-    if current_user.customer_id.empty?
-      flash[:danger] = "You must provide your card information before making a payment."
-      render :new
-    else
-      begin
-        payment = payment_service.create_charge_with_customer
-        payment_service.process!(payment)
-        flash[:notice] = 'Payment successfully made.'
-        redirect_back(fallback_location: (request.referer || root_path))
-      rescue Stripe::CardError => e
-        flash[:danger] = e.message
-        render :new
-      end
-    end
+    @payment_service = PaymentService.new(current_user.id, amount_in_cents, 'usd', params[:stripeToken], payment_params)
+    process_stripe_payment
+    @payment_service.save_payment_info if params[:save_payment_info]
+    redirect_back(fallback_location: (request.referer || root_path))
   end
 
   def first_session_payment
@@ -70,16 +58,29 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       format.js { render :file => 'payments/process_user_feedback.js.erb' }
     end
-
   end
 
   private
+
+  def process_stripe_payment
+    if @payment_service.customer.nil?
+      flash[:danger] = "You must provide your card information before making a payment."
+    elsif charge_customer
+      @payment_service.process!(@payment)
+    end
+  end
+
+  def charge_customer
+    @payment = @payment_service.create_charge
+    flash[:notice] = 'Payment successfully made.'
+  rescue Stripe::CardError => e
+    flash[:danger] = e.message
+    return false
+  end
 
   def payment_params
     params.require(:payment).permit(:description, :hours, :academic_type)
   end
-
-  private
 
   def get_student_engagements
     if current_user.is_student?
@@ -95,5 +96,9 @@ class PaymentsController < ApplicationController
 
   def amount_in_cents
     (params[:amount].to_f * 100).to_i
+  end
+
+  def set_stripe_key
+    Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
   end
 end

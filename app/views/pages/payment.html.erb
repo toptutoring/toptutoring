@@ -2,7 +2,9 @@
 <div class="row">
   <% if @invoices.empty? %>
     <div>
+      <section class="payment-section one-time-payment col-md-6">
       <%= render "payment_form" %>
+      </section>
     </div>
   <% else %>
     <div class="col-md-5 col-md-offset-2">
@@ -106,7 +108,9 @@
   <% end %> <!-- first if statement -->
 
   <div id="payment_section" style="visibility:hidden;">
-    <%= render "payment_form" %>
+    <section class="payment-section one-time-payment col-md-6">
+      <%= render "payment_form" %>
+    </section>
   </div>
 
 </div>

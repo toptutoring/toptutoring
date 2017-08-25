@@ -1,53 +1,49 @@
 class PaymentService
+  attr_reader :customer
+
   def initialize(user_id, amount_in_cents, currency, token, params)
-    @user_id = user_id
+    @user = User.find(user_id)
     @description = params[:description]
     @amount_in_cents = amount_in_cents
     @currency = currency
     @token = token
     @hours = params[:hours].to_f
     @academic_type = params[:academic_type]
+    @customer = retrieve_customer
   end
 
   def retrieve_customer
-    customer = if user.customer_id
-                  Stripe::Customer.retrieve user.customer_id
-               else
-                  customer = Stripe::Customer.create(
-                               source: @token,
-                               email: user.email
-                             )
-               end
+    if @token.nil?
+      Stripe::Customer.retrieve @user.customer_id
+    else
+      Stripe::Customer.create(
+        source: @token,
+        email: @user.email
+      )
+    end
   end
 
-  def create_charge_with_customer
+  def create_charge
     payment = Stripe::Charge.create(
       amount: @amount_in_cents,
       currency: @currency,
-      customer: user.customer_id,
+      customer: @customer,
       description: @description
     )
   end
 
-  def create_charge_with_token
-    payment = Stripe::Charge.create(
-      amount: @amount_in_cents,
-      currency: @currency,
-      source: @token,
-      description: @description
-    )
+  def save_payment_info
+    @user.customer_id = @customer.id
+    @user.save
   end
 
   def process!(payment)
-    if new_payment = create_payment(payment, user.id)
-      update_client_credit(new_payment.amount_in_cents, user.id, @academic_type) if new_payment.valid?
+    if new_payment = create_payment(payment, @user.id)
+      update_client_credit(new_payment.amount_in_cents, @user.id, @academic_type) if new_payment.valid?
     end
   end
 
   private
-  def user
-    @user = User.find(@user_id)
-  end
 
   def create_payment(payment, payer_id)
     Payment.create(
