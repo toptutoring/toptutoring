@@ -15,12 +15,10 @@ class OneTimePaymentsController < ApplicationController
 
     begin
       if params[:save_payment_info] && current_user
-        customer = payment_service.retrieve_customer
-        current_user.customer_id = customer.id
-        current_user.save!
-        payment = payment_service.create_charge_with_customer
+        payment_service.save_payment_info
+        payment = payment_service.create_charge
       else
-        payment = payment_service.create_charge_with_token
+        payment = payment_service.create_charge
       end
 
       payment_service.process!(payment) if current_user

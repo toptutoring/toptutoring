@@ -1,10 +1,13 @@
 <div id="flash_message">
 </div>
+<h2>Payment</h2>
 </br>
 <div class="row">
   <% if @invoices.empty? || @suggested_hours == 0 %>
     <div>
+      <section class="payment-section col-md-8">
       <%= render "payment_form" %>
+      </section>
     </div>
   <% else %>
     <div class="col-md-5 col-md-offset-1">
@@ -112,7 +115,9 @@
     </div>
 
     <div id="payment_section" style="visibility:hidden;">
+      <section class="payment-section one-time-payment col-md-6">
       <%= render "payment_form" %>
+      </section>
     </div>
   <% end %>
 </div>
