@@ -90,7 +90,7 @@
       <div class="col-sm-2"></div>
       <label for="exp" class="col-sm-2 control-label">Expiration</label>
       <div class="controls">
-        <div class="col-sm-3">
+        <div class="col-sm-3" style="padding-bottom:15px;">
           <i class="ion-chevron-down"></i>
           <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}) %>
         </div>
