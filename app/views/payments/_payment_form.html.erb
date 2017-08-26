@@ -1,5 +1,5 @@
-<section class="payment-section one-time-payment col-md-6 <%= 'col-md-offset-2' unless !render_alone %>">
 <%= form_for @payment, :html => { :class => "form-horizontal payment-form", id: "payment-form" } do |f| %>
+  <h2 class="col-md-offset-2">Payment</h2>
   <fieldset class="credit_card">
 
     <div class="form-group">
@@ -86,7 +86,7 @@
       <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
     </div>
 
-    <div class="form-group select-option">
+    <div class="form-group select-option" style="height: auto;">
       <div class="col-sm-2"></div>
       <label for="exp" class="col-sm-2 control-label">Expiration</label>
       <div class="controls">
@@ -141,5 +141,4 @@ just the last four digits followed by a special 3-digit code. This 3-digit code 
   <%= hidden_field_tag :payer_email, current_user.email %>
 
 <% end %>
-</section>
 <%= javascript_include_tag "#{STRIPE_JS_HOST}/v2/" %>

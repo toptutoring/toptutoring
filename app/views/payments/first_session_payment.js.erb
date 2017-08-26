@@ -4,5 +4,5 @@ document.getElementById("payment_section").style.visibility = "visible";
 document.getElementById("amount").value = <%= ((@engagement.tutor.academic_rate_cents/100.0)*(@engagement.invoices.last.hours)) %>.toFixed(2);
 document.getElementById("hours").value = <%= @engagement.invoices.last.hours %>;
 document.getElementById("payment_description").value = "Payment for <%= @engagement.student_name %>'s first session.";
-set_academic_type_dropdown();
+
 document.getElementById("jump_to_payment_section").click();

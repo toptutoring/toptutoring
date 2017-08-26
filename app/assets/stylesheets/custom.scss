@@ -139,6 +139,11 @@ input[type="text"], button, textarea, select, span, input[type="password"], inpu
 }
 
 .select-option, .select2 {
+  position: relative;
+  cursor: pointer;
+  height: 50px;
+  overflow: hidden;
+  margin-bottom: 24px;
 }
 
 .select-option i, .select2 i {
