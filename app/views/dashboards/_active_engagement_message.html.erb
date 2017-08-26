@@ -1,0 +1,12 @@
+<div class="col-md-8">
+  <div class="widget">
+    <div class="widget-body">
+      <% @engagements.each do |engagement| %>
+        You have been assigned to the tutor
+        <b><%= engagement.tutor.name %></b>.
+        <%= link_to "View Tutor Profile", "#" %></br>
+      <% end %>
+    </div>
+  </div>
+  <%= render "client_dashboard_extras" %>
+</div>

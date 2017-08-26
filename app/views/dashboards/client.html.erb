@@ -4,11 +4,16 @@
 <% end %>
 <% if current_user.enabled? %>
   <% if !current_user.is_student? %>
-   <% if current_user.students&.first&.student_engagements&.first&.pending? || current_user.client_engagements&.first&.pending? %>
+    <% if @engagements.active.any? %>
       <%= render "student_pending_engagement_message" %>
+    <% else %>
+      <%= render "student_active_engagement_message" %>
     <% end %>
-  <% end %>
-  <% if current_user.is_student? && current_user.client_engagements&.first&.pending? %>
-    <%= render "pending_engagement_message" %>
+  <% else %>
+    <% if @engagements.last.pending? %>
+      <%= render "pending_engagement_message" %>
+    <% else %>
+      <%= render "active_engagement_message" %>
+    <% end %>
   <% end %>
 <% end %>
