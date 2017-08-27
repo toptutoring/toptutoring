@@ -12,10 +12,11 @@
           <%= student_field.email_field :email, class:"form-control", id: "user_student_email", style: "margin-bottom: -2px;",
             oninput: "checkIfEmailUnique(this.id);", onfocus: "showStudentEmailInfo();"%>
 
-          <h5>Are you interested in hiring a tutor for help in a general academic area or specifically for test preparation?</h5>
-          <select name="info[academic_type]" class="students-academic-type">
+          </br>
+          <h5>Tutoring Type (Based on your selected subject)</h5>
+          <select name="info[academic_type]" class="students-academic-type" style="cursor:not-allowed" disabled>
             <option value="Academic">Academic</option>
-            <option value="Test_Prep">Test Preparation</option>
+            <option value="Test_Prep" <%= if get_academic_type_from_subject == 'Test Prep'; 'selected'; end; %>>Test Preparation</option>
           </select>
         </div>
       </div>
