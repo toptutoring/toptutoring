@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170804212022) do
+ActiveRecord::Schema.define(version: 20170813190354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,19 @@ ActiveRecord::Schema.define(version: 20170804212022) do
 
   create_table "roles", id: :serial, force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "name"
+    t.integer "session_id"
+    t.integer "student_id"
+    t.integer "tutor_id"
+    t.string "student_token"
+    t.string "tutor_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_rooms_on_student_id"
+    t.index ["tutor_id"], name: "index_rooms_on_tutor_id"
   end
 
   create_table "student_infos", id: :serial, force: :cascade do |t|

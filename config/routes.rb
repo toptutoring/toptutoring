@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   #Clearance routes
   resource :session, controller: "sessions", only: [:new, :create]
   resources :payments, only: [:new, :create, :index]
+  resources :rooms
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
     namespace :admin do
