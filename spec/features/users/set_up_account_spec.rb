@@ -47,7 +47,6 @@ feature 'Set up account' do
 
     sign_in(client_as_student)
 
-    select "Academic", from: "info_academic_type"
     click_link "Finish"
 
     expect(page).to have_content("Make payment")
