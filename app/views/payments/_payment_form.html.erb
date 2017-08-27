@@ -131,8 +131,8 @@ just the last four digits followed by a special 3-digit code. This 3-digit code 
     <% end %>
 
     <div class="form-group">
-      <div class="col-xs-3 col-xs-offset-4">
-        <%= f.submit "Pay", class: "btn btn-block btn-blue payment-submit" %>
+      <div class="col-xs-6 col-xs-offset-3">
+        <%= f.submit "Pay", class: "btn btn-block btn-blue payment-submit", onClick: "disablePaymentButtonWhenClicked(this);" %>
       </div>
     </div>
   </fieldset>
@@ -142,3 +142,26 @@ just the last four digits followed by a special 3-digit code. This 3-digit code 
 
 <% end %>
 <%= javascript_include_tag "#{STRIPE_JS_HOST}/v2/" %>
+
+<script>
+  function disablePaymentButtonWhenClicked(button) {
+
+    var allFieldsFilled = false;
+    document.querySelectorAll("input[required]").forEach(function(element) {
+      if(element.value == "" || element.value == 0.0) {
+        allFieldsFilled = false;
+      }
+      else {
+        allFieldsFilled = true;
+      }
+    });
+
+    if(!allFieldsFilled) {
+      return;
+    }
+
+    button.disabled = true;
+    button.value = "Processing...";
+  }
+
+</script>
