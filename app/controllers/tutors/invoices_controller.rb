@@ -48,7 +48,7 @@ module Tutors
     def authorize_tutor
       unless current_user.tutor_engagements.where(state: "active").pluck(:id).include?(params[:invoice][:engagement_id].to_i)
         redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: "There was an error while processing your invoice." }) and return
+                      flash: { error: "There was an error while processing your invoice. Please check with your tutor director if you have been set up yet to tutor this client." }) and return
       end
     end
   end
