@@ -12,7 +12,7 @@ module DashboardHelper
       subject.include?("GRE") || subject.include?("PCAT") || subject.include?("SAT") || subject.include?("TOEFL") || subject.include?("TOPS") ||
       subject.include?("WISC") || subject.include?("WPPSI"))
 
-      "Test Prep"
+      "Test_Prep"
     else
       "Academic"
     end

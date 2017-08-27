@@ -6,8 +6,9 @@
 
       <select required="required" name="info[academic_type]" id="info_academic_type" style="cursor:not-allowed" disabled>
         <option value="Academic">Academic</option>
-        <option value="Test_Prep" <%= if get_academic_type_from_subject == 'Test Prep'; 'selected'; end; %>>Test Preparation</option>
+        <option value="Test_Prep" <%= if get_academic_type_from_subject == 'Test_Prep'; 'selected'; end; %>>Test Preparation</option>
       </select>
+      <input type="hidden" name="info[academic_type]" value="<%= get_academic_type_from_subject %>"/>
     </div>
   </div>
 </div>
