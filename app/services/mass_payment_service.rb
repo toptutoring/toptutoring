@@ -39,7 +39,7 @@ class MassPaymentService
       sql = "tutor_id, string_agg(id::text, ', ') AS description, sum(tutor_pay_cents) AS tutor_pay_cents, sum(hours) AS hours"
       sort_invoices Invoice.pending.select(sql).group(:tutor_id)
     else
-      sql = "user_id, string_add(id::text) AS description, sum(minutes) AS minutes"
+      sql = "user_id, string_agg(id::text, ', ') AS description, sum(minutes) AS minutes"
       sort_timesheets Timesheet.pending.select(sql).group(:user_id)
     end
   end
