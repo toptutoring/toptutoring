@@ -83,6 +83,10 @@ GEM
     clockwork (2.0.2)
       activesupport
       tzinfo
+    codecov (0.1.10)
+      json
+      simplecov
+      url
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
@@ -324,6 +328,7 @@ GEM
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
     uniform_notifier (1.10.0)
+    url (0.3.2)
     vcr (3.0.3)
     web-console (3.5.1)
       actionview (>= 5.0)
@@ -356,6 +361,7 @@ DEPENDENCIES
   capybara-webkit
   clearance
   clockwork (~> 2.0)
+  codecov
   database_cleaner
   dotenv-rails
   dwolla_v2 (~> 1.0)
@@ -408,4 +414,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.14.6
+   1.15.3
