@@ -72,6 +72,7 @@ group :test do
   gem 'sinatra', '~> 2.0.0.rc2', require: false
   gem "vcr"
   gem "rspec-rails", "~> 3.5.0.beta4"
+  gem 'rspec_junit_formatter'
   gem "m"
 end
 
