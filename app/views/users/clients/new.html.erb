@@ -17,7 +17,7 @@
         </div>
         <%= form_for @user, url: users_clients_path(@user), html: { class: "signup-form", id: "client-signup" } do |form| %>
 
-          <%= form.fields_for :client_info do |client_field| %>
+          <%= form.fields_for :signup do |client_field| %>
             <div class="col-md-2 col-md-offset-2">
               <%= client_field.radio_button :student, true %>
               <%= label :tutoring_info_myself, 'Myself' %>
@@ -41,7 +41,7 @@
             <%= form.password_field :password, placeholder: "PASSWORD" %>
           </div>
 
-          <%= form.fields_for :client_info do |client_field| %>
+          <%= form.fields_for :signup do |client_field| %>
             <div class="col-md-12">
               <%= client_field.select :subject, options_from_collection_for_select(Subject.all, "id", "name"), prompt: "Subject", class:"wpcf7-form-control wpcf7-select subject-select" %>
             </div>

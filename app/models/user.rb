@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
   end
 
   def is_student?
-    client_info&.student
+    signup&.student
   end
 
   def notify_bugsnag
