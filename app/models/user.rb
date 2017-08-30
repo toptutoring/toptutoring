@@ -2,8 +2,6 @@ class User < ActiveRecord::Base
   include Clearance::User
 
   # Associations
-  has_one :student_info, dependent: :destroy
-  accepts_nested_attributes_for :student_info
   has_one :contract, dependent: :destroy
   accepts_nested_attributes_for :contract
   has_one :signup, dependent: :destroy

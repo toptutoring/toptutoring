@@ -30,7 +30,7 @@ class EngagementPresenter < SimpleDelegator
   end
 
   def student_academic_type
-    @engagement.student.student_info.academic_type
+    @engagement.academic_type
   end
 
   def student_credit
