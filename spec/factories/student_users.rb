@@ -4,7 +4,6 @@ FactoryGirl.define do
     email                 { "student@example.com" }
     password              { "password" }
     roles                 { "student" }
-    student_info          { FactoryGirl.create(:student_info) }
     access_state          { "enabled" }
     client                { FactoryGirl.create(:client_user) }
   end

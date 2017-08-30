@@ -5,7 +5,7 @@ FactoryGirl.define do
     password      { "password" }
     roles         { "client" }
     access_state  { "enabled" }
-    client_info   { FactoryGirl.create(:client_info) }
+    signup   { FactoryGirl.create(:signup) }
     customer_id   { "xxx" }
     academic_rate     { 20 }
     test_prep_rate    { 20 }
@@ -13,7 +13,7 @@ FactoryGirl.define do
     test_prep_credit  { 20 }
 
     trait :as_student do
-      client_info   { FactoryGirl.create(:client_info, :as_student) }
+      signup   { FactoryGirl.create(:signup, :as_student) }
     end
   end
 end

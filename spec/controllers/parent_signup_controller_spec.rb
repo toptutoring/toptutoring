@@ -7,7 +7,7 @@ require "rails_helper"
 
     it 'does not send notifications to tutor' do
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
-        password: 'some_password', client_info_attributes: { student: false } } }
+        password: 'some_password', signup_attributes: { student: false } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(1)
       expect(ActionMailer::Base.deliveries.last.to).to eq(['some_email@toptutoring.com'])
@@ -17,7 +17,7 @@ require "rails_helper"
       director = FactoryGirl.create(:director_user)
 
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
-        password: 'some_password', client_info_attributes: { student: false } } }
+        password: 'some_password', signup_attributes: { student: false } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
       expect(ActionMailer::Base.deliveries.map(&:to)).to include([director.email])
@@ -28,7 +28,7 @@ require "rails_helper"
       tutor.save
 
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
-        password: 'some_password', client_info_attributes: { student: false } } }
+        password: 'some_password', signup_attributes: { student: false } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
       expect(ActionMailer::Base.deliveries.map(&:to)).to include([tutor.email])
@@ -38,7 +38,7 @@ require "rails_helper"
       admin = FactoryGirl.create(:admin_user)
 
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
-        password: 'some_password', client_info_attributes: { student: false } } }
+        password: 'some_password', signup_attributes: { student: false } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
       expect(ActionMailer::Base.deliveries.map(&:to)).to include([admin.email])
