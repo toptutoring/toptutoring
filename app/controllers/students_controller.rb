@@ -18,8 +18,8 @@ class StudentsController < ApplicationController
         student_id: @student.id,
         student_name: @student.name,
         client_id: current_user.id,
-        subject: current_user.signup.subject,
-        academic_type: student_academic_info
+        subject: student_academic_info_and_subject[:subject],
+        academic_type: student_academic_info_and_subject[:academic_type]
       )
       if engagement.save
         redirect_to students_path, notice: 'Student successfully created'
@@ -43,7 +43,8 @@ class StudentsController < ApplicationController
     params.require(:user).permit(:name, :email, :phone_number).merge(roles: "student")
   end
 
-  def student_academic_info
-    params.require(:info).permit(:academic_type)
+  def student_academic_info_and_subject
+    params.require(:info).permit(:academic_type, :subject)
   end
+
 end
