@@ -9,9 +9,9 @@ describe DwollaTokenRefresh do
       Timecop.freeze(Time.current) do
         service.perform
         user.reload
-        expect(user.access_token).to eq("SPgfOVJVgARXDx8tLbzEOGiFJR82xhuTU6XsabNLFEEXcXxKvJ")
-        expect(user.refresh_token).to eq("PMmp9SF1kD0B2Sen2HU092LPFumw3Ro6JAkyIWSHvQTJbYAY8k")
-        expect(user.token_expires_at).to eq(Time.current.to_i + 3604)
+        expect(user.access_token).to eq("7TNx9RHIQs2EBbP47mKENaVRzBO7rke9DduE52FxP3zKPuuqzt")
+        expect(user.refresh_token).to eq("QgpHipjUMQDcn3xVKgn9vhRtWMoXQkfuamg4h699y5BpaAOB3S")
+        expect(user.token_expires_at).to eq(Time.current.to_i + 3607)
       end
     end
   end

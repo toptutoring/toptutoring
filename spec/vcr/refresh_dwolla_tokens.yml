@@ -5,12 +5,12 @@ http_interactions:
     uri: https://uat.dwolla.com/oauth/v2/token
     body:
       encoding: UTF-8
-      string: grant_type=refresh_token&refresh_token=CYojEe4hMnVzLeXbWbPEPJy2WF7kNvuNvzN6EAdIY5zTXJsvYU
+      string: grant_type=refresh_token&refresh_token=ARQGbyVhwgJfWOyanvLclFQZcdKhjDvRDvJ6G41yraYvoWKDI8
     headers:
       User-Agent:
       - dwolla-v2-ruby 1.1.2
       Authorization:
-      - Basic ODU2aGhJcklDUUNSRms1eVM0U0JhdERtZmp2Znk5aTFNMWxDWGVBM1prN0dTM0MwTkw6bGxoWTNZc2JxRzR6aUFlaVdheDVtalMyQm9XZUYzejFEc2JLNEE5REp3NEZxeTd3S0g=
+      - Basic dzREdkNHckFLYWFsMEM2Qk50cHRtbmpiSFBJUU1ZT2VnMldib3dkWU9GY1I3T0hqVk46TmhsQ3JzSGl0MlZZaHF3Q2dmR09nWWRnd2ZhUVh2NHV4TkhxdHBvNW5pYU5oOVpFUHU=
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 31 Jul 2017 18:34:59 GMT
+      - Thu, 31 Aug 2017 00:33:09 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -31,9 +31,9 @@ http_interactions:
       Connection:
       - keep-alive
       Set-Cookie:
-      - __cfduid=d0157cdba86dad669c4fd59980ba6b9c71501526098; expires=Tue, 31-Jul-18
-        18:34:58 GMT; path=/; domain=.dwolla.com; HttpOnly
-      - dtid=8dd5581e-2637-4388-b9ce-9f16f5d434be; expires=Sat, 31-Jul-2027 18:34:54
+      - __cfduid=d5f86fa588aad2468cb6427aee7cf2b301504139588; expires=Fri, 31-Aug-18
+        00:33:08 GMT; path=/; domain=.dwolla.com; HttpOnly
+      - dtid=ca457950-f816-4897-a691-bb43e0caa0a6; expires=Tue, 31-Aug-2027 00:33:01
         GMT; path=/; HttpOnly
       Cache-Control:
       - private
@@ -50,10 +50,10 @@ http_interactions:
       Server:
       - cloudflare-nginx
       Cf-Ray:
-      - 3872a7a10c822926-OTP
+      - 396be58b6ee41213-SJC
     body:
       encoding: ASCII-8BIT
-      string: '{"_links":{"account":{"href":"https://api-sandbox.dwolla.com/accounts/25565ecb-63d7-481d-89a9-9e169df22d8a"}},"access_token":"SPgfOVJVgARXDx8tLbzEOGiFJR82xhuTU6XsabNLFEEXcXxKvJ","expires_in":3604,"refresh_token":"PMmp9SF1kD0B2Sen2HU092LPFumw3Ro6JAkyIWSHvQTJbYAY8k","refresh_expires_in":5184004,"token_type":"bearer","scope":"accountinfofull|email|transactions|send|funding","account_id":"25565ecb-63d7-481d-89a9-9e169df22d8a"}'
+      string: '{"_links":{"account":{"href":"https://api-sandbox.dwolla.com/accounts/092499dc-d0f0-45c9-b89e-c42d050cbb21"}},"access_token":"7TNx9RHIQs2EBbP47mKENaVRzBO7rke9DduE52FxP3zKPuuqzt","expires_in":3607,"refresh_token":"QgpHipjUMQDcn3xVKgn9vhRtWMoXQkfuamg4h699y5BpaAOB3S","refresh_expires_in":5184007,"token_type":"bearer","scope":"accountinfofull|email|transactions|send|funding","account_id":"092499dc-d0f0-45c9-b89e-c42d050cbb21"}'
     http_version: 
-  recorded_at: Mon, 31 Jul 2017 18:35:01 GMT
+  recorded_at: Thu, 31 Aug 2017 00:33:08 GMT
 recorded_with: VCR 3.0.3

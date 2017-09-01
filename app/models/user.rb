@@ -105,14 +105,11 @@ class User < ActiveRecord::Base
     customer_id.present?
   end
 
-
   def has_valid_dwolla?
-    begin
-      access_token && refresh_token
-    rescue OpenSSL::Cipher::CipherError
-      notify_bugsnag
-      false
-    end
+    access_token && refresh_token
+  rescue OpenSSL::Cipher::CipherError
+    notify_bugsnag
+    false
   end
 
   def valid_token?
@@ -125,10 +122,6 @@ class User < ActiveRecord::Base
 
   def is_student?
     client_info&.student
-  end
-
-  def is_tutor?
-    has_role?("tutor")
   end
 
   def notify_bugsnag
