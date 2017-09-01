@@ -33,7 +33,7 @@
                     <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
                     <td class="text-center">
                       <%= link_to edit_engagement_path(representer.id) do %>
-                        <button type="button" class="btn btn-outline btn-success">Edit</button>
+                        <button type="button" class="btn btn-outline btn-success"><%= representer.text_for_edit_button %></button>
                       <% end %>
                     </td>
                     <% if representer.updated? && representer.pending? %>
