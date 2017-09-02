@@ -6,7 +6,7 @@ module Admin
 
       def create
         pay_all_pending
-        @payment_service.update_pending_to_paid if payment_successful?
+        @payment_service.update_processing_to_paid if payment_successful?
         set_flash_messages
         redirect_back(fallback_location: (request.referer || root_path)) and return
       end
@@ -14,8 +14,8 @@ module Admin
       private
 
       def pay_all_pending
-        @type = params[:pay_type]
-        @payment_service = MassPaymentService.new(@type, current_user)
+        type = params[:pay_type]
+        @payment_service = MassPaymentService.new(type, current_user)
         @payment_service.pay_all
       end
 
