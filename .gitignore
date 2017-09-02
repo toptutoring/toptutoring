@@ -18,5 +18,6 @@
 # Ignore Mac specific files
 .DS_Store
 
-# Ignore Development Environment Variables
+# Ignore Development/Test Environment Variables
 .env.development
+.env.test

@@ -16,7 +16,6 @@ class DwollaService
 
   def funding_sources
     return [] unless @user.has_valid_dwolla?
-    ensure_valid_token
     response = account_token.get("#{account_url}/funding-sources")
     response._embedded["funding-sources"]
   end
@@ -26,16 +25,10 @@ class DwollaService
   attr_reader :user
 
   def account_token
-    DWOLLA_CLIENT.tokens.new(access_token: user.access_token,
-                             refresh_token: user.refresh_token)
+    DWOLLA_CLIENT.auths.client
   end
 
   def account_url(uid = user.auth_uid)
     "#{ENV.fetch("DWOLLA_API_URL")}/accounts/#{uid}"
-  end
-
-  def ensure_valid_token
-    return if user.valid_token?
-    DwollaTokenRefresh.new(user.id).perform
   end
 end

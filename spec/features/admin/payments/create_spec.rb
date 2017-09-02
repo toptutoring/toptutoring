@@ -28,7 +28,7 @@ feature "Create payment for tutor" do
     scenario 'and has dwolla auth' do
       tutor
       funding_source
-      VCR.use_cassette('dwolla authetication') do
+      VCR.use_cassette('dwolla authentication', record: :new_episodes) do
         sign_in(admin)
         visit admin_tutors_path
         click_on "Pay tutor"
@@ -61,7 +61,7 @@ feature "Create payment for tutor" do
       tutor
       engagement
       funding_source
-      VCR.use_cassette('dwolla authetication') do
+      VCR.use_cassette('dwolla authentication', record: :new_episodes) do
         sign_in(director)
         visit director_tutors_path
         click_on "Pay tutor"
@@ -76,7 +76,7 @@ feature "Create payment for tutor" do
     end
 
     scenario "and payment exceeds tutor's balance" do
-      VCR.use_cassette('dwolla authetication') do
+      VCR.use_cassette('dwolla authentication', record: :new_episodes) do
         tutor
         funding_source
         sign_in(director)
@@ -94,7 +94,7 @@ feature "Create payment for tutor" do
     end
 
     scenario "and director pays himself" do
-      VCR.use_cassette('dwolla authetication') do
+      VCR.use_cassette('dwolla authentication', record: :new_episodes) do
         tutor
         contract
         funding_source

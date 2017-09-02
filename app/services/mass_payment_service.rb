@@ -1,5 +1,5 @@
 class MassPaymentService
-  attr_reader :messages, :errors, :pending_items
+  attr_reader :messages, :errors, :payments
 
   def initialize(type, payer)
     @type = type
@@ -7,14 +7,13 @@ class MassPaymentService
     @funding_source = FundingSource.last.funding_source_id
     @messages = []
     @errors = []
-    @pending_items = sort_all_pending
-    @payments = change_to_payments # array of invoices or timesheets
-    @token = DWOLLA_CLIENT.auths.client
+    @payments = sort_all_pending
   end
 
   def pay_all
     return if no_payments?
-    mass_payment = @token.post "mass-payments", request_body
+    token = DWOLLA_CLIENT.auths.client
+    mass_payment = token.post "mass-payments", request_body
     finalize_payments(mass_payment)
   rescue DwollaV2::Error => e
     @errors << e._embedded.errors.first.message
@@ -22,64 +21,71 @@ class MassPaymentService
     @errors << e[:code] + ": " + e[:message]
   end
 
-  def update_pending_to_paid
-    @pending_items.each do |item|
-      if @type == 'invoice'
-        update_for_invoice(item)
-      else
-        User.find(item.user_id).timesheets.pending.update_all(status: "paid")
+  def update_processing_to_paid
+      @paid_users.each do |user|
+        if @type == 'invoice'
+          update_for_invoice(user)
+        else
+          update_for_timesheet(user)
+        end
       end
-    end
   end
 
   private
 
   def sort_all_pending
     if @type == "invoice"
-      sql = "tutor_id, string_agg(id::text, ', ') AS description, sum(tutor_pay_cents) AS tutor_pay_cents, sum(hours) AS hours"
-      sort_invoices Invoice.pending.select(sql).group(:tutor_id)
+      users_with_pending = Invoice.pending.pluck(:tutor_id).uniq
+      sort_invoices users_with_pending
     else
-      sql = "user_id, string_add(id::text) AS description, sum(minutes) AS minutes"
-      sort_timesheets Timesheet.pending.select(sql).group(:user_id)
+      users_with_pending = Timesheet.pending.pluck(:user_id).uniq
+      sort_timesheets users_with_pending
     end
   end
 
-  def sort_invoices(invoices)
-    invoices.each_with_object([]) do |invoice, obj|
-      user = User.find(invoice.tutor_id)
-      valid_user = user.has_valid_dwolla? && user.outstanding_balance >= invoice.hours
-      add_or_skip_item(invoice, obj, valid_user, user)
+  def sort_invoices(user_ids)
+    user_ids.each_with_object([]) do |id, obj|
+      user = User.find(id)
+      pending_items = user.invoices.pending
+      valid_hours = user.outstanding_balance >= pending_items.sum(:hours)
+      valid_user = user.has_valid_dwolla? && valid_hours
+      add_or_skip_item(obj, valid_user, user, pending_items)
     end
   end
 
-  def sort_timesheets(timesheets)
-    timesheets.each_with_object([]) do |sheet, obj|
-      user = User.find(sheet.user_id)
+  def sort_timesheets(user_ids)
+    user_ids.each_with_object([]) do |id, obj|
+      user = User.find(id)
+      pending_items = user.timesheets.pending
       valid_user = user.has_valid_dwolla?
-      add_or_skip_item(sheet, obj, valid_user, user)
+      add_or_skip_item(obj, valid_user, user, pending_items)
     end
   end
 
-  def add_or_skip_item(item, obj, valid_user, user)
+  def add_or_skip_item(obj, valid_user, user, pending_items)
     if valid_user
-      obj << item
+      payment = Payment.new(payment_params(user, pending_items))
+      pending_items.update_all(status: 'processing')
+      obj << payment
     else
       @messages << invalid_user_message(user.name)
     end
   end
 
-  def invalid_user_message(name)
-    "There was an error making a payment for #{name}. Payment was not processed."
+  def payment_params(user, pending_items)
+    ids = pending_items.pluck(:id).join(', ')
+    if @type == "invoice"
+      amount = pending_items.sum(:tutor_pay_cents)
+    else
+      amount = pending_items.map(&:amount_in_cents).reduce(:+)
+    end
+    { amount_in_cents: amount,
+      payee_id: user.id,
+      description: "Payment for invoices: #{ids}." }
   end
 
-  def change_to_payments
-    @pending_items.map do |item|
-      payment = item.to_payment
-      payment.payer_id = @payer.id
-      payment.source = @funding_source
-      payment.description.prepend("Payment for #{@type}s: ")
-      payment
-    end
+  def invalid_user_message(name)
+    "There was an error making a payment for #{name}. Payment was not processed."
   end
 
   def no_payments?
@@ -142,6 +148,7 @@ class MassPaymentService
     if mass_payment
       record_payments
       set_final_message
+      @paid_users = @payments.map { |item| User.find(item.payee_id) }
     else
       @errors << "There was an error while processing payment."
     end
@@ -155,10 +162,17 @@ class MassPaymentService
     @messages << start + " been made for a total of #{total_formatted}."
   end
 
-  def update_for_invoice(invoice)
-    user = User.find(invoice.tutor_id)
-    user.invoices.pending.update_all(status: "paid")
-    user.outstanding_balance -= invoice.hours
-    user.save
+  def update_for_invoice(user)
+    processing_invoices = user.invoices.where(status: 'processing')
+    ActiveRecord::Base.transaction do
+      processing_invoices.update_all(status: "paid")
+      user.outstanding_balance -= processing_invoices.sum(:hours)
+      user.save!
+    end
+  end
+
+  def update_for_timesheet(user)
+    processing_timesheets = user.timesheets.where(status: 'processing')
+    processing_timesheets.update_all(status: "paid")
   end
 end
