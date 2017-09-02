@@ -90,7 +90,7 @@
       <div class="col-sm-2"></div>
       <label for="exp" class="col-sm-2 control-label">Expiration</label>
       <div class="controls">
-        <div class="col-sm-4" style="padding-bottom:15px;">
+        <div class="col-sm-5" style="padding-bottom:15px;">
           <i class="ion-chevron-down"></i>
           <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}) %>
         </div>
@@ -105,7 +105,7 @@
     <div class="form-group">
       <div class="col-sm-2"></div>
       <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
-      <div class="col-sm-2 col-cvv-fixed-width">
+      <div class="col-sm-3 col-cvv-fixed-width">
         <input type="text" class="form-control input-sm" placeholder="CVV" data-stripe="cvc" size="4" required/>
       </div>
 

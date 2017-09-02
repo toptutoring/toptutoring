@@ -8,17 +8,17 @@
       </section>
     </div>
   <% else %>
-    <div class="col-md-5" style="padding-left:15px;">
+    <div class="payment-page-spacing col-md-12 col-lg-5">
       <% if !@invoices.empty? %>
-        <h3><i class="glyphicon glyphicon-alert" style="color:#ff4444;"></i> You have unpaid first tutoring sessions</h3>
+        <h3><i class="glyphicon glyphicon-alert error-message"></i> You have unpaid first tutoring sessions</h3>
           <% @student_engagements.each do |engagement| %>
-            <div style="padding-bottom:75px;">
+            <div>
               <h5><%= engagement.student_name %>'s first session: </h5>
               <div>
                 <span class="col-md-8"><b>Notes:</b> <%= engagement.invoices.last.description %></span>
                 <span class="pull-right"><%= link_to("Pay", {controller: "payments", action: "first_session_payment", engagement: engagement},
                   class: "btn btn-block payment_submit", remote: true, method: "post") %></span>
-                <span class="pull-right" style="padding-right: 25px;"><h4>Price: $<%= (engagement.invoices.last.hours*get_tutor_rate(engagement)).floor(2) %></h4></span>
+                <span class="payment-page-spacing pull-right"><h4>Price: $<%= (engagement.invoices.last.hours*get_tutor_rate(engagement)).floor(2) %></h4></span>
                 <a id="jump_to_payment_section" href="#payment_section"></a>
               </div>
             </div>
@@ -27,20 +27,20 @@
       <% end %>
 
       <% if current_user.academic_credit < 0.5 || current_user.test_prep_credit < 0.5 %>
-        <h3><i class="glyphicon glyphicon-alert" style="color:#ff4444;"></i> Your balance is low</h3>
+        <h3><i class="glyphicon glyphicon-alert error-message"></i> Your balance is low</h3>
         <% if @total_suggested_hours != 0 %>
           </br>
           <div>
-            <h5 style="display:inline;">Total Suggested number of hours:</h5>
-            <h4 style="color:#004444; display: inline;"> <%= @total_suggested_hours %> hours</h4>
-            <h5 style="display:inline;"> of Academic/Test Prep credit</h5>
+            <h5 class="vnu">Total Suggested number of hours:</h5>
+            <h4 class="vnu"> <%= @total_suggested_hours %> hours</h4>
+            <h5 class="vnu"> of Academic/Test Prep credit</h5>
             </br>
             <div class="col-md-12">Your balance is low. Your tutor has suggested this many hours of tutoring. Please purchase these
               number of hours in order for the tutor to schedule additional sessions.
             </div>
           </div>
 
-          <div class="table-responsive" style="display: inline-block;">
+          <div class="table-responsive module-group">
           </br></br>
             <table class="table mb-0">
               <th>Tutor</th>
@@ -78,10 +78,10 @@
                   </div>
                 </div>
 
-                <div>
-                  <h4 style="display:inline;">
+                <div class="col-md-8">
+                  <h4 class="vnu">
                     hours for <%= engagement.student_name %> X $<%= get_tutor_rate(engagement) %>
-                    = $<h3 style="display:inline" id="product-<%= count %>"><%= (get_suggested_hours(engagement)*get_tutor_rate(engagement)).floor(2) %></h3>
+                    = $<h3 class="vnu" id="product-<%= count %>"><%= (get_suggested_hours(engagement)*get_tutor_rate(engagement)).floor(2) %></h3>
                   </h4>
                   <span class="pull-right" id="pay-button-<%= count %>">
                     <%= link_to("Pay", {controller: 'payments', action: 'low_balance_payment', engagement: engagement, count: count},
@@ -98,8 +98,8 @@
 
             </br></br>Have a question about this? <a href="javascript:;" onClick="showUserFeedbackForm();">Please ask us!</a>
             </div>
-            <span class="col-md-4 pull-right"><button type="button" class="btn btn-block payment_submit" onClick="showPaymentForm();">Purchase more hours</button></span>
-            <div style="visibility: hidden;" id="feedback_section">
+            <span class="col-md-4 pull-right"><button type="button" class="btn btn-block payment_submit" onClick="showPaymentForm();">Purchase hours</button></span>
+            <div class="initially-hidden" id="feedback_section">
               <%= form_for(@feedback, url: {controller: "payments", action:"get_user_feedback"}, remote: true, method: "post")  do |f| %>
                 <div class="form-group">
                   <%= f.text_area :comments, placeholder:"Question or concern?", class:"form-control input-sm", rows: 4, id:"user_feedback"%>
@@ -112,8 +112,8 @@
       <% end %>
     </div>
 
-    <div id="payment_section" style="visibility:hidden;">
-      <section class="payment-section one-time-payment col-md-6">
+    <div class="initially-hidden">
+      <section class="payment-section one-time-payment col-lg-7 col-md-12" id="payment_section">
       <%= render "payment_form" %>
       </section>
     </div>
