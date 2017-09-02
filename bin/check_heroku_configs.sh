@@ -36,7 +36,7 @@ STAGING_KEYS=`heroku config -s --app $heroku_staging_name | ag -o '[A-Z].*(?==)'
 PROD_KEYS=`heroku config -s --app $heroku_prod_name | ag -o '[A-Z].*(?==)'`
 
 # Replace these arrays with whichever keys are fine to keep for staging or prod
-staging_specific_keys=("EMAIL_RECIPIENTS" "KEY1" "KEY2")
+staging_specific_keys=("EMAIL_RECIPIENTS" "KEY1" "KEY2" "DWOLLA_DEV_ADMIN_AUTH_UID" "DWOLLA_DEV_FUNDING_SOURCE" "DWOLLA_DEV_TUTOR_AUTH_UID")
 prod_specific_keys=("BUGSNAG_API_KEY" "HEROKU_POSTGRESQL_JADE_URL" "INTERCOM_APP_ID" "INTERCOM_SECRET_KEY")
 
 filtered_staging_string='echo "$STAGING_KEYS" '
