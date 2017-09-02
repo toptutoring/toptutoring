@@ -44,4 +44,8 @@ class EngagementPresenter < SimpleDelegator
       MultiCurrencyAmount.from_cent(self.client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
     end
   end
+
+  def text_for_edit_button
+    @engagement.tutor_id.nil? ? "Assign tutor" : "Edit"
+  end
 end
