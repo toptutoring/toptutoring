@@ -4,7 +4,7 @@ FactoryGirl.define do
     email         { "director@example.com" }
     password      { "password" }
     roles         { "director" }
-    auth_uid      { "xxx-xxx" }
+    auth_uid      { ENV.fetch('DWOLLA_DEV_TUTOR_AUTH_UID') }
     access_token  { "xxx-xxx" }
     refresh_token { "xxx-xxx" }
     contract      { FactoryGirl.create(:contract) }

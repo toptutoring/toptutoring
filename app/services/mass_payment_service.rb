@@ -9,12 +9,12 @@ class MassPaymentService
     @errors = []
     @pending_items = sort_all_pending
     @payments = change_to_payments # array of invoices or timesheets
-    @token = DWOLLA_CLIENT.auths.client
   end
 
   def pay_all
     return if no_payments?
-    mass_payment = @token.post "mass-payments", request_body
+    token = DWOLLA_CLIENT.auths.client
+    mass_payment = token.post "mass-payments", request_body
     finalize_payments(mass_payment)
   rescue DwollaV2::Error => e
     @errors << e._embedded.errors.first.message
