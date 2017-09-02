@@ -11,8 +11,7 @@ module Users
     def create
       @user = Clearance.configuration.user_model.new(signups_params)
       if @user.save
-        UserNotifierMailer.send_signup_email(@user).deliver_now
-        NewClientNotifier.perform(@user, User.admin_and_directors)
+        SendNotifierEmailsWorker.perform_async(@user)
         sign_in(@user)
         redirect_to :root
       else
