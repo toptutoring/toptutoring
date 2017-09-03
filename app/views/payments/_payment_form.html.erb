@@ -44,7 +44,8 @@
         <select name="payment[academic_type]" id="payment_academic_type" class="payment-academic-type">
           <option value="Academic" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Academic</option>
           <option value="Test_Prep" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>"
-            <%= if @student_engagements.last.academic_type != "Academic"; 'selected'; end %>>Test Preparation</option>
+            <%= @test_prep_selected %>>Test Preparation</option>
+          <option value="" data-academic="" data-test-prep="" <%= @empty_selected %>>Select a tutoring type</option>
         </select>
       </div>
     </div>
