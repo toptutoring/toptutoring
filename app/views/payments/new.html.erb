@@ -106,11 +106,11 @@
 
             </br></br>Have a question about this? <a href="javascript:;" onClick="showUserFeedbackForm();">Please ask us!</a>
             </div>
-            <span class="col-md-4 pull-right"><button type="button" class="btn btn-block payment_submit" onClick="showPaymentForm();">Purchase hours</button></span>
+            <span class="col-md-4 pull-right"><button type="button" class="btn btn-block payment_submit purchase-hours" onClick="showPaymentForm();">Purchase hours</button></span>
             <div class="initially-hidden" id="feedback_section">
               <%= form_for(@feedback, url: {controller: "payments", action:"get_user_feedback"}, remote: true, method: "post")  do |f| %>
                 <div class="form-group">
-                  <%= f.text_area :comments, placeholder:"Question or concern?", class:"form-control input-sm", rows: 4, id:"user_feedback"%>
+                  <%= f.text_area :comments, placeholder:"Question or concern?", class:"form-control input-sm", rows: 4, id:"user_feedback" %>
                   <%= f.submit "Submit", class: "btn btn-success pull-right" %>
                 </div>
               <% end %>
