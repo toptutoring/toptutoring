@@ -10,7 +10,7 @@
           <%= f.label :tutor_id, "Tutor" %>
           <div class="select-option">
             <i class="ion-chevron-down"></i>
-            <%= f.select :tutor_id, options_from_collection_for_select(@tutors, :id, :name)%>
+            <%= f.select :tutor_id, options_from_collection_for_select(@tutors, :id, :name, @engagement.tutor_id), { include_blank: true }%>
           </div>
 
           <div class="form-group">
