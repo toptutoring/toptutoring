@@ -35,4 +35,12 @@ class Engagement < ActiveRecord::Base
   def updated?
     tutor
   end
+
+  def client_rate_cents
+    if academic_type == "Academic"
+      User.find(client_id).academic_rate_cents
+    else
+      User.find(client_if).test_prep_rate_cents
+    end
+  end
 end
