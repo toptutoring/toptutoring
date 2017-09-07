@@ -21,3 +21,8 @@
 # Ignore Development/Test Environment Variables
 .env.development
 .env.test
+/public/packs
+/public/packs-test
+/node_modules
+/public/packs
+/node_modules
