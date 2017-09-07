@@ -41,6 +41,9 @@ module Admin
 
     def get_funding_sources
       @funding_sources = DwollaService.new.funding_sources
+    rescue DwollaV2::Error
+      @funding_sources = []
+      flash[:danger] = "There was an error while retrieving available Funding Sources. Please make sure you have authenticated with Dwolla."
     end
 
     def check_funding_source
