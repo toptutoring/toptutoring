@@ -6,7 +6,7 @@ FactoryGirl.define do
     roles            { "admin" }
     access_token     { "xxx-xxx" }
     refresh_token    { "xxx-xxx" }
-    token_expires_at { Time.now + 1 }
+    token_expires_at { Time.now + 60 }
     auth_uid         { ENV.fetch("DWOLLA_DEV_ADMIN_AUTH_UID") }
   end
 end
