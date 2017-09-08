@@ -2,7 +2,7 @@ module Admin
   class PaymentsController < ApplicationController
     before_action :require_login
     before_action :set_auth_tutor, only: :new
-    before_action :set_funding_source, :validate_funding_source, :set_payee, :check_dwolla, :set_invoice_or_timesheet, only: :create
+    before_action :set_funding_source, :validate_funding_source, :set_payee, :set_invoice_or_timesheet, only: :create
 
     def index
       @client_payments = Payment.from_clients
@@ -64,12 +64,6 @@ module Admin
 
     def set_payee
       @payee = User.find(payment_params[:payee_id])
-    end
-
-    def check_dwolla
-      return if @payee.has_valid_dwolla?
-      flash[:danger] = "#{@payee.name} does not have Dwolla authenticated. Payment was cancelled."
-      redirect_back(fallback_location: (request.referer || root_path)) and return
     end
 
     def set_invoice_or_timesheet

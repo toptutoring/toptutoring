@@ -106,10 +106,7 @@ class User < ActiveRecord::Base
   end
 
   def has_valid_dwolla?
-    auth_uid && access_token && refresh_token && valid_token?
-  rescue OpenSSL::Cipher::CipherError
-    notify_bugsnag
-    false
+    auth_uid.present?
   end
 
   def valid_token?

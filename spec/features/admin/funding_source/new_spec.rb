@@ -6,8 +6,10 @@ feature 'Set funding source' do
 
   scenario 'goes to new' do
     sign_in(admin)
-    visit new_admin_funding_source_path
-    expect(page).to have_current_path(new_admin_funding_source_path)
+    VCR.use_cassette('dwolla funding sources') do
+      visit new_admin_funding_source_path
+      expect(page).to have_current_path(new_admin_funding_source_path)
+    end
   end
 
   scenario "with invalid params" do
