@@ -6,7 +6,8 @@ module Admin
 
       def create
         pay_all_pending
-        @payment_service.update_processing_to_paid if payment_successful?
+        status = payment_successful? ? 'paid' : 'pending'
+        @payment_service.update_processing(status)
         set_flash_messages
         redirect_back(fallback_location: (request.referer || root_path)) and return
       end

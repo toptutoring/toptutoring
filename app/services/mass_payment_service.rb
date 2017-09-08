@@ -15,18 +15,18 @@ class MassPaymentService
     token = DWOLLA_CLIENT.auths.client
     mass_payment = token.post "mass-payments", request_body
     finalize_payments(mass_payment)
-  rescue DwollaV2::Error => e
-    @errors << e._embedded.errors.first.message
   rescue DwollaV2::ValidationError => e
     @errors << e[:code] + ": " + e[:message]
+  rescue DwollaV2::Error => e
+    @errors << e._embedded.errors.first.message
   end
 
-  def update_processing_to_paid
-      @paid_users.each do |user|
+  def update_processing(status)
+      paid_users.each do |user|
         if @type == 'invoice'
-          update_for_invoice(user)
+          update_for_invoice(user, status)
         else
-          update_for_timesheet(user)
+          update_for_timesheet(user, status)
         end
       end
   end
@@ -148,10 +148,13 @@ class MassPaymentService
     if mass_payment
       record_payments
       set_final_message
-      @paid_users = @payments.map { |item| User.find(item.payee_id) }
     else
       @errors << "There was an error while processing payment."
     end
+  end
+
+  def paid_users
+    @payments.map { |item| User.find(item.payee_id) }
   end
 
   def set_final_message
@@ -162,17 +165,17 @@ class MassPaymentService
     @messages << start + " been made for a total of #{total_formatted}."
   end
 
-  def update_for_invoice(user)
+  def update_for_invoice(user, status)
     processing_invoices = user.invoices.where(status: 'processing')
     ActiveRecord::Base.transaction do
-      processing_invoices.update_all(status: "paid")
+      processing_invoices.update_all(status: status)
       user.outstanding_balance -= processing_invoices.sum(:hours)
       user.save!
     end
   end
 
-  def update_for_timesheet(user)
+  def update_for_timesheet(user, status)
     processing_timesheets = user.timesheets.where(status: 'processing')
-    processing_timesheets.update_all(status: "paid")
+    processing_timesheets.update_all(status: status)
   end
 end
