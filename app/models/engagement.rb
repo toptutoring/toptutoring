@@ -40,7 +40,11 @@ class Engagement < ActiveRecord::Base
     if academic_type == "Academic"
       User.find(client_id).academic_rate_cents
     else
-      User.find(client_if).test_prep_rate_cents
+      User.find(client_id).test_prep_rate_cents
     end
+  end
+
+  def suggested_hours
+    suggestions.last.hours unless suggestions.empty?
   end
 end

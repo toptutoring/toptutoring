@@ -57,9 +57,9 @@
                   <tr>
                     <td><%= engagement.tutor.name %></td>
                     <td><%= engagement.student_name %></td>
-                    <td><%= get_suggested_hours(engagement) %> hours</td>
+                    <td><%= engagement.suggested_hours %> hours</td>
                     <td><%= engagement.academic_type %></td>
-                    <td>$<%= ((get_suggested_hours(engagement))*(engagement.client_rate_cents/100.0)).floor(2) %></td>
+                    <td>$<%= ((engagement.suggested_hours)*(engagement.client_rate_cents/100.0)).floor(2) %></td>
                   </tr>
                 <% end %>
               <% end %>
@@ -79,7 +79,7 @@
                       <div class="input-group">
                         <input type="number" class="form-control col-sm-3 input-sm" name="payment[amount]"
                           min="0" id="low_balance_hours-<%= count %>" step="any" max="999999" placeholder="Amount" aria-label="Amount"
-                          onChange="calculateProduct(this.id);" value="<%= get_suggested_hours(engagement) %>"/>
+                          onChange="calculateProduct(this.id);" value="<%= engagement.suggested_hours %>"/>
                       </div>
                     </div>
                   </div>
@@ -87,7 +87,7 @@
                   <div class="col-md-8">
                     <h4 class="vnu">
                       hours for <%= engagement.student_name %> X $<%= engagement.client_rate_cents/100.0 %>
-                      = $<h3 class="vnu" id="product-<%= count %>"><%= (get_suggested_hours(engagement)*(engagement.client_rate_cents/100.0)).floor(2) %></h3>
+                      = $<h3 class="vnu" id="product-<%= count %>"><%= (engagement.suggested_hours*(engagement.client_rate_cents/100.0)).floor(2) %></h3>
                     </h4>
                     <span class="pull-right" id="pay-button-<%= count %>">
                       <%= link_to("Pay", {controller: 'payments', action: 'low_balance_payment', engagement: engagement, count: count},
