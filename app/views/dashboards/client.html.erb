@@ -2,12 +2,14 @@
 <% unless current_user.enabled? %>
   <%= render "users/set_up_account" %>
 <% end %>
-<% if current_user.enabled? %>
-  <% if !current_user.is_student? %>
-    <% if @engagements.active.any? %>
-      <%= render "student_pending_engagement_message" %>
-    <% else %>
-      <%= render "student_active_engagement_message" %>
+<% unless @engagements.empty? %>
+  <% if current_user.enabled? %>
+    <% if !current_user.is_student? %>
+      <% if @engagements.active.any? %>
+        <%= render "student_pending_engagement_message" %>
+      <% else %>
+        <%= render "student_active_engagement_message" %>
+      <% end %>
     <% end %>
   <% else %>
     <% if @engagements.last.pending? %>
