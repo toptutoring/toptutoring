@@ -86,7 +86,7 @@ namespace :dev do
     admin.name = "Admin"
     admin.password = "password"
     admin.auth_provider = "dwolla"
-    admin.auth_uid = "8fb759cf-b90d-4ac8-b00e-9760bbfa1a7f"
+    admin.auth_uid = ENV.fetch('DWOLLA_DEV_ADMIN_AUTH_UID')
     admin.token_expires_at = Time.current.to_i + 12.months.to_i
     admin.access_state = "enabled"
     admin.roles = "admin"
