@@ -39,9 +39,9 @@ class EngagementPresenter < SimpleDelegator
 
   def hourly_rate
     if self.academic_type.casecmp('academic') == 0
-      self.client.academic_rate.format
+      self.client.academic_rate
     else
-      self.client.test_prep_rate.format
+      self.client.test_prep_rate
     end
   end
 
