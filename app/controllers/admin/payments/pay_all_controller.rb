@@ -2,11 +2,12 @@ module Admin
   module Payments
     class PayAllController < ApplicationController
       before_action :require_login
-      before_action :check_dwolla, :validate_funding_source, only: :create
+      before_action :validate_funding_source, only: :create
 
       def create
         pay_all_pending
-        @payment_service.update_processing_to_paid if payment_successful?
+        status = payment_successful? ? 'paid' : 'pending'
+        @payment_service.update_processing(status)
         set_flash_messages
         redirect_back(fallback_location: (request.referer || root_path)) and return
       end
@@ -26,12 +27,6 @@ module Admin
 
       def payment_successful?
         @payment_service.errors.empty?
-      end
-
-      def check_dwolla
-        return if current_user.has_valid_dwolla?
-        flash[:danger] = "You must authenticate with Dwolla before making a payment."
-        redirect_back(fallback_location: (request.referer || root_path)) and return
       end
 
       def validate_funding_source
