@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :client_info do
+  factory :signup do
     subject  { "Math" }
     student  { false }
 

@@ -1,4 +1,4 @@
-class ClientInfo < ActiveRecord::Base
+class Signup < ActiveRecord::Base
   include ShowSubjectName
 
   belongs_to :user

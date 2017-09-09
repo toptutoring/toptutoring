@@ -5,7 +5,7 @@ module Users
 
     def new
       @user = User.new
-      @user.build_client_info
+      @user.build_signup
     end
 
     def create
@@ -24,7 +24,7 @@ module Users
     private
 
     def signups_params
-      params.require(:user).permit(:name, :email, :password,  client_info_attributes: [:student, :subject, :comments]).merge(roles: "client")
+      params.require(:user).permit(:name, :email, :password,  signup_attributes: [:student, :subject, :comments]).merge(roles: "client")
     end
 
     def redirect_to_root

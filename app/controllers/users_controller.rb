@@ -50,8 +50,7 @@ class UsersController < Clearance::SessionsController
     engagement = Engagement.new(
       student_id: student_id,
       student_name: student_name,
-      # The below will be replaced by subject_id when client_info goes away
-      subject: current_user.client_info.subject,
+      subject: current_user.signup.subject,
       client_id: current_user.id,
       academic_type: user_academic_type
     )
@@ -107,7 +106,7 @@ class UsersController < Clearance::SessionsController
   end
 
   def client_as_student_params
-    params.require(:user).permit(:name, :email, :phone_number, :password, client_info_attributes: [:id])
+    params.require(:user).permit(:name, :email, :phone_number, :password, signup_attributes: [:id])
   end
 
   def update_params

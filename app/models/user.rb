@@ -2,12 +2,10 @@ class User < ActiveRecord::Base
   include Clearance::User
 
   # Associations
-  has_one :student_info, dependent: :destroy
-  accepts_nested_attributes_for :student_info
   has_one :contract, dependent: :destroy
   accepts_nested_attributes_for :contract
-  has_one :client_info, dependent: :destroy
-  accepts_nested_attributes_for :client_info
+  has_one :signup, dependent: :destroy
+  accepts_nested_attributes_for :signup
   has_many :students, class_name: "User", foreign_key: "client_id"
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
@@ -118,7 +116,7 @@ class User < ActiveRecord::Base
   end
 
   def is_student?
-    client_info&.student
+    signup&.student
   end
 
   def notify_bugsnag

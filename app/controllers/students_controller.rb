@@ -3,7 +3,6 @@ class StudentsController < ApplicationController
 
   def new
     @student = current_user.students.build
-    @student.build_student_info
   end
 
   def create
@@ -19,8 +18,8 @@ class StudentsController < ApplicationController
         student_id: @student.id,
         student_name: @student.name,
         client_id: current_user.id,
-        subject: @student.student_info.subject,
-        academic_type: @student.student_info.academic_type
+        subject: student_academic_info_and_subject[:subject],
+        academic_type: student_academic_info_and_subject[:academic_type]
       )
       if engagement.save
         redirect_to students_path, notice: 'Student successfully created'
@@ -41,6 +40,11 @@ class StudentsController < ApplicationController
   private
 
   def student_params
-    params.require(:user).permit(:name, :email, :phone_number, student_info_attributes: [:id, :subject, :academic_type]).merge(roles: "student")
+    params.require(:user).permit(:name, :email, :phone_number).merge(roles: "student")
   end
+
+  def student_academic_info_and_subject
+    params.require(:info).permit(:academic_type, :subject)
+  end
+
 end

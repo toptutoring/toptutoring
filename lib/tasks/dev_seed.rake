@@ -25,6 +25,12 @@ namespace :dev do
     client_new.roles = "client"
     client_new.save!
 
+    #Update signup
+    signup = Signup.where(user_id: client.id).first_or_initialize
+    signup.subject = "SAT"
+    signup.student = false
+    signup.save!
+
      # Update student
     student1 = User.where(email: "student1@example.com").first_or_initialize
     student1.name = "Student1"
@@ -35,12 +41,6 @@ namespace :dev do
     student1.client_id = client.id
     student1.save!
 
-    # Update student info
-    student_info1 = StudentInfo.where(user_id: student1.id).first_or_initialize
-    student_info1.subject = "Academic"
-    student_info1.academic_type = "Test_Prep"
-    student_info1.save!
-
      # Update student
     student2 = User.where(email: "student2@example.com").first_or_initialize
     student2.name = "Student2"
@@ -50,12 +50,6 @@ namespace :dev do
     student2.roles = "student"
     student2.client_id = client.id
     student2.save!
-
-    # Update student info
-    student_info2 = StudentInfo.where(user_id: student2.id).first_or_initialize
-    student_info2.subject = "Test Preparation"
-    student_info2.academic_type = "Test_Prep"
-    student_info2.save!
 
     # Update tutor
     tutor = User.where(email: "tutor@example.com").first_or_initialize
@@ -105,8 +99,8 @@ namespace :dev do
       student_name: student1.name,
       student_id: student1.id,
       client_id: client.id,
-      subject: student1.student_info.subject,
-      academic_type: student1.student_info.academic_type
+      subject: client.signup.subject,
+      academic_type: "Academic"
     )
     engagement.enable!
 
@@ -115,8 +109,8 @@ namespace :dev do
       student_name: student2.name,
       student_id: student2.id,
       client_id: client.id,
-      subject: student2.student_info.subject,
-      academic_type: student2.student_info.academic_type
+      subject: client.signup.subject,
+      academic_type: "Test_Prep"
     )
     engagement.enable!
 
