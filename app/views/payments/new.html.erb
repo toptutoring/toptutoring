@@ -8,8 +8,8 @@
       </section>
     </div>
   <% else %>
-    <div class="payment-page-spacing col-md-12 col-lg-5">
-      <% if !@invoices.empty? %>
+    <div class="pl-15 pr-15 col-md-12 col-lg-5">
+      <% if @invoices.present? %>
         <h3><i class="glyphicon glyphicon-alert error-message"></i> You have unpaid first tutoring sessions</h3>
           <% @student_engagements.each do |engagement| %>
             <div>
@@ -19,12 +19,12 @@
                   <span class="col-md-8"><b>Notes:</b> <%= engagement.invoices.last.description %></span>
                   <span class="pull-right"><%= link_to("Pay", {controller: "payments", action: "first_session_payment", engagement: engagement},
                     class: "btn btn-block payment_submit", remote: true, method: "post") %></span>
-                  <span class="payment-page-spacing pull-right"><h4>Price: $<%= (engagement.invoices.last.hours*(engagement.client_rate_cents/100.0)).floor(2) %></h4></span>
+                  <span class="pl-15 pr-15 pull-right"><h4>Price: $<%= (engagement.invoices.last.hours*(engagement.client_rate_cents/100.0)).floor(2) %></h4></span>
                   <a id="jump_to_payment_section" href="#payment_section"></a>
                 </div>
               <% end %>
             </div>
-            <br><br><br>
+            <br><br><br><br><br>
           <% end %>
         <div class="separator clearfix"></div>
       <% end %>
@@ -53,7 +53,7 @@
               <th>Total</th>
 
               <% @student_engagements.each do |engagement| %>
-                <% if !(engagement.suggestions.empty?) %>
+                <% if engagement.suggestions.present? %>
                   <tr>
                     <td><%= engagement.tutor.name %></td>
                     <td><%= engagement.student_name %></td>
@@ -71,10 +71,10 @@
 
             <% count = 1 %>
             <% @student_engagements.each_with_index do |engagement| %>
-              <% if !(engagement.suggestions.empty?) %>
+              <% if engagement.suggestions.present? %>
                 <div class="form-group">
                   </br>
-                    <h6 id="tutoring_rate-<%= count %>">Tutor's hourly rate: $<%= engagement.client_rate_cents/100.0 %></h6>
+                    <h6 id="client_rate-<%= count %>"><%= engagement.student_name %>'s hourly rate: $<%= engagement.client_rate_cents/100.0 %></h6>
                     <div class="col-sm-3">
                       <div class="input-group">
                         <input type="number" class="form-control col-sm-3 input-sm" name="payment[amount]"
@@ -129,18 +129,17 @@
 </div>
 
 <script>
-  //Calculates the product of chosen hours and tutoring rate in the low balance section
+  //Calculates the product of chosen hours and client's rate in the low balance section
   function calculateProduct(id) {
     var currentCount = id.slice(-1);
     var input = document.getElementById("low_balance_hours-"+currentCount);
     var output = document.getElementById("product-"+currentCount);
     var payButton = document.getElementById("pay-button-"+currentCount);
-    var tutoring_rate_string = document.getElementById("tutoring_rate-"+currentCount).textContent
+    var client_rate_string = document.getElementById("client_rate-"+currentCount).textContent
 
-    var tutoring_rate = tutoring_rate_string.match(/\d\d.\d\d+$/)[0];
-    console.log(tutoring_rate);
+    var client_rate = client_rate_string.match(/\d\d.\d\d+$/)[0];
 
-    var product = (input.value*tutoring_rate).toFixed(2);
+    var product = (input.value*client_rate).toFixed(2);
 
     output.textContent = product;
   }

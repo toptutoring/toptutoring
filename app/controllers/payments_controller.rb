@@ -106,12 +106,8 @@ class PaymentsController < ApplicationController
 
   def select_correct_tutoring_type
     if @student_engagements.one?
-      if @student_engagements.last.academic_type == "Academic"
-        @test_prep_selected = ""
-      else
-        @test_prep_selected = "selected"
-      end
-
+      academic = @student_engagements.last.academic_type == "Academic"
+      @test_prep_selected = academic ? "" : "selected"
       @empty_selected = ""
     else
       @empty_selected = "selected"

@@ -38,9 +38,9 @@ class Engagement < ActiveRecord::Base
 
   def client_rate_cents
     if academic_type == "Academic"
-      User.find(client_id).academic_rate_cents
+      client.academic_rate_cents
     else
-      User.find(client_id).test_prep_rate_cents
+      client.test_prep_rate_cents
     end
   end
 
