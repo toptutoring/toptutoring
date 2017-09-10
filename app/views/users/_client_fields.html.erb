@@ -2,13 +2,11 @@
   <div class="col-md-6">
     <div class="form-group">
       <h5>Tutoring Type (Based on your selected subject)</h5>
-      <!--<label for="info_academic_type">Tutoring Type</label>-->
-
       <select required="required" name="info[academic_type]" id="info_academic_type" style="cursor:not-allowed" disabled>
         <option value="Academic">Academic</option>
-        <option value="Test_Prep" <%= if get_academic_type_from_subject == 'Test_Prep'; 'selected'; end; %>>Test Preparation</option>
+        <option value="Test_Prep" <%= @test_prep_selected %>>Test Preparation</option>
       </select>
-      <input type="hidden" name="info[academic_type]" value="<%= get_academic_type_from_subject %>"/>
+      <input type="hidden" name="info[academic_type]" value="<%= @tutoring_type %>"/>
     </div>
   </div>
 </div>
