@@ -44,7 +44,6 @@ module Admin
     rescue DwollaV2::Error => e
       @funding_sources = []
       message = "DwollaV2 Error: #{e}"
-      Bugsnag.notify(e)
       Rails.logger.error(message)
       flash[:danger] = message
     end

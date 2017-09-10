@@ -58,7 +58,6 @@ module Admin
       end
     rescue DwollaV2::Error => e
       message = "DwollaV2 Error: #{e}"
-      Bugsnag.notify(e)
       Rails.logger.error(message)
       flash[:danger] = message
     end
