@@ -6,7 +6,7 @@ class PaymentGatewayDwolla
   end
 
   def create_transfer
-    account_token = DWOLLA_CLIENT.auths.client
+    account_token = DwollaService.admin_account_token
     begin
       response = account_token.post("transfers", transfer_payload)
       @payment.external_code = response.headers["location"]

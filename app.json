@@ -41,6 +41,12 @@
     "DWOLLA_APPLICATION_SECRET": {
       "required": true
     },
+    "DWOLLA_DEV_ADMIN_AUTH_UID": {
+      "required": true
+    },
+    "DWOLLA_DEV_TUTOR_AUTH_UID": {
+      "required": true
+    },
     "DWOLLA_ENVIRONMENT": {
       "required": true
     },
