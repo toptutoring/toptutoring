@@ -11,17 +11,23 @@ class DwollaService
                           "transfer_completed"].freeze
 
   def funding_sources
-    response = account_token.get("#{account_url}/funding-sources")
+    return [] unless User.admin.auth_uid.present?
+    response = account_token.get funding_sources_url
     response._embedded["funding-sources"]
   end
 
   private
 
-  def account_token
-    DWOLLA_CLIENT.auths.client
+  def funding_sources_url
+    ENV.fetch('DWOLLA_API_URL') + '/accounts/' + auth_uid + '/funding-sources'
   end
 
-  def account_url
-    account_token.get('/')._links.account.href
+  def auth_uid
+    return ENV.fetch('DWOLLA_DEV_ADMIN_AUTH_UID') if Rails.env.development?
+    User.admin.auth_uid
+  end
+
+  def account_token
+    DWOLLA_CLIENT.auths.client
   end
 end
