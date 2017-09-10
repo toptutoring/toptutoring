@@ -12,8 +12,8 @@ class MassPaymentService
 
   def pay_all
     return if no_payments?
-    token = DWOLLA_CLIENT.auths.client
-    mass_payment = token.post "mass-payments", request_body
+    admin_account_token = DwollaService.admin_account_token
+    mass_payment = admin_account_token.post "mass-payments", request_body
     finalize_payments(mass_payment)
   rescue DwollaV2::ValidationError => e
     @errors << e[:code] + ": " + e[:message]

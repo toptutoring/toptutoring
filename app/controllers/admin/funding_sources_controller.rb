@@ -40,7 +40,7 @@ module Admin
     end
 
     def get_funding_sources
-      @funding_sources = DwollaService.new.funding_sources
+      @funding_sources = DwollaService.funding_sources
     rescue DwollaV2::Error => e
       @funding_sources = []
       message = "DwollaV2 Error: #{e}"

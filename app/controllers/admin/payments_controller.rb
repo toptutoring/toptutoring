@@ -56,6 +56,11 @@ module Admin
       else
         flash[:danger] = transfer_error
       end
+    rescue DwollaV2::Error => e
+      message = "DwollaV2 Error: #{e}"
+      Bugsnag.notify(e)
+      Rails.logger.error(message)
+      flash[:danger] = message
     end
 
     def transfer_error
