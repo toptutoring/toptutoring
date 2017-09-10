@@ -12,7 +12,7 @@ class DwollaService
 
   def funding_sources
     return [] unless User.admin.auth_uid.present?
-    response = account_token.get funding_sources_url
+    response = admin_account_token.get funding_sources_url
     response._embedded["funding-sources"]
   end
 
@@ -27,7 +27,8 @@ class DwollaService
     User.admin.auth_uid
   end
 
-  def account_token
-    DWOLLA_CLIENT.auths.client
+  def admin_account_token
+    # https://github.com/Dwolla/dwolla-v2-ruby#dwollav2token
+    DWOLLA_CLIENT.tokens.new(access_token: User.admin.access_token)
   end
 end
