@@ -17,7 +17,7 @@
             <div style="padding-bottom:75px;">
               <h5><%= engagement.student_name %>'s first session: </h5>
               <div>
-                <span class="col-md-8"><b>Notes:</b> <%= engagement.invoices.last.description %></span>
+                <span class="col-md-8"><b>Notes:</b> <%= engagement.invoices.last&.description %></span>
                 <span class="pull-right"><%= link_to("Pay", {controller: "payments", action: "first_session_payment", engagement: engagement},
                   class: "btn btn-block payment_submit", remote: true, method: "post") %></span>
                 <span class="pull-right" style="padding-right: 25px;"><h4>Price: $<%= (engagement.invoices.last.hours*get_tutor_rate(engagement)).floor(2) %></h4></span>
