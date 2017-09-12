@@ -35,4 +35,16 @@ class Engagement < ActiveRecord::Base
   def updated?
     tutor
   end
+
+  def client_rate_cents
+    if academic_type == "Academic"
+      client.academic_rate_cents
+    else
+      client.test_prep_rate_cents
+    end
+  end
+
+  def suggested_hours
+    suggestions.last.hours unless suggestions.empty?
+  end
 end

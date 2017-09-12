@@ -630,3 +630,12 @@ form {
 .error-message {
   color: red;
 }
+
+.initially-hidden {
+  visibility: hidden;
+}
+
+.purchase-hours {
+  width: 90%;
+  min-width: 140px;
+}

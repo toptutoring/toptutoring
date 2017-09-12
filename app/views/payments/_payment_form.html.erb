@@ -1,4 +1,5 @@
 <%= form_for @payment, :html => { :class => "form-horizontal payment-form", id: "payment-form" } do |f| %>
+  <h2 class="col-md-offset-2">Payment</h2>
   <fieldset class="credit_card">
 
     <div class="form-group">
@@ -18,7 +19,7 @@
     <div class="form-group">
       <div class="col-sm-2"></div>
       <label for="amount" class="col-md-2 col-sm-2 control-label">Amount</label>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <div class="input-group">
           <div class="input-group-addon">$</div>
           <input type="number" id="amount" readonly="true" class="form-control col-sm-3 input-sm amount" name="amount" required="required" min="0" max="9999999" step="0.01" aria-label="Amount" readonly/>
@@ -26,11 +27,11 @@
       </div>
     </div>
 
-    <div class="separator col-md-6 col-md-offset-2 clearfix"></div>
+    <div class="separator col-md-8 col-md-offset-2 clearfix"></div>
 
     <div class="form-group">
       <label for="hours" class="col-sm-2 control-label col-sm-offset-2">Hours</label>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <input type="number" class="form-control col-sm-3 input-sm hours" name="payment[hours]"
         min="0.5" max="9999" step="0.5" placeholder="Hours" aria-label="Hours" id="hours"/>
       </div>
@@ -39,10 +40,12 @@
     <div class="form-group">
       <div class="col-sm-2"></div>
       <label for="payment_academic_type" class="col-sm-2 control-label">Tutoring Type</label>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <select name="payment[academic_type]" id="payment_academic_type" class="payment-academic-type">
           <option value="Academic" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Academic</option>
-          <option value="Test_Prep" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Test Preparation</option>
+          <option value="Test_Prep" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>"
+            <%= @test_prep_selected %>>Test Preparation</option>
+          <option value="" data-academic="" data-test-prep="" <%= @empty_selected %>>Select a tutoring type</option>
         </select>
       </div>
     </div>
@@ -50,27 +53,27 @@
     <div class="form-group">
       <div class="col-sm-2"></div>
       <label for="payment_description" class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <textarea type="text" class="form-control col-sm-3 input-sm" placeholder="Description" name="payment[description]" rows="3" id="payment_description"></textarea>
       </div>
     </div>
 
-    <div class="separator col-md-6 col-md-offset-2 clearfix"></div>
+    <div class="separator col-md-8 col-md-offset-2 clearfix"></div>
 
     <div class="row">
       <legend class="col-sm-6 col-sm-offset-2"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
     </div>
     <div class="row">
-      <p class="col-sm-2 col-sm-offset-2">Note: All fields are required.</p>
+      <p class="col-sm-4 col-sm-offset-2">Note: All fields are required.</p>
     </div>
     <div class="row">
-      <p class="col-sm-4 col-sm-offset-2">This page is protected through secure SSL encrypted payment.</p>
+      <p class="col-sm-10 col-sm-offset-2">This page is protected through secure SSL encrypted payment.</p>
     </div>
 
     <div class="form-group">
       <div class="col-sm-2"></div>
       <label for="card-holder-name" class="col-sm-2 control-label">Card Holder's Name</label>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <input type="text" class="form-control col-sm-4 input-sm"  placeholder="Card Holder's Name" data-stripe="name" title="This is the name as written on your credit card." id="name"/>
       </div>
     </div>
@@ -78,21 +81,21 @@
     <div class="form-group">
       <div class="col-sm-2"></div>
       <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <input type="text" class="form-control col-sm-3 input-sm" placeholder="Credit Card" data-stripe="number" title="Fill in your credit card number." maxlength="19" required id="credit-card"/>
       </div>
       <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
     </div>
 
-    <div class="form-group select-option">
+    <div class="form-group select-option" style="height: auto;">
       <div class="col-sm-2"></div>
       <label for="exp" class="col-sm-2 control-label">Expiration</label>
       <div class="controls">
-        <div class="col-sm-3">
+        <div class="col-sm-5" style="padding-bottom:15px;">
           <i class="ion-chevron-down"></i>
           <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}) %>
         </div>
-        <div class="col-sm-2">
+      <div class="col-sm-3">
           <i class="ion-chevron-down"></i>
           <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, data: {stripe: "exp-year"}) %>
         </div>
@@ -103,7 +106,7 @@
     <div class="form-group">
       <div class="col-sm-2"></div>
       <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
-      <div class="col-sm-2 col-cvv-fixed-width">
+      <div class="col-sm-3 col-cvv-fixed-width">
         <input type="text" class="form-control input-sm" placeholder="CVV" data-stripe="cvc" size="4" required/>
       </div>
 
@@ -129,8 +132,8 @@ just the last four digits followed by a special 3-digit code. This 3-digit code 
     <% end %>
 
     <div class="form-group">
-      <div class="col-xs-3 col-xs-offset-4">
-        <%= f.submit "Pay", class: "btn btn-block btn-blue payment-submit" %>
+      <div class="col-xs-6 col-xs-offset-3">
+        <%= f.submit "Pay", class: "btn btn-block btn-blue payment-submit", onClick: "disablePaymentButtonWhenClicked(this);" %>
       </div>
     </div>
   </fieldset>
@@ -140,3 +143,26 @@ just the last four digits followed by a special 3-digit code. This 3-digit code 
 
 <% end %>
 <%= javascript_include_tag "#{STRIPE_JS_HOST}/v2/" %>
+
+<script>
+  function disablePaymentButtonWhenClicked(button) {
+
+    var allFieldsFilled = false;
+    document.querySelectorAll("input[required]").forEach(function(element) {
+      if(element.value == "" || element.value == 0.0) {
+        allFieldsFilled = false;
+      }
+      else {
+        allFieldsFilled = true;
+      }
+    });
+
+    if(!allFieldsFilled) {
+      return;
+    }
+
+    button.disabled = true;
+    button.value = "Processing...";
+  }
+
+</script>

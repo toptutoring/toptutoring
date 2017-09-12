@@ -18,6 +18,8 @@ class PaymentsController < ApplicationController
         end
       end
     end
+
+    select_correct_tutoring_type
   end
 
   def index
@@ -100,5 +102,15 @@ class PaymentsController < ApplicationController
 
   def set_stripe_key
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
+  end
+
+  def select_correct_tutoring_type
+    if @student_engagements.one?
+      academic = @student_engagements.last.academic_type == "Academic"
+      @test_prep_selected = academic ? "" : "selected"
+      @empty_selected = ""
+    else
+      @empty_selected = "selected"
+    end
   end
 end

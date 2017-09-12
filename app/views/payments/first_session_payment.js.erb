@@ -1,12 +1,10 @@
 //Show the payment form when the pay button is clicked
 document.getElementById("payment_section").style.visibility = "visible";
-
 //prefill out the payment form
-document.getElementById("payment_amount").value = <%= ((@engagement.tutor.academic_rate_cents/100.0)*(@engagement.invoices.last.hours)) %>.toFixed(2);
+document.getElementById("amount").value = <%= ((@engagement.client_rate_cents/100.0)*(@engagement.invoices.last.hours)) %>.toFixed(2);
 document.getElementById("hours").value = <%= @engagement.invoices.last.hours %>;
 document.getElementById("payment_description").value = "Payment for <%= @engagement.student_name %>'s first session.";
 set_academic_type_dropdown();
-
 document.getElementById("jump_to_payment_section").click();
 
 function set_academic_type_dropdown() {

@@ -3,12 +3,10 @@ document.getElementById("payment_section").style.visibility = "visible";
 var product = document.getElementById("product-"+ <%= @count %>);
 var lowBalanceHours = document.getElementById("low_balance_hours-"+ <%= @count %>);
 
-document.getElementById("payment_amount").value = parseFloat(product.textContent);
+document.getElementById("amount").value = parseFloat(product.textContent);
 document.getElementById("hours").value = lowBalanceHours.value;
-
-document.getElementById("payment_description").value = "";
 set_academic_type_dropdown();
-
+document.getElementById("payment_description").value = "";
 document.getElementById("jump_to_payment_section").click();
 
 function set_academic_type_dropdown() {

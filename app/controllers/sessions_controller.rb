@@ -25,7 +25,7 @@ class SessionsController < Clearance::SessionsController
     if current_user.has_role?("client") &&
         current_user.enabled? &&
           !(current_user&.students&.first&.student_engagements&.first&.pending? || current_user&.client_engagements&.first&.pending?)
-      new_payment_path
+      dashboard_path
     else
       dashboard_path
     end
