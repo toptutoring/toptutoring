@@ -9,6 +9,7 @@
           <thead>
             <tr>
               <th>Student Name</th>
+              <th class="text-center">Client Name</th>
               <th class="text-center">Subject</th>
               <th class="text-center">Academic Type</th>
               <th class="text-center">Status</th>
@@ -19,6 +20,7 @@
             <% @pending_engagements.each do |engagement| %>
               <tr>
                 <td><%= engagement.student_name %></td>
+                <td><%= engagement.client.name %></td>
                 <td class="text-center"><%= engagement.subject %></td>
                 <td class="text-center"><%= EngagementPresenter.new(engagement).engagement_academic_type %></td>
                 <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
