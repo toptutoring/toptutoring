@@ -1,4 +1,5 @@
 <header>
+  <%= render "shared/environment_banner" %>
   <a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
   <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
     <script>
@@ -8,27 +9,31 @@
         role_str: '<%= current_user.try(:roles).try(:first).try(:name) %>',
       });
     </script>
-  <% end %>
-  <ul class="notification-bar list-inline pull-right">
-    <li class="dropdown"><a id="dropdownMenu2" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle header-icon lh-1 pt-10 pb-10">
-        <div class="media mt-0">
-          <div class="media-left avatar"><i class="icon ion-ios-person"></i><span class="status bg-success"></span></div>
-          <div class="media-right media-middle pl-0">
-            <p class="fs-12 mb-0">Hi, <%= current_user.name %> </p>
-          </div>
-        </div></a>
-      <ul aria-labelledby="dropdownMenu2" class="dropdown-menu dropdown-menu-right fadeInUp icon animated" style="animation-duration: 0.2s; animation-delay: 0s; animation-timing-function: linear; animation-iteration-count: 1;">
-        <li>
-          <%= link_to profile_path do %>
-            <i class="ion-person mr-5"></i>Profile
-          <% end %>
-        </li>
-        <li>
-          <%= link_to sign_out_path, method: :delete, id: 'sign-out' do %>
-            <i class="ion-unlocked mr-5"></i>Logout
-          <% end %>
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <% end %>  
+  
+  <div class="right-side-header">
+    <ul class="notification-bar list-inline pull-right">
+      <li class="dropdown"><a id="dropdownMenu2" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle header-icon lh-1 pt-10 pb-10">
+          <div class="media mt-0">
+            <div class="media-left avatar"><i class="icon ion-ios-person"></i><span class="status bg-success"></span></div>
+            <div class="media-right media-middle pl-0">
+              <p class="fs-12 mb-0">Hi, <%= current_user.name %> </p>
+            </div>
+          </div></a>
+        <ul aria-labelledby="dropdownMenu2" class="dropdown-menu dropdown-menu-right fadeInUp icon animated" style="animation-duration: 0.2s; animation-delay: 0s; animation-timing-function: linear; animation-iteration-count: 1;">
+          <li>
+            <%= link_to profile_path do %>
+              <i class="ion-person mr-5"></i>Profile
+            <% end %>
+          </li>
+          <li>
+            <%= link_to sign_out_path, method: :delete, id: 'sign-out' do %>
+              <i class="ion-unlocked mr-5"></i>Logout
+            <% end %>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <%= render 'shared/masquerade_stop_button' %>
+  </div>
 </header>
