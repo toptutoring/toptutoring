@@ -13,6 +13,10 @@ class EngagementPresenter < SimpleDelegator
     @engagement.student_name
   end
 
+  def client_name
+    @engagement.client.name
+  end
+
   def tutor_name
     @engagement.tutor.try(:name)
   end
