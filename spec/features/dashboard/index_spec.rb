@@ -36,11 +36,13 @@ feature 'Dashboard Index' do
 
     expect(page).to have_content('Pending Engagements')
     expect(page).to have_content('Student Name')
+    expect(page).to have_content('Client Name')
     expect(page).to have_content('Subject')
     expect(page).to have_content('Academic Type')
     expect(page).to have_content('Status')
 
     expect(page).to have_content(pending_engagement.student.name)
+    expect(page).to have_content(pending_engagement.client.name)
     expect(page).to have_content(pending_engagement.subject)
     expect(page).to have_content(pending_presenter.engagement_academic_type)
     expect(page).to have_content(pending_engagement.state)
