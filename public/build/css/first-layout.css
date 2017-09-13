@@ -2013,6 +2013,12 @@ header .search-form span {
 .environment-banner.development {
   background: #b766e6;
 }
+.environment-banner.staging {
+  background: #7272f4;
+}
+.environment-banner.production {
+  background: red;
+}
 .masquerade-stop {
   margin-right: 10px;
 }
