@@ -28,6 +28,13 @@ Rails.application.routes.draw do
   resource :session, controller: "sessions", only: [:new, :create]
   resources :payments, only: [:new, :create, :index]
 
+  scope module: "admin" do
+    resources :users, only: [] do
+      resource :masquerade, only: :create
+    end
+    resource :masquerade, only: :destroy
+  end
+
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
     namespace :admin do
       resources :users, only: [:index, :edit, :update]
