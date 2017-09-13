@@ -28,6 +28,7 @@ feature "List all users" do
       expect(page).to have_content("Access State")
       expect(page).to have_content("Roles")
       expect(page).to have_content("Action")
+      expect(page).to have_content("Masquerade")
 
       expect(page).to have_content(student.name)
       expect(page).to have_content(student.email)
