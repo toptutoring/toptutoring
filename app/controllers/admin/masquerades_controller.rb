@@ -15,4 +15,12 @@ module Admin
       redirect_to root_path, notice: "Stopped masquerading"
     end
   end
+
+  private
+  def must_be_admin_or_director
+    unless current_user.has_role?("admin") or current_user.has_role?("director")
+      flash[:error] = "Must be admin or director to masquerade"
+      redirect_to root_url
+    end
+  end
 end
