@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-md-6">
     <div class="form-group">
-      <h5>Are you interested in hiring a tutor for help in a general academic area or specifically for test preparation?</h5>
-      <select required="required" name="info[academic_type]" id="info_academic_type">
-        <option value="">Please select tutoring type here</option>
+      <h5>Tutoring Type (Based on your selected subject)</h5>
+      <select required="required" name="info[academic_type]" id="info_academic_type" style="cursor:not-allowed" disabled>
         <option value="Academic">Academic</option>
-        <option value="Test_Prep">Test Preparation</option>
+        <option value="Test_Prep" <%= @test_prep_selected %>>Test Preparation</option>
       </select>
+      <input type="hidden" name="info[academic_type]" value="<%= @tutoring_type %>"/>
     </div>
   </div>
 </div>

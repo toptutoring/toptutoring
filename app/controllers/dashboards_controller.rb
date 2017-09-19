@@ -24,6 +24,7 @@ class DashboardsController < ApplicationController
       @engagements = current_user&.client_engagements || current_user&.student_engagements
       @availability_engagement = current_user&.student_engagements&.first ||
 	      current_user&.client_engagements&.first
+      correct_tutoring_type
       render :client
     end
   end
@@ -52,5 +53,12 @@ class DashboardsController < ApplicationController
 
   def option_array(engagement, credit)
     ["#{engagement.student_name} for #{engagement.subject} - #{credit} Credits", engagement.id]
+  end
+
+  def correct_tutoring_type
+    subject = Subject.find_by(name: current_user.signup.subject)
+    test_prep = subject.test_prep?
+    @test_prep_selected = test_prep ? "selected" : ""
+    @tutoring_type = test_prep ? "Test_Prep" : "Academic"
   end
 end
