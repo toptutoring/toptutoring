@@ -6,8 +6,18 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Subject.where(name: 'Biology').first_or_create
+Subject.where(name: 'Algebra').first_or_create
+Subject.where(name: 'English_Literature').first_or_create
+
+# Create roles
+Role.where(name: "admin").first_or_create
+Role.where(name: "director").first_or_create
+Role.where(name: "tutor").first_or_create
+Role.where(name: "client").first_or_create
+Role.where(name: "student").first_or_create
+Role.where(name: "contractor").first_or_create
+
+# Run seeds for development environment
 Rake::Task['dev:seed'].invoke
 
-Subject.create(name: 'Biology')
-Subject.create(name: 'Algebra')
-Subject.create(name: 'English Literature')
