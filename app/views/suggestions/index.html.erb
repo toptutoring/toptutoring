@@ -1,0 +1,47 @@
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="widget-heading clearfix">
+          <h3 class="widget-title pull-left">Suggestions</h3>
+        </div>
+        <div class="widget-body">
+          <% if @suggestions.empty? %>
+            <p>You have no pending suggestions.</p>
+          <% else %>
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Tutor</th>
+                      <th>Subject</th>
+                      <th class="col-md-1">Suggested Hours</th>
+                      <th class="col-md-5">Description</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @suggestions.each do |suggestion| %>
+                      <tr>
+                        <td><%= suggestion.engagement.student_name %></td>
+                        <td><%= suggestion.engagement.tutor.name %></td>
+                        <td><%= suggestion.engagement.subject %></td>
+                        <td class="text-center"><%= suggestion.hours %></td>
+                        <td><%= suggestion.description %></td>
+                        <td>
+                          <%= link_to "Dismiss", 
+                            suggestion_path(suggestion, suggestion: {status: 'dismissed'}),
+                            method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
