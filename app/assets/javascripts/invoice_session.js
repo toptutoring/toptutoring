@@ -6,7 +6,7 @@ $(function() {
     $('.hours').empty();
     $('.hours').append($('<option>', {
       value: 0,
-      text : "24 hour Cancelation (No hours are charged)"
+      text : "24 hour Cancellation (No hours are charged)"
     }));
     $('.hours').append($('<option>', {
       value: 0.5,
