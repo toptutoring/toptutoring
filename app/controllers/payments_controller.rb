@@ -4,20 +4,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
-    @feedback = current_user.feedbacks.build
-    @student_engagements = get_student_engagements
-    @invoices = []
-    @total_suggested_hours = 0
-
-    @student_engagements.each do |engagement|
-      invoices = Invoice.where(engagement_id: engagement.id)
-      if invoices.count == 1
-        if invoices.first.status != "paid"
-          @invoices << invoices.first
-          @total_suggested_hours += engagement.suggestions.last.suggested_minutes/60.0 unless engagement.suggestions.empty?
-        end
-      end
-    end
+    @total_suggested_hours = current_user.suggestions.pending.sum(:suggested_minutes).to_f / 60
   end
 
   def index
@@ -80,14 +67,6 @@ class PaymentsController < ApplicationController
 
   def payment_params
     params.require(:payment).permit(:description, :hours, :academic_type)
-  end
-
-  def get_student_engagements
-    if current_user.is_student?
-      current_user.student_engagements
-    else
-      current_user.client_engagements
-    end
   end
 
   def feedback_params
