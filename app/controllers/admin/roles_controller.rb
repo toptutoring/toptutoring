@@ -4,6 +4,7 @@ module Admin
 
     def index
       @tutors = User.tutors
+      @unassigned = User.left_joins(:roles).where(user_roles: { user_id: nil })
       @assignable_roles = assignable_roles
       @new_role = UserRole.new
     end
