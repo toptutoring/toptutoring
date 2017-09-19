@@ -4,6 +4,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :client, class_name: "User", foreign_key: "client_id"
   belongs_to :engagement
   before_save :set_amount_value, :set_tutor_pay_cents
+  validates_presence_of :client_id, :tutor_id
   validates :hours, numericality: { greater_than_or_equal_to: 0 }
 
   scope :pending, -> { where(status: 'pending') }
