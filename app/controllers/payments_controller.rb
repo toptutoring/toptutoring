@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
-    @total_suggested_hours = current_user.suggestions.pending.sum(:suggested_minutes).to_f / 60
+    @total_suggested_time = set_suggested_time
   end
 
   def index
@@ -79,5 +79,15 @@ class PaymentsController < ApplicationController
 
   def set_stripe_key
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
+  end
+
+  def set_suggested_time
+    return nil unless current_user.suggestions
+    suggested_minutes = current_user.suggestions.pending.sum(:suggested_minutes)
+    hours = suggested_minutes / 60
+    remainder_minutes = suggested_minutes % 60
+    time_string = "#{hours} #{'hour'.pluralize(hours)}"
+    time_string += " and #{remainder_minutes} minutes" unless remainder_minutes.zero?
+    time_string
   end
 end

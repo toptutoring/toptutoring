@@ -3,19 +3,18 @@
 <h2>Payment</h2>
 </br>
 <div class="row">
-
     <div>
       <section class="payment-section col-md-8">
       <%= render "payment_form" %>
       </section>
     </div>
-
-  <% if @total_suggested_hours > 0 %>
+  <% if @total_suggested_time %>
     <div class='col-md-4 pull-right'>
       <h3>Suggestions</h3>
-      <p> Your tutors have suggested a total of <%= @total_suggested_hours %> hours in order for you to receive your tutoring goals. We suggest having enough credits for <%= @total_suggested_hours %> hours so that your tutors can continue to schedule sessions with you. For a detailed list of suggestions made by your tutors, visit our <%= link_to 'suggestions page', suggestions_path %>.</p>
+      <p> Your tutors have suggested <%= @total_suggested_time %> in order for you to receive your academic goals. We suggest having enough credits for <%= @total_suggested_time %> so that your tutors can continue to schedule sessions with you. For a detailed list of suggestions made by your tutors, visit our <%= link_to 'suggestions page', suggestions_path %>.</p>
     </div>
   <% end %>
+</div>
 
 <script>
   //Calculates the product of chosen hours and tutoring rate in the low balance section
