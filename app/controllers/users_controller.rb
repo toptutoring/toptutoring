@@ -8,9 +8,6 @@ class UsersController < Clearance::SessionsController
     end
   end
 
-  def profile_edit
-  end
-
   def profile_update
     User.find(current_user.id).update(update_params)
     redirect_to profile_path, flash: { success: "Your profile has been updated." } and return
@@ -26,7 +23,8 @@ class UsersController < Clearance::SessionsController
       student = User.create(
         email: student_email,
         name: student_name,
-        password: SecureRandom.hex(10)
+        password: SecureRandom.hex(10),
+        roles: 'student'
       )
       current_user.students << student
       if current_user.save
