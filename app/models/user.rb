@@ -126,4 +126,8 @@ class User < ActiveRecord::Base
       Bugsnag.notify("OpenSSL::Cipher::CipherError: Invalid tokens for user #{id}")
     end
   end
+
+  def academic_types_engaged
+    engagements.pluck(:academic_type).uniq
+  end
 end
