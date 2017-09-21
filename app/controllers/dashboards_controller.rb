@@ -21,8 +21,9 @@ class DashboardsController < ApplicationController
       @suggestion = Suggestion.new()
       render :tutor
     elsif current_user.has_role?("client")
-      @engagements = current_user.engagements
-      @availability_engagement = @engagements.first
+      @engagements = current_user.engagements.includes(:tutor, :availabilities)
+      @engagements = @engagements.sort_by { |engagement| engagement.try(:tutor).try(:name) }
+      @academic_type = current_user.academic_types_engaged
       render :client
     end
   end
