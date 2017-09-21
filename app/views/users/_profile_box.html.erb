@@ -47,6 +47,7 @@
             </div>
           </li>
         <% end %>
+        <% if current_user.has_role?('tutor') || current_user.has_role?('contractor') %>
         <li class="media">
           <div class="media-left"><i class="ion-cash"></i></div>
           <div class="media-body">
@@ -59,6 +60,7 @@
             </p>
           </div>
         </li>
+        <% end %>
       </ul>
     </div>
   </div>
