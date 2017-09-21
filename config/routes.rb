@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
     resources :students, only: [:index, :new, :create]
+    resources :suggestions
     get "/dashboard" => "dashboards#client"
     resources :availability, only: [:new, :create, :update, :edit]
     post "/availability/dropdown_change" => "availability#dropdown_change"

@@ -34,7 +34,7 @@ module Tutors
       end
       params.require(:invoice)
         .permit(:engagement_id, :hours, :subject, :description)
-        .merge(tutor_id: current_user.id, hourly_rate: hourly_rate, status: "pending")
+        .merge(tutor_id: current_user.id, client_id: @client.id, hourly_rate: hourly_rate, status: "pending")
     end
 
     def set_client

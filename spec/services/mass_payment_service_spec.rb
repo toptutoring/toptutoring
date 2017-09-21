@@ -13,9 +13,9 @@ describe MassPaymentService do
     subject { MassPaymentService.new('invoice', admin) }
 
     it "grabs all pending invoices" do
-      invoice_pending = FactoryGirl.create(:invoice, tutor_id: tutor.id, engagement: engagement, status: 'pending')
-      invoice_paid = FactoryGirl.create(:invoice, tutor_id: tutor.id, engagement: engagement, status: 'paid')
-      invoice_nil = FactoryGirl.create(:invoice, tutor_id: tutor.id, engagement: engagement, status: nil)
+      invoice_pending = FactoryGirl.create(:invoice, client: client, tutor: tutor, engagement: engagement, status: 'pending')
+      invoice_paid = FactoryGirl.create(:invoice, client: client, tutor: tutor, engagement: engagement, status: 'paid')
+      invoice_nil = FactoryGirl.create(:invoice,client: client, tutor: tutor, engagement: engagement, status: nil)
 
       expect(subject.payments.count).to eq 1
       expect(subject.payments.sum(&:amount_in_cents)).to eq 3000

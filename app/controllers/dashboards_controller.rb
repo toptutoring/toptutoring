@@ -21,9 +21,8 @@ class DashboardsController < ApplicationController
       @suggestion = Suggestion.new()
       render :tutor
     elsif current_user.has_role?("client")
-      @engagements = current_user&.client_engagements || current_user&.student_engagements
-      @availability_engagement = current_user&.student_engagements&.first ||
-	      current_user&.client_engagements&.first
+      @engagements = current_user.engagements
+      @availability_engagement = @engagements.first
       render :client
     end
   end
