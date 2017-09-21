@@ -89,6 +89,8 @@ Rails.application.routes.draw do
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("student") } do
     get "/dashboard" => "dashboards#student"
+    resources :availability, only: [:new, :create, :update, :edit]
+    post "/availability/dropdown_change" => "availability#dropdown_change"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("contractor") } do

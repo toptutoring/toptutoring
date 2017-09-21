@@ -1,1 +1,13 @@
 <%= render "menu" %>
+<% if current_user.enabled? %>
+  <!-- left main -->
+  <div class="widget-body col-lg-12 col-md-12 col-sm-12 pull-left">
+    <!-- tutor blocks -->
+    <%= render "dashboards/clients/tutor_list" %>
+    <!-- balance block -->
+    <%= render "dashboards/clients/comment_form" %>
+  </div>
+  <!-- left main end -->
+<% else %>
+  <%= render "users/set_up_account" %>
+<% end%>

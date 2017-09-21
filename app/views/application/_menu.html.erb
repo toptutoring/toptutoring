@@ -28,6 +28,8 @@
     <ul class="list-unstyled navigation mb-0">
       <% if current_user.has_role?("client") %>
         <%= render "application/menu_links/client" %>
+      <% elsif current_user.has_role?("student") %>
+        <%= render "application/menu_links/student" %>
       <% elsif current_user.has_role?("admin") || current_user.has_role?("director") %>
         <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
       <% if current_user.has_role?("admin") %>
