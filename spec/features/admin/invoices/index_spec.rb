@@ -6,7 +6,7 @@ feature 'Invoices Index' do
   let(:student) { FactoryGirl.create(:student_user, client: client) }
   let(:admin) { FactoryGirl.create(:admin_user) }
   let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client) }
-  let!(:invoice) { FactoryGirl.create(:invoice, client: client, tutor: tutor, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
+  let!(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
 
   scenario 'when user is admin' do
     sign_in(admin)
