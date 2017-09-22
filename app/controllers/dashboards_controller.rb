@@ -29,7 +29,9 @@ class DashboardsController < ApplicationController
   end
 
   def student
-    redirect_to profile_path
+    @engagements = current_user.engagements.includes(:tutor, :availabilities)
+    @engagements = @engagements.sort_by { |engagement| engagement.try(:tutor).try(:name) }
+    @academic_type = current_user.academic_types_engaged
   end
 
   private
