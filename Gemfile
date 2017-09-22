@@ -35,6 +35,9 @@ gem "intercom-rails"
 gem 'cancancan', '~> 1.16'
 gem 'money-rails', '~> 1'
 gem 'clockwork', '~> 2.0'
+gem "react-rails"
+# Upgrade webpacker after https://github.com/reactjs/react-rails/pull/777 is merged
+gem "webpacker", '2.0.0'
 
 group :development do
   gem "listen"

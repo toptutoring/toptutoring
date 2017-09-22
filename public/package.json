@@ -1,0 +1,30 @@
+{
+    "name": "sigma",
+    "version": "1.1.0",
+    "description": "responsive web app kit",
+    "main": "gulpfile.js",
+    "dependencies": {
+        "browser-sync": "^2.18.1",
+        "gulp": "^3.9.1",
+        "gulp-clean-css": "^2.0.13",
+        "gulp-jade": "^1.1.0",
+        "gulp-less": "^3.3.0",
+        "gulp-uglify": "^2.0.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "admin",
+        "dashboard",
+        "bootstrap",
+        "crm",
+        "responsive",
+        "web-app",
+        "ui-kit",
+        "backend"
+    ],
+    "author": "Loi Le - lethemes.net",
+    "license": "regular license, extended license"
+}
