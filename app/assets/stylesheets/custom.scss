@@ -117,6 +117,10 @@ a, a:hover, a:visited, a.focus {
   outline: none;
 }
 
+a.text-base, a.text-base:hover, a.text-base.focus {
+  color: #737373
+}
+
 input, button, select, span, textarea {
   font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
