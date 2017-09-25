@@ -1,157 +1,56 @@
 <% if current_user.enabled? %>
   <aside data-mcs-theme="minimal-dark" class="main-sidebar mCustomScrollbar">
     <div class="media user">
-      <%= link_to profile_path, class: 'text-base' do %>
-        <div class="media-left">
-          <div id="esp-user-profile" data-percent="66" style="height: 56px; width: 56px; line-height: 40px; padding: 8px;" class="easy-pie-chart"><i class="icon ion-ios-person avatar img-circle"></i></div>
-        </div>
-        <div class="media-body media-middle">
-          <h4 class="media-heading fs-16"><%= current_user.name %></h4>
-          <% if current_user.has_role?("client") %>
-            <div class="dropdown">
-              <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
-                <%= client_credit(current_user) %>
-              </a>
-              <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
-              </ul>
-            </div>
-          <% elsif current_user.has_role?("tutor") %>
-            <div class="dropdown">
-              <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
-                <%= tutor_outstanding_balance(current_user) %>
-              </a>
-              <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
-              </ul>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+      <div class="media-left">
+        <%= link_to profile_path, class: 'text-base' do %>
+          <div id="esp-user-profile" data-percent="66" class="menu_user_widget easy-pie-chart"><i class="icon ion-ios-person avatar img-circle"></i></div>
+        <% end %>
+      </div>
+      <div class="media-body media-middle">
+        <h4 class="media-heading fs-16"><%= current_user.name %></h4>
+        <% if current_user.has_role?("client") %>
+          <div class="dropdown">
+            <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
+              <%= client_credit(current_user) %>
+            </a>
+            <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
+            </ul>
+          </div>
+        <% elsif current_user.has_role?("tutor") %>
+          <div class="dropdown">
+            <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
+              <%= tutor_outstanding_balance(current_user) %>
+            </a>
+            <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
+            </ul>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <ul class="list-unstyled navigation mb-0">
+      <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
       <% if current_user.has_role?("client") %>
         <%= render "application/menu_links/client" %>
       <% elsif current_user.has_role?("student") %>
         <%= render "application/menu_links/student" %>
-      <% elsif current_user.has_role?("admin") || current_user.has_role?("director") %>
-        <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
-        <% if current_user.has_role?("admin") %>
-          <li class="panel"><a href="/admin/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payment History</span></a></li>
-        <% end %>
-        <% if current_user.has_role?("director") %>
-          <li class="panel"><a href="/director/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payment History</span></a></li>
-        <% end %>
-
-      <li class="panel">
-        <%= link_to engagements_path do %>
-          <i class="icon ion-ios-contact bg-primary"></i>
-          <span class="sidebar-title">Engagements</span>
-        <% end %>
-      </li>
-
-      <% if current_user.has_role?("director") %>
-        <li class="panel">
-          <%= link_to director_users_path do %>
-            <i class="icon ion-ios-contact bg-danger"></i>
-            <span class="sidebar-title">Clients</span>
-          <% end %>
-        </li>
-      <% end %>
-
-      <% if current_user.has_role?("admin") %>
-      <li class="panel">
-        <%= link_to admin_tutors_path do %>
-          <i class="icon ion-ios-contact bg-purple"></i>
-          <span class="sidebar-title">Tutors</span>
-        <% end %>
-      </li>
-      <% end %>
-      <% if current_user.has_role?("director") %>
-      <li class="panel">
-        <%= link_to director_tutors_path do %>
-          <i class="icon ion-ios-contact bg-purple"></i>
-          <span class="sidebar-title">Tutors</span>
-        <% end %>
-      </li>
-      <% end %>
+      <% elsif current_user.has_role?("admin") %>
+        <%= render "application/menu_links/admin" %>
+      <% elsif current_user.has_role?("director") %>
+        <%= render "application/menu_links/director" %>
       <% elsif current_user.has_role?("tutor") %>
-        <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
+        <%= render "application/menu_links/tutor" %>
       <% end %>
-      <% if current_user.has_role?("admin") %>
+
+      <% if current_user.has_role?("contractor") %>
         <li class="panel">
-          <%= link_to admin_users_path do %>
-            <i class="icon ion-ios-contact bg-success"></i>
-            <span class="sidebar-title">Users</span>
-          <% end %>
-        </li>
-        <li class="panel">
-          <%= link_to admin_roles_path do %>
-            <i class="icon ion-ios-clock bg-success"></i>
-            <span class="sidebar-title">Roles</span>
-          <% end %>
-        </li>
-        <li class="panel">
-          <%= link_to admin_invoices_path do %>
-            <i class="icon ion-clipboard bg-primary"></i>
-            <span class="sidebar-title">Invoices</span>
-          <% end %>
-        </li>          
-        <li class="panel">
-            <%= link_to admin_timesheets_path do %>
-              <i class="icon ion-cash bg-success"></i>
-              <span class="sidebar-title">Timesheets</span>
-            <% end %>
-        </li>
-        <li class="panel">
-          <%= link_to admin_emails_path do %>
-            <i class="icon ion-ios-email-outline bg-danger"></i>
-            <span class="sidebar-title">Emails</span>
-          <% end %>
-        </li>
-        <li class="panel">
-          <%= link_to new_admin_funding_source_path do %>
-            <i class="icon ion-card bg-primary"></i>
-            <span class="sidebar-title">Funding Source</span>
+          <%= link_to contractors_timesheets_path do %>
+            <i class="icon ion-cash bg-success"></i>
+            <span class="sidebar-title">Timesheets</span>
           <% end %>
         </li>
       <% end %>
-      <% if current_user.has_role?("tutor") %>
-        <li class="panel">
-          <%= link_to tutors_students_path do %>
-            <i class="icon ion-ios-contact bg-success"></i>
-            <span class="sidebar-title">Students</span>
-          <% end %>
-        </li>
-        <% if current_user.has_role?("director") %>
-          <li class="panel">
-            <%= link_to admin_invoices_path do %>
-              <i class="icon ion-clipboard bg-primary"></i>
-              <span class="sidebar-title">Invoices</span>
-            <% end %>
-          </li>
-        <% else %>
-          <li class="panel">
-            <%= link_to tutors_invoices_path do %>
-              <i class="icon ion-clipboard bg-primary"></i>
-              <span class="sidebar-title">Invoices</span>
-            <% end %>
-          </li>
-        <% end %>
-        <% if current_user.has_role?("contractor") %>
-          <li class="panel">
-            <%= link_to contractors_timesheets_path do %>
-              <i class="icon ion-cash bg-success"></i>
-              <span class="sidebar-title">Timesheets</span>
-            <% end %>
-          </li>
-        <% end %>
-        <li class="panel">
-          <%= link_to tutors_emails_path do %>
-            <i class="icon ion-ios-email-outline bg-danger"></i>
-            <span class="sidebar-title">Emails</span>
-          <% end %>
-        </li>
-      <% end %>
+      
     </ul>
   </aside>
 <% end %>
