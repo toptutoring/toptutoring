@@ -25,13 +25,13 @@ class DashboardsController < ApplicationController
   def client
     @engagements = current_user.engagements.includes(:tutor, :availabilities)
     @engagements = @engagements.sort_by { |engagement| engagement.try(:tutor).try(:name) }
-    @academic_type = current_user.academic_types_engaged
+    @academic_types = current_user.academic_types_engaged
   end
 
   def student
     @engagements = current_user.engagements.includes(:tutor, :availabilities)
     @engagements = @engagements.sort_by { |engagement| engagement.try(:tutor).try(:name) }
-    @academic_type = current_user.academic_types_engaged
+    @academic_types = current_user.academic_types_engaged
   end
 
   private

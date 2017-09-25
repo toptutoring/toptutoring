@@ -4,6 +4,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
+    @academic_types = current_user.academic_types_engaged
     @total_suggested_time = set_suggested_time
   end
 

@@ -8,10 +8,16 @@
     <div class="form-group">
       <label for="hourly-rate" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
       <div class="col-sm-3">
-        <p class="col-sm-3 hourly-rate" id="rate"
-          data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>"
-          data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>"
-          name="hourly_rate" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
+        <% if @academic_types.count > 1 %>
+          <p class="control-label col-sm-3 hourly-rate" id="rate"
+            data-academic="<%= current_user.academic_rate %>"
+            data-test-prep="<%= current_user.test_prep_rate %>"
+            name="hourly_rate" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
+        <% elsif @academic_types.include?('Academic') %>
+          <p class="control-label col-sm-3 hourly-rate" id="rate"><%= current_user.academic_rate %></p>
+        <% else %>
+          <p class="control-label col-sm-3 hourly-rate" id="rate"><%= current_user.test_prep_rate %></p>
+        <% end %>
       </div>
     </div>
 
@@ -36,16 +42,20 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <div class="col-sm-2"></div>
-      <label for="payment_academic_type" class="col-sm-2 control-label">Tutoring Type</label>
-      <div class="col-sm-4">
-        <select name="payment[academic_type]" id="payment_academic_type" class="payment-academic-type">
-          <option value="Academic" data-academic="<%= MultiCurrencyAmount.from_cent(current_user.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Academic</option>
-          <option value="Test_Prep" data-test-prep="<%= MultiCurrencyAmount.from_cent(current_user.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY) %>">Test Preparation</option>
-        </select>
+    <% if @academic_types.count > 1 %>
+      <div class="form-group">
+        <div class="col-sm-2"></div>
+        <label for="payment_academic_type" class="col-sm-2 control-label">Tutoring Type</label>
+        <div class="col-sm-4">
+          <select name="payment[academic_type]" id="payment_academic_type" class="payment-academic-type">
+            <option value="Academic" data-academic="<%= current_user.academic_rate %>">Academic</option>
+            <option value="Test_Prep" data-test-prep="<%= current_user.test_prep_rate %>">Test Preparation</option>
+          </select>
+        </div>
       </div>
-    </div>
+    <% else %>
+      <%= hidden_field_tag "payment[academic_type]", @academic_types.first %>
+    <% end %>
 
     <div class="form-group">
       <div class="col-sm-2"></div>
