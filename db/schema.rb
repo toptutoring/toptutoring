@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170920223654) do
+ActiveRecord::Schema.define(version: 20170924222727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20170920223654) do
   end
 
   create_table "contracts", id: :serial, force: :cascade do |t|
-    t.integer "hourly_rate", default: 1500, null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -77,8 +76,7 @@ ActiveRecord::Schema.define(version: 20170920223654) do
     t.integer "tutor_id"
     t.integer "engagement_id"
     t.decimal "hours", precision: 10, scale: 2, default: "0.0", null: false
-    t.integer "hourly_rate"
-    t.integer "amount"
+    t.integer "hourly_rate_cents"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -86,13 +84,14 @@ ActiveRecord::Schema.define(version: 20170920223654) do
     t.string "subject"
     t.integer "client_id"
     t.integer "tutor_pay_cents"
+    t.integer "amount_cents"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id"
     t.index ["tutor_id"], name: "index_invoices_on_tutor_id"
   end
 
   create_table "payments", id: :serial, force: :cascade do |t|
-    t.integer "amount_in_cents"
+    t.integer "amount_cents"
     t.string "description"
     t.string "status"
     t.string "source"
