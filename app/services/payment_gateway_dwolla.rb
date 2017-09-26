@@ -7,13 +7,13 @@ class PaymentGatewayDwolla
 
   def create_transfer
     account_token = DwollaService.admin_account_token
-    begin
-      response = account_token.post("transfers", transfer_payload)
-      @payment.external_code = response.headers["location"]
-      @payment.status = "created"
-    rescue DwollaV2::Error => e
-      @error = e._embedded.errors.first.message
-    end
+    response = account_token.post("transfers", transfer_payload)
+    @payment.external_code = response.headers["location"]
+    @payment.status = "created"
+  rescue DwollaV2::Error => e
+    @error = e._embedded.errors.first.message
+  rescue OpenSSL::Cipher::CipherError
+    @error = "There was an error with ciphering the access token."
   end
 
   private

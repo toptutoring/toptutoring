@@ -19,6 +19,8 @@ class MassPaymentService
     @errors << e[:code] + ": " + e[:message]
   rescue DwollaV2::Error => e
     @errors << e._embedded.errors.first.message
+  rescue OpenSSL::Cipher::CipherError
+    @errors << "There was an error with ciphering the access token."
   end
 
   def update_processing(status)
