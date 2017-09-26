@@ -36,6 +36,6 @@ class OneTimePaymentsController < ApplicationController
   end
 
   def amount_in_cents
-    (params[:amount].to_f * 100).to_i
+    params[:amount].to_money.cents
   end
 end

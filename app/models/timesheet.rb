@@ -28,11 +28,7 @@ class Timesheet < ActiveRecord::Base
   end
 
   def amount
-    User.find(user_id).contract.hourly_rate * hours / 100
-  end
-
-  def amount_in_cents
-    User.find(user_id).contract.hourly_rate * hours
+    user.contract.hourly_rate * hours
   end
 
   def to_payment
@@ -42,7 +38,7 @@ class Timesheet < ActiveRecord::Base
   private
 
   def payment_params
-    { amount_in_cents: amount_in_cents, payee_id: user_id,
+    { amount: amount, payee_id: user_id,
       description: description }
   end
 end

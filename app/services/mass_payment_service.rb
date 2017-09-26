@@ -74,14 +74,18 @@ class MassPaymentService
 
   def payment_params(user, pending_items)
     ids = pending_items.pluck(:id).join(', ')
-    if @type == "invoice"
-      amount = pending_items.sum(:tutor_pay_cents)
-    else
-      amount = pending_items.map(&:amount_in_cents).reduce(:+)
-    end
-    { amount_in_cents: amount,
+    { amount: pending_items_total_pay(pending_items),
       payee_id: user.id,
       description: "Payment for invoices: #{ids}." }
+  end
+
+  def pending_items_total_pay(pending_items)
+    if @type == "invoice"
+      cents = pending_items.map(&:tutor_pay).reduce(:+).cents
+    else
+      cents = pending_items.map { |sheet| sheet.amount.cents }.reduce(:+)
+    end
+    Money.new(cents)
   end
 
   def invalid_user_message(name)
@@ -167,9 +171,9 @@ class MassPaymentService
 
   def update_for_invoice(user, status)
     processing_invoices = user.invoices.where(status: 'processing')
+    user.outstanding_balance -= processing_invoices.sum(:hours) if status =='paid'
     ActiveRecord::Base.transaction do
       processing_invoices.update_all(status: status)
-      user.outstanding_balance -= processing_invoices.sum(:hours)
       user.save!
     end
   end

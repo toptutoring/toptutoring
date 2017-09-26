@@ -26,23 +26,36 @@ module Tutors
     end
 
     private
+
     def invoice_params
-      if @engagement.academic_type.casecmp('academic') == 0
-        hourly_rate = MultiCurrencyAmount.from_cent(@client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
-      else
-        hourly_rate = MultiCurrencyAmount.from_cent(@client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
-      end
       params.require(:invoice)
-        .permit(:engagement_id, :hours, :subject, :description)
-        .merge(tutor_id: current_user.id, client_id: @client.id, hourly_rate: hourly_rate, status: "pending")
+            .permit(:engagement_id, :hours, :subject, :description)
+            .merge(tutor: current_user, client: @client, amount: client_charge,
+                   hourly_rate: hourly_rate, status: "pending",
+                   tutor_pay: tutor_pay)
+    end
+
+    def hourly_rate
+      return @client.academic_rate if @engagement.academic_type == 'Academic'
+      @client.test_prep_rate
+    end
+
+    def client_charge
+      hourly_rate * params[:invoice][:hours].to_f
+    end
+
+    def tutor_pay
+      tutor_rate = current_user.contract.hourly_rate
+      tutor_rate * params[:invoice][:hours].to_f
+  
     end
 
     def set_client
-      @client = User.find(@engagement.client_id)
+      @client = @engagement.client
     end
 
     def set_engagement
-      @engagement = current_user.tutor_engagements.find(params[:invoice][:engagement_id])
+      @engagement = current_user.engagements.find(params[:invoice][:engagement_id])
     end
 
     def authorize_tutor

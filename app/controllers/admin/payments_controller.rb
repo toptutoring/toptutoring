@@ -15,22 +15,36 @@ module Admin
     end
 
     def create
+      if payment_within_balance?
+        create_payment
+      else
+        flash[:danger] = "This exceeds the maximum payment for this tutor.
+          Please contact an administrator if you have any questions"
+      end
+      redirect_to admin_invoices_path
+    end
+
+    private
+
+    def payment_within_balance?
+      @amount = params[:amount].to_money
+      payee = User.find(params[:payment][:payee_id])
+      payee.outstanding_balance >= @amount / payee.contract.hourly_rate
+    end
+
+    def payment_params
+      params.require(:payment)
+            .permit(:source, :description, :payee_id, :payer_id)
+            .merge(amount: @amount, source: @funding_source.funding_source_id)
+    end
+
+    def create_payment
       @payment = Payment.new(payment_params)
       if @payment.valid?
         process_payment
       else
         flash[:danger] = @payment.errors.full_messages
       end
-      redirect_back(fallback_location: (request.referer || root_path)) and return
-    end
-
-    private
-
-    def payment_params
-      amount = params[:amount].to_f * 100
-      params.require(:payment)
-            .permit(:source, :description, :payee_id, :payer_id)
-        .merge(amount_in_cents: amount.to_i, source: @funding_source.funding_source_id)
     end
 
     def set_funding_source
@@ -39,7 +53,7 @@ module Admin
 
     def validate_funding_source
       return unless @funding_source.nil?
-      flash[:danger] = "You must authenticate with Dwolla and select a funding source before making a payment."
+      flash[:danger] = "Funding source is not set. Please contact the administrator."
       redirect_back(fallback_location: (request.referer || root_path)) and return
     end
 
