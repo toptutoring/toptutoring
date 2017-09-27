@@ -31,6 +31,7 @@ feature "Create payment for tutor" do
 
         expect(page).to have_content("There was an error making a payment for #{tutor_no_auth.name}. Payment was not processed.")
         expect(page).to have_content('1 payment has been made for a total of $45.00')
+        expect(tutor.reload.outstanding_balance).to eq 0
       end
     end
   end

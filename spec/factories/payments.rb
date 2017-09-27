@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :payment do
-    amount_in_cents      { 20000 }
-    description { "Test payment" }
-    payer       { FactoryGirl.create(:admin_user) }
-    customer_id { "xxx" }
+    amount_cents { 200_00 }
+    description  { "Test payment" }
+    payer        { FactoryGirl.create(:admin_user) }
+    customer_id  { "xxx" }
   end
 end

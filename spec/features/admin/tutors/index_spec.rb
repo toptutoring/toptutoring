@@ -20,7 +20,7 @@ feature "Index tutors" do
       expect(page).to have_content(tutor.email)
       expect(page).to have_content(tutor.outstanding_balance)
       expect(page).to have_link("Edit")
-      expect(page).to have_link("Pay tutor")
+      expect(page).not_to have_link("Pay tutor")
     end
   end
 
