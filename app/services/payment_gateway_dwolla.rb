@@ -12,6 +12,7 @@ class PaymentGatewayDwolla
     @payment.status = "created"
   rescue DwollaV2::Error => e
     @error = e._embedded.errors.first.message
+    Rails.logger.error(e._embedded.errors)
   rescue OpenSSL::Cipher::CipherError
     @error = "There was an error with ciphering the access token."
   end
