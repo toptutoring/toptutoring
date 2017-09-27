@@ -7,7 +7,7 @@
           <% confirm_message = "This will pay all pending invoices for a total of #{number_to_currency(@total_for_all)}. Are you sure?" %>
           <% link_title = "Pay All Invoices: #{number_to_currency(@total_for_all)}" %>
           <% link_classes = "pull-right btn btn-sm btn-outline btn-primary" %>
-          <%= link_to link_title, admin_payments_pay_all_index_path(pay_type: 'invoice'), method: :post, class: link_classes, data: {confirm: confirm_message} %>
+          <%= link_to link_title, admin_payments_pay_all_index_path(pay_type: 'invoice'), method: :post, class: link_classes, data: { disable_with: 'Submitting', confirm: confirm_message } %>
         <% end %>
       </div>
       <div class="widget-body">
@@ -42,7 +42,7 @@
                   <td><%= number_to_currency(i.tutor_pay) %></td>
                   <td>
                     <%= link_to "Edit", edit_admin_invoice_path(i), method: :patch, class: "btn btn-sm btn-outline btn-primary" %>
-                    <%= link_to "Pay", admin_payments_path(invoice: i, payment: {payee_id: i.tutor_id, payer_id: current_user.id, description: "#{name} for: #{description}"}, amount: i.tutor_pay), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                    <%= link_to "Pay", admin_payments_path(invoice: i, payment: { payee_id: i.tutor_id, payer_id: current_user.id, description: "#{name} for: #{description}" }, amount: i.tutor_pay), method: :post, data: { disable_with: 'Submitting' }, class: "btn btn-sm btn-outline btn-primary" %>
                     <%= link_to "Deny", admin_invoice_path(i, invoice: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
                   </td>
                 </tr>

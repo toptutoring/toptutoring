@@ -7,7 +7,7 @@
           <% confirm_message = "This will pay all pending timesheets for a total of #{number_to_currency(@total_for_all)}. Are you sure?" %>
           <% link_title = "Pay All Timesheets: #{number_to_currency(@total_for_all)}" %>
           <% link_classes = "pull-right btn btn-sm btn-outline btn-primary" %>
-          <%= link_to link_title, admin_payments_pay_all_index_path(pay_type: 'timesheet'), method: :post, class: link_classes, data: {confirm: confirm_message} %>
+          <%= link_to link_title, admin_payments_pay_all_index_path(pay_type: 'timesheet'), method: :post, class: link_classes, data: { disable_with: "Submitting", confirm: confirm_message } %>
         <% end %>
       </div>
       <div class="widget-body">
@@ -35,7 +35,7 @@
                   <td><%= number_to_currency(t.amount) %></td>
                   <td>
                     <% payment_params = {payee_id: t.user_id, payer_id: current_user.id, description: "#{name} for: #{description}"} %>
-                    <%= link_to "Pay", admin_payments_path(timesheet: t.id, payment: payment_params, amount: t.amount), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                    <%= link_to "Pay", admin_payments_path(timesheet: t.id, payment: payment_params, amount: t.amount), method: :post, data: { disable_with: "Submitting" }, class: "btn btn-sm btn-outline btn-primary" %>
                     <%= link_to "Deny", admin_timesheet_path(t, timesheet: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
                   </td>
                 </tr>
