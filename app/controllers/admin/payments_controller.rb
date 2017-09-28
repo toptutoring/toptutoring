@@ -43,7 +43,6 @@ module Admin
       @payment = Payment.new(payment_params)
       if @payment.valid?
         process_payment
-        adjust_balances if @object_to_update_status
       else
         flash[:danger] = @payment.errors.full_messages
       end
@@ -54,20 +53,11 @@ module Admin
       @transfer.create_transfer
       if @transfer.error.nil?
         @payment.save!
+        BalanceAdjuster.lower_balance_and_update(@payee, @object_to_update_status) if @object_to_update_status
         flash.notice = "Payment is being processed."
       else
         flash[:danger] = @transfer.error
       end
-    end
-
-    def adjust_balances
-      @payee.outstanding_balance -= @object_to_update_status.hours
-      @payee.save
-      @object_to_update_status.update(status: "paid")
-    end
-
-    def transfer_error
-      @transfer.instance_variable_get(:@gateway).error
     end
 
     def set_payee
