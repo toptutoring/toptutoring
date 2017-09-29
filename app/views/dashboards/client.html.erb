@@ -1,19 +1,19 @@
 <%= render "menu" %>
-<% unless current_user.enabled? %>
-  <%= render "users/set_up_account" %>
-<% end %>
 <% if current_user.enabled? %>
-  <% if !current_user.is_student? %>
-    <% if @engagements.active.any? %>
-      <%= render "student_pending_engagement_message" %>
-    <% else %>
-      <%= render "student_active_engagement_message" %>
-    <% end %>
-  <% else %>
-    <% if @engagements.last.pending? %>
-      <%= render "pending_engagement_message" %>
-    <% else %>
-      <%= render "active_engagement_message" %>
-    <% end %>
-  <% end %>
-<% end %>
+  <!-- left main -->
+  <div class="widget-body col-lg-8 col-md-12 col-sm-12 pull-left">
+    <!-- tutor blocks -->
+    <%= render "dashboards/clients/tutor_list" %>
+    <!-- comment block -->
+    <%= render "dashboards/clients/comment_form" %>
+  </div>
+  <!-- left main end -->
+  <!-- right sidebar -->
+  <div class="widget-body col-lg-4 col-md-12 col-sm-12 pull-right">
+    <%= render "dashboards/clients/balance_widget" %>
+    <%= render "dashboards/clients/request_tutor_link" %>
+  </div>
+  <!-- right sidebar end -->
+<% else %>
+  <%= render "users/set_up_account" %>
+<% end%>

@@ -4,7 +4,10 @@ class Invoice < ActiveRecord::Base
   belongs_to :client, class_name: "User", foreign_key: "client_id"
   belongs_to :engagement
   before_save :set_amount_value, :set_tutor_pay_cents
+  validates_presence_of :client_id, :tutor_id
   validates :hours, numericality: { greater_than_or_equal_to: 0 }
+  validates_presence_of :tutor_id, :client_id, :description,
+                        :subject, :hours
 
   scope :pending, -> { where(status: 'pending') }
   scope :newest_first, -> { order("created_at DESC").limit(100) }

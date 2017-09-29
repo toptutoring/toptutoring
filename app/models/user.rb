@@ -9,12 +9,13 @@ class User < ActiveRecord::Base
   has_many :students, class_name: "User", foreign_key: "client_id"
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
-  has_many :engagements, ->(user) { unscope(:where).where("tutor_id = ? OR client_id = ?", user.id, user.id) }
+  has_many :engagements, ->(user) { unscope(:where).where("tutor_id = ? OR client_id = ? OR student_id = ?", user.id, user.id, user.id) }
   has_many :tutor_engagements, class_name: "Engagement", foreign_key: "tutor_id", dependent: :destroy
   has_many :client_engagements, class_name: "Engagement", foreign_key: "client_id", dependent: :destroy
   has_many :student_engagements, class_name: "Engagement", foreign_key: "student_id", dependent: :destroy
-  has_many :invoices, class_name: "Invoice", foreign_key: "tutor_id", dependent: :destroy
+  has_many :invoices, ->(user) { unscope(:where).where("tutor_id = ? OR client_id = ?", user.id, user.id) }
   has_many :emails, class_name: "Email", foreign_key: "tutor_id", dependent: :destroy
+  has_many :suggestions, through: :engagements
   has_many :user_roles
   has_many :roles, through: :user_roles
   has_many :tutor_profiles
@@ -124,5 +125,9 @@ class User < ActiveRecord::Base
     if Rails.env.production?
       Bugsnag.notify("OpenSSL::Cipher::CipherError: Invalid tokens for user #{id}")
     end
+  end
+
+  def academic_types_engaged
+    engagements.pluck(:academic_type).uniq
   end
 end

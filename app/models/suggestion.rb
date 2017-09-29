@@ -2,6 +2,10 @@ class Suggestion < ActiveRecord::Base
   # Associations
   belongs_to :engagement
 
+  # Scopes
+  scope :pending, -> { where(status: 'pending') }
+  scope :dismissed, -> { where(status: 'dismissed') }
+
   # Validations
   validate :suggested_minutes_must_be_quarter_hours, :suggested_minutes_must_be_greater_than_zero
   validates :suggested_minutes, numericality: { only_integer: true }

@@ -2,30 +2,36 @@ class DashboardsController < ApplicationController
   before_action :require_login
   before_action :build_student_for_client, only: [:client]
 
-  def show
-    if current_user.has_role?("admin")
-      @pending_engagements = Engagement.pending
-      render :admin
-    elsif current_user.has_role?("director")
-      @pending_engagements = Engagement.pending
-      @tutor_engagements = current_user.tutor_engagements
-      @invoice = Invoice.new()
-      @timesheet = Timesheet.new()
-      @suggestion = Suggestion.new()
-      render :director
-    elsif current_user.has_role?("tutor")
-      @tutor_engagements = current_user.tutor_engagements
-      @low_balance_engagements = low_balance_engagements?
-      @invoice = Invoice.new()
-      @timesheet = Timesheet.new()
-      @suggestion = Suggestion.new()
-      render :tutor
-    elsif current_user.has_role?("client")
-      @engagements = current_user&.client_engagements || current_user&.student_engagements
-      @availability_engagement = current_user&.student_engagements&.first ||
-	      current_user&.client_engagements&.first
-      render :client
-    end
+  def admin
+    @pending_engagements = Engagement.pending
+  end
+
+  def director
+    @pending_engagements = Engagement.pending
+    @tutor_engagements = current_user.tutor_engagements
+    @invoice = Invoice.new()
+    @timesheet = Timesheet.new()
+    @suggestion = Suggestion.new()
+  end
+
+  def tutor
+    @tutor_engagements = current_user.tutor_engagements
+    @low_balance_engagements = low_balance_engagements?
+    @invoice = Invoice.new()
+    @timesheet = Timesheet.new()
+    @suggestion = Suggestion.new()
+  end
+
+  def client
+    @engagements = current_user.engagements.includes(:tutor, :availabilities)
+    @engagements = @engagements.sort_by { |engagement| engagement.try(:tutor).try(:name) }
+    @academic_types = current_user.academic_types_engaged
+  end
+
+  def student
+    @engagements = current_user.engagements.includes(:tutor, :availabilities)
+    @engagements = @engagements.sort_by { |engagement| engagement.try(:tutor).try(:name) }
+    @academic_types = current_user.academic_types_engaged
   end
 
   private

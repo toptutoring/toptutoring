@@ -21,6 +21,6 @@ class StudentPresenter < SimpleDelegator
   end
 
   def academic_type
-    client.client_engagements.pluck(:academic_type).uniq
+    client.academic_types_engaged
   end
 end

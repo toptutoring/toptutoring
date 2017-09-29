@@ -5,7 +5,7 @@ class AvailabilityController < ApplicationController
 
   def new
     @days = DAYS
-    @engagements = Engagement.where(client_id: current_user.id)
+    @engagements = current_user.engagements
     @next_engagement = Engagement.find_by(id: params[:engagement_id])
     if @next_engagement.nil?
       @availabilities = []

@@ -4,20 +4,8 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
-    @feedback = current_user.feedbacks.build
-    @student_engagements = get_student_engagements
-    @invoices = []
-    @total_suggested_hours = 0
-
-    @student_engagements.each do |engagement|
-      invoices = Invoice.where(engagement_id: engagement.id)
-      if invoices.count == 1
-        if invoices.first.status != "paid"
-          @invoices << invoices.first
-          @total_suggested_hours += engagement.suggestions.last.suggested_minutes/60.0 unless engagement.suggestions.empty?
-        end
-      end
-    end
+    @academic_types = current_user.academic_types_engaged
+    @total_suggested_time = set_suggested_time
   end
 
   def index
@@ -82,14 +70,6 @@ class PaymentsController < ApplicationController
     params.require(:payment).permit(:description, :hours, :academic_type)
   end
 
-  def get_student_engagements
-    if current_user.is_student?
-      current_user.student_engagements
-    else
-      current_user.client_engagements
-    end
-  end
-
   def feedback_params
     params.require(:feedback).permit(:comments)
   end
@@ -100,5 +80,15 @@ class PaymentsController < ApplicationController
 
   def set_stripe_key
     Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
+  end
+
+  def set_suggested_time
+    return nil unless current_user.suggestions
+    suggested_minutes = current_user.suggestions.pending.sum(:suggested_minutes)
+    hours = suggested_minutes / 60
+    remainder_minutes = suggested_minutes % 60
+    time_string = "#{hours} #{'hour'.pluralize(hours)}"
+    time_string += " and #{remainder_minutes} minutes" unless remainder_minutes.zero?
+    time_string
   end
 end

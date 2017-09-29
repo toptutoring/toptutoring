@@ -1,0 +1,5 @@
+<%= form_for current_user.feedbacks.build, url: dashboard_feedback_path do |form| %>
+  <h3 class="widget-title pull-left">Contact TopTutoring</h3>
+  <%= form.text_area :comments, placeholder: "Questions or concerns? Let us know!", rows: "3", style: "height:100px; margin-top: 25px;", required: true %>
+  <%= form.submit "Send Message", class: "btn-primary" %>
+<% end %>

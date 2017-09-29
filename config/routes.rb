@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   post "payments/first_session_payment" => "payments#first_session_payment"
   post "payments/low_balance_payment" => "payments#low_balance_payment"
   post "payments/get_user_feedback" => "payments#get_user_feedback"
-  get "/dashboard" => "dashboards#show"
   post "users/email_is_unique" => "users#email_is_unique"
 
   # Omniauth routes
@@ -88,6 +87,7 @@ Rails.application.routes.draw do
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
     resources :students, only: [:index, :new, :create]
+    resources :suggestions
     get "/dashboard" => "dashboards#client"
     resources :availability, only: [:new, :create, :update, :edit]
     post "/availability/dropdown_change" => "availability#dropdown_change"
@@ -96,6 +96,8 @@ Rails.application.routes.draw do
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("student") } do
     get "/dashboard" => "dashboards#student"
+    resources :availability, only: [:new, :create, :update, :edit]
+    post "/availability/dropdown_change" => "availability#dropdown_change"
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("contractor") } do

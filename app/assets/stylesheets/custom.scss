@@ -1,9 +1,19 @@
+$light_blue: #59a4f0; // For font, backgrounds, and borders
+$text_default: #737373; // To revert to default font color
+
 .unfloat {
   float: none;
 }
 
 .fs-120 {
   font-size: 120px;
+}
+
+.menu_user_widget {
+  height: 56px;
+  width: 56px;
+  line-height: 40px;
+  padding: 8px;
 }
 
 input[type="date"] {
@@ -112,9 +122,13 @@ body {
 }
 
 a, a:hover, a:visited, a.focus {
-  color: #59a4f0;
+  color: $light_blue;
   text-decoration: none;
   outline: none;
+}
+
+a.text-base, a.text-base:hover, a.text-base.focus {
+  color: $text_default;
 }
 
 input, button, select, span, textarea {
@@ -185,8 +199,8 @@ select, .select2 {
 }
 
 .btn.btn-blue {
-  background: #59a4f0;
-  border: 2px solid #59a4f0;
+  background: $light_blue;
+  border: 2px solid $light_blue;
   margin-right: 0;
   color: #fff;
 }
@@ -457,8 +471,8 @@ legend {
 }
 
 .btn.btn-block {
-    background: #59a4f0;
-    border: 2px solid #59a4f0;
+    background: $light_blue;
+    border: 2px solid $light_blue;
     margin-right: 0;
     color: #fff;
 }
@@ -485,8 +499,8 @@ legend {
     padding-right: 30%;
   }
   .submit-field input {
-    background: #59a4f0;
-    border: 2px solid #59a4f0;
+    background: $light_blue;
+    border: 2px solid $light_blue;
     margin-right: 0;
     color: #fff;
   }

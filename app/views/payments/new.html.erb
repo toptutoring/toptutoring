@@ -3,121 +3,15 @@
 <h2>Payment</h2>
 </br>
 <div class="row">
-  <% if @invoices.empty? || @suggested_hours == 0 %>
     <div>
       <section class="payment-section col-md-8">
       <%= render "payment_form" %>
       </section>
     </div>
-  <% else %>
-    <div class="col-md-5 col-md-offset-1">
-      <% if !@invoices.empty? %>
-        <h3><i class="glyphicon glyphicon-alert" style="color:#ff4444;"></i> You have unpaid first tutoring sessions</h3>
-          <% @student_engagements.each do |engagement| %>
-            <div style="padding-bottom:75px;">
-              <h5><%= engagement.student_name %>'s first session: </h5>
-              <div>
-                <span class="col-md-8"><b>Notes:</b> <%= engagement.invoices.last&.description %></span>
-                <span class="pull-right"><%= link_to("Pay", {controller: "payments", action: "first_session_payment", engagement: engagement},
-                  class: "btn btn-block payment_submit", remote: true, method: "post") %></span>
-                <span class="pull-right" style="padding-right: 25px;"><h4>Price: $<%= (engagement.invoices.last.hours*get_tutor_rate(engagement)).floor(2) %></h4></span>
-                <a id="jump_to_payment_section" href="#payment_section"></a>
-              </div>
-            </div>
-          <% end %>
-        <div class="separator clearfix"></div>
-      <% end %>
-
-      <% if current_user.academic_credit < 0.5 || current_user.test_prep_credit < 0.5 %>
-        <h3><i class="glyphicon glyphicon-alert" style="color:#ff4444;"></i> Your balance is low</h3>
-        <% if @total_suggested_hours != 0 %>
-          </br>
-          <div>
-            <h5 style="display:inline;">Total Suggested number of hours:</h5>
-            <h4 style="color:#004444; display: inline;"> <%= @total_suggested_hours %> hours</h4>
-            <h5 style="display:inline;"> of Academic/Test Prep credit</h5>
-            </br>
-            <div class="col-md-12">Your balance is low. Your tutor has suggested this many hours of tutoring. Please purchase these
-              number of hours in order for the tutor to schedule additional sessions.
-            </div>
-          </div>
-
-          <div class="table-responsive" style="display: inline-block;">
-          </br></br>
-            <table class="table mb-0">
-              <th>Tutor</th>
-              <th>Student</th>
-              <th>Suggested Hours</th>
-              <th>Tutoring Type</th>
-              <th>Total</th>
-
-              <% @student_engagements.each do |engagement| %>
-                <tr>
-                  <td><%= engagement.tutor.name %></td>
-                  <td><%= engagement.student_name %></td>
-                  <td><%= get_suggested_hours(engagement) %> hours</td>
-                  <td><%= engagement.academic_type %></td>
-                  <td>$<%= ((get_suggested_hours(engagement))*(get_tutor_rate(engagement))).floor(2) %></td>
-                </tr>
-              <% end %>
-            </table>
-          </div>
-
-          </br></br>
-          <div class="separator clearfix"></div>
-
-            <% count = 1 %>
-            <% @student_engagements.each_with_index do |engagement| %>
-              <div class="form-group">
-                </br>
-                  <h6 id="tutoring_rate-<%= count %>">Tutor's hourly rate: $<%= get_tutor_rate(engagement) %></h6>
-                  <div class="col-sm-3">
-                    <div class="input-group">
-                      <input type="number" class="form-control col-sm-3 input-sm" name="payment[amount]"
-                        min="0" id="low_balance_hours-<%= count %>" step="any" max="999999" placeholder="Amount" aria-label="Amount"
-                        onChange="calculateProduct(this.id);" value="<%= get_suggested_hours(engagement) %>"/>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 style="display:inline;">
-                    hours for <%= engagement.student_name %> X $<%= get_tutor_rate(engagement) %>
-                    = $<h3 style="display:inline" id="product-<%= count %>"><%= (get_suggested_hours(engagement)*get_tutor_rate(engagement)).floor(2) %></h3>
-                  </h4>
-                  <span class="pull-right" id="pay-button-<%= count %>">
-                    <%= link_to("Pay", {controller: 'payments', action: 'low_balance_payment', engagement: engagement, count: count},
-                    class: "btn btn-block payment_submit", remote: true, method: "post") %>
-                  </span>
-                </div>
-                <% count = count + 1 %>
-            <% end %>
-        <% else %>
-          <div>
-            <div class="col-md-8">Your balance is running low! We recommend that you purchase more hours
-              in order for the tutor to schedule additional sessions. This will help interactions
-              with your tutor run smoothly. Thank you.
-
-            </br></br>Have a question about this? <a href="javascript:;" onClick="showUserFeedbackForm();">Please ask us!</a>
-            </div>
-            <span class="col-md-4 pull-right"><button type="button" class="btn btn-block payment_submit" onClick="showPaymentForm();">Purchase more hours</button></span>
-            <div style="visibility: hidden;" id="feedback_section">
-              <%= form_for(@feedback, url: {controller: "payments", action:"get_user_feedback"}, remote: true, method: "post")  do |f| %>
-                <div class="form-group">
-                  <%= f.text_area :comments, placeholder:"Question or concern?", class:"form-control input-sm", rows: 4, id:"user_feedback"%>
-                  <%= f.submit "Submit", class: "btn btn-success pull-right" %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-
-    <div id="payment_section" style="visibility:hidden;">
-      <section class="payment-section one-time-payment col-md-6">
-      <%= render "payment_form" %>
-      </section>
+  <% if @total_suggested_time %>
+    <div class='col-md-4 pull-right'>
+      <h3>Suggestions</h3>
+      <p> Your tutors have suggested <%= @total_suggested_time %> in order for you to receive your academic goals. We suggest having enough credits for <%= @total_suggested_time %> so that your tutors can continue to schedule sessions with you. For a detailed list of suggestions made by your tutors, visit our <%= link_to 'suggestions page', suggestions_path %>.</p>
     </div>
   <% end %>
 </div>
@@ -138,14 +32,4 @@
 
     output.textContent = product;
   }
-
-  function showPaymentForm() {
-    document.getElementById("payment_section").style.visibility = "visible";
-    document.getElementById("jump_to_payment_section").click();
-  }
-
-  function showUserFeedbackForm() {
-    document.getElementById("feedback_section").style.visibility = "visible";
-  }
-
 </script>
