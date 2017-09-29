@@ -12,4 +12,9 @@ class ApplicationController < ActionController::Base
       redirect_to login_url
     end
   end
+
+  def masquerading?
+    session[:admin_id].present?
+  end
+  helper_method :masquerading?
 end
