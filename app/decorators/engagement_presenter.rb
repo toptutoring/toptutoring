@@ -9,11 +9,11 @@ class EngagementPresenter < SimpleDelegator
     results = []
     academic_credit = @engagement.client.academic_credit
     test_prep_credit = @engagement.client.test_prep_credit
-    if academic_credit.positive?
+    if !academic_credit.zero?
       results << "A: #{academic_credit.to_s} hrs"
     end
 
-    if test_prep_credit.positive?
+    if !test_prep_credit.zero?
       results << "TP: #{test_prep_credit.to_s} hrs"
     end
     results.join("<br>")

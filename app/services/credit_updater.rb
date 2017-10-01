@@ -1,6 +1,7 @@
 class CreditUpdater
-  def initialize(invoice_id, new_hours = nil)
-    @new_hours = new_hours
+  def initialize(invoice_id, update_params = nil)
+    @update_params = update_params
+    @new_hours = @update_params[:hours] if update_params
     @invoice = Invoice.find(invoice_id)
     @engagement = @invoice.engagement
     @client = @engagement.client
@@ -20,7 +21,6 @@ class CreditUpdater
     old_hours = @invoice.hours.to_f
     new_hours = @new_hours.to_f
     difference = new_hours - old_hours
-
     ActiveRecord::Base.transaction do
       if difference.positive?
         absolute_amount = difference.abs
