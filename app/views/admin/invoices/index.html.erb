@@ -15,6 +15,7 @@
           <table class="table mb-0 table-striped table-hover">
             <thead>
               <tr>
+                <th class="col-lg-1 col-sm-1">Invoice ID</th>
                 <th class="col-lg-1 col-sm-1">Tutor</th>
                 <th class="col-lg-1 col-sm-1">Date Submitted</th>
                 <th class="col-lg-1 col-sm-1">Type</th>
@@ -30,6 +31,7 @@
               <% @invoices.pending.order(:tutor_id).each do |i| %>
                 <% engagement = Engagement.find(i.engagement_id) %>
                 <tr>
+                  <td><%= i.id %></td>
                   <td><%= name = User.find(i.tutor_id).name %></td>
                   <td><%= i.updated_at.strftime("%-m/%-e/%y") %></td>
                   <td><%= engagement.academic_type %></td>
@@ -63,6 +65,7 @@
           <table class="table mb-0 table-striped table-hover">
             <thead>
               <tr>
+                <th class="col-lg-1 col-sm-1">Invoice ID</th>
                 <th class="col-lg-1 col-sm-1">Tutor</th>
                 <th class="col-lg-1 col-sm-1">Date Submitted</th>
                 <th class="col-lg-1 col-sm-1">Type</th>
@@ -79,6 +82,7 @@
               <% @invoices.where("status != 'pending'").order(:status, :tutor_id).each do |i| %>
                 <%  engagement = Engagement.find(i.engagement_id) %>
                 <tr>
+                  <td><%= i.id %></td>
                   <td><%= User.find(i.tutor_id).name %></td>
                   <td><%= i.updated_at.strftime("%-m/%-e/%y") %></td>
                   <td><%= engagement.academic_type %></td>
