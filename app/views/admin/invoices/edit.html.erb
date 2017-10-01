@@ -1,0 +1,22 @@
+<%= form_for(@invoice, url: admin_invoice_path(@invoice), :html =>
+                                        { class: "form-horizontal" }) do |f| %>
+  <p>Tutor: <%= @invoice.tutor.name %></p>
+  <p>Date Submitted: <%= @invoice.created_at.strftime("%-m/%-e/%y")  %></p>
+
+  <div class="form-group">
+    <%= f.label :description, class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <%= f.text_field :description, :class => "col-md-9 col-sm-9", :placeholder => "Description" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :hours, class: "col-md-3 col-sm-3 control-label" %>
+    <div class="col-md-9 col-sm-9">
+      <%= f.text_field :hours, :class => "col-md-9 col-sm-9",
+              :required => true, :placeholder => "Hours" %>
+    </div>
+  </div>
+
+  <%= f.submit "Update", class: "btn btn-outline btn-blue" %>
+<% end %>

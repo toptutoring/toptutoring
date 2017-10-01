@@ -7,9 +7,14 @@ module Admin
       @total_for_all = Invoice.pending.map(&:tutor_pay).reduce(:+)
     end
 
+    def edit
+      @invoice = Invoice.find(params[:id])
+    end
+
     def update
       @invoice = Invoice.find(params[:id])
-      if @invoice.update(update_params)
+
+      if CreditUpdater.new(@invoice.id, update_params[:hours]).update_existing_invoice
         redirect_to(admin_invoices_path, notice: 'The invoice has been updated') and return
       else
         redirect_back(fallback_location: (request.referer || root_path),
@@ -18,7 +23,7 @@ module Admin
     end
 
     def update_params
-      params.require(:invoice).permit(:status)
+      params.require(:invoice).permit(:status, :description, :hours)
     end
   end
 end
