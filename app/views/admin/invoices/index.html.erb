@@ -15,6 +15,7 @@
           <table class="table mb-0 table-striped table-hover">
             <thead>
               <tr>
+                <th class="col-lg-1 col-sm-1">Invoice ID</th>
                 <th class="col-lg-1 col-sm-1">Tutor</th>
                 <th class="col-lg-1 col-sm-1">Date Submitted</th>
                 <th class="col-lg-1 col-sm-1">Type</th>
@@ -30,8 +31,9 @@
               <% @invoices.pending.order(:tutor_id).each do |i| %>
                 <% engagement = Engagement.find(i.engagement_id) %>
                 <tr>
+                  <td><%= i.id %></td>
                   <td><%= name = User.find(i.tutor_id).name %></td>
-                  <td><%= i.updated_at.strftime("%-m/%-e/%y") %></td>
+                  <td><%= i.created_at.strftime("%-m/%-e/%y") %></td>
                   <td><%= engagement.academic_type %></td>
                   <td><%= engagement.client.name %></td>
                   <td><%= i.hours.to_s %></td>
@@ -39,6 +41,7 @@
                   <td><%= description = i.description %></td>
                   <td><%= number_to_currency(i.tutor_pay) %></td>
                   <td>
+                    <%= link_to "Edit", edit_admin_invoice_path(i), method: :patch, class: "btn btn-sm btn-outline btn-primary" %>
                     <%= link_to "Pay", admin_payments_path(invoice: i, payment: {payee_id: i.tutor_id, payer_id: current_user.id, description: "#{name} for: #{description}"}, amount: i.tutor_pay), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
                     <%= link_to "Deny", admin_invoice_path(i, invoice: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
                   </td>
@@ -63,6 +66,7 @@
           <table class="table mb-0 table-striped table-hover">
             <thead>
               <tr>
+                <th class="col-lg-1 col-sm-1">Invoice ID</th>
                 <th class="col-lg-1 col-sm-1">Tutor</th>
                 <th class="col-lg-1 col-sm-1">Date Submitted</th>
                 <th class="col-lg-1 col-sm-1">Type</th>
@@ -79,6 +83,7 @@
               <% @invoices.where("status != 'pending'").order(:status, :tutor_id).each do |i| %>
                 <%  engagement = Engagement.find(i.engagement_id) %>
                 <tr>
+                  <td><%= i.id %></td>
                   <td><%= User.find(i.tutor_id).name %></td>
                   <td><%= i.updated_at.strftime("%-m/%-e/%y") %></td>
                   <td><%= engagement.academic_type %></td>
