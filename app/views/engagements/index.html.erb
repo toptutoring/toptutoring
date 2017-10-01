@@ -17,6 +17,7 @@
                   <th>Subject</th>
                   <th class="text-center">Academic Type</th>
                   <th class="text-center">Client Hourly Rate</th>
+                  <th class="text-center">Client balance</th>
                   <th class="text-center">Status</th>
                   <th class="text-center"></th>
                 </tr>
@@ -32,6 +33,7 @@
                     <td><%= representer.subject %></td>
                     <td class="text-center"><%= representer.engagement_academic_type %></td>
                     <td class="text-center"><%= number_to_currency(representer.hourly_rate) %></td>
+                    <td class="text-center"><%= simple_format(representer.client_balance) %></td>
                     <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
                     <td class="text-center">
                       <%= link_to edit_engagement_path(representer.id) do %>

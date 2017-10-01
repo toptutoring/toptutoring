@@ -5,6 +5,20 @@ class EngagementPresenter < SimpleDelegator
     super
   end
 
+  def client_balance
+    results = []
+    academic_credit = @engagement.client.academic_credit
+    test_prep_credit = @engagement.client.test_prep_credit
+    if academic_credit.positive?
+      results << "A: #{academic_credit.to_s} hrs"
+    end
+
+    if test_prep_credit.positive?
+      results << "TP: #{test_prep_credit.to_s} hrs"
+    end
+    results.join("<br>")
+  end
+
   def student_id
     @engagement.student.id
   end
