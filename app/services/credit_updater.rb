@@ -13,7 +13,7 @@ class CreditUpdater
   end
 
   def client_balance
-    academic? ? @client.academic_credit : @client.test_prep_credit
+    @engagement.academic? ? @client.academic_credit : @client.test_prep_credit
   end
 
   def update_existing_invoice

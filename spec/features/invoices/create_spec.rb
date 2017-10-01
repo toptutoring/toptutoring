@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Create Invoice', js: true do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user, academic_credit: 50, test_prep_credit: 50) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
   let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student: student, student_name: student.name, academic_type: "Academic", client: client) }
-  let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, client: client, engagement: engagement, student: student) }
+  let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, client: client, engagement: engagement) }
   let(:email) { FactoryGirl.create(:email, tutor: tutor, client: client) }
 
   scenario 'has invoice form' do
