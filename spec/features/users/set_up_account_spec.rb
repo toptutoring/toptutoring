@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Set up account' do
   let(:client) { FactoryGirl.create(:client_user, access_state: "disabled") }
