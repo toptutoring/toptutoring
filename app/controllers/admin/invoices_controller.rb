@@ -13,8 +13,7 @@ module Admin
 
     def update
       @invoice = Invoice.find(params[:id])
-
-      if CreditUpdater.new(@invoice.id, update_params[:hours]).update_existing_invoice
+      if CreditUpdater.new(@invoice.id, update_params).update_existing_invoice
         redirect_to(admin_invoices_path, notice: 'The invoice has been updated') and return
       else
         redirect_back(fallback_location: (request.referer || root_path),

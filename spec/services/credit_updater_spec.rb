@@ -27,9 +27,10 @@ describe CreditUpdater do
 
    describe "#update_existing_invoice" do
      context "when the new invoice is higher" do
+       let(:new_params) { {hours: "5"} }
        it "Adjusts the client's balance down" do
-         new_hours = 5
-         subject = CreditUpdater.new(invoice.id, new_hours)
+         subject = CreditUpdater.new(invoice.id, new_params)
+         new_hours = new_params["hours"].to_f
          old_hours = invoice.hours # 2 hours
          difference = new_hours - old_hours
          expect { subject.update_existing_invoice }
@@ -37,8 +38,8 @@ describe CreditUpdater do
        end
 
        it "Adjusts the tutor's balance up" do
-         new_hours = 5
-         subject = CreditUpdater.new(invoice.id, new_hours)
+         subject = CreditUpdater.new(invoice.id, new_params)
+         new_hours = new_params["hours"].to_f
          old_hours = invoice.hours # 2 hours
          difference = new_hours - old_hours
          expect { subject.update_existing_invoice }
@@ -46,17 +47,18 @@ describe CreditUpdater do
        end
      end
     context "when the new invoice is lower" do
+      let(:new_params) { {hours: "1"} }
       it "Adjusts the client's balance up" do
-        new_hours = 1
-        subject = CreditUpdater.new(invoice.id, new_hours)
+        new_hours = new_params["hours"].to_f
+        subject = CreditUpdater.new(invoice.id, new_params)
         old_hours = invoice.hours # 2 hours
         expect { subject.update_existing_invoice }
           .to change { client.reload.test_prep_credit }.by(1)
       end
 
       it "Adjusts the tutor's balance down" do
-        new_hours = 1
-        subject = CreditUpdater.new(invoice.id, new_hours)
+        new_hours = new_params["hours"].to_f
+        subject = CreditUpdater.new(invoice.id, new_params)
         old_hours = invoice.hours # 2 hours
         expect { subject.update_existing_invoice }
           .to change { tutor.reload.outstanding_balance }.by(-1)
