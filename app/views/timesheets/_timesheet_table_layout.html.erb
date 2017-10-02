@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left"><%= type %> Timesheets</h3>
+          <%= pay_all_link(timesheets, 'timesheets') if type == 'Pending' %>
+      </div>
+      <div class="widget-body">
+        <%= render "timesheet_table", timesheets: timesheets %>
+      </div>
+    </div>
+  </div>
+</div>

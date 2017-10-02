@@ -47,19 +47,19 @@
             </div>
           </li>
         <% end %>
-        <% if current_user.has_role?('tutor') || current_user.has_role?('contractor') || current_user.has_role?('admin') %>
-        <li class="media">
-          <div class="media-left"><i class="ion-cash"></i></div>
-          <div class="media-body">
-            <p>Dwolla:
-            <% if current_user.has_valid_dwolla? %>
-               Authenticated, but feel free to <a href="/auth/dwolla">authenticate again.</a>
-            <% else %>
-              <a href="/auth/dwolla">Please Authenticate</a>
-            <% end %>
-            </p>
-          </div>
-        </li>
+        <% if current_user.requires_dwolla? %>
+          <li class="media">
+            <div class="media-left"><i class="ion-cash"></i></div>
+            <div class="media-body">
+              <p>Dwolla:
+              <% if current_user.has_valid_dwolla? %>
+                Authenticated, but feel free to <a href="/auth/dwolla">authenticate again.</a>
+              <% else %>
+                <a href="/auth/dwolla">Please Authenticate</a>
+              <% end %>
+              </p>
+            </div>
+          </li>
         <% end %>
       </ul>
     </div>

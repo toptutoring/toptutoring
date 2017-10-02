@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170924222727) do
+ActiveRecord::Schema.define(version: 20171009235856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20170924222727) do
   end
 
   create_table "invoices", id: :serial, force: :cascade do |t|
-    t.integer "tutor_id"
+    t.integer "submitter_id"
     t.integer "engagement_id"
     t.decimal "hours", precision: 10, scale: 2, default: "0.0", null: false
     t.integer "hourly_rate_cents"
@@ -83,11 +83,12 @@ ActiveRecord::Schema.define(version: 20170924222727) do
     t.string "status"
     t.string "subject"
     t.integer "client_id"
-    t.integer "tutor_pay_cents"
+    t.integer "submitter_pay_cents"
     t.integer "amount_cents"
+    t.integer "submitter_type", default: 0
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id"
-    t.index ["tutor_id"], name: "index_invoices_on_tutor_id"
+    t.index ["submitter_id"], name: "index_invoices_on_submitter_id"
   end
 
   create_table "payments", id: :serial, force: :cascade do |t|
@@ -127,17 +128,6 @@ ActiveRecord::Schema.define(version: 20170924222727) do
     t.text "description"
     t.text "status", default: "pending"
     t.index ["engagement_id"], name: "index_suggestions_on_engagement_id"
-  end
-
-  create_table "timesheets", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "minutes"
-    t.text "description"
-    t.date "date"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_timesheets_on_user_id"
   end
 
   create_table "tutor_profiles", id: :serial, force: :cascade do |t|

@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :tutor_engagements, class_name: "Engagement", foreign_key: "tutor_id", dependent: :destroy
   has_many :client_engagements, class_name: "Engagement", foreign_key: "client_id", dependent: :destroy
   has_many :student_engagements, class_name: "Engagement", foreign_key: "student_id", dependent: :destroy
-  has_many :invoices, ->(user) { unscope(:where).where("tutor_id = ? OR client_id = ?", user.id, user.id) }
+  has_many :invoices, ->(user) { unscope(:where).where("submitter_id = ? OR client_id = ?", user.id, user.id) }
   has_many :emails, class_name: "Email", foreign_key: "tutor_id", dependent: :destroy
   has_many :suggestions, through: :engagements
   has_many :user_roles
@@ -111,6 +111,10 @@ class User < ActiveRecord::Base
     customer_id.present?
   end
 
+  def requires_dwolla?
+    roles.where(roles: { name: ['director', 'tutor', 'contractor', 'admin'] }).any?
+  end
+
   def has_valid_dwolla?
     auth_uid.present?
   end
@@ -135,5 +139,10 @@ class User < ActiveRecord::Base
 
   def academic_types_engaged
     engagements.pluck(:academic_type).uniq
+  end
+
+  def self.with_pending_invoices(type)
+    join_sql = "JOIN invoices ON users.id = invoices.submitter_id"
+    joins(join_sql).where(invoices: {status: 'pending', submitter_type: type}).distinct
   end
 end

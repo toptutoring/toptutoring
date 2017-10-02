@@ -1,0 +1,30 @@
+<div class="table-responsive">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Subject</th>
+        <th class="text-center">Academic Type</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">Description</th>
+        <th class="text-center">Hours</th>
+        <th class="text-center">Status</th>
+        <th class="col-xs-1 text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% invoices.each do |invoice| %>
+        <tr>
+          <td><%= invoice.client.name %></td>
+          <td><%= invoice.engagement.subject %></td>
+          <td class="text-center"><%= invoice.engagement.academic_type %></td>
+          <td class="text-center"><%= invoice.created_at %></td>
+          <td class="text-center"><%= invoice.description %></td>
+          <td class="text-center"><%= invoice.hours %></span></td>
+          <td class="text-center"><%= invoice.status %></span></td>
+          <td class="col-xs-1"><%= delete_link(invoice) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

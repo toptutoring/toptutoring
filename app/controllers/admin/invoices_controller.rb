@@ -3,8 +3,8 @@ module Admin
     before_action :require_login
 
     def index
-      @invoices = Invoice.all.newest_first
-      @total_for_all = Invoice.pending.map(&:tutor_pay).reduce(:+)
+      @invoices = Invoice.tutor.includes(:engagement, :submitter, engagement: :client).newest_first
+      @total_for_all = Invoice.tutor_pending_total
     end
 
     def edit

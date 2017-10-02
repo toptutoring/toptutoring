@@ -12,7 +12,7 @@ feature 'Emails Index' do
       student: student,
       tutor: tutor
     )
-    invoice = FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement, client: client)
+    invoice = FactoryGirl.create(:invoice, submitter: tutor, engagement: engagement, client: client)
     email = FactoryGirl.create(:email, tutor: tutor, client: client)
 
     sign_in(admin)

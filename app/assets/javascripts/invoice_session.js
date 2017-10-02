@@ -12,12 +12,20 @@ $(function() {
       value: 0.5,
       text : "No show (Client will be charged for 30 mins)"
     }));
-    for(var i = 1; i <= 5; i+= 0.5) {
+    create_hour_options(5);
+  }
+
+  function create_hour_options(limit) {
+    for(var i = 0.5; i <= limit; i+= 0.5) {
       $('.hours').append($('<option>', {
         value: i,
         text : i
       }));
     }
+  }
+  function setHoursDropDownForContractor() {
+    $('.hours').empty();
+    create_hour_options(160);
   }
 
   function processTutorType() {
@@ -45,5 +53,16 @@ $(function() {
 
   $(document).on('change', '.student', function() {
     processTutorType();
+  });
+
+  $(document).on('change', '#invoice_submitter_type', function() {
+    var submitter_type  = $('#invoice_submitter_type').val()
+    if(submitter_type === 'by_contractor') {
+      $('.only-for-tutors').addClass('hidden');
+      setHoursDropDownForContractor();
+    } else if(submitter_type === 'by_tutor') {
+      $('.only-for-tutors').removeClass('hidden');
+      setHoursDropDown();
+    }
   });
 })

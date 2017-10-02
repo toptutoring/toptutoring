@@ -3,22 +3,21 @@ class DashboardsController < ApplicationController
   before_action :build_student_for_client, only: [:client]
 
   def admin
-    @pending_engagements = Engagement.pending
+    @pending_engagements = Engagement.pending.includes(:client, :tutor)
   end
 
   def director
-    @pending_engagements = Engagement.pending
-    @tutor_engagements = current_user.tutor_engagements
+    @pending_engagements = Engagement.pending.includes(:client, :tutor)
+    @tutor_engagements = current_user.tutor_engagements.includes(:suggestions)
+    @low_balance_engagements = low_balance_engagements?
     @invoice = Invoice.new()
-    @timesheet = Timesheet.new()
     @suggestion = Suggestion.new()
   end
 
   def tutor
-    @tutor_engagements = current_user.tutor_engagements
+    @tutor_engagements = current_user.tutor_engagements.includes(:client, :suggestions)
     @low_balance_engagements = low_balance_engagements?
     @invoice = Invoice.new()
-    @timesheet = Timesheet.new()
     @suggestion = Suggestion.new()
   end
 

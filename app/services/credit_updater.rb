@@ -5,7 +5,7 @@ class CreditUpdater
     @invoice = Invoice.find(invoice_id)
     @engagement = @invoice.engagement
     @client = @engagement.client
-    @tutor = @invoice.tutor
+    @submitter = @invoice.submitter
   end
 
   def process!
@@ -58,12 +58,12 @@ class CreditUpdater
   end
 
   def add_to_tutor_balance(hours)
-    @tutor.outstanding_balance += hours
-    @tutor.save
+    @submitter.outstanding_balance += hours
+    @submitter.save
   end
 
   def subtract_from_tutor_balance(hours)
-    @tutor.outstanding_balance -= hours
-    @tutor.save
+    @submitter.outstanding_balance -= hours
+    @submitter.save
   end
 end

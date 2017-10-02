@@ -1,4 +1,8 @@
 class UpdateInvoiceToMonetize < ActiveRecord::Migration[5.1]
+  class Invoice < ApplicationRecord
+    belongs_to :tutor, class_name: "User"
+  end
+
   def up
     remove_column :invoices, :amount
     add_column :invoices, :amount_cents, :integer
