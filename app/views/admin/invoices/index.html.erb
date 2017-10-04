@@ -85,7 +85,7 @@
                 <tr>
                   <td><%= i.id %></td>
                   <td><%= User.find(i.tutor_id).name %></td>
-                  <td><%= i.updated_at.strftime("%-m/%-e/%y") %></td>
+                  <td><%= i.created_at.strftime("%-m/%-e/%y") %></td>
                   <td><%= engagement.academic_type %></td>
                   <td><%= engagement.client.name %></td>
                   <td><%= i.hours %></td>
