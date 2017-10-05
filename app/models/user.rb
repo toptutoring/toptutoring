@@ -32,6 +32,12 @@ class User < ActiveRecord::Base
 
   # Validation #
   validates_presence_of :name
+  validate :credits_must_be_by_quarter_hours
+
+  def credits_must_be_by_quarter_hours
+    return if academic_credit % 0.25 == 0.0 && test_prep_credit % 0.25 == 0.0
+    errors.add(:credits, "must be in quarter hours")
+  end
 
   # Scopes #
   scope :customer, ->(customer_id) { where(customer_id: customer_id) }

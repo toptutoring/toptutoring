@@ -1,22 +1,28 @@
 <%= form_for(@user, url: director_user_path(@user)) do |f| %>
   <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: "form-control" %>
+    <%= f.label :academic_credit, "Academic Credit (in hours)" %>
+    <%= f.number_field :academic_credit, class: "form-control", step: 0.25, min: 0 %>
   </div>
 
   <div class="form-group">
-    <%= f.label :email %>
-    <%= f.text_field :email, class: "form-control" %>
+    <%= f.label :test_prep_credit, "Test Prep Credit (in hours)" %>
+    <%= f.number_field :test_prep_credit, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= f.label :academic_rate_cents, "Academic Rate(in cents)" %>
-    <%= f.text_field :academic_rate_cents, class: "form-control" %>
+    <%= f.label :academic_rate, "Academic Rate" %>
+    <div class="input-group">
+      <div class="input-group-addon">$</div>
+    <%= f.number_field :academic_rate, class: "form-control", step: 0.01, min: 0 %>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :test_prep_rate_cents, "Test Preparation Rate(in cents)" %>
-    <%= f.text_field :test_prep_rate_cents, class: "form-control" %>
+    <%= f.label :test_prep_rate, "Test Prep Rate" %>
+    <div class="input-group">
+      <div class="input-group-addon">$</div>
+      <%= f.number_field :test_prep_rate, class: "form-control", step: 0.01, min: 0 %>
+    </div>
   </div>
 
   <div class="form-group">
