@@ -1,6 +1,42 @@
 $light_blue: #59a4f0; // For font, backgrounds, and borders
 $text_default: #737373; // To revert to default font color
 
+.sign-in-form {
+  max-width: 480px;
+  width: 95%;
+  margin: auto;
+}
+
+.footer-2 .footer-left ul {
+  min-width: 160px;
+  width: 25%;
+}
+
+.footer-2 .footer-left ul li {
+  display: inline-block;
+  width: 100%;
+}
+
+@media (min-width: 700px) {
+  .footer-2 .footer-left ul {
+    width: 50%;
+  }
+
+  .footer-2 .footer-left ul li {
+    width: 49%;
+  }
+}
+
+@media (min-width: 1090px) {
+  .footer-2 .footer-left ul {
+    min-width: 700px;
+  }
+
+  .footer-2 .footer-left ul li {
+    width: auto;
+  }
+}
+
 .unfloat {
   float: none;
 }
