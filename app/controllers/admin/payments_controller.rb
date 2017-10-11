@@ -83,10 +83,7 @@ module Admin
     end
 
     def adjust_balances
-      adjuster = BalanceAdjuster.new(@invoice, @payee)
-      adjuster.lower_submitter_balance
-      adjuster.update_invoice_to_paid
-      adjuster.save_records
+      CreditUpdater.new(@invoice).process_payment_of_invoice!
     end
   end
 end
