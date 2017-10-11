@@ -1,54 +1,96 @@
 module Tutors
   class InvoicesController < ApplicationController
     before_action :require_login
-    before_action :authorize_tutor, :set_engagement, :set_client, only: :create
 
     def index
-      @invoices = current_user.invoices.newest_first
+      @invoices = current_user.invoices.by_tutor.includes(:engagement, :client)
     end
 
     def create
-      @invoice = Invoice.new(invoice_params)
-      if @invoice.save
-        credit_updater = CreditUpdater.new(@invoice.id)
-        credit_updater.process!
-        if credit_updater.client_balance < 0 && @invoice.hours != 0
-          redirect_to tutors_students_path, alert: 'The session has been logged but the client
-                        has a negative balance of hours. You may not be paid for this session
-                        unless the client adds to his/her hourly balance.' and return
-        else
-          redirect_to tutors_invoices_path, notice: 'Session successfully logged!' and return
-        end
+      create_invoice
+      adjust_balances_and_save_records
+      set_flash_messages
+      if @by_tutor
+        redirect_to tutors_invoices_path
       else
-        redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: @invoice.errors.full_messages }) and return
+        redirect_to timesheets_path
       end
+    end
+
+    def destroy
+      current_user.invoices.by_tutor.pending.find(params[:id]).destroy
+      redirect_to({ action: "index" }, notice: "Invoice has been deleted")
     end
 
     private
-    def invoice_params
-      if @engagement.academic_type.casecmp('academic') == 0
-        hourly_rate = MultiCurrencyAmount.from_cent(@client.academic_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
-      else
-        hourly_rate = MultiCurrencyAmount.from_cent(@client.test_prep_rate.cents, MultiCurrencyAmount::APP_DEFAULT_CURRENCY)
+
+    def create_invoice
+      @by_tutor = params[:invoice][:submitter_type] == 'by_tutor'
+      if @by_tutor
+        authorize_tutor
+        set_engagement_and_client
       end
+      @invoice = Invoice.new(invoice_params)
+    end
+
+    def invoice_params
       params.require(:invoice)
-        .permit(:engagement_id, :hours, :subject, :description)
-        .merge(tutor_id: current_user.id, client_id: @client.id, hourly_rate: hourly_rate, status: "pending")
+            .permit(:engagement_id, :subject, :hours,
+                    :description, :submitter_type)
+            .merge(submitter: current_user, status: "pending",
+                   submitter_pay: submitter_pay, client: @client,
+                   amount: client_charge, hourly_rate: hourly_rate,
+                   engagement: @engagement, subject: subject)
     end
 
-    def set_client
-      @client = User.find(@engagement.client_id)
+    def subject
+      @client ? params[:invoice][:subject] : nil
     end
 
-    def set_engagement
-      @engagement = current_user.tutor_engagements.find(params[:invoice][:engagement_id])
+    def hourly_rate
+      return nil unless @client
+      if @engagement.academic?
+        @client.academic_rate
+      elsif @engagement.test_prep?
+        @client.test_prep_rate
+      end
+    end
+
+    def client_charge
+      return nil unless @client
+      hourly_rate * params[:invoice][:hours].to_f
+    end
+
+    def submitter_pay
+      submitter_rate = current_user.contract.hourly_rate
+      submitter_rate * params[:invoice][:hours].to_f
+    end
+
+    def set_engagement_and_client
+      engagement_id = params[:invoice][:engagement_id]
+      @engagement = current_user.engagements.find(engagement_id)
+      @client = @engagement.client
     end
 
     def authorize_tutor
-      unless current_user.tutor_engagements.where(state: "active").pluck(:id).include?(params[:invoice][:engagement_id].to_i)
+      unless current_user.engagements.where(state: "active").exists?(params[:invoice][:engagement_id].to_i)
         redirect_back(fallback_location: (request.referer || root_path),
                       flash: { error: "There was an error while processing your invoice. Please check with your tutor director if you have been set up yet to tutor this client." }) and return
+      end
+    end
+
+    def adjust_balances_and_save_records
+      @adjuster = CreditUpdater.new(@invoice)
+      @adjuster.process_creation_of_invoice!
+    end
+
+    def set_flash_messages
+      if @adjuster.errors
+        flash.alert = "There was an error while creating your invoice."
+      elsif @adjuster.client_low_balance?
+        flash.alert = "Your invoice has been created. However, your client is running low on their balance. Please consider making a suggestion to your client to add to their balance before scheduling any more sessions."
+      else
+        flash.notice = @by_tutor ? "Invoice has been created." : "Timesheet has been created"
       end
     end
   end

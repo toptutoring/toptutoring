@@ -8,9 +8,9 @@ feature "Create payment for tutor" do
   let(:student) { FactoryGirl.create(:student_user, client: client) }
   let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client) }
   let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor_no_auth, student: student, student_name: student.name, client: client) }
-  let!(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
-  let!(:invoice2) { FactoryGirl.create(:invoice, tutor: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 2) }
-  let!(:invoice3) { FactoryGirl.create(:invoice, tutor: tutor_no_auth, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
+  let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
+  let!(:invoice2) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 2) }
+  let!(:invoice3) { FactoryGirl.create(:invoice, submitter: tutor_no_auth, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
   let(:funding_source) { FactoryGirl.create(:funding_source, user_id: admin.id) }
 
   context "when user is admin" do
@@ -31,6 +31,7 @@ feature "Create payment for tutor" do
 
         expect(page).to have_content("There was an error making a payment for #{tutor_no_auth.name}. Payment was not processed.")
         expect(page).to have_content('1 payment has been made for a total of $45.00')
+        expect(tutor.reload.outstanding_balance).to eq 0
       end
     end
   end

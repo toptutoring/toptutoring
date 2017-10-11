@@ -39,7 +39,7 @@ class PaymentService
 
   def process!(payment)
     if new_payment = create_payment(payment, @user.id)
-      update_client_credit(new_payment.amount_in_cents, @user.id, @academic_type) if new_payment.valid?
+      update_client_credit(new_payment.amount_cents, @user.id, @academic_type) if new_payment.valid?
     end
   end
 
@@ -47,7 +47,7 @@ class PaymentService
 
   def create_payment(payment, payer_id)
     Payment.create(
-      amount_in_cents: payment.amount,
+      amount_cents: payment.amount,
       description:     payment.description,
       status:          payment.status,
       customer_id:     payment.customer,

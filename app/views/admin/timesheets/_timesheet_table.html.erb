@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table mb-0 table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="col-lg-2 col-sm-1">Submitted By</th>
+        <th class="col-lg-1 col-sm-1">Date Submitted</th>
+        <th class="col-lg-1 col-sm-1">Total Hours</th>
+        <th class="text-center">Description</th>
+        <th class="col-lg-1 col-sm-1">Total Pay</th>
+        <th class="col-lg-1 col-sm-1">Status</th>
+        <th class="col-lg-2 col-sm-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% timesheets.order(:submitter_id).each do |timesheet| %>
+        <tr>
+          <td><%= name = timesheet.submitter.name %></td>
+          <td><%= timesheet.updated_at.strftime("%-m/%-e/%y") %></td>
+          <td><%= timesheet.hours %></td>
+          <td><%= description = timesheet.description %></td>
+          <td><%= number_to_currency(timesheet.submitter_pay) %></td>
+          <td><%= timesheet.status %></td>
+          <td>
+            <% if timesheet.status == 'pending' %>
+              <% payment_params = {payee_id: timesheet.submitter_id, payer_id: current_user.id, description: "#{name} for: #{description}"} %>
+              <%= link_to "Pay", admin_payments_path(timesheet: timesheet.id, payment: payment_params, amount: timesheet.amount), method: :post, data: { disable_with: "Submitting" }, class: "btn btn-sm btn-outline btn-primary" %>
+              <%= link_to "Deny", admin_timesheet_path(timesheet, timesheet: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
+            <% else %>
+              <p>No actions available</p>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

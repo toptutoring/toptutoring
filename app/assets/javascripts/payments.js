@@ -6,17 +6,17 @@ jQuery(function($) {
   function setHourlyRate() {
     var type = $('.payment-academic-type').val();
     if (type == 'Academic') {
-      $('.hourly-rate').text($('.hourly-rate').data('academic'));
+      $('.hourly-rate').val($('.hourly-rate').data('academic'));
     } else {
-      $('.hourly-rate').text($('.hourly-rate').data('test-prep'));
+      $('.hourly-rate').val($('.hourly-rate').data('test-prep'));
     }
   }
 
   function calculateAmount() {
-    var hours = $('.hours').val();
-    var hourlyRate = parseFloat($('.hourly-rate').text());
-    var product = hours*hourlyRate;
-    $('.amount').val((hours*hourlyRate).toFixed(2));
+    var hours = parseFloat($('.hours').val());
+    var hourlyRate = parseFloat($('.hourly-rate').val());
+    var product = (hours*hourlyRate).toFixed(2);
+    $('#amount').val(product);
   }
 
   $('.payment-academic-type').on('change', function() {

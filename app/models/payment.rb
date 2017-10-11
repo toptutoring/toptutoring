@@ -5,8 +5,11 @@ class Payment < ActiveRecord::Base
   before_validation :set_destination
 
   # Validations #
-  validates :amount_in_cents, presence: true, numericality: { greater_than: 0 }
+  validates :amount_cents, numericality: { greater_than: 0 }
   validate :payee_validation, :payer_validation
+
+  # Monetize amounts
+  monetize :amount_cents
 
   # Scopes #
   scope :from_clients, -> { where.not(customer_id: nil) }
@@ -17,10 +20,6 @@ class Payment < ActiveRecord::Base
     if source && !payee_id
       errors.add(:payee_id, "can't be blank")
     end
-  end
-
-  def amount
-    amount_in_cents.to_f / 100
   end
 
   def payer_validation

@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("director") } do
     get "/dashboard" => "dashboards#director"
     namespace :director do
-      resources :payments, only: [:new, :create, :index]
+      resources :payments, only: [:index]
       resources :tutors, only: [:index, :edit, :update]
       resources :users, only: [:index, :edit, :update]
     end
@@ -74,7 +74,7 @@ Rails.application.routes.draw do
     get "/dashboard" => "dashboards#tutor"
     namespace :tutors do
       resources :students, only: [:index]
-      resources :invoices, only: [:index, :create]
+      resources :invoices, only: [:index, :create, :destroy]
       resources :emails, only: [:index]
       resources :suggestions
     end
@@ -105,9 +105,7 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("contractor") } do
-    namespace :contractors do
-      resources :timesheets
-    end
+    resources :timesheets
   end
 
   # API

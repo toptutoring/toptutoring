@@ -1,0 +1,44 @@
+<div class="table-responsive">
+  <table class="table mb-0 table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="col-lg-1 col-sm-1">Invoice ID</th>
+        <th class="col-lg-1 col-sm-1">Tutor</th>
+        <th class="col-lg-1 col-sm-1">Date Submitted</th>
+        <th class="col-lg-1 col-sm-1">Type</th>
+        <th class="col-lg-1 col-sm-1">Client</th>
+        <th class="col-lg-1 col-sm-1">Hours</th>
+        <th class="col-lg-1 col-sm-1">Client Charge</th>
+        <th class="text-center">Description</th>
+        <th class="col-lg-1 col-sm-1">Tutor Pay</th>
+        <th class="col-lg-1 col-sm-1">Status</th>
+        <th class="col-lg-2 col-sm-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% invoices.order(:submitter_id).each do |invoice| %>
+        <tr>
+          <td><%= invoice.id %></td>
+          <td><%= name = invoice.submitter.name %></td>
+          <td><%= invoice.created_at.strftime("%-m/%-e/%y") %></td>
+          <td><%= invoice.engagement.academic_type %></td>
+          <td><%= invoice.engagement.client.name %></td>
+          <td><%= invoice.hours.to_s %></td>
+          <td><%= number_to_currency(invoice.amount) %></td>
+          <td><%= description = invoice.description %></td>
+          <td><%= number_to_currency(invoice.submitter_pay) %></td>
+          <td><%= invoice.status %></td>
+          <td>
+            <% if invoice.status == 'pending' %>
+              <%= link_to "Edit", edit_admin_invoice_path(invoice), method: :patch, class: "btn btn-sm btn-outline btn-primary" %>
+              <%= link_to "Pay", admin_payments_path(invoice: invoice, payment: { payee_id: invoice.submitter_id, payer_id: current_user.id, description: "#{name} for: #{description}" }, amount: invoice.submitter_pay), method: :post, data: { disable_with: 'Submitting' }, class: "btn btn-sm btn-outline btn-primary" %>
+              <%= link_to "Deny", admin_invoice_path(invoice, invoice: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
+            <% else %>
+              <p>No actions available</p>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

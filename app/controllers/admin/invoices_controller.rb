@@ -3,8 +3,8 @@ module Admin
     before_action :require_login
 
     def index
-      @invoices = Invoice.all.newest_first
-      @total_for_all = Invoice.pending.map(&:tutor_pay).reduce(:+)
+      @invoices = Invoice.by_tutor.includes(:engagement, :submitter, engagement: :client).newest_first
+      @total_for_all = Invoice.tutor_pending_total
     end
 
     def edit
@@ -13,7 +13,7 @@ module Admin
 
     def update
       @invoice = Invoice.find(params[:id])
-      if CreditUpdater.new(@invoice.id, update_params).update_existing_invoice
+      if CreditUpdater.new(@invoice).update_existing_invoice(update_params)
         redirect_to(admin_invoices_path, notice: 'The invoice has been updated') and return
       else
         redirect_back(fallback_location: (request.referer || root_path),

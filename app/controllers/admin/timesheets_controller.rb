@@ -3,12 +3,11 @@ module Admin
     before_action :require_login
 
     def index
-      @timesheets = Timesheet.all
-      @total_for_all = Timesheet.pending.map { |ts| ts.amount }.reduce(&:+)
+      @timesheets = Invoice.by_contractor.includes(:submitter)
     end
 
     def update
-      @timesheet = Timesheet.find(params[:id])
+      @timesheet = Invoice.find(params[:id])
       if @timesheet.update(update_params)
         redirect_to(admin_timesheets_path, notice: 'The timesheet has been updated') and return
       else

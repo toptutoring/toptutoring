@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table mb-0 table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="col-lg-1 col-sm-1">Date Submitted</th>
+        <th class="col-lg-1 col-sm-1">Total Hours</th>
+        <th class="text-center">Description</th>
+        <th class="col-lg-1 col-sm-1">Total Pay</th>
+        <th class="col-lg-1 col-sm-1">Status</th>
+        <th class="col-lg-2 col-sm-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% timesheets.order(:submitter_id).each do |timesheet| %>
+        <tr>
+          <td><%= timesheet.updated_at.strftime("%-m/%-e/%y") %></td>
+          <td><%= timesheet.hours %></td>
+          <td><%= description = timesheet.description %></td>
+          <td><%= number_to_currency(timesheet.submitter_pay) %></td>
+          <td><%= timesheet.status %></td>
+          <td><%= delete_link(timesheet) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

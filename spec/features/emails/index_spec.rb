@@ -5,7 +5,7 @@ feature 'Emails Index' do
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
   let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student: student, student_name: student.name, client: client) }
-  let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, engagement: engagement, student: student) }
+  let(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, engagement: engagement, student: student) }
   let(:email) { FactoryGirl.create(:email, tutor: tutor, client: client) }
 
   scenario 'when user is tutor' do

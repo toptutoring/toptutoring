@@ -115,7 +115,7 @@ namespace :dev do
     Payment.where(payer_id: admin.id).destroy_all
     Payment.where(payer_id: director.id).destroy_all
     Payment.create(
-      amount_in_cents: 20000,
+      amount_cents: 200_00,
       description: "Payment for Tutor",
       status: "succeeded",
       customer_id: client.customer_id,

@@ -1,12 +1,15 @@
 FactoryGirl.define do
   factory :invoice do
-    tutor         { FactoryGirl.create(:tutor_user) }
-    client        { FactoryGirl.create(:client_user) }
-    engagement    { FactoryGirl.create(:engagement, tutor: tutor, client: client) }
-    hours         { 2 }
-    amount        { 40 }
-    description   { 'This is an invoice' }
-    subject       { 'Subject' }
-    tutor_pay_cents { tutor.contract.hourly_rate }
+    submitter    { FactoryGirl.create(:tutor_user) }
+    client       { FactoryGirl.create(:client_user) }
+    engagement   { FactoryGirl.create(:engagement, tutor: submitter, client: client) }
+    hours        { 2 }
+    hourly_rate  { engagement.academic_type == 'Academic' ? client.academic_rate : client.test_prep_rate }
+    amount       { hourly_rate * hours }
+    submitter_pay    { submitter.contract.hourly_rate * hours }
+    submitter_type    { 'by_tutor' }
+    description  { 'This is an invoice' }
+    subject      { 'Subject' }
+    status       { 'pending' }
   end
 end

@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :contract do
-    hourly_rate    { 1500 }
+    hourly_rate_cents    { 15_00 }
   end
 end

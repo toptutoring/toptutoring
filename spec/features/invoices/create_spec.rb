@@ -5,7 +5,7 @@ feature 'Create Invoice', js: true do
   let(:client) { FactoryGirl.create(:client_user, academic_credit: 50, test_prep_credit: 50) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
   let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student: student, student_name: student.name, academic_type: "Academic", client: client) }
-  let(:invoice) { FactoryGirl.create(:invoice, tutor: tutor, client: client, engagement: engagement) }
+  let(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, student: student) }
   let(:email) { FactoryGirl.create(:email, tutor: tutor, client: client) }
 
   scenario 'has invoice form' do
@@ -33,7 +33,7 @@ feature 'Create Invoice', js: true do
 
     click_on "Create Invoice"
 
-    expect(page).to have_content("Session successfully logged!")
+    expect(page).to have_content("Invoice has been created.")
 
     sign_out
   end
@@ -52,8 +52,6 @@ feature 'Create Invoice', js: true do
 
     click_on "Create Invoice"
 
-    expect(page).to have_content("The session has been logged but
-              the client has a negative balance of hours. You may not be paid
-              for this session unless the client adds to his/her hourly balance")
+    expect(page).to have_content("Your invoice has been created. However, your client is running low on their balance. Please consider making a suggestion to your client to add to their balance before scheduling any more sessions.")
   end
 end

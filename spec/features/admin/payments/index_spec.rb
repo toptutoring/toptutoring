@@ -5,8 +5,8 @@ feature "Index payments" do
   let(:director) { FactoryGirl.create(:director_user) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:payment_client) { FactoryGirl.create(:payment, payer: client, amount_in_cents: 20000, customer_id: "xxx") }
-  let(:payment_director) { FactoryGirl.create(:payment, payer: director, payee: tutor, amount_in_cents: 20000) }
+  let(:payment_client) { FactoryGirl.create(:payment, payer: client, amount_cents: 200_00, customer_id: "xxx") }
+  let(:payment_director) { FactoryGirl.create(:payment, payer: director, payee: tutor, amount_cents: 200_00) }
 
   context "when user is director" do
     scenario "should see client payments" do
