@@ -32,7 +32,7 @@ end
 def text_for_program
   program_text = File.read(PATH_TO_DEPLOY_PROGRAM)
   program_text.gsub!("INSTALL_TTUTORING_PATH", PATH_TO_TTUTORING)
-  program_text.gsub!("INSTALL_TERMINAL_NOTIFIER_PATH", USER_DIRECTORY + "/.rbenv/shims/terminal-notifier")
+  program_text.gsub!("INSTALL_TERMINAL_NOTIFIER_PATH", `which terminal-notifier`.chomp)
 end
 
 def text_for_plist

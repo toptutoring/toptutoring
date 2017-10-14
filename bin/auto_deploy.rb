@@ -13,7 +13,7 @@ class Deployer
   TTUTORING_PATH = "INSTALL_TTUTORING_PATH".freeze
   PATH_COMMAND = "cd #{TTUTORING_PATH}".freeze
   TERMINAL_NOTIFIER = "INSTALL_TERMINAL_NOTIFIER_PATH".freeze
-  BRANCH_NAME = "add-korean-daily-ad-page".freeze
+  BRANCH_NAME = "gh-pages".freeze
 
   def process
     checkout_to_deploy_branch
