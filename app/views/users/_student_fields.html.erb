@@ -11,12 +11,6 @@
           <h5>Student's Email</h5>
           <%= student_field.email_field :email, class:"form-control", id: "user_student_email", style: "margin-bottom: -2px;",
             oninput: "checkIfEmailUnique(this.id);", onfocus: "showStudentEmailInfo();"%>
-
-          <h5>Are you interested in hiring a tutor for help in a general academic area or specifically for test preparation?</h5>
-          <select name="info[academic_type]" class="students-academic-type">
-            <option value="Academic">Academic</option>
-            <option value="Test_Prep">Test Preparation</option>
-          </select>
         </div>
       </div>
       <div class="col-md-4">

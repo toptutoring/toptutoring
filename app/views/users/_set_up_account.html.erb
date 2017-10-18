@@ -27,9 +27,7 @@
             </div>
           </div>
         </fieldset>
-        <% if current_user.is_student? %>
-          <%= render "users/client_fields", f: f %>
-        <% else %>
+        <% unless current_user.is_student? %>
           <%= render "users/student_fields", f: f %>
         <% end %>
         <%= f.submit "", class:"hidden-submit" %>
