@@ -21,3 +21,4 @@
 # Ignore Development/Test Environment Variables
 .env.development
 .env.test
+.ruby-version

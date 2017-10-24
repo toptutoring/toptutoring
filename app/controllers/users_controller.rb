@@ -50,7 +50,7 @@ class UsersController < Clearance::SessionsController
       student_name: student_name,
       subject: current_user.signup.subject,
       client_id: current_user.id,
-      academic_type: user_academic_type
+      academic_type: find_subject_type(current_user.signup.subject)
     )
 
     if engagement.save
@@ -95,12 +95,9 @@ class UsersController < Clearance::SessionsController
     params.require(:user).permit(:name, :email, :phone_number, :password, student: [:id, :name, :email, :phone_number, :password, :subject])
   end
 
-  def user_academic_type
-    if current_user.is_student?
-      client_as_student_info_params[:academic_type]
-    else
-      params[:info][:academic_type]
-    end
+  def find_subject_type(subject_name)
+    subject = Subject.find_by(name: subject_name)
+    subject.academic? ? 'Academic' : 'Test Prep'
   end
 
   def client_as_student_params
