@@ -13,6 +13,19 @@ class PaymentsController < ApplicationController
   end
 
   def create
+    if current_user.engagements.many?
+      Bugsnag.notify("More than one engagement. Handle this payment case")
+    else
+      engagement = current_user.engagements.last
+      client = engagement.client
+      if engagement.academic?
+        rate = client.academic_rate
+      else
+        rate = client.test_prep_rate
+      end
+    end
+
+    amount_in_cents = payment_params[:hours].to_i * rate.cents
     @payment_service = PaymentService.new(current_user.id, amount_in_cents, 'usd', params[:stripeToken], payment_params)
     process_stripe_payment
     @payment_service.save_payment_info if params[:save_payment_info]
@@ -72,10 +85,6 @@ class PaymentsController < ApplicationController
 
   def feedback_params
     params.require(:feedback).permit(:comments)
-  end
-
-  def amount_in_cents
-    params[:amount].to_money.cents
   end
 
   def set_stripe_key

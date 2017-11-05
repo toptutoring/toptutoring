@@ -9,28 +9,20 @@
       <label for="hourly-rate" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
       <div class="col-sm-4">
         <div class="input-group">
-        <div class="input-group-addon">$</div>
         <% if @academic_types.count > 1 %>
+          <div class="input-group-addon">$</div>
           <input type="number" class="hourly-rate form-control input-sm" placeholder="Hourly Rate" name="hourly_rate" min="0.0" required="required" disabled="true"
             data-academic="<%= current_user.academic_rate %>"
             data-test-prep="<%= current_user.test_prep_rate %>"
-            name="hourly_rate"  aria-label="Hourly Rate"/>
+            name="hourly_rate"  aria-label="Hourly Rate"></input>
         <% elsif @academic_types.include?('Academic') %>
-          <input type="number" class="hourly-rate form-control input-sm" value="<%= current_user.academic_rate %>" name="hourly_rate" min="0.0" required="required" disabled="true"/>
+          <p>
+            $<%= current_user.academic_rate %>
+          </p>
         <% else %>
-          <input type="number" class="hourly-rate form-control input-sm" value="<%= current_user.test_prep_rate %>" name="hourly_rate" min="0.0" required="required" disabled="true"/>
-        <% end %>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="amount" class="col-md-2 col-md-offset-2 col-sm-2 control-label">Amount</label>
-      <div class="col-sm-4">
-        <div class="input-group">
           <div class="input-group-addon">$</div>
-          <input type="number" id="amount" readonly="true" class="form-control col-sm-3 input-sm amount" name="amount" required="required" min="0" max="9999999" step="0.01" aria-label="Amount" disabled="true"/>
-          </input>
+          <input type="number" class="hourly-rate form-control input-sm" value="<%= current_user.test_prep_rate %>" name="hourly_rate" min="0.0" disabled="true"/>
+        <% end %>
         </div>
       </div>
     </div>
