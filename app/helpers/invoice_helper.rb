@@ -17,7 +17,7 @@ module InvoiceHelper
 
   private
 
-  def authorized_to_pay?(invoices,type)
+  def authorized_to_pay?(invoices, type)
     return false if invoices.empty?
     return true if current_user.has_role?('admin')
     type == 'invoices' && current_user.has_role?('director')

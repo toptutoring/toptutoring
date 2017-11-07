@@ -59,9 +59,13 @@ $(function() {
     var submitter_type  = $('#invoice_submitter_type').val()
     if(submitter_type === 'by_contractor') {
       $('.only-for-tutors').addClass('hidden');
+      $('#invoice_engagement_id').attr("required", false);
+      $('#invoice_subject').attr("required", false);
       setHoursDropDownForContractor();
     } else if(submitter_type === 'by_tutor') {
       $('.only-for-tutors').removeClass('hidden');
+      $('#invoice_engagement_id').attr("required", true);
+      $('#invoice_subject').attr("required", true);
       setHoursDropDown();
     }
   });
