@@ -78,7 +78,7 @@
       set_passwords
       success_message 
   rescue DatabaseUpdateError => e
-    display e.message + ' ' + e.error
+    display "\e[31m" + e.message + ' ' + e.error + "\e[0m"
     exit 1
   end
 
