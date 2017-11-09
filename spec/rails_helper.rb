@@ -24,6 +24,7 @@ RSpec.configure do |config|
     FactoryGirl.create(:role, name: "tutor")
     FactoryGirl.create(:role, name: "client")
     FactoryGirl.create(:role, name: "student")
+    FactoryGirl.create(:role, name: "contractor")
   end
 end
 

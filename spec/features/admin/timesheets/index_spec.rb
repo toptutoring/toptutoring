@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'rails_helper'
 
 feature 'Timesheet Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user) }

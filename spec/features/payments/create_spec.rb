@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'rails_helper'
 
 feature "Create payment as client" do
   let(:client) { FactoryGirl.create(:client_user, customer_id: "cus_A45BGhlr4VjDcJ") }
@@ -6,7 +7,6 @@ feature "Create payment as client" do
 
   scenario "with a valid stripe card", js: true do
     VCR.use_cassette('valid stripe card') do
-      set_roles
       engagement
 
       sign_in(client)

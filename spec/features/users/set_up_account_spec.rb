@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'spec_helper'
 
 feature 'Set up account' do
   let(:client) { FactoryGirl.create(:client_user, access_state: "disabled") }
@@ -9,7 +10,6 @@ feature 'Set up account' do
 
   scenario "successfully when user has a student", js: true do
     set_roles
-
     sign_in(client)
 
     fill_in "user_phone_number", with: "0000000000"
@@ -27,7 +27,6 @@ feature 'Set up account' do
 
   scenario "successfully when user doesn't provide a student email", js: true do
     set_roles
-
     sign_in(client)
 
     fill_in "user_phone_number", with: "0000000000"
@@ -42,7 +41,6 @@ feature 'Set up account' do
 
   scenario "successfully when user is a student", js: true do
     set_roles
-
     sign_in(client_as_student)
     click_link "Finish"
 
@@ -52,7 +50,6 @@ feature 'Set up account' do
   
   scenario "successfully signs up with academic subject", js: true do
     set_roles
-
     sign_in(client_as_student)
     click_link "Finish"
 
@@ -62,7 +59,6 @@ feature 'Set up account' do
 
   scenario "successfully signs up with test prep subject", js: true do
     set_roles
-
     sign_in(client_with_test_prep)
     click_link "Finish"
 
