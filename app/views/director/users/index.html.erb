@@ -3,7 +3,7 @@
     <div class="widget">
 
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Users</h3>
+        <h3 class="widget-title pull-left">Clients</h3>
       </div>
 
       <div class="widget-body">
@@ -13,10 +13,11 @@
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
-                  <th>Email</th>
-                  <th>Date Added</th>
                   <th>Access State</th>
-                  <th>Roles</th>
+                  <th>Academic Rate</th>
+                  <th>Test Prep Rate</th>
+                  <th>Academic Credit</th>
+                  <th>Test Prep Credit</th>
                   <th>Action</th>
                   <th>Masquerade</th>
                 </tr>
@@ -30,30 +31,17 @@
                         <div class="media-body">
                           <h5 class="media-heading"><%= user.name.humanize %></h5>
                           <p class="text-muted mb-0"><%= cleanup_phone_number(user.phone_number) %></p>
+                          <p class="text-muted mb-0"><%= user.email.downcase %></p>
                         </div>
                       </div>
                     </td>
-                    <td><%= user.email.downcase %></td>
-                    <td><%= user.created_at.to_time.strftime('%B %e at %l:%M %p')%></td>
                     <td><%= user.access_state %></td>
+                    <td><%= number_to_currency(user.academic_rate) %></td>
+                    <td><%= number_to_currency(user.test_prep_rate) %></td>
+                    <td><%= user.academic_credit.to_s + " hrs" %></td>
+                    <td><%= user.test_prep_credit.to_s + " hrs" %></td>
                     <td>
-                      <% user.roles.distinct.each do |role| %>
-                        <% if role.name == 'director' %>
-                          <span class="label label-outline label-purple">Director</span>
-                        <% end %>
-                        <% if role.name == 'client' %>
-                          <span class="label label-outline label-success">Client</span>
-                        <% end %>
-                        <% if role.name == 'tutor' %>
-                          <span class="label label-outline label-primary">Tutor</span>
-                        <% end %>
-                        <% if role.name == 'student' %>
-                          <span class="label label-outline label-danger">Student</span>
-                        <% end %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <%= link_to "Edit", edit_director_user_path(user), class: "btn btn-outline btn-success btn-sm" %>
+                      <%= link_to "Adjust Rates and Balances", edit_director_user_path(user), class: "btn btn-outline btn-success btn-sm" %>
                     </td>
                     <td>
                       <%= render 'shared/masquerade_start_button', user: user %>

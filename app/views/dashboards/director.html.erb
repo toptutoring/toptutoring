@@ -1,8 +1,6 @@
 <%= render "menu" %>
-<div class="row">
-  <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
-  <%= render "engagements" %>
-</div>
+<%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
+<%= render "engagements" %>
 
   <div class="row">
     <% if @low_balance_engagements %>

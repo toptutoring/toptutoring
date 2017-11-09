@@ -1,5 +1,3 @@
 <%= render "menu" %>
-<div class="row">
-  <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
-  <%= render "engagements" %>
-</end>
+<%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
+<%= render "engagements" %>
