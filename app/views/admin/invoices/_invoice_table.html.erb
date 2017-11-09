@@ -22,24 +22,18 @@
             <%= invoice.id %>
             <br />
             <%= invoice_note_label(invoice) %>
-        </td>
-          <td><%= name = invoice.submitter.name %></td>
+          </td>
+          <td><%= invoice.submitter.name %></td>
           <td><%= invoice.created_at.strftime("%-m/%-e/%y") %></td>
           <td><%= invoice.engagement.academic_type %></td>
           <td><%= invoice.engagement.client.name %></td>
           <td><%= invoice.hours.to_s %></td>
           <td><%= number_to_currency(invoice.amount) %></td>
-          <td><%= description = invoice.description %></td>
+          <td><%= invoice.description %></td>
           <td><%= number_to_currency(invoice.submitter_pay) %></td>
           <td><%= invoice.status %></td>
           <td>
-            <% if invoice.status == 'pending' %>
-              <%= link_to "Edit", edit_admin_invoice_path(invoice), method: :patch, class: "btn btn-sm btn-outline btn-primary" %>
-              <%= link_to "Pay", admin_payments_path(invoice: invoice, payment: { payee_id: invoice.submitter_id, payer_id: current_user.id, description: "#{name} for: #{description}" }, amount: invoice.submitter_pay), method: :post, data: { disable_with: 'Submitting' }, class: "btn btn-sm btn-outline btn-primary" %>
-              <%= link_to "Deny", admin_invoice_path(invoice, invoice: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
-            <% else %>
-              <p>No actions available</p>
-            <% end %>
+            <%= invoice_actions(invoice) %>
           </td>
         </tr>
       <% end %>

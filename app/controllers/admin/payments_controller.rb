@@ -33,10 +33,9 @@ module Admin
     end
 
     def payment_params
-      amount = params[:amount].to_money
       params.require(:payment)
-            .permit(:source, :description, :payee_id, :payer_id)
-            .merge(amount: amount, source: @funding_source.funding_source_id)
+            .permit(:amount, :description, :payee_id)
+            .merge(source: @funding_source.funding_source_id, payer: current_user)
     end
 
     def create_payment
@@ -53,7 +52,7 @@ module Admin
       @transfer.create_transfer
       if @transfer.error.nil?
         @payment.save!
-        adjust_balances if @invoice
+        adjust_balance_and_update_status_for_invoice if @invoice
         flash.notice = "Payment is being processed."
       else
         flash[:danger] = @transfer.error
@@ -65,7 +64,7 @@ module Admin
     end
 
     def set_invoice
-      @invoice = Invoice.find(params[:invoice].to_i) if params[:invoice]
+      @invoice = Invoice.find(params[:invoice]) if params[:invoice]
     end
 
     def set_funding_source
@@ -82,7 +81,7 @@ module Admin
       @tutors = User.tutors_with_external_auth
     end
 
-    def adjust_balances
+    def adjust_balance_and_update_status_for_invoice
       CreditUpdater.new(@invoice).process_payment_of_invoice!
     end
   end

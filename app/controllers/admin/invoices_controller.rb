@@ -13,8 +13,9 @@ module Admin
 
     def update
       @invoice = Invoice.find(params[:id])
+      type = @invoice.by_tutor? ? 'invoice' : 'timesheet'
       if CreditUpdater.new(@invoice).update_existing_invoice(update_params)
-        redirect_to(admin_invoices_path, notice: 'The invoice has been updated') and return
+        redirect_back(fallback_location: admin_invoices_path, notice: "The #{type} has been updated.") and return
       else
         redirect_back(fallback_location: (request.referer || root_path),
                       flash: { error: @invoice.errors.full_messages }) and return

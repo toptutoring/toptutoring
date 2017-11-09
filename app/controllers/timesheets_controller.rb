@@ -4,7 +4,8 @@ class TimesheetsController < ApplicationController
   end
 
   def destroy
-    current_user.invoices.by_contractor.pending.find(params[:id]).destroy
+    timesheet = current_user.invoices.by_contractor.pending.find(params[:id])
+    CreditUpdater.new(timesheet).process_deletion_of_invoice!
     redirect_to({ action: "index" }, notice: "Timesheet deleted")
   end
 end
