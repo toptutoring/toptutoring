@@ -20,7 +20,7 @@ module Tutors
 
     def destroy
       invoice = current_user.invoices.by_tutor.pending.find(params[:id])
-      CreditUpdater.new(timesheet).process_deletion_of_invoice!
+      CreditUpdater.new(invoice).process_deletion_of_invoice!
       redirect_to({ action: "index" }, notice: "Invoice has been deleted")
     end
 

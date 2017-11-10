@@ -24,11 +24,11 @@ module InvoiceHelper
   def invoice_actions(invoice)
     return "No actions available" unless invoice.status == 'pending'
     link_to("Edit", edit_admin_invoice_path(invoice),
-            method: :patch, class: "btn btn-sm btn-outline btn-primary") +
+            class: "btn btn-sm btn-outline btn-primary") +
       link_to("Pay", admin_payments_path(payment_params(invoice)),
               method: :post, data: { disable_with: 'Submitting' },
               class: "btn btn-sm btn-outline btn-primary") +
-      link_to("Deny", admin_invoice_path(invoice, invoice: { status: 'denied' }),
+      link_to("Deny", deny_admin_invoice_path(invoice),
               data: { disable_with: 'Updating' },
               method: :patch, class: "btn btn-sm btn-outline btn-danger")
   end
@@ -36,13 +36,15 @@ module InvoiceHelper
   private
 
   def payment_params(invoice)
-    { payment:
+    {
+      payment:
       {
         payee_id: invoice.submitter_id,
         description: "#{invoice.submitter.name} for: #{invoice.description}",
-        amount: invoice.submitter_pay,
+        amount: invoice.submitter_pay
       },
-      invoice: invoice }
+      invoice: invoice
+    }
   end
 
   def authorized_to_pay?(invoices, type)

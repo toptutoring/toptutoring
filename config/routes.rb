@@ -58,9 +58,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
       resources :invoices, only: [:index, :edit, :update] do
-        member do
-          patch :edit
-        end
+        patch :deny, on: :member
       end
       resources :tutors, only: [:index, :edit, :update]
       resources :funding_sources, only: [:new, :create, :edit, :update]
