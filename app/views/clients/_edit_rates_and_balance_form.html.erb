@@ -1,4 +1,4 @@
-<%= form_for(@user, url: director_user_path(@user)) do |f| %>
+<%= form_for(@user, url: url) do |f| %>
   <div class="form-group">
     <%= f.label :academic_credit, "Academic Credit (in hours)" %>
     <%= f.number_field :academic_credit, class: "form-control", step: 0.25, min: 0 %>
@@ -26,6 +26,6 @@
   </div>
 
   <div class="form-group">
-    <%= f.submit "Submit", class: "btn btn-outline btn-blue" %>
+    <%= f.submit "Update", class: "btn btn-outline btn-blue" %>
   </div>
 <% end %>

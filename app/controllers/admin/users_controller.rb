@@ -23,7 +23,9 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(:name, :email, :phone_number)
+      params.require(:user).permit(:name, :email, :phone_number,
+                                   :test_prep_credit, :academic_credit,
+                                   :test_prep_rate, :academic_rate)
     end
 
     def set_user
