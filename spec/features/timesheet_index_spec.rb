@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'as a contractor reviewing timesheets' do
-  let(:contractor) { FactoryGirl.create(:tutor_user, roles: ['tutor', 'contractor'], outstanding_balance: 1) }
+  let(:contractor) { FactoryGirl.create(:tutor_user, roles: Role.where(name: ['tutor', 'contractor']), outstanding_balance: 1) }
   let!(:invoice) { FactoryGirl.create(:invoice, submitter: contractor, submitter_type: 'by_contractor', hours: 1) }
 
   scenario 'when user has a timesheet' do

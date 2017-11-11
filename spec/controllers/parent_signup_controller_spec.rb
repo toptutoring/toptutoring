@@ -24,8 +24,7 @@ require "rails_helper"
     end
 
     it 'sends notifications to tutor director' do
-      tutor.roles = "director"
-      tutor.save
+      tutor.roles = Role.where(name: "director")
 
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
         password: 'some_password', signup_attributes: { student: false } } }

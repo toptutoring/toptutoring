@@ -31,7 +31,7 @@ module Users
     def signups_params
       params.require(:user)
         .permit(:name, :email, :password)
-        .merge(roles: "tutor", access_state: "enabled")
+        .merge(roles: Role.where(name: "tutor"), access_state: "enabled")
     end
 
     def redirect_to_root

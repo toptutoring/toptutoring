@@ -70,18 +70,6 @@ class User < ActiveRecord::Base
 
   #### Setters ####
 
-  def roles=(roles)
-    if roles.is_a? Array
-      roles.each do |role|
-        role_id =  Role.find_by_name(role).id
-        self.user_roles.build(role_id: role_id)
-      end
-    else
-      role_id =  Role.find_by_name(roles).id
-      self.user_roles.build(role_id: role_id)
-    end
-  end
-
   def dwolla_access_token=(value)
     self.encrypted_access_token = nil
     self.encrypted_access_token_iv = nil
@@ -104,7 +92,7 @@ class User < ActiveRecord::Base
   end
 
   def has_role?(role)
-    roles.any? { |r| r.name == role }
+    roles.find_by_name(role)
   end
 
   def is_customer?

@@ -6,10 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Subject.where(name: 'Biology').first_or_create
-Subject.where(name: 'Algebra').first_or_create
-Subject.where(name: 'English_Literature').first_or_create
-
 # Create roles
 Role.where(name: "admin").first_or_create
 Role.where(name: "director").first_or_create
@@ -19,5 +15,5 @@ Role.where(name: "student").first_or_create
 Role.where(name: "contractor").first_or_create
 
 # Run seeds for development environment
-Rake::Task['dev:seed'].invoke
+Rake::Task['dev:seed'].invoke if Rails.env.development? || Rails.env.staging?
 

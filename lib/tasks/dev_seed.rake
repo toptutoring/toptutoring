@@ -1,21 +1,26 @@
 namespace :dev do
   task seed: :environment do
+    # Create Subjects
+    Subject.where(name: "Biology").first_or_create!
+    Subject.where(name: "Algebra").first_or_create!
+    Subject.where(name: "English_Literature").first_or_create!
+
     # Update client
     client = User.where(email: "client@example.com").first_or_initialize
     client.name = "Client"
     client.password = "password"
     client.customer_id = "cus_A45BGhlr4VjDcJ"
     client.access_state = "enabled"
-    client.roles = "client"
+    client.roles = Role.where(name: "client")
     client.save!
 
-      # New client
+    # New client
     client_new = User.where(email: "clientnew@example.com").first_or_initialize
     client_new.name = "Client"
     client_new.password = "password"
     client_new.customer_id = ""
     client_new.access_state = "enabled"
-    client_new.roles = "client"
+    client_new.roles = Role.where(name: "client")
     client_new.save!
 
     #Update signup
@@ -24,23 +29,23 @@ namespace :dev do
     signup.student = false
     signup.save!
 
-     # Update student
+    # Update student
     student1 = User.where(email: "student1@example.com").first_or_initialize
     student1.name = "Student1"
     student1.email = "student1@example.com"
     student1.password = "password"
     student1.access_state = "enabled"
-    student1.roles = "student"
+    student1.roles = Role.where(name: "student")
     student1.client_id = client.id
     student1.save!
 
-     # Update student
+    # Update student
     student2 = User.where(email: "student2@example.com").first_or_initialize
     student2.name = "Student2"
     student2.email = "student2@example.com"
     student2.password = "password"
     student2.access_state = "enabled"
-    student2.roles = "student"
+    student2.roles = Role.where(name: "student")
     student2.client_id = client.id
     student2.save!
 
@@ -52,7 +57,7 @@ namespace :dev do
     tutor.auth_uid = "854f5ac8-e728-4959-b6e0-13917cd2cf60"
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
-    tutor.roles = ["tutor"]
+    tutor.roles = Role.where(name: "tutor")
     tutor.save!
 
     contract = Contract.where(user_id: tutor.id).first_or_initialize
@@ -67,7 +72,7 @@ namespace :dev do
     director.auth_uid = "eef71d60-c133-4eed-af14-77dd2e4b9950"
     director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
-    director.roles = ["tutor", "director"]
+    director.roles = Role.where(name: ["tutor", "director"])
     director.save!
 
     contract = Contract.where(user_id: director.id).first_or_initialize
@@ -79,10 +84,10 @@ namespace :dev do
     admin.name = "Admin"
     admin.password = "password"
     admin.auth_provider = "dwolla"
-    admin.auth_uid = ENV.fetch('DWOLLA_DEV_ADMIN_AUTH_UID')
+    admin.auth_uid = ENV.fetch("DWOLLA_DEV_ADMIN_AUTH_UID")
     admin.token_expires_at = Time.current.to_i + 12.months.to_i
     admin.access_state = "enabled"
-    admin.roles = "admin"
+    admin.roles = Role.where(name: "admin")
     admin.save!
 
     # Update engagements

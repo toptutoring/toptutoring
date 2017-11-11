@@ -3,7 +3,7 @@ FactoryGirl.define do
     name          { "Director" }
     email         { "director@example.com" }
     password      { "password" }
-    roles         { "director" }
+    roles         { Role.where(name: 'director') }
     auth_uid      { ENV.fetch('DWOLLA_DEV_TUTOR_AUTH_UID') }
     access_token  { "xxx-xxx" }
     refresh_token { "xxx-xxx" }
