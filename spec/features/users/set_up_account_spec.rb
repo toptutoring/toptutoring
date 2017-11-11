@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'spec_helper'
 
 feature 'Set up account' do
   let(:client) { FactoryGirl.create(:client_user, access_state: "disabled") }
@@ -8,61 +7,58 @@ feature 'Set up account' do
   let(:signup_test_prep) { FactoryGirl.create(:signup, :as_student, subject: subject_test_prep.name) }
   let(:client_with_test_prep) { FactoryGirl.create(:client_user, :as_student, signup: signup_test_prep, access_state: "disabled") }
 
-  scenario "successfully when user has a student", js: true do
-    set_roles
-    sign_in(client)
+  context "new user signs up" do
+    scenario "successfully when user has a student", js: true do
+      sign_in(client)
 
-    fill_in "user_phone_number", with: "0000000000"
-    click_link "Next"
+      fill_in "user_phone_number", with: "0000000000"
+      click_link "Next"
 
-    student_name = 'Student Name'
-    fill_in "user_student_name", with: student_name
-    fill_in "user_student_email", with: "student@example.com"
-    click_link "Finish"
+      student_name = 'Student Name'
+      fill_in "user_student_name", with: student_name
+      fill_in "user_student_email", with: "student@example.com"
+      click_link "Finish"
 
-    expect(page).to have_content(client.name)
-    expect(page).to have_content("Dashboard")
-    expect(page).to have_content(student_name)
-  end
+      expect(page).to have_content(client.name)
+      expect(page).to have_content("Dashboard")
+      expect(page).to have_content(student_name)
+    end
 
-  scenario "successfully when user doesn't provide a student email", js: true do
-    set_roles
-    sign_in(client)
+    scenario "successfully when user doesn't provide a student email", js: true do
+      sign_in(client)
 
-    fill_in "user_phone_number", with: "0000000000"
-    click_link "Next"
+      fill_in "user_phone_number", with: "0000000000"
+      click_link "Next"
 
-    fill_in "user_student_name", with: "Student"
-    click_link "Finish"
+      fill_in "user_student_name", with: "Student"
+      click_link "Finish"
 
-    expect(page).to have_content(client.name)
-    expect(page).to have_content("Dashboard")
-  end
+      expect(page).to have_content(client.name)
+      expect(page).to have_content("Dashboard")
+    end
 
-  scenario "successfully when user is a student", js: true do
-    set_roles
-    sign_in(client_as_student)
-    click_link "Finish"
+    scenario "successfully when user is a student", js: true do
+      sign_in(client_as_student)
+      click_link "Finish"
 
-    expect(page).to have_content(client.name)
-    expect(page).to have_content("Dashboard")
-  end
-  
-  scenario "successfully signs up with academic subject", js: true do
-    set_roles
-    sign_in(client_as_student)
-    click_link "Finish"
+      expect(page).to have_content(client.name)
+      expect(page).to have_content("Dashboard")
+    end
 
-    expect(page).to have_content(client_as_student.signup.subject)
-    expect(page).to have_content("Academic")
-  end
+    scenario "successfully signs up with academic subject", js: true do
+      sign_in(client_as_student)
+      click_link "Finish"
 
-  scenario "successfully signs up with test prep subject", js: true do
-    set_roles
-    sign_in(client_with_test_prep)
-    click_link "Finish"
+      expect(page).to have_content(client_as_student.signup.subject)
+      expect(page).to have_content("Academic")
+    end
 
-    expect(page).to have_content(subject_test_prep.name)
-    expect(page).to have_content("Test Prep")
+    scenario "successfully signs up with test prep subject", js: true do
+      sign_in(client_with_test_prep)
+      click_link "Finish"
+
+      expect(page).to have_content(subject_test_prep.name)
+      expect(page).to have_content("Test Prep")
+    end
   end
 end

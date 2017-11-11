@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'rails_helper'
 
 feature 'Create Invoice', js: true do
@@ -9,35 +8,34 @@ feature 'Create Invoice', js: true do
   let(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, student: student) }
   let(:email) { FactoryGirl.create(:email, tutor: tutor, client: client) }
 
-  scenario 'has invoice form' do
-    set_roles
-    sign_in(tutor)
+  context "tutor" do 
+    scenario 'has invoice form' do
+      sign_in(tutor)
 
-    expect(page).to have_content("Invoice session")
-    expect(page).to have_content("Use this form to log past sessions with your students")
-    expect(page).to have_content("Student")
-    expect(page).to have_content("Hours")
-    expect(page).to have_content("Main Subject Covered")
-    expect(page).to have_content("Description")
-  end
+      expect(page).to have_content("Invoice session")
+      expect(page).to have_content("Use this form to log past sessions with your students")
+      expect(page).to have_content("Student")
+      expect(page).to have_content("Hours")
+      expect(page).to have_content("Main Subject Covered")
+      expect(page).to have_content("Description")
+    end
 
-  scenario 'with valid invoice params' do
-    set_roles
-    student
-    engagement
+    scenario 'creates invoice with valid params' do
+      student
+      engagement
 
-    sign_in(tutor)
+      sign_in(tutor)
 
-    find('.hours').find(:xpath, 'option[1]').select_option
-    fill_in "invoice[subject]", with: "Mathmatics"
-    fill_in "Description", with: "for this weeks payment"
+      find('.hours').find(:xpath, 'option[1]').select_option
+      fill_in "invoice[subject]", with: "Mathmatics"
+      fill_in "Description", with: "for this weeks payment"
 
-    click_on "Create Invoice"
+      click_on "Create Invoice"
 
-    expect(page).to have_content("Invoice has been created.")
+      expect(page).to have_content("Invoice has been created.")
 
-    sign_out
-  end
+      sign_out
+    end
 
     scenario 'creates invoice as no show' do
       set_roles
@@ -60,20 +58,20 @@ feature 'Create Invoice', js: true do
       sign_out
     end
 
-  scenario 'low balance warning' do
-    set_roles
-    student
-    engagement
-    engagement.client.update(academic_credit: 0.0)
+    scenario 'creates invoice but client has a low balance' do
+      student
+      engagement
+      engagement.client.update(academic_credit: 0.0)
 
-    sign_in(tutor)
+      sign_in(tutor)
 
-    find('.hours').find(:xpath, 'option[3]').select_option
-    fill_in "invoice[subject]", with: "Mathmatics"
-    fill_in "Description", with: "for this weeks payment"
+      find('.hours').find(:xpath, 'option[3]').select_option
+      fill_in "invoice[subject]", with: "Mathmatics"
+      fill_in "Description", with: "for this weeks payment"
 
-    click_on "Create Invoice"
+      click_on "Create Invoice"
 
-    expect(page).to have_content("Your invoice has been created. However, your client is running low on their balance. Please consider making a suggestion to your client to add to their balance before scheduling any more sessions.")
+      expect(page).to have_content("Your invoice has been created. However, your client is running low on their balance. Please consider making a suggestion to your client to add to their balance before scheduling any more sessions.")
+    end
   end
 end

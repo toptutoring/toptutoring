@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'rails_helper'
 
 feature "Create payment as client" do

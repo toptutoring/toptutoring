@@ -1,6 +1,8 @@
 ENV["RACK_ENV"] = "test"
 
 require File.expand_path("../../config/environment", __FILE__)
+require_relative 'role_generator'
+
 abort("DATABASE_URL environment variable is set") if ENV["DATABASE_URL"]
 
 require "rspec/rails"
@@ -19,12 +21,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.use_transactional_fixtures = false
   config.before(:all) do
-    FactoryGirl.create(:role, name: "admin")
-    FactoryGirl.create(:role, name: "director")
-    FactoryGirl.create(:role, name: "tutor")
-    FactoryGirl.create(:role, name: "client")
-    FactoryGirl.create(:role, name: "student")
-    FactoryGirl.create(:role, name: "contractor")
+    RoleGenerator.set_roles
   end
 end
 

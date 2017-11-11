@@ -9,6 +9,7 @@ RSpec.configure do |config|
 
   config.before(:each, js: true) do
     DatabaseCleaner.strategy = :deletion
+    RoleGenerator.set_roles
   end
 
   config.before(:each) do

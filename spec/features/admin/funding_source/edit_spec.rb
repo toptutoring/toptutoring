@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Edit funding source' do
   let(:admin) { FactoryGirl.create(:auth_admin_user) }

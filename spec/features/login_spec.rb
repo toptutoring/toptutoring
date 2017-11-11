@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'User logs in' do
   given(:user) { FactoryGirl.create(:tutor_user) }
