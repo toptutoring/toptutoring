@@ -1,51 +1,55 @@
-<div class="col-md-7">
-  <div class="widget">
-    <div class="widget-heading clearfix">
-      <h3 class="widget-title pull-left">Pending Engagements</h3>
-    </div>
-    <div class="widget-body">
-      <div class="table-responsive">
-        <table class="table mb-0">
-          <thead>
-            <tr>
-              <th>Student Name</th>
-              <th class="text-center">Client Name</th>
-              <th class="text-center">Subject</th>
-              <th class="text-center">Academic Type</th>
-              <th class="text-center">Status</th>
-              <th class="text-center"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @pending_engagements.each do |engagement| %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Pending Engagements</h3>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
               <tr>
-                <td><%= engagement.student_name %></td>
-                <td><%= engagement.client.name %></td>
-                <td class="text-center"><%= engagement.subject %></td>
-                <td class="text-center"><%= EngagementPresenter.new(engagement).engagement_academic_type %></td>
-                <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
-                <td class="text-center">
-                  <%= link_to edit_engagement_path(engagement) do %>
-                    <button type="button" class="btn btn-outline btn-primary">Edit</button>
-                  <% end %>
-                </td>
-                <% if engagement.updated? && engagement.pending? %>
-                  <td class="text-center">
-                    <%= link_to enable_engagement_path(engagement) do %>
-                      <button type="button" class="btn btn-outline btn-success">Enable</button>
-                    <% end %>
-                  </td>
-                <% elsif engagement.active? %>
-                  <td class="text-center">
-                    <%= link_to disable_engagement_path(engagement) do %>
-                      <button type="button" class="btn btn-outline btn-danger">Disable</button>
-                    <% end %>
-                  </td>
-                <% end %>
+                <th>Student Name</th>
+                <th class="text-center">Client Name</th>
+                <th class="text-center">Subject</th>
+                <th class="text-center">Academic Type</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Actions</th>
+                <th class="text-center"></th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @pending_engagements.each do |engagement| %>
+                <tr>
+                  <td><%= engagement.student_name %></td>
+                  <td><%= engagement.client.name %></td>
+                  <td class="text-center"><%= engagement.subject %></td>
+                  <td class="text-center"><%= EngagementPresenter.new(engagement).engagement_academic_type %></td>
+                  <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
+                  <td class="text-center">
+                    <%= link_to edit_engagement_path(engagement) do %>
+                      <button type="button" class="btn btn-outline btn-primary">Edit</button>
+                    <% end %>
+                  <% if engagement.updated? && engagement.pending? %>
+                    <td class="text-center">
+                      <%= link_to enable_engagement_path(engagement) do %>
+                        <button type="button" class="btn btn-outline btn-success">Enable</button>
+                      <% end %>
+                    </td>
+                  <% elsif engagement.active? %>
+                    <td class="text-center">
+                      <%= link_to disable_engagement_path(engagement) do %>
+                        <button type="button" class="btn btn-outline btn-danger">Disable</button>
+                      <% end %>
+                    </td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

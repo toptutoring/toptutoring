@@ -29,3 +29,18 @@
     </div>
   </div>
 </div>
+
+<% if @user_role == 'Client' %>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="widget">
+        <div class="widget-heading">
+          <h3 class="widget-title text-center">Rates and Balance Adjustment</h3>
+        </div>
+        <div class="widget-body">
+          <%= render partial: 'clients/edit_rates_and_balance_form', locals: { url: admin_user_path(@user) } %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -11,7 +11,7 @@ module Director
     end
 
     def update
-      @user = User.find(params[:id])
+      @user = User.clients.find(params[:id])
       if valid_inputs? && @user.update_attributes(user_params)
         redirect_to director_users_path, notice: 'Client info is successfully updated!'
       else
