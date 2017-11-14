@@ -22,3 +22,8 @@
 .env.development
 .env.test
 .ruby-version
+
+# Added by webpacker:install
+/public/packs
+/public/packs-test
+/node_modules
