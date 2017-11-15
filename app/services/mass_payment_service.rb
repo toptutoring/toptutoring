@@ -4,7 +4,7 @@ class MassPaymentService
   def initialize(type, payer)
     @type = type
     @payer = payer
-    @funding_source = FundingSource.last.funding_source_id
+    @funding_source = FundingSource.first.funding_source_id
     @messages = []
     @errors = []
     @paid_users = []

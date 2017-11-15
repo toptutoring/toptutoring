@@ -64,7 +64,7 @@ module Admin
     end
 
     def set_funding_source
-      @funding_source = FundingSource.last
+      @funding_source = FundingSource.first
     end
 
     def validate_funding_source
