@@ -20,6 +20,7 @@ module InvoiceHelper
     content_tag(:p, class: "label label-outline label-danger") do
       invoice.note
     end
+  end
 
   def invoice_actions(invoice)
     return "No actions available" unless invoice.status == 'pending'
