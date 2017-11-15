@@ -15,7 +15,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <h5>Phone Number</h5>
-                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), class:"form-control", placeholder: "(XXX) XXX-XXXX"%>
+                <%= f.text_field number_to_phone(:phone_number), value: number_to_phone(current_user.phone_number), required: true, class:"form-control", placeholder: "(XXX) XXX-XXXX"%>
               </div>
             </div>
             <div class="col-md-4">

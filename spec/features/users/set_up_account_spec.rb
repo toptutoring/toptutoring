@@ -24,6 +24,14 @@ feature 'Set up account' do
       expect(page).to have_content(student_name)
     end
 
+    scenario "unsuccessfully when user doesn't provide a phone number", js: true do
+      sign_in(client)
+
+      click_link "Next"
+
+      expect(page).to have_content("This value is required.")
+    end
+
     scenario "successfully when user doesn't provide a student email", js: true do
       sign_in(client)
 
@@ -32,13 +40,13 @@ feature 'Set up account' do
 
       fill_in "user_student_name", with: "Student"
       click_link "Finish"
-
       expect(page).to have_content(client.name)
       expect(page).to have_content("Dashboard")
     end
 
     scenario "successfully when user is a student", js: true do
       sign_in(client_as_student)
+      fill_in "user_phone_number", with: "0000000000"
       click_link "Finish"
 
       expect(page).to have_content(client.name)
@@ -47,6 +55,7 @@ feature 'Set up account' do
 
     scenario "successfully signs up with academic subject", js: true do
       sign_in(client_as_student)
+      fill_in "user_phone_number", with: "0000000000"
       click_link "Finish"
 
       expect(page).to have_content(client_as_student.signup.subject)
@@ -55,6 +64,7 @@ feature 'Set up account' do
 
     scenario "successfully signs up with test prep subject", js: true do
       sign_in(client_with_test_prep)
+      fill_in "user_phone_number", with: "0000000000"
       click_link "Finish"
 
       expect(page).to have_content(subject_test_prep.name)
