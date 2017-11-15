@@ -18,7 +18,11 @@
     <tbody>
       <% invoices.order(:submitter_id).each do |invoice| %>
         <tr>
-          <td><%= invoice.id %></td>
+          <td>
+            <%= invoice.id %>
+            <br />
+            <%= invoice_note_label(invoice) %>
+        </td>
           <td><%= name = invoice.submitter.name %></td>
           <td><%= invoice.created_at.strftime("%-m/%-e/%y") %></td>
           <td><%= invoice.engagement.academic_type %></td>

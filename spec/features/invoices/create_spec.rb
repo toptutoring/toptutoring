@@ -38,6 +38,27 @@ feature 'Create Invoice', js: true do
     sign_out
   end
 
+    scenario 'creates invoice as no show' do
+      set_roles
+      student
+      engagement
+
+      sign_in(tutor)
+
+      find('.hours').find(:xpath, 'option[2]').select_option
+      fill_in "invoice[subject]", with: "Mathmatics"
+      fill_in "Description", with: "no show"
+
+      click_on "Create Invoice"
+
+      expect(page).to have_content("Invoice has been created.")
+      expect(tutor.reload.outstanding_balance).to eq(0)
+      expect(client.reload.academic_credit).to eq(50)
+      expect(Invoice.last.note).to eq("No Show")
+
+      sign_out
+    end
+
   scenario 'low balance warning' do
     set_roles
     student

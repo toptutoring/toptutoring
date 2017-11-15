@@ -9,8 +9,8 @@ $(function() {
       text : "24 hour Cancellation (No hours are charged)"
     }));
     $('.hours').append($('<option>', {
-      value: 0.5,
-      text : "No show (Client will be charged for 30 mins)"
+      value: 'no_show',
+      text : "No show"
     }));
     create_hour_options(5);
   }
