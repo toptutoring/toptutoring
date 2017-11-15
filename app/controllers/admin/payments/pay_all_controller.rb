@@ -9,6 +9,7 @@ module Admin
         status = payment_successful? ? 'paid' : 'pending'
         @payment_service.update_processing(status)
         set_flash_messages
+        ping_slack
         redirect_back(fallback_location: (request.referer || root_path)) and return
       end
 
@@ -23,6 +24,17 @@ module Admin
       def set_flash_messages
         flash.notice = @payment_service.messages
         flash[:danger] = @payment_service.errors unless payment_successful?
+      end
+
+      def ping_slack
+        message = "A mass payment was attempted.\n"
+        if @payment_service.messages.any?
+          message += "Messages\n" + @payment_service.messages.join("\n")
+        end
+        if @payment_service.errors
+          message += "Errors\n" + @payment_service.errors.join("\n")
+        end
+        SLACK_NOTIFIER.ping message
       end
 
       def payment_successful?

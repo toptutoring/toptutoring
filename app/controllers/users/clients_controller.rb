@@ -33,7 +33,7 @@ module Users
       SLACK_NOTIFIER.ping "A new user has signed up.\n" \
         "Name: #{@user.name}\n" \
         "Email: #{@user.email}\n" \
-        "Comments: #{@user.signup_attributes.comments}\n"
+        "Comments: #{@user.signup.comments}\n"
       UserNotifierMailer.send_signup_email(@user).deliver_now
       NewClientNotifier.perform(@user, User.admin_and_directors)
     end
