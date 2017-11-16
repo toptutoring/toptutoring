@@ -8,11 +8,6 @@ class UsersController < Clearance::SessionsController
     end
   end
 
-  def profile_update
-    User.find(current_user.id).update(update_params)
-    redirect_to profile_path, flash: { success: "Your profile has been updated." } and return
-  end
-
   def update
     if check_phone_number_and_update_client
       set_student_info
@@ -21,10 +16,7 @@ class UsersController < Clearance::SessionsController
     else
       flash.alert = "Please input a valid phone number."
     end
-  end
-
-  def profile
-    @availability_engagement = current_user&.student_engagements&.first || current_user&.client_engagements&.first
+    redirect_to dashboard_path
   end
 
   def email_is_unique
@@ -65,11 +57,8 @@ class UsersController < Clearance::SessionsController
   end
 
   def client_as_student_params
-    params.require(:user).permit(:name, :email, :phone_number, :password, signup_attributes: [:id])
-  end
-
-  def update_params
-    params.require(:user).permit(:name, :phone_number)
+    params.require(:user).permit(:name, :email, :phone_number,
+                                 :password, signup_attributes: [:id])
   end
 
   def student_email_matches_client?
