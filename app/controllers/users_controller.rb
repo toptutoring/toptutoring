@@ -14,50 +14,12 @@ class UsersController < Clearance::SessionsController
   end
 
   def update
-    current_user.update_attribute(
-      :phone_number, user_params[:phone_number])
-
-    if student_email_provided? && !student_email_matches_client?
-      student_name = user_params[:student][:name]
-      student_email = user_params[:student][:email]
-      student = User.create(
-        email: student_email,
-        name: student_name,
-        password: SecureRandom.hex(10),
-        roles: Role.where(name: 'student')
-      )
-      current_user.students << student
-      if current_user.save
-        student.enable!
-        student.forgot_password!
-        SetStudentPasswordMailer.set_password(student).deliver_now
-      end
+    if check_phone_number_and_update_client
+      set_student_info
+      current_user.enable!
+      create_engagement ? success_message : failure_message
     else
-      #Do not create student but save engagement info
-      if current_user.is_student?
-        student_name = current_user.name
-      else
-        student_name = user_params[:student][:name]
-      end
-      student_id = current_user.id
-    end
-
-    current_user.enable!
-
-    student_id = student.id if student
-    engagement = Engagement.new(
-      student_id: student_id,
-      student_name: student_name,
-      subject: current_user.signup.subject,
-      client_id: current_user.id,
-      academic_type: find_subject_type(current_user.signup.subject)
-    )
-
-    if engagement.save
-      redirect_to dashboard_path
-    else
-      redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: current_user.errors.full_messages })
+      flash.alert = "Please input a valid phone number."
     end
   end
 
@@ -92,7 +54,9 @@ class UsersController < Clearance::SessionsController
   end
 
   def client_params
-    params.require(:user).permit(:name, :email, :phone_number, :password, student: [:id, :name, :email, :phone_number, :password, :subject])
+    params.require(:user).permit(:name, :email, :phone_number, :password,
+                                 student: [:id, :name, :email, 
+                                           :phone_number, :password, :subject])
   end
 
   def find_subject_type(subject_name)
@@ -117,7 +81,70 @@ class UsersController < Clearance::SessionsController
     if student_email.downcase == current_user.email
       true
     else
-      (User.where(email: student_email).first).nil?
+      User.where(email: student_email).first.nil?
     end
+  end
+
+  def check_phone_number_and_update_client
+    return false unless phone_number_valid?
+    current_user.update_attribute(:phone_number, user_params[:phone_number])
+  end
+
+  def phone_number_valid?
+    user_params[:phone_number].length > 1
+  end
+
+  def set_student_info
+    create_student_account = student_email_provided? && !student_email_matches_client?
+    return create_and_email_student_user if create_student_account
+    set_student_without_creating_account
+  end
+
+  def create_and_email_student_user
+    @student = User.create(student_params)
+    current_user.students << @student
+    if current_user.save
+      @student.enable!
+      @student.forgot_password!
+      SetStudentPasswordMailer.set_password(@student).deliver_now
+    end
+  end
+
+  def student_params
+    @student_name = user_params[:student][:name]
+    { email: user_params[:student][:email],
+      name: @student_name,
+      password: SecureRandom.hex(10),
+      roles: Role.where(name: 'student') }
+  end
+
+  def set_student_without_creating_account
+    if current_user.is_student?
+      @student_name = current_user.name
+    else
+      @student_name = user_params[:student][:name]
+    end
+    @student = current_user
+  end
+
+  def create_engagement
+    @engagement = Engagement.new(
+      student_id: @student.id,
+      student_name: @student_name,
+      subject: current_user.signup.subject,
+      client_id: current_user.id,
+      academic_type: find_subject_type(current_user.signup.subject)
+    )
+    @engagement.save
+  end
+
+  def success_message
+    flash.notice = "Thank you for finishing the sign up process!" \
+      " We are in the process of finding a great tutor for you." \
+      " If you have any questions in the mean time, feel free to contact us!"
+  end
+
+  def failure_message
+    flash[:error] = @engagement.errors.messages
   end
 end
