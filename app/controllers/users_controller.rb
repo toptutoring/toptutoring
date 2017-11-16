@@ -1,5 +1,6 @@
 class UsersController < Clearance::SessionsController
   before_action :require_login
+  after_action :ping_slack, only: [:update]
 
   def edit
     @user = current_user
@@ -29,5 +30,18 @@ class UsersController < Clearance::SessionsController
 
   def client_params
     params.require(:user).permit(:phone_number, student: [:name, :email])
+  end
+
+  def ping_slack
+    if flash[:error]
+      message = "#{current_user.name} attempted to finish sign up, but failed.\n" \
+        "#{flash[:error]}"
+    else
+      message = "#{current_user.name} finished the sign up process.\n" \
+        "Contact info for new client:\n" \
+        "Email: #{current_user.email}\n" \
+        "Phone Number: #{current_user.phone_number}"
+    end
+    SLACK_NOTIFIER.ping message
   end
 end
