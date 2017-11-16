@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Invoices Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
@@ -32,5 +32,14 @@ feature 'Invoices Index' do
     expect(page).to have_content(invoice.description)
     expect(page).to have_content(invoice.status)
     expect(page).to have_content("$15.00")
-    end
+    expect(page).not_to have_content('No Show')
+  end
+
+  scenario 'when invoice has a note' do
+    invoice.update(note: 'No Show')
+    sign_in(admin)
+    visit admin_invoices_path
+
+    expect(page).to have_content('No Show')
+  end
 end

@@ -15,6 +15,13 @@ module InvoiceHelper
     end
   end
 
+  def invoice_note_label(invoice)
+    return unless invoice.note
+    content_tag(:p, class: "label label-outline label-danger") do
+      invoice.note
+    end
+  end
+
   private
 
   def authorized_to_pay?(invoices, type)

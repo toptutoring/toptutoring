@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171017182521) do
+ActiveRecord::Schema.define(version: 20171115183842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20171017182521) do
     t.integer "submitter_pay_cents"
     t.integer "amount_cents"
     t.integer "submitter_type", default: 0
+    t.string "note"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id"
     t.index ["submitter_id"], name: "index_invoices_on_submitter_id"

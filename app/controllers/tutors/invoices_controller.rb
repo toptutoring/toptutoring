@@ -7,6 +7,7 @@ module Tutors
     end
 
     def create
+      update_no_show_params if params[:invoice][:hours] == 'no_show'
       create_invoice
       adjust_balances_and_save_records
       set_flash_messages
@@ -24,6 +25,11 @@ module Tutors
 
     private
 
+    def update_no_show_params
+      params[:invoice][:hours] = 0
+      @note = 'No Show'
+    end
+
     def create_invoice
       @by_tutor = params[:invoice][:submitter_type] == 'by_tutor'
       if @by_tutor
@@ -40,7 +46,7 @@ module Tutors
             .merge(submitter: current_user, status: "pending",
                    submitter_pay: submitter_pay, client: @client,
                    amount: client_charge, hourly_rate: hourly_rate,
-                   engagement: @engagement, subject: subject)
+                   engagement: @engagement, subject: subject, note: @note)
     end
 
     def subject
@@ -90,7 +96,7 @@ module Tutors
       elsif @adjuster.client_low_balance?
         flash.alert = "Your invoice has been created. However, your client is running low on their balance. Please consider making a suggestion to your client to add to their balance before scheduling any more sessions."
       else
-        flash.notice = @by_tutor ? "Invoice has been created." : "Timesheet has been created"
+        flash.notice = @by_tutor ? "Invoice has been created." : "Timesheet has been created."
       end
     end
   end
