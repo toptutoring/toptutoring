@@ -24,12 +24,13 @@ feature 'Set up account' do
       expect(page).to have_content(student_name)
     end
 
-    scenario "unsuccessfully when user doesn't provide a phone number", js: true do
-      sign_in(client)
+    scenario "successfully when user provides an invalid phone number", js: true do
+      sign_in(client_as_student)
 
-      click_link "Next"
+      fill_in "user_phone_number", with: "1"
+      click_link "Finish"
 
-      expect(page).to have_content("This value is required.")
+      expect(page).to have_content("Please input a valid phone number.")
     end
 
     scenario "successfully when user doesn't provide a student email", js: true do
