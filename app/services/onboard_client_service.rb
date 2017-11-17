@@ -14,7 +14,7 @@ class OnboardClientService
       engagement = create_engagement
       engagement.persisted? ? success : failure(engagement.errors.messages)
     else
-      failure "Please input a valid phone number."
+      failure I18n.t("app.signup.phone_validation")
     end
   end
 
@@ -91,9 +91,7 @@ class OnboardClientService
   end
 
   def success
-    message = "Thank you for finishing the sign up process!" \
-      " We are in the process of finding a great tutor for you." \
-      " If you have any questions in the mean time, feel free to contact us!"
+    message = I18n.t("app.signup.success_message")
     Result.new(true, message)
   end
 
