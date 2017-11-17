@@ -18,7 +18,7 @@ module Admin
       private
 
       def set_funding_source
-        @funding_source = FundingSource.last
+        @funding_source = FundingSource.first
       end
 
       def create_payment
@@ -32,8 +32,10 @@ module Admin
 
       def payment_params
         params.require(:payment)
-          .permit(:amount, :description, :payee_id)
-          .merge(source: @funding_source.funding_source_id, payer: current_user)
+              .permit(:amount, :description, :payee_id)
+              .merge(source: @funding_source.funding_source_id,
+                     payer: @funding_source.user,
+                     approver: current_user)
       end
 
       def process_payment

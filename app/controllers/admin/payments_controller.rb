@@ -38,7 +38,8 @@ module Admin
         description: @invoice.description,
         payee: @payee,
         source: @funding_source.funding_source_id,
-        payer: current_user,
+        payer: @funding_source.user,
+        approver: current_user,
         amount: @invoice.submitter_pay
       }
     end

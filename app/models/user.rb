@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   has_many :timesheets
   has_many :payments_received, class_name: "Payment", foreign_key: "payee_id"
   has_many :payments_made, class_name: "Payment", foreign_key: "payer_id"
+  has_many :payments_approved, class_name: "Payment", foreign_key: "approver_id"
   accepts_nested_attributes_for :subjects
   attribute :access_token
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
