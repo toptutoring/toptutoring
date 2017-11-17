@@ -2,8 +2,6 @@ require "sidekiq/web"
 
 Rails.application.routes.draw do
   get "/sign_in" => "sessions#new", as: "login"
-  get "/reset_password" => "passwords#new", as: "reset_password"
-  post "/passwords" => "passwords#create"
   get "/example_dashboard" => "pages#example_dashboard"
   get "/calendar" => "pages#calendar"
   get "/one_time_payment" => "one_time_payments#new"
@@ -14,6 +12,9 @@ Rails.application.routes.draw do
   post "payments/first_session_payment" => "payments#first_session_payment"
   post "payments/low_balance_payment" => "payments#low_balance_payment"
   post "payments/get_user_feedback" => "payments#get_user_feedback"
+
+  resource :password, only: [:edit]
+  get "/reset_password" => "passwords#new", as: "reset_password"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"
