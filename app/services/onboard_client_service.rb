@@ -6,19 +6,31 @@ class OnboardClientService
 
   Result = Struct.new(:success?, :message)
 
-  # This method returns a hash with keys :success?, and :message
   def onboard_client!
     if check_phone_number_and_update_client
-      set_student_info
-      @user.enable!
-      engagement = create_engagement
-      engagement.persisted? ? success : failure(engagement.errors.messages)
+      process_student_and_engagement
     else
       failure I18n.t("app.signup.phone_validation")
     end
   end
 
   private
+
+  def process_student_and_engagement
+    if @user.is_student?
+      process_engagement(@user)
+    elsif set_student_info
+      process_engagement(@student)
+    else
+      failure(@student.errors.full_messages)
+    end
+  end
+
+  def process_engagement(student)
+    @user.enable!
+    engagement = create_engagement(student)
+    engagement.persisted? ? success : failure(engagement.errors.full_messages)
+  end
 
   def check_phone_number_and_update_client
     return false unless phone_number_valid?
@@ -30,32 +42,36 @@ class OnboardClientService
   end
 
   def set_student_info
+    set_student_without_creating_account
     if student_email_provided? && !student_email_matches_client?
-      create_and_email_student_user
+      save_and_email_student_user
     else
-      set_student_without_creating_account
+      true
     end
   end
 
   def student_email_provided?
     # If client has a student and if a student email has been given
     @params[:student] &&
-    @params[:student][:email].present? &&
-    @params[:student][:email] != @params[:email]
+      @params[:student][:email].present? &&
+      @params[:student][:email] != @params[:email]
+  end
+
+  def set_student_without_creating_account
+    @student = User.new(student_params)
   end
 
   def student_email_matches_client?
     @params[:student][:email].downcase == @user.email
   end
 
-  def create_and_email_student_user
-    @student = User.create(student_params)
+  def save_and_email_student_user
+    return false unless @student.save
     @user.students << @student
-    if @user.save
-      @student.enable!
-      @student.forgot_password!
-      SetStudentPasswordMailer.set_password(@student).deliver_now
-    end
+    @student.enable!
+    @student.forgot_password!
+    SetStudentPasswordMailer.set_password(@student).deliver_now
+    true
   end
 
   def student_params
@@ -66,19 +82,10 @@ class OnboardClientService
       roles: Role.where(name: 'student') }
   end
 
-  def set_student_without_creating_account
-    if @user.is_student?
-      @student_name = @user.name
-    else
-      @student_name = @params[:student][:name]
-    end
-    @student = @user
-  end
-
-  def create_engagement
+  def create_engagement(student)
     Engagement.create(
-      student_id: @student.id,
-      student_name: @student_name,
+      student_id: student.id || @user.id,
+      student_name: student.name,
       subject: @user.signup.subject,
       client_id: @user.id,
       academic_type: find_subject_type(@user.signup.subject)

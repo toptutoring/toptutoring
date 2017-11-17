@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   post "payments/first_session_payment" => "payments#first_session_payment"
   post "payments/low_balance_payment" => "payments#low_balance_payment"
   post "payments/get_user_feedback" => "payments#get_user_feedback"
-  post "users/email_is_unique" => "users#email_is_unique"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"
