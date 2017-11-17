@@ -22,9 +22,10 @@ feature 'Set up account' do
       expect(page).to have_content(client.name)
       expect(page).to have_content("Dashboard")
       expect(page).to have_content(student_name)
+      expect(page).to have_content("Thank you for finishing the sign up process!")
     end
 
-    scenario "successfully when user provides an invalid phone number", js: true do
+    scenario "unsuccessfully when user provides an invalid phone number", js: true do
       sign_in(client_as_student)
 
       fill_in "user_phone_number", with: "1"
@@ -43,6 +44,7 @@ feature 'Set up account' do
       click_link "Finish"
       expect(page).to have_content(client.name)
       expect(page).to have_content("Dashboard")
+      expect(page).to have_content("Thank you for finishing the sign up process!")
     end
 
     scenario "successfully when user is a student", js: true do
@@ -52,6 +54,7 @@ feature 'Set up account' do
 
       expect(page).to have_content(client.name)
       expect(page).to have_content("Dashboard")
+      expect(page).to have_content("Thank you for finishing the sign up process!")
     end
 
     scenario "successfully signs up with academic subject", js: true do
@@ -61,6 +64,7 @@ feature 'Set up account' do
 
       expect(page).to have_content(client_as_student.signup.subject)
       expect(page).to have_content("Academic")
+      expect(page).to have_content("Thank you for finishing the sign up process!")
     end
 
     scenario "successfully signs up with test prep subject", js: true do
@@ -70,6 +74,7 @@ feature 'Set up account' do
 
       expect(page).to have_content(subject_test_prep.name)
       expect(page).to have_content("Test Prep")
+      expect(page).to have_content("Thank you for finishing the sign up process!")
     end
   end
 end
