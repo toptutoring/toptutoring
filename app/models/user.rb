@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   has_many :timesheets
   has_many :payments_received, class_name: "Payment", foreign_key: "payee_id"
   has_many :payments_made, class_name: "Payment", foreign_key: "payer_id"
+  has_many :payments_approved, class_name: "Payment", foreign_key: "approver_id"
   accepts_nested_attributes_for :subjects
   attribute :access_token
   attr_encrypted :access_token, key: ENV.fetch("ENCRYPTOR_KEY")
@@ -70,18 +71,6 @@ class User < ActiveRecord::Base
 
   #### Setters ####
 
-  def roles=(roles)
-    if roles.is_a? Array
-      roles.each do |role|
-        role_id =  Role.find_by_name(role).id
-        self.user_roles.build(role_id: role_id)
-      end
-    else
-      role_id =  Role.find_by_name(roles).id
-      self.user_roles.build(role_id: role_id)
-    end
-  end
-
   def dwolla_access_token=(value)
     self.encrypted_access_token = nil
     self.encrypted_access_token_iv = nil
@@ -104,7 +93,7 @@ class User < ActiveRecord::Base
   end
 
   def has_role?(role)
-    roles.any? { |r| r.name == role }
+    roles.find_by_name(role)
   end
 
   def is_customer?

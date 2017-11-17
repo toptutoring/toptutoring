@@ -1,10 +1,10 @@
 class MassPaymentService
   attr_reader :messages, :errors, :payments
 
-  def initialize(type, payer)
+  def initialize(type, approver)
     @type = type
-    @payer = payer
-    @funding_source = FundingSource.last.funding_source_id
+    @approver = approver
+    @funding_source = FundingSource.first
     @messages = []
     @errors = []
     @paid_users = []
@@ -69,8 +69,8 @@ class MassPaymentService
   def payment_params(user, pending_items)
     ids = pending_items.pluck(:id).join(', ')
     { amount: pending_items_total_pay(pending_items),
-      payee: user, payer: @payer,
-      destination: user.auth_uid, source: @funding_source,
+      payee: user, payer: @funding_source.user, approver: @approver,
+      destination: user.auth_uid, source: @funding_source.funding_source_id,
       description: "Payment for invoices: #{ids}." }
   end
 
@@ -87,7 +87,7 @@ class MassPaymentService
     {
       _links: {
         source: {
-          href: source_url(@funding_source)
+          href: source_url(@funding_source.funding_source_id)
         }
       },
       items: payments_array

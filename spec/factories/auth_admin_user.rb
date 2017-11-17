@@ -3,7 +3,7 @@ FactoryGirl.define do
     name             { "Admin" }
     sequence(:email) { |n| "auth_admin#{n}@example.com" }
     password         { "password" }
-    roles            { "admin" }
+    roles            { Role.where(name: 'admin') }
     access_token     { "xxx-xxx" }
     refresh_token    { "xxx-xxx" }
     token_expires_at { Time.now + 60 }

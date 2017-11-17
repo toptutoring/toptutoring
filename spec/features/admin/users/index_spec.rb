@@ -1,10 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "List all users" do
-  before(:all) do
-    set_roles
-  end
-
   let(:admin) { FactoryGirl.create(:admin_user) }
   let(:student) { FactoryGirl.create(:student_user) }
   let(:tutor) { FactoryGirl.create(:tutor_user) }

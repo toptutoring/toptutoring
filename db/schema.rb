@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171115183842) do
+ActiveRecord::Schema.define(version: 20171117001206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20171115183842) do
     t.integer "payer_id"
     t.integer "payee_id"
     t.datetime "created_at"
+    t.integer "approver_id"
     t.index ["payee_id"], name: "index_payments_on_payee_id"
     t.index ["payer_id"], name: "index_payments_on_payer_id"
   end

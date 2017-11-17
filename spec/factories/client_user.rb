@@ -3,7 +3,7 @@ FactoryGirl.define do
     name          { "Client" }
     sequence(:email) { |n| "client_#{n}@example.com" }
     password      { "password" }
-    roles         { "client" }
+    roles         { Role.where(name: 'client') }
     access_state  { "enabled" }
     signup   { FactoryGirl.create(:signup) }
     customer_id   { "xxx" }

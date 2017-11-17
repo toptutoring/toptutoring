@@ -24,7 +24,7 @@ class UsersController < Clearance::SessionsController
         email: student_email,
         name: student_name,
         password: SecureRandom.hex(10),
-        roles: 'student'
+        roles: Role.where(name: 'student')
       )
       current_user.students << student
       if current_user.save

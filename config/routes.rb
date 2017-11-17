@@ -40,6 +40,9 @@ Rails.application.routes.draw do
       resources :timesheets
       resources :roles
       resources :subjects
+      namespace :payments do
+        resource :miscellaneous_payment, only: [:new, :create]
+      end
     end
     mount Sidekiq::Web, at: "/sidekiq"
     get "/dashboard" => "dashboards#admin"
@@ -58,9 +61,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :payments, only: [:new, :create, :index]
       resources :invoices, only: [:index, :edit, :update] do
-        member do
-          patch :edit
-        end
+        patch :deny, on: :member
       end
       resources :tutors, only: [:index, :edit, :update]
       resources :funding_sources, only: [:new, :create, :edit, :update]

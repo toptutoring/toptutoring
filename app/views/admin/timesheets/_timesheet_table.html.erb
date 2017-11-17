@@ -21,13 +21,7 @@
           <td><%= number_to_currency(timesheet.submitter_pay) %></td>
           <td><%= timesheet.status %></td>
           <td>
-            <% if timesheet.status == 'pending' %>
-              <% payment_params = {payee_id: timesheet.submitter_id, payer_id: current_user.id, description: "#{name} for: #{description}"} %>
-              <%= link_to "Pay", admin_payments_path(timesheet: timesheet.id, payment: payment_params, amount: timesheet.amount), method: :post, data: { disable_with: "Submitting" }, class: "btn btn-sm btn-outline btn-primary" %>
-              <%= link_to "Deny", admin_timesheet_path(timesheet, timesheet: {status: 'denied'}), method: :patch, class: "btn btn-sm btn-outline btn-danger" %>
-            <% else %>
-              <p>No actions available</p>
-            <% end %>
+            <%= invoice_actions(timesheet) %>
           </td>
         </tr>
       <% end %>

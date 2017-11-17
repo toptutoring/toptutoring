@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "Navigate to payment as client" do
   let(:client) { FactoryGirl.create(:client_user) }

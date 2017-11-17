@@ -30,7 +30,7 @@ module Admin
       end
 
       def validate_funding_source
-        return unless FundingSource.last.nil?
+        return unless FundingSource.first.nil?
         flash[:danger] = "You must select a funding source before making a payment."
         redirect_back(fallback_location: (request.referer || root_path)) and return
       end

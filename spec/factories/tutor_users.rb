@@ -3,7 +3,7 @@ FactoryGirl.define do
     name                { "Tutor" }
     sequence(:email) { |n| "tutor_#{n}@example.com" }
     password            { "password" }
-    roles               { "tutor" }
+    roles               { Role.where(name: 'tutor') }
     auth_uid            { ENV.fetch("DWOLLA_DEV_TUTOR_AUTH_UID") }
     access_token        { "xxx-xxx" }
     refresh_token       { "xxx-xxx" }

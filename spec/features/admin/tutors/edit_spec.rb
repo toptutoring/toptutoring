@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "Edit tutor" do
   let(:admin) { FactoryGirl.create(:admin_user) }

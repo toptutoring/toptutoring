@@ -1,6 +1,6 @@
 <%= form_for(@invoice, url: admin_invoice_path(@invoice), :html =>
                                         { class: "form-horizontal" }) do |f| %>
-  <p>Tutor: <%= @invoice.tutor.name %></p>
+  <p>Submitter: <%= @invoice.submitter.name %></p>
   <p>Date Submitted: <%= @invoice.created_at.strftime("%-m/%-e/%y")  %></p>
 
   <div class="form-group">

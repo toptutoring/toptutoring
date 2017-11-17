@@ -22,6 +22,18 @@ module InvoiceHelper
     end
   end
 
+  def invoice_actions(invoice)
+    return "No actions available" unless invoice.status == 'pending'
+    link_to("Edit", edit_admin_invoice_path(invoice),
+            class: "btn btn-sm btn-outline btn-primary") +
+      link_to("Pay", admin_payments_path({ invoice: invoice }),
+              method: :post, data: { disable_with: 'Submitting' },
+              class: "btn btn-sm btn-outline btn-primary") +
+      link_to("Deny", deny_admin_invoice_path(invoice),
+              data: { disable_with: 'Updating' },
+              method: :patch, class: "btn btn-sm btn-outline btn-danger")
+  end
+
   private
 
   def authorized_to_pay?(invoices, type)

@@ -1,17 +1,11 @@
 module Admin
   class PaymentsController < ApplicationController
     before_action :require_login
-    before_action :set_auth_tutor, only: :new
-    before_action :set_funding_source, :validate_funding_source, :set_payee, :set_invoice, only: :create
-
+    before_action :set_funding_source, :validate_funding_source, :set_invoice, :set_payee, only: :create
+    
     def index
       @client_payments = Payment.from_clients
       @tutor_payments = Payment.to_tutor
-    end
-
-    def new
-      @payment = Payment.new
-      @tutors = User.tutors
     end
 
     def create
@@ -27,16 +21,7 @@ module Admin
     private
 
     def payment_within_balance?
-      return true unless @invoice
-      @payee = User.find(params[:payment][:payee_id])
       @payee.outstanding_balance >= @invoice.hours
-    end
-
-    def payment_params
-      amount = params[:amount].to_money
-      params.require(:payment)
-            .permit(:source, :description, :payee_id, :payer_id)
-            .merge(amount: amount, source: @funding_source.funding_source_id)
     end
 
     def create_payment
@@ -48,28 +33,39 @@ module Admin
       end
     end
 
+    def payment_params
+      {
+        description: @invoice.description,
+        payee: @payee,
+        source: @funding_source.funding_source_id,
+        payer: @funding_source.user,
+        approver: current_user,
+        amount: @invoice.submitter_pay
+      }
+    end
+
     def process_payment
       @transfer = PaymentGatewayDwolla.new(@payment)
       @transfer.create_transfer
       if @transfer.error.nil?
         @payment.save!
-        adjust_balances if @invoice
+        adjust_balance_and_update_status_for_invoice
         flash.notice = "Payment is being processed."
       else
         flash[:danger] = @transfer.error
       end
     end
 
-    def set_payee
-      @payee = User.find(payment_params[:payee_id])
+    def set_invoice
+      @invoice = Invoice.find(params[:invoice])
     end
 
-    def set_invoice
-      @invoice = Invoice.find(params[:invoice].to_i) if params[:invoice]
+    def set_payee
+      @payee = @invoice.submitter
     end
 
     def set_funding_source
-      @funding_source = FundingSource.last
+      @funding_source = FundingSource.first
     end
 
     def validate_funding_source
@@ -78,11 +74,7 @@ module Admin
       redirect_back(fallback_location: dashboard_path)
     end
 
-    def set_auth_tutor
-      @tutors = User.tutors_with_external_auth
-    end
-
-    def adjust_balances
+    def adjust_balance_and_update_status_for_invoice
       CreditUpdater.new(@invoice).process_payment_of_invoice!
     end
   end
