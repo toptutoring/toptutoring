@@ -22,7 +22,7 @@ class CreateStudentService
     @student.client_id = @client.id
     @student.save!
     @student.forgot_password!
-    SetStudentPasswordMailer.set_password(@student.id).deliver_now
+    SetStudentPasswordMailer.mail_student(@student).deliver_later
   end
 
   def create_engagement!(subject)
