@@ -30,10 +30,7 @@ module Users
     end
 
     def notify_through_slack_and_emails
-      SLACK_NOTIFIER.ping "A new user has signed up.\n" \
-        "Name: #{@user.name}\n" \
-        "Email: #{@user.email}\n" \
-        "Comments: #{@user.signup.comments}\n"
+      SlackNotifier.notify_user_signup_start(@user)
       UserNotifierMailer.send_signup_email(@user).deliver_now
       NewClientNotifier.perform(@user, User.admin_and_directors)
     end

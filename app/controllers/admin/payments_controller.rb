@@ -58,7 +58,7 @@ module Admin
     end
 
     def ping_slack
-      SLACK_NOTIFIER.ping "A payment has been made to #{@payee.name} for $#{@payment.amount} by #{current_user.name}"
+      SlackNotifier.notify_payment_made(@payment)
     end
 
     def set_invoice

@@ -33,15 +33,6 @@ class UsersController < Clearance::SessionsController
   end
 
   def ping_slack
-    if flash[:error]
-      message = "#{current_user.name} attempted to finish sign up, but failed.\n" \
-        "#{flash[:error]}"
-    else
-      message = "#{current_user.name} finished the sign up process.\n" \
-        "Contact info for new client:\n" \
-        "Email: #{current_user.email}\n" \
-        "Phone Number: #{current_user.phone_number}"
-    end
-    SLACK_NOTIFIER.ping message
+    SlackNotifier.notify_user_signed_up(current_user)
   end
 end

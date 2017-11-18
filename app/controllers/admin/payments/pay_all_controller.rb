@@ -27,14 +27,7 @@ module Admin
       end
 
       def ping_slack
-        message = "A mass payment was attempted.\n"
-        if @payment_service.messages.any?
-          message += "Messages\n" + @payment_service.messages.join("\n")
-        end
-        if @payment_service.errors
-          message += "Errors\n" + @payment_service.errors.join("\n")
-        end
-        SLACK_NOTIFIER.ping message
+        SlackNotifier.notify_mass_payment_made(@payment_service)
       end
 
       def payment_successful?
