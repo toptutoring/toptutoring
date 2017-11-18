@@ -9,6 +9,7 @@ feature 'Set up account' do
 
   context "new user signs up" do
     scenario "successfully when user has a student", js: true do
+      FactoryGirl.create(:admin_user)
       sign_in(client)
 
       fill_in "user_phone_number", with: "0000000000"
@@ -16,13 +17,15 @@ feature 'Set up account' do
 
       student_name = 'Student Name'
       fill_in "user_student_name", with: student_name
-      fill_in "user_student_email", with: "student@example.com"
+      fill_in "user_student_email", with: "new_student@example.com"
       click_link "Finish"
 
       expect(page).to have_content(client.name)
       expect(page).to have_content("Dashboard")
       expect(page).to have_content(student_name)
       expect(page).to have_content("Thank you for finishing the sign up process!")
+      # sends email to new student and admin
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
 
     scenario "unsuccessfully when user provides an invalid phone number", js: true do
