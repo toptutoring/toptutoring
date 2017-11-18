@@ -18,9 +18,8 @@ Rails.application.configure do
     Bullet.bullet_logger = true
     Bullet.rails_logger = true
   end
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: "localhost", port: 1025 }
-  config.action_mailer.default_url_options = { :host => "localhost:3000" }
+  # During development, emails are saved as files in tmp/mails
+  config.action_mailer.delivery_method = :file
   config.active_support.deprecation = :log
   config.active_record.migration_error = :page_load
   config.assets.debug = true
