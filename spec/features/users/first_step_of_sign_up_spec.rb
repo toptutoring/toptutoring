@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Create user' do
+feature 'Create user as first step of sign up process' do
   context "with valid params" do
     scenario 'when user is student' do
       visit client_sign_up_path

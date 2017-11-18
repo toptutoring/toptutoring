@@ -30,26 +30,3 @@
     </div>
   <% end %>
 </fieldset>
-
-<script>
-  function checkIfEmailUnique(id) {
-
-    var inputEmail = document.getElementById(id).value;
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = "text/javascript";
-
-    function requestListener() {
-      eval(xhr.responseText);
-    }
-
-    xhr.addEventListener("load", requestListener)
-    xhr.open('POST', '<%= users_email_is_unique_path %>', true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send('{"user_student_email":"'+inputEmail+'"}');
-  }
-
-  function showStudentEmailInfo() {
-    document.getElementById("student_email_info").style.visibility = "visible";
-  }
-
-</script>

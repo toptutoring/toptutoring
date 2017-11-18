@@ -5,7 +5,6 @@ en:
         "%m/%d/%Y"
       with_weekday:
         "%a %m/%d/%y"
-
   time:
     formats:
       default:
@@ -14,6 +13,39 @@ en:
         "%b %-d, %Y"
       short:
         "%B %d"
-
   titles:
     application: Top Tutoring
+  app:
+    signup:
+      success_message: |
+        Thank you for finishing the sign up process!
+        We are in the process of finding a great tutor for you.
+        If you have any questions in the mean time, feel free to contact us!
+      phone_validation: "Please input a valid phone number."
+  # activerecord translations.
+  # for default messages, left blank.
+  # intentionally placed, so translators will remember to translate
+  # comments show current default message
+  activerecord:
+    models:
+      engagement: # Engagement
+    attributes:
+      engagement:
+        student: # Student
+        client: # Client
+        tutor: # Tutor
+        student_name: # Student name
+        academic_type: # Academic type
+        subject: # Subject
+        state: # State
+  errors:
+    models:
+      engagement:
+        attributes:
+          student_name:
+            blank: # can't be blank
+          client:
+            blank: # can't be blank
+          academic_type:
+            blank: # can't be blank
+

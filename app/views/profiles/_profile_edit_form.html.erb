@@ -1,12 +1,12 @@
 <div class="col-md-6 center-block">
-<%= form_for current_user, url: { action: "profile_edit" }, html: { class: "form-horizontal" } do |f| %>
+<%= form_for current_user, url: profile_path, html: { class: "form-horizontal" } do |f| %>
 
   <div class ="form-group">
     <div class ="col-lg-4">
     <%= label_tag(:name, "Name", class: "pull-right control-label") %>
     </div>
     <div class="col-lg-8">
-      <%= f.text_field :name %>
+      <%= f.text_field :name, required: true %>
     </div>
   </div>
 
@@ -15,7 +15,7 @@
     <%= label_tag(:phone_number, "Phone Number", class: "pull-right control-label") %>
     </div>
     <div class="col-lg-8">
-    <%= f.text_field :phone_number %>
+    <%= f.text_field :phone_number, required: true %>
     </div>
   </div>
 

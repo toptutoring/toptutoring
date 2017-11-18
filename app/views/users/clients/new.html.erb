@@ -30,20 +30,20 @@
           <% end %>
 
           <div class="col-md-12">
-            <%= form.text_field :name, type: "text", placeholder: "FULL NAME" %>
+            <%= form.text_field :name, type: "text", placeholder: "FULL NAME", required: true %>
           </div>
 
           <div class="col-md-12">
-            <%= form.email_field :email, type: "text", placeholder: "YOUR EMAIL" %>
+            <%= form.email_field :email, type: "text", placeholder: "YOUR EMAIL", required: true %>
           </div>
 
           <div class="col-md-12">
-            <%= form.password_field :password, placeholder: "PASSWORD" %>
+            <%= form.password_field :password, placeholder: "PASSWORD", required: true %>
           </div>
 
           <%= form.fields_for :signup do |client_field| %>
             <div class="col-md-12">
-              <%= client_field.select :subject, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), prompt: "Subject", class:"wpcf7-form-control wpcf7-select subject-select" %>
+              <%= client_field.select :subject, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), prompt: "Subject", required: true, class:"wpcf7-form-control wpcf7-select subject-select" %>
             </div>
 
           </br>

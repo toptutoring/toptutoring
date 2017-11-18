@@ -10,14 +10,10 @@ Rails.application.routes.draw do
   post "/payments/one_time" => "one_time_payments#create"
   get "/confirmation" => "one_time_payments#confirmation"
   get "payment" => "pages#payment"
-  get "/profile" => "users#profile"
   get "/sign_up" => "users/clients#new", as: "client_sign_up"
-  get "profile/edit" => "users#profile_edit", as: "profile_edit"
-  patch "profile/edit" => "users#profile_update", as: "profile_update"
   post "payments/first_session_payment" => "payments#first_session_payment"
   post "payments/low_balance_payment" => "payments#low_balance_payment"
   post "payments/get_user_feedback" => "payments#get_user_feedback"
-  post "users/email_is_unique" => "users#email_is_unique"
 
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"
@@ -33,6 +29,8 @@ Rails.application.routes.draw do
     end
     resource :masquerade, only: :destroy
   end
+
+  resource :profile, only: [:edit, :show, :update]
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
     namespace :admin do

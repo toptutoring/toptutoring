@@ -22,6 +22,16 @@ feature 'Set up account' do
       expect(page).to have_content(client.name)
       expect(page).to have_content("Dashboard")
       expect(page).to have_content(student_name)
+      expect(page).to have_content("Thank you for finishing the sign up process!")
+    end
+
+    scenario "unsuccessfully when user provides an invalid phone number", js: true do
+      sign_in(client_as_student)
+
+      fill_in "user_phone_number", with: "1"
+      click_link "Finish"
+
+      expect(page).to have_content("Please input a valid phone number.")
     end
 
     scenario "successfully when user doesn't provide a student email", js: true do
@@ -32,33 +42,39 @@ feature 'Set up account' do
 
       fill_in "user_student_name", with: "Student"
       click_link "Finish"
-
       expect(page).to have_content(client.name)
       expect(page).to have_content("Dashboard")
+      expect(page).to have_content("Thank you for finishing the sign up process!")
     end
 
     scenario "successfully when user is a student", js: true do
       sign_in(client_as_student)
+      fill_in "user_phone_number", with: "0000000000"
       click_link "Finish"
 
       expect(page).to have_content(client.name)
       expect(page).to have_content("Dashboard")
+      expect(page).to have_content("Thank you for finishing the sign up process!")
     end
 
     scenario "successfully signs up with academic subject", js: true do
       sign_in(client_as_student)
+      fill_in "user_phone_number", with: "0000000000"
       click_link "Finish"
 
       expect(page).to have_content(client_as_student.signup.subject)
       expect(page).to have_content("Academic")
+      expect(page).to have_content("Thank you for finishing the sign up process!")
     end
 
     scenario "successfully signs up with test prep subject", js: true do
       sign_in(client_with_test_prep)
+      fill_in "user_phone_number", with: "0000000000"
       click_link "Finish"
 
       expect(page).to have_content(subject_test_prep.name)
       expect(page).to have_content("Test Prep")
+      expect(page).to have_content("Thank you for finishing the sign up process!")
     end
   end
 end
