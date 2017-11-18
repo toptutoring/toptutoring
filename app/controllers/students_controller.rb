@@ -7,29 +7,13 @@ class StudentsController < ApplicationController
 
   def create
     @student = Clearance.configuration.user_model.new(student_params)
-    @student.password = SecureRandom.hex(10)
-    @student.client_id = current_user.id
-    if @student.save
-      if @student.email.present?
-        @student.forgot_password!
-        SetStudentPasswordMailer.set_password(@student.id).deliver_now
-      end
-      engagement = Engagement.new(
-        student_id: @student.id,
-        student_name: @student.name,
-        client_id: current_user.id,
-        subject: student_academic_info_and_subject[:subject],
-        academic_type: student_academic_info_and_subject[:academic_type]
-      )
-      if engagement.save
-        redirect_to students_path, notice: 'Student successfully created'
-      else
-        redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: engagement.errors.full_messages })
-      end
+    results = process_request(@student)
+    if results.success?
+      flash.notice = results.messages
+      redirect_to students_path
     else
-      redirect_back(fallback_location: (request.referer || root_path),
-                    flash: { error: @student.errors.full_messages })
+      flash.alert = results.messages
+      render :new
     end
   end
 
@@ -39,12 +23,16 @@ class StudentsController < ApplicationController
 
   private
 
+  def process_request(student)
+    create_student_service = CreateStudentService.new(student, current_user)
+    create_student_service.create_student_and_engagement!(subject)
+  end
+
   def student_params
-    params.require(:user).permit(:name, :email, :phone_number).merge(roles: "student")
+    params.require(:user).permit(:name, :email).merge(roles: Role.where(name: "student"))
   end
 
-  def student_academic_info_and_subject
-    params.require(:info).permit(:academic_type, :subject)
+  def subject
+    Subject.find(params[:engagement][:subject])
   end
-
 end

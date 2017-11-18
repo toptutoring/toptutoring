@@ -7,16 +7,11 @@
     <%= f.email_field :email, class:"form-control", placeholder: "Email" %>
   </div>
 
-  <div class="form-group">
-    <input type="text" class="form-control" name="info[subject]" placeholder="Subject" title="Subject your student is signing up for." required />
-  </div>
-
-  <div class="form-group">
-    <select name="info[academic_type]" required>
-      <option value="Academic">Academic</option>
-      <option value="Test_Prep">Test Preparation</option>
-    </select>
-  </div>
+  <%= fields_for @student.engagements.build do |engagement_field| %>
+    <div class="form-group">
+      <%= engagement_field.select :subject, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), prompt: "Subject", required: true, class:"form-control" %>
+    </div>
+  <% end %>
 
   <div class="text-center">
     <%= f.submit "Submit", class: "btn btn-outline btn-blue" %>
