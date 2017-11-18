@@ -1,5 +1,5 @@
 class NewTutorNotifierMailer < ApplicationMailer
-  default from: 'tutor@toptutoring.org'
+  default from: 'tutor@toptutoring.com'
 
   def welcome(new_user, users)
     @new_user = new_user

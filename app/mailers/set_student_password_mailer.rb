@@ -1,5 +1,5 @@
 class SetStudentPasswordMailer < ApplicationMailer
-  default from: 'tutor@toptutoring.org'
+  default from: 'tutor@toptutoring.com'
 
   def set_password(user_id)
     @user = User.find(user_id)

@@ -1,5 +1,5 @@
 class UserNotifierMailer < ApplicationMailer
-  default from: 'tutor@toptutoring.org'
+  default from: 'tutor@toptutoring.com'
 
   def send_signup_email(user)
     @user = user
