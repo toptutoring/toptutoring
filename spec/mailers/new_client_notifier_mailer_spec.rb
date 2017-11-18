@@ -3,7 +3,7 @@ require "rails_helper"
 describe NewClientNotifierMailer do
   let(:director) { build_stubbed(:director_user) }
   let(:client) { build_stubbed(:client_user) }
-  let (:email) { NewClientNotifierMailer.mail_admin_and_directors(client, director) }
+  let (:email) { NewClientNotifierMailer.started_sign_up(client) }
 
   it "delivers an notification email" do
     expect(email.to).to eq([director.email])

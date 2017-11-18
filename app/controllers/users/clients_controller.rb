@@ -32,7 +32,7 @@ module Users
     def notify_through_slack_and_emails
       SlackNotifier.notify_user_signup_start(@user)
       UserNotifierMailer.send_signup_email(@user).deliver_later
-      NewClientNotifierMailer.mail_admin_and_directors(@user).deliver_later
+      NewClientNotifierMailer.started_sign_up(@user).deliver_later
     end
 
     def redirect_to_root
