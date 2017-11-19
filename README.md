@@ -37,6 +37,16 @@ you can deploy to staging and production with:
     $ ./bin/deploy staging
     $ ./bin/deploy production
 
+## Live Styleguide Through Storybook
+
+We will be using storybook as our live styleguide. This means you can
+use storybook to see which components we currently using on our site as
+well as develop new components and see your changes in storybook as you
+develop.
+
+To run storybook make sure your assets are compiled through rails and run
+    % npm run storybook
+
 ## Dig Deeper
 
 [Check out our wiki](https://github.com/plexmate/toptutoring/wiki) for a more detailed installation guide as well as in depth explanation of our code and process.

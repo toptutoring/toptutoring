@@ -8,6 +8,10 @@
     "react-dom": "^16.1.1"
   },
   "devDependencies": {
+    "@storybook/react": "^3.2.16",
     "webpack-dev-server": "^2.9.4"
+  },
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook"
   }
 }
