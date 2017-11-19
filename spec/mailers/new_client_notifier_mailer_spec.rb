@@ -1,13 +1,16 @@
 require "rails_helper"
 
 describe NewClientNotifierMailer do
-  let(:director) { build_stubbed(:director_user) }
+  let!(:admin) { FactoryGirl.create(:admin_user) }
+  let!(:director) { FactoryGirl.create(:director_user) }
   let(:client) { build_stubbed(:client_user) }
   let (:email) { NewClientNotifierMailer.started_sign_up(client) }
 
   it "delivers an notification email" do
-    expect(email.to).to eq([director.email])
+    email.deliver_now
+    expect(email.bcc).to include(admin.email, director.email)
     expect(email.from).to eq(["tutor@toptutoring.com"])
-    expect(email.subject).to eq("#{client.name} has just registered")
+    expect(email.subject).to eq("#{client.name} has begun the signup process as a client")
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
   end
 end

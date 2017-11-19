@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Set up account' do
+  let!(:admin) { FactoryGirl.create(:admin_user) }
   let(:client) { FactoryGirl.create(:client_user, access_state: "disabled") }
   let(:client_as_student) { FactoryGirl.create(:client_user, :as_student, access_state: "disabled") }
   let(:subject_test_prep) { FactoryGirl.create(:subject, tutoring_type: 'test_prep') }
@@ -9,7 +10,7 @@ feature 'Set up account' do
 
   context "new user signs up" do
     scenario "successfully when user has a student", js: true do
-      FactoryGirl.create(:admin_user)
+      
       sign_in(client)
 
       fill_in "user_phone_number", with: "0000000000"

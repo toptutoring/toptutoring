@@ -6,11 +6,13 @@ require "rails_helper"
     let!(:tutor) { FactoryGirl.create(:tutor_user) }
 
     it 'does not send notifications to tutor' do
+      director = FactoryGirl.create(:director_user)
+
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
         password: 'some_password', signup_attributes: { student: false } } }
 
-      expect(ActionMailer::Base.deliveries.count).to eq(1)
-      expect(ActionMailer::Base.deliveries.last.to).to eq(['some_email@toptutoring.com'])
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
+      expect(ActionMailer::Base.deliveries.first.to).to eq(['some_email@toptutoring.com'])
     end
 
     it 'sends notifications to director' do
@@ -20,17 +22,17 @@ require "rails_helper"
         password: 'some_password', signup_attributes: { student: false } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
-      expect(ActionMailer::Base.deliveries.map(&:to)).to include([director.email])
+      expect(ActionMailer::Base.deliveries.map(&:bcc)).to include([director.email])
     end
 
     it 'sends notifications to tutor director' do
-      tutor.roles = Role.where(name: "director")
+      tutor.roles << Role.where(name: "director")
 
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
         password: 'some_password', signup_attributes: { student: false } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
-      expect(ActionMailer::Base.deliveries.map(&:to)).to include([tutor.email])
+      expect(ActionMailer::Base.deliveries.map(&:bcc)).to include([tutor.email])
     end
 
     it 'sends notifications to admin' do
@@ -40,7 +42,7 @@ require "rails_helper"
         password: 'some_password', signup_attributes: { student: false } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
-      expect(ActionMailer::Base.deliveries.map(&:to)).to include([admin.email])
+      expect(ActionMailer::Base.deliveries.map(&:bcc)).to include([admin.email])
     end
   end
 end

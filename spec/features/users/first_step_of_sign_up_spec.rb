@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 feature 'Create user as first step of sign up process' do
+  let(:admin) { FactoryGirl.create(:admin_user) }
+
   context "with valid params" do
     scenario 'when user is student' do
-      FactoryGirl.create(:admin_user) # creates admin user to check if email is sent to admin
+      admin # creates admin user to check if email is sent to admin
       visit client_sign_up_path
 
       name = "Student"
@@ -20,6 +22,7 @@ feature 'Create user as first step of sign up process' do
     end
 
     scenario 'when user is tutor' do
+      admin
       visit new_users_tutor_path
 
       fill_in "user_name", with: 'tutor'
