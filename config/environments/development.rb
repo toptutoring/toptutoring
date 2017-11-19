@@ -19,7 +19,7 @@ Rails.application.configure do
     Bullet.rails_logger = true
   end
   # During development, emails are saved as files in tmp/mails
-  config.action_mailer.delivery_method = :file
+  config.action_mailer.delivery_method = :letter_opener
   config.active_support.deprecation = :log
   config.active_record.migration_error = :page_load
   config.assets.debug = true
