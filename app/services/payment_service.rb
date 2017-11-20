@@ -41,6 +41,7 @@ class PaymentService
     if new_payment = create_payment(payment, @user.id)
       update_client_credit(new_payment.amount_cents, @user.id, @academic_type) if new_payment.valid?
     end
+    new_payment
   end
 
   private

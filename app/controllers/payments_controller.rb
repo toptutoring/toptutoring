@@ -27,8 +27,9 @@ class PaymentsController < ApplicationController
 
     amount_in_cents = payment_params[:hours].to_i * rate.cents
     @payment_service = PaymentService.new(current_user.id, amount_in_cents, 'usd', params[:stripeToken], payment_params)
-    process_stripe_payment
+    payment_record = process_stripe_payment
     @payment_service.save_payment_info if params[:save_payment_info]
+    SlackNotifier.notify_payment_made(payment_record)
     redirect_back(fallback_location: (request.referer || root_path))
   end
 

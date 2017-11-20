@@ -50,10 +50,15 @@ module Admin
       if @transfer.error.nil?
         @payment.save!
         adjust_balance_and_update_status_for_invoice
+        ping_slack
         flash.notice = "Payment is being processed."
       else
         flash[:danger] = @transfer.error
       end
+    end
+
+    def ping_slack
+      SlackNotifier.notify_payment_made(@payment)
     end
 
     def set_invoice

@@ -17,25 +17,26 @@ gem "skylight"
 gem "sprockets", ">= 3.0.0"
 gem "title"
 gem "uglifier"
-gem 'bootstrap-sass', '~> 3.3.6'
+gem "bootstrap-sass", "~> 3.3.6"
 
 gem "bugsnag"
 gem "clearance"
-gem 'stripe', '~> 2.2.1'
+gem "stripe", "~> 2.2.1"
 gem "dwolla_v2", "~> 1.0"
 gem "newrelic_rpm"
 gem "omniauth"
 gem "omniauth-oauth2"
 gem "attr_encrypted", "~> 3.0.0"
 gem "responders"
-gem 'state_machines'
-gem 'state_machines-activerecord'
-gem 'activemodel-serializers-xml'
+gem "state_machines"
+gem "state_machines-activerecord"
+gem "activemodel-serializers-xml"
 gem "intercom-rails"
-gem 'cancancan', '~> 1.16'
-gem 'money-rails', '~> 1'
-gem 'clockwork', '~> 2.0'
-gem 'webpacker', '~> 3.0'
+gem "cancancan", "~> 1.16"
+gem "money-rails", "~> 1"
+gem "clockwork", "~> 2.0"
+gem "webpacker", "~> 3.0"
+gem "slack-notifier"
 
 group :development do
   gem "listen"
@@ -61,7 +62,7 @@ end
 
 group :test do
   gem "capybara-webkit"
-  gem 'codecov', require: false
+  gem "codecov", require: false
   gem "database_cleaner"
   gem "formulaic"
   gem "launchy"
@@ -69,11 +70,11 @@ group :test do
   gem "simplecov", require: false
   gem "timecop"
   gem "webmock"
-  gem 'fake_stripe'
-  gem 'sinatra', '~> 2.0.0.rc2', require: false
+  gem "fake_stripe"
+  gem "sinatra", "~> 2.0.0.rc2", require: false
   gem "vcr"
   gem "rspec-rails", "~> 3.5.0.beta4"
-  gem 'rspec_junit_formatter'
+  gem "rspec_junit_formatter"
   gem "m"
 end
 

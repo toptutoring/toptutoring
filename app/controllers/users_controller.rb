@@ -1,5 +1,6 @@
 class UsersController < Clearance::SessionsController
   before_action :require_login
+  after_action :ping_slack, only: [:update]
 
   def edit
     @user = current_user
@@ -29,5 +30,9 @@ class UsersController < Clearance::SessionsController
 
   def client_params
     params.require(:user).permit(:phone_number, student: [:name, :email])
+  end
+
+  def ping_slack
+    SlackNotifier.notify_user_signed_up(current_user)
   end
 end
