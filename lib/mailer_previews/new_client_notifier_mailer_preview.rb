@@ -1,8 +1,16 @@
 class NewClientNotifierMailerPreview < ActionMailer::Preview
-  def welcome
+  def started_sign_up
+    client_info = Struct.new(:subject, :comments)
+                        .new("Math", nil)
+    client = Struct.new(:email, :name, :created_at, :signup)
+                   .new("client@example.com", "Client", Time.current, client_info)
+    NewClientNotifierMailer.started_sign_up(client)
+  end
+
+  def finished_sign_up
     client_info = Struct.new(:subject, :comments).new("Math", nil)
-    client = Struct.new(:email, :name, :created_at, :client_info).new("client@example.com", "Client", Time.current, client_info, )
-    admin = Struct.new(:email, :name).new("admin@example.com", "Admin")
-    NewClientNotifierMailer.welcome(client, admin)
+    client = Struct.new(:email, :phone_number, :name, :created_at, :signup)
+                   .new("client@example.com", "510-TOP-TUTR", "Client", Time.current, client_info)
+    NewClientNotifierMailer.finished_sign_up(client)
   end
 end

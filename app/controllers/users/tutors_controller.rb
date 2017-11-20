@@ -13,7 +13,7 @@ module Users
       @user.build_contract
 
       if @user.save
-        NewTutorNotifierMailer.welcome(@user, User.admin_and_directors).deliver_now
+        NewTutorNotifierMailer.mail_admin_and_directors(@user).deliver_later
         sign_in(@user)
         redirect_to :root
       else

@@ -4,4 +4,8 @@ class Subject < ActiveRecord::Base
                         test_prep: "test_prep" }
 
   belongs_to :user
+
+  def academic_type
+    academic? ? "Academic" : "Test Prep"
+  end
 end

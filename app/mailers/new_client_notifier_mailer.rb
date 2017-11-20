@@ -1,10 +1,17 @@
 class NewClientNotifierMailer < ApplicationMailer
-  default from: 'tutor@toptutoring.org'
+  default from: 'tutor@toptutoring.com'
 
-  def welcome(new_user, notified_user)
+  def started_sign_up(new_user)
     @new_user = new_user
-    @user = notified_user
-    mail(to: @user.email,
-         subject: "#{@new_user.name} has just registered")
+    users = User.admin_and_directors
+    mail(bcc: users.map(&:email),
+         subject: "#{@new_user.name} has begun the signup process as a client")
+  end
+
+  def finished_sign_up(new_user)
+    @new_user = new_user
+    users = User.admin_and_directors
+    mail(bcc: users.map(&:email),
+         subject: "#{@new_user.name} has just finished the signup process as a client")
   end
 end

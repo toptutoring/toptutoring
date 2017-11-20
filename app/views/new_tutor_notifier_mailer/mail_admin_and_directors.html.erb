@@ -119,8 +119,8 @@
 																									</span>
 																								</span>
 																							</div>
-																							<div style="padding-top: 10px; padding-left: 30px;">Hello <%= @user.name %>,</div>
-																							<div style="padding-top: 10px; padding-left: 30px;"><%= @user.client.name %> has added you as a student to Top Tutoring. To set up a password and access your account <%= link_to "click here", edit_user_password_url(@user, token: @user.confirmation_token.html_safe) %>.  </div>
+																							<div style="padding-top: 10px; padding-left: 30px;">Hello,</div>
+																							<div style="padding-top: 10px; padding-left: 30px;">We are writing to let you know that <%= @new_user.name %>,  with email <%= @new_user.email %> has registered as a tutor at <%= @new_user.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%Y-%m-%d %I:%M %p") %>!</div>
 																							<div style="padding-top: 10px; padding-left: 30px;">Regards,</div>
 																							<div style="padding-left: 30px;">Top Tutoring</div>
 																						</td>

@@ -1,7 +1,6 @@
 class NewTutorNotifierMailerPreview < ActionMailer::Preview
-  def welcome
+  def mail_admin_and_directors
     tutor = Struct.new(:email, :name, :created_at).new("tutor@example.com", "Tutor", Time.current)
-    admin = Struct.new(:email, :name).new("admin@example.com", "Admin")
-    NewTutorNotifierMailer.welcome(tutor, [admin])
+    NewTutorNotifierMailer.mail_admin_and_directors(tutor)
   end
 end

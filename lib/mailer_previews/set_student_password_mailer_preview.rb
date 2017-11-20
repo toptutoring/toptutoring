@@ -1,7 +1,7 @@
 class SetStudentPasswordMailerPreview < ActionMailer::Preview
-  def set_password
+  def mail_student
     client = Struct.new(:name).new("Client")
-    student = Struct.new(:email, :name, :client, :confirmation_token).new('student@example.com', 'Student', client, 'xxx')
-    SetStudentPasswordMailer.set_password(student)
+    student = Struct.new(:email, :name, :id, :confirmation_token, :client).new("student@example.com", "Student", 'id', 'token', client)
+    SetStudentPasswordMailer.mail_student(student)
   end
 end

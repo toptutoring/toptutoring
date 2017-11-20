@@ -45,19 +45,14 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <% if current_user.nil? %>
       <%= render "authentication_header" %>
-    <% else %>
-      <%= render "user_header" %>
-      <%= render "menu" %>
-    <% end %>
 
     <div class="main-container login-container">
       <%= render "flashes" %>
       <%= yield %>
     </div>
 
-    <%= render "footer" if current_user.nil? %>
+    <%= render "footer" %>
 
     <%= render "javascript" %>
     <%= render "css_overrides" %>

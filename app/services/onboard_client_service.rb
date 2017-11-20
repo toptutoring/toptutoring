@@ -70,7 +70,7 @@ class OnboardClientService
     @user.students << @student
     @student.enable!
     @student.forgot_password!
-    SetStudentPasswordMailer.set_password(@student).deliver_now
+    SetStudentPasswordMailer.mail_student(@student).deliver_later
     true
   end
 

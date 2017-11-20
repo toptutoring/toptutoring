@@ -11,6 +11,7 @@ class UsersController < Clearance::SessionsController
     onboard_service = OnboardClientService.new(current_user, strong_params)
     results = onboard_service.onboard_client!
     if results.success?
+      NewClientNotifierMailer.finished_sign_up(current_user).deliver_later
       flash.notice = results.message
     else
       flash.alert = results.message

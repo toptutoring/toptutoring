@@ -11,7 +11,7 @@ class EmailsController < ApplicationController
   def create
     @email = Email.create(email_params)
     if @email.save
-      TutorMailer.perform(@email.id).deliver_now
+      TutorMailer.send_mail(@email).deliver_later
       redirect_to tutors_students_path, notice: 'Email has been sent!'
     else
       redirect_back(fallback_location: (request.referer || root_path),
