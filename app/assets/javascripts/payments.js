@@ -5,7 +5,7 @@ jQuery(function($) {
   // Client Payment page
   function setHourlyRate() {
     var type = $('.payment-academic-type').val();
-    if (type == 'Academic') {
+    if (type == 'academic') {
       $('.hourly-rate').val($('.hourly-rate').data('academic'));
     } else {
       $('.hourly-rate').val($('.hourly-rate').data('test-prep'));
