@@ -23,7 +23,7 @@ feature 'Dashboard Index' do
     expect(page).to have_content('Status')
 
     expect(page).to have_content(active_engagement.student.name)
-    expect(page).to have_content(active_engagement.subject)
+    expect(page).to have_content(active_engagement.subject.name)
     expect(page).to have_content(active_engagement.academic_type)
     expect(page).to have_content(active_engagement.state)
     expect(page).to have_content(active_engagement.client.test_prep_credit)
@@ -43,7 +43,7 @@ feature 'Dashboard Index' do
 
     expect(page).to have_content(pending_engagement.student.name)
     expect(page).to have_content(pending_engagement.client.name)
-    expect(page).to have_content(pending_engagement.subject)
+    expect(page).to have_content(pending_engagement.subject.name)
     expect(page).to have_content(pending_presenter.engagement_academic_type)
     expect(page).to have_content(pending_engagement.state)
     expect(page).to have_link("Edit")

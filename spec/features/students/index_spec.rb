@@ -21,6 +21,6 @@ feature 'Students Index' do
     expect(page).to have_content(engagement.student_name)
     expect(page).to have_content(client.email)
     expect(page).to have_content(client.phone_number)
-    expect(page).to have_content(engagement.subject)
+    expect(page).to have_content(engagement.subject.name)
     end
 end
