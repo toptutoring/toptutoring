@@ -26,7 +26,7 @@
                   <td><%= client.name %></td>
                   <td><%= client.email %></td>
                   <td><%= cleanup_phone_number(client.phone_number) %></td>
-                  <td><%= engagement.subject %></td>
+                  <td><%= engagement.subject.name %></td>
                   <td><%= engagement.academic_type %></td>
                   <% if engagement.academic_type == "Test_Prep" %>
                     <td><%= client.test_prep_credit %></td>

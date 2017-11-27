@@ -20,7 +20,7 @@
               <% @tutor_engagements.each do |engagement| %>
                 <tr>
                   <td><%= engagement.student_name %></td>
-                  <td class="text-center"><%= engagement.subject %></td>
+                  <td class="text-center"><%= engagement.subject.name %></td>
                   <td class="text-center"><%= engagement.academic_type %></td>
                   <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
                   <% if engagement.academic_type == "Academic" %>

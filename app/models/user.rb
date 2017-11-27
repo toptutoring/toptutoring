@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
   end
 
   def academic_types_engaged
-    engagements.pluck(:academic_type).uniq
+    engagements.joins(:subject).pluck('subjects.tutoring_type').uniq
   end
 
   def self.with_pending_invoices(type)

@@ -1,7 +1,6 @@
 class EngagementCreator
   def initialize(user, params, client)
     @user = user
-    @academic_type = client ? student_info.academic_type : params[:academic_type]
     @subject = client ? student_info.subject : params[:subject]
     @student_id = client ? student.id : @user.id
     @client = client
@@ -27,7 +26,6 @@ class EngagementCreator
       student_id: @student_id,
       subject: @subject,
       client_id: @user.id,
-      academic_type: @academic_type
     )
   end
 

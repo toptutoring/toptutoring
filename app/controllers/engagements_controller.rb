@@ -39,7 +39,8 @@ class EngagementsController < ApplicationController
   private
 
   def engagement_params
-    params.require(:engagement).permit(:tutor_id, :student_id, :client_id, :subject, :academic_type, :hourly_rate)
+    params.require(:engagement)
+          .permit(:tutor_id, :student_id, :client_id, :subject_id, :hourly_rate)
   end
 
   def set_engagement

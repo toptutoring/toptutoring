@@ -22,7 +22,7 @@
               <tr>
                 <td><%= engagement.tutor ? engagement.tutor.name : 'Pending' %></td>
                 <td><%= engagement.student_name %></td>
-                <td><%= engagement.subject %></td>
+                <td><%= engagement.subject.name %></td>
                 <td><%= engagement.academic_type %></td>
                 <td>
                   <% if engagement.availabilities.empty? %>

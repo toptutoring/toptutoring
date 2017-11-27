@@ -56,6 +56,6 @@ class DashboardsController < ApplicationController
   end
 
   def option_array(engagement, credit)
-    ["#{engagement.student_name} for #{engagement.subject} - #{credit} Credits", engagement.id]
+    ["#{engagement.student_name} for #{engagement.subject.name} - #{credit} Credits", engagement.id]
   end
 end

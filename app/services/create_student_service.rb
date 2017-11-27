@@ -30,8 +30,7 @@ class CreateStudentService
       student_id: @student.id || @client.id,
       student_name: @student.name,
       client_id: @client.id,
-      subject: subject.name,
-      academic_type: subject.academic_type
+      subject: subject,
     )
   end
 end

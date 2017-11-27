@@ -16,7 +16,7 @@
       <% invoices.each do |invoice| %>
         <tr>
           <td><%= invoice.client.name %></td>
-          <td><%= invoice.engagement.subject %></td>
+          <td><%= invoice.engagement.subject.name %></td>
           <td class="text-center"><%= invoice.engagement.academic_type %></td>
           <td class="text-center"><%= invoice.created_at %></td>
           <td class="text-center"><%= invoice.description %></td>

@@ -83,18 +83,13 @@ class OnboardClientService
   end
 
   def create_engagement(student)
+    subject = Subject.find_by_name(@user.signup.subject)
     Engagement.create(
       student_id: student.id || @user.id,
       student_name: student.name,
-      subject: @user.signup.subject,
+      subject: subject,
       client_id: @user.id,
-      academic_type: find_subject_type(@user.signup.subject)
     )
-  end
-
-  def find_subject_type(subject_name)
-    subject = Subject.find_by(name: subject_name)
-    subject.academic? ? 'Academic' : 'Test Prep'
   end
 
   def success
