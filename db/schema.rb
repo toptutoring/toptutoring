@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117001206) do
+ActiveRecord::Schema.define(version: 20171124000708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,15 +46,15 @@ ActiveRecord::Schema.define(version: 20171117001206) do
     t.integer "tutor_id"
     t.integer "student_id"
     t.string "state", default: "pending", null: false
-    t.string "subject"
-    t.string "academic_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "client_id"
     t.string "student_name"
     t.datetime "preferred_start_date"
+    t.bigint "subject_id"
     t.index ["client_id"], name: "index_engagements_on_client_id"
     t.index ["student_id"], name: "index_engagements_on_student_id"
+    t.index ["subject_id"], name: "index_engagements_on_subject_id"
     t.index ["tutor_id"], name: "index_engagements_on_tutor_id"
   end
 

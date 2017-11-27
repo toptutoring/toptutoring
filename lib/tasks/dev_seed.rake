@@ -97,8 +97,7 @@ namespace :dev do
       student_name: student1.name,
       student_id: student1.id,
       client_id: client.id,
-      subject: client.signup.subject,
-      academic_type: "Academic"
+      subject: Subject.find_by_name(client.signup.subject),
     )
     engagement.enable!
 
@@ -107,8 +106,7 @@ namespace :dev do
       student_name: student2.name,
       student_id: student2.id,
       client_id: client.id,
-      subject: client.signup.subject,
-      academic_type: "Test_Prep"
+      subject: Subject.find_by_name(client.signup.subject),
     )
     engagement.enable!
 
