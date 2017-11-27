@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_one :signup, dependent: :destroy
   accepts_nested_attributes_for :signup
   has_many :students, class_name: "User", foreign_key: "client_id"
+  has_many :student_accounts, foreign_key: "client_id"
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
   has_many :engagements, ->(user) { unscope(:where).where("tutor_id = ? OR client_id = ? OR student_id = ?", user.id, user.id, user.id) }
