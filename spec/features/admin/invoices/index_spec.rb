@@ -25,7 +25,7 @@ feature 'Invoices Index' do
     expect(page).to have_content('Action')
     expect(page).to have_content(invoice.engagement.tutor.name)
     expect(page).to have_content(invoice.updated_at.strftime("%-m/%-e/%y"))
-    expect(page).to have_content(invoice.engagement.academic_type)
+    expect(page).to have_content(invoice.engagement.academic_type.humanize)
     expect(page).to have_content(invoice.engagement.client.name)
     expect(page).to have_content(invoice.hours)
     expect(page).to have_content("59.00")

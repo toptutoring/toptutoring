@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :engagement do
-    subject       { FactoryGirl.create(:subject, tutoring_type: 'academic') }
+    subject       { FactoryGirl.create(:subject, academic_type: 'academic') }
     state         { "active" }
     tutor                 { FactoryGirl.create(:tutor_user) }
     client                { FactoryGirl.create(:client_user) }

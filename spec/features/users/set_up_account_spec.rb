@@ -4,7 +4,7 @@ feature 'Set up account' do
   let!(:admin) { FactoryGirl.create(:admin_user) }
   let(:client) { FactoryGirl.create(:client_user, access_state: "disabled") }
   let(:client_as_student) { FactoryGirl.create(:client_user, :as_student, access_state: "disabled") }
-  let(:subject_test_prep) { FactoryGirl.create(:subject, tutoring_type: 'test_prep') }
+  let(:subject_test_prep) { FactoryGirl.create(:subject, academic_type: 'test_prep') }
   let(:signup_test_prep) { FactoryGirl.create(:signup, :as_student, subject: subject_test_prep.name) }
   let(:client_with_test_prep) { FactoryGirl.create(:client_user, :as_student, signup: signup_test_prep, access_state: "disabled") }
 

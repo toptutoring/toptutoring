@@ -21,7 +21,7 @@ feature 'Invoices Index' do
 
     expect(page).to have_content(invoice.engagement.student.name)
     expect(page).to have_content(invoice.engagement.subject.name)
-    expect(page).to have_content(invoice.engagement.academic_type)
+    expect(page).to have_content(invoice.engagement.academic_type.humanize)
     expect(page).to have_content(invoice.created_at)
     expect(page).to have_content(invoice.description)
     expect(page).to have_content(invoice.hours)

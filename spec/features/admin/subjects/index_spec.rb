@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Subjects Index' do
   let(:admin) { FactoryGirl.create(:admin_user) }
   let!(:subject_academic) { FactoryGirl.create(:subject) }
-  let!(:subject_test_prep) { FactoryGirl.create(:subject, tutoring_type: 'test_prep') }
+  let!(:subject_test_prep) { FactoryGirl.create(:subject, academic_type: 'test_prep') }
 
   scenario 'when user is admin' do
     sign_in(admin)
