@@ -17,7 +17,7 @@
         <tr>
           <td><%= invoice.client.name %></td>
           <td><%= invoice.engagement.subject.name %></td>
-          <td class="text-center"><%= invoice.engagement.academic_type %></td>
+          <td class="text-center"><%= invoice.engagement.academic_type.humanize %></td>
           <td class="text-center"><%= invoice.created_at %></td>
           <td class="text-center"><%= invoice.description %></td>
           <td class="text-center"><%= invoice.hours %></span></td>

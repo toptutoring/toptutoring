@@ -17,7 +17,7 @@ module Admin
     private
 
     def update_status
-      @type = params[:subject][:tutoring_type]
+      @type = params[:subject][:academic_type]
       if @type == 'Academic'
         @subject.academic!
       elsif @type == 'Test Prep'

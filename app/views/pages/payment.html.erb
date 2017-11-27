@@ -62,7 +62,7 @@
                 <td><%= engagement.tutor.name %></td>
                 <td><%= engagement.student_name %></td>
                 <td><%= get_suggested_hours(engagement) %> hours</td>
-                <td><%= engagement.academic_type %></td>
+                <td><%= engagement.academic_type.humanize %></td>
                 <td>$<%= ((get_suggested_hours(engagement))*(get_tutor_rate(engagement))).floor(2) %></td>
               </tr>
             <% end %>

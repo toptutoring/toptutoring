@@ -23,7 +23,7 @@
                 <td><%= engagement.tutor ? engagement.tutor.name : 'Pending' %></td>
                 <td><%= engagement.student_name %></td>
                 <td><%= engagement.subject.name %></td>
-                <td><%= engagement.academic_type %></td>
+                <td><%= engagement.academic_type.humanize %></td>
                 <td>
                   <% if engagement.availabilities.empty? %>
                     <% availability_url = new_availability_url(engagement.availabilities.build) %>

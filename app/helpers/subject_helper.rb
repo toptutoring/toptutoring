@@ -14,7 +14,7 @@ module SubjectHelper
       ' ' +
       link_to("Switch to #{switch}",
               admin_subject_path(subject,
-                                 subject: { tutoring_type: switch }),
+                                 subject: { academic_type: switch }),
               class: "btn btn-outline btn-#{sw_class}", method: :patch)
   end
 end

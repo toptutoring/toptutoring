@@ -46,7 +46,7 @@ class DashboardsController < ApplicationController
     @tutor_engagements.each do |engagement|
       next if engagement.suggestions.any? { |suggestion| suggestion.status == "pending" }
       client =User.find(engagement.client_id)
-      if engagement.academic_type == "Test_Prep"
+      if engagement.academic_type == "test_prep"
         results << option_array(engagement, client.test_prep_credit) if client.test_prep_credit < 2
       else
         results << option_array(engagement, client.academic_credit) if client.academic_credit < 2

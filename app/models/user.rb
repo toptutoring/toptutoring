@@ -113,7 +113,7 @@ class User < ActiveRecord::Base
   end
 
   def credit_status(invoice)
-    invoice.engagement.academic_type.casecmp("academic") == 0 ? academic_credit : test_prep_credit
+    invoice.engagement.academic? ? academic_credit : test_prep_credit
   end
 
   def is_student?
@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
   end
 
   def academic_types_engaged
-    engagements.joins(:subject).pluck('subjects.tutoring_type').uniq
+    engagements.joins(:subject).pluck("subjects.academic_type").uniq
   end
 
   def self.with_pending_invoices(type)
