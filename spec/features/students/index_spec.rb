@@ -4,7 +4,8 @@ feature 'Students Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 20) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let!(:engagement) { FactoryGirl.create(:engagement, client: student.client, tutor: tutor, student: student, student_name: student.name) }
+  let(:student_account) { FactoryGirl.create(:student_account, user: student, client: client) }
+  let!(:engagement) { FactoryGirl.create(:engagement, client: client, tutor: tutor, student_account: student_account) }
 
   scenario 'when user is tutor' do
     sign_in tutor

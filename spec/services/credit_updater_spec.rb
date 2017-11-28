@@ -2,13 +2,15 @@ require "rails_helper"
 
 describe CreditUpdater do
   let(:client) { FactoryGirl.create(:client_user) }
+  let(:student) { FactoryGirl.create(:student_user, name: 'Something2') }
+  let(:student_account) { FactoryGirl.create(:student_account, user: student, client: client) }
   let(:submitter)  { FactoryGirl.create(:tutor_user) }
   let(:test_prep_subject) { FactoryGirl.create(:subject, academic_type: "test_prep") }
   let(:engagement) { FactoryGirl.create(:engagement,
                                         client: client,
                                         tutor: submitter,
-                                        subject: test_prep_subject, 
-                                        student: FactoryGirl.create(:student_user, name: 'Something2')) }
+                                        subject: test_prep_subject,
+                                        student_account: student_account) }
   let(:invoice) { FactoryGirl.create(:invoice, client: client, submitter: submitter, engagement: engagement, hours: 2) }
 
   describe "#process_creation_of_invoice!" do

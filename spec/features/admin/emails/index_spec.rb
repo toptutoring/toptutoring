@@ -6,10 +6,10 @@ feature 'Emails Index' do
     tutor = FactoryGirl.create(:tutor_user)
     client = FactoryGirl.create(:client_user)
     student = FactoryGirl.create(:student_user, client: client)
+    student_account = FactoryGirl.create(:student_account, user: student, client: client)
     engagement = FactoryGirl.create(:engagement,
       client: client,
-      student_name: student.name,
-      student: student,
+      student_account: student_account,
       tutor: tutor
     )
     invoice = FactoryGirl.create(:invoice, submitter: tutor, engagement: engagement, client: client)

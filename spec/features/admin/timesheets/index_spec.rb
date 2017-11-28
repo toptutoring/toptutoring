@@ -2,10 +2,7 @@ require 'rails_helper'
 
 feature 'Timesheet Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
   let(:admin) { FactoryGirl.create(:admin_user) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client) }
   let!(:timesheet) { FactoryGirl.create(:invoice, submitter: tutor, submitter_type: 'by_contractor', status: "pending", hours: 1) }
 
   scenario 'when user is admin' do

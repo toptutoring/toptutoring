@@ -4,7 +4,6 @@ FactoryGirl.define do
     state         { "active" }
     tutor                 { FactoryGirl.create(:tutor_user) }
     client                { FactoryGirl.create(:client_user) }
-    student               { FactoryGirl.create(:student_user, name: "Bobby") }
-    student_name          { student.name }
+    student_account               { FactoryGirl.create(:student_account) }
   end
 end

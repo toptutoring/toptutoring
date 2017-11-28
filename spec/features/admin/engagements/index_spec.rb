@@ -6,7 +6,8 @@ feature "Index engagements" do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client, state: "active") }
+  let(:student_account) { FactoryGirl.create(:student_account, user: student, client: client) }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client: client, state: "active") }
   let(:presenter) { EngagementPresenter.new(engagement) }
 
   context "when user is director" do

@@ -4,7 +4,8 @@ feature 'Create Invoice', js: true do
   let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 0) }
   let(:client) { FactoryGirl.create(:client_user, academic_credit: 50, test_prep_credit: 50) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student: student, student_name: student.name, client: client) }
+  let(:student_account) { FactoryGirl.create(:student_account, user: student, client: client) }
+  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student_account: student_account, client: client) }
   let(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, student: student) }
   let(:email) { FactoryGirl.create(:email, tutor: tutor, client: client) }
 
