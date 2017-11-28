@@ -17,19 +17,18 @@ class OnboardClientService
   private
 
   def process_student_and_engagement
-    if @user.is_student?
-      process_engagement(@user)
-    elsif set_student_info
-      process_engagement(@student)
-    else
-      failure(@student.errors.full_messages)
+    ActiveRecord::Base.transaction do
+      set_student_info unless @user.is_student?
+      process_engagement
     end
+    success
+  rescue ActiveRecord::RecordInvalid => e
+    failure(e)
   end
 
-  def process_engagement(student)
+  def process_engagement
     @user.enable!
-    engagement = create_engagement(student)
-    engagement.persisted? ? success : failure(engagement.errors.full_messages)
+    engagement = create_engagement
   end
 
   def check_phone_number_and_update_client
@@ -42,11 +41,10 @@ class OnboardClientService
   end
 
   def set_student_info
-    set_student_without_creating_account
     if student_email_provided? && !student_email_matches_client?
       save_and_email_student_user
     else
-      true
+      set_student_without_creating_account
     end
   end
 
@@ -57,36 +55,40 @@ class OnboardClientService
       @params[:student][:email] != @params[:email]
   end
 
-  def set_student_without_creating_account
-    @student = User.new(student_params)
-  end
-
   def student_email_matches_client?
     @params[:student][:email].downcase == @user.email
   end
 
   def save_and_email_student_user
-    return false unless @student.save
-    @user.students << @student
-    @student.enable!
-    @student.forgot_password!
-    SetStudentPasswordMailer.mail_student(@student).deliver_later
-    true
+    student = User.create!(student_params)
+    student.enable!
+    @student_account = StudentAccount.create!(student_account_params(student))
+    SetStudentPasswordMailer.mail_student(student).deliver_later
+    Result.new(true)
+  end
+
+  def student_account_params(student_user = nil)
+    { name: @params[:student][:name],
+      client: @user,
+      user: student_user }
   end
 
   def student_params
-    @student_name = @params[:student][:name]
     { email: @params[:student][:email],
-      name: @student_name,
+      name: @params[:student][:name],
       password: SecureRandom.hex(10),
+      client: @user,
       roles: Role.where(name: 'student') }
   end
 
-  def create_engagement(student)
+  def set_student_without_creating_account
+    @student_account = StudentAccount.create!(student_account_params)
+  end
+
+  def create_engagement
     subject = Subject.find_by_name(@user.signup.subject)
-    Engagement.create(
-      student_id: student.id || @user.id,
-      student_name: student.name,
+    Engagement.create!(
+      student_account: @student_account || @user.student_account,
       subject: subject,
       client_id: @user.id,
     )

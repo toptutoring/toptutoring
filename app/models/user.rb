@@ -7,10 +7,11 @@ class User < ActiveRecord::Base
   has_one :signup, dependent: :destroy
   accepts_nested_attributes_for :signup
   has_many :students, class_name: "User", foreign_key: "client_id"
+  has_one :student_account
   has_many :student_accounts, foreign_key: "client_id"
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
-  has_many :engagements, ->(user) { unscope(:where).where("tutor_id = ? OR client_id = ? OR student_id = ?", user.id, user.id, user.id) }
+  has_many :engagements, ->(user) { unscope(:where).where("tutor_id = ? OR client_id = ?", user.id, user.id) }
   has_many :tutor_engagements, class_name: "Engagement", foreign_key: "tutor_id", dependent: :destroy
   has_many :client_engagements, class_name: "Engagement", foreign_key: "client_id", dependent: :destroy
   has_many :student_engagements, class_name: "Engagement", foreign_key: "student_id", dependent: :destroy
@@ -35,6 +36,7 @@ class User < ActiveRecord::Base
   # Validation #
   validates_presence_of :name
   validate :credits_must_be_by_quarter_hours
+  validates :phone_number, length: { minimum: 3 }, allow_nil: true
 
   def credits_must_be_by_quarter_hours
     return if academic_credit % 0.25 == 0.0 && test_prep_credit % 0.25 == 0.0

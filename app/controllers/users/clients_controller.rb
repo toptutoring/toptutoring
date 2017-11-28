@@ -10,7 +10,7 @@ module Users
 
     def create
       @user = Clearance.configuration.user_model.new(signups_params)
-      if @user.save
+      if @user.save && create_student_account
         notify_through_slack_and_emails
         sign_in(@user)
         redirect_to :root
@@ -27,6 +27,12 @@ module Users
             .permit(:name, :email, :password,
                     signup_attributes: [:student, :subject, :comments])
             .merge(roles: Role.where(name: "client"))
+    end
+
+    def create_student_account
+      return true unless @user.is_student?
+      @user.create_student_account(client: @user, name: @user.name)
+      @user.student_account.persisted?
     end
 
     def notify_through_slack_and_emails

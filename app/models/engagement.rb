@@ -1,6 +1,6 @@
 class Engagement < ActiveRecord::Base
   # Associations
-  belongs_to :student, class_name: "User", foreign_key: "student_id"
+  belongs_to :student_account
   belongs_to :client, class_name: "User", foreign_key: "client_id"
   belongs_to :tutor, class_name: "User", foreign_key: "tutor_id"
   belongs_to :subject
@@ -15,7 +15,7 @@ class Engagement < ActiveRecord::Base
   scope :active, -> { where(state: :active) }
 
   #### Validations ####
-  validates_presence_of :student_name
+  validates_presence_of :student_account
   validates_presence_of :client
 
   #### State Machine ####
@@ -34,5 +34,13 @@ class Engagement < ActiveRecord::Base
 
   def updated?
     tutor
+  end
+
+  def student_name
+    student_account.name
+  end
+
+  def student
+    student_account.user
   end
 end
