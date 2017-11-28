@@ -3,9 +3,9 @@ require 'rails_helper'
 feature 'Dashboard Index' do
   let(:director) { FactoryGirl.create(:director_user) }
   let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:student_account) { FactoryGirl.create(:student_account, user: student, client: client) }
+  let(:client_account) { FactoryGirl.create(:client_account) }
+  let(:client) { client_account.user }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client_account) }
   let(:active_engagement) { FactoryGirl.create(:engagement, client: client, tutor: tutor, state: "active", student_account: student_account) }
   let(:active_presenter) { EngagementPresenter.new(active_engagement) }
   let(:pending_engagement) { FactoryGirl.create(:engagement, client: client, tutor: tutor, state: "pending", student_account: student_account) }

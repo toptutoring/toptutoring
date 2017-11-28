@@ -69,7 +69,7 @@ class OnboardClientService
 
   def student_account_params(student_user = nil)
     { name: @params[:student][:name],
-      client: @user,
+      client_account: @user.client_account,
       user: student_user }
   end
 

@@ -8,10 +8,10 @@ describe MassPaymentService do
   context "for invoices" do
     subject { MassPaymentService.new('by_tutor', admin) }
 
-    let(:client) { FactoryGirl.create(:client_user) }
-    let(:student) { FactoryGirl.create(:student_user, client: client) }
-    let(:student_account) { FactoryGirl.create(:student_account, user: student, client: client) }
-    let(:student_account_user_nil) { FactoryGirl.create(:student_account, user: nil, client: client) }
+    let(:client_account) { FactoryGirl.create(:client_account) }
+    let(:client) { client_account.user }
+    let(:student_account) { FactoryGirl.create(:student_account, client_account: client_account) }
+    let(:student_account_user_nil) { FactoryGirl.create(:student_account, user: nil, client_account: client_account) }
     let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client: client) }
     let!(:invoice_pending) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement) }
     let!(:invoice_pending2) { FactoryGirl.create(:invoice, submitter: tutor, client: client, hourly_rate: client.test_prep_rate, engagement: engagement) }

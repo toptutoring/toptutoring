@@ -10,7 +10,7 @@ module Users
 
     def create
       @user = Clearance.configuration.user_model.new(signups_params)
-      if @user.save && create_student_account
+      if @user.save && create_client_account && create_student_account
         notify_through_slack_and_emails
         sign_in(@user)
         redirect_to :root
@@ -29,9 +29,13 @@ module Users
             .merge(roles: Role.where(name: "client"))
     end
 
+    def create_client_account
+      @user.create_client_account
+    end
+
     def create_student_account
       return true unless @user.is_student?
-      @user.create_student_account(client: @user, name: @user.name)
+      @user.create_student_account(client_account: @user.client_account, name: @user.name)
       @user.student_account.persisted?
     end
 

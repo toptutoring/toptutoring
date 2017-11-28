@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171127215733) do
+ActiveRecord::Schema.define(version: 20171128031952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,13 @@ ActiveRecord::Schema.define(version: 20171127215733) do
     t.datetime "to"
     t.integer "engagement_id"
     t.index ["engagement_id"], name: "index_availabilities_on_engagement_id"
+  end
+
+  create_table "client_accounts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_client_accounts_on_user_id"
   end
 
   create_table "contracts", id: :serial, force: :cascade do |t|
@@ -121,10 +128,11 @@ ActiveRecord::Schema.define(version: 20171127215733) do
 
   create_table "student_accounts", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "client_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "client_account_id"
+    t.index ["client_account_id"], name: "index_student_accounts_on_client_account_id"
     t.index ["user_id"], name: "index_student_accounts_on_user_id"
   end
 
@@ -186,6 +194,7 @@ ActiveRecord::Schema.define(version: 20171127215733) do
   end
 
   add_foreign_key "availabilities", "engagements"
+  add_foreign_key "client_accounts", "users"
   add_foreign_key "contracts", "users"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "payments", "users", column: "payee_id"

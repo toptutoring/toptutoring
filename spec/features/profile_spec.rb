@@ -30,6 +30,7 @@ feature 'Profile' do
       click_button "Submit"
       
       expect(page).to have_content("Your profile has been updated.")
+      expect(page).to have_content("New Name")
       expect(tutor.reload.name).to eq("New Name")
     end
   end

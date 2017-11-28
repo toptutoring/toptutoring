@@ -3,10 +3,10 @@ require 'rails_helper'
 feature "Create payment for tutor" do
   let(:admin) { FactoryGirl.create(:auth_admin_user) }
   let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 10) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:student_account) { FactoryGirl.create(:student_account, user: student, client: client) }
   let(:contract) { FactoryGirl.create(:contract, user_id: tutor.id) }
+  let(:client_account) { FactoryGirl.create(:client_account) }
+  let(:client) { client_account.user }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client_account) }
   let(:director) { FactoryGirl.create(:director_user, outstanding_balance: 10) }
   let(:funding_source) { FactoryGirl.create(:funding_source, user_id: admin.id) }
 
