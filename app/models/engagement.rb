@@ -1,7 +1,7 @@
 class Engagement < ActiveRecord::Base
   # Associations
   belongs_to :student_account
-  belongs_to :client, class_name: "User", foreign_key: "client_id"
+  belongs_to :client_account
   belongs_to :tutor, class_name: "User", foreign_key: "tutor_id"
   belongs_to :subject
 
@@ -16,7 +16,7 @@ class Engagement < ActiveRecord::Base
 
   #### Validations ####
   validates_presence_of :student_account
-  validates_presence_of :client
+  validates_presence_of :client_account
 
   #### State Machine ####
 
@@ -31,6 +31,10 @@ class Engagement < ActiveRecord::Base
   end
 
   delegate :academic?, :test_prep?, :academic_type, to: :subject
+
+  def client
+    client_account.user
+  end
 
   def updated?
     tutor

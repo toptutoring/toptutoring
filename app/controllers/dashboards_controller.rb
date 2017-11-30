@@ -3,11 +3,14 @@ class DashboardsController < ApplicationController
   before_action :build_student_for_client, only: [:client]
 
   def admin
-    @pending_engagements = Engagement.pending.includes(:client, :tutor)
+    @pending_engagements = Engagement
+                           .pending
+                           .includes(:student_account, :tutor,
+                                     :subject, client_account: :user)
   end
 
   def director
-    @pending_engagements = Engagement.pending.includes(:client, :tutor)
+    @pending_engagements = Engagement.pending.includes(:student_account, :tutor, :subject, client_account: :user)
     @tutor_engagements = current_user.tutor_engagements.includes(:suggestions)
     @low_balance_engagements = low_balance_engagements?
     @invoice = Invoice.new()
@@ -15,22 +18,26 @@ class DashboardsController < ApplicationController
   end
 
   def tutor
-    @tutor_engagements = current_user.tutor_engagements.includes(:client, :suggestions)
+    @tutor_engagements = current_user.tutor_engagements.includes(:client_account, :suggestions)
     @low_balance_engagements = low_balance_engagements?
     @invoice = Invoice.new()
     @suggestion = Suggestion.new()
   end
 
   def client
-    @engagements = current_user.engagements.includes(:tutor, :availabilities)
-    @engagements = @engagements.sort_by { |engagement| engagement.try(:tutor).try(:name) }
-    @academic_types = current_user.academic_types_engaged
+    @engagements = current_user.client_account
+                               .engagements
+                               .includes(:tutor, :subject, :student_account, :availabilities)
+                               .order("users.name")
+    @academic_types = current_user.client_account.academic_types_engaged
   end
 
   def student
-    @engagements = current_user.engagements.includes(:tutor, :availabilities)
-    @engagements = @engagements.sort_by { |engagement| engagement.try(:tutor).try(:name) }
-    @academic_types = current_user.academic_types_engaged
+    @engagements = current_user.student_account
+                               .engagements
+                               .includes(:tutor, :subject, :student_account, :availabilities)
+                               .order("users.name")
+    @academic_types = current_user.student_account.academic_types_engaged
   end
 
   private
@@ -45,7 +52,7 @@ class DashboardsController < ApplicationController
     results = []
     @tutor_engagements.each do |engagement|
       next if engagement.suggestions.any? { |suggestion| suggestion.status == "pending" }
-      client =User.find(engagement.client_id)
+      client = engagement.client
       if engagement.academic_type == "test_prep"
         results << option_array(engagement, client.test_prep_credit) if client.test_prep_credit < 2
       else

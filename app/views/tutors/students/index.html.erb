@@ -21,7 +21,7 @@
             <tbody>
               <% @tutor_engagements.each do |engagement| %>
                 <tr>
-                  <% client = User.find(engagement.client_id) %>
+                  <% client = engagement.client %>
                   <td><%= engagement.student_name %></td>
                   <td><%= client.name %></td>
                   <td><%= client.email %></td>

@@ -87,6 +87,10 @@ class AvailabilityController < ApplicationController
   end
 
   def current_availabilities
-    current_user&.student_engagements&.first&.availabilities || current_user&.client_engagements&.first&.availabilities
+    if current_user.has_role?("student")
+      current_user.student_account.engagements.first.availabilities
+    else
+      current_user.client_account.engagements.first.availabilities
+    end
   end
 end

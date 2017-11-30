@@ -12,13 +12,9 @@ class User < ActiveRecord::Base
   has_many :student_accounts, through: :client_accounts
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
-  has_many :engagements, ->(user) { unscope(:where).where("tutor_id = ? OR client_id = ?", user.id, user.id) }
-  has_many :tutor_engagements, class_name: "Engagement", foreign_key: "tutor_id", dependent: :destroy
-  has_many :client_engagements, class_name: "Engagement", foreign_key: "client_id", dependent: :destroy
-  has_many :student_engagements, class_name: "Engagement", foreign_key: "student_id", dependent: :destroy
+  has_many :tutor_engagements, class_name: "Engagement", foreign_key: "tutor_id"
   has_many :invoices, ->(user) { unscope(:where).where("submitter_id = ? OR client_id = ?", user.id, user.id) }
   has_many :emails, class_name: "Email", foreign_key: "tutor_id", dependent: :destroy
-  has_many :suggestions, through: :engagements
   has_many :user_roles
   has_many :roles, through: :user_roles
   has_many :tutor_profiles
@@ -36,6 +32,7 @@ class User < ActiveRecord::Base
 
   # Validation #
   validates_presence_of :name
+  validates_length_of :phone_number, minimum: 3, allow_nil: true
   validate :credits_must_be_by_quarter_hours
 
   def credits_must_be_by_quarter_hours
@@ -127,10 +124,6 @@ class User < ActiveRecord::Base
     if Rails.env.production?
       Bugsnag.notify("OpenSSL::Cipher::CipherError: Invalid tokens for user #{id}")
     end
-  end
-
-  def academic_types_engaged
-    engagements.joins(:subject).pluck("subjects.academic_type").uniq
   end
 
   def self.with_pending_invoices(type)

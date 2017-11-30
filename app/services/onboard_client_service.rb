@@ -7,17 +7,8 @@ class OnboardClientService
   Result = Struct.new(:success?, :message)
 
   def onboard_client!
-    if check_phone_number_and_update_client
-      process_student_and_engagement
-    else
-      failure I18n.t("app.signup.phone_validation")
-    end
-  end
-
-  private
-
-  def process_student_and_engagement
     ActiveRecord::Base.transaction do
+      update_phone_number
       set_student_info unless @user.is_student?
       process_engagement
     end
@@ -31,13 +22,8 @@ class OnboardClientService
     engagement = create_engagement
   end
 
-  def check_phone_number_and_update_client
-    return false unless phone_number_valid?
-    @user.update_attribute(:phone_number, @params[:phone_number])
-  end
-
-  def phone_number_valid?
-    @params[:phone_number].length > 1
+  def update_phone_number
+    @user.update_attributes!(phone_number: @params[:phone_number])
   end
 
   def set_student_info
@@ -60,11 +46,11 @@ class OnboardClientService
   end
 
   def save_and_email_student_user
+    student_params.merge!(phone_number: @user.phone_number)
     student = User.create!(student_params)
     student.enable!
     @student_account = StudentAccount.create!(student_account_params(student))
     SetStudentPasswordMailer.mail_student(student).deliver_later
-    Result.new(true)
   end
 
   def student_account_params(student_user = nil)
@@ -78,7 +64,7 @@ class OnboardClientService
       name: @params[:student][:name],
       password: SecureRandom.hex(10),
       client: @user,
-      roles: Role.where(name: 'student') }
+      roles: Role.where(name: "student") }
   end
 
   def set_student_without_creating_account
@@ -88,9 +74,9 @@ class OnboardClientService
   def create_engagement
     subject = Subject.find_by_name(@user.signup.subject)
     Engagement.create!(
+      client_account: @user.client_account,
       student_account: @student_account || @user.student_account,
-      subject: subject,
-      client_id: @user.id,
+      subject: subject
     )
   end
 

@@ -3,7 +3,7 @@ module Admin
     before_action :require_login
     before_action :set_invoice, only: [:edit, :update, :deny]
     def index
-      @invoices = Invoice.by_tutor.includes(:engagement, :submitter, engagement: :client).newest_first
+      @invoices = Invoice.by_tutor.includes(:engagement, :submitter, engagement: :client_account).newest_first
       @total_for_all = Invoice.tutor_pending_total
     end
 
