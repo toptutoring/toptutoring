@@ -10,18 +10,18 @@ module Clients
     def create
       @engagement = Engagement.new(engagement_params)
       if @engagement.save
-        flash.notice = "Thank you for making a request. We will contact you when we find a tutor."
+        flash.notice = I18n.t("app.request_tutor.success")
         SlackNotifier.notify_new_engagement(@engagement)
         redirect_to return_path
       else
-        flash.alert = "There was an error while processing your request."
+        flash.alert = I18n.t("app.request_tutor.failure")
         render :new
       end
     end
 
     def destroy
       current_user.client_account.engagements.pending.find(params[:id]).destroy
-      flash.notice = "Your request has been removed."
+      flash.notice = I18n.t("app.request_tutor.destroy")
       redirect_to return_path
     end
 
