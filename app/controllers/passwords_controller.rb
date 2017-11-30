@@ -1,6 +1,10 @@
 class PasswordsController < Clearance::PasswordsController
   layout "authentication"
 
+  def create
+    super
+  end
+
   def edit
     # Sign out any current user that might already be logged in
     # to avoid signing in multiple users after password reset

@@ -1,6 +1,7 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
+  mount Sidekiq::Web, at: '/sidekiq' if Rails.env.development?
   get "/sign_in" => "sessions#new", as: "login"
   get "/example_dashboard" => "pages#example_dashboard"
   get "/calendar" => "pages#calendar"
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
   post "payments/low_balance_payment" => "payments#low_balance_payment"
   post "payments/get_user_feedback" => "payments#get_user_feedback"
 
-  resource :password, only: [:edit]
+  resource :password, only: [:create, :edit]
   get "/reset_password" => "passwords#new", as: "reset_password"
 
   # Omniauth routes
@@ -43,7 +44,7 @@ Rails.application.routes.draw do
         resource :miscellaneous_payment, only: [:new, :create]
       end
     end
-    mount Sidekiq::Web, at: "/sidekiq"
+    mount Sidekiq::Web, at: "/sidekiq" unless Rails.env.development?
     get "/dashboard" => "dashboards#admin"
   end
 
