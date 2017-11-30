@@ -23,7 +23,7 @@ class CreateClientService
 
     def create_student_account!
       return unless @user.is_student?
-      @user.client_account.student_accounts.create!(name: @user.name)
+      @user.client_account.student_accounts.create!(user: @user, name: @user.name)
     end
 
     def notify_through_slack_and_emails

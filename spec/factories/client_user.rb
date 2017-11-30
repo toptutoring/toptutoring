@@ -19,6 +19,9 @@ FactoryGirl.define do
 
     after(:create) do |user, _|
       user.create_client_account
+      user.client_account
+          .student_accounts
+          .create(user: user, name: user.name) if user.is_student?
     end
   end
 end

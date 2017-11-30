@@ -15,6 +15,7 @@ class Engagement < ActiveRecord::Base
   scope :active, -> { where(state: :active) }
 
   #### Validations ####
+  validates_presence_of :subject
   validates_presence_of :student_account
   validates_presence_of :client_account
 
