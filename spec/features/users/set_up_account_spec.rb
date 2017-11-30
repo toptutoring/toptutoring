@@ -3,19 +3,15 @@ require 'rails_helper'
 feature 'Set up account' do
   let!(:admin) { FactoryGirl.create(:admin_user) }
   let(:client) { FactoryGirl.create(:client_user, access_state: "disabled") }
-  let(:client_account) { FactoryGirl.create(:client_account, user: client) }
   let(:client_as_student) { FactoryGirl.create(:client_user, :as_student, access_state: "disabled") }
-  let(:client_account_as_student) { FactoryGirl.create(:client_account, user: client_as_student) }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client_account_as_student, user: client_as_student) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client_as_student.client_account, user: client_as_student) }
   let(:subject_test_prep) { FactoryGirl.create(:subject, academic_type: 'test_prep') }
   let(:signup_test_prep) { FactoryGirl.create(:signup, :as_student, subject: subject_test_prep.name) }
   let(:client_with_test_prep) { FactoryGirl.create(:client_user, :as_student, signup: signup_test_prep, access_state: "disabled") }
-  let(:client_account_with_test_prep) { FactoryGirl.create(:client_account, user: client_with_test_prep) }
-  let(:student_account_test_prep) { FactoryGirl.create(:student_account, client_account: client_account_with_test_prep, user: client_with_test_prep) }
+  let(:student_account_test_prep) { FactoryGirl.create(:student_account, client_account: client_with_test_prep.client_account, user: client_with_test_prep) }
 
   context "new user signs up" do
     scenario "successfully when user has a student", js: true do
-      client_account
       sign_in(client)
 
       fill_in "user_phone_number", with: "0000000000"
@@ -41,11 +37,10 @@ feature 'Set up account' do
       fill_in "user_phone_number", with: "1"
       click_link "Finish"
 
-      expect(page).to have_content("Please input a valid phone number.")
+      expect(page).to have_content("Validation failed: Phone number")
     end
 
     scenario "successfully when user doesn't provide a student email", js: true do
-      client_account
       sign_in(client)
 
       fill_in "user_phone_number", with: "0000000000"

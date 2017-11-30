@@ -3,10 +3,9 @@ require 'rails_helper'
 feature 'Create Invoice', js: true do
   let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 0) }
   let(:client) { FactoryGirl.create(:client_user, academic_credit: 50, test_prep_credit: 50) }
-  let(:client_account) { FactoryGirl.create(:client_account, user: client) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:student_account) { FactoryGirl.create(:student_account, user: student, client_account: client_account) }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student_account: student_account, client: client) }
+  let(:student_account) { FactoryGirl.create(:student_account, user: student, client_account: client.client_account) }
+  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, state: "active", student_account: student_account, client_account: client.client_account) }
   let(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, student: student) }
   let(:email) { FactoryGirl.create(:email, tutor: tutor, client: client) }
 

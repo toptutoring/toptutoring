@@ -2,13 +2,14 @@ require 'rails_helper'
 
 feature "Create payment as client" do
   let(:client) { FactoryGirl.create(:client_user, customer_id: "cus_A45BGhlr4VjDcJ") }
-  let(:engagement) { FactoryGirl.create(:engagement, client: client) }
+  let(:engagement) { FactoryGirl.create(:engagement, client_account: client.client_account) }
 
   scenario "with a valid stripe card", js: true do
     VCR.use_cassette('valid stripe card') do
       engagement
 
       sign_in(client)
+      visit new_payment_path
 
       fill_in "Hours", with: 2
       fill_in "Description", with: "initial payment"

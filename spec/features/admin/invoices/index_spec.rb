@@ -2,11 +2,10 @@ require 'rails_helper'
 
 feature 'Invoices Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:client_account) { FactoryGirl.create(:client_account) }
-  let(:client) { client_account.user }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client_account) }
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
   let(:admin) { FactoryGirl.create(:admin_user) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client: client) }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client_account: client.client_account) }
   let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
 
   scenario 'when user is admin' do

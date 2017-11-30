@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :director_user, class: User do
     name          { "Director" }
+    phone_number  { "555-5555" }
     email         { "director@example.com" }
     password      { "password" }
     roles         { Role.where(name: 'director') }

@@ -4,10 +4,9 @@ feature "Index engagements" do
   let(:admin) { FactoryGirl.create(:admin_user) }
   let(:director) { FactoryGirl.create(:director_user) }
   let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:client_account) { FactoryGirl.create(:client_account) }
-  let(:client) { client_account.user }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client_account) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client: client, state: "active") }
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client_account: client.client_account, state: "active") }
   let(:presenter) { EngagementPresenter.new(engagement) }
 
   context "when user is director" do

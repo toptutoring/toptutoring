@@ -2,12 +2,11 @@ require "rails_helper"
 
 describe CreditUpdater do
   let(:submitter)  { FactoryGirl.create(:tutor_user) }
-  let(:client_account) { FactoryGirl.create(:client_account) }
-  let(:client) { client_account.user }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client_account) }
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
   let(:test_prep_subject) { FactoryGirl.create(:subject, academic_type: "test_prep") }
   let(:engagement) { FactoryGirl.create(:engagement,
-                                        client: client,
+                                        client_account: client.client_account,
                                         tutor: submitter,
                                         subject: test_prep_subject,
                                         student_account: student_account) }
