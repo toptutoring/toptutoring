@@ -35,14 +35,20 @@
     <%= render "user_header" %>
 
     <div class="main-container">
-      <%= render "menu" %>
-      <div class="page-container">
-        <div class="page-content container-fluid">
+      <% if current_user.enabled? %>
+        <%= render "menu" %>
+        <div class="page-container">
+          <div class="page-content container-fluid">
+            <%= render "flashes" %>
+            <%= yield %>
+          </div>
+        </div>
+      <% else %>
+        <div class="p-20">
           <%= render "flashes" %>
-
           <%= yield %>
         </div>
-      </div>
+      <% end %>
     </div>
 
     <%= render "javascript" %>
