@@ -1,0 +1,7 @@
+<h2 class="mb-20">Your Tutors
+<%= link_to new_clients_request_tutor_path, class: "ml-30" do %>
+  <button type="button" class="btn btn-outline btn-primary">Request Another Tutor</button>
+<% end %>
+</h2>
+<%= render partial: "tutors", locals: { tutors: @tutors } %>
+<%= render partial: "pending_requests", locals: { pending_requests: @pending_requests } %>

@@ -91,7 +91,11 @@ Rails.application.routes.draw do
     get "/one_time_payment" => "one_time_payments#new"
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
-    resources :students, only: [:index, :new, :create]
+    namespace :clients do
+      resources :students, only: [:show, :edit, :index, :new, :create]
+      resources :tutors
+      resource :request_tutor, only: [:destroy, :new, :create]
+    end
     resources :suggestions
     get "/dashboard" => "dashboards#client"
     resources :availability, only: [:new, :create, :update, :edit]

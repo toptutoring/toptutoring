@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Your Requests</h3>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% pending_requests.each do |pending_engagement| %>
+                <tr>
+                  <td>
+                    <%= pending_engagement.subject.name %>
+                  </td>
+                  <td>
+                    <%= link_to clients_request_tutor_path(id: pending_engagement.id), method: "delete" do %>
+                      <i class="ion-trash-b fs-18"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

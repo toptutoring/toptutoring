@@ -1,0 +1,28 @@
+<%= form_tag '/clients/students' do %>
+  <div class="form-group">
+    <%= text_field_tag :name, nil, class:"form-control", required: true, placeholder: "Full Name" %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :create_user_account, class: "pl-20" do %>
+      Create a user account for this student
+      <%= check_box_tag :create_user_account, 'yes', true %>
+    <% end %>
+  </div>
+
+  <%= fields_for User.new do |user_field| %>
+    <div class="form-group">
+      <%= user_field.email_field :email, class:"form-control", placeholder: "Email (ony required if creating account for student)" %>
+    </div>
+  <% end %>
+
+  <%= fields_for Engagement.new do |engagement_field| %>
+    <div class="form-group">
+      <%= engagement_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, required: true %>
+    </div>
+  <% end %>
+
+  <div class="text-center">
+    <%= submit_tag "Submit", class: "btn btn-outline btn-blue" %>
+  </div>
+<% end %>
