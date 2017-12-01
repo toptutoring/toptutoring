@@ -26,6 +26,9 @@
     "SECRET_KEY_BASE":{
       "generator":"secret"
     },
+    "SLACK_WEBHOOK_URL": {
+      "required": true
+    },
     "STRIPE_SECRET_KEY": {
       "required": true
     },

@@ -27,3 +27,6 @@
 /public/packs
 /public/packs-test
 /node_modules
+
+# Ignore Papertrail
+.papertrail.yml
