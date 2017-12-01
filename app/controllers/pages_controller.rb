@@ -12,6 +12,9 @@ class PagesController < ApplicationController
     render "tutor_dashboard", :layout => false
   end
 
+  def home
+  end
+
   def calendar
     render "calendar", :layout => false
   end
