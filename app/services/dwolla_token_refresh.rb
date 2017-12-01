@@ -5,6 +5,8 @@ class DwollaTokenRefresh
 
   def perform
     refresh_token
+  rescue ArgumentError => e
+    Bugsnag.notify("Error refreshing Dwolla Token: " + e.message)
   end
 
   private

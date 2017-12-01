@@ -13,6 +13,9 @@ class DwollaService
     return [] unless User.admin.auth_uid.present?
     response = admin_account_token.get funding_sources_url
     response._embedded["funding-sources"]
+  rescue DwollaV2::Error => e
+    Bugsnag.notify("Error retrieving funding_sources for admin: " + e.message)
+    []
   end
 
   def self.admin_account_token
