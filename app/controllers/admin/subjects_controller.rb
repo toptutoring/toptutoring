@@ -1,26 +1,32 @@
 module Admin
   class SubjectsController < ApplicationController
+    skip_before_action :verify_authenticity_token, only: :update
+
     def index
-      @subjects = Subject.all.order(:name)
+      @subjects = Subject.all.order(:name).includes(tutor_profiles: :user)
     end
 
     def update
       @subject = Subject.find(params[:id])
-      if update_status
-        flash.notice = "Tutoring Type has been changed to #{@type} for #{@subject.name}."
-      else
-        flash[:error] = "Could not update tutoring type for #{@subject.name}."
+      respond_to do |format|
+        if update_status
+          format.json do
+            render json: { message: "#{@subject.name} has been" \
+                           "changed to #{@subject.tutoring_type}" }
+          end
+        else
+          format.json { render json: { message: "Failed to update" } }
+        end
       end
-      redirect_to action: 'index'
     end
 
     private
 
     def update_status
       @type = params[:subject][:tutoring_type]
-      if @type == 'Academic'
+      if @type == 'academic'
         @subject.academic!
-      elsif @type == 'Test Prep'
+      elsif @type == 'test_prep'
         @subject.test_prep!
       end
     end
