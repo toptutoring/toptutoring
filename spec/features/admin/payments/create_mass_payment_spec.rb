@@ -5,12 +5,12 @@ feature "Create payment for tutor" do
   let(:tutor) { FactoryGirl.create(:tutor_user, name: "Authorized", outstanding_balance: 3) }
   let(:tutor_no_auth) { FactoryGirl.create(:tutor_user, name: "None", access_token: nil, refresh_token: nil) }
   let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor_no_auth, student: student, student_name: student.name, client: client) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client_account: client.client_account) }
+  let!(:engagement_no_auth) { FactoryGirl.create(:engagement, tutor: tutor_no_auth, student_account: student_account, client_account: client.client_account) }
   let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
   let!(:invoice2) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 2) }
-  let!(:invoice3) { FactoryGirl.create(:invoice, submitter: tutor_no_auth, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
+  let!(:invoice3) { FactoryGirl.create(:invoice, submitter: tutor_no_auth, client: client, engagement: engagement_no_auth, status: "pending", hourly_rate: 59, hours: 1) }
   let(:funding_source) { FactoryGirl.create(:funding_source, user_id: admin.id) }
 
   context "when user is admin" do

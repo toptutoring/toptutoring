@@ -1,0 +1,35 @@
+<% tutors.each do |tutor| %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="widget-heading clearfix">
+          <div class="col-xs-5 col-lg-3">
+            <h3 class="widget-title pull-left"><%= tutor.name %></h3>
+            <br/>
+            <p>Email: <%= tutor.email %></p>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% tutor.tutor_engagements.where(student_account: current_user.student_account).each do |engagement| %>
+                  <tr>
+                    <td>
+                      <%= engagement.subject.name %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

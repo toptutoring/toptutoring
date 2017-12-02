@@ -8,8 +8,13 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    User.find(current_user.id).update(update_params)
-    redirect_to profile_path, flash: { success: "Your profile has been updated." }
+    user = User.find(current_user.id)
+    if user.update(update_params)
+      flash.notice = "Your profile has been updated."
+    else
+      flash.alert = user.errors.full_messages
+    end
+    redirect_back fallback_location: profile_path
   end
 
   private

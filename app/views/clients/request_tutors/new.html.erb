@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+          <h3 class="widget-title pull-left">Request a Tutor</h3>
+        <div class="widget-body">
+          <%= form_for(@engagement, url: clients_request_tutor_path) do |f| %>
+            <div class="form-group">
+              <% if current_user.is_student? %>
+                <%= f.hidden_field :student_account_id, value: current_user.student_account.id %>
+              <% else %>
+                <%= f.label :student_account_id, "Student" %>
+                <%= f.select :student_account_id, options_from_collection_for_select(current_user.client_account.student_accounts, "id", "name", @student_account_id), { required: true } %>
+              <% end %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :subject_id, "Subject" %>
+              <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Choose one of the following" }, required: true %>
+            </div>
+
+            <div class="text-center">
+              <%= f.submit "Submit", class: "btn btn-outline btn-blue" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,19 +13,21 @@ namespace :dev do
     client.access_state = "enabled"
     client.roles = Role.where(name: "client")
     client.save!
+    client.create_client_account!
 
     # New client
     client_new = User.where(email: "clientnew@example.com").first_or_initialize
     client_new.name = "Client"
     client_new.password = "password"
-    client_new.customer_id = ""
+    client_new.customer_id = nil
     client_new.access_state = "enabled"
     client_new.roles = Role.where(name: "client")
     client_new.save!
+    client_new.create_client_account!
 
     #Update signup
     signup = Signup.where(user_id: client.id).first_or_initialize
-    signup.subject = "SAT"
+    signup.subject = Subject.last.name
     signup.student = false
     signup.save!
 
@@ -38,6 +40,7 @@ namespace :dev do
     student1.roles = Role.where(name: "student")
     student1.client_id = client.id
     student1.save!
+    student1.create_student_account!(client_account: client.client_account, name: student1.name)
 
     # Update student
     student2 = User.where(email: "student2@example.com").first_or_initialize
@@ -48,6 +51,7 @@ namespace :dev do
     student2.roles = Role.where(name: "student")
     student2.client_id = client.id
     student2.save!
+    student2.create_student_account!(client_account: client.client_account, name: student2.name)
 
     # Update tutor
     tutor = User.where(email: "tutor@example.com").first_or_initialize
@@ -92,23 +96,19 @@ namespace :dev do
 
     # Update engagements
     tutor.tutor_engagements.destroy_all
-    engagement = Engagement.create(
+    engagement = Engagement.create!(
       tutor_id: tutor.id,
-      student_name: student1.name,
-      student_id: student1.id,
-      client_id: client.id,
-      subject: client.signup.subject,
-      academic_type: "Academic"
+      student_account: student1.student_account,
+      client_account: client.client_account,
+      subject: Subject.find_by_name(client.signup.subject),
     )
     engagement.enable!
 
-    engagement = Engagement.create(
+    engagement = Engagement.create!(
       tutor_id: tutor.id,
-      student_name: student2.name,
-      student_id: student2.id,
-      client_id: client.id,
-      subject: client.signup.subject,
-      academic_type: "Test_Prep"
+      student_account: student2.student_account,
+      client_account: client.client_account,
+      subject: Subject.find_by_name(client.signup.subject),
     )
     engagement.enable!
 

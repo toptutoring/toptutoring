@@ -3,8 +3,8 @@ require 'rails_helper'
 feature 'Invoices Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
+  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client_account: client.client_account) }
   let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement) }
 
   scenario 'when user is tutor' do
@@ -20,8 +20,8 @@ feature 'Invoices Index' do
     expect(page).to have_content('Hours')
 
     expect(page).to have_content(invoice.engagement.student.name)
-    expect(page).to have_content(invoice.engagement.subject)
-    expect(page).to have_content(invoice.engagement.academic_type)
+    expect(page).to have_content(invoice.engagement.subject.name)
+    expect(page).to have_content(invoice.engagement.academic_type.humanize)
     expect(page).to have_content(invoice.created_at)
     expect(page).to have_content(invoice.description)
     expect(page).to have_content(invoice.hours)

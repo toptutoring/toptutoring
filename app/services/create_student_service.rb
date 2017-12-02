@@ -1,14 +1,14 @@
 class CreateStudentService
-  def initialize(student, client)
-    @student = student
+  def initialize(client)
     @client = client
   end
 
   Result = Struct.new(:success?, :messages)
 
-  def create_student_and_engagement!(subject)
+  def process!(student_name, subject, student_params = nil)
     ActiveRecord::Base.transaction do
-      create_student!
+      create_student_account!(student_name)
+      create_student_user!(student_params) if student_params
       create_engagement!(subject)
     end
     Result.new(true, I18n.t("app.add_student.success"))
@@ -16,22 +16,26 @@ class CreateStudentService
     Result.new(false, e.message)
   end
 
-  def create_student!
-    return unless @student.email.present?
-    @student.password = SecureRandom.hex(10)
-    @student.client_id = @client.id
-    @student.save!
-    @student.forgot_password!
-    SetStudentPasswordMailer.mail_student(@student).deliver_later
+  private
+
+  def create_student_account!(name)
+    @student_account = @client.client_account
+                              .student_accounts
+                              .create!(name: name)
+  end
+
+  def create_student_user!(params)
+    student = User.create!(params)
+    student.enable!
+    student.forgot_password!
+    SetStudentPasswordMailer.mail_student(student).deliver_later
   end
 
   def create_engagement!(subject)
     @engagement = Engagement.create!(
-      student_id: @student.id || @client.id,
-      student_name: @student.name,
-      client_id: @client.id,
-      subject: subject.name,
-      academic_type: subject.academic_type
+      student_account: @student_account,
+      client_account: @client.client_account,
+      subject: subject
     )
   end
 end

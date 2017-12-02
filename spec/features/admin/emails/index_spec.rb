@@ -5,13 +5,12 @@ feature 'Emails Index' do
     admin = FactoryGirl.create(:admin_user)
     tutor = FactoryGirl.create(:tutor_user)
     client = FactoryGirl.create(:client_user)
-    student = FactoryGirl.create(:student_user, client: client)
+    student_account = FactoryGirl.create(:student_account, client_account: client.client_account)
     engagement = FactoryGirl.create(:engagement,
-      client: client,
-      student_name: student.name,
-      student: student,
-      tutor: tutor
-    )
+                                    client_account: client.client_account,
+                                    student_account: student_account,
+                                    tutor: tutor
+                                  )
     invoice = FactoryGirl.create(:invoice, submitter: tutor, engagement: engagement, client: client)
     email = FactoryGirl.create(:email, tutor: tutor, client: client)
 

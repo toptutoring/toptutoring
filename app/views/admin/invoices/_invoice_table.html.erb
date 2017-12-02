@@ -25,7 +25,7 @@
           </td>
           <td><%= invoice.submitter.name %></td>
           <td><%= invoice.created_at.strftime("%-m/%-e/%y") %></td>
-          <td><%= invoice.engagement.academic_type %></td>
+          <td><%= invoice.engagement.academic_type.humanize %></td>
           <td><%= invoice.engagement.client.name %></td>
           <td><%= invoice.hours.to_s %></td>
           <td><%= number_to_currency(invoice.amount) %></td>

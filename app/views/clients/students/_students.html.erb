@@ -1,0 +1,52 @@
+<% student_accounts.each do |account| %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="widget-heading clearfix">
+          <div class="col-xs-5 col-lg-3">
+            <h3 class="widget-title pull-left"><%= account.name %></h3>
+            <br/>
+            <p>Email: <%= account.email || "No email provided" %></p>
+          </div>
+          <%= link_to "Request a Tutor for #{account.name}", new_clients_request_tutor_path(student_account_id: account.id), class: "btn btn-outline btn-primary" %>
+        </div>
+        <div class="widget-body">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th class="col-xs-3">Tutor</th>
+                  <th>Subject</th>
+                  <th class="col-xs-1"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% account.engagements.each do |engagement| %>
+                  <tr>
+                    <td>
+                      <% if engagement.tutor.present? %>
+                        <%= engagement.tutor.name %>
+                      <% else %>
+                        Matching tutor...
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= engagement.subject.name %>
+                    </td>
+                    <td>
+                      <% if engagement.pending? %>
+                        <%= link_to clients_request_tutor_path(id: engagement.id), method: "delete" do %>
+                          <i class="ion-trash-b fs-18"></i>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,13 +1,14 @@
 FactoryGirl.define do
   factory :tutor_user, class: User do
     name                { "Tutor" }
+    phone_number        { "555-5555" }
     sequence(:email) { |n| "tutor_#{n}@example.com" }
     password            { "password" }
     roles               { Role.where(name: 'tutor') }
     auth_uid            { ENV.fetch("DWOLLA_DEV_TUTOR_AUTH_UID") }
     access_token        { "xxx-xxx" }
     refresh_token       { "xxx-xxx" }
-    token_expires_at { Time.now + 60 }
+    token_expires_at    { Time.now + 60 }
     contract            { FactoryGirl.create(:contract) }
     access_state        { "enabled" }
   end

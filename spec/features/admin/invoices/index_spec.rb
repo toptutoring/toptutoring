@@ -3,9 +3,9 @@ require 'rails_helper'
 feature 'Invoices Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
   let(:admin) { FactoryGirl.create(:admin_user) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client) }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client_account: client.client_account) }
   let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
 
   scenario 'when user is admin' do
@@ -25,7 +25,7 @@ feature 'Invoices Index' do
     expect(page).to have_content('Action')
     expect(page).to have_content(invoice.engagement.tutor.name)
     expect(page).to have_content(invoice.updated_at.strftime("%-m/%-e/%y"))
-    expect(page).to have_content(invoice.engagement.academic_type)
+    expect(page).to have_content(invoice.engagement.academic_type.humanize)
     expect(page).to have_content(invoice.engagement.client.name)
     expect(page).to have_content(invoice.hours)
     expect(page).to have_content("59.00")

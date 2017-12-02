@@ -21,14 +21,14 @@
             <tbody>
               <% @tutor_engagements.each do |engagement| %>
                 <tr>
-                  <% client = User.find(engagement.client_id) %>
+                  <% client = engagement.client %>
                   <td><%= engagement.student_name %></td>
                   <td><%= client.name %></td>
                   <td><%= client.email %></td>
                   <td><%= cleanup_phone_number(client.phone_number) %></td>
-                  <td><%= engagement.subject %></td>
-                  <td><%= engagement.academic_type %></td>
-                  <% if engagement.academic_type == "Test_Prep" %>
+                  <td><%= engagement.subject.name %></td>
+                  <td><%= engagement.academic_type.humanize %></td>
+                  <% if engagement.test_prep? %>
                     <td><%= client.test_prep_credit %></td>
                   <% else %>
                     <td><%= client.academic_credit %></td>

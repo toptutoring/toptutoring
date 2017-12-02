@@ -1,10 +1,10 @@
 require "rails_helper"
 
-describe NewClientNotifierMailer do
+describe AdminDirectorNotifierMailer do
   let!(:admin) { FactoryGirl.create(:admin_user) }
   let!(:director) { FactoryGirl.create(:director_user) }
   let(:client) { build_stubbed(:client_user) }
-  let (:email) { NewClientNotifierMailer.started_sign_up(client) }
+  let (:email) { AdminDirectorNotifierMailer.new_user_started_sign_up(client) }
 
   it "delivers an notification email" do
     email.deliver_now

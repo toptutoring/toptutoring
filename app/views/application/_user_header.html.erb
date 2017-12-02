@@ -1,13 +1,15 @@
 <header>
   <%= render "shared/environment_banner" %>
-  <a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
+  <% if current_user.enabled? %>
+    <a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
+  <% end %>
   <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
     <script>
-      FS.identify('<%= current_user.id %>', {
-        displayName: '<%= current_user.name %>',
-        email: '<%= current_user.email %>',
-        role_str: '<%= current_user.try(:roles).try(:first).try(:name) %>',
-      });
+FS.identify('<%= current_user.id %>', {
+  displayName: '<%= current_user.name %>',
+  email: '<%= current_user.email %>',
+  role_str: '<%= current_user.try(:roles).try(:first).try(:name) %>',
+});
     </script>
   <% end %>  
   

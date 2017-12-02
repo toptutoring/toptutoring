@@ -15,7 +15,7 @@
             data-academic="<%= current_user.academic_rate %>"
             data-test-prep="<%= current_user.test_prep_rate %>"
             name="hourly_rate"  aria-label="Hourly Rate"></input>
-        <% elsif @academic_types.include?('Academic') %>
+        <% elsif @academic_types.include?('academic') %>
           <p>
             $<%= current_user.academic_rate %>
           </p>

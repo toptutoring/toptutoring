@@ -1,0 +1,6 @@
+<h2 class="mb-20">Your Students
+<%= link_to new_clients_student_path, class: "ml-30" do %>
+  <button type="button" class="btn btn-outline btn-primary">New student</button>
+<% end %>
+</h2>
+<%= render partial: "students", locals: { student_accounts: @student_accounts } %>

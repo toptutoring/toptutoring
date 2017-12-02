@@ -36,19 +36,15 @@ class EngagementPresenter < SimpleDelegator
   end
 
   def subject
-    @engagement.subject
+    @engagement.subject.name
   end
 
   def engagement_academic_type
-    if @engagement.academic_type && @engagement.academic_type.casecmp('academic') == 0
-      'Academic'
-    else
-      'Test Preparation'
-    end
+    @engagement.academic_type.humanize
   end
 
   def student_academic_type
-    @engagement.academic_type
+    @engagement.academic_type.humanize
   end
 
   def student_credit
@@ -56,7 +52,7 @@ class EngagementPresenter < SimpleDelegator
   end
 
   def hourly_rate
-    if self.academic_type.casecmp('academic') == 0
+    if self.academic?
       self.client.academic_rate
     else
       self.client.test_prep_rate

@@ -4,10 +4,10 @@ feature 'Dashboard Index' do
   let(:director) { FactoryGirl.create(:director_user) }
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:active_engagement) { FactoryGirl.create(:engagement, client: client, tutor: tutor, state: "active", student: student, student_name: student.name) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
+  let(:active_engagement) { FactoryGirl.create(:engagement, client_account: client.client_account, tutor: tutor, state: "active", student_account: student_account) }
   let(:active_presenter) { EngagementPresenter.new(active_engagement) }
-  let(:pending_engagement) { FactoryGirl.create(:engagement, client: client, tutor: tutor, state: "pending", student: student, student_name: student.name) }
+  let(:pending_engagement) { FactoryGirl.create(:engagement, client_account: client.client_account, tutor: tutor, state: "pending", student_account: student_account) }
   let(:pending_presenter) { EngagementPresenter.new(pending_engagement) }
 
   scenario 'when user is tutor' do
@@ -23,8 +23,8 @@ feature 'Dashboard Index' do
     expect(page).to have_content('Status')
 
     expect(page).to have_content(active_engagement.student.name)
-    expect(page).to have_content(active_engagement.subject)
-    expect(page).to have_content(active_engagement.academic_type)
+    expect(page).to have_content(active_engagement.subject.name)
+    expect(page).to have_content(active_engagement.academic_type.humanize)
     expect(page).to have_content(active_engagement.state)
     expect(page).to have_content(active_engagement.client.test_prep_credit)
   end
@@ -43,7 +43,7 @@ feature 'Dashboard Index' do
 
     expect(page).to have_content(pending_engagement.student.name)
     expect(page).to have_content(pending_engagement.client.name)
-    expect(page).to have_content(pending_engagement.subject)
+    expect(page).to have_content(pending_engagement.subject.name)
     expect(page).to have_content(pending_presenter.engagement_academic_type)
     expect(page).to have_content(pending_engagement.state)
     expect(page).to have_link("Edit")

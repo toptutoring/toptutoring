@@ -50,6 +50,13 @@ class SlackNotifier
       ping(message, :general)
     end
 
+    def notify_new_engagement(engagement)
+      message = "#{engagement.client.name} has requested a new engagement.\n" \
+        "Student: #{engagement.student_name}\n" \
+        "Subject: #{engagement.subject.name}"
+      ping(message, :leads)
+    end
+
     def ping(message, channel)
       SLACK_NOTIFIER.ping(message, channel: channel_finder(channel)) unless Rails.env.test?
     end
@@ -57,7 +64,11 @@ class SlackNotifier
     private
 
     def channel_finder(channel)
-      Rails.env.production? ? CHANNELS[channel] : CHANNELS[:development]
+      if ENV["DWOLLA_ENVIRONMENT"] == "production" && Rails.env.production?
+        CHANNELS[channel]
+      else
+        CHANNELS[:development]
+      end
     end
   end
 end

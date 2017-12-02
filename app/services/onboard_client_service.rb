@@ -7,46 +7,30 @@ class OnboardClientService
   Result = Struct.new(:success?, :message)
 
   def onboard_client!
-    if check_phone_number_and_update_client
-      process_student_and_engagement
-    else
-      failure I18n.t("app.signup.phone_validation")
+    ActiveRecord::Base.transaction do
+      update_phone_number
+      set_student_info unless @user.is_student?
+      process_engagement
     end
+    success
+  rescue ActiveRecord::RecordInvalid => e
+    failure(e)
   end
 
-  private
-
-  def process_student_and_engagement
-    if @user.is_student?
-      process_engagement(@user)
-    elsif set_student_info
-      process_engagement(@student)
-    else
-      failure(@student.errors.full_messages)
-    end
-  end
-
-  def process_engagement(student)
+  def process_engagement
     @user.enable!
-    engagement = create_engagement(student)
-    engagement.persisted? ? success : failure(engagement.errors.full_messages)
+    engagement = create_engagement
   end
 
-  def check_phone_number_and_update_client
-    return false unless phone_number_valid?
-    @user.update_attribute(:phone_number, @params[:phone_number])
-  end
-
-  def phone_number_valid?
-    @params[:phone_number].length > 1
+  def update_phone_number
+    @user.update_attributes!(phone_number: @params[:phone_number])
   end
 
   def set_student_info
-    set_student_without_creating_account
     if student_email_provided? && !student_email_matches_client?
       save_and_email_student_user
     else
-      true
+      set_student_without_creating_account
     end
   end
 
@@ -57,44 +41,43 @@ class OnboardClientService
       @params[:student][:email] != @params[:email]
   end
 
-  def set_student_without_creating_account
-    @student = User.new(student_params)
-  end
-
   def student_email_matches_client?
     @params[:student][:email].downcase == @user.email
   end
 
   def save_and_email_student_user
-    return false unless @student.save
-    @user.students << @student
-    @student.enable!
-    @student.forgot_password!
-    SetStudentPasswordMailer.mail_student(@student).deliver_later
-    true
+    student_params.merge!(phone_number: @user.phone_number)
+    student = User.create!(student_params)
+    student.enable!
+    @student_account = StudentAccount.create!(student_account_params(student))
+    SetStudentPasswordMailer.mail_student(student).deliver_later
+  end
+
+  def student_account_params(student_user = nil)
+    { name: @params[:student][:name],
+      client_account: @user.client_account,
+      user: student_user }
   end
 
   def student_params
-    @student_name = @params[:student][:name]
     { email: @params[:student][:email],
-      name: @student_name,
+      name: @params[:student][:name],
       password: SecureRandom.hex(10),
-      roles: Role.where(name: 'student') }
+      client: @user,
+      roles: Role.where(name: "student") }
   end
 
-  def create_engagement(student)
-    Engagement.create(
-      student_id: student.id || @user.id,
-      student_name: student.name,
-      subject: @user.signup.subject,
-      client_id: @user.id,
-      academic_type: find_subject_type(@user.signup.subject)
+  def set_student_without_creating_account
+    @student_account = StudentAccount.create!(student_account_params)
+  end
+
+  def create_engagement
+    subject = Subject.find_by_name(@user.signup.subject)
+    Engagement.create!(
+      client_account: @user.client_account,
+      student_account: @student_account || @user.student_account,
+      subject: subject
     )
-  end
-
-  def find_subject_type(subject_name)
-    subject = Subject.find_by(name: subject_name)
-    subject.academic? ? 'Academic' : 'Test Prep'
   end
 
   def success

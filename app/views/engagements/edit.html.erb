@@ -24,13 +24,8 @@
           </div>
 
           <div class="form-group">
-            <%= f.label :subject %>
-            <%= f.text_field :subject, value: @engagement.subject, class:"form-control" %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :academic_type %>
-            <%= f.select :academic_type, options_for_select([['Academic', 'Academic'], ['Test_Prep', 'Test Prep']], @engagement.academic_type), class:"form-control", required: true %>
+            <%= f.label :subject_id, "Subject" %>
+            <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, required: true %>
           </div>
 
           <div class="text-center">

@@ -3,8 +3,10 @@ require "rails_helper"
 feature "Passwords can be reset" do
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
+  let(:student_account) { FactoryGirl.create(:student_account, user: student, client_account: client.client_account) }
 
   scenario "when reset link with token is sent to user" do
+    student_account
     student.update(password: "first", confirmation_token: "test")
     visit edit_password_path(user_id: student.id, token: "test")
 

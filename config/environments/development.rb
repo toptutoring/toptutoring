@@ -20,6 +20,7 @@ Rails.application.configure do
   end
   # During development, emails are saved as files in tmp/mails
   config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.default_url_options = { host: ENV.fetch("APPLICATION_HOST") }
   config.active_support.deprecation = :log
   config.active_record.migration_error = :page_load
   config.assets.debug = true

@@ -9,14 +9,13 @@ module Users
     end
 
     def create
-      @user = Clearance.configuration.user_model.new(signups_params)
-      if @user.save
-        notify_through_slack_and_emails
-        sign_in(@user)
+      result = CreateClientService.create!(signups_params)
+      if result.success?
+        sign_in(result.user)
         redirect_to :root
       else
-        redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: @user.errors.full_messages })
+        flash.alert = result.messages
+        redirect_back fallback_location: (client_sign_up_path)
       end
     end
 
@@ -27,12 +26,6 @@ module Users
             .permit(:name, :email, :password,
                     signup_attributes: [:student, :subject, :comments])
             .merge(roles: Role.where(name: "client"))
-    end
-
-    def notify_through_slack_and_emails
-      SlackNotifier.notify_user_signup_start(@user)
-      UserNotifierMailer.send_signup_email(@user).deliver_later
-      NewClientNotifierMailer.started_sign_up(@user).deliver_later
     end
 
     def redirect_to_root

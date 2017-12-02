@@ -1,12 +1,15 @@
 require "rails_helper"
 
 describe CreditUpdater do
-  let(:client) { FactoryGirl.create(:client_user) }
   let(:submitter)  { FactoryGirl.create(:tutor_user) }
+  let(:client) { FactoryGirl.create(:client_user) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
+  let(:test_prep_subject) { FactoryGirl.create(:subject, academic_type: "test_prep") }
   let(:engagement) { FactoryGirl.create(:engagement,
-                                        client: client,
+                                        client_account: client.client_account,
                                         tutor: submitter,
-                                        student: FactoryGirl.create(:student_user, name: 'Something2')) }
+                                        subject: test_prep_subject,
+                                        student_account: student_account) }
   let(:invoice) { FactoryGirl.create(:invoice, client: client, submitter: submitter, engagement: engagement, hours: 2) }
 
   describe "#process_creation_of_invoice!" do
@@ -91,7 +94,7 @@ describe CreditUpdater do
     end
 
     it "also works for academic_credit" do
-      engagement.update(academic_type: 'Academic')
+      engagement.update(subject: FactoryGirl.create(:subject))
       client.update(test_prep_credit: 0)
       subject = CreditUpdater.new(invoice)
       expect(subject.client_low_balance?)

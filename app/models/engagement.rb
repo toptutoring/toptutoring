@@ -1,10 +1,9 @@
 class Engagement < ActiveRecord::Base
-  include ShowSubjectName
-
   # Associations
-  belongs_to :student, class_name: "User", foreign_key: "student_id"
-  belongs_to :client, class_name: "User", foreign_key: "client_id"
+  belongs_to :student_account
+  belongs_to :client_account
   belongs_to :tutor, class_name: "User", foreign_key: "tutor_id"
+  belongs_to :subject
 
   has_many :invoices
   has_many :availabilities
@@ -16,9 +15,9 @@ class Engagement < ActiveRecord::Base
   scope :active, -> { where(state: :active) }
 
   #### Validations ####
-  validates_presence_of :student_name
-  validates_presence_of :client
-  validates_presence_of :academic_type
+  validates_presence_of :subject
+  validates_presence_of :student_account
+  validates_presence_of :client_account
 
   #### State Machine ####
 
@@ -32,15 +31,21 @@ class Engagement < ActiveRecord::Base
     end
   end
 
-  def academic?
-    academic_type == "Academic"
-  end
+  delegate :academic?, :test_prep?, :academic_type, to: :subject
 
-  def test_prep?
-    academic_type == "Test Prep"
+  def client
+    client_account.user
   end
 
   def updated?
     tutor
+  end
+
+  def student_name
+    student_account.name
+  end
+
+  def student
+    student_account.user
   end
 end

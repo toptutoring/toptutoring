@@ -5,8 +5,8 @@ feature "Index engagements" do
   let(:director) { FactoryGirl.create(:director_user) }
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client, state: "active", academic_type: "Academic") }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client_account: client.client_account, state: "active") }
   let(:presenter) { EngagementPresenter.new(engagement) }
 
   context "when user is director" do
@@ -26,7 +26,7 @@ feature "Index engagements" do
 
       expect(page).to have_content(engagement.id)
       expect(page).to have_content(engagement.student.name)
-      expect(page).to have_content(engagement.subject)
+      expect(page).to have_content(engagement.subject.name)
       expect(page).to have_content(presenter.engagement_academic_type)
       expect(page).to have_content(presenter.hourly_rate)
       expect(page).to have_content(engagement.state)
@@ -50,7 +50,7 @@ feature "Index engagements" do
       expect(page).to have_content("Status")
       expect(page).to have_content(engagement.id)
       expect(page).to have_content(engagement.student.name)
-      expect(page).to have_content(engagement.subject)
+      expect(page).to have_content(engagement.subject.name)
       expect(page).to have_content(presenter.engagement_academic_type)
       expect(page).to have_content(presenter.hourly_rate)
       expect(page).to have_content(engagement.state)

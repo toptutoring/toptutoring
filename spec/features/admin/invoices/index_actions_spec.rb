@@ -3,8 +3,9 @@ require 'rails_helper'
 feature 'Admin invoice features' do
   let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 2) }
   let(:client) { FactoryGirl.create(:client_user, test_prep_credit: 2) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student: student, student_name: student.name, client: client) }
+  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
+  let(:test_prep_subject) { FactoryGirl.create(:subject, academic_type: "test_prep") }
+  let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, subject: test_prep_subject, student_account: student_account, client_account: client.client_account) }
   let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
   let(:admin) { FactoryGirl.create(:auth_admin_user) }
   let(:funding_source) { FactoryGirl.create(:funding_source, user_id: admin.id) }

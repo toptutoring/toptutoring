@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
-    @academic_types = current_user.academic_types_engaged
+    @academic_types = current_user.client_account.academic_types_engaged
     @total_suggested_time = set_suggested_time
   end
 
@@ -13,15 +13,14 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    if current_user.engagements.many?
+    if current_user.client_account.engagements.many?
       Bugsnag.notify("More than one engagement. Handle this payment case")
     else
-      engagement = current_user.engagements.last
-      client = engagement.client
+      engagement = current_user.client_account.engagements.last
       if engagement.academic?
-        rate = client.academic_rate
+        rate = current_user.academic_rate
       else
-        rate = client.test_prep_rate
+        rate = current_user.test_prep_rate
       end
     end
 
@@ -93,8 +92,8 @@ class PaymentsController < ApplicationController
   end
 
   def set_suggested_time
-    return nil unless current_user.suggestions
-    suggested_minutes = current_user.suggestions.pending.sum(:suggested_minutes)
+    return nil unless current_user.client_account.suggestions
+    suggested_minutes = current_user.client_account.suggestions.pending.sum(:suggested_minutes)
     hours = suggested_minutes / 60
     remainder_minutes = suggested_minutes % 60
     time_string = "#{hours} #{'hour'.pluralize(hours)}"

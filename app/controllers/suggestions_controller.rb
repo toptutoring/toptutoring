@@ -1,10 +1,10 @@
 class SuggestionsController < ApplicationController
   def index
-    @suggestions = current_user.suggestions.pending.includes(:engagement)
+    @suggestions = current_user.client_account.suggestions.pending.includes(:engagement)
   end
 
   def update
-    @suggestion = current_user.suggestions.where(id: params[:id]).take
+    @suggestion = current_user.client_account.suggestions.where(id: params[:id]).take
     if @suggestion.update(suggestion_params)
       flash[:notice] = 'Suggestion was dismissed'
       redirect_to suggestions_path
