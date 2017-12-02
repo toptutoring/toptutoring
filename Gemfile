@@ -21,7 +21,7 @@ gem "bootstrap-sass", "~> 3.3.6"
 
 gem "bugsnag"
 gem "clearance"
-gem "stripe", "~> 2.2.1"
+gem 'stripe', '~> 3.4.1'
 gem "dwolla_v2", "~> 1.0"
 gem "newrelic_rpm"
 gem "omniauth"

@@ -321,8 +321,8 @@ GEM
     state_machines-activerecord (0.5.0)
       activerecord (>= 4.1, < 5.2)
       state_machines-activemodel (>= 0.5.0)
-    stripe (2.2.1)
-      faraday (~> 0.9)
+    stripe (3.4.1)
+      faraday (~> 0.10)
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
@@ -416,7 +416,7 @@ DEPENDENCIES
   sprockets (>= 3.0.0)
   state_machines
   state_machines-activerecord
-  stripe (~> 2.2.1)
+  stripe (~> 3.4.1)
   timecop
   title
   uglifier

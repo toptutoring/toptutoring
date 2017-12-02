@@ -144,4 +144,4 @@ just the last four digits followed by a special 3-digit code. This 3-digit code 
   <%= hidden_field_tag :payer_email, current_user.email %>
 
 <% end %>
-<%= javascript_include_tag "#{STRIPE_JS_HOST}/v2/" %>
+<%= javascript_include_tag "#{STRIPE_JS_HOST} %>
