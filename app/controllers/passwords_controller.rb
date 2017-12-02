@@ -1,6 +1,7 @@
 class PasswordsController < Clearance::PasswordsController
   layout "authentication"
 
+  # TODO remove and change routes to default clearance once layouts become generic
   def create
     super
   end
