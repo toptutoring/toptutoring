@@ -18,6 +18,8 @@ After setting up, you can run the application using [Heroku Local]:
 
 [Heroku Local]: https://devcenter.heroku.com/articles/heroku-local
 
+[Check out our wiki](https://github.com/plexmate/toptutoring/wiki) for more detailed instructions and explanations.
+
 ## Guidelines
 
 Use the following guides for getting things done, programming well, and
@@ -34,3 +36,7 @@ you can deploy to staging and production with:
 
     $ ./bin/deploy staging
     $ ./bin/deploy production
+
+## Dig Deeper
+
+[Check out our wiki](https://github.com/plexmate/toptutoring/wiki) for a more detailed installation guide as well as in depth explanation of our code and process.
