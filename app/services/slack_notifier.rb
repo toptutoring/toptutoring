@@ -64,7 +64,11 @@ class SlackNotifier
     private
 
     def channel_finder(channel)
-      Rails.env.production? ? CHANNELS[channel] : CHANNELS[:development]
+      if ENV["DWOLLA_ENVIRONMENT"] == "production" && Rails.env.production?
+        CHANNELS[channel]
+      else
+        CHANNELS[:development]
+      end
     end
   end
 end
