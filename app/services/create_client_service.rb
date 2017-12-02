@@ -29,7 +29,7 @@ class CreateClientService
     def notify_through_slack_and_emails
       SlackNotifier.notify_user_signup_start(@user)
       UserNotifierMailer.send_signup_email(@user).deliver_later
-      NewClientNotifierMailer.started_sign_up(@user).deliver_later
+      AdminDirectorNotifierMailer.new_user_started_sign_up(@user).deliver_later
     end
   end
 end
