@@ -25,12 +25,15 @@
                 <td><%= engagement.subject.name %></td>
                 <td><%= engagement.academic_type.humanize %></td>
                 <td>
+                  <!-- 
                   <% if engagement.availabilities.empty? %>
                     <% availability_url = new_availability_url(engagement.availabilities.build) %>
                   <% else %>
                     <% availability_url = edit_availability_path(engagement.availabilities.last) %>
                   <% end %>
+                  <% # TODO enable this feature when availabilites feature is stable %>
                   <a class="pull-right" data-toggle="tooltip" title="Let us know when you are available for this tutor." href="<%= availability_url %>"><i class="ion-clock fs-18"></i></a>
+                  -->
                 </td>
               </tr>
             <% end %>
