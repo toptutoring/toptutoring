@@ -1,12 +1,11 @@
-<div class="row">
-  <div class="col-sm-12">
-    <div class="widget">
-      <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Subjects</h3>
-      </div>
-      <div class="widget-body">
-        <%= render "subject_table", subjects: @subjects %>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- This div contains the data to be passed to the React components -->
+<%= content_tag :div,
+  id: "subjects",
+  data: @subjects.to_json do %>
+<% end %>
+
+<!-- This is the target div that our React script will insert elements into -->
+<div id="root"></div>
+
+<!-- Adding the component script -->
+<%= javascript_pack_tag "admin_subject_table" %>

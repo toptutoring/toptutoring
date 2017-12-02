@@ -3,7 +3,8 @@ class Subject < ActiveRecord::Base
   enum tutoring_type: { academic: "academic", 
                         test_prep: "test_prep" }
 
-  belongs_to :user
+  has_many :tutor_profiles
+  has_many :users, through: :tutor_profiles
 
   def academic_type
     academic? ? "Academic" : "Test Prep"
