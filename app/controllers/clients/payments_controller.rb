@@ -1,4 +1,4 @@
-class PaymentsController < ApplicationController
+class Clients::PaymentsController < ApplicationController
   before_action :require_login
   before_action :set_stripe_key, only: :create
 
@@ -80,7 +80,7 @@ class PaymentsController < ApplicationController
   end
 
   def payment_params
-    params.require(:payment).permit(:description, :hours, :academic_type)
+    params.require(:payment).permit(:hours, :academic_type)
   end
 
   def feedback_params

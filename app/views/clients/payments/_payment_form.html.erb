@@ -1,4 +1,4 @@
-<%= form_for @payment do |f| %>
+<%= form_for @payment, url: clients_payments_path do |f| %>
   <!--  Credit Card Inputs -->
   <%= content_tag :div, nil, id: "stripe_publishable_key", data: { key: ENV['STRIPE_PUBLISHABLE_KEY'] } %>
   <div class="col-lg-6">
