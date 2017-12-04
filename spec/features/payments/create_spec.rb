@@ -9,7 +9,7 @@ feature "Create payment as client" do
       engagement
 
       sign_in(client)
-      visit new_payment_path
+      visit new_clients_payment_path
 
       fill_in "Hours", with: 2
       fill_in "Description", with: "initial payment"
