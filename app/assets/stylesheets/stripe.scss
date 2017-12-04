@@ -1,0 +1,25 @@
+.payment-display {
+  margin: 20px 0 10px 0;
+  padding: 0;
+  line-height: 1.1;
+  font-weight: 300;
+  font-size: 36px;
+}
+
+#hours_desired {
+  margin: 10px 0 0 0;
+  height: 59px;
+  font-weight: 300;
+  font-size: 36px;
+}
+
+.StripeElement {
+  margin: 20px 0;
+  padding: 13px;
+  background: #f5f5f5;
+}
+
+#card-error {
+  color: #EB1C27;
+  margin: 20px 0;
+}

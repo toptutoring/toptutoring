@@ -1,147 +1,103 @@
-<%= form_for @payment, :html => { :class => "form-horizontal payment-form", id: "payment-form" } do |f| %>
-  <fieldset class="credit_card">
+<%= form_for @payment do |f| %>
+  <!--  Credit Card Inputs -->
+  <%= content_tag :div, nil, id: "stripe_publishable_key", data: { key: ENV['STRIPE_PUBLISHABLE_KEY'] } %>
+  <div class="col-lg-6">
+    <div class="widget">
+      <div class="widget-body">
+        <div class="widget-content">
+          <% if @academic_types.count > 1 %>
+            <div class="row">
+              <div class="col-sm-12">
+                <%= label :academic_type, "What hours would you like to purchase?" %>
+              </div>
+              <div class="col-sm-12">
+                <%= select_tag :academic_type, options_for_select(@academic_types.map { |type| [type.humanize, type] }), required: true %>
+              </div>
+            </div>
+          <% elsif @academic_types.include?("academic") %>
+            <%= label :academic_type, "Purchasing Academic Hours" %>
+            <%= hidden_field_tag :academic_type, "academic" %>
+          <% else %>
+            <%= label :academic_type, "Purchasing Test Prep Hours" %>
+            <%= hidden_field_tag :academic_type, "test_prep" %>
+          <% end %>
 
-    <div class="form-group">
-      <span class="payment-errors alert-danger col-sm-7"></span>
-    </div>
+          <div class="row">
+            <div class="col-xs-6">
+              <h1 class="fw-300">Your Rate</h1>
+            </div>
+            <div class="col-xs-6">
+              <%= content_tag :h1, nil, class: "fw-300 text-right",
+                data: { academic: current_user.academic_rate.to_s, test: current_user.test_prep_rate.to_s },
+                id: "hourly-rate-display" %>
+            </div>
+          </div>
 
-    <div class="form-group">
-      <label for="hourly-rate" class="col-sm-2 control-label col-sm-offset-2">Hourly rate</label>
-      <div class="col-sm-4">
-        <div class="input-group">
-        <% if @academic_types.count > 1 %>
-          <div class="input-group-addon">$</div>
-          <input type="number" class="hourly-rate form-control input-sm" placeholder="Hourly Rate" name="hourly_rate" min="0.0" required="required" disabled="true"
-            data-academic="<%= current_user.academic_rate %>"
-            data-test-prep="<%= current_user.test_prep_rate %>"
-            name="hourly_rate"  aria-label="Hourly Rate"></input>
-        <% elsif @academic_types.include?('academic') %>
-          <p>
-            $<%= current_user.academic_rate %>
-          </p>
-        <% else %>
-          <div class="input-group-addon">$</div>
-          <input type="number" class="hourly-rate form-control input-sm" value="<%= current_user.test_prep_rate %>" name="hourly_rate" min="0.0" disabled="true"/>
-        <% end %>
+          <div class="row">
+            <div class="col-xs-6">
+              <%= label_tag :hours_desired, "Hours", class: "payment-display" %>
+            </div>
+            <h1 class="col-xs-3 fw-300 text-right">x</h1>
+            <div class="col-xs-3">
+              <%= number_field_tag :hours_desired, 1, min: 1, step: "0.25", class: "text-right" %>
+            </div>
+          </div>
+
+          <div class="separator m-0"></div>
+
+          <div class="row">
+            <div class="col-xs-6">
+              <h1 class="fw-300">Your Total</h1>
+            </div>
+            <div id="payment-total" class="col-xs-6">
+              <h1 id="payment-total-display" class="fw-300 text-right">$0.00</h1>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-7">
+              <h3 id="hour-type" class="fw-300">Academic Hours</h3>
+            </div>
+
+            <div class="col-xs-2">
+              <%= content_tag :h3, nil, class: "fw-300 text-left",
+                data: { academic: current_user.academic_credit, test: current_user.test_prep_credit },
+                id: "current-hours" %>
+          </div>
+
+          <div class="col-xs-1">
+            <h3 class="fw-300 text-center">→</h3>
+          </div>
+
+          <div class="col-xs-2">
+            <h3 id="after-purchase-hours" class="fw-300 text-right"></h3>
+          </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="separator col-md-6 col-md-offset-2 clearfix"></div>
+  <div class="col-lg-6">
+    <div class="widget">
+      <div class="widget-body">
+        <div class="widget-content">
+          <%= label :credit_card, "Credit Card Information" %>
+          <div id="card-element"></div>
+          <h4 id="card-error" class="fw-300 text-right"></h4>
 
-    <div class="form-group">
-      <label for="hours" class="col-sm-2 control-label col-sm-offset-2">Hours</label>
-      <div class="col-sm-4">
-        <input type="number" class="form-control col-sm-3 input-sm hours" name="payment[hours]"
-        min="0.5" max="9999" step="0.5" placeholder="Hours" aria-label="Hours" id="hours"/>
-      </div>
-    </div>
-
-    <% if @academic_types.count > 1 %>
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <label for="payment_academic_type" class="col-sm-2 control-label">Tutoring Type</label>
-        <div class="col-sm-4">
-          <select name="payment[academic_type]" id="payment_academic_type" class="payment-academic-type">
-            <option value="Academic" data-academic="<%= current_user.academic_rate %>">Academic</option>
-            <option value="Test_Prep" data-test-prep="<%= current_user.test_prep_rate %>">Test Preparation</option>
-          </select>
+          <div class="row">
+            <div class="col-md-8">
+            </div>
+            <div class="col-md-4">
+              <!-- button disabling is handled by jaavascript because Stripe validation requires javascript -->
+              <%= f.submit "Purchase Hours", class: "btn btn-primary", data: { disable_with: false } %>
+            </div>
+          </div>
         </div>
       </div>
-    <% else %>
-      <%= hidden_field_tag "payment[academic_type]", @academic_types.first %>
-    <% end %>
-
-    <div class="form-group">
-      <div class="col-sm-2"></div>
-      <label for="payment_description" class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-4">
-        <textarea type="text" class="form-control col-sm-3 input-sm" placeholder="Description" name="payment[description]" rows="3" id="payment_description"></textarea>
-      </div>
     </div>
-
-    <div class="separator col-md-6 col-md-offset-2 clearfix"></div>
-
-    <div class="row">
-      <legend class="col-sm-6 col-sm-offset-2"><i class="glyphicon glyphicon-lock color-grey"></i> Secure Credit Card</legend>
-    </div>
-    <div class="row">
-      <p class="col-sm-2 col-sm-offset-2">Note: All fields are required.</p>
-    </div>
-    <div class="row">
-      <p class="col-sm-4 col-sm-offset-2">This page is protected through secure SSL encrypted payment.</p>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-2"></div>
-      <label for="card-holder-name" class="col-sm-2 control-label">Card Holder's Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control col-sm-4 input-sm"  placeholder="Card Holder's Name" data-stripe="name" title="This is the name as written on your credit card." id="name"/>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-2"></div>
-      <label for="credit-card-number" class="col-sm-2 control-label">Credit Card</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control col-sm-3 input-sm" placeholder="Credit Card" data-stripe="number" title="Fill in your credit card number." maxlength="19" required id="credit-card"/>
-      </div>
-      <img src="/img/credit-card-icons.png" class="img-responsive col-sm-2"></img>
-    </div>
-
-    <div class="form-group select-option">
-      <div class="col-sm-2"></div>
-      <label for="exp" class="col-sm-2 control-label">Expiration</label>
-      <div class="controls">
-        <div class="col-sm-3">
-          <i class="ion-chevron-down"></i>
-          <%= select_month(Date.today, {add_month_numbers: true}, name: nil, data: {stripe: "exp-month"}) %>
-        </div>
-        <div class="col-sm-2">
-          <i class="ion-chevron-down"></i>
-          <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, data: {stripe: "exp-year"}) %>
-        </div>
-        <%= hidden_field_tag :token %>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-2"></div>
-      <label for="cvv-code" class="col-sm-2 control-label">CVV</label>
-      <div class="col-sm-2 col-cvv-fixed-width">
-        <input type="text" class="form-control input-sm" placeholder="CVV" data-stripe="cvc" size="4" required/>
-      </div>
-
-      <script>
-      $(function ()
-      { $("#cvv").popover({
-        trigger: 'hover'
-        });
-      });
-      </script>
-
-      <a id="cvv" class="col-sm-2" data-content="<strong>Visa®, Mastercard®, and Discover® cardholders:</strong><p>Turn your card over and look at the signature box. You should see either the entire 16-digit credit card number or
-just the last four digits followed by a special 3-digit code. This 3-digit code is your CVV number / Card Security Code.</p><strong> American Express® cardholders:</strong><p>Look for the 4-digit code printed on the front of your card just above and to the right of your main credit card number. This 4-digit code is your Card Identification Number (CID). The CID is the four-digit code printed just above the Account Number.</p>" data-placement="right" data-toggle="popover" class="btn" data-original-title="Card Verification Number" data-html="true" style="font-size:11px">What is my CVV code?</a>
-    </div>
-
-    <% if current_user %>
-      <div class="form-group">
-        <div class="col-sm-offset-4">
-          <%= check_box_tag 'save_payment_info'  %>
-          <label>Save card information</label>
-        </div>
-      </div>
-    <% end %>
-
-    <div class="form-group">
-      <div class="col-xs-3 col-xs-offset-4">
-        <%= f.submit "Pay", class: "btn btn-block btn-blue payment-submit" %>
-      </div>
-    </div>
-  </fieldset>
-
-  <%= hidden_field_tag :stripe_publishable_key, ENV['STRIPE_PUBLISHABLE_KEY'] %>
-  <%= hidden_field_tag :payer_email, current_user.email %>
+  </div>
 
 <% end %>
-<%= javascript_include_tag "#{STRIPE_JS_HOST} %>
+<%= javascript_include_tag STRIPE_JS_HOST %>
