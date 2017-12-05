@@ -6,4 +6,5 @@ class Subject < ActiveRecord::Base
 
   belongs_to :user
   has_many :engagements
+  has_many :signups
 end
