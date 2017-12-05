@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'Create Invoice', js: true do
+feature "Create Invoice", js: true do
   let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 0) }
   let(:client) { FactoryGirl.create(:client_user, academic_credit: 50, test_prep_credit: 50) }
   let(:student) { FactoryGirl.create(:student_user, client: client) }
@@ -10,7 +10,7 @@ feature 'Create Invoice', js: true do
   let(:email) { FactoryGirl.create(:email, tutor: tutor, client: client) }
 
   context "tutor" do
-    scenario 'has invoice form' do
+    scenario "has invoice form" do
       sign_in(tutor)
 
       expect(page).to have_content("Invoice session")
@@ -21,13 +21,13 @@ feature 'Create Invoice', js: true do
       expect(page).to have_content("Description")
     end
 
-    scenario 'creates invoice with valid params' do
+    scenario "creates invoice with valid params" do
       student
       engagement
 
       sign_in(tutor)
 
-      find('.hours').find(:xpath, 'option[3]').select_option
+      find("#invoice_hours").find(:xpath, "option[3]").select_option
       fill_in "invoice[subject]", with: "Mathmatics"
       fill_in "Description", with: "for this weeks payment"
 
@@ -40,13 +40,13 @@ feature 'Create Invoice', js: true do
       sign_out
     end
 
-    scenario 'creates invoice as no show' do
+    scenario "creates invoice as no show" do
       student
       engagement
 
       sign_in(tutor)
 
-      find('.hours').find(:xpath, 'option[2]').select_option
+      find("#invoice_hours").find(:xpath, "option[2]").select_option
       fill_in "invoice[subject]", with: "Mathmatics"
       fill_in "Description", with: "no show"
 
@@ -60,14 +60,14 @@ feature 'Create Invoice', js: true do
       sign_out
     end
 
-    scenario 'creates invoice but client has a low balance' do
+    scenario "creates invoice but client has a low balance" do
       student
       engagement
       engagement.client.update(academic_credit: 0.0)
 
       sign_in(tutor)
 
-      find('.hours').find(:xpath, 'option[3]').select_option
+      find("#invoice_hours").find(:xpath, "option[3]").select_option
       fill_in "invoice[subject]", with: "Mathmatics"
       fill_in "Description", with: "for this weeks payment"
 
@@ -76,14 +76,14 @@ feature 'Create Invoice', js: true do
       expect(page).to have_content("Your invoice has been created. However, your client is running low on their balance. Please consider making a suggestion to your client to add to their balance before scheduling any more sessions.")
     end
 
-    scenario 'creates timesheet' do
+    scenario "creates timesheet" do
       student
       engagement
-      tutor.roles << Role.where(name: 'contractor')
+      tutor.roles << Role.where(name: "contractor")
       sign_in(tutor)
 
-      find('#invoice_submitter_type').find(:xpath, 'option[3]').select_option
-      find('.hours').find(:xpath, 'option[2]').select_option
+      find("#invoice_submitter_type").find(:xpath, "option[3]").select_option
+      find("#invoice_hours").find(:xpath, "option[2]").select_option
       fill_in "Description", with: "Work"
 
       click_on "Create Invoice"
