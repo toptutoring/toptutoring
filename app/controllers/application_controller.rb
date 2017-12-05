@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   if Rails.env.production?
-    force_ssl(host: ENV['SSL_APPLICATION_HOST'])
+    force_ssl(host: ENV["SSL_APPLICATION_HOST"])
   end
 
   def require_login
