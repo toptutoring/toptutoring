@@ -1,73 +1,81 @@
 class PaymentService
-  attr_reader :customer
+  Result = Struct.new(:success?, :message)
 
-  def initialize(user_id, amount_in_cents, currency, token, params)
-    @user = User.find(user_id)
-    @description = params[:description]
-    @amount_in_cents = amount_in_cents
-    @currency = currency
-    @token = token
-    @hours = params[:hours].to_f
-    @academic_type = params[:academic_type]
-    @customer = retrieve_customer
+  def initialize(user, academic_type, hours)
+    @user = user
+    @academic_type = academic_type
+    @hours = hours
   end
 
-  def retrieve_customer
-    if @token.nil?
-      Stripe::Customer.retrieve @user.customer_id
-    else
-      Stripe::Customer.create(
-        source: @token,
-        email: @user.email
-      )
-    end
-  end
-
-  def create_charge
-    payment = Stripe::Charge.create(
-      amount: @amount_in_cents,
-      currency: @currency,
-      customer: @customer,
-      description: @description
-    )
-  end
-
-  def save_payment_info
-    @user.customer_id = @customer.id
-    @user.save
-  end
-
-  def process!(payment)
-    if new_payment = create_payment(payment, @user.id)
-      update_client_credit(new_payment.amount_cents, @user.id, @academic_type) if new_payment.valid?
-    end
-    new_payment
+  def charge!(token)
+    payment = build_payment(token)
+    process_payment!(payment, token)
+  rescue Stripe::StripeError => e
+    Bugsnag.notify("Stripe Payment Error for #{user.name + user.id.to_s}: " + e.message)
+    Result.new(false, "There was an error submitting payment with your credit card.")
   end
 
   private
 
-  def create_payment(payment, payer_id)
-    Payment.create(
-      amount_cents: payment.amount,
-      description:     payment.description,
-      status:          payment.status,
-      customer_id:     payment.customer,
-      destination:     payment.destination,
-      payer_id:        payer_id,
-      created_at:      Time.now)
+  attr_reader :user, :academic_type, :stripe_token, :hours
+
+  def build_payment(token)
+    Payment.new(
+      amount_cents: amount_in_cents,
+      description:  payment_description,
+      status:       "succeeded",
+      customer_id:  token,
+      payer:        user,
+      created_at:   Time.now
+    )
   end
 
-  def update_client_credit(amount_cents, payer_id, academic_type)
-    client = User.find(payer_id)
-    if academic_type.casecmp("Academic") == 0
-      client.academic_credit += @hours if payment_valid?(amount_cents, client.academic_rate)
+  def process_payment!(payment, token)
+    if payment.valid? && user_credit_valid
+      charge_with_stripe(token)
+      payment.save
+      user.save
+      SlackNotifier.notify_payment_made(payment)
+      Result.new(true, I18n.t('app.payment.success'))
     else
-      client.test_prep_credit += @hours if payment_valid?(amount_cents, client.test_prep_rate)
+      Result.new(false, payment.errors.full_messages)
     end
-    client.save
   end
 
-  def payment_valid?(amount_cents, rate)
-    (@hours * rate.cents).round == amount_cents ? true : false
+  def user_credit_valid
+    if academic?
+      user.academic_credit += hours
+    else
+      user.test_prep_credit += hours
+    end
+    user.valid?
+  end
+
+  def charge_with_stripe(token)
+    Stripe::Charge.create(
+      amount: amount_in_cents,
+      currency: "usd",
+      source: token,
+      description: payment_description
+    )
+  end
+
+  def amount_in_cents
+    return @amount_cents if @amount_cents
+    rate = academic? ? user.academic_rate : user.test_prep_rate
+    @amount_cents = (hours * rate).cents
+  end
+
+  def payment_description
+    @payment_desctiprion ||= "Purchase of #{hours_string}"
+  end
+
+  def hours_string
+    type = academic? ? "Academic" : "Test Prep"
+    hours.to_s + " " + type + " " + (hours == 1 ? "hour" : "hours.")
+  end
+
+  def academic?
+    academic_type == "academic"
   end
 end

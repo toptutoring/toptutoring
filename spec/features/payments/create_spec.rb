@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "Create payment as client" do
-  let(:client) { FactoryGirl.create(:client_user, customer_id: "cus_A45BGhlr4VjDcJ") }
+  let(:client) { FactoryGirl.create(:client_user) }
   let(:engagement) { FactoryGirl.create(:engagement, client_account: client.client_account) }
 
   scenario "with a valid stripe card", js: true do
@@ -12,9 +12,8 @@ feature "Create payment as client" do
       visit new_clients_payment_path
 
       fill_in "Hours", with: 2
-      fill_in "Description", with: "initial payment"
 
-      click_on "Pay"
+      click_button "Purchase Hours"
 
       expect(page).to have_content("Payment successfully made.")
     end

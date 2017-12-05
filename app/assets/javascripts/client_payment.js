@@ -1,22 +1,80 @@
-jQuery(function($) {
-  setBalanceType();
-  calculateHours();
-  setHourlyRate();
-  calculateAmount();
+$(function() {
+  if (document.getElementById('new_payment')) {
+    setBalanceTypeForPayment();
+    calculateHoursForPayment();
+    setHourlyRateForPayment();
+    calculateAmountForPayment();
 
-  $('#academic_type').on('change', function() {
-    setBalanceType();
-    calculateHours();
-    setHourlyRate();
-    calculateAmount();
-  })
+    // Sets Stripe Key
+    var publishable_key = $('#stripe_publishable_key').data('key');
+    var stripe = Stripe(publishable_key)
 
-  $('#hours_desired').on('change', function() {
-    calculateHours();
-    calculateAmount();
-  })
+    // Create an instance of Elements
+    var elements = stripe.elements();
 
-  function setBalanceType() {
+    var card = elements.create('card', {
+      style: {
+        base: {
+          color: '#32325d',
+          lineHeight: '24px',
+          fontFamily: 'inherit',
+          fontSmoothing: 'antialiased',
+          fontWeight: '300',
+          fontSize: '24px',
+          '::placeholder': {
+            color: '#aab7c4'
+          }
+        }
+      }
+    });
+
+    // Add an instance of the card Element into the `card-element` <div>
+    card.mount('#card-element');
+
+    // Show live error feedback
+    card.addEventListener('change', function(event) {
+      var displayError = $('#card-error');
+      if (event.error) {
+        displayError.text(event.error.message);
+      } else {
+        displayError.text('');
+      }
+    });
+
+    // Create Stripe Token upon submit
+    var form = document.getElementById('new_payment');
+
+    form.addEventListener('submit', function(event) {
+      $('input[type=submit]').attr('disabled', true);
+      event.preventDefault();
+
+      stripe.createToken(card).then(function(result) {
+        if (result.error) {
+          // Inform the customer that there was an error
+          var errorElement = document.getElementById('card-error');
+          errorElement.textContent = result.error.message;
+          $('input[type=submit]').attr('disabled', false);
+        } else {
+          // Send the token to your server
+          stripeTokenHandler(result.token);
+        }
+      });
+    });
+
+    $('#academic_type').on('change', function() {
+      setBalanceTypeForPayment();
+      calculateHoursForPayment();
+      setHourlyRateForPayment();
+      calculateAmountForPayment();
+    });
+
+    $('#hours_desired').on('change', function() {
+      calculateHoursForPayment();
+      calculateAmountForPayment();
+    });
+  }
+
+  function setBalanceTypeForPayment() {
     var type = $('#academic_type').val();
     var hours;
     if (type == 'academic') {
@@ -30,7 +88,7 @@ jQuery(function($) {
     $('#current-hours').text(hours);
   }
 
-  function calculateHours() {
+  function calculateHoursForPayment() {
     var type = $('#academic_type').val();
     var currentHours;
     var purchaseHours;
@@ -45,7 +103,7 @@ jQuery(function($) {
     $('#after-purchase-hours').text(newHours);
   }
 
-  function setHourlyRate() {
+  function setHourlyRateForPayment() {
     var type = $('#academic_type').val();
     if (type == 'academic') {
       rate = $('#hourly-rate-display').data('academic');
@@ -56,7 +114,7 @@ jQuery(function($) {
     $('#hourly-rate-display').text(`$${rate}`);
   };
 
-  function calculateAmount() {
+  function calculateAmountForPayment() {
     var type = $('#academic_type').val();
     var rate;
     if (type == 'academic') {
@@ -70,60 +128,6 @@ jQuery(function($) {
     total = isNaN(total) ? '0.00' : total;
     $('#payment-total-display').text(`$${total}`);
   };
-
-  var publishable_key = $('#stripe_publishable_key').data('key');
-  var stripe = Stripe(publishable_key)
-  // Create an instance of Elements
-  var elements = stripe.elements();
-
-  var card = elements.create('card', {
-    style: {
-      base: {
-          color: '#32325d',
-          lineHeight: '24px',
-          fontFamily: 'inherit',
-          fontSmoothing: 'antialiased',
-          fontWeight: '300',
-          fontSize: '24px',
-          '::placeholder': {
-            color: '#aab7c4'
-        }
-      }
-    }
-  });
-
-  // Add an instance of the card Element into the `card-element` <div>
-  card.mount('#card-element');
-
-  // Show live error feedback
-  card.addEventListener('change', function(event) {
-    var displayError = $('#card-error');
-    if (event.error) {
-      displayError.text(event.error.message);
-    } else {
-      displayError.text('');
-    }
-  });
-
-  // Create Stripe Token upon submit
-  var form = document.getElementById('new_payment');
-  
-  form.addEventListener('submit', function(event) {
-    $('input[type=submit]').attr('disabled', true);
-    event.preventDefault();
-
-    stripe.createToken(card).then(function(result) {
-      if (result.error) {
-        // Inform the customer that there was an error
-        var errorElement = document.getElementById('card-error');
-        errorElement.textContent = result.error.message;
-        $('input[type=submit]').attr('disabled', false);
-      } else {
-        // Send the token to your server
-        stripeTokenHandler(result.token);
-      }
-    });
-  });
 
   function stripeTokenHandler(token) {
     // Insert the token ID into the form so it gets submitted to the server
