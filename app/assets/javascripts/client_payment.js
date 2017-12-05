@@ -47,8 +47,9 @@ $(function() {
     form.addEventListener('submit', function(event) {
       $('input[type=submit]').attr('disabled', true);
       event.preventDefault();
+      var options = { name: document.getElementById('name').value }
 
-      stripe.createToken(card).then(function(result) {
+      stripe.createToken(card, options).then(function(result) {
         if (result.error) {
           // Inform the customer that there was an error
           var errorElement = document.getElementById('card-error');

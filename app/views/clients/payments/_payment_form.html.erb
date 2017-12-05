@@ -1,3 +1,5 @@
+<!-- Styles for this form is defined in "stripe.scss" -->
+
 <%= form_tag clients_payments_path, id: "new_payment" do %>
   <!--  Credit Card Inputs -->
   <%= content_tag :div, nil, id: "stripe_publishable_key", data: { key: ENV['STRIPE_PUBLISHABLE_KEY'] } %>
@@ -11,7 +13,7 @@
                 <%= label :academic_type, "What hours would you like to purchase?" %>
               </div>
               <div class="col-sm-12">
-                <%= select_tag :academic_type, options_for_select(@academic_types.map { |type| [type.humanize, type] }), class: "payment", required: true %>
+                <%= select_tag :academic_type, options_for_select(@academic_types.map { |type| [type.humanize, type] }), class: "payment_field", required: true %>
               </div>
             </div>
           <% elsif @academic_types.include?("academic") %>
@@ -83,6 +85,9 @@
       <div class="widget-body">
         <div class="widget-content">
           <%= label :credit_card, "Credit Card Information" %>
+          <div class="StripeElement custom">
+          <%= text_field_tag :name, nil, placeholder: "Cardholder name", class: "payment_field", required: true %>
+          </div>
           <div id="card-element"></div>
           <h4 id="card-error" class="fw-300 text-right"></h4>
 
