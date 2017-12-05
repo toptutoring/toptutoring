@@ -15,7 +15,8 @@ module Users
         redirect_to :root
       else
         flash.alert = result.messages
-        redirect_back fallback_location: (client_sign_up_path)
+        @user = result.user
+        render :new
       end
     end
 

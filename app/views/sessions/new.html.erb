@@ -8,7 +8,7 @@
     <%= form_for :session, url: session_path, html: { class: "form-horizontal login" } do |form| %>
       <div class="email col-xs-12">
         <%= form.label :email, class: "sr-only"  %>
-        <%= form.email_field :email, type: "email", placeholder: "EMAIL" %>
+        <%= form.email_field :email, type: "email", value: @user_email, placeholder: "EMAIL" %>
       </div>
 
       <div class="password col-xs-12">
