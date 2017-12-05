@@ -62,7 +62,8 @@ group :development, :staging do
 end
 
 group :test do
-  gem "capybara-webkit"
+  gem "chromedriver-helper"
+  gem "capybara-selenium"
   gem "codecov", require: false
   gem "database_cleaner"
   gem "formulaic"
