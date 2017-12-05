@@ -4,12 +4,13 @@ require "rails_helper"
   describe '#creates a parent' do
     let(:user) { FactoryGirl.create(:client_user) }
     let!(:tutor) { FactoryGirl.create(:tutor_user) }
+    let(:subject_id) { FactoryGirl.create(:subject).id }
 
     it 'does not send notifications to tutor' do
       director = FactoryGirl.create(:director_user)
 
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
-        password: 'some_password', signup_attributes: { student: false } } }
+        password: 'some_password', signup_attributes: { student: false, subject_id: subject_id } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
       expect(ActionMailer::Base.deliveries.first.to).to eq(['some_email@toptutoring.com'])
@@ -19,7 +20,7 @@ require "rails_helper"
       director = FactoryGirl.create(:director_user)
 
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
-        password: 'some_password', signup_attributes: { student: false } } }
+        password: 'some_password', signup_attributes: { student: false, subject_id: subject_id } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
       expect(ActionMailer::Base.deliveries.map(&:bcc)).to include([director.email])
@@ -29,7 +30,7 @@ require "rails_helper"
       tutor.roles << Role.where(name: "director")
 
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
-        password: 'some_password', signup_attributes: { student: false } } }
+        password: 'some_password', signup_attributes: { student: false, subject_id: subject_id } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
       expect(ActionMailer::Base.deliveries.map(&:bcc)).to include([tutor.email])
@@ -39,7 +40,7 @@ require "rails_helper"
       admin = FactoryGirl.create(:admin_user)
 
       post :create, params: { user: { name: 'some name', email: 'some_email@toptutoring.com',
-        password: 'some_password', signup_attributes: { student: false } } }
+        password: 'some_password', signup_attributes: { student: false, subject_id: subject_id } } }
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
       expect(ActionMailer::Base.deliveries.map(&:bcc)).to include([admin.email])

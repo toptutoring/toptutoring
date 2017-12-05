@@ -72,11 +72,10 @@ class OnboardClientService
   end
 
   def create_engagement
-    subject = Subject.find_by_name(@user.signup.subject)
     Engagement.create!(
       client_account: @user.client_account,
       student_account: @student_account || @user.student_account,
-      subject: subject
+      subject: @user.signup.subject
     )
   end
 
