@@ -27,7 +27,7 @@ namespace :dev do
 
     #Update signup
     signup = Signup.where(user_id: client.id).first_or_initialize
-    signup.subject = Subject.last.name
+    signup.subject = Subject.last
     signup.student = false
     signup.save!
 
@@ -100,7 +100,7 @@ namespace :dev do
       tutor_id: tutor.id,
       student_account: student1.student_account,
       client_account: client.client_account,
-      subject: Subject.find_by_name(client.signup.subject),
+      subject: client.signup.subject
     )
     engagement.enable!
 
@@ -108,7 +108,7 @@ namespace :dev do
       tutor_id: tutor.id,
       student_account: student2.student_account,
       client_account: client.client_account,
-      subject: Subject.find_by_name(client.signup.subject),
+      subject: client.signup.subject
     )
     engagement.enable!
 

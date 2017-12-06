@@ -39,7 +39,7 @@ module Admin
     end
 
    def type 
-      @invoice.by_tutor? ? 'invoice' : 'timesheet'
+      @invoice.by_tutor? ? "invoice" : "timesheet"
    end
 
     def return_path

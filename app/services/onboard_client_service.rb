@@ -12,9 +12,9 @@ class OnboardClientService
       set_student_info unless @user.is_student?
       process_engagement
     end
-    success
+    return_results(true, I18n.t("app.signup.success_message"))
   rescue ActiveRecord::RecordInvalid => e
-    failure(e)
+    return_results(false, e)
   end
 
   def process_engagement
@@ -72,20 +72,15 @@ class OnboardClientService
   end
 
   def create_engagement
-    subject = Subject.find_by_name(@user.signup.subject)
     Engagement.create!(
       client_account: @user.client_account,
       student_account: @student_account || @user.student_account,
-      subject: subject
+      subject: @user.signup.subject
     )
   end
 
-  def success
-    message = I18n.t("app.signup.success_message")
+  def return_results(result, message)
+    SlackNotifier.notify_user_signed_up(@user)
     Result.new(true, message)
-  end
-
-  def failure(message)
-    Result.new(false, message)
   end
 end

@@ -123,7 +123,7 @@
                                             <div style="padding-top: 10px; padding-left: 30px;">Hello,</div>
                                             <div style="padding-top: 10px; padding-left: 30px;">We are writing to let you know that <%= @new_user.name %>, with email <%= @new_user.email %>, has started the sign up process on <%= @new_user.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%B %d, %Y") %>. </div>
                                             <div style="padding-top: 10px; padding-left: 30px;"><strong>Email:</strong> <%= @new_user.email %></div>
-                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Subject:</strong> <%= @new_user.signup.subject %></div>
+                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Subject:</strong> <%= @new_user.signup.subject.name %></div>
                                             <div style="padding-top: 10px; padding-left: 30px;"><strong>Comments:</strong> <%= @new_user.signup.comments || "None" %></div>
                                             <div style="padding-top: 10px; padding-left: 30px;">Regards,</div>
                                             <div style="padding-left: 30px;">Top Tutoring</div>

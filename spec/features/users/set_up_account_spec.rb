@@ -5,8 +5,8 @@ feature "Set up account" do
   let(:client) { FactoryGirl.create(:client_user, access_state: "disabled") }
   let(:client_as_student) { FactoryGirl.create(:client_user, :as_student, access_state: "disabled") }
   let(:student_account) { FactoryGirl.create(:student_account, client_account: client_as_student.client_account, user: client_as_student) }
-  let(:subject_test_prep) { FactoryGirl.create(:subject, academic_type: "test_prep") }
-  let(:signup_test_prep) { FactoryGirl.create(:signup, :as_student, subject: subject_test_prep.name) }
+  let(:subject_test_prep) { FactoryGirl.create(:subject, academic_type: 'test_prep') }
+  let(:signup_test_prep) { FactoryGirl.create(:signup, :as_student, subject: subject_test_prep) }
   let(:client_with_test_prep) { FactoryGirl.create(:client_user, :as_student, signup: signup_test_prep, access_state: "disabled") }
   let(:student_account_test_prep) { FactoryGirl.create(:student_account, client_account: client_with_test_prep.client_account, user: client_with_test_prep) }
 
@@ -68,7 +68,7 @@ feature "Set up account" do
       fill_in "user_phone_number", with: "0000000000"
       click_link "Finish"
 
-      expect(page).to have_content(client_as_student.signup.subject)
+      expect(page).to have_content(client_as_student.signup.subject.name)
       expect(page).to have_content("Academic")
       expect(page).to have_content(I18n.t("app.signup.success_message"))
     end

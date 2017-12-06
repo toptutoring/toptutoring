@@ -14,6 +14,12 @@ describe CreateClientService do
                              signup_attributes: { student: true,
                                                   subject: FactoryGirl.create(:subject),
                                                   comments: "Hello"} } }
+    let(:invalid_params) { { name: "Student",
+                             email: "client_new@example.com",
+                             password: "password",
+                             signup_attributes: { student: true,
+                                                  subject: nil, # Subject is invalid
+                                                  comments: "Hello"} } }
 
     it "creates user successfully when user is not a student" do
       subject = CreateClientService.create!(user_params)
@@ -37,6 +43,13 @@ describe CreateClientService do
       expect(subject.user.client_account.student_accounts.any?).to be true
       expect(subject.user.student_account).not_to be nil
       expect(subject.user.is_student?).to be true
+    end
+
+    it "fails when params aren't valid" do
+      subject = CreateClientService.create!(invalid_params)
+
+      expect(subject.success?).to be false
+      expect(subject.user.persisted?).to be false
     end
   end
 end

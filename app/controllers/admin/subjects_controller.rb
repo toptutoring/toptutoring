@@ -11,16 +11,16 @@ module Admin
       else
         flash[:error] = "Could not update tutoring type for #{@subject.name}."
       end
-      redirect_to action: 'index'
+      redirect_to action: "index"
     end
 
     private
 
     def update_status
       @type = params[:subject][:academic_type]
-      if @type == 'Academic'
+      if @type == "Academic"
         @subject.academic!
-      elsif @type == 'Test Prep'
+      elsif @type == "Test Prep"
         @subject.test_prep!
       end
     end

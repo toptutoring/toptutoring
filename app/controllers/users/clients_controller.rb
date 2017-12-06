@@ -15,7 +15,8 @@ module Users
         redirect_to :root
       else
         flash.alert = result.messages
-        redirect_back fallback_location: (client_sign_up_path)
+        @user = result.user
+        render :new
       end
     end
 
@@ -24,7 +25,7 @@ module Users
     def signups_params
       params.require(:user)
             .permit(:name, :email, :password,
-                    signup_attributes: [:student, :subject, :comments])
+                    signup_attributes: [:student, :subject_id, :comments])
             .merge(roles: Role.where(name: "client"))
     end
 

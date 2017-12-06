@@ -1,5 +1,5 @@
-  require 'open3'
-  require 'English'
+  require "open3"
+  require "English"
 
   module ProgressDisplayer
     MARKERS = {
@@ -68,7 +68,7 @@
 
     def initialize(remote)
       @app_name = remote
-      @password = ENV.fetch('DEFAULT_DEV_RESTORE_PASSWORD')
+      @password = ENV.fetch("DEFAULT_DEV_RESTORE_PASSWORD")
     end
 
     def restore
@@ -78,7 +78,7 @@
       set_passwords
       success_message 
   rescue DatabaseUpdateError => e
-    display "\e[31m" + e.message + ' ' + e.error + "\e[0m"
+    display "\e[31m" + e.message + " " + e.error + "\e[0m"
     exit 1
   end
 
@@ -126,7 +126,7 @@
 
   def set_passwords
     display "Setting user passwords."
-    password_change_script = "User.all.each { |user| user.password = '#{@password}'; user.save }"
+    password_change_script = "User.all.each { |user| user.password = \"#{@password}\"; user.save }"
     raise_error(:set_passwords) unless run_process("rails runner \"#{password_change_script}\"")
     display "#{CHECK} Successfully reset passwords"
   end

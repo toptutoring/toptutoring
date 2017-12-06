@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Subject, type: :model do
+  it { should validate_presence_of(:name) }
+  it { should validate_uniqueness_of(:name) }
+  it { should have_many(:signups) }
   describe ".academic_type" do
     it "returns academic if tutoring type is academic" do
       academic_subject = FactoryGirl.create(:subject, academic_type: "academic")

@@ -6,7 +6,7 @@ module Admin
 
       def create
         pay_all_pending
-        status = payment_successful? ? 'paid' : 'pending'
+        status = payment_successful? ? "paid" : "pending"
         @payment_service.update_processing(status)
         set_flash_messages
         ping_slack

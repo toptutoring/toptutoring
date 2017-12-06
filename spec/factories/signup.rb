@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :signup do
-    subject  { Subject.first_or_create(name: 'Math').name }
+    subject  { Subject.first_or_create(name: 'Math') }
     student  { false }
 
     trait :as_student do

@@ -14,6 +14,7 @@ class SessionsController < Clearance::SessionsController
         redirect_back_or url_after_create
       else
         flash.now[:error] = "Invalid email or password."
+        @user_email = params[:session][:email]
         render template: "sessions/new", status: :unauthorized
       end
     end
