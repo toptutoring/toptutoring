@@ -112,7 +112,7 @@ $(function() {
       rate = $('#hourly-rate-display').data('test');
     }
     rate = parseFloat(rate).toFixed(2);
-    $('#hourly-rate-display').text(`$${rate}`);
+    $('#hourly-rate-display').text("$".concat(rate));
   };
 
   function calculateAmountForPayment() {
@@ -127,7 +127,7 @@ $(function() {
     var hours = parseFloat($("#hours_desired").val());
     var total = (hours * rate).toFixed(2);
     total = isNaN(total) ? '0.00' : total;
-    $('#payment-total-display').text(`$${total}`);
+    $('#payment-total-display').text("$".concat(total));
   };
 
   function stripeTokenHandler(token) {
