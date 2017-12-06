@@ -21,7 +21,7 @@ gem "bootstrap-sass", "~> 3.3.6"
 
 gem "bugsnag"
 gem "clearance"
-gem 'stripe', '~> 3.4.1'
+gem "stripe", "~> 3.4.1"
 gem "dwolla_v2", "~> 1.0"
 gem "newrelic_rpm"
 gem "omniauth"
@@ -37,6 +37,7 @@ gem "money-rails", "~> 1"
 gem "clockwork", "~> 2.0"
 gem "webpacker", "~> 3.0"
 gem "slack-notifier"
+gem "opentok", "~> 3.0.0"
 
 group :development do
   gem "listen"
