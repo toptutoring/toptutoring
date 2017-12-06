@@ -43,7 +43,7 @@
 
           <%= form.fields_for :signup do |client_field| %>
             <div class="col-md-12">
-              <%= client_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), prompt: "Subject", required: true, class:"wpcf7-form-control wpcf7-select subject-select" %>
+              <%= client_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, { required: true, class:"wpcf7-form-control wpcf7-select subject-select" } %>
             </div>
 
           </br>
