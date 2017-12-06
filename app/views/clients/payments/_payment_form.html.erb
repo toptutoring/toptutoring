@@ -1,0 +1,108 @@
+<!-- Styles for this form is defined in "stripe.scss" -->
+
+<%= form_tag clients_payments_path, id: "new_payment" do %>
+  <!--  Credit Card Inputs -->
+  <%= content_tag :div, nil, id: "stripe_publishable_key", data: { key: ENV['STRIPE_PUBLISHABLE_KEY'] } %>
+  <div class="col-lg-6">
+    <div class="widget">
+      <div class="widget-body">
+        <div class="widget-content">
+          <% if @academic_types.count > 1 %>
+            <div class="row">
+              <div class="col-sm-12">
+                <%= label :academic_type, "What hours would you like to purchase?" %>
+              </div>
+              <div class="col-sm-12">
+                <%= select_tag :academic_type, options_for_select(@academic_types.map { |type| [type.humanize, type] }), class: "payment_field", required: true %>
+              </div>
+            </div>
+          <% elsif @academic_types.include?("academic") %>
+            <%= label :academic_type, "Purchasing Academic Hours" %>
+            <%= hidden_field_tag :academic_type, "academic" %>
+          <% else %>
+            <%= label :academic_type, "Purchasing Test Prep Hours" %>
+            <%= hidden_field_tag :academic_type, "test_prep" %>
+          <% end %>
+
+          <div class="row">
+            <div class="col-xs-6">
+              <h1 class="fw-300">Your Rate</h1>
+            </div>
+            <div class="col-xs-6">
+              <%= content_tag :h1, nil, class: "fw-300 text-right",
+                data: { academic: current_user.academic_rate.to_s, test: current_user.test_prep_rate.to_s },
+                id: "hourly-rate-display" %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-6">
+              <%= label_tag :hours_desired, "Hours", class: "payment-display" %>
+            </div>
+            <h1 class="col-xs-3 fw-300 text-right">x</h1>
+            <div class="col-xs-3">
+              <%= number_field_tag :hours_desired, 1, min: 1, step: "0.25", class: "payment text-right" %>
+            </div>
+          </div>
+
+          <div class="separator m-0"></div>
+
+          <div class="row">
+            <div class="col-xs-6">
+              <h1 class="fw-300">Your Total</h1>
+            </div>
+            <div id="payment-total" class="col-xs-6">
+              <h1 id="payment-total-display" class="fw-300 text-right">$0.00</h1>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-7">
+              <h3 id="hour-type" class="fw-300">Academic Hours</h3>
+            </div>
+
+            <div class="col-xs-2">
+              <%= content_tag :h3, nil, class: "fw-300 text-left",
+                data: { academic: current_user.academic_credit, test: current_user.test_prep_credit },
+                id: "current-hours" %>
+          </div>
+
+          <div class="col-xs-1">
+            <h3 class="fw-300 text-center">→</h3>
+          </div>
+
+          <div class="col-xs-2">
+            <h3 id="after-purchase-hours" class="fw-300 text-right"></h3>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="widget">
+      <div class="widget-body">
+        <div class="widget-content">
+          <%= label :credit_card, "Credit Card Information" %>
+          <div class="StripeElement custom">
+          <%= text_field_tag :name, nil, placeholder: "Cardholder name", class: "payment_field", required: true %>
+          </div>
+          <div id="card-element"></div>
+          <h4 id="card-error" class="fw-300 text-right"></h4>
+
+          <div class="row">
+            <div class="col-md-8">
+            </div>
+            <div class="col-md-4">
+              <!-- button disabling is handled by jaavascript because Stripe validation requires javascript -->
+              <%= submit_tag "Purchase Hours", class: "btn btn-primary", data: { disable_with: false } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+<%= javascript_include_tag STRIPE_JS_HOST %>

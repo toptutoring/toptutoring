@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'Set up account' do
+feature "Set up account" do
   let!(:admin) { FactoryGirl.create(:admin_user) }
   let(:client) { FactoryGirl.create(:client_user, access_state: "disabled") }
   let(:client_as_student) { FactoryGirl.create(:client_user, :as_student, access_state: "disabled") }
   let(:student_account) { FactoryGirl.create(:student_account, client_account: client_as_student.client_account, user: client_as_student) }
-  let(:subject_test_prep) { FactoryGirl.create(:subject, academic_type: 'test_prep') }
+  let(:subject_test_prep) { FactoryGirl.create(:subject, academic_type: "test_prep") }
   let(:signup_test_prep) { FactoryGirl.create(:signup, :as_student, subject: subject_test_prep.name) }
   let(:client_with_test_prep) { FactoryGirl.create(:client_user, :as_student, signup: signup_test_prep, access_state: "disabled") }
   let(:student_account_test_prep) { FactoryGirl.create(:student_account, client_account: client_with_test_prep.client_account, user: client_with_test_prep) }
@@ -17,15 +17,15 @@ feature 'Set up account' do
       fill_in "user_phone_number", with: "0000000000"
       click_link "Next"
 
-      student_name = 'Student Name'
+      student_name = "Student Name"
       fill_in "user_student_name", with: student_name
       fill_in "user_student_email", with: "new_student@example.com"
       click_link "Finish"
 
       expect(page).to have_content(client.name)
-      expect(page).to have_content("Dashboard")
       expect(page).to have_content(student_name)
-      expect(page).to have_content("Thank you for finishing the sign up process!")
+      expect(page).to have_content(I18n.t("app.signup.success_message"))
+
       # sends email to new student and admin
       expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
@@ -49,8 +49,7 @@ feature 'Set up account' do
       fill_in "user_student_name", with: "Student"
       click_link "Finish"
       expect(page).to have_content(client.name)
-      expect(page).to have_content("Dashboard")
-      expect(page).to have_content("Thank you for finishing the sign up process!")
+      expect(page).to have_content(I18n.t("app.signup.success_message"))
     end
 
     scenario "successfully when user is a student", js: true do
@@ -60,8 +59,7 @@ feature 'Set up account' do
       click_link "Finish"
 
       expect(page).to have_content(client.name)
-      expect(page).to have_content("Dashboard")
-      expect(page).to have_content("Thank you for finishing the sign up process!")
+      expect(page).to have_content(I18n.t("app.signup.success_message"))
     end
 
     scenario "successfully signs up with academic subject", js: true do
@@ -72,7 +70,7 @@ feature 'Set up account' do
 
       expect(page).to have_content(client_as_student.signup.subject)
       expect(page).to have_content("Academic")
-      expect(page).to have_content("Thank you for finishing the sign up process!")
+      expect(page).to have_content(I18n.t("app.signup.success_message"))
     end
 
     scenario "successfully signs up with test prep subject", js: true do
@@ -83,7 +81,7 @@ feature 'Set up account' do
 
       expect(page).to have_content(subject_test_prep.name)
       expect(page).to have_content("Test Prep")
-      expect(page).to have_content("Thank you for finishing the sign up process!")
+      expect(page).to have_content(I18n.t("app.signup.success_message"))
     end
   end
 end

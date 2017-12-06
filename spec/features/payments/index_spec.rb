@@ -9,7 +9,7 @@ feature "Index Payments" do
     payment
 
     sign_in(client)
-    visit payments_path
+    visit clients_payments_path
 
     expect(page).to have_content(payment.created_at)
     expect(page).to have_content(payment.amount)

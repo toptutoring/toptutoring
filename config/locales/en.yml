@@ -27,4 +27,5 @@ en:
       success: "Thank you for making a request. We will contact you when we find a tutor."
       failure: "There was an error while processing your request."
       destroy: "Your request has been removed."
-      
+    payment:
+      success: "Thank you for adding to your balance."

@@ -1,0 +1,69 @@
+.payment-display {
+  margin: 20px 0 10px 0;
+  padding: 0;
+  line-height: 1.1;
+  font-weight: 300;
+  font-size: 36px;
+}
+
+#hours_desired.payment {
+  margin: 10px 0 0 0;
+  height: 59px;
+  font-weight: 300;
+  font-size: 36px;
+}
+
+.StripeElement {
+  margin: 20px 0;
+  padding: 13px;
+  background: #f5f5f5;
+}
+
+.StripeElement.custom {
+  margin: 20px 0;
+}
+
+#card-error {
+  color: #EB1C27;
+  margin: 20px 0;
+}
+
+#new_payment .payment_field {
+  font-weight: 400;
+  margin: 0;
+  overflow: show;
+}
+
+#new_payment input[type="text"] {
+  height: 30px;
+  font-size: 24px;
+  color: #32325d;
+  font-family: open-sans;
+  font-weight: 300;
+  padding: 0;
+  background: #f5f5f5;
+}
+
+#new_payment input:focus {
+  outline: none
+}
+
+#new_payment ::-webkit-input-placeholder { /* Chrome */
+  color: #aab7c4;
+  opacity: 1;
+}
+
+#new_payment :-ms-input-placeholder { /* IE 10+ */
+  color: #aab7c4;
+  opacity: 1;
+}
+
+#new_payment ::-moz-placeholder { /* Firefox 19+ */
+  color: #aab7c4;
+  opacity: 1;
+}
+
+#new_payment :-moz-placeholder { /* Firefox 4 - 18 */
+  color: #aab7c4;
+  opacity: 1;
+}

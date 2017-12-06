@@ -13,7 +13,7 @@ $(function() {
       text : "No show"
     }));
     create_hour_options(5);
-  }
+  };
 
   function create_hour_options(limit) {
     for(var i = 0.5; i <= limit; i+= 0.5) {
@@ -22,11 +22,12 @@ $(function() {
         text : i
       }));
     }
-  }
+  };
+
   function setHoursDropDownForContractor() {
     $('.hours').empty();
     create_hour_options(160);
-  }
+  };
 
   function processTutorType() {
     var $selectedOption = $('.student').find(":selected");
@@ -49,7 +50,7 @@ $(function() {
         text : "Test Preparation - " + creditTestPrep + " hours"
       }));
     }
-  }
+  };
 
   $(document).on('change', '.student', function() {
     processTutorType();
@@ -69,4 +70,4 @@ $(function() {
       setHoursDropDown();
     }
   });
-})
+});

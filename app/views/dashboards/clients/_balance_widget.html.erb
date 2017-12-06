@@ -9,7 +9,7 @@
       <% if @academic_types.include?('academic') %>
         <p class="lead mt-30">Academic: <%= current_user.academic_credit %> hrs</p>
       <% end %>
-      <%= link_to 'Add more hours', new_payment_path %>
+      <%= link_to 'Add more hours', new_clients_payment_path %>
     </div>
     <!-- end widget -->
   </div>

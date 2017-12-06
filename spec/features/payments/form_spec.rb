@@ -5,8 +5,8 @@ feature "Navigate to payment as client" do
 
   scenario "with valid payment form" do
     sign_in(client)
-    visit new_payment_path
+    visit new_clients_payment_path
 
-    expect(page.current_path).to eq new_payment_path
+    expect(page.current_path).to eq new_clients_payment_path
   end
 end

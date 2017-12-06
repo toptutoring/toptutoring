@@ -21,7 +21,7 @@ gem "bootstrap-sass", "~> 3.3.6"
 
 gem "bugsnag"
 gem "clearance"
-gem "stripe", "~> 2.2.1"
+gem 'stripe', '~> 3.4.1'
 gem "dwolla_v2", "~> 1.0"
 gem "newrelic_rpm"
 gem "omniauth"
@@ -62,7 +62,8 @@ group :development, :staging do
 end
 
 group :test do
-  gem "capybara-webkit"
+  gem "chromedriver-helper"
+  gem "capybara-selenium"
   gem "codecov", require: false
   gem "database_cleaner"
   gem "formulaic"

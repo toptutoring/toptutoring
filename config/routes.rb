@@ -10,9 +10,6 @@ Rails.application.routes.draw do
   get "/confirmation" => "one_time_payments#confirmation"
   get "payment" => "pages#payment"
   get "/sign_up" => "users/clients#new", as: "client_sign_up"
-  post "payments/first_session_payment" => "payments#first_session_payment"
-  post "payments/low_balance_payment" => "payments#low_balance_payment"
-  post "payments/get_user_feedback" => "payments#get_user_feedback"
 
   resource :password, only: [:create, :edit]
   get "/reset_password" => "passwords#new", as: "reset_password"
@@ -23,7 +20,6 @@ Rails.application.routes.draw do
 
   #Clearance routes
   resource :session, controller: "sessions", only: [:new, :create]
-  resources :payments, only: [:new, :create, :index]
 
   scope module: "admin" do
     resources :users, only: [] do
@@ -88,11 +84,11 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("client") } do
-    get "/payment/new" => "payments#new"
     get "/one_time_payment" => "one_time_payments#new"
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
     namespace :clients do
+      resources :payments, only: [:index, :new, :create]
       resources :students, only: [:show, :edit, :index, :new, :create]
       resources :tutors
       resource :request_tutor, only: [:destroy, :new, :create]

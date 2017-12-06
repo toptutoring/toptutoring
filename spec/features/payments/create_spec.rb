@@ -1,7 +1,8 @@
 require 'rails_helper'
 
+# TODO write full integration tests for payments feature. Pair.
 feature "Create payment as client" do
-  let(:client) { FactoryGirl.create(:client_user, customer_id: "cus_A45BGhlr4VjDcJ") }
+  let(:client) { FactoryGirl.create(:client_user) }
   let(:engagement) { FactoryGirl.create(:engagement, client_account: client.client_account) }
 
   scenario "with a valid stripe card", js: true do
@@ -9,14 +10,13 @@ feature "Create payment as client" do
       engagement
 
       sign_in(client)
-      visit new_payment_path
+      visit new_clients_payment_path
 
-      fill_in "Hours", with: 2
-      fill_in "Description", with: "initial payment"
-
-      click_on "Pay"
-
-      expect(page).to have_content("Payment successfully made.")
+      expect(page).to have_content("Purchase Additional Hours")
+      expect(page).to have_content("Your Rate")
+      expect(page).to have_content("Academic Hours")
+      expect(page).to have_content("Credit card information")
+      expect(page).to have_content(client.academic_rate.to_s)
     end
   end
 end
