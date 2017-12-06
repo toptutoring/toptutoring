@@ -20,12 +20,10 @@ class SlackNotifier
       if user.persisted?
         message = "#{user.name} finished the sign up process.\n" \
           "Contact info for new client:\n" \
-          "Email: #{user.email}\n" \
-          "Phone Number: #{user.phone_number}"
       else
         message = "#{user.name} attempted to finish sign up, but failed.\n" \
-          "#{flash[:error]}"
       end
+      message.concat("Email: #{user.email}\nPhone Number: #{user.phone_number}")
       ping(message, :leads)
     end
 
