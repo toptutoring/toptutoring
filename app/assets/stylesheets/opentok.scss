@@ -1,0 +1,14 @@
+#opentok-container {
+  position: relative;
+}
+
+#opentok-publisher {
+  width: 100%;
+  height: 80vh;
+}
+
+#opentok-subscriber {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}

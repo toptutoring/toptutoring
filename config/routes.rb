@@ -40,6 +40,7 @@ Rails.application.routes.draw do
         resource :miscellaneous_payment, only: [:new, :create]
       end
     end
+    resources :open_tok_rooms
     mount Sidekiq::Web, at: "/sidekiq" unless Rails.env.development?
     get "/dashboard" => "dashboards#admin"
   end
@@ -108,6 +109,7 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("contractor") } do
+    resources :open_tok_rooms
     resources :timesheets
   end
 
