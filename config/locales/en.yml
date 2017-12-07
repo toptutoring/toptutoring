@@ -23,6 +23,8 @@ en:
         Thank you for finishing the sign up process!
         We are in the process of finding a great tutor for you.
         If you have any questions in the mean time, feel free to contact us!
+      tutors:
+        success: "Thank you for signing up!" 
     request_tutor:
       success: "Thank you for making a request. We will contact you when we find a tutor."
       failure: "There was an error while processing your request."

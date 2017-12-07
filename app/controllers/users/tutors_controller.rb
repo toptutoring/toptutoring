@@ -8,21 +8,18 @@ module Users
     end
 
     def create
-      @user = Clearance.configuration.user_model.new(signups_params)
-      add_subjects
-      @user.build_contract
-
-      if @user.save
-        NewTutorNotifierMailer.mail_admin_and_directors(@user).deliver_later
-        sign_in(@user)
+      results = CreateTutorService.create!(signups_params, tutor_subject_params)
+      if results.success?
+        sign_in(results.user)
+        flash.notice = results.message
         redirect_to :root
       else
-        redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: @user.errors.full_messages })
+        @user = results.user
+        flash.alert = results.message
+        render :new
       end
     end
 
-    #"cover page" for signing up users
     def signup
     end
 
@@ -34,22 +31,12 @@ module Users
         .merge(roles: Role.where(name: "tutor"), access_state: "enabled")
     end
 
-    def redirect_to_root
-      redirect_to root_path
-    end
-
     def tutor_subject_params
       params.fetch(:tutor, {}).permit(subjects: [])
     end
 
-    #Add each subject that was selected on signup to the tutor
-    def add_subjects
-      if !tutor_subject_params.blank?
-        ((tutor_subject_params)[:subjects]).each do |subject_id|
-          @user.subjects << Subject.find(subject_id.to_i)
-        end
-      end
+    def redirect_to_root
+      redirect_to root_path
     end
-
   end
 end
