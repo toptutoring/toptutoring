@@ -10,5 +10,9 @@ FactoryGirl.define do
     refresh_token { "xxx-xxx" }
     contract      { FactoryGirl.create(:contract) }
     access_state  { "enabled" }
+
+    after(:create) do |user, _|
+      user.create_tutor_account
+    end
   end
 end

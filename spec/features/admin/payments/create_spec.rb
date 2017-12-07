@@ -48,7 +48,7 @@ feature "Create payment for tutor" do
 
   context "when user is director" do
     context "and isn't paying himself" do
-      let!(:engagement) { FactoryGirl.create(:engagement, student_account: student_account, tutor: tutor, client_account: client.client_account) }
+      let!(:engagement) { FactoryGirl.create(:engagement, student_account: student_account, tutor_account: tutor.tutor_account, client_account: client.client_account) }
       let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, hours: 1) }
 
       scenario "and admin does not have external auth" do
@@ -91,7 +91,7 @@ feature "Create payment for tutor" do
     context "and is paying himself" do 
       scenario "with valid credentials" do
         VCR.use_cassette('dwolla authentication', record: :new_episodes) do
-          director_engagement = FactoryGirl.create(:engagement, tutor: director, client_account: client.client_account, student_account: student_account)
+          director_engagement = FactoryGirl.create(:engagement, tutor_account: director.tutor_account, client_account: client.client_account, student_account: student_account)
           FactoryGirl.create(:invoice, submitter: director, client: client, engagement: director_engagement, hours: 1)
           funding_source
 

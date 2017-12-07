@@ -5,9 +5,9 @@ feature 'Dashboard Index' do
   let(:tutor) { FactoryGirl.create(:tutor_user) }
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
-  let(:active_engagement) { FactoryGirl.create(:engagement, client_account: client.client_account, tutor: tutor, state: "active", student_account: student_account) }
+  let(:active_engagement) { FactoryGirl.create(:engagement, client_account: client.client_account, tutor_account: tutor.tutor_account, state: "active", student_account: student_account) }
   let(:active_presenter) { EngagementPresenter.new(active_engagement) }
-  let(:pending_engagement) { FactoryGirl.create(:engagement, client_account: client.client_account, tutor: tutor, state: "pending", student_account: student_account) }
+  let(:pending_engagement) { FactoryGirl.create(:engagement, client_account: client.client_account, tutor_account: tutor.tutor_account, state: "pending", student_account: student_account) }
   let(:pending_presenter) { EngagementPresenter.new(pending_engagement) }
 
   scenario 'when user is tutor' do

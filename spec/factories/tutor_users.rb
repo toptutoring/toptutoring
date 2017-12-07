@@ -11,5 +11,9 @@ FactoryGirl.define do
     token_expires_at    { Time.now + 60 }
     contract            { FactoryGirl.create(:contract) }
     access_state        { "enabled" }
+
+    after(:create) do |user, _|
+      user.create_tutor_account
+    end
   end
 end

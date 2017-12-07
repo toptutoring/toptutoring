@@ -7,7 +7,7 @@ describe CreditUpdater do
   let(:test_prep_subject) { FactoryGirl.create(:subject, academic_type: "test_prep") }
   let(:engagement) { FactoryGirl.create(:engagement,
                                         client_account: client.client_account,
-                                        tutor: submitter,
+                                        tutor_account: submitter.tutor_account,
                                         subject: test_prep_subject,
                                         student_account: student_account) }
   let(:invoice) { FactoryGirl.create(:invoice, client: client, submitter: submitter, engagement: engagement, hours: 2) }
