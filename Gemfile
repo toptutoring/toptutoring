@@ -19,6 +19,10 @@ gem "title"
 gem "uglifier"
 gem "bootstrap-sass", "~> 3.3.6"
 
+# stylesheets
+gem "bourbon"
+gem "neat"
+
 gem "bugsnag"
 gem "clearance"
 gem "stripe", "~> 3.4.1"

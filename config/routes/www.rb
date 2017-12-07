@@ -17,6 +17,6 @@ Rails.application.routes.draw do
       resources :blog_posts, path: "blog", param: :slug, only: [:index, :show]
     end
     get "/*path" => "pages#show"
-    root to: "pages#home"
+    root to: "www#index"
   end
 end
