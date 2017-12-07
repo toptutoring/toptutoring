@@ -8,11 +8,10 @@ FactoryGirl.define do
     auth_uid      { ENV.fetch('DWOLLA_DEV_TUTOR_AUTH_UID') }
     access_token  { "xxx-xxx" }
     refresh_token { "xxx-xxx" }
-    contract      { FactoryGirl.create(:contract) }
     access_state  { "enabled" }
 
     after(:create) do |user, _|
-      user.create_tutor_account
+      user.create_tutor_account.create_contract(hourly_rate: 15)
     end
   end
 end
