@@ -5,7 +5,6 @@ ruby "2.4.1"
 gem "autoprefixer-rails"
 gem "sidekiq"
 gem "jquery-rails"
-gem "normalize-rails", "~> 3.0.0"
 gem "pg"
 gem "puma"
 # gem "rack-canonical-host" Temporarily disable until payments are figured out
@@ -19,6 +18,7 @@ gem "title"
 gem "uglifier"
 gem "bootstrap-sass", "~> 3.3.6"
 
+gem "normalize-scss", "~> 5.0.3"
 # stylesheets
 gem "bourbon"
 gem "neat"
