@@ -1,82 +1,83 @@
-  require "open3"
+require "open3"
   require "English"
 
-  module ProgressDisplayer
-    MARKERS = {
-     "pg_dump: reading default privileges" => 1,
-     "pg_dump: reading indexes" => 2,
-     "pg_dump: reading constraints" => 3,
-     "pg_dump: reading policies" => 4,
-     "pg_dump: reading dependency data" => 5,
-     "pg_restore: connecting to database for restore" => 6,
-     "pg_dump: dumping contents of table \"public.users\"" => 7,
-     "pg_restore: setting owner and privileges for SCHEMA \"public\"" => 8,
-     "pg_restore: setting owner and privileges for TABLE DATA \"public.users\"" => 9
-    }
+module ProgressDisplayer
+  MARKERS = {
+    "pg_dump: reading default privileges" => 1,
+    "pg_dump: reading indexes" => 2,
+    "pg_dump: reading constraints" => 3,
+    "pg_dump: reading policies" => 4,
+    "pg_dump: reading dependency data" => 5,
+    "pg_restore: connecting to database for restore" => 6,
+    "pg_dump: dumping contents of table \"public.users\"" => 7,
+    "pg_restore: setting owner and privileges for SCHEMA \"public\"" => 8,
+    "pg_restore: setting owner and privileges for TABLE DATA \"public.users\"" => 9
+  }
 
-    BAR = {
-      0 => "[..........................] (0%) Importing Staging",
-      1 => "[##........................] (10%) Importing Staging",
-      2 => "[####......................] (20%) Importing Staging",
-      3 => "[######....................] (30%) Importing Staging",
-      4 => "[########..................] (40%) Importing Staging",
-      5 => "[##########................] (50%) Importing Staging",
-      6 => "[############..............] (60%) Importing Staging",
-      7 => "[###############...........] (70%) Importing Staging",
-      8 => "[####################......] (80%) Importing Staging",
-      9 => "[#######################...] (90%) Importing Staging",
-      10 => "\b\b\e[32m*\e[0m [##########################] (100%) Importing Staging - Done!",
-    }
+  BAR = {
+    0 => "[..........................] (0%) Importing Staging",
+    1 => "[##........................] (10%) Importing Staging",
+    2 => "[####......................] (20%) Importing Staging",
+    3 => "[######....................] (30%) Importing Staging",
+    4 => "[########..................] (40%) Importing Staging",
+    5 => "[##########................] (50%) Importing Staging",
+    6 => "[############..............] (60%) Importing Staging",
+    7 => "[###############...........] (70%) Importing Staging",
+    8 => "[####################......] (80%) Importing Staging",
+    9 => "[#######################...] (90%) Importing Staging",
+    10 => "\b\b\e[32m*\e[0m [##########################] (100%) Importing Staging - Done!",
+  }
 
-    def current_progress(line, percentage)
-     MARKERS[line] || percentage 
-    end
-
-    def progress_bar_output(percentage, first = false)
-      bar = "\r\e[32m" + pinwheel.rotate!.first + "\e[0m " + BAR[percentage]
-      bar.strip! if first
-      STDOUT.print bar
-    end
-
-    def pinwheel
-      @pinwheel ||= %w(| / - \\)
-    end
+  def current_progress(line, percentage)
+    MARKERS[line] || percentage 
   end
 
-  class DatabaseUpdateError < StandardError
-    attr_reader :error
-    ERROR = {
-      no_remote: "The remote you are requesting is unavailable.",
-      development: "Environment is not development.",
-      no_app_access: "You do not have access to the current remote database.\n" \
-      "Please make sure that the app you want to import is in your Heroku apps list before continuing.",
-      drop: "Unable to drop development database.",
-      import_data: "Unable to import data from staging backup file.",
-      migrate: "Unable to fully migrate. Try: \"rails db:migrate\".",
-      set_passwords: "Unable to set passwords"
-    }.freeze
-
-    def initialize(error, message = "Failed to restore staging data.")
-      @error = ERROR[error]
-      super(message)
-    end
+  def progress_bar_output(percentage, first = false)
+    bar = "\r\e[32m" + pinwheel.rotate!.first + "\e[0m " + BAR[percentage]
+    bar.strip! if first
+    STDOUT.print bar
   end
 
-  class RemoteDataImporter
-    include ProgressDisplayer
-    CHECK = "\e[32m✔\e[0m".freeze
+  def pinwheel
+    @pinwheel ||= %w(| / - \\)
+  end
+end
 
-    def initialize(remote)
-      @app_name = remote
-      @password = ENV.fetch("DEFAULT_DEV_RESTORE_PASSWORD")
-    end
+class DatabaseUpdateError < StandardError
+  attr_reader :error
+  ERROR = {
+    no_remote: "The remote you are requesting is unavailable.",
+    development: "Environment is not development.",
+    no_app_access: "You do not have access to the current remote database.\n" \
+    "Please make sure that the app you want to import is in your Heroku apps list before continuing.",
+    drop: "Unable to drop development database.",
+    import_data: "Unable to import data from staging backup file.",
+    migrate: "Unable to fully migrate. Try: \"rails db:migrate\".",
+    set_passwords: "Unable to set passwords"
+  }.freeze
 
-    def restore
-      disconnect_and_drop if restorable?
-      pull_staging
-      migrate
-      set_passwords
-      success_message 
+  def initialize(error, message = "Failed to restore staging data.")
+    @error = ERROR[error]
+    super(message)
+  end
+end
+
+class RemoteDataImporter
+  include ProgressDisplayer
+  CHECK = "\e[32m✔\e[0m".freeze
+
+  def initialize(remote, password, skip_migration)
+    @app_name = remote
+    @password = password 
+    @skip_migration = skip_migration
+  end
+
+  def restore
+    disconnect_and_drop if restorable?
+    pull_staging
+    migrate
+    set_passwords
+    success_message 
   rescue DatabaseUpdateError => e
     display "\e[31m" + e.message + " " + e.error + "\e[0m"
     exit 1
@@ -119,14 +120,18 @@
   end
 
   def migrate
-    display "Performing migrations."
-    raise_error(:migrate) unless run_process("rails db:migrate")
-    display "#{CHECK} Successfully performed migrations"
+    if @skip_migration
+      display "Skipping migrations."
+    else
+      display "Performing migrations. If you want to skip migrations, pass the \"-s\" flag."
+      raise_error(:migrate) unless run_process("rails db:migrate")
+      display "#{CHECK} Successfully performed migrations"
+    end
   end
 
   def set_passwords
     display "Setting user passwords."
-    password_change_script = "User.all.each { |user| user.password = \"#{@password}\"; user.save }"
+    password_change_script = "User.all.each { |user| user.password = '#{@password}'; user.save }"
     raise_error(:set_passwords) unless run_process("rails runner \"#{password_change_script}\"")
     display "#{CHECK} Successfully reset passwords"
   end
