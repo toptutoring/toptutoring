@@ -1,4 +1,121 @@
 @import 'colors';
 @import 'fonts';
 
-$g-enable-grid-visualization: true;
+// =======
+//  Debug
+// =======
+$g-enable-grid-visualization: false;
+
+// =======
+//  Fonts
+// =======
+
+$g-base-font: $helvetica-display-font;
+$g-secondary-font: $helvetica-font;
+$g-secondary-medium-font: $helvetica-medium-font;
+
+$g-body-font: $g-base-font;
+$g-input-font: $g-base-font;
+$g-input-label-font: $g-secondary-font;
+$g-heading-font: $g-base-font;
+$g-subhead-major-font: $g-secondary-font;
+$g-subhead-minor-font: $g-secondary-font;
+
+// ========
+//  Colors
+// ========
+$g-base-font-color: $black;
+$g-fill-font-color: $cream;
+$g-heading-font-color: $g-base-font-color;
+$g-link-color: $g-base-font-color;
+$g-focus-color: $blue-highlight;
+$g-error-color: $primary-red;
+
+// Backgrounds
+$g-base-background-color: $cream;
+$g-base-fill-color: $black;
+$g-header-background-color: $g-base-background-color;
+$g-footer-background-color: $g-base-fill-color;
+
+// Elements
+$g-button-primary-background-color: $g-base-background-color;
+$g-button-primary-color: $g-base-font-color;
+$g-button-fill-background-color: $g-base-fill-color;
+$g-button-fill-color: $g-fill-font-color;
+
+// ========
+//  Sizing
+// ========
+// All sizes should be based on a base size of 8px:
+$g-base-size: 8px;
+$g-base-font-size: 2 * $g-base-size;
+$g-base-line-height: 2 * $g-base-size;
+// Use same value as base-line-height to ensure consistent vertical spacing (vertical rhythm)
+$g-base-spacing: $g-base-line-height;
+$g-small-spacing: $g-base-size;
+$g-large-spacing: 4 * $g-base-size;
+$g-base-icon-size: 3 * $g-base-size;
+
+$g-max-width: 40 * $g-base-size; // 320px
+$g-mobile-max-width: $g-max-width;
+$g-tablet-max-width: 96 * $g-base-size; // 768px
+$g-desktop-max-width: 170 * $g-base-size; // 1360px
+
+$g-tablet-breakpoint: $g-tablet-max-width;
+$g-desktop-breakpoint: 128 * $g-base-size; // 1024px
+
+$g-base-gutter: 2 * $g-base-size;
+$g-mobile-gutter: $g-base-size;
+$g-desktop-gutter: $g-base-gutter;
+$g-tablet-gutter: $g-base-gutter;
+
+$g-icon-position: $g-base-size - 1;
+
+// ========
+//  Legacy
+// ========
+$g-legacy-base-spacing: 20px;
+$g-legacy-nav-height: 5rem;
+$g-mobile-padding: $g-legacy-base-spacing;
+$g-tablet-padding: 2 * $g-legacy-base-spacing;
+$g-desktop-padding: 4 * $g-legacy-base-spacing;
+
+// =======
+//  Grids
+// =======
+$g-base-columns: 12;
+$g-desktop-columns: $g-base-columns;
+$g-mobile-columns: $g-base-columns / 3;
+$g-tablet-columns: $g-base-columns;
+
+// =========
+//  Borders
+// =========
+$g-base-border-width: 2px;
+$g-base-border-style: solid;
+$g-base-border-color: $black;
+$g-base-border-radius: 0;
+@mixin g-base-border() { @include border; }
+
+// ======
+//  Misc
+// ======
+$g-base-opacity: 1;
+$g-disabled-opacity: .25;
+$g-base-z-index: 1;
+$g-base-transition-time: .5s;
+
+// =====
+//  Nav
+// =====
+$g-base-navigation-z-index: $g-base-z-index;
+$g-nav-height: 8 * $g-base-size; // 64px
+$g-nav-height-mobile: 12 * $g-base-size; // 96px
+$g-nav-content-offset: 80px; // TODO remove this since we dont have a nav
+
+// ===============================
+//  Material Components Overrides
+// ===============================
+$mdc-theme-primary: $black;
+$mdc-theme-accent: $cream;
+$mdc-theme-background: $g-base-background-color;

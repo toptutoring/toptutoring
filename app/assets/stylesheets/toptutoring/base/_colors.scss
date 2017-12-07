@@ -1,0 +1,68 @@
+// =============================
+//  Top Tutoring "Primary" Colors
+// =============================
+
+$white: #fff;
+$black: #000;
+
+// Grays
+$dark-gray: #7f7f7f;
+$moderate-gray: #bfbfbf;
+$light-gray: #ebebeb;
+
+// Cream
+$cream: #f7f3ea;
+$cream-disabled: rgba($cream, .25);
+
+// Primary Dark Blue
+$primary-blue-dark: #024092;
+$primary-blue-dark-900: darken($primary-blue-dark, 20%);
+$primary-blue-dark-700: $primary-blue-dark;
+$primary-blue-dark-500: lighten($primary-blue-dark, 20%);
+$primary-blue-dark-300: lighten($primary-blue-dark, 40%);
+$primary-blue-dark-100: lighten($primary-blue-dark, 60%);
+
+// Primary Light Blue
+$primary-blue-light: #8dbbd9;
+$primary-blue-light-900: lighten($primary-blue-light, 20%);
+$primary-blue-light-700: $primary-blue-light;
+$primary-blue-light-500: lighten($primary-blue-light, 20%);
+$primary-blue-light-300: lighten($primary-blue-light, 40%);
+$primary-blue-light-100: lighten($primary-blue-light, 60%);
+
+// Primary Red
+$primary-red: #e25f4b;
+$primary-red-900: lighten($primary-red, 20%);
+$primary-red-700: $primary-red;
+$primary-red-500: lighten($primary-red, 20%);
+$primary-red-300: lighten($primary-red, 40%);
+$primary-red-100: lighten($primary-red, 60%);
+
+// Primary Yellow
+$primary-yellow: #ffbc00;
+$primary-yellow-900: lighten($primary-yellow, 20%);
+$primary-yellow-700: $primary-yellow;
+$primary-yellow-500: lighten($primary-yellow, 20%);
+$primary-yellow-300: lighten($primary-yellow, 40%);
+$primary-yellow-100: lighten($primary-yellow, 60%);
+
+// Primary Green
+$primary-green: #267431;
+$primary-green-900: lighten($primary-green, 20%);
+$primary-green-700: $primary-green;
+$primary-green-500: lighten($primary-green, 20%);
+$primary-green-300: lighten($primary-green, 40%);
+$primary-green-100: lighten($primary-green, 60%);
+
+// Primary Pink
+$primary-pink: #eda697;
+$primary-pink-900: lighten($primary-pink, 20%);
+$primary-pink-700: $primary-pink;
+$primary-pink-500: lighten($primary-pink, 20%);
+$primary-pink-300: lighten($primary-pink, 40%);
+$primary-pink-100: lighten($primary-pink, 60%);
+
+// =============
+//  Misc Colors
+// =============
+$blue-highlight: #76abff;
