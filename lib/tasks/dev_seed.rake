@@ -65,7 +65,7 @@ namespace :dev do
     tutor.create_tutor_account!
     tutor.save!
 
-    contract = Contract.where(user_id: tutor.id).first_or_initialize
+    contract = Contract.where(tutor_account_id: tutor.tutor_account.id).first_or_initialize
     contract.hourly_rate = 40
     contract.save!
 
@@ -81,7 +81,7 @@ namespace :dev do
     director.create_tutor_account!
     director.save!
 
-    contract = Contract.where(user_id: director.id).first_or_initialize
+    contract = Contract.where(tutor_account_id: director.tutor_account.id).first_or_initialize
     contract.hourly_rate = 40
     contract.save!
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207175301) do
+ActiveRecord::Schema.define(version: 20171207191212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,12 +30,12 @@ ActiveRecord::Schema.define(version: 20171207175301) do
   end
 
   create_table "contracts", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "hourly_rate_cents", default: 1500, null: false
     t.string "hourly_rate_currency", default: "USD", null: false
-    t.index ["user_id"], name: "index_contracts_on_user_id"
+    t.bigint "tutor_account_id"
+    t.index ["tutor_account_id"], name: "index_contracts_on_tutor_account_id"
   end
 
   create_table "emails", id: :serial, force: :cascade do |t|
@@ -203,7 +203,6 @@ ActiveRecord::Schema.define(version: 20171207175301) do
 
   add_foreign_key "availabilities", "engagements"
   add_foreign_key "client_accounts", "users"
-  add_foreign_key "contracts", "users"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "payments", "users", column: "payee_id"
   add_foreign_key "payments", "users", column: "payer_id"

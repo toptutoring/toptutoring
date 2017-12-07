@@ -69,7 +69,7 @@ module Tutors
     end
 
     def submitter_pay
-      submitter_rate = current_user.contract.hourly_rate
+      submitter_rate = current_user.tutor_account.contract.hourly_rate
       submitter_rate * params[:invoice][:hours].to_f
     end
 
