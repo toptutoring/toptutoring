@@ -38,6 +38,7 @@ class EngagementsController < ApplicationController
 
   private
 
+  # TODO Find where these params are coming from and fix
   def engagement_params
     params.require(:engagement)
           .permit(:tutor_id, :student_id, :client_id, :subject_id, :hourly_rate)

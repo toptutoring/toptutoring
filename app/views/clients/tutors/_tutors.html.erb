@@ -18,7 +18,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% tutor.tutor_engagements.where(student_account: current_user.student_account).each do |engagement| %>
+                <% tutor.tutor_account.engagements.where(student_account: current_user.student_account).each do |engagement| %>
                   <tr>
                     <td>
                       <%= engagement.subject.name %>

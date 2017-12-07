@@ -3,7 +3,7 @@ module Tutors
     before_action :require_login
 
     def index
-      @tutor_engagements = current_user.tutor_engagements
+      @tutor_engagements = current_user.tutor_account.engagements
                                        .includes(:subject, :student_account)
                                        .order("student_accounts.name")
     end

@@ -18,6 +18,6 @@ class StudentAccount < ApplicationRecord
   end
 
   def tutors
-    tutor_accounts.map(&:user)
+    User.joins(:tutor_account).where(tutor_accounts: { id: tutor_accounts.ids })
   end
 end
