@@ -18,7 +18,6 @@ gem "title"
 gem "uglifier"
 gem "bootstrap-sass", "~> 3.3.6"
 
-gem "normalize-scss", "~> 5.0.3"
 # stylesheets
 gem "bourbon"
 gem "neat"
