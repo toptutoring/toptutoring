@@ -4,4 +4,6 @@ class TutorAccount < ApplicationRecord
   has_many :student_accounts, through: :engagements
   has_and_belongs_to_many :subjects
   has_one :contract
+
+  validates_presence_of :user
 end
