@@ -14,7 +14,7 @@ feature "Profile" do
       expect(page).to have_content(tutor.name)
       expect(page).to have_content(tutor.email)
       expect(page).to have_content(tutor.created_at.strftime("%B %e, %Y"))
-      expect(page).to have_content("Subjects Listed")
+      expect(page).to have_content("Your Subjects")
       expect(page).to have_content("Dwolla:")
     end
 
