@@ -6,4 +6,6 @@ class TutorAccount < ApplicationRecord
   has_one :contract
 
   validates_presence_of :user
+
+  delegate :name, to: :user
 end
