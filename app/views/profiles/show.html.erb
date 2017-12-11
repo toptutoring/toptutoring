@@ -18,3 +18,29 @@
 <% if current_user.has_role?('client') || current_user.has_role?('student') %>
   <%= link_to "Tell us your availability!", new_availability_path %>
 <% end %>
+
+<% if current_user.has_role?('tutor') %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="widget">
+        <div class="widget-heading">
+          <div class="col-xs-12">
+            <h2 class="widget-title">Your Subjects
+              <%= link_to tutors_subjects_path do %>
+                <i class="ion-edit fs-18"></i></a>
+            <% end %>
+            </h2>
+          </div>
+        </div>
+        <div class="widget-body clearfix mt-30">
+          <% current_user.tutor_account.subjects.each do |subject| %>
+            <div class="col-lg-4 col-sm-6">
+              <%= content_tag :p, subject.name %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
