@@ -56,7 +56,7 @@ class CreditUpdater
       else
         # Don't do anything if hours did not change
       end
-      @invoice.update(update_params)
+      update_invoice(update_params)
     end
   end
 
@@ -97,5 +97,22 @@ class CreditUpdater
   def subtract_from_submitter_balance(hours)
     @submitter.outstanding_balance -= hours
     @submitter.save!
+  end
+
+  def update_invoice(update_params)
+    @invoice.update(update_params)
+    rate = @submitter.tutor_account.contract.hourly_rate
+    @invoice.submitter_pay = @invoice.hours * rate
+    @invoice.amount = updated_amount if @client
+    @invoice.save!
+  end
+
+  def updated_amount
+    if @engagement.academic?
+      @invoice.hours * @client.academic_rate
+    elsif @engagement.test_prep?
+      @invoice.hours * @client.test_prep_rate
+    else
+    end
   end
 end
