@@ -45,4 +45,8 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+# set specific port and host for testing since we are using subdomains
+Capybara.server_port = 7171
+Capybara.app_host = "http://app.toptutoring.dev:7171"
+
 ActiveRecord::Migration.maintain_test_schema!
