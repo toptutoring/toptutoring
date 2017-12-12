@@ -1,6 +1,8 @@
 class WwwTopTutoring
   def self.matches?(request)
-    splitter_leader(request.subdomain) == "www"
+    # Do not prepend 'www' for now to
+    # keep the domain as short as possible
+    splitter_leader(request.subdomain).blank?
   end
 end
 

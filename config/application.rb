@@ -22,8 +22,7 @@ module TopTutoring
       generate.view_specs false
     end
 
-    config.paths["config/routes.rb"] =
-      (Dir["config/routes/*.rb"] << "config/routes.rb").map { |relative_path| Rails.root.join(relative_path)}
+    config.paths["config/routes.rb"].concat(Dir[Rails.root.join("config/routes/*.rb")])
 
     config.autoload_paths += %W(#{config.root}/lib/cli)
     config.autoload_paths += %W(#{config.root}/app/services)
