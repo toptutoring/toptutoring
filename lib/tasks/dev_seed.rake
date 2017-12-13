@@ -96,6 +96,19 @@ namespace :dev do
     admin.roles = Role.where(name: "admin")
     admin.save!
 
+    # Create contractor
+    contractor = User.where(email: "contractor@example.com").first_or_initialize
+    contractor.name = "Contractor"
+    contractor.password = "password"
+    contractor.auth_provider = "dwolla"
+    contractor.auth_uid = ENV.fetch("DWOLLA_DEV_ADMIN_AUTH_UID")
+    contractor.token_expires_at = Time.current.to_i + 12.months.to_i
+    contractor.access_state = "enabled"
+    contractor.roles << Role.where(name: "contractor")
+    contractor.roles << Role.where(name: "tutor")
+    contractor.save!
+    contractor.create_tutor_account!.create_contract!
+
     # Update engagements
     tutor.tutor_account.engagements.destroy_all
     engagement = Engagement.create!(
