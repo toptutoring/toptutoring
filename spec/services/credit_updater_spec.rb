@@ -57,6 +57,24 @@ describe CreditUpdater do
         expect { subject.update_existing_invoice(new_params) }
           .to change { submitter.reload.outstanding_balance }.by(3)
       end
+
+      it "Updates submitter_pay" do
+        subject = CreditUpdater.new(invoice)
+        new_hours = new_params["hours"].to_f
+        old_hours = invoice.hours # 2 hours
+        difference = new_hours - old_hours
+        expect { subject.update_existing_invoice(new_params) }
+          .to change { invoice.reload.submitter_pay }.by(submitter.tutor_account.contract.hourly_rate * 3)
+      end
+
+      it "Updates amount charged to client" do
+        subject = CreditUpdater.new(invoice)
+        new_hours = new_params["hours"].to_f
+        old_hours = invoice.hours # 2 hours
+        difference = new_hours - old_hours
+        expect { subject.update_existing_invoice(new_params) }
+          .to change { invoice.reload.amount }.by(client.test_prep_rate * 3)
+      end
     end
 
     context "when the new invoice is lower" do
