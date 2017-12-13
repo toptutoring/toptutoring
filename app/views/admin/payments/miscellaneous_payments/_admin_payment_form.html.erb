@@ -3,7 +3,7 @@
     <%= f.label :payee_id, "Tutor", :class => "col-sm-3 control-label" %>
     <div class="col-sm-9 select-option">
       <i class="ion-chevron-down"></i>
-      <%= f.select(:payee_id, options_for_select(@tutors.map{ |tutor| [tutor.name, tutor.id, { 'data-hourly-rate' => tutor.contract.hourly_rate }]}), {}, { class: "tutor", required: true }) %>
+      <%= f.select(:payee_id, options_for_select(@tutors.map{ |tutor| [tutor.name, tutor.id, { 'data-hourly-rate' => tutor.tutor_account.contract.hourly_rate }]}), {}, { class: "tutor", required: true }) %>
     </div>
   </div>
 

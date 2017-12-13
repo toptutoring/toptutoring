@@ -5,7 +5,7 @@ feature 'Invoices Index' do
   let(:client) { FactoryGirl.create(:client_user) }
   let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
   let(:admin) { FactoryGirl.create(:admin_user) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client_account: client.client_account) }
+  let!(:engagement) { FactoryGirl.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account) }
   let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
 
   scenario 'when user is admin' do

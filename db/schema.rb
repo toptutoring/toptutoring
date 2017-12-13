@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205224142) do
+ActiveRecord::Schema.define(version: 20171207230122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,12 +30,12 @@ ActiveRecord::Schema.define(version: 20171205224142) do
   end
 
   create_table "contracts", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "hourly_rate_cents", default: 1500, null: false
     t.string "hourly_rate_currency", default: "USD", null: false
-    t.index ["user_id"], name: "index_contracts_on_user_id"
+    t.bigint "tutor_account_id"
+    t.index ["tutor_account_id"], name: "index_contracts_on_tutor_account_id"
   end
 
   create_table "emails", id: :serial, force: :cascade do |t|
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 20171205224142) do
   end
 
   create_table "engagements", id: :serial, force: :cascade do |t|
-    t.integer "tutor_id"
     t.string "state", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -58,10 +57,11 @@ ActiveRecord::Schema.define(version: 20171205224142) do
     t.bigint "subject_id"
     t.bigint "student_account_id"
     t.bigint "client_account_id"
+    t.bigint "tutor_account_id"
     t.index ["client_account_id"], name: "index_engagements_on_client_account_id"
     t.index ["student_account_id"], name: "index_engagements_on_student_account_id"
     t.index ["subject_id"], name: "index_engagements_on_subject_id"
-    t.index ["tutor_id"], name: "index_engagements_on_tutor_id"
+    t.index ["tutor_account_id"], name: "index_engagements_on_tutor_account_id"
   end
 
   create_table "feedbacks", id: :serial, force: :cascade do |t|
@@ -142,6 +142,13 @@ ActiveRecord::Schema.define(version: 20171205224142) do
     t.string "academic_type", default: "academic"
   end
 
+  create_table "subjects_tutor_accounts", id: false, force: :cascade do |t|
+    t.bigint "subject_id", null: false
+    t.bigint "tutor_account_id", null: false
+    t.index ["subject_id"], name: "index_subjects_tutor_accounts_on_subject_id"
+    t.index ["tutor_account_id"], name: "index_subjects_tutor_accounts_on_tutor_account_id"
+  end
+
   create_table "suggestions", id: :serial, force: :cascade do |t|
     t.integer "engagement_id"
     t.integer "suggested_minutes"
@@ -150,11 +157,11 @@ ActiveRecord::Schema.define(version: 20171205224142) do
     t.index ["engagement_id"], name: "index_suggestions_on_engagement_id"
   end
 
-  create_table "tutor_profiles", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "subject_id"
-    t.index ["subject_id"], name: "index_tutor_profiles_on_subject_id"
-    t.index ["user_id"], name: "index_tutor_profiles_on_user_id"
+  create_table "tutor_accounts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tutor_accounts_on_user_id"
   end
 
   create_table "user_roles", id: :serial, force: :cascade do |t|
@@ -196,7 +203,6 @@ ActiveRecord::Schema.define(version: 20171205224142) do
 
   add_foreign_key "availabilities", "engagements"
   add_foreign_key "client_accounts", "users"
-  add_foreign_key "contracts", "users"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "payments", "users", column: "payee_id"
   add_foreign_key "payments", "users", column: "payer_id"

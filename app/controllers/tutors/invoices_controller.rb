@@ -69,18 +69,18 @@ module Tutors
     end
 
     def submitter_pay
-      submitter_rate = current_user.contract.hourly_rate
+      submitter_rate = current_user.tutor_account.contract.hourly_rate
       submitter_rate * params[:invoice][:hours].to_f
     end
 
     def set_engagement_and_client
       engagement_id = params[:invoice][:engagement_id]
-      @engagement = current_user.tutor_engagements.find(engagement_id)
+      @engagement = current_user.tutor_account.engagements.find(engagement_id)
       @client = @engagement.client
     end
 
     def authorize_tutor
-      unless current_user.tutor_engagements.where(state: "active").exists?(params[:invoice][:engagement_id].to_i)
+      unless current_user.tutor_account.engagements.where(state: "active").exists?(params[:invoice][:engagement_id].to_i)
         redirect_back(fallback_location: (request.referer || root_path),
                       flash: { error: "There was an error while processing your invoice. Please check with your tutor director if you have been set up yet to tutor this client." }) and return
       end

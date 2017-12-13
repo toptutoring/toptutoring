@@ -5,6 +5,7 @@ class EngagementsController < ApplicationController
 
   def index
     @engagements = Engagement.order('created_at DESC')
+                             .includes(:subject, :student_account, client_account: :user, tutor_account: :user)
   end
 
   def update
@@ -29,7 +30,7 @@ class EngagementsController < ApplicationController
   def disable
     if @engagement.disable!
       redirect_back(fallback_location: (request.referer || root_path),
-                     notice: 'Engagement successfully enabled!')
+                     notice: 'Engagement successfully disabled!')
     else
       redirect_back(fallback_location: (request.referer || root_path),
                     flash: { error: @engagement.errors.full_messages })
@@ -40,7 +41,7 @@ class EngagementsController < ApplicationController
 
   def engagement_params
     params.require(:engagement)
-          .permit(:tutor_id, :student_id, :client_id, :subject_id, :hourly_rate)
+          .permit(:tutor_account_id, :subject_id)
   end
 
   def set_engagement
@@ -48,6 +49,6 @@ class EngagementsController < ApplicationController
   end
 
   def set_tutors
-    @tutors = User.tutors
+    @tutor_accounts = TutorAccount.where(user_id: User.tutors.ids)
   end
 end

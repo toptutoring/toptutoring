@@ -1,7 +1,7 @@
 {
   "name":"toptutoring",
   "scripts": {
-    "postdeploy": "DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rake db:schema:load db:seed db:migrate"
+    "postdeploy": "DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rake db:schema:load db:seed db:migrate dev:seed"
   },
   "env":{
     "APPLICATION_HOST":{

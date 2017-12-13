@@ -7,20 +7,20 @@
       <div class="widget-body">
         <%= form_for(@engagement) do |f| %>
 
-          <%= f.label :tutor_id, "Tutor" %>
+          <%= f.label :tutor_account_id, "Tutor" %>
           <div class="select-option">
             <i class="ion-chevron-down"></i>
-            <%= f.select :tutor_id, options_from_collection_for_select(@tutors, :id, :name, @engagement.tutor_id), { include_blank: true }%>
+            <%= f.select :tutor_account_id, options_from_collection_for_select(@tutor_accounts, :id, :name, @engagement.tutor_account_id), { include_blank: true }%>
           </div>
 
           <div class="form-group">
-            <%= f.label :student_id %>
-            <%= f.text_field :student_id, value: @engagement.student_name, class:"form-control", disabled: true, required: true %>
+            <%= f.label :student %>
+            <%= f.text_field :student, value: @engagement.student_name, class:"form-control", disabled: true, required: true %>
           </div>
 
           <div class="form-group">
-            <%= f.label :client_id %>
-            <%= f.text_field :client_id, value: @engagement.client.name, class:"form-control", disabled: true, required: true %>
+            <%= f.label :client %>
+            <%= f.text_field :client, value: @engagement.client.name, class:"form-control", disabled: true, required: true %>
           </div>
 
           <div class="form-group">

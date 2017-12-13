@@ -75,6 +75,7 @@ Rails.application.routes.draw do
       resources :invoices, only: [:index, :create, :destroy]
       resources :emails, only: [:index]
       resources :suggestions
+      resources :subjects, only: [:index, :update]
     end
     resources :users do
       member do

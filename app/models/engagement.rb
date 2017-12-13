@@ -2,7 +2,7 @@ class Engagement < ActiveRecord::Base
   # Associations
   belongs_to :student_account
   belongs_to :client_account
-  belongs_to :tutor, class_name: "User", foreign_key: "tutor_id"
+  belongs_to :tutor_account
   belongs_to :subject
 
   has_many :invoices
@@ -38,7 +38,7 @@ class Engagement < ActiveRecord::Base
   end
 
   def updated?
-    tutor
+    tutor_account
   end
 
   def student_name
@@ -47,5 +47,9 @@ class Engagement < ActiveRecord::Base
 
   def student
     student_account.user
+  end
+
+  def tutor
+    tutor_account.try(:user)
   end
 end

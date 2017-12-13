@@ -5,7 +5,7 @@ module Tutors
     before_action :authorize_tutor, only: :create
 
     def new
-      @engagement = current_user.tutor_engagements.find(params[:id])
+      @engagement = current_user.tutor_account.engagements.find(params[:id])
       @suggestion = @engagement.suggestions.new
     end
 
@@ -61,11 +61,11 @@ module Tutors
     end
 
     def active_engagements
-      current_user.tutor_engagements.where(state: "active")
+      current_user.tutor_account.engagements.where(state: "active")
     end
 
     def set_engagement
-      current_user.tutor_engagements.find(params[:suggestion][:engagement_id])
+      current_user.tutor_account.engagements.find(params[:suggestion][:engagement_id])
     end
 
     def pending_suggestions

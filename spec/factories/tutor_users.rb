@@ -9,7 +9,10 @@ FactoryGirl.define do
     access_token        { "xxx-xxx" }
     refresh_token       { "xxx-xxx" }
     token_expires_at    { Time.now + 60 }
-    contract            { FactoryGirl.create(:contract) }
     access_state        { "enabled" }
+
+    after(:create) do |user, _|
+      user.create_tutor_account.create_contract(hourly_rate: 15)
+    end
   end
 end

@@ -5,20 +5,20 @@ class DashboardsController < ApplicationController
   def admin
     @pending_engagements = Engagement
                            .pending
-                           .includes(:student_account, :tutor,
-                                     :subject, client_account: :user)
+                           .includes(:student_account,
+                                     :subject, tutor_account: :user, client_account: :user)
   end
 
   def director
-    @pending_engagements = Engagement.pending.includes(:student_account, :tutor, :subject, client_account: :user)
-    @tutor_engagements = current_user.tutor_engagements.includes(:suggestions)
+    @pending_engagements = Engagement.pending.includes(:student_account, :subject, tutor_account: :user, client_account: :user)
+    @tutor_engagements = current_user.tutor_account.engagements.includes(:suggestions)
     @low_balance_engagements = low_balance_engagements?
     @invoice = Invoice.new()
     @suggestion = Suggestion.new()
   end
 
   def tutor
-    @tutor_engagements = current_user.tutor_engagements.includes(:client_account, :suggestions)
+    @tutor_engagements = current_user.tutor_account.engagements.includes(:client_account, :suggestions)
     @low_balance_engagements = low_balance_engagements?
     @invoice = Invoice.new()
     @suggestion = Suggestion.new()
@@ -27,7 +27,7 @@ class DashboardsController < ApplicationController
   def client
     @engagements = current_user.client_account
                                .engagements
-                               .includes(:tutor, :subject, :student_account, :availabilities)
+                               .includes(:subject, :student_account, :availabilities, tutor_account: :user)
                                .order("users.name")
     @academic_types = current_user.client_account.academic_types_engaged
   end
@@ -35,7 +35,7 @@ class DashboardsController < ApplicationController
   def student
     @engagements = current_user.student_account
                                .engagements
-                               .includes(:tutor, :subject, :student_account, :availabilities)
+                               .includes(:subject, :student_account, :availabilities, tutor_account: :user)
                                .order("users.name")
     @academic_types = current_user.student_account.academic_types_engaged
   end

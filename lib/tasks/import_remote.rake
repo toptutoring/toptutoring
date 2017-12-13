@@ -1,4 +1,5 @@
 require 'benchmark'
+require 'optparse'
 require_relative 'import_remote'
 
 namespace :db do
@@ -10,10 +11,14 @@ namespace :db do
     Without arguments, this task imports the data in toptutoring-staging.
     Other remote databases might become available in the future.
 
-    For instance:
+    Usage: 
+    rake 'db:import_remote[app_name] -- [options]'
+    -p Sets password ex. -pMyPassword sets default password for all users to MyPassword
+    -s Skips migration
+
+    Examples:
     rake 'db:import_remote'
     Will import toptutoring-staging by default.
-    If env var DEFAULT_DEV_RESTORE_PASSWORD is set to "my_other_password", passwords will not default to "password" and set to "my_other_password."
 
     rake 'db:import_remote[app_name]'
     Where app_name is the app where you want to import from.
@@ -22,9 +27,18 @@ namespace :db do
   DESC
 
   task :import_remote, [:remote] => [:environment] do |_, args|
+    options = {}
+    opts = OptionParser.new
+    opts.banner = "Usage: rake db:import_remote[remote] -- [options]"
+    opts.on("-s", "--skip-migrations", "Skip migrations") { |migrate| options[:skip_migration] = true }
+    opts.on("-pPASSWORD", "--password PASSWORD", "Set password") { |password| options[:password] = password }
+    user_args = opts.order!(ARGV) {}
+    opts.parse!(user_args)
+
     time = Benchmark.realtime do
       env = args[:remote] || 'toptutoring-staging'
-      importer = RemoteDataImporter.new(env)
+      password = options[:password] || "password"
+      importer = RemoteDataImporter.new(env, password, options[:skip_migration])
       importer.restore
     end
     system("echo \"Total time: #{time.round(2)} seconds.\"")

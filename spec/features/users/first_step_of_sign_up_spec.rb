@@ -33,6 +33,7 @@ feature "Create user as first step of sign up process" do
       click_button "Sign up"
 
       expect(page).to have_current_path(dashboard_path)
+      expect(page).to have_content(I18n.t("app.signup.tutors.success"))
     end
   end
 

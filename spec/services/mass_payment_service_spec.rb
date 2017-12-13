@@ -11,7 +11,7 @@ describe MassPaymentService do
     let(:client) { FactoryGirl.create(:client_user) }
     let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
     let(:student_account_user_nil) { FactoryGirl.create(:student_account, user: nil, client_account: client.client_account) }
-    let(:engagement) { FactoryGirl.create(:engagement, tutor: tutor, student_account: student_account, client_account: client.client_account) }
+    let(:engagement) { FactoryGirl.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account) }
     let!(:invoice_pending) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement) }
     let!(:invoice_pending2) { FactoryGirl.create(:invoice, submitter: tutor, client: client, hourly_rate: client.test_prep_rate, engagement: engagement) }
     let!(:invoice_paid) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: 'paid') }
@@ -25,7 +25,7 @@ describe MassPaymentService do
 
     it "makes multiple payments if there are more than 1 payee" do
       tutor2 = FactoryGirl.create(:tutor_user, outstanding_balance: 2)
-      engagement2 = FactoryGirl.create(:engagement, tutor: tutor2, client_account: client.client_account, student_account: student_account_user_nil)
+      engagement2 = FactoryGirl.create(:engagement, tutor_account: tutor2.tutor_account, client_account: client.client_account, student_account: student_account_user_nil)
       invoice2 = FactoryGirl.create(:invoice, submitter: tutor2, client: client, engagement: engagement2)
 
       expect(subject.payments.count).to eq 2

@@ -1,0 +1,18 @@
+<h1>Your Subjects</h1>
+<div class="widget">
+  <div class="widget-body clearfix">
+    <%= form_for @tutor_account, url: tutors_subject_path(@tutor_account) do |f| %>
+      <%= f.collection_check_boxes :subject_ids, Subject.all, :id, :name do |c| %>
+        <div class="custom-checkbox col-lg-4 col-sm-6">
+          <%= c.check_box %>
+          <%= c.label %>
+        </div>
+    <% end %>
+    
+      <div class="col-md-6 col-md-offset-3">
+        <%= f.submit "Submit", class: "btn btn-submit btn-primary mt-30" %>
+      </div>
+
+    <% end %>
+  </div>
+</div>

@@ -62,9 +62,10 @@ namespace :dev do
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
     tutor.roles = Role.where(name: "tutor")
+    tutor.create_tutor_account!
     tutor.save!
 
-    contract = Contract.where(user_id: tutor.id).first_or_initialize
+    contract = Contract.where(tutor_account_id: tutor.tutor_account.id).first_or_initialize
     contract.hourly_rate = 40
     contract.save!
 
@@ -77,9 +78,10 @@ namespace :dev do
     director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
     director.roles = Role.where(name: ["tutor", "director"])
+    director.create_tutor_account!
     director.save!
 
-    contract = Contract.where(user_id: director.id).first_or_initialize
+    contract = Contract.where(tutor_account_id: director.tutor_account.id).first_or_initialize
     contract.hourly_rate = 40
     contract.save!
 
@@ -95,9 +97,9 @@ namespace :dev do
     admin.save!
 
     # Update engagements
-    tutor.tutor_engagements.destroy_all
+    tutor.tutor_account.engagements.destroy_all
     engagement = Engagement.create!(
-      tutor_id: tutor.id,
+      tutor_account: tutor.tutor_account,
       student_account: student1.student_account,
       client_account: client.client_account,
       subject: client.signup.subject
@@ -105,7 +107,7 @@ namespace :dev do
     engagement.enable!
 
     engagement = Engagement.create!(
-      tutor_id: tutor.id,
+      tutor_account: tutor.tutor_account,
       student_account: student2.student_account,
       client_account: client.client_account,
       subject: client.signup.subject

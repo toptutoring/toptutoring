@@ -60,6 +60,6 @@ class EngagementPresenter < SimpleDelegator
   end
 
   def text_for_edit_button
-    @engagement.tutor_id.nil? ? "Assign tutor" : "Edit"
+    @engagement.tutor_account_id.nil? ? "Assign tutor" : "Edit"
   end
 end

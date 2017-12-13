@@ -46,7 +46,7 @@ class EmailsController < ApplicationController
   end
 
   def authorize_tutor
-    if @student.student_engagements.blank? || @student.student_engagements.pluck(:tutor_id).exclude?(current_user.id)
+    if @student.student_engagements.blank? || @student.student_account.engagements.pluck(:tutor_account_id).exclude?(current_user.tutor_account_id)
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
     end
   end
