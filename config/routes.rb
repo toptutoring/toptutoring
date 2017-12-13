@@ -49,18 +49,17 @@ Rails.application.routes.draw do
     get "/dashboard" => "dashboards#director"
     namespace :director do
       resources :payments, only: [:index]
-      resources :tutors, only: [:index, :edit, :update]
       resources :users, only: [:index, :edit, :update]
     end
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") || user.has_role?("director") } do
     namespace :admin do
+      resources :tutors, only: [:index, :show, :edit, :update]
       resources :payments, only: [:new, :create, :index]
       resources :invoices, only: [:index, :edit, :update] do
         patch :deny, on: :member
       end
-      resources :tutors, only: [:index, :edit, :update]
       resources :funding_sources, only: [:new, :create, :edit, :update]
       resources :emails, only: [:index]
       namespace :payments do

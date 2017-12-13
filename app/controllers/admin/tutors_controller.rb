@@ -5,6 +5,12 @@ module Admin
 
     def index
       @tutors = User.tutors
+      @subject_id = params[:subject_id]
+      select_tutors unless @subject_id.nil? || @subject_id.empty?
+    end
+
+    def show
+      @tutor = User.find(params[:id])
     end
 
     def update
@@ -17,6 +23,11 @@ module Admin
     end
 
     private
+
+    def select_tutors
+      @tutors = @tutors.joins(tutor_account: :subjects)
+                       .where(subjects: { id: @subject_id })
+    end
 
     def tutor_params
       params.require(:user).permit(:name, :email)
