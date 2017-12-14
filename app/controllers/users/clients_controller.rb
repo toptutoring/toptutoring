@@ -1,6 +1,6 @@
 module Users
   class ClientsController < ApplicationController
-    before_action :redirect_to_root, :only => [:new, :create], :if => :signed_in?
+    before_action :redirect_to_root, if: :signed_in?
     layout "authentication"
 
     def new
@@ -12,7 +12,8 @@ module Users
       result = CreateClientService.create!(signups_params)
       if result.success?
         sign_in(result.user)
-        redirect_to :root
+        flash.notice = result.messages
+        redirect_to return_path(result.user)
       else
         flash.alert = result.messages
         @user = result.user
@@ -24,9 +25,13 @@ module Users
 
     def signups_params
       params.require(:user)
-            .permit(:name, :email, :password,
+            .permit(:name, :phone_number, :email, :password,
                     signup_attributes: [:student, :subject_id, :comments])
             .merge(roles: Role.where(name: "client"))
+    end
+
+    def return_path(user)
+      user.signup.student ? dashboard_path : new_clients_student_path
     end
 
     def redirect_to_root

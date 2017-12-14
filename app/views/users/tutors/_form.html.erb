@@ -11,6 +11,11 @@
     </div>
 
     <div class="col-md-12">
+      <%= f.label :phone_number %>
+      <%= f.email_field :phone_number, type: "text", placeholder: "(510) 555-5555", required: true %>
+    </div>
+
+    <div class="col-md-12">
       <%= f.label :email %>
       <%= f.email_field :email, type: "text", placeholder: "YOUR UC BERKELEY EMAIL", required: true %>
     </div>

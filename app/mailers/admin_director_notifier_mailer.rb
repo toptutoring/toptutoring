@@ -3,6 +3,7 @@ class AdminDirectorNotifierMailer < ApplicationMailer
 
   def new_user_started_sign_up(new_user)
     @new_user = new_user
+    @phone = Phonelib.parse(new_user.phone_number, :us).national
     users = User.admin_and_directors
     mail(to: "noreply@toptutoring.com",
          bcc: users.map(&:email),

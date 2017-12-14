@@ -11,6 +11,7 @@ class SlackNotifier
     def notify_user_signup_start(user)
       message = "A new user has signed up.\n" \
         "Name: #{user.name}\n" \
+        "Phone Number: #{user.phone_number}\n" \
         "Email: #{user.email}\n" \
         "Comments: #{user.signup.comments}\n"
       ping(message, :leads)
