@@ -31,6 +31,14 @@ en:
           While you wait for us to contact you, feel free to browse the site or request tutors directly through the app.
       tutors:
         success: "Thank you for signing up!" 
+    clients:
+      dashboard:
+        no_tutor_message: |
+          You do not have any tutors yet, but we're working hard to get you started.
+          Our tutor director has been notified and will contact you shortly.
+          We're excited to have you on board and looking forward to assigning you your first tutor!
+      payments:
+        no_engagements: "Don't worry about payments for now. Let us set you up with a tutor first."
     tutors:
       subjects:
         update_success: "Your subjects have been updated."
