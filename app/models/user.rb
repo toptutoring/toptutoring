@@ -111,10 +111,6 @@ class User < ActiveRecord::Base
     invoice.engagement.academic? ? academic_credit : test_prep_credit
   end
 
-  def is_student?
-    signup&.student
-  end
-
   def notify_bugsnag
     if Rails.env.production?
       Bugsnag.notify("OpenSSL::Cipher::CipherError: Invalid tokens for user #{id}")

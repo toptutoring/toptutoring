@@ -30,7 +30,7 @@ describe CreateClientService do
       expect(subject.user.client_account).not_to be nil
       expect(subject.user.client_account.student_accounts.any?).to be false
       expect(subject.user.student_account).to be nil
-      expect(subject.user.is_student?).to be false
+      expect(subject.user.signup.student).to be false
     end
 
     it "creates user successfully when user is a student" do
@@ -42,7 +42,7 @@ describe CreateClientService do
       expect(subject.user.client_account).not_to be nil
       expect(subject.user.client_account.student_accounts.any?).to be true
       expect(subject.user.student_account).not_to be nil
-      expect(subject.user.is_student?).to be true
+      expect(subject.user.signup.student).to be true
     end
 
     it "fails when params aren't valid" do
