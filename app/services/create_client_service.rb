@@ -6,30 +6,36 @@ class CreateClientService
       ActiveRecord::Base.transaction do
         @user = Clearance.configuration.user_model.new(params)
         @user.save!
-        create_client_account!
-        create_student_account!
+        @user.enable!
+        create_accounts!
       end
       notify_through_slack_and_emails
-      Result.new(true, @user, nil)
+      Result.new(true, @user, I18n.t(message))
     rescue ActiveRecord::RecordInvalid => e
       Result.new(false, @user, e)
     end
 
     private
 
-    def create_client_account!
-      @user.create_client_account!
+    def student?
+      @user.signup.student
     end
 
-    def create_student_account!
-      return unless @user.signup.student
+    def create_accounts!
+      @user.create_client_account!
+      return unless student?
       @user.client_account.student_accounts.create!(user: @user, name: @user.name)
     end
 
     def notify_through_slack_and_emails
       SlackNotifier.notify_user_signup_start(@user)
       UserNotifierMailer.send_signup_email(@user).deliver_later
-      AdminDirectorNotifierMailer.new_user_started_sign_up(@user).deliver_later
+      AdminDirectorNotifierMailer.new_user_registered(@user).deliver_later
+    end
+
+    def message
+      return "app.signup.client.success_message" unless student?
+      "app.signup.client_student.success_message"
     end
   end
 end
