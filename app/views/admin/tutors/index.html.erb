@@ -2,8 +2,20 @@
   <div class="col-md-12">
     <div class="widget">
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Tutors</h3>
-        <%= link_to 'Pay tutor', new_admin_payments_miscellaneous_payment_path, class: 'btn btn-blue', style: 'margin-left:20px;'%>
+        <div>
+          <h2 class="widget-title mb-30">Tutors</h2>
+        </div>
+        <%= form_tag admin_tutors_path, method: :get, class: "p-0 pull-left col-xs-10" do %>
+          <div class="col-md-6 col-xs-10 m-0 select-option">
+            <i class="ion-chevron-down fs-14" style="top: 7px"></i>
+            <%= select_tag "subject_id", options_from_collection_for_select(Subject.all, :id, :name, @subject_id), prompt: "View All", onchange: "this.form.submit();", class: "form-control fw-400 pull-left pr-30" %>
+          </div>
+        <% end %>
+        <% if current_user.has_role?("admin") %>
+          <div class="col-xs-2">
+            <%= link_to "Pay tutor", new_admin_payments_miscellaneous_payment_path, class: "btn btn-blue pull-right", style: "margin-left:20px;"%>
+          </div>
+        <% end %>
       </div>
       <div class="widget-body">
         <div class="table-responsive">
@@ -14,19 +26,21 @@
                 <th>Email</th>
                 <th class="text-center">Balance</th>
                 <th>Action</th>
+                <th>Masquerade</th>
               </tr>
             </thead>
             <tbody>
               <% @tutors.each do |tutor| %>
                 <tr>
-                  <td><%= tutor.name %></td>
+                  <td><%= link_to tutor.name, admin_tutor_path(tutor) %></td>
                   <td><%= tutor.email %></td>
                   <td class="text-center"><%= tutor_outstanding_balance(tutor)%></td>
-                  <% if current_user.has_role?("admin") || current_user.has_role?("director") %>
-                    <td class="text-left">
-                      <%= link_to "Edit", edit_admin_tutor_path(tutor), class: "btn btn-outline btn-success" %>
-                    </td>
-                  <% end %>
+                  <td class="text-left">
+                    <%= link_to "Edit", edit_admin_tutor_path(tutor), class: "btn btn-outline btn-success" %>
+                  </td>
+                  <td>
+                    <%= render "shared/masquerade_start_button", user: tutor %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>

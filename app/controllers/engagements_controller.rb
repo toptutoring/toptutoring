@@ -50,5 +50,6 @@ class EngagementsController < ApplicationController
 
   def set_tutors
     @tutor_accounts = TutorAccount.where(user_id: User.tutors.ids)
+                                  .includes(:user)
   end
 end

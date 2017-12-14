@@ -1,0 +1,19 @@
+<h1><%= @tutor.name %></h1>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="widget">
+      <div class="widget-heading">
+        <div class="col-xs-12">
+          <h2 class="widget-title">Tutor Subjects</h2>
+        </div>
+      </div>
+      <div class="widget-body clearfix mt-30">
+        <% @tutor.tutor_account.subjects.each do |subject| %>
+          <div class="col-lg-4 col-sm-6">
+            <%= content_tag :p, subject.name %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

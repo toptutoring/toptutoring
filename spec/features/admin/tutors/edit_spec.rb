@@ -9,7 +9,7 @@ feature "Edit tutor" do
     scenario "has valid form" do
       tutor
       sign_in(director)
-      visit edit_director_tutor_path(tutor)
+      visit edit_admin_tutor_path(tutor)
 
       expect(page).to have_content("Name")
       expect(page).to have_content("Email")
@@ -20,7 +20,7 @@ feature "Edit tutor" do
     scenario "with invalid params" do
       tutor
       sign_in(director)
-      visit edit_director_tutor_path(tutor)
+      visit edit_admin_tutor_path(tutor)
 
       fill_in "Email", with: nil
       click_on "Submit"
@@ -30,7 +30,7 @@ feature "Edit tutor" do
 
     scenario "with valid params" do
       sign_in(director)
-      visit edit_director_tutor_path(tutor)
+      visit edit_admin_tutor_path(tutor)
 
       fill_in "Name", with: "new tutor"
       fill_in "Email", with: "new_email@gmail.com"

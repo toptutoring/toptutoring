@@ -1,4 +1,4 @@
-<div class="col-md-6">
+<div class="col-md-6 col-md-offset-3">
   <div class="widget">
     <div class="widget-heading clearfix">
       <h3 class="widget-title pb-10 text-center">Suggest Hours</h3>
@@ -24,7 +24,9 @@
         </div>
         
         <%= hidden_field(:suggestion, :engagement_id) %>
-        <%= f.submit class: "btn btn-outline btn-blue" %>
+        <div class="text-center">
+          <%= f.submit class: "btn btn-outline btn-blue" %>
+        </div>
       <% end %>
 
     </div>
