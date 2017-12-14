@@ -11,6 +11,7 @@
               <tr>
                 <th>Student Name</th>
                 <th class="text-center">Client Name</th>
+                <th class="text-center">Phone Number</th>
                 <th class="text-center">Subject</th>
                 <th class="text-center">Academic Type</th>
                 <th class="text-center">Status</th>
@@ -23,6 +24,7 @@
                 <tr>
                   <td><%= engagement.student_name %></td>
                   <td><%= engagement.client.name %></td>
+                  <td><%= cleanup_phone_number(engagement.client.phone_number) %></td>
                   <td class="text-center"><%= engagement.subject.name %></td>
                   <td class="text-center"><%= engagement.academic_type.humanize %></td>
                   <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
