@@ -11,8 +11,8 @@ class Invoice < ActiveRecord::Base
                                   :hourly_rate_cents, :amount_cents
   end
 
-  scope :pending, -> { where(status: 'pending') }
-  scope :not_pending, -> { where.not(status: 'pending').order(:status) }
+  scope :pending, -> { where(status: "pending") }
+  scope :not_pending, -> { where.not(status: "pending").order(:status) }
   scope :newest_first, -> { order("created_at DESC").limit(100) }
 
   enum submitter_type: [:by_tutor, :by_contractor]

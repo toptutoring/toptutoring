@@ -3,6 +3,7 @@ class ClientAccount < ApplicationRecord
   has_many :student_accounts
   has_many :engagements
   has_many :suggestions, through: :engagements
+  has_many :invoices, through: :engagements
   validates_presence_of :user
 
   def academic_types_engaged

@@ -1,0 +1,4 @@
+<div class="page-content container-fluid">
+  <%= render "invoices/invoice_table_layout", type: "Pending", invoices: @invoices.pending %>
+  <%= render "invoices/invoice_table_layout", type: "Processed", invoices: @invoices.not_pending.where.not(status: "denied") %>
+</div>

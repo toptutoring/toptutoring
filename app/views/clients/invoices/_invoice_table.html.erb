@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Tutor</th>
+        <th>Student</th>
+        <th>Subject</th>
+        <th class="text-center">Academic Type</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">Hours</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% invoices.each do |invoice| %>
+        <tr>
+          <td><%= invoice.engagement.tutor.name %></td>
+          <td><%= invoice.engagement.student.name %></td>
+          <td><%= invoice.engagement.subject.name %></td>
+          <td class="text-center"><%= invoice.engagement.academic_type.humanize %></td>
+          <td class="text-center"><%= l(invoice.created_at, format: :short) %></td>
+          <td class="text-center"><%= invoice.hours %></span></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
