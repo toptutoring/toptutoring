@@ -91,6 +91,7 @@ Rails.application.routes.draw do
     namespace :clients do
       resources :payments, only: [:index, :new, :create]
       resources :students, only: [:show, :edit, :index, :new, :create]
+      resources :invoices, only: [:index]
       resources :tutors
       resource :request_tutor, only: [:destroy, :new, :create]
     end

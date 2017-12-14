@@ -5,4 +5,10 @@
   <li class="panel">
     <%= link_to_client_students_or_tutors %>
   </li>
+  <li class="panel">
+    <%= link_to clients_invoices_path do %>
+      <i class="ion-document bg-success"></i>
+      <span class="sidebar-title">Invoices</span>
+    <% end %>
+  </li>
 <% end %>
