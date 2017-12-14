@@ -15,10 +15,6 @@
   </div>
 </div>
 
-<% if current_user.has_role?('client') || current_user.has_role?('student') %>
-  <%= link_to "Tell us your availability!", new_availability_path %>
-<% end %>
-
 <% if current_user.has_role?('tutor') %>
   <div class="row">
     <div class="col-xs-12">
