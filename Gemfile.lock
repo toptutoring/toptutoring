@@ -137,6 +137,8 @@ GEM
       activesupport (>= 4.2.0)
     hashdiff (0.3.4)
     hashie (3.5.6)
+    httparty (0.15.6)
+      multi_xml (>= 0.5.2)
     i18n (0.8.6)
     intercom-rails (0.3.5)
       activesupport (> 3.0)
@@ -198,6 +200,11 @@ GEM
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
+    opentok (3.0.0)
+      activesupport (>= 2.0)
+      addressable (~> 2.3)
+      httparty (~> 0.15.5)
+      jwt (~> 1.5.6)
     pg (0.21.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -403,6 +410,7 @@ DEPENDENCIES
   normalize-rails (~> 3.0.0)
   omniauth
   omniauth-oauth2
+  opentok (~> 3.0.0)
   pg
   pry-byebug
   pry-rails
