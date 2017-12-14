@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :student_user, class: User do
     name             { "Student" }
-    phone_number     { "555-5555" }
+    phone_number     { "(510)555-5555" }
     sequence(:email) { |n| "student#{n}@example.com" }
     password         { "password" }
     roles            { Role.where(name: 'student') }

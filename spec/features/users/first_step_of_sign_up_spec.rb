@@ -5,6 +5,26 @@ feature "Create user as first step of sign up process" do
   let!(:subject_academic) { FactoryGirl.create(:subject) }
 
   context "with valid params" do
+    scenario "when user is a client that is not a student" do
+      admin # creates admin user to check if email is sent to admin
+      visit client_sign_up_path
+
+      name = "Client"
+      fill_in "user_name", with: name
+      fill_in "user_email", with: "client@example.com"
+      fill_in "user_phone_number", with: "(510)555-5555"
+      fill_in "user_password", with: "password"
+      find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
+      choose "user_signup_attributes_student_false"
+      click_button "Sign up"
+
+      expect(page).to have_current_path(new_clients_student_path)
+      expect(page).to have_content(I18n.t("app.signup.client.success_message"))
+      expect(page).to have_content(name)
+      # Email count should be 2 since an email is sent to both client and admin
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
+    end
+
     scenario "when user is student" do
       admin # creates admin user to check if email is sent to admin
       visit client_sign_up_path
@@ -12,12 +32,14 @@ feature "Create user as first step of sign up process" do
       name = "Student"
       fill_in "user_name", with: name
       fill_in "user_email", with: "student@example.com"
+      fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
       find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
-      choose "user_signup_attributes_student_false"
+      choose "user_signup_attributes_student_true"
       click_button "Sign up"
 
       expect(page).to have_current_path(dashboard_path)
+      expect(page).to have_content(I18n.t("app.signup.client_student.success_message"))
       expect(page).to have_content(name)
       # Email count should be 2 since an email is sent to both client and admin
       expect(ActionMailer::Base.deliveries.count).to eq(2)
@@ -28,6 +50,7 @@ feature "Create user as first step of sign up process" do
       visit new_users_tutor_path
 
       fill_in "user_name", with: "tutor"
+      fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_email", with: "tutor@example.com"
       fill_in "user_password", with: "password"
       click_button "Sign up"
@@ -38,10 +61,11 @@ feature "Create user as first step of sign up process" do
   end
 
   context "with invalid params" do
-    scenario "when user is student" do
+    scenario "with an invalid email" do
       visit client_sign_up_path
 
       fill_in "user_name", with: "student"
+      fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_email", with: "student"
       fill_in "user_password", with: "password"
       click_button "Sign up"

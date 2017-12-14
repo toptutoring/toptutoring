@@ -44,7 +44,6 @@ feature "Profile" do
       expect(page).to have_content(client.name)
       expect(page).to have_content(client.email)
       expect(page).to have_content(client.created_at.strftime("%B %e, %Y"))
-      expect(page).to have_content("Tell us your availability!")
     end
 
     scenario "and edits profile" do
@@ -54,12 +53,13 @@ feature "Profile" do
       expect(page).to have_content("Profile")
       expect(page).to have_content(client.name)
 
-      fill_in "user_phone_number", with: "123456"
+      number = "408-555-5555"
+      fill_in "user_phone_number", with: number
 
       click_button "Submit"
      
       expect(page).to have_content("Your profile has been updated.")
-      expect(client.reload.phone_number).to eq("123456")
+      expect(client.reload.phone_number).to eq(number)
     end
   end
 
@@ -72,7 +72,6 @@ feature "Profile" do
       expect(page).to have_content(student.name)
       expect(page).to have_content(student.email)
       expect(page).to have_content(student.created_at.strftime("%B %e, %Y"))
-      expect(page).to have_content("Tell us your availability!")
     end
   end
 end

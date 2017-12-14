@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :client_user, class: User do
     name          { "Client" }
-    phone_number  { "555-5555" }
+    phone_number  { "(510)555-5555" }
     sequence(:email) { |n| "client_#{n}@example.com" }
     password      { "password" }
     roles         { Role.where(name: 'client') }
