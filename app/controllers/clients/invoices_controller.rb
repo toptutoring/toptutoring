@@ -10,6 +10,8 @@ module Clients
       ] }
       @invoices = current_user.client_account
                               .invoices
+                              .where.not(status: "denied")
+                              .order(created_at: :desc)
                               .includes(include_hash)
     end
   end

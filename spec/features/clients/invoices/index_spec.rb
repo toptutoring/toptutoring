@@ -14,8 +14,6 @@ feature "Clients Invoices Index" do
     visit clients_invoices_path
 
     expect(page).to have_content("Invoices")
-    expect(page).to have_content("Pending")
-    expect(page).to have_content("Processed")
     expect(page).to have_content("Tutor")
     expect(page).to have_content("Student")
     expect(page).to have_content("Subject")
