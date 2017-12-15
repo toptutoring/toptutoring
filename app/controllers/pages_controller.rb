@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  layout "authentication", only: [:payment]
+  layout "authentication", only: [:payment, :home]
+
   def admin_dashboard
     render "admin_dashboard", :layout => false
   end
@@ -10,6 +11,9 @@ class PagesController < ApplicationController
 
   def tutor_dashboard
     render "tutor_dashboard", :layout => false
+  end
+
+  def home
   end
 
   def calendar

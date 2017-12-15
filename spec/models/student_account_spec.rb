@@ -11,11 +11,11 @@ RSpec.describe StudentAccount, type: :model do
       subject = student.student_account
       FactoryGirl.create(:engagement, student_account: subject)
 
-      expect(subject.academic_types_engaged).to eq(["academic"])
+      expect(subject.academic_types_engaged).to contain_exactly("academic")
 
       FactoryGirl.create(:engagement, student_account: subject, subject: FactoryGirl.create(:subject, academic_type: "test_prep"))
 
-      expect(subject.academic_types_engaged).to eq(["academic", "test_prep"])
+      expect(subject.academic_types_engaged).to contain_exactly("academic", "test_prep")
     end
   end
 end
