@@ -9,7 +9,7 @@ class OnboardClientService
   def onboard_client!
     ActiveRecord::Base.transaction do
       update_phone_number
-      set_student_info unless @user.is_student?
+      set_student_info unless @user.signup.student
       process_engagement
     end
     return_results(true, I18n.t("app.signup.success_message"))

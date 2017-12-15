@@ -34,7 +34,7 @@ module Clients
     end
 
     def return_path
-      current_user.is_student? ? clients_tutors_path : clients_students_path
+      current_user.student_account ? clients_tutors_path : clients_students_path
     end
   end
 end

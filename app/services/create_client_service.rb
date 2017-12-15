@@ -22,7 +22,7 @@ class CreateClientService
     end
 
     def create_student_account!
-      return unless @user.is_student?
+      return unless @user.signup.student
       @user.client_account.student_accounts.create!(user: @user, name: @user.name)
     end
 

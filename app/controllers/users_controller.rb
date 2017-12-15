@@ -6,8 +6,7 @@ class UsersController < Clearance::SessionsController
   end
 
   def update
-    strong_params = student? ? client_as_student_params : client_params
-    onboard_service = OnboardClientService.new(current_user, strong_params)
+    onboard_service = OnboardClientService.new(current_user, user_params)
     results = onboard_service.onboard_client!
     if results.success?
       AdminDirectorNotifierMailer.new_user_finished_sign_up(current_user).deliver_later
@@ -20,8 +19,8 @@ class UsersController < Clearance::SessionsController
 
   private
 
-  def student?
-    current_user.is_student?
+  def user_params
+    current_user.signup.student ? client_as_student_params : client_params
   end
 
   def client_as_student_params

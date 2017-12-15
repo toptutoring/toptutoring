@@ -1,6 +1,5 @@
 class DashboardsController < ApplicationController
   before_action :require_login
-  before_action :build_student_for_client, only: [:client]
 
   def admin
     @pending_engagements = Engagement
@@ -41,12 +40,6 @@ class DashboardsController < ApplicationController
   end
 
   private
-
-  def build_student_for_client
-    if !current_user.is_student?
-      current_user.students.build
-    end
-  end
 
   def low_balance_engagements?
     results = []
