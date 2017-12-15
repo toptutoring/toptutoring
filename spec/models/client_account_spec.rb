@@ -10,11 +10,11 @@ RSpec.describe ClientAccount, type: :model do
       subject = client.client_account
       FactoryGirl.create(:engagement, client_account: subject)
 
-      expect(subject.academic_types_engaged).to eq(["academic"])
+      expect(subject.academic_types_engaged).to contain_exactly("academic")
 
       FactoryGirl.create(:engagement, client_account: subject, subject: FactoryGirl.create(:subject, academic_type: "test_prep"))
 
-      expect(subject.academic_types_engaged).to eq(["academic", "test_prep"])
+      expect(subject.academic_types_engaged).to contain_exactly("academic", "test_prep")
     end
   end
 end
