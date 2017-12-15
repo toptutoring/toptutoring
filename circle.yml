@@ -1,6 +1,3 @@
-machine:
-  hosts:
-    app.toptutoring.dev: 127.0.0.1
 database:
   override:
     - bin/setup
