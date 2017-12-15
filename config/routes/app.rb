@@ -73,6 +73,12 @@ Rails.application.routes.draw do
         resources :pay_all
       end
     end
+    resources :engagements do
+      member do
+        get "/enable" => "engagements#enable"
+        get "/disable" => "engagements#disable"
+      end
+    end
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("tutor") } do
@@ -138,17 +144,12 @@ Rails.application.routes.draw do
     resources :clients, only: [:create]
     resources :tutors, only: [:new, :create]
     get "tutors/signup" => "tutors#signup"
-
-    resources :engagements do
-      member do
-        get "/enable" => "engagements#enable"
-        get "/disable" => "engagements#disable"
-      end
-    end
-
-    # Demo dashboards
-    get "/tutor-dashboard" => "pages#tutor_dashboard"
-    get "/director-dashboard" => "pages#director_dashboard"
-    get "/admin-dashboard" => "pages#admin_dashboard"
   end
+
+  # Demo dashboards
+  get "/tutor-dashboard" => "pages#tutor_dashboard"
+  get "/director-dashboard" => "pages#director_dashboard"
+  get "/admin-dashboard" => "pages#admin_dashboard"
+
+  root "sessions#new"
 end
