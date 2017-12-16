@@ -33,8 +33,8 @@ class SlackNotifier
       if service.messages.any?
         message += "Messages\n" + service.messages.join("\n")
       end
-      if service.errors
-        message += "Errors\n" + service.errors.join("\n")
+      if service.errors.any?
+        message += "\nErrors\n" + service.errors.join("\n")
       end
       ping(message, :general)
     end
