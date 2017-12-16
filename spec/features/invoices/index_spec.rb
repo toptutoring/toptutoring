@@ -1,11 +1,11 @@
 require "rails_helper"
 
 feature "Invoices Index" do
-  let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account) }
-  let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
+  let(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account) }
+  let!(:invoice) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement) }
 
   scenario "when user is tutor" do
     sign_in(tutor)

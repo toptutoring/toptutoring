@@ -1,8 +1,8 @@
 require "rails_helper"
 
 feature "Create user as first step of sign up process" do
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let!(:subject_academic) { FactoryGirl.create(:subject) }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let!(:subject_academic) { FactoryBot.create(:subject) }
 
   context "with valid params" do
     scenario "when user is a client that is not a student" do

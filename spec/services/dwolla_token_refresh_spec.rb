@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe DwollaTokenRefresh do
-  let(:user) { FactoryGirl.create(:tutor_user) }
+  let(:user) { FactoryBot.create(:tutor_user) }
   let(:service) { DwollaTokenRefresh.new(user.id) }
 
   it 'refreshes valid tokens' do

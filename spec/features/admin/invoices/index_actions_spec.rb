@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 feature 'Admin invoice features' do
-  let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 2) }
-  let(:client) { FactoryGirl.create(:client_user, test_prep_credit: 2) }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
-  let(:test_prep_subject) { FactoryGirl.create(:subject, academic_type: "test_prep") }
-  let(:engagement) { FactoryGirl.create(:engagement, tutor_account: tutor.tutor_account, subject: test_prep_subject, student_account: student_account, client_account: client.client_account) }
-  let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
-  let(:admin) { FactoryGirl.create(:auth_admin_user) }
-  let(:funding_source) { FactoryGirl.create(:funding_source, user_id: admin.id) }
+  let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 2) }
+  let(:client) { FactoryBot.create(:client_user, test_prep_credit: 2) }
+  let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
+  let(:test_prep_subject) { FactoryBot.create(:subject, academic_type: "test_prep") }
+  let(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, subject: test_prep_subject, student_account: student_account, client_account: client.client_account) }
+  let!(:invoice) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
+  let(:admin) { FactoryBot.create(:auth_admin_user) }
+  let(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
 
   scenario 'when admin pays a single invoice' do
     funding_source

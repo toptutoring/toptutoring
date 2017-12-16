@@ -7,14 +7,14 @@ describe CreateClientService do
                           email: "client_new@example.com",
                           password: "password",
                           signup_attributes: { student: false,
-                                               subject: FactoryGirl.create(:subject),
+                                               subject: FactoryBot.create(:subject),
                                                comments: "Hello"} } }
     let(:student_params) { { name: "Student",
                              phone_number: "510-555-5555",
                              email: "client_new@example.com",
                              password: "password",
                              signup_attributes: { student: true,
-                                                  subject: FactoryGirl.create(:subject),
+                                                  subject: FactoryBot.create(:subject),
                                                   comments: "Hello"} } }
     let(:invalid_params) { { name: "Student",
                              phone_number: "510-555-5555",

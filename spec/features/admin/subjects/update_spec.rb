@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Subjects Index' do
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let(:subject_academic) { FactoryGirl.create(:subject) }
-  let(:subject_test_prep) { FactoryGirl.create(:subject, academic_type: 'test_prep') }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:subject_academic) { FactoryBot.create(:subject) }
+  let(:subject_test_prep) { FactoryBot.create(:subject, academic_type: 'test_prep') }
 
   scenario 'when tutoring type is changed from Academic to Test Prep' do
     subject_academic

@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature "List all users" do
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let(:student) { FactoryGirl.create(:student_user) }
-  let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:director) { FactoryGirl.create(:director_user) }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:student) { FactoryBot.create(:student_user) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:director) { FactoryBot.create(:director_user) }
 
   context "when user is admin" do
     scenario "should see user info" do

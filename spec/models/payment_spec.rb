@@ -4,7 +4,7 @@ RSpec.describe Payment, type: :model do
   context "for dwolla transfers" do
     before {
       allow(subject).to receive(:source).and_return('xxx')
-      allow(subject).to receive(:payee).and_return(FactoryGirl.create(:tutor_user))
+      allow(subject).to receive(:payee).and_return(FactoryBot.create(:tutor_user))
     }
     it { should belong_to(:payer) }
     it { should belong_to(:payee) }

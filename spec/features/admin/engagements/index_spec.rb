@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 feature "Index engagements" do
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let(:director) { FactoryGirl.create(:director_user) }
-  let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account, state: "active") }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:director) { FactoryBot.create(:director_user) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
+  let!(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account, state: "active") }
   let(:presenter) { EngagementPresenter.new(engagement) }
 
   context "when user is director" do

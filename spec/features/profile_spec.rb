@@ -1,10 +1,10 @@
 require "rails_helper"
 
 feature "Profile" do
-  let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:student_account) { FactoryGirl.create(:student_account, user: student, client_account: client.client_account) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:student) { FactoryBot.create(:student_user, client: client) }
+  let(:student_account) { FactoryBot.create(:student_account, user: student, client_account: client.client_account) }
 
   context "when user is tutor" do
     scenario "and visits profile page" do

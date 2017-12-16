@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Set funding source' do
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let(:auth_admin) { FactoryGirl.create(:auth_admin_user) }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:auth_admin) { FactoryBot.create(:auth_admin_user) }
 
   scenario 'goes to new' do
     sign_in(admin)

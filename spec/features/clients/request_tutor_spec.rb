@@ -1,9 +1,9 @@
 require "rails_helper"
 
 feature "Request tutors" do
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:client_as_student) { FactoryGirl.create(:client_user, :as_student) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:student) { FactoryBot.create(:student_user, client: client) }
+  let(:client_as_student) { FactoryBot.create(:client_user, :as_student) }
 
 
   scenario "successfully when client is not a student" do

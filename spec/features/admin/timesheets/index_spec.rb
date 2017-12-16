@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Timesheet Index' do
-  let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let!(:timesheet) { FactoryGirl.create(:invoice, submitter: tutor, submitter_type: 'by_contractor', status: "pending", hours: 1) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let!(:timesheet) { FactoryBot.create(:invoice, submitter: tutor, submitter_type: 'by_contractor', status: "pending", hours: 1) }
 
   scenario 'when user is admin' do
     sign_in(admin)

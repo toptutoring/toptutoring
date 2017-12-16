@@ -14,14 +14,14 @@ RSpec.describe Invoice, type: :model do
 
   describe ".contractor_pending_total" do
     subject = Invoice
-    let(:submitter) { FactoryGirl.create(:tutor_user) }
+    let(:submitter) { FactoryBot.create(:tutor_user) }
 
     it "calculates total owed to submitters for pending invoices with submitter type" do
-      FactoryGirl.create(:invoice, status: 'pending', submitter: submitter, submitter_type: 'by_contractor')
-      FactoryGirl.create(:invoice, status: 'pending', hours: 1, submitter: submitter, submitter_type: 'by_contractor')
-      FactoryGirl.create(:invoice, status: 'paid', submitter: submitter, submitter_type: 'by_contractor')
-      FactoryGirl.create(:invoice, status: 'pending', submitter: submitter, submitter_type: 'by_tutor')
-      FactoryGirl.create(:invoice, status: 'paid', submitter: submitter, submitter_type: 'by_tutor')
+      FactoryBot.create(:invoice, status: 'pending', submitter: submitter, submitter_type: 'by_contractor')
+      FactoryBot.create(:invoice, status: 'pending', hours: 1, submitter: submitter, submitter_type: 'by_contractor')
+      FactoryBot.create(:invoice, status: 'paid', submitter: submitter, submitter_type: 'by_contractor')
+      FactoryBot.create(:invoice, status: 'pending', submitter: submitter, submitter_type: 'by_tutor')
+      FactoryBot.create(:invoice, status: 'paid', submitter: submitter, submitter_type: 'by_tutor')
 
       expect(subject.contractor_pending_total.class).to eql(Money)
       expect(subject.contractor_pending_total.cents).to eql(4500)
@@ -30,14 +30,14 @@ RSpec.describe Invoice, type: :model do
 
   describe ".tutor_pending_total" do
     subject = Invoice
-    let(:submitter) { FactoryGirl.create(:tutor_user) }
+    let(:submitter) { FactoryBot.create(:tutor_user) }
 
     it "calculates total owed to submitters for pending invoices with submitter type" do
-      FactoryGirl.create(:invoice, status: 'pending', hours: 3, submitter: submitter, submitter_type: 'by_tutor')
-      FactoryGirl.create(:invoice, status: 'pending', hours: 1, submitter: submitter, submitter_type: 'by_tutor')
-      FactoryGirl.create(:invoice, status: 'paid', submitter: submitter, submitter_type: 'by_tutor')
-      FactoryGirl.create(:invoice, status: 'pending', submitter: submitter, submitter_type: 'by_contractor')
-      FactoryGirl.create(:invoice, status: 'paid', submitter: submitter, submitter_type: 'by_contractor')
+      FactoryBot.create(:invoice, status: 'pending', hours: 3, submitter: submitter, submitter_type: 'by_tutor')
+      FactoryBot.create(:invoice, status: 'pending', hours: 1, submitter: submitter, submitter_type: 'by_tutor')
+      FactoryBot.create(:invoice, status: 'paid', submitter: submitter, submitter_type: 'by_tutor')
+      FactoryBot.create(:invoice, status: 'pending', submitter: submitter, submitter_type: 'by_contractor')
+      FactoryBot.create(:invoice, status: 'paid', submitter: submitter, submitter_type: 'by_contractor')
 
       expect(subject.tutor_pending_total.class).to eql(Money)
       expect(subject.tutor_pending_total.cents).to eql(6000)

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :director_user, class: User do
     name          { "Director" }
     phone_number  { "(510)555-5555" }

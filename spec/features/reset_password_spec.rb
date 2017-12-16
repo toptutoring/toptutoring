@@ -1,9 +1,9 @@
 require "rails_helper"
 
 feature "Passwords can be reset" do
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student) { FactoryGirl.create(:student_user, client: client) }
-  let(:student_account) { FactoryGirl.create(:student_account, user: student, client_account: client.client_account) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:student) { FactoryBot.create(:student_user, client: client) }
+  let(:student_account) { FactoryBot.create(:student_account, user: student, client_account: client.client_account) }
 
   scenario "when reset link with token is sent to user" do
     student_account

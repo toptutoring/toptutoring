@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 feature "Update engagements" do
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let(:director) { FactoryGirl.create(:director_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
-  let!(:engagement) { FactoryGirl.create(:engagement, tutor_account: nil, student_account: student_account, client_account: client.client_account, state: "pending") }
-  let!(:tutor) { FactoryGirl.create(:tutor_user, name: "Amazing Tutor") }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:director) { FactoryBot.create(:director_user) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
+  let!(:engagement) { FactoryBot.create(:engagement, tutor_account: nil, student_account: student_account, client_account: client.client_account, state: "pending") }
+  let!(:tutor) { FactoryBot.create(:tutor_user, name: "Amazing Tutor") }
 
   context "when user is director" do
     scenario "updating a tutor for a pending engagement" do

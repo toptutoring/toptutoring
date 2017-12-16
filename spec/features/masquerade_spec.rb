@@ -1,9 +1,9 @@
 require "rails_helper"
 
 feature "Masquerading" do
-  let!(:client) { FactoryGirl.create(:client_user) }
-  let(:director) { FactoryGirl.create(:director_user) }
-  let(:admin) { FactoryGirl.create(:admin_user) }
+  let!(:client) { FactoryBot.create(:client_user) }
+  let(:director) { FactoryBot.create(:director_user) }
+  let(:admin) { FactoryBot.create(:admin_user) }
 
   scenario "when directors masquerade as clients" do
     client
