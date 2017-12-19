@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_one :student_account
   has_one :client_account
   has_one :tutor_account
+  has_one :contractor_account
   has_many :student_accounts, through: :client_accounts
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
