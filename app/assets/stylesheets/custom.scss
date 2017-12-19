@@ -274,36 +274,6 @@ select, .select2 {
   width: 100%;
 }
 
-nav {
-  background: #fff;
-  max-width: 100%;
-}
-
-.nav-bar {
-  height: 55px;
-  max-height: 55px;
-  line-height: 53px;
-  border-bottom: 1px solid #ccc;
-}
-
-.nav-bar .module, .nav-bar .module-group {
-  height: 55px;
-}
-
-.module.left, .module-group.left {
-  float: left;
-}
-
-.module {
-  display: inline-block;
-  padding: 0 32px;
-}
-
-.nav-bar a {
-  display: inline-block;
-  height: 55px;
-}
-
 .vnu {
   display: inline;
 }
