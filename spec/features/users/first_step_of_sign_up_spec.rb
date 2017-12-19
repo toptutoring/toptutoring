@@ -15,7 +15,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
       find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
-      choose "user_signup_attributes_student_false"
+      find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
       click_button "Sign up"
 
       expect(page).to have_current_path(new_clients_student_path)
@@ -35,7 +35,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
       find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
-      choose "user_signup_attributes_student_true"
+      find("#user_signup_attributes_student").find(:xpath, "option[3]").select_option
       click_button "Sign up"
 
       expect(page).to have_current_path(dashboard_path)
