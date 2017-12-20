@@ -7,7 +7,7 @@ module Tutors
     end
 
     def create
-      update_no_show_params if params[:invoice][:hours] == 'no_show'
+      update_no_show_params if params[:invoice][:hours] == "no_show"
       create_invoice
       adjust_balances_and_save_records
       set_flash_messages
@@ -28,11 +28,11 @@ module Tutors
 
     def update_no_show_params
       params[:invoice][:hours] = 0
-      @note = 'No Show'
+      @note = "No Show"
     end
 
     def create_invoice
-      @by_tutor = params[:invoice][:submitter_type] == 'by_tutor'
+      @by_tutor = params[:invoice][:submitter_type] == "by_tutor"
       if @by_tutor
         authorize_tutor
         set_engagement_and_client
@@ -69,7 +69,11 @@ module Tutors
     end
 
     def submitter_pay
-      submitter_rate = current_user.tutor_account.contract.hourly_rate
+      if @by_tutor
+        submitter_rate = current_user.tutor_account.contract.hourly_rate
+      else
+        submitter_rate = current_user.contractor_account.contract.hourly_rate
+      end
       submitter_rate * params[:invoice][:hours].to_f
     end
 

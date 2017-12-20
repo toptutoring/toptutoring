@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Admin timesheet features' do
-  let(:contractor) { FactoryBot.create(:tutor_user, outstanding_balance: 1) }
+  let(:contractor) { FactoryBot.create(:contractor_user, outstanding_balance: 1) }
   let(:admin) { FactoryBot.create(:auth_admin_user) }
   let!(:timesheet) { FactoryBot.create(:invoice, submitter: contractor, submitter_type: 'by_contractor', status: "pending", hours: 1) }
   let(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
