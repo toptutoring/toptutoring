@@ -9,6 +9,7 @@ namespace :dev do
     client = User.where(email: "client@example.com").first_or_initialize
     client.name = "Client"
     client.password = "password"
+    client.phone_number = "5105555555"
     client.customer_id = "cus_A45BGhlr4VjDcJ"
     client.access_state = "enabled"
     client.roles = Role.where(name: "client")
@@ -19,6 +20,7 @@ namespace :dev do
     client_new = User.where(email: "clientnew@example.com").first_or_initialize
     client_new.name = "Client"
     client_new.password = "password"
+    client_new.phone_number = "5105555555"
     client_new.customer_id = nil
     client_new.access_state = "enabled"
     client_new.roles = Role.where(name: "client")
@@ -36,6 +38,7 @@ namespace :dev do
     student1.name = "Student1"
     student1.email = "student1@example.com"
     student1.password = "password"
+    student1.phone_number = "5105555555"
     student1.access_state = "enabled"
     student1.roles = Role.where(name: "student")
     student1.client_id = client.id
@@ -47,6 +50,7 @@ namespace :dev do
     student2.name = "Student2"
     student2.email = "student2@example.com"
     student2.password = "password"
+    student2.phone_number = "5105555555"
     student2.access_state = "enabled"
     student2.roles = Role.where(name: "student")
     student2.client_id = client.id
@@ -57,6 +61,7 @@ namespace :dev do
     tutor = User.where(email: "tutor@example.com").first_or_initialize
     tutor.name = "Tutor"
     tutor.password = "password"
+    tutor.phone_number = "5105555555"
     tutor.auth_provider = "dwolla"
     tutor.auth_uid = "854f5ac8-e728-4959-b6e0-13917cd2cf60"
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
@@ -73,6 +78,7 @@ namespace :dev do
     director = User.where(email: "director@example.com").first_or_initialize
     director.name = "Director"
     director.password = "password"
+    director.phone_number = "5105555555"
     director.auth_provider = "dwolla"
     director.auth_uid = "eef71d60-c133-4eed-af14-77dd2e4b9950"
     director.token_expires_at = Time.current.to_i + 12.months.to_i
@@ -89,6 +95,7 @@ namespace :dev do
     admin = User.where(email: "admin@example.com").first_or_initialize
     admin.name = "Admin"
     admin.password = "password"
+    admin.phone_number = "5105555555"
     admin.auth_provider = "dwolla"
     admin.auth_uid = ENV.fetch("DWOLLA_DEV_ADMIN_AUTH_UID")
     admin.token_expires_at = Time.current.to_i + 12.months.to_i
@@ -100,6 +107,7 @@ namespace :dev do
     contractor = User.where(email: "contractor@example.com").first_or_initialize
     contractor.name = "Contractor"
     contractor.password = "password"
+    contractor.phone_number = "5105555555"
     contractor.auth_provider = "dwolla"
     contractor.auth_uid = ENV.fetch("DWOLLA_DEV_ADMIN_AUTH_UID")
     contractor.token_expires_at = Time.current.to_i + 12.months.to_i
