@@ -2,6 +2,7 @@ require "rails_helper"
 
 feature "Dashboard Index" do
   let(:director) { FactoryBot.create(:director_user) }
+  let(:contractor) { FactoryBot.create(:contractor_user) }
   let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:client) { FactoryBot.create(:client_user) }
   let(:client_student) { FactoryBot.create(:client_user, :as_student) }
@@ -76,5 +77,12 @@ feature "Dashboard Index" do
     expect(page).to have_content(pending_engagement.academic_type.humanize)
     expect(page).to have_content(pending_engagement.state)
     expect(page).to have_link("Edit")
+  end
+
+  scenario "when user is contractor" do
+    sign_in(contractor)
+
+    expect(page).to have_content("Timesheet")
+    expect(page).to have_content("Hours")
   end
 end
