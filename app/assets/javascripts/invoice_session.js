@@ -1,5 +1,5 @@
 $(function() {
-  setHoursDropDown();
+  update_form_for_submitter_type();
   processTutorType();
 
   function setHoursDropDown() {
@@ -52,11 +52,7 @@ $(function() {
     }
   };
 
-  $(document).on('change', '.student', function() {
-    processTutorType();
-  });
-
-  $(document).on('change', '#invoice_submitter_type', function() {
+  function update_form_for_submitter_type() {
     var submitter_type  = $('#invoice_submitter_type').val()
     if(submitter_type === 'by_contractor') {
       $('.only-for-tutors').addClass('hidden');
@@ -69,5 +65,11 @@ $(function() {
       $('#invoice_subject').attr("required", true);
       setHoursDropDown();
     }
+  }
+
+  $(document).on('change', '.student', function() {
+    processTutorType();
   });
+
+  $(document).on('change', '#invoice_submitter_type', update_form_for_submitter_type);
 });

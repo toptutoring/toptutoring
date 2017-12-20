@@ -125,6 +125,10 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("contractor") } do
+    get "/dashboard" => "dashboards#contractor"
+    namespace :tutors do
+      resources :invoices, only: [:index, :create, :destroy]
+    end
     resources :open_tok_rooms
     resources :timesheets
   end
