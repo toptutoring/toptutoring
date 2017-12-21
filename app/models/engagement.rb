@@ -5,12 +5,12 @@ class Engagement < ActiveRecord::Base
   belongs_to :tutor_account
   belongs_to :subject
 
+  # Engagements with invoices should not be destroyed
   has_many :invoices
-  has_many :availabilities
-  has_many :suggestions
+  has_many :availabilities, dependent: :destroy
+  has_many :suggestions, dependent: :destroy
 
   #### Scopes ####
-
   scope :pending, -> { where(state: :pending).order('created_at DESC') }
   scope :active, -> { where(state: :active) }
 
@@ -20,7 +20,6 @@ class Engagement < ActiveRecord::Base
   validates_presence_of :client_account
 
   #### State Machine ####
-
   state_machine :state, :initial => :pending do
     event :enable do
       transition :pending => :active
@@ -46,7 +45,7 @@ class Engagement < ActiveRecord::Base
   end
 
   def student
-    student_account.user
+    student_account.try(:user)
   end
 
   def tutor
