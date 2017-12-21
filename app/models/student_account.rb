@@ -1,7 +1,7 @@
 class StudentAccount < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, dependent: :destroy
   belongs_to :client_account
-  has_many :engagements
+  has_many :engagements, dependent: :destroy
   has_many :tutor_accounts, through: :engagements
   validates_presence_of :client_account, :name
 

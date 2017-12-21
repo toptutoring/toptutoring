@@ -4,7 +4,7 @@ FactoryBot.define do
     phone_number     { "(510)555-5555" }
     sequence(:email) { |n| "student#{n}@example.com" }
     password         { "password" }
-    roles            { Role.where(name: 'student') }
+    roles            { Role.where(name: "student") }
     access_state     { "enabled" }
     client           { FactoryBot.create(:client_user) }
 

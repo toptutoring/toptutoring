@@ -7,5 +7,8 @@ class TutorAccount < ApplicationRecord
 
   validates_presence_of :user
 
+  # clears join table
+  before_destroy { subjects.clear }
+
   delegate :name, to: :user
 end

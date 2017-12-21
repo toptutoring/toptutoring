@@ -15,9 +15,18 @@ module Admin
       if @user.update_attributes(user_params)
         redirect_to admin_users_path, notice: 'User successfully updated!'
       else
-        redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: @user.errors.full_messages })
+        flash.alert = @user.errors.full_messages
+        redirect_to edit_admin_user_path(@user)
       end
+    end
+
+    def destroy
+      user = User.find(params[:id]).destroy
+      flash.notice = t("app.admin.users.remove_user_success", name: user.name)
+      redirect_to admin_users_path
+    rescue ActiveRecord::ActiveRecordError => e
+      flash.alert = t("app.admin.users.remove_user_failure")
+      redirect_to admin_users_path
     end
 
     private

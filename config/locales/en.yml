@@ -48,3 +48,7 @@ en:
       destroy: "Your request has been removed."
     payment:
       success: "Thank you for adding to your balance."
+    admin:
+      users:
+        remove_user_success: "%{name} has permanently been removed from the database."
+        remove_user_failure: "Failed to remove user from the database. Users with an invoiced engagement or a payment cannot be removed."

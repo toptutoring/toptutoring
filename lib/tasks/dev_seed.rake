@@ -16,6 +16,12 @@ namespace :dev do
     client.save!
     client.create_client_account!
 
+    #Update signup
+    signup = Signup.where(user_id: client.id).first_or_initialize
+    signup.subject = Subject.last
+    signup.student = false
+    signup.save!
+
     # New client
     client_new = User.where(email: "clientnew@example.com").first_or_initialize
     client_new.name = "Client"
@@ -27,11 +33,11 @@ namespace :dev do
     client_new.save!
     client_new.create_client_account!
 
-    #Update signup
-    signup = Signup.where(user_id: client.id).first_or_initialize
-    signup.subject = Subject.last
-    signup.student = false
-    signup.save!
+    #Update signup2
+    signup2 = Signup.where(user_id: client_new.id).first_or_initialize
+    signup2.subject = Subject.last
+    signup2.student = false
+    signup2.save!
 
     # Update student
     student1 = User.where(email: "student1@example.com").first_or_initialize
