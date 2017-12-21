@@ -16,7 +16,10 @@ Rails.application.routes.draw do
   post "/payments/one_time" => "one_time_payments#create"
   get "/confirmation" => "one_time_payments#confirmation"
   get "payment" => "pages#payment"
+
+  # Client Signups
   get "/sign_up" => "users/clients#new", as: "client_sign_up"
+  post "/sign_up" => "users/clients#create", as: :users_clients
 
   resource :password, only: [:create, :edit]
   get "/reset_password" => "passwords#new", as: "reset_password"
@@ -139,9 +142,8 @@ Rails.application.routes.draw do
   # Users
   resources :users, only: [:edit, :update]
 
-  # Users signup.
+  # Tutor signup.
   namespace :users do
-    resources :clients, only: [:create]
     resources :tutors, only: [:new, :create]
     get "tutors/signup" => "tutors#signup"
   end

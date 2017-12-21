@@ -19,12 +19,26 @@ en:
     add_student:
       success: "Successfully added!"
     signup:
-      success_message: |
-        Thank you for finishing the sign up process!
-        We are in the process of finding a great tutor for you.
-        If you have any questions in the mean time, feel free to contact us!
+      client:
+        success_message: |
+          Thank you for signing up for TopTutoring! We're excited to join you in your academic journey.
+          While you wait for us to contact you, feel free to let us know about the student who will be receiving tutoring.
+          You can create an account for the student, or have them use your account(recommended for younger children).
+          Feel free to add as many students as you would like.
+      client_student:
+        success_message: |
+          Thank you for signing up for TopTutoring! We're excited to join you in your academic journey.
+          While you wait for us to contact you, feel free to browse the site or request tutors directly through the app.
       tutors:
         success: "Thank you for signing up!" 
+    clients:
+      dashboard:
+        no_tutor_message: |
+          You do not have any tutors yet, but we're working hard to get you started.
+          Our tutor director has been notified and will contact you shortly.
+          We're excited to have you on board and looking forward to assigning you your first tutor!
+      payments:
+        no_engagements: "Don't worry about payments for now. Let us set you up with a tutor first."
     tutors:
       subjects:
         update_success: "Your subjects have been updated."

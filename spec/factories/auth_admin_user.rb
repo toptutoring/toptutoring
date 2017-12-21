@@ -1,6 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :auth_admin_user, class: User do
     name             { "Admin" }
+    phone_number     { "510-555-5555" }
     sequence(:email) { |n| "auth_admin#{n}@example.com" }
     password         { "password" }
     roles            { Role.where(name: 'admin') }

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 feature "Index payments" do
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let(:director) { FactoryGirl.create(:director_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:payment_client) { FactoryGirl.create(:payment, payer: client, amount_cents: 200_00, customer_id: "xxx") }
-  let(:payment_director) { FactoryGirl.create(:payment, payer: director, payee: tutor, amount_cents: 200_00) }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:director) { FactoryBot.create(:director_user) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
+  let(:payment_client) { FactoryBot.create(:payment, payer: client, amount_cents: 200_00, customer_id: "xxx") }
+  let(:payment_director) { FactoryBot.create(:payment, payer: director, payee: tutor, amount_cents: 200_00) }
 
   context "when user is director" do
     scenario "should see client payments" do

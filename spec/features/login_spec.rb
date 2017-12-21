@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User logs in' do
-  given(:user) { FactoryGirl.create(:tutor_user) }
+  given(:user) { FactoryBot.create(:tutor_user) }
 
   scenario 'with valid email and password' do
     visit login_path

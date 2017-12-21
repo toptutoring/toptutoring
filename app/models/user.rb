@@ -26,8 +26,7 @@ class User < ActiveRecord::Base
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
 
   # Validation #
-  validates_presence_of :name
-  validates_length_of :phone_number, minimum: 3, allow_nil: true
+  validates_presence_of :name, :email, :phone_number
   validate :credits_must_be_by_quarter_hours
 
   def credits_must_be_by_quarter_hours

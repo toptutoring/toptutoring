@@ -15,6 +15,7 @@ module Clients
 
     def index
       @student_accounts = current_user.client_account.student_accounts
+      render :new if @student_accounts.empty?
     end
 
     def show

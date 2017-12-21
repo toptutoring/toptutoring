@@ -6,12 +6,12 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of(:password) }
 
   describe ".with_pending_invoices" do
-    let(:tutor_with_pending) { FactoryGirl.create(:tutor_user, name: 'TutorWithPending') }
-    let(:tutor_without_pending) { FactoryGirl.create(:tutor_user, name: 'TutorWithOutPending') }
+    let(:tutor_with_pending) { FactoryBot.create(:tutor_user, name: 'TutorWithPending') }
+    let(:tutor_without_pending) { FactoryBot.create(:tutor_user, name: 'TutorWithOutPending') }
 
     it 'returns users with pending invoices' do
-      FactoryGirl.create(:invoice, submitter: tutor_with_pending)
-      FactoryGirl.create(:invoice, submitter: tutor_without_pending, status: 'paid')
+      FactoryBot.create(:invoice, submitter: tutor_with_pending)
+      FactoryBot.create(:invoice, submitter: tutor_without_pending, status: 'paid')
       result = User.with_pending_invoices('by_tutor')
 
       expect(result.count).to eq(1)
@@ -19,9 +19,9 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns one user when they have multiple invoices' do
-      FactoryGirl.create(:invoice, submitter: tutor_with_pending)
-      FactoryGirl.create(:invoice, submitter: tutor_with_pending)
-      FactoryGirl.create(:invoice, submitter: tutor_with_pending)
+      FactoryBot.create(:invoice, submitter: tutor_with_pending)
+      FactoryBot.create(:invoice, submitter: tutor_with_pending)
+      FactoryBot.create(:invoice, submitter: tutor_with_pending)
       result = User.with_pending_invoices('by_tutor')
 
       expect(result.count).to eq(1)
@@ -29,8 +29,8 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns users with pending invoices of the given type' do
-      FactoryGirl.create(:invoice, submitter: tutor_with_pending)
-      FactoryGirl.create(:invoice, submitter: tutor_without_pending, submitter_type: 'by_contractor')
+      FactoryBot.create(:invoice, submitter: tutor_with_pending)
+      FactoryBot.create(:invoice, submitter: tutor_without_pending, submitter_type: 'by_contractor')
       result = User.with_pending_invoices('by_tutor')
 
       expect(result.count).to eq(1)

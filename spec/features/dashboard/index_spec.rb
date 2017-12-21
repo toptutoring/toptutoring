@@ -1,13 +1,13 @@
 require "rails_helper"
 
 feature "Dashboard Index" do
-  let(:director) { FactoryGirl.create(:director_user) }
-  let(:tutor) { FactoryGirl.create(:tutor_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:client_student) { FactoryGirl.create(:client_user, :as_student) }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
-  let(:active_engagement) { FactoryGirl.create(:engagement, client_account: client.client_account, tutor_account: tutor.tutor_account, state: "active", student_account: student_account) }
-  let(:pending_engagement) { FactoryGirl.create(:engagement, client_account: client.client_account, tutor_account: tutor.tutor_account, state: "pending", student_account: student_account) }
+  let(:director) { FactoryBot.create(:director_user) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:client_student) { FactoryBot.create(:client_user, :as_student) }
+  let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
+  let(:active_engagement) { FactoryBot.create(:engagement, client_account: client.client_account, tutor_account: tutor.tutor_account, state: "active", student_account: student_account) }
+  let(:pending_engagement) { FactoryBot.create(:engagement, client_account: client.client_account, tutor_account: tutor.tutor_account, state: "pending", student_account: student_account) }
 
   scenario "when user is client" do
     active_engagement

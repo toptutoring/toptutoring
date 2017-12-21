@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe CreateClientService do
-    let(:client) { FactoryGirl.create(:client_user) }
+    let(:client) { FactoryBot.create(:client_user) }
   describe "#charge!" do
     it "successfully charges client" do
       subject = PaymentService.new(client, "academic", 2.0).charge!("tok_visa")

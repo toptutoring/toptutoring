@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 feature "Index tutors" do
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let(:director) { FactoryGirl.create(:director_user) }
-  let(:tutor) { FactoryGirl.create(:tutor_user, name: "Someone") }
-  let(:tutor2) { FactoryGirl.create(:tutor_user, name: "Another") }
-  let(:subject1) { FactoryGirl.create(:subject) }
-  let(:subject2) { FactoryGirl.create(:subject) }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:director) { FactoryBot.create(:director_user) }
+  let(:tutor) { FactoryBot.create(:tutor_user, name: "Someone") }
+  let(:tutor2) { FactoryBot.create(:tutor_user, name: "Another") }
+  let(:subject1) { FactoryBot.create(:subject) }
+  let(:subject2) { FactoryBot.create(:subject) }
 
   context "when user is director" do
     scenario "should see tutors" do

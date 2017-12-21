@@ -1,9 +1,9 @@
 require "rails_helper"
 
 feature "Add student" do
-  let!(:subject) { FactoryGirl.create(:subject) }
-  let(:existing_client) { FactoryGirl.create(:client_user) }
-  let(:client) { FactoryGirl.create(:client_user) }
+  let!(:subject) { FactoryBot.create(:subject) }
+  let(:existing_client) { FactoryBot.create(:client_user) }
+  let(:client) { FactoryBot.create(:client_user) }
 
   scenario "successfully when client does not provide email" do
     sign_in(client)

@@ -115,10 +115,10 @@ GEM
     encryptor (3.0.0)
     erubi (1.6.1)
     execjs (2.7.0)
-    factory_girl (4.8.0)
+    factory_bot (4.8.2)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.8.0)
-      factory_girl (~> 4.8.0)
+    factory_bot_rails (4.8.2)
+      factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
     fake_stripe (0.0.12)
       capybara
@@ -206,6 +206,7 @@ GEM
       httparty (~> 0.15.5)
       jwt (~> 1.5.6)
     pg (0.21.0)
+    phonelib (0.6.17)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -396,7 +397,7 @@ DEPENDENCIES
   database_cleaner
   dotenv-rails
   dwolla_v2 (~> 1.0)
-  factory_girl_rails
+  factory_bot_rails
   fake_stripe
   formulaic
   intercom-rails
@@ -412,6 +413,7 @@ DEPENDENCIES
   omniauth-oauth2
   opentok (~> 3.0.0)
   pg
+  phonelib
   pry-byebug
   pry-rails
   puma
@@ -450,4 +452,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.4
+   1.16.0

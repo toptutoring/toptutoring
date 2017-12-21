@@ -1,5 +1,5 @@
 class Clients::PaymentsController < ApplicationController
-  before_action :require_login
+  before_action :require_login, :check_for_engagements
 
   def new
     @academic_types = current_user.client_account.academic_types_engaged
@@ -31,5 +31,11 @@ class Clients::PaymentsController < ApplicationController
 
   def stripe_token
     params.require(:stripeToken)
+  end
+
+  def check_for_engagements
+    return if current_user.client_account.engagements.any?
+    flash.notice = I18n.t("app.clients.payments.no_engagements")
+    redirect_to dashboard_path
   end
 end

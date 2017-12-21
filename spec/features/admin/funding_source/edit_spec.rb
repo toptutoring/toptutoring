@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature 'Edit funding source' do
-  let(:admin) { FactoryGirl.create(:auth_admin_user) }
+  let(:admin) { FactoryBot.create(:auth_admin_user) }
 
   scenario 'redirects to edit and has valid form' do
-    admin = FactoryGirl.create(:auth_admin_user)
-    funding_source = FactoryGirl.create(:funding_source)
+    admin = FactoryBot.create(:auth_admin_user)
+    funding_source = FactoryBot.create(:funding_source)
 
     sign_in(admin)
     VCR.use_cassette('dwolla funding sources') do
@@ -16,7 +16,7 @@ feature 'Edit funding source' do
   end
 
   scenario "with invalid params" do
-    admin = FactoryGirl.create(:auth_admin_user)
+    admin = FactoryBot.create(:auth_admin_user)
 
     sign_in(admin)
     VCR.use_cassette('dwolla funding sources') do
@@ -28,7 +28,7 @@ feature 'Edit funding source' do
   end
 
   scenario "with valid params" do
-    admin = FactoryGirl.create(:auth_admin_user)
+    admin = FactoryBot.create(:auth_admin_user)
 
     sign_in(admin)
     VCR.use_cassette('dwolla funding sources') do

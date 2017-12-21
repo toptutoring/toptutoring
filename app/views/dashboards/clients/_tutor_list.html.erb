@@ -5,7 +5,7 @@
     <div class="widget-body">
       <% if @engagements.empty? %>
         <!-- Request a Tutor -->
-        <p>We are in process of looking for you tutor. We will let you know as soon as we find the perfect match for your academic journey!</p>
+        <p class="mt-30"><%= I18n.t("app.clients.dashboard.no_tutor_message") %></p>
       <% else %>
         <div class="table-responsive mt-15 mb-0">
           <table class="table mb-0 table-striped table-hover">

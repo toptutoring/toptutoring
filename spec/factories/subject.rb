@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :subject do
     sequence(:name)  { |n| "Subject#{n}" }
     academic_type    { "academic" }

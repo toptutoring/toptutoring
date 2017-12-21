@@ -11,6 +11,7 @@ class SlackNotifier
     def notify_user_signup_start(user)
       message = "A new user has signed up.\n" \
         "Name: #{user.name}\n" \
+        "Phone Number: #{user.phone_number}\n" \
         "Email: #{user.email}\n" \
         "Comments: #{user.signup.comments}\n"
       ping(message, :leads)
@@ -32,8 +33,8 @@ class SlackNotifier
       if service.messages.any?
         message += "Messages\n" + service.messages.join("\n")
       end
-      if service.errors
-        message += "Errors\n" + service.errors.join("\n")
+      if service.errors.any?
+        message += "\nErrors\n" + service.errors.join("\n")
       end
       ping(message, :general)
     end

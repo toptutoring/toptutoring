@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature "Edit tutor" do
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let(:director) { FactoryGirl.create(:director_user) }
-  let(:tutor) { FactoryGirl.create(:tutor_user) }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:director) { FactoryBot.create(:director_user) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
 
   context "when user is director" do
     scenario "has valid form" do

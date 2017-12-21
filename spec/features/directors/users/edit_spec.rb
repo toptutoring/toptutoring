@@ -1,8 +1,8 @@
 require "rails_helper"
 
 feature "Director edits user balance" do
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:director) { FactoryGirl.create(:director_user) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:director) { FactoryBot.create(:director_user) }
 
   context "is submitted successfully" do
     scenario "for credits" do

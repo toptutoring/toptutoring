@@ -1,6 +1,6 @@
 module Clients
   class RequestTutorsController < ApplicationController
-    before_action :require_login
+    before_action :require_login, :handle_no_students
 
     def new
       @student_account_id = params[:student_account_id]
@@ -35,6 +35,13 @@ module Clients
 
     def return_path
       current_user.student_account ? clients_tutors_path : clients_students_path
+    end
+
+    def handle_no_students
+      return if current_user.student_account
+      return if current_user.client_account.student_accounts.any?
+      flash.notice = "Please add a student before requesting tutors."
+      redirect_to new_clients_student_path
     end
   end
 end

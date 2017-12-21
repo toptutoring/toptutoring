@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 feature "Create payment for tutor" do
-  let(:admin) { FactoryGirl.create(:auth_admin_user) }
-  let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 10) }
-  let(:contract) { FactoryGirl.create(:contract, user_id: tutor.id) }
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:student_account) { FactoryGirl.create(:student_account, client_account: client.client_account) }
-  let(:director) { FactoryGirl.create(:director_user, outstanding_balance: 10) }
-  let(:funding_source) { FactoryGirl.create(:funding_source, user_id: admin.id) }
+  let(:admin) { FactoryBot.create(:auth_admin_user) }
+  let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 10) }
+  let(:contract) { FactoryBot.create(:contract, user_id: tutor.id) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
+  let(:director) { FactoryBot.create(:director_user, outstanding_balance: 10) }
+  let(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
 
   context "when user is admin" do
     before do
@@ -48,8 +48,8 @@ feature "Create payment for tutor" do
 
   context "when user is director" do
     context "and isn't paying himself" do
-      let!(:engagement) { FactoryGirl.create(:engagement, student_account: student_account, tutor_account: tutor.tutor_account, client_account: client.client_account) }
-      let!(:invoice) { FactoryGirl.create(:invoice, submitter: tutor, client: client, engagement: engagement, hours: 1) }
+      let!(:engagement) { FactoryBot.create(:engagement, student_account: student_account, tutor_account: tutor.tutor_account, client_account: client.client_account) }
+      let!(:invoice) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement, hours: 1) }
 
       scenario "and admin does not have external auth" do
         sign_in(director)
@@ -91,8 +91,8 @@ feature "Create payment for tutor" do
     context "and is paying himself" do 
       scenario "with valid credentials" do
         VCR.use_cassette('dwolla authentication', record: :new_episodes) do
-          director_engagement = FactoryGirl.create(:engagement, tutor_account: director.tutor_account, client_account: client.client_account, student_account: student_account)
-          FactoryGirl.create(:invoice, submitter: director, client: client, engagement: director_engagement, hours: 1)
+          director_engagement = FactoryBot.create(:engagement, tutor_account: director.tutor_account, client_account: client.client_account, student_account: student_account)
+          FactoryBot.create(:invoice, submitter: director, client: client, engagement: director_engagement, hours: 1)
           funding_source
 
           sign_in(director)

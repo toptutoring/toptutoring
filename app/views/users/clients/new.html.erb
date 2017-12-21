@@ -1,71 +1,67 @@
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 col-md-5">
-        <h4 class="uppercase">Sign Up</h4>
-        <p> Already have an account?
-          <%= link_to "Sign in", sign_in_path %>
-        </p>
-        <%= image_tag("yellownotebook.jpg", class: "contact-us-image") %>
-        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br></p>
+<div class="container pt-30">
+  <div class="row">
+    <div class="col-lg-6 mt-30 mb-30">
+      <div class="text-center">
+        <h4 class="uppercase">Sign Up Process</h4>
       </div>
-      <div class="col-sm-6 col-md-6 col-md-offset-1">
-        <div class="col-md-12">
-          <p class="note text-center">
-            Who is this tutoring for?
-          </p>
-        </div>
-        <%= form_for @user, url: users_clients_path(@user), html: { class: "signup-form", id: "client-signup" } do |form| %>
+      <p class="m-15">At TopTutoring, it is our top priority to ensure you receive the best tutoring solution for your academic needs. You can either submit the provided form or call us at <a herf="tel:<%= ENV.fetch("CONTACT_PHONE_NUMBER") %>"><%= cleanup_phone_number ENV.fetch("CONTACT_PHONE_NUMBER") %></a> to get in touch with one of our Tutoring Directors who will help you get started on your academic journey.</p>
+      <p class="m-15"> Already have an account?
+      <%= link_to "Sign in", sign_in_path %>
+      </p>
+      <%= image_tag("yellownotebook.jpg", class: "visible-lg center-block contact-us-image") %>
+    </div>
 
-          <%= form.fields_for :signup do |client_field| %>
-            <div class="col-md-2 col-md-offset-2">
-              <%= client_field.radio_button :student, true %>
-              <%= label :tutoring_info_myself, 'Myself' %>
-            </div>
-            <div class="col-md-5 col-md-offset-2">
-              <%= client_field.radio_button :student, false, checked: true %>
-              <%= label :tutoring_info_someone_else, 'Someone else (My child)' %>
-            </div>
-            </br></br>
-          <% end %>
 
-          <div class="col-md-12">
-            <%= form.text_field :name, type: "text", placeholder: "FULL NAME", required: true %>
+    <div class="col-lg-6 mt-30">
+      <%= form_for @user, url: users_clients_path(@user), html: { class: "signup-form", id: "client-signup" } do |form| %>
+
+        <%= form.fields_for :signup do |client_field| %>
+          <div class="col-sm-6 col-lg-6 select-option">
+            <i class="ion-chevron-down"></i>
+            <%= client_field.select :student, [["My Child", false], ["Myself", true]], { prompt: "This is for..." }, { required: true, class:"wpcf7-form-control wpcf7-select subject-select" } %>
           </div>
 
-          <div class="col-md-12">
-            <%= form.email_field :email, type: "text", placeholder: "YOUR EMAIL", required: true %>
-          </div>
-
-          <div class="col-md-12">
-            <%= form.password_field :password, placeholder: "PASSWORD", required: true %>
-          </div>
-
-          <%= form.fields_for :signup do |client_field| %>
-            <div class="col-md-12">
-              <%= client_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, { required: true, class:"wpcf7-form-control wpcf7-select subject-select" } %>
-            </div>
-
-          </br>
-            <div class="col-md-12">
-              <%= client_field.text_area :comments, placeholder: "COMMENTS", rows: "3", style: "height:100px; margin-top: 25px;" %>
-            </div>
-          <% end %>
-
-          <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-lg btn-blue">Sign up</button>
-          </div>
-
-          <div class="col-md-12">
-            <p class="note text-center">
-              By signing up, you agree to our
-                <a href="https://toptutoring.com/terms_of_service/">terms of service</a>
-              and
-                <a href="https://toptutoring.com/privacy_policy/">privacy policy</a>.
-            </p>
+          <div class="col-sm-6 col-lg-6 select-option">
+            <i class="ion-chevron-down"></i>
+            <%= client_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, { required: true, class:"pr-40 wpcf7-form-control wpcf7-select subject-select" } %>
           </div>
         <% end %>
-      </div>
+
+        <div class="col-sm-6">
+          <%= form.text_field :name, type: "text", placeholder: "FULL NAME", onfocus: "this.placeholder = ''", onblur: "this.placeholder = 'FULL NAME'", required: true %>
+        </div>
+
+        <div class="col-sm-6">
+          <%= form.text_field :phone_number, placeholder: "PHONE NUMBER", onfocus: "this.placeholder = ''", onblur: "this.placeholder = 'PHONE NUMBER'", required: true %>
+        </div>
+
+        <div class="col-sm-6">
+          <%= form.email_field :email, type: "text", placeholder: "EMAIL", onfocus: "this.placeholder = ''", onblur: "this.placeholder = 'EMAIL'", required: true %>
+        </div>
+
+        <div class="col-sm-6">
+          <%= form.password_field :password, placeholder: "PASSWORD", onfocus: "this.placeholder = ''", onblur: "this.placeholder = 'PASSWORD'", required: true %>
+        </div>
+
+        <%= form.fields_for :signup do |client_field| %>
+          <div class="col-md-12">
+            <%= client_field.text_area :comments, placeholder: "COMMENTS", rows: "3", style: "height:100px" %>
+          </div>
+        <% end %>
+
+        <div class="col-md-12 text-center">
+          <button type="submit" class="btn btn-lg btn-blue">Sign up</button>
+        </div>
+
+        <div class="col-md-12">
+          <p class="note text-center">
+          By signing up, you agree to our
+          <a href="https://toptutoring.com/terms_of_service/">terms of service</a>
+          and
+          <a href="https://toptutoring.com/privacy_policy/">privacy policy</a>.
+          </p>
+        </div>
+      <% end %>
     </div>
   </div>
-</section>
+</div>

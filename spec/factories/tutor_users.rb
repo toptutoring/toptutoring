@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :tutor_user, class: User do
     name                { "Tutor" }
-    phone_number        { "555-5555" }
+    phone_number        { "(510)555-5555" }
     sequence(:email) { |n| "tutor_#{n}@example.com" }
     password            { "password" }
     roles               { Role.where(name: 'tutor') }

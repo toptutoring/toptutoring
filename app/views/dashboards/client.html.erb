@@ -1,19 +1,15 @@
 <%= render "menu" %>
-<% if current_user.enabled? %>
-  <!-- left main -->
-  <div class="widget-body col-lg-8 col-md-12 col-sm-12 pull-left">
-    <!-- tutor blocks -->
-    <%= render "dashboards/clients/tutor_list" %>
-    <!-- comment block -->
-    <%= render "dashboards/clients/comment_form" %>
-  </div>
-  <!-- left main end -->
-  <!-- right sidebar -->
-  <div class="widget-body col-lg-4 col-md-12 col-sm-12 pull-right">
-    <%= render "dashboards/clients/balance_widget" %>
-    <%= render "dashboards/clients/request_tutor_link" %>
-  </div>
-  <!-- right sidebar end -->
-<% else %>
-  <%= render "users/set_up_account" %>
-<% end%>
+<!-- left main -->
+<div class="widget-body col-lg-8 col-md-12 col-sm-12 pull-left">
+  <!-- tutor blocks -->
+  <%= render "dashboards/clients/tutor_list" %>
+  <!-- comment block -->
+  <%= render "dashboards/clients/comment_form" %>
+</div>
+<!-- left main end -->
+<!-- right sidebar -->
+<div class="widget-body col-lg-4 col-md-12 col-sm-12 pull-right">
+  <%= render "dashboards/clients/balance_widget" if current_user.client_account.engagements.any? %>
+  <%= render "dashboards/clients/request_tutor_link" %>
+</div>
+<!-- right sidebar end -->

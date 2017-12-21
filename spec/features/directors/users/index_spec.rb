@@ -2,8 +2,8 @@ require 'spec_helper'
 require "rails_helper"
 
 feature "Director client index" do
-  let!(:client) { FactoryGirl.create(:client_user) }
-  let(:director) { FactoryGirl.create(:director_user) }
+  let!(:client) { FactoryBot.create(:client_user) }
+  let(:director) { FactoryBot.create(:director_user) }
 
   scenario "when director visits index page" do
     sign_in(director)

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 feature "Tutors change subjects" do
-  let(:tutor) { FactoryGirl.create(:tutor_user, outstanding_balance: 20) }
+  let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 20) }
 
   before(:each) do
-    FactoryGirl.create(:subject, name: "Math")
-    FactoryGirl.create(:subject, name: "English")
-    FactoryGirl.create(:subject, name: "Science")
+    FactoryBot.create(:subject, name: "Math")
+    FactoryBot.create(:subject, name: "English")
+    FactoryBot.create(:subject, name: "Science")
   end
 
   scenario "when viewing subjects" do

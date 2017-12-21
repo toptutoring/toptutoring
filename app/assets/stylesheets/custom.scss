@@ -1,6 +1,34 @@
 $light_blue: #59a4f0; // For font, backgrounds, and borders
 $text_default: #737373; // To revert to default font color
 
+.visible-xs,.visible-sm,.visible-md,.visible-lg {
+  display:none!important
+}
+
+@media(max-width:767px){
+  .visible-xs {
+    display:block!important
+  }
+}
+
+@media(min-width:768px) and (max-width:991px){
+  .visible-sm {
+    display:block!important
+  }
+}
+
+@media(min-width:992px) and (max-width:1199px){
+  .visible-md {
+    display:block!important
+  }
+}
+
+@media(min-width:1200px){
+  .visible-lg {
+    display:block!important
+  }
+}
+
 .sign-in-form {
   max-width: 480px;
   width: 95%;
@@ -213,9 +241,9 @@ select, .select2 {
   outline: none;
   padding-left: 20px;
   position: relative;
-  font-size: 11px;
+  font-size: 13px;
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 500;
   letter-spacing: 1px;
   color: #777;
   transition: all 0.3s ease;
@@ -246,36 +274,6 @@ select, .select2 {
   width: 100%;
 }
 
-nav {
-  background: #fff;
-  max-width: 100%;
-}
-
-.nav-bar {
-  height: 55px;
-  max-height: 55px;
-  line-height: 53px;
-  border-bottom: 1px solid #ccc;
-}
-
-.nav-bar .module, .nav-bar .module-group {
-  height: 55px;
-}
-
-.module.left, .module-group.left {
-  float: left;
-}
-
-.module {
-  display: inline-block;
-  padding: 0 32px;
-}
-
-.nav-bar a {
-  display: inline-block;
-  height: 55px;
-}
-
 .vnu {
   display: inline;
 }
@@ -299,10 +297,6 @@ nav {
 
 .right {
   right: 0;
-}
-
-.visible-xs, .visible-sm, .visible-md, .visible-lg {
-  display: none !important;
 }
 
 .module.widget-handle i {
@@ -388,6 +382,10 @@ ul.menu {
 
 .pt96 {
   padding-top: 96px;
+}
+
+.pr-40 {
+  padding-right: 40px;
 }
 
 .bg-dark {

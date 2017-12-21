@@ -2,8 +2,8 @@ require 'rails_helper'
 
 # TODO write full integration tests for payments feature. Pair.
 feature "Create payment as client" do
-  let(:client) { FactoryGirl.create(:client_user) }
-  let(:engagement) { FactoryGirl.create(:engagement, client_account: client.client_account) }
+  let(:client) { FactoryBot.create(:client_user) }
+  let(:engagement) { FactoryBot.create(:engagement, client_account: client.client_account) }
 
   scenario "with a valid stripe card", js: true do
     VCR.use_cassette('valid stripe card') do
