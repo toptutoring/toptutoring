@@ -19,8 +19,8 @@ class DashboardsController < ApplicationController
   def tutor
     @tutor_engagements = current_user.tutor_account.engagements.includes(:client_account, :suggestions)
     @low_balance_engagements = low_balance_engagements?
-    @invoice = Invoice.new()
-    @suggestion = Suggestion.new()
+    @invoice = Invoice.new
+    @suggestion = Suggestion.new
   end
 
   def client
@@ -37,6 +37,10 @@ class DashboardsController < ApplicationController
                                .includes(:subject, :student_account, :availabilities, tutor_account: :user)
                                .order("users.name")
     @academic_types = current_user.student_account.academic_types_engaged
+  end
+
+  def contractor
+    @invoice = Invoice.new
   end
 
   private

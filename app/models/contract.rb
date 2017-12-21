@@ -1,6 +1,6 @@
 class Contract < ApplicationRecord
   # Associations
-  belongs_to :tutor_account
+  belongs_to :account, polymorphic: true
 
   # Validations
   validates_presence_of :hourly_rate, :numericality => { :greater_than_or_equal_to => 0 }

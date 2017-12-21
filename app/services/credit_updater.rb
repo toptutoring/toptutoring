@@ -101,8 +101,7 @@ class CreditUpdater
 
   def update_invoice(update_params)
     @invoice.update(update_params)
-    rate = @submitter.tutor_account.contract.hourly_rate
-    @invoice.submitter_pay = @invoice.hours * rate
+    @invoice.submitter_pay = submitter_pay
     @invoice.amount = updated_amount if @client
     @invoice.save!
   end
@@ -114,5 +113,14 @@ class CreditUpdater
       @invoice.hours * @client.test_prep_rate
     else
     end
+  end
+
+  def submitter_pay
+    if @invoice.by_tutor?
+      rate = @submitter.tutor_account.contract.hourly_rate
+    elsif @invoice.by_contractor?
+      rate = @submitter.contractor_account.contract.hourly_rate
+    end
+    @invoice.hours * rate
   end
 end

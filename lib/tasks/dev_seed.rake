@@ -67,12 +67,8 @@ namespace :dev do
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
     tutor.roles = Role.where(name: "tutor")
-    tutor.create_tutor_account!
+    tutor.create_tutor_account!.create_contract!(hourly_rate: 40)
     tutor.save!
-
-    contract = Contract.where(tutor_account_id: tutor.tutor_account.id).first_or_initialize
-    contract.hourly_rate = 40
-    contract.save!
 
     # Update director
     director = User.where(email: "director@example.com").first_or_initialize
@@ -84,12 +80,8 @@ namespace :dev do
     director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
     director.roles = Role.where(name: ["tutor", "director"])
-    director.create_tutor_account!
+    director.create_tutor_account!.create_contract!(hourly_rate: 40)
     director.save!
-
-    contract = Contract.where(tutor_account_id: director.tutor_account.id).first_or_initialize
-    contract.hourly_rate = 40
-    contract.save!
 
     # Update admin
     admin = User.where(email: "admin@example.com").first_or_initialize
@@ -113,9 +105,8 @@ namespace :dev do
     contractor.token_expires_at = Time.current.to_i + 12.months.to_i
     contractor.access_state = "enabled"
     contractor.roles << Role.where(name: "contractor")
-    contractor.roles << Role.where(name: "tutor")
     contractor.save!
-    contractor.create_tutor_account!.create_contract!
+    contractor.create_contractor_account!.create_contract!
 
     # Update engagements
     tutor.tutor_account.engagements.destroy_all

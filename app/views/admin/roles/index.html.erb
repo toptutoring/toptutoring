@@ -29,8 +29,10 @@
                         <%= link_to "Remove as Contractor", admin_role_path(contractor_role), method: :delete, class: "btn btn-sm btn-outline btn-danger" %>
                       <% elsif role.name == "tutor" %>
                         <% @assignable_roles.where.not(id: user.roles.pluck(:id)).each do |new_role| %>
-                          <%= link_to "Add as #{new_role.name}", admin_roles_path(user_id: user.id, role_id: new_role.id), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                          <%= link_to "Add as #{new_role.name}", admin_roles_path(user_role: { user_id: user.id, role_id: new_role.id }), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
                         <% end %>
+                        <% tutor_role = UserRole.where(user_id: user.id, role_id: role.id).take %>
+                        <%= link_to "Remove as Tutor", admin_role_path(tutor_role), method: :delete, class: "btn btn-sm btn-outline btn-danger" %>
                       <% end %>
                     </td>
                   </tr>
@@ -68,10 +70,10 @@
                     <td><%= user.phone_number %></td>
                     <td>
                       <% @assignable_roles.each do |new_role| %>
-                        <%= link_to "Add as #{new_role.name}", admin_roles_path(user_id: user.id, role_id: new_role.id), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                        <%= link_to "Add as #{new_role.name}", admin_roles_path(user_role: { user_id: user.id, role_id: new_role.id }), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
                       <% end %>
-                      <%= link_to "Add as Client", admin_roles_path(user_id: user.id, role_id: Role.find_by(name: 'client').id), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
-                      <%= link_to "Add as Student", admin_roles_path(user_id: user.id, role_id: Role.find_by(name: 'student').id), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                      <%= link_to "Add as Client", admin_roles_path(user_role: { user_id: user.id, role_id: Role.find_by(name: 'client').id }), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
+                      <%= link_to "Add as Student", admin_roles_path(user_role: { user_id: user.id, role_id: Role.find_by(name: 'student').id }), method: :post, class: "btn btn-sm btn-outline btn-primary" %>
                     </td>
                   </tr>
                 <% end %>

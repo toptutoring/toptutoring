@@ -80,6 +80,7 @@ feature "Create Invoice", js: true do
       student
       engagement
       tutor.roles << Role.where(name: "contractor")
+      tutor.create_contractor_account.create_contract
       sign_in(tutor)
 
       find("#invoice_submitter_type").find(:xpath, "option[3]").select_option

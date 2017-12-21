@@ -3,7 +3,7 @@ class TutorAccount < ApplicationRecord
   has_many :engagements
   has_many :student_accounts, through: :engagements
   has_and_belongs_to_many :subjects
-  has_one :contract
+  has_one :contract, as: :account, dependent: :destroy
 
   validates_presence_of :user
 
