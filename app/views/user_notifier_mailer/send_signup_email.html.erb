@@ -115,13 +115,13 @@
 															<td bgcolor="#ffffff" role="module-content" style="padding: 0px 0px 0px 0px;">
 															<div>
 																<span contenteditable="false" tabindex="-1"><span class="sg-image" data-imagelibrary="%7B%22width%22%3A%22260%22%2C%22height%22%3A%2262%22%2C%22alignment%22%3A%22center%22%2C%22src%22%3A%22https%3A//marketing-image-production.s3.amazonaws.com/uploads/bd209d62882853a0ab9ba58c91533484d654a26dc21ecae6bfde19552d045929b4195a7c46140536231c22c18451c6bb554f5b448c8280164de2efc5137e82a4.png%22%2C%22alt_text%22%3A%22%22%2C%22link%22%3A%22%22%2C%22classes%22%3A%7B%22sg-image%22%3A1%7D%7D" data-widget="sgimage" style="float: none; display: block; text-align: center;">
-																	<img height="62" src="https://marketing-image-production.s3.amazonaws.com/uploads/bd209d62882853a0ab9ba58c91533484d654a26dc21ecae6bfde19552d045929b4195a7c46140536231c22c18451c6bb554f5b448c8280164de2efc5137e82a4.png" style="width: 260px; height: 62px; padding-top: 40px;" width="260" />
+																	<img height="62" src="https://app.toptutoring.com/assets/topTutoringFinal-e2ff8c7932bd9cbe79219aa308ae6160bc477bd8efc4cac3515864cbda6f56bc.png" style="width: 260px; height: 62px; padding-top: 40px;" width="260" />
 																</span>
 															</span>
 														</div>
                               <div style="padding-top: 10px; padding-left: 30px;">Hello <%= @user.name %>,</div>
 															<div style="padding-top: 10px; padding-left: 30px;">Thank you for signing up for Top Tutoring! We offer premium tutoring from the best universities to anywhere in the world.</div>
-                              <div style="padding-top: 10px; padding-left: 30px;">Our tutor director has been notified of your sign up and will be in touch with you shortly. Feel free to give us a call at <%= Phonelib.parse(ENV.fetch("CONTACT_PHONE_NUMBER"), :us).national %> if you have any questions.</div>
+                              <div style="padding-top: 10px; padding-left: 30px;">Our tutor director has been notified of your sign up and will be in touch with you shortly. Feel free to give us a call at <%= Phonelib.parse(ENV["CONTACT_PHONE_NUMBER"] || "15105228221", :us).national %> if you have any questions.</div>
 															<div style="padding-top: 10px; padding-left: 30px;">Regards,</div>
 															<div style="padding-left: 30px;">Top Tutoring</div>
 															</td>
