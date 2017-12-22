@@ -4,7 +4,7 @@
       <div class="text-center">
         <h4 class="uppercase">Sign Up Process</h4>
       </div>
-      <p class="m-15">At TopTutoring, it is our top priority to ensure you receive the best tutoring solution for your academic needs. You can either submit the provided form or call us at <a herf="tel:<%= ENV.fetch("CONTACT_PHONE_NUMBER") %>"><%= cleanup_phone_number ENV.fetch("CONTACT_PHONE_NUMBER") %></a> to get in touch with one of our Tutoring Directors who will help you get started on your academic journey.</p>
+      <p class="m-15">At TopTutoring, it is our top priority to ensure you receive the best tutoring solution for your academic needs. You can either submit the provided form or call us at <a herf="tel:<%= ENV["CONTACT_PHONE_NUMBER"] || "15105228221" %>"><%= cleanup_phone_number(ENV["CONTACT_PHONE_NUMBER"] || "15105228221") %></a> to get in touch with one of our Tutoring Directors who will help you get started on your academic journey.</p>
       <p class="m-15"> Already have an account?
       <%= link_to "Sign in", sign_in_path %>
       </p>
