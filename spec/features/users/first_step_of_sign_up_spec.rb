@@ -21,6 +21,8 @@ feature "Create user as first step of sign up process" do
       expect(page).to have_current_path(new_clients_student_path)
       expect(page).to have_content(I18n.t("app.signup.client.success_message"))
       expect(page).to have_content(name)
+      expect(User.clients.last.student_account).to be nil
+      expect(User.clients.last.client_account).to be_truthy
       # Email count should be 2 since an email is sent to both client and admin
       expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
@@ -41,6 +43,8 @@ feature "Create user as first step of sign up process" do
       expect(page).to have_current_path(dashboard_path)
       expect(page).to have_content(I18n.t("app.signup.client_student.success_message"))
       expect(page).to have_content(name)
+      expect(User.clients.last.student_account).to be_truthy
+      expect(User.clients.last.client_account).to be_truthy
       # Email count should be 2 since an email is sent to both client and admin
       expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
