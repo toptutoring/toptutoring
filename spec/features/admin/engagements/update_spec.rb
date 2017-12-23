@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 feature "Update engagements" do
   let(:admin) { FactoryBot.create(:admin_user) }
@@ -28,12 +28,29 @@ feature "Update engagements" do
       expect(page).to have_content("Engagement successfully updated!")
       expect(page).to have_content("Student")
       expect(page).to have_content(tutor.name)
+    end
+
+    scenario "when enabling and disabling an engagement" do
+      engagement.update(tutor_account: tutor.tutor_account)
+      sign_in(director)
+      visit engagements_path
 
       click_link "Enable"
       expect(page).to have_content("Engagement successfully enabled!")
 
       click_link "Disable"
       expect(page).to have_content("Engagement successfully disabled!")
+    end
+
+    scenario "updating the student for the engagement" do
+      sign_in(director)
+      client.client_account.student_accounts << FactoryBot.create(:student_account)
+      
+      visit edit_engagement_path(engagement)
+      find("#engagement_student_account_id").find(:xpath, "option[2]").select_option
+
+      click_on "Submit"
+      expect(page).to have_content("Engagement successfully updated!")
     end
   end
 end
