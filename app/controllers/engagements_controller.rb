@@ -8,6 +8,10 @@ class EngagementsController < ApplicationController
                              .includes(:subject, :student_account, client_account: :user, tutor_account: :user)
   end
 
+  def edit
+    @student_accounts = @engagement.client.student_accounts
+  end
+
   def update
     if @engagement.update_attributes(engagement_params)
       redirect_to engagements_path, notice: 'Engagement successfully updated!'
@@ -41,7 +45,7 @@ class EngagementsController < ApplicationController
 
   def engagement_params
     params.require(:engagement)
-          .permit(:tutor_account_id, :subject_id)
+          .permit(:tutor_account_id, :student_account_id, :subject_id)
   end
 
   def set_engagement

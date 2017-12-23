@@ -8,24 +8,26 @@
         <%= form_for(@engagement) do |f| %>
 
           <%= f.label :tutor_account_id, "Tutor" %>
-          <div class="select-option">
+          <div class="form-group select-option">
             <i class="ion-chevron-down"></i>
             <%= f.select :tutor_account_id, options_from_collection_for_select(@tutor_accounts, :id, :name, @engagement.tutor_account_id), { include_blank: true }%>
           </div>
 
-          <div class="form-group">
-            <%= f.label :student %>
-            <%= f.text_field :student, value: @engagement.student_name, class:"form-control", disabled: true, required: true %>
+          <%= f.label :student_account_id, "Student" %>
+          <div class="form-group select-option">
+            <i class="ion-chevron-down"></i>
+            <%= f.select :student_account_id, options_from_collection_for_select(@student_accounts, :id, :name, @engagement.student_account_id), { include_blank: false } %>
+          </div>
+
+          <%= f.label :subject_id, "Subject" %>
+          <div class="form-group select-option">
+            <i class="ion-chevron-down"></i>
+            <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, required: true %>
           </div>
 
           <div class="form-group">
             <%= f.label :client %>
             <%= f.text_field :client, value: @engagement.client.name, class:"form-control", disabled: true, required: true %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :subject_id, "Subject" %>
-            <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, required: true %>
           </div>
 
           <div class="text-center">
