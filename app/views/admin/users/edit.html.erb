@@ -2,7 +2,7 @@
   <div class="col-md-6 col-md-offset-3">
     <div class="widget">
       <div class="widget-heading">
-        <h3 class="widget-title text-center"><%= @user_role %></h3>
+        <h3 class="widget-title text-center"><%= @user_role.capitalize %></h3>
       </div>
       <div class="widget-body">
         <%= form_for(@user, url: admin_user_path(@user)) do |f| %>
@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<% if @user_role == 'Client' %>
+<% if @user_role == "client" %>
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <div class="widget">
@@ -39,6 +39,45 @@
         </div>
         <div class="widget-body">
           <%= render partial: 'clients/edit_rates_and_balance_form', locals: { url: admin_user_path(@user) } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="widget">
+        <div class="widget-heading">
+          <h3 class="widget-title text-center">Student Account</h3>
+        </div>
+        <div class="widget-body">
+          <table class="col-xs-12">
+            <tr>
+              <th class="col-xs-6">Name</th>
+              <th>Action</th>
+            </tr>
+            <% @user.student_accounts.find_each do |account| %>
+              <tr>
+                <td class="col-xs-6"><%= account.name %></td>
+                <td>
+                  <%= link_to "Remove Account", admin_student_account_path(id: account.id), method: :delete, class: "btn btn-danger" %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+          <div class="clearfix"></div>
+          <div class="mt-30">
+            <h3 class="widget-title text-center">Add a Student Account</h3>
+            <%= form_for StudentAccount.new, url: admin_student_accounts_path do |f| %>
+              <div class="form-group">
+                <%= f.label :name %>
+                <%= f.text_field :name, required: true, class: "form-control" %>
+              </div>
+
+              <%= f.hidden_field :client_account_id, value: @user.client_account.id %>
+              <%= f.submit "Add", class: "center-block btn btn-primary" %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

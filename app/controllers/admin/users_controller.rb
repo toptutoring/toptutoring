@@ -8,7 +8,7 @@ module Admin
     end
 
     def edit
-      @user_role = @user.roles.first.name.capitalize 
+      @user_role = @user.roles.first.name
     end
 
     def update

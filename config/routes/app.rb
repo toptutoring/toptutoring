@@ -75,6 +75,7 @@ Rails.application.routes.draw do
       namespace :payments do
         resources :pay_all
       end
+      resources :student_accounts, only: [:create, :destroy]
     end
     resources :engagements do
       member do

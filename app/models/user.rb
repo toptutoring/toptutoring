@@ -5,22 +5,18 @@ class User < ActiveRecord::Base
   has_one :signup, dependent: :destroy
   accepts_nested_attributes_for :signup
   has_many :students, class_name: "User", foreign_key: "client_id"
-  has_one :student_account
-  has_one :client_account
-  has_one :tutor_account
-  has_one :contractor_account
   has_one :student_account, dependent: :destroy
   has_one :client_account, dependent: :destroy
   has_one :tutor_account, dependent: :destroy
   has_one :contractor_account, dependent: :destroy
-  has_many :student_accounts, through: :client_accounts
+  has_many :student_accounts, through: :client_account
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
   has_many :invoices, ->(user) { unscope(:where).where("submitter_id = ? OR client_id = ?", user.id, user.id) }
   has_many :emails, class_name: "Email", foreign_key: "tutor_id", dependent: :destroy
   has_many :user_roles
   has_many :roles, through: :user_roles
-  has_many :feedbacks
+  has_many :feedbacks, dependent: :destroy
   has_many :timesheets
   has_many :payments_received, class_name: "Payment", foreign_key: "payee_id"
   has_many :payments_made, class_name: "Payment", foreign_key: "payer_id"
