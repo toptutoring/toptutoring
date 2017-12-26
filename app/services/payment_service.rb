@@ -38,7 +38,7 @@ class PaymentService
       payment.stripe_charge_id = charge.id
       payment.save
       user.save
-      SlackNotifier.notify_client_payment(payment)
+      send_notices(payment)
       Result.new(true, I18n.t('app.payment.success'))
     else
       Result.new(false, payment.errors.full_messages)
@@ -80,5 +80,12 @@ class PaymentService
 
   def academic?
     academic_type == "academic"
+  end
+
+  def send_notices(payment)
+    args = [@user, @academic_type, @hours, payment]
+    UserNotifierMailer.send_payment_notice(*args)
+                      .deliver_later
+    SlackNotifier.notify_payment_made(payment)
   end
 end
