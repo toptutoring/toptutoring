@@ -14,12 +14,10 @@ class MassPaymentService
   def pay_all
     return if no_payments?
     admin_account_token = DwollaService.admin_account_token
-    admin_account_token.post "mass-payments", request_body
-    finalize_payments
-  rescue DwollaV2::ValidationError => e
-    @errors << e[:code] + ": " + e[:message]
+    mass_pay = admin_account_token.post "mass-payments", request_body
+    finalize_payments(mass_pay.headers[:location])
   rescue DwollaV2::Error => e
-    @errors << e._embedded.errors.first.message
+    @errors << "Dwolla Error: " + e._embedded.errors.first.message
   rescue OpenSSL::Cipher::CipherError
     @errors << "OpenSSL Error: There was an error with ciphering the access token."
   end
@@ -112,7 +110,10 @@ class MassPaymentService
         value: payment.amount
       },
       metadata: {
-        payment1: payment.description
+        auth_uid: payment.payee.auth_uid,
+        payee_id: payment.payee_id,
+        approver_id: payment.approver_id,
+        description: payment.description
       }
     }
   end
@@ -125,14 +126,22 @@ class MassPaymentService
     "#{ENV.fetch('DWOLLA_API_URL')}/funding-sources/#{id}"
   end
 
-  def finalize_payments
-    record_payments
+  def finalize_payments(mass_url)
+    record_payments(retrieve_items(mass_url))
     set_final_message
   end
 
-  def record_payments
+  def retrieve_items(mass_url)
+    items_response = DWOLLA_CLIENT.auths.client.get mass_url + "/items"
+    items_response[:_embedded][:items]
+  end
+
+  def record_payments(items)
     @payments.each do |payment|
-      payment.status = "paid"
+      auth_id = payment.payee.auth_uid
+      payment_item = items.find { |item| auth_id == item[:metadata][:auth_uid] }
+      payment.status = "processing"
+      payment.external_code = payment_item[:_links][:transfer][:href]
       payment.save
     end
   end
