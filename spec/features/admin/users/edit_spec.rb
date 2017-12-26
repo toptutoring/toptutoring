@@ -48,10 +48,45 @@ feature "Edit user" do
 
     visit edit_admin_user_path(client)
 
-    fill_in "student_account_name", with: "StudentName"
+    name = "StudentName"
+    fill_in "name", with: name
+    uncheck "create_user_account"
     click_on "Add"
     
-    expect(page).to have_content("A new Student Account has been created for #{client.name}.")
+    expect(page).to have_content(I18n.t("app.add_student.success"))
+    expect(page).to have_content(name)
+  end
+
+  scenario "by adding student account with subject" do
+    engagement_subject = FactoryBot.create(:subject)
+    sign_in(admin)
+
+    visit edit_admin_user_path(client)
+
+    name = "StudentName"
+    fill_in "name", with: name
+    find("#engagement_subject_id").find(:xpath, "option[2]").select_option
+    uncheck "create_user_account"
+    click_on "Add"
+    
+    expect(page).to have_content(I18n.t("app.add_student.success"))
+    expect(Engagement.last.subject.name).to eq(engagement_subject.name)
+    expect(Engagement.last.client).to eq(client)
+  end
+
+  scenario "by adding student account with student_user" do
+    sign_in(admin)
+
+    visit edit_admin_user_path(client)
+
+    name = "StudentName"
+    email = "studentemail@example.com"
+    fill_in "name", with: name
+    fill_in "student_user_email", with: email
+    click_on "Add"
+    
+    expect(page).to have_content(I18n.t("app.add_student.success"))
+    expect(User.last.email).to eq(email)
   end
 
   scenario "by removing a student account" do

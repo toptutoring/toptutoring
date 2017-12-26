@@ -28,7 +28,7 @@ feature "Add student" do
     name = "New Student"
     email = "new_student@example.com"
     fill_in "name", with: name
-    fill_in "user_email", with: email
+    fill_in "student_user_email", with: email
     find("#engagement_subject_id").find(:xpath, "option[2]").select_option
     click_on "Submit"
 
@@ -43,7 +43,7 @@ feature "Add student" do
 
     email = existing_client.email
     fill_in "name", with: "New Student"
-    fill_in "user_email", with: email
+    fill_in "student_user_email", with: email
     find("#engagement_subject_id").find(:xpath, "option[2]").select_option
     click_on "Submit"
 
