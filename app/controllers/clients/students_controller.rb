@@ -26,14 +26,11 @@ module Clients
 
     def create_student!
       create_student_service = CreateStudentService.new(current_user)
-      if params[:create_user_account] == "yes"
-        create_student_service.process!(student_name, subject, student_params)
-      else
-        create_student_service.process!(student_name, subject)
-      end
+      create_student_service.process!(student_name, subject, student_params)
     end
 
     def student_params
+      return nil unless params[:create_user_account] == "yes"
       params.require(:user).permit(:email)
             .merge(name: student_name, client_id: current_user.id,
                    phone_number: current_user.phone_number,

@@ -11,19 +11,39 @@ module Admin
     end
 
     def create
-      account = StudentAccount.new(account_params)
-      if account.save
-        flash.notice = "A new Student Account has been created for #{account.client.name}."
+      results = create_student!
+      if results.success?
+        flash.notice = results.messages
+        redirect_to edit_admin_user_path(@client)
       else
         flash.alert = results.messages
+        redirect_to edit_admin_user_path(@client)
       end
-      redirect_to edit_admin_user_path(account.client)
     end
 
     private
 
-    def account_params
-      params.require(:student_account).permit(:client_account_id, :name)
+    def create_student!
+      @client = User.find(params[:client_id])
+      create_student_service = CreateStudentService.new(@client)
+      create_student_service.process!(student_name, subject, student_user_params)
+    end
+
+    def student_user_params
+      return nil unless params[:create_user_account] == "yes"
+      params.require(:user).permit(:email)
+            .merge(name: student_name, client_id: @client.id,
+                   phone_number: @client.phone_number,
+                   password: SecureRandom.hex(10),
+                   roles: Role.where(name: "student"))
+    end
+
+    def student_name
+      params.require(:name)
+    end
+
+    def subject
+      Subject.find_by_id(params[:engagement][:subject_id])
     end
   end
 end

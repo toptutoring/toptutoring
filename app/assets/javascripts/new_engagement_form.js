@@ -4,9 +4,9 @@ jQuery(function($) {
   function require_email() {
     var name = $('#create_user_account').is(":checked");
     if (name == true) {
-      $('#user_email').attr("required", true);
+      $('#student_user_email').attr("required", true);
     } else {
-      $('#user_email').attr("required", false);
+      $('#student_user_email').attr("required", false);
     }
   }
 

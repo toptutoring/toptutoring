@@ -68,14 +68,33 @@
           <div class="clearfix"></div>
           <div class="mt-30">
             <h3 class="widget-title text-center">Add a Student Account</h3>
-            <%= form_for StudentAccount.new, url: admin_student_accounts_path do |f| %>
+            <%= form_tag admin_student_accounts_path do %>
               <div class="form-group">
-                <%= f.label :name %>
-                <%= f.text_field :name, required: true, class: "form-control" %>
+                <%= label_tag :name %>
+                <%= text_field_tag :name, nil, required: true, class: "form-control" %>
               </div>
 
-              <%= f.hidden_field :client_account_id, value: @user.client_account.id %>
-              <%= f.submit "Add", class: "center-block btn btn-primary" %>
+              <div class="form-group">
+                <%= label_tag :create_user_account, class: "pl-20" do %>
+                  Create a user account for this student
+                  <%= check_box_tag :create_user_account, 'yes', true %>
+                <% end %>
+              </div>
+
+              <%= fields_for User.new do |user_field| %>
+                <div class="form-group">
+                  <%= user_field.email_field :email, class:"form-control", id: "student_user_email", placeholder: "Email (ony required if creating account for student)" %>
+                </div>
+              <% end %>
+
+              <%= fields_for Engagement.new do |engagement_field| %>
+                <div class="form-group">
+                  <%= engagement_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" } %>
+                </div>
+              <% end %>
+
+              <%= hidden_field_tag :client_id, @user.id %>
+              <%= submit_tag "Add", class: "center-block btn btn-primary" %>
             <% end %>
           </div>
         </div>

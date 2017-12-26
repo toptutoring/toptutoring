@@ -5,11 +5,11 @@ class CreateStudentService
 
   Result = Struct.new(:success?, :messages)
 
-  def process!(student_name, subject, student_params = nil)
+  def process!(student_name, subject = nil, student_params = nil)
     ActiveRecord::Base.transaction do
       create_student_account!(student_name)
       create_student_user!(student_params) if student_params
-      create_engagement!(subject)
+      create_engagement!(subject) if subject
     end
     Result.new(true, I18n.t("app.add_student.success"))
   rescue ActiveRecord::RecordInvalid => e
@@ -26,6 +26,7 @@ class CreateStudentService
 
   def create_student_user!(params)
     student = User.create!(params)
+    @student_account.update!(user: student)
     student.enable!
     student.forgot_password!
     SetStudentPasswordMailer.mail_student(student).deliver_later

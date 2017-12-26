@@ -12,7 +12,7 @@
 
   <%= fields_for User.new do |user_field| %>
     <div class="form-group">
-      <%= user_field.email_field :email, class:"form-control", placeholder: "Email (ony required if creating account for student)" %>
+      <%= user_field.email_field :email, id: "student_user_email", class:"form-control", placeholder: "Email (ony required if creating account for student)" %>
     </div>
   <% end %>
 
