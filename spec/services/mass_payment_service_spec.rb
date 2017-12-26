@@ -40,6 +40,23 @@ describe MassPaymentService do
       expect(invoice_nil.reload.status).to be nil
     end
 
+    it "records correct data for payment" do
+      expect(Payment.count).to eq 0
+      total_to_be_paid = tutor.invoices.pending.sum(:submitter_pay_cents)
+      VCR.use_cassette("dwolla_mass_payment", match_requests_on: [:method, :path]) do
+        subject.pay_all
+      end
+      expect(Payment.count).to eq 1
+      payment = Payment.last
+      expect(payment.external_code).not_to be_nil
+      expect(payment.payee_id).to eq tutor.id
+      expect(payment.destination).to eq tutor.auth_uid
+      expect(payment.amount.cents).to eq total_to_be_paid
+      expect(payment.source).to eq funding_source.funding_source_id
+      expect(payment.approver).to eq admin
+      expect(payment.description).to eq "Payment for invoices: #{invoice_pending.id}, #{invoice_pending2.id}."
+    end
+
     describe "#update_processing" do
       it "pays all pending invoices" do
         subject.update_processing("paid")
