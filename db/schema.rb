@@ -111,6 +111,10 @@ ActiveRecord::Schema.define(version: 20171222010739) do
     t.string "customer_id"
     t.integer "payer_id"
     t.datetime "created_at"
+    t.integer "approver_id"
+    t.string "card_brand"
+    t.string "last_four"
+    t.string "stripe_charge_id"
     t.index ["payer_id"], name: "index_payments_on_payer_id"
   end
 

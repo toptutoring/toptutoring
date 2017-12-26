@@ -130,11 +130,24 @@ $(function() {
 
   function stripeTokenHandler(token) {
     // Insert the token ID into the form so it gets submitted to the server
-    var hiddenInput = document.createElement('input');
-    hiddenInput.setAttribute('type', 'hidden');
-    hiddenInput.setAttribute('name', 'stripeToken');
-    hiddenInput.setAttribute('value', token.id);
-    form.appendChild(hiddenInput);
+    var tokenInput = document.createElement('input');
+    var lastFourInput = document.createElement('input');
+    var cardBrandInput = document.createElement('input');
+
+    tokenInput.setAttribute('type', 'hidden');
+    tokenInput.setAttribute('name', 'stripeToken');
+    tokenInput.setAttribute('value', token.id);
+    form.appendChild(tokenInput);
+
+    lastFourInput.setAttribute('type', 'hidden');
+    lastFourInput.setAttribute('name', 'last_four');
+    lastFourInput.setAttribute('value', token.card.last4);
+    form.appendChild(lastFourInput);
+
+    cardBrandInput.setAttribute('type', 'hidden');
+    cardBrandInput.setAttribute('name', 'card_brand');
+    cardBrandInput.setAttribute('value', token.card.brand);
+    form.appendChild(cardBrandInput);
 
     // Submit the form
     form.submit();
