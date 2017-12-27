@@ -35,7 +35,7 @@ class PaymentService
       charge_with_stripe(token)
       payment.save
       user.save
-      SlackNotifier.notify_payment_made(payment)
+      SlackNotifier.notify_client_payment(payment)
       Result.new(true, I18n.t('app.payment.success'))
     else
       Result.new(false, payment.errors.full_messages)

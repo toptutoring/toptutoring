@@ -131,6 +131,7 @@ class MassPaymentService
   def finalize_payouts(mass_url)
     record_payouts(retrieve_items(mass_url))
     set_final_message
+    ping_slack
   end
 
   def retrieve_items(mass_url)
@@ -162,5 +163,11 @@ class MassPaymentService
       processing_invoices.update_all(status: status)
       user.save!
     end
+  end
+
+  def ping_slack
+    messages = @messages.empty? ? nil : "\nMessages\n" + @messages.join("\n")
+    error_messages = @errors.empty? ? nil : "\nErrors\n" + @errors.join("\n")
+    SlackNotifier.notify_mass_payment_made(messages, error_messages)
   end
 end

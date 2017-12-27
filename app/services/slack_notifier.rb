@@ -28,24 +28,26 @@ class SlackNotifier
       ping(message, :leads)
     end
 
-    def notify_mass_payment_made(service)
-      message = "A mass payment was attempted.\n"
-      if service.messages.any?
-        message += "Messages\n" + service.messages.join("\n")
-      end
-      if service.errors.any?
-        message += "\nErrors\n" + service.errors.join("\n")
-      end
+    def notify_mass_payment_made(payment_messages, error_messages)
+      message = "A mass payment was attempted."
+      message += payment_messages if payment_messages
+      message += error_messages if error_messages
       ping(message, :general)
     end
 
-    def notify_payment_made(payment)
+    def notify_client_payment(payment)
       return unless payment.persisted?
-      payer = payment.approver || payment.payer
       message = "A payment has been made.\n" \
-        "By: #{payer.name}\n" \
+        "By: #{payment.payer.name}\n" \
         "Amount: #{payment.amount}"
-      message.concat("\nTo: #{payment.payee.name}") if payment.payee
+      ping(message, :general)
+    end
+
+    def notify_payout_made(payout)
+      message = "A payment has been made.\n" \
+        "By: #{payout.approver.name}\n" \
+        "To: #{payout.receiving_account.user.name}\n" \
+        "Amount: #{payout.amount}"
       ping(message, :general)
     end
 
