@@ -21,10 +21,8 @@ module Admin
 
     def destroy
       user_role = UserRole.find(params[:id])
-      destroy_role(user_role)
-      user_name = user_role.user.name
-      role_name = user_role.role.name
-      flash.notice = "#{user_name} has been removed as a #{role_name}."
+      user_role.destroy!
+      flash.notice = destroy_success_string(user_role.user, user_role.role)
       redirect_to admin_roles_path
     rescue ActiveRecord::ActiveRecordError => e
       flash.alert = e.message
@@ -58,15 +56,8 @@ module Admin
       end
     end
 
-    def destroy_role(user_role)
-      ActiveRecord::Base.transaction do
-        if user_role.role.name == "contractor"
-          user_role.user.contractor_account.destroy!
-        elsif user_role.role.name == "tutor"
-          user_role.user.tutor_account.destroy!
-        end
-        user_role.destroy!
-      end
+    def destroy_success_string(user, role)
+      "#{user.name} has been removed as a #{role.name}."
     end
   end
 end
