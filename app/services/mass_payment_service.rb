@@ -1,5 +1,5 @@
 class MassPaymentService
-  attr_reader :messages, :errors, :payments
+  attr_reader :messages, :errors, :payouts
 
   def initialize(type, approver)
     @type = type
@@ -8,14 +8,14 @@ class MassPaymentService
     @messages = []
     @errors = []
     @paid_users = []
-    @payments = convert_all_pending_to_payments
+    @payouts = convert_all_pending_to_payouts
   end
 
   def pay_all
-    return if no_payments?
+    return if no_payouts?
     admin_account_token = DwollaService.admin_account_token
     mass_pay = admin_account_token.post "mass-payments", request_body
-    finalize_payments(mass_pay.headers[:location])
+    finalize_payouts(mass_pay.headers[:location])
   rescue DwollaV2::Error => e
     @errors << "Dwolla Error: " + e._embedded.errors.first.message
   rescue OpenSSL::Cipher::CipherError
@@ -30,22 +30,24 @@ class MassPaymentService
 
   private
 
-  def no_payments?
-    return false unless @payments.empty?
-    @errors << "There were no payments to be made."
+  def no_payouts?
+    return false unless @payouts.empty?
+    @errors << "There were no payouts to be made."
+    ping_slack
+    true
   end
 
-  def convert_all_pending_to_payments
+  def convert_all_pending_to_payouts
     users_to_pay = User.with_pending_invoices(@type)
-    create_payments_for_users(users_to_pay)
+    create_payouts_for_users(users_to_pay)
   end
 
-  def create_payments_for_users(users_to_pay)
-    users_to_pay.each_with_object([]) do |user, payment_list|
+  def create_payouts_for_users(users_to_pay)
+    users_to_pay.each_with_object([]) do |user, payout_list|
       pending_items = user_pending_items(user)
       valid_hours = user.outstanding_balance >= pending_items.sum(:hours)
       if user.has_valid_dwolla? && valid_hours
-        add_to_payments(payment_list, user, pending_items)
+        add_to_payouts(payout_list, user, pending_items)
       else
         @messages << invalid_user_message(user.name)
       end
@@ -53,22 +55,22 @@ class MassPaymentService
   end
 
   def user_pending_items(user)
-    return user.invoices.by_tutor.pending if @type == 'by_tutor'
+    return user.invoices.by_tutor.pending if @type == "by_tutor"
     user.invoices.by_contractor.pending
   end
 
-  def add_to_payments(payment_list, user, pending_items)
-    payment = Payment.new(payment_params(user, pending_items))
-    payment_list << payment
-    pending_items.update_all(status: 'processing')
+  def add_to_payouts(payout_list, user, pending_items)
+    payout_list << Payout.new(payout_params(user, pending_items))
+    pending_items.update_all(status: "processing")
     @paid_users << user
   end
 
-  def payment_params(user, pending_items)
-    ids = pending_items.pluck(:id).join(', ')
+  def payout_params(user, pending_items)
+    ids = pending_items.pluck(:id).join(", ")
+    account = @type == "by_tutor" ? user.tutor_account : user.contractor_account
     { amount: pending_items_total_pay(pending_items),
-      payee: user, payer: @funding_source.user, approver: @approver,
-      destination: user.auth_uid, source: @funding_source.funding_source_id,
+      receiving_account: account, approver: @approver,
+      destination: user.auth_uid, funding_source: @funding_source.funding_source_id,
       description: "Payment for invoices: #{ids}." }
   end
 
@@ -88,32 +90,32 @@ class MassPaymentService
           href: source_url(@funding_source.funding_source_id)
         }
       },
-      items: payments_array
+      items: payouts_array
     }
   end
 
-  def payments_array
-    @payments.each_with_object([]) do |payment, result_array|
-      result_array << payment_hash(payment)
+  def payouts_array
+    @payouts.each_with_object([]) do |payout, result_array|
+      result_array << payout_hash(payout)
     end
   end
 
-  def payment_hash(payment)
+  def payout_hash(payout)
     {
       _links: {
         destination: {
-          href: account_url(payment.payee.auth_uid)
+          href: account_url(payout.destination)
         }
       },
       amount: {
         currency: "USD",
-        value: payment.amount
+        value: payout.amount
       },
       metadata: {
-        auth_uid: payment.payee.auth_uid,
-        payee_id: payment.payee_id,
-        approver_id: payment.approver_id,
-        description: payment.description
+        auth_uid: payout.payee.auth_uid,
+        payee_id: payout.payee.id,
+        approver_id: payout.approver_id,
+        description: payout.description
       }
     }
   end
@@ -126,8 +128,8 @@ class MassPaymentService
     "#{ENV.fetch('DWOLLA_API_URL')}/funding-sources/#{id}"
   end
 
-  def finalize_payments(mass_url)
-    record_payments(retrieve_items(mass_url))
+  def finalize_payouts(mass_url)
+    record_payouts(retrieve_items(mass_url))
     set_final_message
   end
 
@@ -136,26 +138,26 @@ class MassPaymentService
     items_response[:_embedded][:items]
   end
 
-  def record_payments(items)
-    @payments.each do |payment|
-      auth_id = payment.payee.auth_uid
-      payment_item = items.find { |item| auth_id == item[:metadata][:auth_uid] }
-      payment.status = "processing"
-      payment.external_code = payment_item[:_links][:transfer][:href]
-      payment.save
+  def record_payouts(items)
+    @payouts.each do |payout|
+      auth_id = payout.payee.auth_uid
+      payout_item = items.find { |item| auth_id == item[:metadata][:auth_uid] }
+      payout.status = "processing"
+      payout.dwolla_transfer_url = payout_item[:_links][:transfer][:href]
+      payout.save
     end
   end
 
   def set_final_message
-    total_paid = @payments.map(&:amount).reduce(:+)
-    size = @payments.size
+    total_paid = @payouts.map(&:amount).reduce(:+)
+    size = @payouts.size
     start = size == 1 ? "#{size} payment has" : "#{size} payments have"
     @messages << start + " been made for a total of $#{total_paid}."
   end
 
   def update_and_adjust_balances(user, status)
-    processing_invoices = user.invoices.where(status: 'processing')
-    user.outstanding_balance -= processing_invoices.sum(:hours) if status == 'paid'
+    processing_invoices = user.invoices.where(status: "processing")
+    user.outstanding_balance -= processing_invoices.sum(:hours) if status == "paid"
     ActiveRecord::Base.transaction do
       processing_invoices.update_all(status: status)
       user.save!

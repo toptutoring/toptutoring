@@ -1,15 +1,15 @@
 class PaymentGatewayDwolla
   attr_reader :error
 
-  def initialize(payment)
-    @payment = payment
+  def initialize(payout)
+    @payout = payout
   end
 
   def create_transfer
     account_token = DwollaService.admin_account_token
     response = account_token.post("transfers", transfer_payload)
-    @payment.external_code = response.headers["location"]
-    @payment.status = "created"
+    @payout.dwolla_transfer_url = response.headers["location"]
+    @payout.status = "created"
   rescue DwollaV2::Error => e
     Rails.logger.error(e._embedded.errors)
     @error = "Dwolla Error: " + e._embedded.errors.first.message
@@ -23,18 +23,18 @@ class PaymentGatewayDwolla
     {
       _links: {
         destination: {
-          href: account_url(@payment.destination)
+          href: account_url(@payout.destination)
         },
         source: {
-          href: source_url(@payment.source)
+          href: source_url(@payout.funding_source)
         }
       },
       amount: {
         currency: "USD",
-        value: @payment.amount
+        value: @payout.amount
       },
       metadata: {
-        concept: @payment.description
+        concept: @payout.description
       }
     }
   end
