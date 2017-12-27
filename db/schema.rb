@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221020151) do
+ActiveRecord::Schema.define(version: 20171222010739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,16 +108,26 @@ ActiveRecord::Schema.define(version: 20171221020151) do
     t.integer "amount_cents"
     t.string "description"
     t.string "status"
-    t.string "source"
-    t.string "destination"
-    t.string "external_code"
     t.string "customer_id"
     t.integer "payer_id"
-    t.integer "payee_id"
     t.datetime "created_at"
-    t.integer "approver_id"
-    t.index ["payee_id"], name: "index_payments_on_payee_id"
     t.index ["payer_id"], name: "index_payments_on_payer_id"
+  end
+
+  create_table "payouts", force: :cascade do |t|
+    t.string "description"
+    t.string "destination"
+    t.string "dwolla_transfer_url"
+    t.string "status"
+    t.string "funding_source"
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "USD", null: false
+    t.integer "approver_id"
+    t.string "receiving_account_type"
+    t.bigint "receiving_account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiving_account_id", "receiving_account_type"], name: "index_payouts_receiver_account_and_type"
   end
 
   create_table "roles", id: :serial, force: :cascade do |t|
@@ -215,7 +225,6 @@ ActiveRecord::Schema.define(version: 20171221020151) do
   add_foreign_key "engagements", "subjects"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "invoices", "engagements"
-  add_foreign_key "payments", "users", column: "payee_id"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "signups", "users"
   add_foreign_key "student_accounts", "client_accounts"
