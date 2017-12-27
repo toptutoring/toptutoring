@@ -144,12 +144,11 @@ namespace :dev do
       description: "Payment for Tutor",
       status: "succeeded",
       customer_id: client.customer_id,
-      payer_id: client.id,
-      payee_id: tutor.id)
+      payer_id: client.id)
     #Set the client default information for existing clients
     User.clients.each do |client|
-      client.academic_rate_cents = 2999
-      client.test_prep_rate_cents = 5999
+      client.academic_rate_cents = 29_99
+      client.test_prep_rate_cents = 59_99
       client.academic_credit = 0.0
       client.test_prep_credit = 0.0
       client.save
