@@ -10,8 +10,8 @@ class Clients::PaymentsController < ApplicationController
   end
 
   def create
-    service = PaymentService.new(current_user, academic_type, hours)
-    results = service.charge!(stripe_params)
+    service = PaymentService.new(current_user, purchase_params)
+    results = service.charge!
     if results.success?
       flash.notice = results.message
       redirect_to clients_payments_path
@@ -21,29 +21,10 @@ class Clients::PaymentsController < ApplicationController
     end
   end
 
-  def academic_type
-    params.require(:academic_type)
-  end
-
-  def hours
-    params.require(:hours_desired).to_f
-  end
-
-  def stripe_params
-    Struct.new(:stripe_token, :last_four, :card_brand)
-          .new(stripe_token, last_four, card_brand)
-  end
-
-  def stripe_token
-    params.require(:stripeToken)
-  end
-
-  def last_four
-    params.require(:last_four)
-  end
-
-  def card_brand
-    params.require(:card_brand)
+  def purchase_params
+    params.require(:purchase).permit(:academic_type, :hours_desired,
+                                     :stripe_token, :last_four,
+                                     :card_holder_name, :card_brand)
   end
 
   def check_for_engagements

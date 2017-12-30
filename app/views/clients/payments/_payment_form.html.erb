@@ -13,18 +13,18 @@
           <% if @academic_types.count > 1 %>
             <div class="row">
               <div class="col-sm-12">
-                <%= label :academic_type, "What hours would you like to purchase?" %>
+                <%= label_tag "purchase[academic_type]", "What hours would you like to purchase?" %>
               </div>
               <div class="col-sm-12">
-                <%= select_tag :academic_type, options_for_select(@academic_types.map { |type| [type.humanize, type] }), class: "form-control input-lg", required: true %>
+                <%= select_tag "purchase[academic_type]", options_for_select(@academic_types.map { |type| [type.humanize, type] }), class: "form-control input-lg", required: true %>
               </div>
             </div>
           <% elsif @academic_types.include?("academic") %>
-            <%= label :academic_type, "Purchasing Academic Hours" %>
-            <%= hidden_field_tag :academic_type, "academic" %>
+            <%= label_tag "purchase[academic_type]", "Purchasing Academic Hours" %>
+            <%= hidden_field_tag "purchase[academic_type]", "academic" %>
           <% else %>
-            <%= label :academic_type, "Purchasing Test Prep Hours" %>
-            <%= hidden_field_tag :academic_type, "test_prep" %>
+            <%= label_tag "purchase[academic_type]", "Purchasing Test Prep Hours" %>
+            <%= hidden_field_tag "purchase[academic_type]", "test_prep" %>
           <% end %>
 
           <div class="row">
@@ -45,7 +45,7 @@
               </h4>
             </div>
             <div class="col-xs-6">
-              <%= number_field_tag :hours_desired, 1, min: 1, step: "0.25", class: "form-control input-lg" %>
+              <%= number_field_tag "purchase[hours_desired]", 1, min: 1, step: "0.25", class: "form-control input-lg" %>
             </div>
           </div>
 
@@ -90,7 +90,7 @@
         <div class="widget-content">
           <%= label :credit_card, "Credit Card Information" %>
           <div>
-            <%= text_field_tag :name, nil, placeholder: "Cardholder name", class: "form-control input-lg", required: true %>
+            <%= text_field_tag "purchase[card_holder_name]", nil, placeholder: "Cardholder name", class: "form-control input-lg", required: true %>
           </div>
           <div id="card-element" class="form-control input-lg mt-20"></div>
           <h4 id="card-error" class="fw-300 text-right"></h4>

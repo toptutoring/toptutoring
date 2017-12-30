@@ -7,8 +7,9 @@ class UserNotifierMailer < ApplicationMailer
          subject: "Welcome to Top Tutoring")
   end
 
-  def send_payment_notice(user, academic_type, hours, payment)
+  def send_payment_notice(user, card_holder_name, academic_type, hours, payment)
     @user = user
+    @card_holder_name = card_holder_name
     @academic_type = academic_type
     @hours = hours
     @payment = payment
