@@ -24,7 +24,7 @@ feature "Index payments" do
       expect(page).to have_content(payment_client.amount)
       expect(page).to have_content(payment_client.description)
       expect(page).to have_content(payment_client.status)
-      expect(page).to have_content(payment_client.created_at)
+      expect(page).to have_content(l(payment_client.created_at, format: :date))
     end
 
     scenario "should see his tutor payments" do
@@ -45,7 +45,7 @@ feature "Index payments" do
       expect(page).to have_content(payment_director.amount)
       expect(page).to have_content(payment_director.description)
       expect(page).to have_content(payment_director.status)
-      expect(page).to have_content(payment_director.created_at)
+      expect(page).to have_content(l(payment_director.created_at, format: :date))
     end
   end
 
@@ -66,7 +66,7 @@ feature "Index payments" do
       expect(page).to have_content(payment_client.amount)
       expect(page).to have_content(payment_client.description)
       expect(page).to have_content(payment_client.status)
-      expect(page).to have_content(payment_client.created_at)
+      expect(page).to have_content(l(payment_client.created_at, format: :date))
     end
 
     scenario "should see all tutor payments" do
@@ -87,7 +87,7 @@ feature "Index payments" do
       expect(page).to have_content(payment_director.amount)
       expect(page).to have_content(payment_director.description)
       expect(page).to have_content(payment_director.status)
-      expect(page).to have_content(payment_director.created_at)
+      expect(page).to have_content(l(payment_director.created_at, format: :date))
     end
   end
 end
