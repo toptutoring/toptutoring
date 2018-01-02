@@ -10,8 +10,10 @@ en:
       default:
         "%a, %b %-d, %Y at %r"
       date:
+        "%-m/%-d/%y"
+      long_date:
         "%b %-d, %Y"
-      short:
+      short_date:
         "%B %d"
   titles:
     application: Top Tutoring
