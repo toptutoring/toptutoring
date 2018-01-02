@@ -29,7 +29,7 @@
     </div>
 
     <ul class="list-unstyled navigation mb-0">
-      <li class="panel"><a href="/dashboard"><i class="ion-ios-home-outline bg-purple"></i><span class="sidebar-title">Dashboard</span></a></li>
+      <%= menu_link(dashboard_path, "Dashboard", "ion-ios-home-outline bg-purple") %>
       <% if current_user.has_role?("client") %>
         <%= render "application/menu_links/client" %>
       <% elsif current_user.has_role?("student") %>
@@ -43,14 +43,8 @@
       <% end %>
 
       <% if current_user.has_role?("contractor") %>
-        <li class="panel">
-          <%= link_to timesheets_path do %>
-            <i class="icon ion-cash bg-success"></i>
-            <span class="sidebar-title">Timesheets</span>
-          <% end %>
-        </li>
+        <%= menu_link(timesheets_path, "Timesheets", "icon ion-cash bg-success") %>
       <% end %>
-      
     </ul>
   </aside>
 <% end %>

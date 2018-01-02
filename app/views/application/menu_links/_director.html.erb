@@ -1,29 +1,5 @@
-<li class="panel"><a href="/director/payments"><i class="ion-card bg-success"></i><span class="sidebar-title">Payment History</span></a></li>
-
-<li class="panel">
-  <%= link_to admin_invoices_path do %>
-    <i class="icon ion-clipboard bg-primary"></i>
-    <span class="sidebar-title">Invoices</span>
-  <% end %>
-</li>
-
-<li class="panel">
-  <%= link_to engagements_path do %>
-    <i class="icon ion-ios-contact bg-primary"></i>
-    <span class="sidebar-title">Engagements</span>
-  <% end %>
-</li>
-
-<li class="panel">
-  <%= link_to director_users_path do %>
-    <i class="icon ion-ios-contact bg-danger"></i>
-    <span class="sidebar-title">Clients</span>
-  <% end %>
-</li>
-
-<li class="panel">
-  <%= link_to admin_tutors_path do %>
-    <i class="icon ion-ios-contact bg-purple"></i>
-    <span class="sidebar-title">Tutors</span>
-  <% end %>
-</li>
+<%= menu_link(director_payments_path, "Payment History", "ion-card bg-success") %>
+<%= menu_link(admin_invoices_path, "Invoices", "icon ion-clipboard bg-primary") %>
+<%= menu_link(engagements_path, "Engagements", "icon ion-ios-contact bg-primary") %>
+<%= menu_link(director_users_path, "Clients", "icon ion-ios-contact bg-danger") %>
+<%= menu_link(admin_tutors_path, "Tutors", "icon ion-ios-contact bg-purple") %>
