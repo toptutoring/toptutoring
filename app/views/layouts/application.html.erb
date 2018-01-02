@@ -23,7 +23,7 @@
     <%= render "css_import" %>
     <%= stylesheet_link_tag :application, media: "all" %>
     <%= csrf_meta_tags %>
-<!--     <%= favicon_link_tag %> -->
+    <%= favicon_link_tag %>
   </head>
   <body>
     <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
