@@ -13,7 +13,6 @@
                   <th>Date</th>
                   <th>Amount</th>
                   <th class="text-center">Description</th>
-                  <th class="text-center">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -23,7 +22,6 @@
                       <td><%= l(payment.created_at, format: :date) %></td>
                       <td><%= number_to_currency(payment.amount) %></td>
                       <td class="text-center"><%= payment.description %></td>
-                      <td class="text-center"><%= payment.status %></td>
                     </tr>
                   <% end %>
                 <% else %>
