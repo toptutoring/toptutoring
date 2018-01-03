@@ -34,7 +34,7 @@
                       </div>
                     </td>
                     <td><%= user.email.downcase %></td>
-                    <td><%= user.created_at.to_time.strftime('%B %e at %l:%M %p')%></td>
+                    <td><%= l(user.created_at, format: :date)%></td>
                     <td><%= user.access_state %></td>
                     <td>
                       <% user.roles.distinct.each do |role| %>

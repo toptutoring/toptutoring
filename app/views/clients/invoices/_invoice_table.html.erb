@@ -17,7 +17,7 @@
           <td><%= invoice.engagement.student.name %></td>
           <td><%= invoice.engagement.subject.name %></td>
           <td class="text-center"><%= invoice.engagement.academic_type.humanize %></td>
-          <td class="text-center"><%= l(invoice.created_at, format: :short) %></td>
+          <td class="text-center"><%= l(invoice.created_at, format: :date) %></td>
           <td class="text-center"><%= invoice.hours %></span></td>
         </tr>
       <% end %>

@@ -11,7 +11,7 @@ feature "Index Payments" do
     sign_in(client)
     visit clients_payments_path
 
-    expect(page).to have_content(payment.created_at)
+    expect(page).to have_content(l(payment.created_at, format: :date))
     expect(page).to have_content(payment.amount)
     expect(page).to have_content(payment.description)
   end

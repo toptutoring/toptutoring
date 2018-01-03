@@ -13,7 +13,7 @@ feature "Profile" do
 
       expect(page).to have_content(tutor.name)
       expect(page).to have_content(tutor.email)
-      expect(page).to have_content(tutor.created_at.strftime("%B %e, %Y"))
+      expect(page).to have_content(l(tutor.created_at, format: :date))
       expect(page).to have_content("Your Subjects")
       expect(page).to have_content("Dwolla:")
     end
@@ -43,7 +43,7 @@ feature "Profile" do
 
       expect(page).to have_content(client.name)
       expect(page).to have_content(client.email)
-      expect(page).to have_content(client.created_at.strftime("%B %e, %Y"))
+      expect(page).to have_content(l(client.created_at, format: :date))
     end
 
     scenario "and edits profile" do
@@ -71,7 +71,7 @@ feature "Profile" do
 
       expect(page).to have_content(student.name)
       expect(page).to have_content(student.email)
-      expect(page).to have_content(student.created_at.strftime("%B %e, %Y"))
+      expect(page).to have_content(l(student.created_at, format: :date))
     end
   end
 end

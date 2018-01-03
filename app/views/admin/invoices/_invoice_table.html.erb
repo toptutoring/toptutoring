@@ -24,7 +24,7 @@
             <%= invoice_note_label(invoice) %>
           </td>
           <td><%= invoice.submitter.name %></td>
-          <td><%= invoice.created_at.strftime("%-m/%-e/%y") %></td>
+          <td><%= l(invoice.updated_at, format: :date) %></td>
           <td><%= invoice.engagement.academic_type.humanize %></td>
           <td><%= invoice.engagement.client.name %></td>
           <td><%= invoice.hours.to_s %></td>

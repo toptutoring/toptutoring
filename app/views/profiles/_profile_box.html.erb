@@ -20,7 +20,7 @@
         <li class="media">
           <div class="media-left"><i class="ion-calendar"></i></div>
           <div class="media-body">
-            <p>Date joined: <%= current_user.created_at.strftime("%B %e, %Y") %></p>
+            <p>Date joined: <%= l(current_user.created_at, format: :date) %></p>
           </div>
         </li>
         <li class="media">

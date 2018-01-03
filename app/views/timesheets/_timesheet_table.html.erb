@@ -13,7 +13,7 @@
     <tbody>
       <% timesheets.order(:submitter_id).each do |timesheet| %>
         <tr>
-          <td><%= timesheet.updated_at.strftime("%-m/%-e/%y") %></td>
+          <td><%= l(timesheet.updated_at, format: :date) %></td>
           <td><%= timesheet.hours %></td>
           <td><%= description = timesheet.description %></td>
           <td><%= number_to_currency(timesheet.submitter_pay) %></td>
