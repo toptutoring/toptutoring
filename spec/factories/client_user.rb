@@ -17,6 +17,10 @@ FactoryBot.define do
       signup { FactoryBot.create(:signup, :as_student) }
     end
 
+    trait :invalid_record do
+      to_create { |instance| instance.save(validate: false) }
+    end
+
     after(:create) do |user, _|
       user.create_client_account
       if user.signup.student
