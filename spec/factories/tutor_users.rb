@@ -11,6 +11,10 @@ FactoryBot.define do
     token_expires_at    { Time.now + 60 }
     access_state        { "enabled" }
 
+    trait :invalid_record do
+      to_create { |instance| instance.save(validate: false) }
+    end
+
     after(:create) do |user, _|
       user.create_tutor_account.create_contract(hourly_rate: 15)
     end
