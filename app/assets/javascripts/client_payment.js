@@ -15,14 +15,12 @@ $(function() {
     var card = elements.create('card', {
       style: {
         base: {
-          color: '#32325d',
-          lineHeight: '24px',
+          color: '#555',
           fontFamily: 'inherit',
           fontSmoothing: 'antialiased',
-          fontWeight: '300',
-          fontSize: '24px',
+          fontSize: '14px',
           '::placeholder': {
-            color: '#aab7c4'
+            color: '#999'
           }
         }
       }

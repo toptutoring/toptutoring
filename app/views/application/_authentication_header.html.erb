@@ -1,41 +1,37 @@
-<nav>
-  <div class="nav-bar">
-    <div class="module left">
-        <a href="<%= "https://toptutoring.com/" %>">
-          <div class="vnu">
-            <img src="<%= image_url('topTutoringFinal.png') %>" class="logo logo-dark">
-          </div>
-        </a>
-    </div>
-    <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
-        <i class="ion-navicon fs-30"></i>
-    </div>
-    <div class="module-group right">
-        <div class="module left">
-            <ul class="menu">
-              <li>
-                <a class="page-link logo-dark" href="https://toptutoring.com/how_it_works/">How It Works</a>
-              </li>
-              <li>
-                <a class="page-link logo-dark" href="https://toptutoring.com/about_us/">About us</a>
-              </li>
-              <li>
-                <a class="page-link logo-dark" href="https://toptutoring.com/top-tutors/">Our Tutors</a>
-              </li>
-              <li>
-                <a class="page-link logo-dark" href="https://toptutoring.com/contact/">Contact</a>
-              </li>
-              <li>
-                <a class="page-link logo-dark" href="https://toptutoring.com/blog/">Blog</a>
-              </li>
-              <li>
-                <%= link_to "Sign in", sign_in_path, class: "page-link logo-dark" %>
-              </li>
-              <li>
-                <%= link_to "Sign up", client_sign_up_path, class: "page-link logo-dark" %>
-              </li>
-            </ul>
-        </div>
+<nav class="nav-bar">
+  <div class="pl-30 pull-left">
+    <a href="https://toptutoring.com/">
+      <img src="<%= image_url("topTutoringFinal.png") %>" class="logo">
+    </a>
+  </div>
+  <div class="nav-handle pull-right visible-sm visible-xs">
+    <i class="ion-navicon"></i>
+  </div>
+  <div class="nav-component-group pull-right">
+    <div class="pull-left">
+      <ul class="menu">
+        <li>
+          <a href="https://toptutoring.com/how_it_works/">How It Works</a>
+        </li>
+        <li>
+          <a href="https://toptutoring.com/about_us/">About us</a>
+        </li>
+        <li>
+          <a href="https://toptutoring.com/top-tutors/">Our Tutors</a>
+        </li>
+        <li>
+          <a href="https://toptutoring.com/blog/">Blog</a>
+        </li>
+        <li>
+          <a href="https://toptutoring.com/contact/">Contact</a>
+        </li>
+        <li>
+          <%= link_to "Sign in", sign_in_path %>
+        </li>
+        <li>
+          <%= link_to "Sign up", client_sign_up_path %>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

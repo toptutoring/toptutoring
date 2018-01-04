@@ -7,7 +7,6 @@
         </div>
         <%= form_tag admin_tutors_path, method: :get, class: "p-0 pull-left col-xs-10" do %>
           <div class="col-md-6 col-xs-10 m-0 select-option">
-            <i class="ion-chevron-down fs-14" style="top: 7px"></i>
             <%= select_tag "subject_id", options_from_collection_for_select(Subject.all, :id, :name, @subject_id), prompt: "View All", onchange: "this.form.submit();", class: "form-control fw-400 pull-left pr-30" %>
           </div>
         <% end %>

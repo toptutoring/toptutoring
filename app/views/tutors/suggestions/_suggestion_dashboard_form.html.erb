@@ -1,36 +1,36 @@
 <div class="col-md-6">
   <div class="widget">
-    <div class="widget-heading clearfix">
-      <h3 class="widget-title pb-10 text-center">Suggest Hours</h3>
-      <p class="widget-hint pull-left">Your client has a low balance. Make a suggestion to your client to add credit to their balance by using this form. Please take note that hours must be in quarter hours.</p>
+    <div class="widget-heading">
+      <h3 class="widget-title text-center">Suggest Hours</h3>
+      <p class="widget-hint">Your client has a low balance. Make a suggestion to your client to add credit to their balance by using this form. Please take note that hours must be in quarter hours.</p>
     </div>
     <div class="widget-body">
 
       <%= form_for [:tutors, @suggestion], :html => { class: "form-horizontal" } do |f| %>
 
         <div class="form-group">
-          <label for="engagement_id" class="col-md-3 col-sm-3 control-label">Student</label>
-          <div class="col-md-9 col-sm-9">
-            <%= f.select(:engagement_id, options_for_select(@low_balance_engagements, @low_balance_engagements.first), {}, { class: "student", required: true}) %>
+          <label for="engagement_id" class="col-sm-3 control-label">Student</label>
+          <div class="col-sm-9">
+            <%= f.select :engagement_id, options_for_select(@low_balance_engagements, @low_balance_engagements.first), {}, class: "form-control", required: true %>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="suggested_hours" class="col-md-3 col-sm-3 control-label">Hours</label>
-          <div class="col-md-9 col-sm-9">
-            <input type="number" name="suggestion[hours]" required="required" min="1" max="12" step="0.25" value="<%= @suggestion.suggested_minutes ? @suggestion.suggested_minutes / 60.0 : "1.00" %>">
+          <label for="suggested_hours" class="col-sm-3 control-label">Hours</label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control" name="suggestion[hours]" required="required" min="1" max="12" step="0.25" value="<%= @suggestion.suggested_minutes ? @suggestion.suggested_minutes / 60.0 : "1.00" %>">
           </div>
         </div>
 
-        <div class="form-group mb-30">
-          <label for="description" class="col-md-3 col-sm-3 control-label">Description</label>
-          <div class="col-md-9 col-sm-9 mb-20">
+        <div class="form-group">
+          <label for="description" class="col-sm-3 control-label">Description</label>
+          <div class="col-sm-9">
             <%= f.text_area :description, rows: 4, class: "form-control", placeholder: "Please give a short description of your suggestion.", required: "required" %>
           </div>
         </div>
 
         <div class="text-center">
-          <%= f.submit class: "btn btn-outline btn-blue" %>
+          <%= f.submit class: "btn btn-primary" %>
         </div>
       <% end %>
 

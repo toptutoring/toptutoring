@@ -3,12 +3,12 @@ $(function() {
   processTutorType();
 
   function setHoursDropDown() {
-    $('.hours').empty();
-    $('.hours').append($('<option>', {
+    $('.invoice_hours').empty();
+    $('.invoice_hours').append($('<option>', {
       value: 0,
       text : "24 hour Cancellation (No hours are charged)"
     }));
-    $('.hours').append($('<option>', {
+    $('.invoice_hours').append($('<option>', {
       value: 'no_show',
       text : "No show"
     }));
@@ -17,7 +17,7 @@ $(function() {
 
   function create_hour_options(limit) {
     for(var i = 0.5; i <= limit; i+= 0.5) {
-      $('.hours').append($('<option>', {
+      $('.invoice_hours').append($('<option>', {
         value: i,
         text : i
       }));
@@ -25,7 +25,7 @@ $(function() {
   };
 
   function setHoursDropDownForContractor() {
-    $('.hours').empty();
+    $('.invoice_hours').empty();
     create_hour_options(160);
   };
 
@@ -67,7 +67,7 @@ $(function() {
     }
   }
 
-  $(document).on('change', '.student', function() {
+  $(document).on('change', '.invoice_tutor_student', function() {
     processTutorType();
   });
 

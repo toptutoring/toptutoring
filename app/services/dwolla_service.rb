@@ -16,6 +16,8 @@ class DwollaService
   rescue DwollaV2::Error => e
     Bugsnag.notify("Error retrieving funding_sources for admin: " + e.message)
     []
+  rescue OpenSSL::Cipher::CipherError
+    []
   end
 
   def self.admin_account_token
