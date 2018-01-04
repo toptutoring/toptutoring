@@ -1,0 +1,56 @@
+// Sigma styles adjusted for TopTutoring
+
+// App Header Styles
+
+header {
+  height: 54px;
+}
+header li a, .dropdown-menu li > a {
+  height: 54px;
+  line-height: 54px;
+  margin: 0;
+  padding: 0 20px;
+}
+
+// Container Styles
+
+.main-container {
+  min-height: calc(100vh - 153px); // 98 + 55 (header/footer)
+  padding-bottom: 78px;
+}
+
+// Sidebar Styles
+
+.menu-profile-icon {
+  width: 56px;
+  height: 56px;
+  line-height: 49px;
+  padding: 2px;
+}
+
+// Button Styles
+
+.btn-blue {
+  background-color: $major_blue;
+  border-color: $deep_blue;
+  color: $foreground_white;
+}
+.btn-blue:hover {
+  background-color: $deep_blue;
+  color: $foreground_white;
+}
+
+// Input Styles
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+// To ensure there's parity with stripe
+.form-control {
+  font-family: sans-serif;
+}
