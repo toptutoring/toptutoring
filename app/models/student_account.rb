@@ -6,7 +6,7 @@ class StudentAccount < ApplicationRecord
   validates_presence_of :client_account, :name
 
   def email
-    user ? user.email : client.email
+    user ? user.email : "No email provided"
   end
 
   def client
