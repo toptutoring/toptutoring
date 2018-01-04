@@ -8,23 +8,6 @@
       </div>
       <div class="media-body media-middle">
         <h4 class="media-heading fs-16"><%= current_user.name %></h4>
-        <% if current_user.has_role?("client") %>
-          <div class="dropdown">
-            <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
-              <%= client_credit(current_user) %>
-            </a>
-            <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
-            </ul>
-          </div>
-        <% elsif current_user.has_role?("tutor") %>
-          <div class="dropdown">
-            <a id="dropdown-status" href="#" role="button" aria-haspopup="true" class="dropdown-toggle">
-              <%= tutor_outstanding_balance(current_user) %>
-            </a>
-            <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
-            </ul>
-          </div>
-        <% end %>
       </div>
     </div>
 
