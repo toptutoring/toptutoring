@@ -1,7 +1,6 @@
 <div class="widget">
   <div class="widget-heading clearfix">
     <h3 class="widget-title pull-left">Your Balance</h3>
-    <!-- begin widget -->
     <div class="widget-body">
       <% if @academic_types.include?('test_prep') %>
         <p class="lead mt-30">Test Prep: <%= current_user.test_prep_credit %> hrs</p>
@@ -11,6 +10,5 @@
       <% end %>
       <%= link_to 'Add more hours', new_clients_payment_path %>
     </div>
-    <!-- end widget -->
   </div>
 </div>

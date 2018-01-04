@@ -1,9 +1,10 @@
-<%= render "menu" %>
-<% unless current_user.enabled? %>
-  <%= render "users/set_up_account" %>
-<% else %>
+<% if current_user.enabled? %>
   <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
-  <%= render "students" %>
+  <div class="row">
+    <div class="col-md-9">
+      <%= render "students" %>
+    </div>
+  </div>
 
   <div class="row">
     <% if @low_balance_engagements %>
