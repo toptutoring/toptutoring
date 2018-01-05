@@ -78,6 +78,10 @@ GEM
     capybara-selenium (0.0.6)
       capybara
       selenium-webdriver
+    carrierwave (1.2.2)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
     chromedriver-helper (1.1.0)
@@ -390,6 +394,7 @@ DEPENDENCIES
   bundler-audit (>= 0.5.0)
   cancancan (~> 1.16)
   capybara-selenium
+  carrierwave
   chromedriver-helper
   clearance
   clockwork (~> 2.0)

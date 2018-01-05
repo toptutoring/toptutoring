@@ -39,6 +39,7 @@ gem "webpacker", "~> 3.0"
 gem "slack-notifier"
 gem "opentok", "~> 3.0.0"
 gem "phonelib"
+gem "carrierwave"
 
 group :development do
   gem "listen"
