@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 20180109193713) do
     t.index ["engagement_id"], name: "index_availabilities_on_engagement_id"
   end
 
+  create_table "blog_posts", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.date "publish_date"
+    t.boolean "published", default: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["published"], name: "index_blog_posts_on_published"
+    t.index ["user_id"], name: "index_blog_posts_on_user_id"
+  end
+
   create_table "client_accounts", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -225,6 +237,7 @@ ActiveRecord::Schema.define(version: 20180109193713) do
   end
 
   add_foreign_key "availabilities", "engagements"
+  add_foreign_key "blog_posts", "users"
   add_foreign_key "client_accounts", "users"
   add_foreign_key "contractor_accounts", "users"
   add_foreign_key "engagements", "client_accounts"
