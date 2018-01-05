@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/galetahub/ckeditor.git
+  revision: 32bc0c6702388549cb4b3f00f82afbc3798d6891
+  specs:
+    ckeditor (4.2.4)
+      cocaine
+      orm_adapter (~> 0.5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -91,9 +99,12 @@ GEM
       bcrypt
       email_validator (~> 1.4)
       rails (>= 3.1)
+    climate_control (0.2.0)
     clockwork (2.0.2)
       activesupport
       tzinfo
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     codecov (0.1.10)
       json
       simplecov
@@ -172,6 +183,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mini_magick (4.8.0)
     mini_portile2 (2.3.0)
     minitest (5.10.2)
     monetize (1.7.0)
@@ -209,6 +221,7 @@ GEM
       addressable (~> 2.3)
       httparty (~> 0.15.5)
       jwt (~> 1.5.6)
+    orm_adapter (0.5.0)
     pg (0.21.0)
     phonelib (0.6.17)
     pry (0.10.4)
@@ -396,6 +409,7 @@ DEPENDENCIES
   capybara-selenium
   carrierwave
   chromedriver-helper
+  ckeditor!
   clearance
   clockwork (~> 2.0)
   codecov
@@ -411,6 +425,7 @@ DEPENDENCIES
   letter_opener
   listen
   m
+  mini_magick
   money-rails (~> 1)
   newrelic_rpm
   normalize-rails (~> 3.0.0)
