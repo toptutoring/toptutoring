@@ -29,6 +29,7 @@ class CreateStudentService
     student.enable!
     student.forgot_password!
     SetStudentPasswordMailer.mail_student(student).deliver_later
+    @student_account.update!(user: student)
   end
 
   def create_engagement!(subject)
