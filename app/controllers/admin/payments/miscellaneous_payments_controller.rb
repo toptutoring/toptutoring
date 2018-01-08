@@ -2,13 +2,13 @@ module Admin
   module Payments
     class MiscellaneousPaymentsController < ApplicationController
       def new
-        @payment = Payment.new
-        @tutors = User.tutors_with_external_auth
+        @payout = Payout.new
+        @tutors = User.includes(:tutor_account).tutors_with_external_auth
       end
 
       def create
         if set_funding_source
-          create_payment
+          create_payout
         else
           flash[:error] = "Funding source is not set. Please contact the administrator."
         end
@@ -21,28 +21,33 @@ module Admin
         @funding_source = FundingSource.first
       end
 
-      def create_payment
-        @payment = Payment.new(payment_params)
-        if @payment.valid?
-          process_payment
+      def create_payout
+        @payout = Payout.new(payout_params)
+        if @payout.valid?
+          process_payout
         else
-          flash[:danger] = @payment.errors.full_messages
+          flash[:danger] = @payout.errors.full_messages
         end
       end
 
-      def payment_params
-        params.require(:payment)
-              .permit(:amount, :description, :payee_id)
-              .merge(source: @funding_source.funding_source_id,
-                     payer: @funding_source.user,
+      def payout_params
+        params.require(:payout)
+              .permit(:amount, :description, :receiving_account_id)
+              .merge(funding_source: @funding_source.funding_source_id,
+                     destination: auth_uid,
+                     receiving_account_type: "TutorAccount",
                      approver: current_user)
       end
 
-      def process_payment
-        @transfer = PaymentGatewayDwolla.new(@payment)
+      def auth_uid
+        TutorAccount.find(params[:payout][:receiving_account_id]).user.auth_uid
+      end
+
+      def process_payout
+        @transfer = PaymentGatewayDwolla.new(@payout)
         @transfer.create_transfer
         if @transfer.error.nil?
-          @payment.save!
+          @payout.save!
           flash.notice = "Payment is being processed."
         else
           flash[:danger] = @transfer.error

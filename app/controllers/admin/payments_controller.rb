@@ -4,13 +4,13 @@ module Admin
     before_action :set_funding_source, :validate_funding_source, :set_invoice, :set_payee, only: :create
     
     def index
-      @client_payments = Payment.from_clients
-      @tutor_payments = Payment.to_tutor
+      @client_payments = Payment.all
+      @tutor_payments = Payout.all
     end
 
     def create
-      if payment_within_balance?
-        create_payment
+      if payout_within_balance?
+        create_payout
       else
         flash[:danger] = "This exceeds the maximum payment for this tutor.
           Please contact an administrator if you have any questions"
@@ -20,35 +20,43 @@ module Admin
 
     private
 
-    def payment_within_balance?
+    def payout_within_balance?
       @payee.outstanding_balance >= @invoice.hours
     end
 
-    def create_payment
-      @payment = Payment.new(payment_params)
-      if @payment.valid?
-        process_payment
+    def create_payout
+      @payout = Payout.new(payout_params)
+      if @payout.valid?
+        process_payout
       else
-        flash[:danger] = @payment.errors.full_messages
+        flash[:danger] = @payout.errors.full_messages
       end
     end
 
-    def payment_params
+    def payout_params
       {
         description: @invoice.description,
-        payee: @payee,
-        source: @funding_source.funding_source_id,
-        payer: @funding_source.user,
+        destination: @payee.auth_uid,
+        receiving_account: account,
+        funding_source: @funding_source.funding_source_id,
         approver: current_user,
         amount: @invoice.submitter_pay
       }
     end
 
-    def process_payment
-      @transfer = PaymentGatewayDwolla.new(@payment)
+    def account
+      if @invoice.by_tutor?
+        @payee.tutor_account
+      else
+        @payee.contractor_account
+      end
+    end
+
+    def process_payout
+      @transfer = PaymentGatewayDwolla.new(@payout)
       @transfer.create_transfer
       if @transfer.error.nil?
-        @payment.save!
+        @payout.save!
         adjust_balance_and_update_status_for_invoice
         ping_slack
         flash.notice = "Payment is being processed."
@@ -58,7 +66,7 @@ module Admin
     end
 
     def ping_slack
-      SlackNotifier.notify_payment_made(@payment)
+      SlackNotifier.notify_payout_made(@payout)
     end
 
     def set_invoice

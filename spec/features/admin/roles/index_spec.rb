@@ -57,12 +57,10 @@ feature "Admin role features" do
     expect(tutor.roles).to include(tutor_role)
     click_on "Remove as Tutor"
     expect(tutor.reload.roles.empty?).to be true
-    expect(tutor.reload.tutor_account).to be nil
 
     expect(contractor.roles).to include(contractor_role)
     click_on "Remove as Contractor"
     expect(contractor.reload.roles.empty?).to be true
-    expect(contractor.reload.tutor_account).to be nil
   end
 
   scenario "when admin adds contractor and director roles" do
@@ -84,7 +82,6 @@ feature "Admin role features" do
 
   scenario "when admin adds tutor role" do
     contractor.roles = []
-    contractor.contractor_account.destroy
     sign_in(admin)
 
     visit admin_roles_path

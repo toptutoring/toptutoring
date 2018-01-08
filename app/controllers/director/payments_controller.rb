@@ -3,8 +3,8 @@ module Director
     before_action :require_login
 
     def index
-      @client_payments = Payment.from_clients
-      @tutor_payments = Payment.from_user(current_user.id)
+      @client_payments = Payment.all
+      @tutor_payments = current_user.approved_payouts
     end
   end
 end

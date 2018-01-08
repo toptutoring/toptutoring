@@ -9,25 +9,23 @@ module Admin
         status = payment_successful? ? "paid" : "pending"
         @payment_service.update_processing(status)
         set_flash_messages
-        ping_slack
-        redirect_back(fallback_location: (request.referer || root_path)) and return
+        redirect_to return_path
       end
 
       private
 
       def pay_all_pending
-        type = params[:pay_type]
         @payment_service = MassPaymentService.new(type, current_user)
         @payment_service.pay_all
+      end
+
+      def type
+        params.require(:pay_type)
       end
 
       def set_flash_messages
         flash.notice = @payment_service.messages
         flash[:danger] = @payment_service.errors unless payment_successful?
-      end
-
-      def ping_slack
-        SlackNotifier.notify_mass_payment_made(@payment_service)
       end
 
       def payment_successful?
@@ -37,7 +35,11 @@ module Admin
       def validate_funding_source
         return unless FundingSource.first.nil?
         flash[:danger] = "You must select a funding source before making a payment."
-        redirect_back(fallback_location: (request.referer || root_path)) and return
+        redirect_to return_path
+      end
+
+      def return_path
+        type == "by_tutor" ? admin_invoices_path : admin_timesheets_path
       end
     end
   end
