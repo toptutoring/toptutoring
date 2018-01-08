@@ -45,7 +45,7 @@ $(function() {
     form.addEventListener('submit', function(event) {
       $('input[type=submit]').attr('disabled', true);
       event.preventDefault();
-      var options = { name: document.getElementById('purchase_card_holder_name').value }
+      var options = { name: document.getElementById('payment_card_holder_name').value }
 
       stripe.createToken(card, options).then(function(result) {
         if (result.error) {
@@ -60,21 +60,21 @@ $(function() {
       });
     });
 
-    $('#purchase_academic_type').on('change', function() {
+    $('#payment_hours_type').on('change', function() {
       setBalanceTypeForPayment();
       calculateHoursForPayment();
       setHourlyRateForPayment();
       calculateAmountForPayment();
     });
 
-    $('#purchase_hours_desired').on('change', function() {
+    $('#payment_hours_purchased').on('change', function() {
       calculateHoursForPayment();
       calculateAmountForPayment();
     });
   }
 
   function setBalanceTypeForPayment() {
-    var type = $('#purchase_academic_type').val();
+    var type = $('#payment_hours_type').val();
     var hours;
     if (type == 'academic') {
       $('#hour-type').text("Academic Hours");
@@ -88,7 +88,7 @@ $(function() {
   }
 
   function calculateHoursForPayment() {
-    var type = $('#purchase_academic_type').val();
+    var type = $('#payment_hours_type').val();
     var currentHours;
     var purchaseHours;
     if (type == 'academic') {
@@ -97,13 +97,16 @@ $(function() {
       currentHours = $('#current-hours').data('test');
     }
     currentHours = parseFloat(currentHours);
-    purchaseHours = parseFloat($("#purchase_hours_desired").val());
+    purchaseHours = parseFloat($("#payment_hours_purchased").val());
+    if (isNaN(purchaseHours)) {
+      purchaseHours = 0
+    }
     newHours = (currentHours + purchaseHours).toFixed(2);
     $('#after-purchase-hours').text(newHours);
   }
 
   function setHourlyRateForPayment() {
-    var type = $('#purchase_academic_type').val();
+    var type = $('#payment_hours_type').val();
     if (type == 'academic') {
       rate = $('#hourly-rate-display').data('academic');
     } else {
@@ -114,7 +117,7 @@ $(function() {
   };
 
   function calculateAmountForPayment() {
-    var type = $('#purchase_academic_type').val();
+    var type = $('#payment_hours_type').val();
     var rate;
     if (type == 'academic') {
       rate = $('#hourly-rate-display').data('academic');
@@ -122,7 +125,7 @@ $(function() {
       rate = $('#hourly-rate-display').data('test');
     }
     rate = parseFloat(rate);
-    var hours = parseFloat($("#purchase_hours_desired").val());
+    var hours = parseFloat($("#payment_hours_purchased").val());
     var total = (hours * rate).toFixed(2);
     total = isNaN(total) ? '0.00' : total;
     $('#payment-total-display').text("$".concat(total));
@@ -135,17 +138,17 @@ $(function() {
     var cardBrandInput = document.createElement('input');
 
     tokenInput.setAttribute('type', 'hidden');
-    tokenInput.setAttribute('name', 'purchase[stripe_token]');
+    tokenInput.setAttribute('name', 'stripe_token');
     tokenInput.setAttribute('value', token.id);
     form.appendChild(tokenInput);
 
     lastFourInput.setAttribute('type', 'hidden');
-    lastFourInput.setAttribute('name', 'purchase[last_four]');
+    lastFourInput.setAttribute('name', 'payment[last_four]');
     lastFourInput.setAttribute('value', token.card.last4);
     form.appendChild(lastFourInput);
 
     cardBrandInput.setAttribute('type', 'hidden');
-    cardBrandInput.setAttribute('name', 'purchase[card_brand]');
+    cardBrandInput.setAttribute('name', 'payment[card_brand]');
     cardBrandInput.setAttribute('value', token.card.brand);
     form.appendChild(cardBrandInput);
 

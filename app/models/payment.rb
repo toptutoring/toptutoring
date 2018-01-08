@@ -4,11 +4,12 @@ class Payment < ActiveRecord::Base
   belongs_to :approver, class_name: "User", foreign_key: "approver_id"
 
   # Validations #
-  validates :amount_cents, numericality: { greater_than: 0 }
-  validates_presence_of :payer_id
+  validates_presence_of :payer_id, :hours_type, :card_holder_name,
+                        :last_four, :card_brand
+  validates :amount_cents, :rate_cents, :hours_purchased, numericality: { greater_than_or_equal_to: 1 }
 
   # Monetize amounts
-  monetize :amount_cents
+  monetize :amount_cents, :rate_cents
 
   # Scopes #
   scope :from_user, ->(payer_id) { where(payer_id: payer_id) }

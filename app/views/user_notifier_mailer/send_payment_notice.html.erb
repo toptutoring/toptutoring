@@ -63,11 +63,11 @@
                 <tr>
                   <td colspan="2" style="padding:20px;border:1px solid white">
                     <p style="color:rgb(153,153,153);font-size:18px">Hours Purchased</p>
-                    <p><%= @academic_type.capitalize + " Hours @ $" + @rate.to_s + "/hr" %></p>
+                    <p><%= @payment.hours_type.humanize + " Hours @ $" + @payment.rate.to_s + "/hr" %></p>
                   </td>
                   <td style="padding:20px;border:1px solid white;text-align:right">
                     <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
-                    <p><%= @hours %></p>
+                    <p><%= @payment.hours_purchased %></p>
                   </td>
                 </tr>
                 <tr height="80">
@@ -78,7 +78,7 @@
                   <td width="220" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
                     <p style="color:rgb(153,153,153);font-size:18px">Billed To</p>
                     <p><%= @payment.card_brand_and_four_digits %></p>
-                    <p><%= @card_holder_name %></p>
+                    <p><%= @payment.card_holder_name %></p>
                   </td>
                   <td width="120" align="right" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
                     <p style="color:rgb(153,153,153);font-size:18px">TOTAL</p>

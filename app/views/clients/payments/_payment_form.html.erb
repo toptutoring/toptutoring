@@ -1,6 +1,6 @@
 <!-- Styles for this form is defined in "stripe.scss" -->
 
-<%= form_tag clients_payments_path, id: "new_payment" do %>
+<%= form_for [:clients, Payment.new], id: "new_payment" do |f| %>
   <!--  Credit Card Inputs -->
   <%= content_tag :div, nil, id: "stripe_publishable_key", data: { key: ENV['STRIPE_PUBLISHABLE_KEY'] } %>
   <div class="col-lg-6">
@@ -12,19 +12,19 @@
         <div class="widget-content">
           <% if @academic_types.count > 1 %>
             <div class="row">
-              <div class="col-sm-12">
-                <%= label_tag "purchase[academic_type]", "What hours would you like to purchase?" %>
+              <div class="col-xs-6 text-right">
+                <%= f.label :hours_type, "What hours would you like to purchase?" %>
               </div>
-              <div class="col-sm-12">
-                <%= select_tag "purchase[academic_type]", options_for_select(@academic_types.map { |type| [type.humanize, type] }), class: "form-control input-lg", required: true %>
+              <div class="col-xs-6">
+                <%= f.select :hours_type, options_for_select(@academic_types.map { |type| [type.humanize, type] }), class: "form-control input-lg", required: true %>
               </div>
             </div>
           <% elsif @academic_types.include?("academic") %>
-            <%= label_tag "purchase[academic_type]", "Purchasing Academic Hours" %>
-            <%= hidden_field_tag "purchase[academic_type]", "academic" %>
+            <%= f.label :hours_type, "Purchasing Academic Hours" %>
+            <%= f.hidden_field :hours_type, value: "academic" %>
           <% else %>
-            <%= label_tag "purchase[academic_type]", "Purchasing Test Prep Hours" %>
-            <%= hidden_field_tag "purchase[academic_type]", "test_prep" %>
+            <%= f.label :hours_type, "Purchasing Test Prep Hours" %>
+            <%= f.hidden_field :hours_type, value: "test_prep" %>
           <% end %>
 
           <div class="row">
@@ -41,11 +41,11 @@
           <div class="row">
             <div class="col-xs-6 text-right">
               <h4 class="mb-20">
-              <%= label_tag :hours_desired, "Hours x", class: "fw-300 m-0" %>
+              <%= f.label :hours_purchased, "Hours", class: "fw-300 m-0" %>
               </h4>
             </div>
             <div class="col-xs-6">
-              <%= number_field_tag "purchase[hours_desired]", 1, min: 1, step: "0.25", class: "form-control input-lg" %>
+              <%= f.number_field :hours_purchased, value: 1, min: 1, step: "0.25", class: "form-control input-lg" %>
             </div>
           </div>
 
@@ -62,7 +62,7 @@
 
           <div class="row">
             <div class="col-xs-6 text-right">
-              <h4 id="hour-type" class="mb-20 fw-300">Academic Hours</h4>
+              <h4 id="hour-type" class="mb-20 fw-300"></h4>
             </div>
 
             <div class="col-xs-2">
@@ -90,14 +90,14 @@
         <div class="widget-content">
           <%= label :credit_card, "Credit Card Information" %>
           <div>
-            <%= text_field_tag "purchase[card_holder_name]", nil, placeholder: "Cardholder name", class: "form-control input-lg", required: true %>
+            <%= f.text_field :card_holder_name, placeholder: "Cardholder name", class: "form-control input-lg", required: true %>
           </div>
           <div id="card-element" class="form-control input-lg mt-20"></div>
           <h4 id="card-error" class="fw-300 text-right"></h4>
 
           <div class="row m-0">
-              <!-- button disabling is handled by jaavascript because Stripe validation requires javascript -->
-              <%= submit_tag "Purchase Hours", class: "pull-right btn btn-primary", data: { disable_with: false } %>
+            <!-- button disabling is handled by javascript because Stripe validation requires javascript -->
+            <%= submit_tag "Purchase Hours", class: "pull-right btn btn-primary", data: { disable_with: false } %>
           </div>
         </div>
       </div>

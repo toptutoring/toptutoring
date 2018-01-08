@@ -10,7 +10,7 @@ class Clients::PaymentsController < ApplicationController
   end
 
   def create
-    service = PaymentService.new(current_user, purchase_params)
+    service = PaymentService.new(payment_params, token)
     results = service.charge!
     if results.success?
       flash.notice = results.message
@@ -21,10 +21,15 @@ class Clients::PaymentsController < ApplicationController
     end
   end
 
-  def purchase_params
-    params.require(:purchase).permit(:academic_type, :hours_desired,
-                                     :stripe_token, :last_four,
-                                     :card_holder_name, :card_brand)
+  def payment_params
+    params.require(:payment)
+          .permit(:hours_purchased, :hours_type,
+                  :last_four, :card_holder_name, :card_brand)
+          .merge(payer_id: current_user.id)
+  end
+
+  def token
+    params.require(:stripe_token)
   end
 
   def check_for_engagements
