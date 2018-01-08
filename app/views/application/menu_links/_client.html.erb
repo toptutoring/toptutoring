@@ -1,14 +1,7 @@
 <% if current_user.enabled? %>
-  <li class="panel"><a href="<%= new_clients_payment_path %>"><i class="ion-card bg-success"></i><span class="sidebar-title">Purchase Hours</span></a></li>
-  <li class="panel"><a href="<%= clients_payments_path %>"><i class="ion-clipboard bg-primary"></i><span class="sidebar-title">Past Payments</span></a></li>
-  <li class="panel"><a href="/suggestions"><i class="ion-clock bg-primary"></i><span class="sidebar-title">Suggestions</span></a></li>
-  <li class="panel">
-    <%= link_to_client_students_or_tutors %>
-  </li>
-  <li class="panel">
-    <%= link_to clients_invoices_path do %>
-      <i class="ion-document bg-success"></i>
-      <span class="sidebar-title">Invoices</span>
-    <% end %>
-  </li>
+  <%= menu_link(new_clients_payment_path, "Purchase Hours", "ion-card bg-success") %>
+  <%= menu_link(clients_payments_path, "Past Payments", "ion-clipboard bg-info") %>
+  <%= menu_link(suggestions_path, "Suggestions", "ion-clock bg-warning") %>
+  <%= link_to_client_students_or_tutors %>
+  <%= menu_link(clients_invoices_path, "Invoices", "ion-document bg-danger") %>
 <% end %>
