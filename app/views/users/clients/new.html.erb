@@ -1,8 +1,8 @@
-<div class="container pt-30">
+<div class="container">
   <div class="row">
-    <div class="col-lg-6 mt-30 mb-30">
+    <div class="col-lg-6">
       <div class="text-center">
-        <h4 class="uppercase">Sign Up Process</h4>
+        <h4>Sign Up Process</h4>
       </div>
       <p class="m-15">At TopTutoring, it is our top priority to ensure you receive the best tutoring solution for your academic needs. You can either submit the provided form or call us at <a herf="tel:<%= ENV["CONTACT_PHONE_NUMBER"] || "15105228221" %>"><%= cleanup_phone_number(ENV["CONTACT_PHONE_NUMBER"] || "15105228221") %></a> to get in touch with one of our Tutoring Directors who will help you get started on your academic journey.</p>
       <p class="m-15"> Already have an account?
@@ -11,46 +11,43 @@
       <%= image_tag("yellownotebook.jpg", class: "visible-lg center-block contact-us-image") %>
     </div>
 
-
-    <div class="col-lg-6 mt-30">
+    <div class="col-lg-6">
       <%= form_for @user, url: users_clients_path(@user), html: { class: "signup-form", id: "client-signup" } do |form| %>
 
         <%= form.fields_for :signup do |client_field| %>
-          <div class="col-sm-6 col-lg-6 select-option">
-            <i class="ion-chevron-down"></i>
-            <%= client_field.select :student, [["My Child", false], ["Myself", true]], { prompt: "This is for..." }, { required: true, class:"wpcf7-form-control wpcf7-select subject-select" } %>
+          <div class="col-sm-6 col-lg-6 mb-15 select-option">
+            <%= client_field.select :student, [["My Child", false], ["Myself", true]], { prompt: "This is for..." }, { required: true, class:"form-control input-lg" } %>
           </div>
 
-          <div class="col-sm-6 col-lg-6 select-option">
-            <i class="ion-chevron-down"></i>
-            <%= client_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, { required: true, class:"pr-40 wpcf7-form-control wpcf7-select subject-select" } %>
+          <div class="col-sm-6 col-lg-6 mb-15 select-option">
+            <%= client_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, { required: true, class:"form-control input-lg" } %>
           </div>
         <% end %>
 
         <div class="col-sm-6">
-          <%= form.text_field :name, type: "text", placeholder: "FULL NAME", onfocus: "this.placeholder = ''", onblur: "this.placeholder = 'FULL NAME'", required: true %>
+          <%= form.text_field :name, type: "text", placeholder: "First and Last Name", class: "form-control input-lg mb-15", required: true %>
         </div>
 
         <div class="col-sm-6">
-          <%= form.text_field :phone_number, placeholder: "PHONE NUMBER", onfocus: "this.placeholder = ''", onblur: "this.placeholder = 'PHONE NUMBER'", required: true %>
+          <%= form.text_field :phone_number, placeholder: "Phone Number", class: "form-control input-lg mb-15", required: true %>
         </div>
 
         <div class="col-sm-6">
-          <%= form.email_field :email, type: "text", placeholder: "EMAIL", onfocus: "this.placeholder = ''", onblur: "this.placeholder = 'EMAIL'", required: true %>
+          <%= form.email_field :email, type: "text", placeholder: "Email", class: "form-control input-lg mb-15", required: true %>
         </div>
 
         <div class="col-sm-6">
-          <%= form.password_field :password, placeholder: "PASSWORD", onfocus: "this.placeholder = ''", onblur: "this.placeholder = 'PASSWORD'", required: true %>
+          <%= form.password_field :password, placeholder: "Password", class: "form-control input-lg mb-15", required: true %>
         </div>
 
         <%= form.fields_for :signup do |client_field| %>
-          <div class="col-md-12">
-            <%= client_field.text_area :comments, placeholder: "COMMENTS", rows: "3", style: "height:100px" %>
+          <div class="col-xs-12">
+            <%= client_field.text_area :comments, placeholder: "Comments", class: "form-control mb-15", rows: "3", style: "height:100px" %>
           </div>
         <% end %>
 
-        <div class="col-md-12 text-center">
-          <button type="submit" class="btn btn-lg btn-blue">Sign up</button>
+        <div class="col-md-12 text-center mb-15">
+          <%= form.submit "Submit", class: "btn btn-lg btn-blue" %>
         </div>
 
         <div class="col-md-12">

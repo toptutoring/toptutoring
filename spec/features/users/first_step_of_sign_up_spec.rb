@@ -16,7 +16,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_password", with: "password"
       find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
       find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
-      click_button "Sign up"
+      click_button "Submit"
 
       expect(page).to have_current_path(new_clients_student_path)
       expect(page).to have_content(I18n.t("app.signup.client.success_message"))
@@ -36,7 +36,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_password", with: "password"
       find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
       find("#user_signup_attributes_student").find(:xpath, "option[3]").select_option
-      click_button "Sign up"
+      click_button "Submit"
 
       expect(page).to have_current_path(dashboard_path)
       expect(page).to have_content(I18n.t("app.signup.client_student.success_message"))
@@ -68,7 +68,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_email", with: "student"
       fill_in "user_password", with: "password"
-      click_button "Sign up"
+      click_button "Submit"
 
       expect(page).to have_content("Email is invalid")
     end

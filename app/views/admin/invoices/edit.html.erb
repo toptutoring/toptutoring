@@ -1,24 +1,33 @@
-<%= form_for(@invoice, url: admin_invoice_path(@invoice), :html =>
-                                        { class: "form-horizontal" }) do |f| %>
-  <p>Submitter: <%= @invoice.submitter.name %></p>
-  <p>Date Submitted: <%= l(@invoice.created_at, format: :date) %></p>
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <div class="widget">
+      <div class="widget-heading">
+        <h3 class="widget-title">Edit Invoice</h3>
+      </div>
+      <div class="widget-body">
+        <%= form_for @invoice, url: admin_invoice_path(@invoice), html: { class: "form-horizontal" } do |f| %>
+          <p>Submitter: <%= @invoice.submitter.name %></p>
+          <p>Date Submitted: <%= l(@invoice.created_at, format: :date) %></p>
 
-  <div class="form-group">
-    <%= f.label :description, class: "col-md-3 col-sm-3 control-label" %>
-    <div class="col-md-9 col-sm-9">
-      <%= f.text_field :description, :class => "col-md-9 col-sm-9", :placeholder => "Description" %>
+          <div class="form-group">
+            <%= f.label :description, class: "col-sm-3 control-label" %>
+            <div class="col-sm-9">
+              <%= f.text_field :description, class: "form-control", placeholder: "Description" %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :hours, class: "col-sm-3 control-label" %>
+            <div class="col-sm-9">
+              <%= f.text_field :hours, class: "form-control", required: true, placeholder: "Hours" %>
+          </div>
+          </div>
+
+          <div class="text-center">
+            <%= f.submit "Update", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-
-  <div class="form-group">
-    <%= f.label :hours, class: "col-md-3 col-sm-3 control-label" %>
-    <div class="col-md-9 col-sm-9">
-      <%= f.text_field :hours, :class => "col-md-9 col-sm-9",
-              :required => true, :placeholder => "Hours" %>
-    </div>
-  </div>
-
-  <div class="text-center">
-    <%= f.submit "Update", class: "btn btn-outline btn-blue" %>
-  </div>
-<% end %>
+</div>

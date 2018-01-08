@@ -5,12 +5,11 @@ feature "Request tutors" do
   let(:student) { FactoryBot.create(:student_user, client: client) }
   let(:client_as_student) { FactoryBot.create(:client_user, :as_student) }
 
-
   scenario "successfully when client is not a student" do
     student
     sign_in(client)
-    visit new_clients_request_tutor_path(id: student.id)
-    
+    visit new_clients_request_tutor_path(student_account_id: student.student_account.id)
+
     find("#engagement_subject_id").find(:xpath, "option[2]").select_option
     click_on "Submit"
 

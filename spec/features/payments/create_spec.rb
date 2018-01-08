@@ -12,7 +12,7 @@ feature "Create payment as client" do
       sign_in(client)
       visit new_clients_payment_path
 
-      expect(page).to have_content("Purchase Additional Hours")
+      expect(page).to have_content("Purchase Hours")
       expect(page).to have_content("Your Rate")
       expect(page).to have_content("Academic Hours")
       expect(page).to have_content("Credit card information")

@@ -1,39 +1,29 @@
 <section>
   <div class="container">
-  <h1 class="logo-word large text-center" id="logo">
-    <img src="<%= image_url('topTutoringFinal.png') %>" class="logo-img">
-  </h1>
-  <div class="row">
-  <div class="sign-in-form text-center">
-    <%= form_for :session, url: session_path, html: { class: "form-horizontal login" } do |form| %>
-      <div class="email col-xs-12">
-        <%= form.label :email, class: "sr-only"  %>
-        <%= form.email_field :email, type: "email", value: @user_email, placeholder: "EMAIL" %>
-      </div>
+    <div class="row mt-30 mb-30">
+      <div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1">
+        <div class="widget border-blue mt-30 mb-30">
+          <div class="widget-heading mb-15">
+            <h3 class="widget-title text-blue">Sign In</h3>
+          </div>
+          <div class="widget-body pt-30 pb-30">
+            <%= form_for :session, url: session_path do |form| %>
+              <%= form.label :email, class: "sr-only"  %>
+              <%= form.email_field :email, type: "email", value: @user_email, class: "form-control input-lg mb-15", placeholder: "Email" %>
 
-      <div class="password col-xs-12">
-        <%= form.label :password, class: "sr-only"  %>
-        <%= form.password_field :password, type: "password", placeholder: "PASSWORD" %>
-      </div>
+              <%= form.label :password, class: "sr-only"  %>
+              <%= form.password_field :password, type: "password", class: "form-control input-lg mb-15", placeholder: "Password" %>
 
-        <div class="col-xs-12">
-          <div class="pull-left">
-            <%= form.label :remember_me, class: "remember-me inline-block form-control-static" do %>
-              <%= form.check_box :remember_me %>
+              <%= form.label :remember_me, class: "remember-me inline-block form-control-static" do %>
+                <%= form.check_box :remember_me %>
                 Remember me
+              <% end %>
+              <%= link_to "Trouble signing in?", reset_password_path, class: "pull-right inline-block form-control-static" %>
+
+              <button type="submit" class="btn btn-lg btn-blue center-block">Login</button>
             <% end %>
           </div>
-          <div class="pull-right">
-            <%= link_to "Trouble signing in?", reset_password_path, class: "inline-block form-control-static" %>
-          </div>
         </div>
-
-      <div class="col-xs-12">
-        <button type="submit" class="btn btn-lg btn-blue">Login</button>
       </div>
-
-    <% end %>
     </div>
-  </div>
-  </div>
 </section>

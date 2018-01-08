@@ -1,7 +1,14 @@
-<%= form_for current_user.feedbacks.build, url: dashboard_feedback_path do |form| %>
-  <h3 class="widget-title pull-left">Contact TopTutoring</h3>
-  <%= form.text_area :comments, placeholder: "Questions or concerns? Let us know!", rows: "3", style: "height:100px; margin-top: 25px;", required: true %>
-  <div class="text-center">
-    <%= form.submit "Send Message", class: "btn btn-primary" %>
+<div class="widget">
+  <div class="widget-heading mb-15">
+    <h3 class="widget-title">Contact Top Tutoring</h3>
+    <!-- begin widget -->
+    <div class="widget-body">
+      <%= form_for current_user.feedbacks.build, url: dashboard_feedback_path do |form| %>
+        <%= form.text_area :comments, placeholder: "Questions or concerns? Let us know!", rows: "3", class: "form-control mb-15", required: true %>
+        <div class="text-center">
+          <%= form.submit "Send Message", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</div>

@@ -1,0 +1,154 @@
+// Nav Styles //
+
+nav.nav-bar {
+    background: #fff;
+    -webkit-backface-visibility: hidden;
+    max-width: 100%;
+    color: $deep_blue;
+    height: 55px;
+    line-height: 53px;
+    border-bottom: 1px solid $faded_blue;
+}
+.logo {
+    max-height: 41px;
+}
+.menu {
+    font-family: $raleway;
+}
+.menu li a {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: $deep_blue;
+    opacity: 0.5;
+    transition: all 0.1s ease;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+}
+.menu li a:hover {
+    opacity: 1 !important;
+}
+.menu > li {
+    list-style: none;
+    margin-right: 32px;
+    float: left;
+}
+.nav-handle {
+    padding: 0 16px;
+    z-index: 2;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 0;
+}
+.nav-handle i {
+    font-size: 36px;
+    opacity: 0.5;
+    transition: all 0.1s ease;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+}
+.nav-handle:hover i,
+.nav-handle.active:hover i {
+    opacity: 1;
+}
+@media all and (max-width: 990px) {
+    .nav-component-group {
+        position: fixed;
+        width: 0;
+        height: 100%;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        background-color: #fff;
+        border-left: 1px solid $deep_blue;
+        overflow-x: hidden;
+        transition: width 0.5s ease;
+        -webkit-transition: width 0.5s ease;
+        -moz-transition: width 0.5s ease;
+    }
+    .nav-component-group.nav-open {
+        width: 50%;
+    }
+    .menu {
+        width: 400px;
+        margin-top: 55px;
+    }
+    .menu li {
+        height: 50px;
+        line-height: 50px;
+        float: none;
+        max-width: 100%;
+    }
+    .menu li a {
+        color: $deep_blue;
+        font-size: 18px;
+    }
+    .nav-handle.active {
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+}
+
+// Footer Styles //
+
+footer {
+    font-family: $raleway;
+    font-size: 13px;
+    background-color: $bg_dark;
+    width: 100%;
+    padding: 35px 0;
+}
+footer .rights {
+    padding-right: 24px;
+    float: right;
+}
+footer ul {
+    float: left;
+    padding-left: 10px;
+}
+footer ul li {
+    padding: 0 10px;
+    list-style: none;
+    float: left;
+}
+footer ul li a {
+    padding-left: 10px;
+    color: $text_light;
+    text-transform: uppercase;
+    opacity: 0.5;
+    transition: all 0.1s ease;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+}
+footer li a:hover {
+    color: $foreground_white;
+    opacity: 1 !important;
+}
+.footer-left ul {
+    min-width: 160px;
+    width: 25%;
+}
+@media(min-width:700px) {
+    .footer-left ul {
+        width: 50%;
+    }
+    .footer-left ul li {
+        width: 49%;
+    }
+}
+@media (min-width: 1090px) {
+    .footer-left ul {
+        min-width: 700px;
+    }
+    .footer-left ul li {
+        width: auto;
+    }
+}

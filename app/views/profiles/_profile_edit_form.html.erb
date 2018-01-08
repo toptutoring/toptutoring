@@ -6,21 +6,21 @@
     <div class="widget-body">
       <%= form_for current_user, url: profile_path, html: { class: "form-horizontal" } do |f| %>
 
-        <div class ="form-group">
-          <div class ="col-lg-4">
-            <%= label_tag(:name, "Name", class: "pull-right control-label") %>
+        <div class ="form-group form-group-lg">
+          <div class ="col-lg-4 text-right">
+            <%= label_tag(:name, "Name", class: "control-label") %>
           </div>
           <div class="col-lg-8">
-            <%= f.text_field :name, required: true %>
+            <%= f.text_field :name, class: "form-control input-lg", required: true %>
           </div>
         </div>
 
-        <div class ="form-group">
-          <div class ="col-lg-4">
-            <%= label_tag(:phone_number, "Phone Number", class: "pull-right control-label") %>
+        <div class ="form-group form-group-lg">
+          <div class ="col-lg-4 text-right">
+            <%= label_tag(:phone_number, "Phone Number", class: "control-label") %>
           </div>
           <div class="col-lg-8">
-            <%= f.text_field :phone_number, required: true %>
+            <%= f.text_field :phone_number, class: "form-control input-lg", required: true %>
           </div>
         </div>
 

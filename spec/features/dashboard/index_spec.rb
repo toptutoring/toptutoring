@@ -25,7 +25,7 @@ feature "Dashboard Index" do
     expect(page).to have_content("Your Balance")
     expect(page).to have_content(client.academic_credit)
     expect(page).to have_content("Request a Tutor")
-    expect(page).to have_content("Contact TopTutoring")
+    expect(page).to have_content("Contact Top Tutoring")
     expect(page).to have_content("Dashboard")
     expect(page).to have_content("Purchase Hours")
     expect(page).to have_content("Past Payments")

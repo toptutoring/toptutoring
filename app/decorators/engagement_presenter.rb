@@ -58,8 +58,4 @@ class EngagementPresenter < SimpleDelegator
       self.client.test_prep_rate
     end
   end
-
-  def text_for_edit_button
-    @engagement.tutor_account_id.nil? ? "Assign tutor" : "Edit"
-  end
 end
