@@ -16,8 +16,10 @@ class MassPaymentService
     admin_account_token = DwollaService.admin_account_token
     mass_pay = admin_account_token.post "mass-payments", request_body
     finalize_payouts(mass_pay.headers[:location])
+  rescue DwollaV2::ValidationError => e
+    @errors << "Dwolla Errors" + e._embedded.errors.to_s
   rescue DwollaV2::Error => e
-    @errors << "Dwolla Error: " + e[:message]
+    @errors << "Dwolla Error: " + e.to_s
   rescue OpenSSL::Cipher::CipherError
     @errors << "OpenSSL Error: There was an error with ciphering the access token."
   end
