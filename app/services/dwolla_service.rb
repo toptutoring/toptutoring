@@ -23,7 +23,8 @@ class DwollaService
   def self.admin_account_token
     DwollaTokenRefresh.new(User.admin.id).perform
     # https://github.com/Dwolla/dwolla-v2-ruby#dwollav2token
-    DWOLLA_CLIENT.tokens.new(access_token: User.admin.access_token)
+    DWOLLA_CLIENT.tokens.new(access_token: User.admin.access_token,
+                             refresh_token: User.admin.refresh_token)
   end
 
   class << self
