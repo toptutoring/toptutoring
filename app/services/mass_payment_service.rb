@@ -13,8 +13,8 @@ class MassPaymentService
 
   def pay_all
     return if no_payouts?
-    admin_account_token = DwollaService.admin_account_token
-    mass_pay = admin_account_token.post "mass-payments", request_body
+    @admin_account_token = DwollaService.admin_account_token
+    mass_pay = @admin_account_token.post "mass-payments", request_body
     finalize_payouts(mass_pay.headers[:location])
   rescue DwollaV2::ValidationError => e
     @errors << "Dwolla Errors" + e._embedded.errors.to_s
@@ -137,7 +137,7 @@ class MassPaymentService
   end
 
   def retrieve_items(mass_url)
-    items_response = DWOLLA_CLIENT.auths.client.get mass_url + "/items"
+    items_response = @admin_account_token.get mass_url + "/items"
     items_response[:_embedded][:items]
   end
 
