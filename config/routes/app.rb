@@ -82,8 +82,11 @@ Rails.application.routes.draw do
         get "/disable" => "engagements#disable"
       end
     end
-    # only Admin/Director/Contractor has access to blogs for now
+    # only Admin/Director has access to blogs and cities for now
     resources :blog_posts
+    resources :cities
+    resources :countries
+    resources :regions
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("tutor") } do

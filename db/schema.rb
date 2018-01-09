@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109193713) do
+ActiveRecord::Schema.define(version: 20180115070830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(version: 20180109193713) do
     t.datetime "updated_at", null: false
     t.index ["published"], name: "index_blog_posts_on_published"
     t.index ["user_id"], name: "index_blog_posts_on_user_id"
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.string "country"
+    t.string "state"
+    t.string "phone_number"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "country_id"
+    t.index ["country_id"], name: "index_cities_on_country_id"
   end
 
   create_table "ckeditor_assets", force: :cascade do |t|
@@ -66,6 +78,13 @@ ActiveRecord::Schema.define(version: 20180109193713) do
     t.string "account_type"
     t.bigint "account_id"
     t.index ["account_type", "account_id"], name: "index_contracts_on_account_type_and_account_id"
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "emails", id: :serial, force: :cascade do |t|
@@ -250,6 +269,7 @@ ActiveRecord::Schema.define(version: 20180109193713) do
 
   add_foreign_key "availabilities", "engagements"
   add_foreign_key "blog_posts", "users"
+  add_foreign_key "cities", "countries"
   add_foreign_key "client_accounts", "users"
   add_foreign_key "contractor_accounts", "users"
   add_foreign_key "engagements", "client_accounts"
