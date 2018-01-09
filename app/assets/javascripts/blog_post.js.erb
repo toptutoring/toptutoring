@@ -1,0 +1,33 @@
+$(function() {
+  if (document.getElementById('blog-content-contenteditable')) {
+    CKEDITOR.inline('blog-content-contenteditable', { "customConfig":"<%= javascript_path "ckeditor/config.js" %>" });
+
+    var form = document.getElementById('blog-form');
+
+    form.addEventListener('submit', function(event) {
+      $('input[type=submit]').attr('disabled', true);
+      event.preventDefault();
+      var options = {
+        content: document.getElementById('blog-content-contenteditable').innerHTML,
+        blogTitle: document.getElementById('blog-title-contenteditable').innerText
+      };
+      appendInputs(form, options);
+      form.submit();
+    });
+
+    function appendInputs(form, options) {
+      var titleInput = document.createElement('input');
+      var contentInput = document.createElement('input');
+
+      titleInput.setAttribute('type', 'hidden');
+      titleInput.setAttribute('name', 'blog_post[title]');
+      titleInput.setAttribute('value', options.blogTitle);
+      form.appendChild(titleInput);
+
+      contentInput.setAttribute('type', 'hidden');
+      contentInput.setAttribute('name', 'blog_post[content]');
+      contentInput.setAttribute('value', options.content);
+      form.appendChild(contentInput);
+    };
+  };
+});

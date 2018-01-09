@@ -4,7 +4,7 @@
     <% @posts.each do |post| %>
       <div>
         <h3><%= link_to post.title.capitalize, blog_post_path(post) %></h3>
-        <%= tag.span l(post.created_at, format: :default) %>
+        <%= tag.span l(post.created_at, format: :date) %>
       </div>
     <% end %>
   </div>

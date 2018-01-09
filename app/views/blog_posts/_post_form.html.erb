@@ -1,26 +1,24 @@
-<div class="section">
-  <%= form_for @post do |f| %>
-    <div class="col-xs-6">
-      <div class="form-group">
-        <%= f.label :title %>
-        <%= f.text_field :title, class: "form-control" %>
-      </div>
-    </div>
+<div class="col-md-8 col-md-offset-2">
+  <h1 class="p-10 editable" id="blog-title-contenteditable" contenteditable="true">
+    <%= @post.title || "Please add a title" %>
+  </h1>
 
-    <div class="col-xs-6">
+  <p class="p-10"><b>Published:</b> <span id="blog-publish-date-display"><%= @post.publish_date ? l(@post.publish_date) : "Not published" %></span></p>
+
+  <div class="p-10 editable" id="blog-content-contenteditable" contenteditable="true">
+    <%= raw @post.content || "Please add content" %>
+  </div>
+</div>
+
+<div class="col-md-2">
+  <div class="widget">
+    <%= form_for @post, html: { class: "mt-20 mb-20", id: "blog-form" } do |f| %>
       <div class="form-group">
         <%= f.label :publish_date %>
         <%= f.date_field :publish_date, min: Date.current, class: "form-control" %>
       </div>
-    </div>
-
-    <div class="col-xs-12">
-      <div class="form-group">
-        <%= f.label :content %>
-        <%= f.text_area :content, rows: 10, class: "form-control" %>
-      </div>
-    </div>
-
-    <%= f.submit class: "center-block btn btn-primary" %>
-  <% end %>
+      <%= f.submit class: "center-block btn btn-primary" %>
+    <% end %>
+  </div>
+  <%= link_to "All posts", blog_posts_path %>
 </div>
