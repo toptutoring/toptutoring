@@ -19,7 +19,7 @@ class MassPaymentService
   rescue DwollaV2::ValidationError => e
     @errors << "Dwolla Errors" + e._embedded.errors.to_s
   rescue DwollaV2::Error => e
-    @errors << "Dwolla Error: " + e.to_s
+    @errors << "Dwolla Error: " + e.message
   rescue OpenSSL::Cipher::CipherError
     @errors << "OpenSSL Error: There was an error with ciphering the access token."
   end
@@ -111,7 +111,7 @@ class MassPaymentService
       },
       amount: {
         currency: "USD",
-        value: payout.amount
+        value: payout.amount.to_s
       },
       metadata: {
         auth_uid: payout.payee.auth_uid,
