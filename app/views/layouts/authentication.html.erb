@@ -23,6 +23,7 @@
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600' rel='stylesheet' type='text/css'>
     <!-- JQuery -->
     <%= javascript_include_tag '/plugins/jquery/dist/jquery.min.js' %>
+    <%= javascript_include_tag Ckeditor.cdn_url %>
     <!-- Bootstrap CSS-->
     <%= stylesheet_link_tag '/plugins/bootstrap/dist/css/bootstrap.min.css' %>
     <!-- Ionicons-->
@@ -46,14 +47,13 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <%= render "authentication_header" %>
+    <%= render "flashes" %>
 
     <div class="main-container">
-      <%= render "flashes" %>
       <%= yield %>
     </div>
 
     <%= render "footer" %>
-
     <%= render "javascript" %>
     <%= render "css_overrides" %>
   </body>

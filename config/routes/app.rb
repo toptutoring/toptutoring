@@ -82,6 +82,8 @@ Rails.application.routes.draw do
         get "/disable" => "engagements#disable"
       end
     end
+    # only Admin/Director/Contractor has access to blogs for now
+    resources :blog_posts
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("tutor") } do
@@ -131,6 +133,8 @@ Rails.application.routes.draw do
     end
     resources :open_tok_rooms
     resources :timesheets
+    # only Admin/Director/Contractor has access to blogs for now
+    resources :blog_posts
   end
 
   # API

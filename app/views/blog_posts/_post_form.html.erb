@@ -1,0 +1,24 @@
+<div class="col-md-8 col-md-offset-2">
+  <h1 class="p-10 editable" id="blog-title-contenteditable" contenteditable="true">
+    <%= @post.title || "Please add a title" %>
+  </h1>
+
+  <p class="p-10"><b>Published:</b> <span id="blog-publish-date-display"><%= @post.publish_date ? l(@post.publish_date) : "Not published" %></span></p>
+
+  <div class="p-10 editable" id="blog-content-contenteditable" contenteditable="true">
+    <%= raw @post.content || "Please add content" %>
+  </div>
+</div>
+
+<div class="col-md-2">
+  <div class="widget">
+    <%= form_for @post, html: { class: "mt-20 mb-20", id: "blog-form" } do |f| %>
+      <div class="form-group">
+        <%= f.label :publish_date %>
+        <%= f.date_field :publish_date, min: Date.current, value: @post.publish_date || Date.current, class: "form-control" %>
+      </div>
+      <%= f.submit class: "center-block btn btn-primary" %>
+    <% end %>
+  </div>
+  <%= link_to "All Posts", blog_posts_path %>
+</div>

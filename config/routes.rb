@@ -11,6 +11,7 @@ def splitter_leader(subdomain)
 end
 
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   constraints WwwTopTutoring do
     root to: "pages#home"
   end
