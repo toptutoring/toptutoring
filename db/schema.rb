@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171222010739) do
+ActiveRecord::Schema.define(version: 20180108174414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,13 @@ ActiveRecord::Schema.define(version: 20171222010739) do
     t.string "customer_id"
     t.integer "payer_id"
     t.datetime "created_at"
+    t.string "card_brand"
+    t.string "last_four"
+    t.string "stripe_charge_id"
+    t.integer "rate_cents"
+    t.string "hours_type"
+    t.string "card_holder_name"
+    t.decimal "hours_purchased", precision: 10, scale: 2
     t.index ["payer_id"], name: "index_payments_on_payer_id"
   end
 

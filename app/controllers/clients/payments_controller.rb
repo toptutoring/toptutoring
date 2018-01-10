@@ -10,8 +10,8 @@ class Clients::PaymentsController < ApplicationController
   end
 
   def create
-    service = PaymentService.new(current_user, academic_type, hours)
-    results = service.charge!(stripe_token)
+    service = PaymentService.new(payment_params, token)
+    results = service.charge!
     if results.success?
       flash.notice = results.message
       redirect_to clients_payments_path
@@ -21,16 +21,15 @@ class Clients::PaymentsController < ApplicationController
     end
   end
 
-  def academic_type
-    params.require(:academic_type)
+  def payment_params
+    params.require(:payment)
+          .permit(:hours_purchased, :hours_type,
+                  :last_four, :card_holder_name, :card_brand)
+          .merge(payer_id: current_user.id)
   end
 
-  def hours
-    params.require(:hours_desired).to_f
-  end
-
-  def stripe_token
-    params.require(:stripeToken)
+  def token
+    params.require(:stripe_token)
   end
 
   def check_for_engagements
