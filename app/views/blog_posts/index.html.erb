@@ -3,8 +3,8 @@
     <%= link_to "New Post", new_blog_post_path %>
     <% @posts.each do |post| %>
       <div>
-        <h3><%= link_to post.title.capitalize, blog_post_path(post) %></h3>
-        <%= tag.span l(post.created_at, format: :date) %>
+        <h3><%= link_to post.title, blog_post_path(post) %></h3>
+        <%= tag.span l(post.publish_date) %>
       </div>
     <% end %>
   </div>

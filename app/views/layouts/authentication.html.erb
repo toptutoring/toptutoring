@@ -47,14 +47,13 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <%= render "authentication_header" %>
+    <%= render "flashes" %>
 
     <div class="main-container">
-      <%= render "flashes" %>
       <%= yield %>
     </div>
 
     <%= render "footer" %>
-
     <%= render "javascript" %>
     <%= render "css_overrides" %>
   </body>

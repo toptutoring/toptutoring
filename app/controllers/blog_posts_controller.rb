@@ -44,6 +44,8 @@ class BlogPostsController < ApplicationController
   private
 
   def post_params
-    params.require(:blog_post).permit(:title, :publish_date, :content)
+    params.require(:blog_post)
+          .permit(:title, :publish_date, :content)
+          .merge(user: current_user)
   end
 end
