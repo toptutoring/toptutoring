@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/galetahub/ckeditor.git
-  revision: 32bc0c6702388549cb4b3f00f82afbc3798d6891
-  specs:
-    ckeditor (4.2.4)
-      cocaine
-      orm_adapter (~> 0.5.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -95,6 +87,9 @@ GEM
     chromedriver-helper (1.1.0)
       archive-zip (~> 0.7.0)
       nokogiri (~> 1.6)
+    ckeditor (4.2.4)
+      cocaine
+      orm_adapter (~> 0.5.0)
     clearance (1.16.0)
       bcrypt
       email_validator (~> 1.4)
@@ -409,7 +404,7 @@ DEPENDENCIES
   capybara-selenium
   carrierwave
   chromedriver-helper
-  ckeditor!
+  ckeditor
   clearance
   clockwork (~> 2.0)
   codecov

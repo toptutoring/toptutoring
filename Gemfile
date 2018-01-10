@@ -41,7 +41,7 @@ gem "opentok", "~> 3.0.0"
 gem "phonelib"
 gem "carrierwave"
 gem "mini_magick"
-gem "ckeditor", github: "galetahub/ckeditor"
+gem "ckeditor"
 
 group :development do
   gem "listen"
