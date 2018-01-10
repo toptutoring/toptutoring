@@ -14,7 +14,7 @@
       <% invoices.each do |invoice| %>
         <tr>
           <td><%= invoice.engagement.tutor.name %></td>
-          <td><%= invoice.engagement.student.name %></td>
+          <td><%= invoice.engagement.student_name %></td>
           <td><%= invoice.engagement.subject.name %></td>
           <td class="text-center"><%= invoice.engagement.academic_type.humanize %></td>
           <td class="text-center"><%= l(invoice.created_at, format: :date) %></td>
