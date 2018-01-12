@@ -1,42 +1,70 @@
 class DwollaService
-  DWOLLA_WEBHOOK_EVENTS = ["bank_transfer_created",
-                           "bank_transfer_cancelled",
-                           "bank_transfer_failed",
-                           "bank_transfer_completed",
-                           "transfer_created",
-                           "transfer_cancelled",
-                           "transfer_failed",
-                           "transfer_reclaimed",
-                           "transfer_completed"].freeze
-
-  def self.funding_sources
-    return [] unless User.admin.auth_uid.present?
-    response = admin_account_token.get funding_sources_url
-    response._embedded["funding-sources"]
-  rescue DwollaV2::Error => e
-    Bugsnag.notify("Error retrieving funding_sources for admin: " + e.message)
-    []
-  rescue OpenSSL::Cipher::CipherError
-    []
-  end
-
-  def self.admin_account_token
-    DwollaTokenRefresh.new(User.admin.id).perform
-    # https://github.com/Dwolla/dwolla-v2-ruby#dwollav2token
-    DWOLLA_CLIENT.tokens.new(access_token: User.admin.access_token,
-                             refresh_token: User.admin.refresh_token)
-  end
-
   class << self
-    private
+    DWOLLA_WEBHOOK_EVENTS = ["bank_transfer_created",
+                             "bank_transfer_cancelled",
+                             "bank_transfer_failed",
+                             "bank_transfer_completed",
+                             "transfer_created",
+                             "transfer_cancelled",
+                             "transfer_failed",
+                             "transfer_reclaimed",
+                             "transfer_completed"].freeze
 
-    def funding_sources_url
-      ENV.fetch('DWOLLA_API_URL') + '/accounts/' + auth_uid + '/funding-sources'
+    Response = Struct.new(:success?, :response)
+
+    def request(resource, *args)
+      send(resource, *args)
+    rescue DwollaV2::ValidationError => e
+      Response.new(false, e._embedded.errors.map { |error| error_text(error) })
+    rescue DwollaV2::Error => e
+      Response.new(false, error_text(e))
+    rescue OpenSSL::Cipher::CipherError
+      Response.new(false, "There was an error with OpenSSL.")
     end
 
-    def auth_uid
-      return ENV.fetch('DWOLLA_DEV_ADMIN_AUTH_UID') if Rails.env.development?
-      User.admin.auth_uid
+    def refresh_token!(user)
+      new_token = DWOLLA_CLIENT.auths.refresh(account_token(user))
+      user.update(access_token: new_token.access_token,
+                  refresh_token: new_token.refresh_token,
+                  token_expires_at: Time.current + new_token.expires_in)
+      new_token
+    end
+
+    private
+
+    def mass_payment(payload)
+      response = refresh_token!(User.admin).post("mass-payments", payload)
+      Response.new(true, response.headers[:location])
+    end
+
+    def mass_pay_items(url)
+      response = account_token(User.admin).get(url + "/items")
+      Response.new(true, response[:_embedded][:items])
+    end
+
+    def transfer(payload)
+      response = refresh_token!(User.admin).post("transfers", payload)
+      Response.new(true, response.headers["location"])
+    end
+
+    def funding_sources(user)
+      return Response.new(false, "User must authenticate with Dwolla") unless user.auth_uid
+      url = api_url + "/accounts/" + user.auth_uid + "/funding-sources"
+      response = account_token(user).get url
+      Response.new(true, response._embedded["funding-sources"])
+    end
+
+    def account_token(user)
+      DWOLLA_CLIENT.tokens.new(access_token: user.access_token,
+                               refresh_token: user.refresh_token)
+    end
+
+    def error_text(error)
+      error[:code] + ": " + error[:message]
+    end
+    
+    def api_url
+      ENV.fetch("DWOLLA_API_URL")
     end
   end
 end

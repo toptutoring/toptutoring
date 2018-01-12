@@ -4,7 +4,7 @@ class UpdateTokensWorker
 
   def perform
     User.with_external_auth.each do |user|
-      DwollaTokenRefresh.new(user.id).perform
+      DwollaService.refresh_token!(user)
     end
   end
 end
