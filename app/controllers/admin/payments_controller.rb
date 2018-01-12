@@ -25,7 +25,7 @@ module Admin
     end
 
     def create_payout
-      @payout = Payout.new(payout_params)
+      @payout = @invoice.build_payout(payout_params)
       if @payout.valid?
         process_payout
       else

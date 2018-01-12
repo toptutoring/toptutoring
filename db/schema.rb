@@ -146,8 +146,10 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.integer "submitter_type", default: 0
     t.string "note"
     t.boolean "online", default: true
+    t.bigint "payout_id"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id"
+    t.index ["payout_id"], name: "index_invoices_on_payout_id"
     t.index ["submitter_id"], name: "index_invoices_on_submitter_id"
   end
 
@@ -293,6 +295,7 @@ ActiveRecord::Schema.define(version: 20180203183001) do
   add_foreign_key "feedbacks", "users"
   add_foreign_key "invoices", "engagements"
   add_foreign_key "payments", "stripe_accounts"
+  add_foreign_key "invoices", "payouts"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "signups", "users"
   add_foreign_key "stripe_accounts", "users"

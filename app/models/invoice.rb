@@ -3,6 +3,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :submitter, class_name: "User", foreign_key: "submitter_id"
   belongs_to :client, class_name: "User", foreign_key: "client_id"
   belongs_to :engagement
+  belongs_to :payout
   validates :hours, numericality: { greater_than_or_equal_to: 0 }
   validates_presence_of :submitter_id, :description,
                         :hours, :submitter_type
