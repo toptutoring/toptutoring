@@ -19,7 +19,7 @@ feature "Create payment for tutor" do
       visit admin_invoices_path
       click_on "Pay All Invoices"
 
-      expect(page).to have_content("You must select a funding source before making a payment.")
+      expect(page).to have_content("Please select a funding source before making a payment.")
     end
 
     scenario "makes payment for tutors with and without dwolla authentication" do
