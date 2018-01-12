@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
   end
 
   def requires_dwolla?
-    roles.where(roles: { name: ['director', 'tutor', 'contractor', 'admin'] }).any?
+    roles.where(roles: { name: ["director", "tutor", "contractor", "admin"] }).any?
   end
 
   def has_valid_dwolla?
@@ -115,10 +115,5 @@ class User < ActiveRecord::Base
     if Rails.env.production?
       Bugsnag.notify("OpenSSL::Cipher::CipherError: Invalid tokens for user #{id}")
     end
-  end
-
-  def self.with_pending_invoices(type)
-    join_sql = "JOIN invoices ON users.id = invoices.submitter_id"
-    joins(join_sql).where(invoices: {status: 'pending', submitter_type: type}).distinct
   end
 end

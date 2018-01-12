@@ -1,7 +1,7 @@
 class AuthCallbacksController < ApplicationController
   def create
     user_from_auth_hash
-    redirect_to root_path
+    redirect_to dashboard_path
   end
 
   private
