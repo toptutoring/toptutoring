@@ -185,6 +185,8 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.bigint "receiving_account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "dwolla_mass_pay_url"
+    t.string "dwolla_mass_pay_item_url"
     t.index ["receiving_account_id", "receiving_account_type"], name: "index_payouts_receiver_account_and_type"
   end
 
