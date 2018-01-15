@@ -1,6 +1,7 @@
 class DataMigrationForStudentAccounts < ActiveRecord::Migration[5.1]
   def up
     user = User.find_by(id: 89, email: "jlety@hotmail.com")
+    return if user.nil?
     student_account = user.student_account
     student_account.user_id = nil
     if student_account.save
