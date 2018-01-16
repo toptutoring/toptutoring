@@ -70,6 +70,7 @@ class DataMigrationUpdateCreatedAtForPayouts < ActiveRecord::Migration[5.1]
   def up
     ORIGINAL_DATA.each do |payment|
       payout = Payout.find_by(payment[:params])
+      next if payout.nil?
       payout.created_at = DateTime.parse(payment[:created_at])
       if payout.save
         STDOUT.puts "Updated created_at for payout #{payout.id } with #{payout.created_at }."
