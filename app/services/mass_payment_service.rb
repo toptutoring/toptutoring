@@ -145,8 +145,8 @@ class MassPaymentService
     @payouts.each do |payout|
       auth_id = payout.payee.auth_uid
       payout_item = items.find { |item| auth_id == item[:metadata][:auth_uid] }
-      payout.status = "processing"
-      payout.dwolla_transfer_url = payout_item[:_links][:transfer][:href]
+      payout.status = "paid"
+      payout.dwolla_transfer_url = payout_item[:_links][:transfer][:href] unless payout_item.nil?
       payout.save
     end
   end
