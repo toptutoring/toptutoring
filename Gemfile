@@ -42,6 +42,7 @@ gem "phonelib"
 gem "carrierwave"
 gem "mini_magick"
 gem "ckeditor"
+gem "fog-aws"
 
 group :development do
   gem "listen"
