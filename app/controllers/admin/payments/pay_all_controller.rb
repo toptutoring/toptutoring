@@ -5,7 +5,8 @@ module Admin
       before_action :validate_funding_source, only: :create
 
       def create
-        result = MassPaymentService.new(user_invoices, current_user).pay_all
+        result = MassPaymentService.new(user_invoices, current_user, type)
+                                   .pay_all
         if result.success?
           flash.notice = result.message
         else
@@ -17,12 +18,12 @@ module Admin
       private
 
       def user_invoices
-        return Invoice.pending.by_tutor.group_by(&:submitter) if by_tutor?
-        Invoice.pending.by_contractor.group_by(&:submitter)
+        # This user object has additional invoice attributes
+        User.with_pending_invoices_attributes(type)
       end
 
-      def by_tutor?
-        params.require(:pay_type) == "by_tutor"
+      def type
+        params.require(:pay_type)
       end
 
       def validate_funding_source
@@ -32,7 +33,7 @@ module Admin
       end
 
       def return_path
-        by_tutor? ? admin_invoices_path : admin_timesheets_path
+        type == "by_tutor" ? admin_invoices_path : admin_timesheets_path
       end
     end
   end

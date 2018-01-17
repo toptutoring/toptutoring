@@ -1,15 +1,5 @@
 class DwollaService
   class << self
-    DWOLLA_WEBHOOK_EVENTS = ["bank_transfer_created",
-                             "bank_transfer_cancelled",
-                             "bank_transfer_failed",
-                             "bank_transfer_completed",
-                             "transfer_created",
-                             "transfer_cancelled",
-                             "transfer_failed",
-                             "transfer_reclaimed",
-                             "transfer_completed"].freeze
-
     Response = Struct.new(:success?, :response)
 
     def request(resource, *args)
@@ -39,7 +29,14 @@ class DwollaService
 
     def mass_pay_items(url)
       response = account_token(User.admin).get(url + "/items")
-      Response.new(true, response[:_embedded][:items])
+      items_array = response._embedded.items.map do |item|
+        item_hash = { auth_uid: item[:metadata][:auth_uid],
+                      status: item[:status],
+                      item_url: item._links[:self][:href] }
+        item_hash[:transfer_url] = item._links[:transfer][:href] if item._links[:transfer]
+        item_hash
+      end
+      Response.new(true, items_array)
     end
 
     def transfer(payload)
