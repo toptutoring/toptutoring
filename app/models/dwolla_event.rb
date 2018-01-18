@@ -1,0 +1,2 @@
+class DwollaEvent < ApplicationRecord
+end
