@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   # Omniauth routes
   get "/auth/dwolla/callback", to: "auth_callbacks#create"
   get "/auth/failure", to: "auth_callbacks#failure"
+  post "/dwolla/webhooks", to: "webhooks/dwolla#update"
 
   #Clearance routes
   resource :session, controller: "sessions", only: [:new, :create]

@@ -106,17 +106,24 @@ class MassPaymentService
 
   def finalize_payouts(url)
     @payouts.update_all(dwolla_mass_pay_url: url)
-    DwollaMassPayWorker.perform_in(10.seconds, url)
+    @valid_users.each do |user|
+      user.outstanding_balance -= user.invoice_hours
+      user.save
+    end
+    final_message
+  end
+
+  def final_message
     size = @payouts.count
     if size >= 1
-      final_message_of_payments(size)
+      message_of_payments_paid(size)
     else
       no_payments_message
     end
     SlackNotifier.notify_mass_payment_made(@messages)
   end
 
-  def final_message_of_payments(size)
+  def message_of_payments_paid(size)
     total_paid = Money.new(@payouts.sum(&:amount_cents))
     start = size == 1 ? "#{size} payment has" : "#{size} payments have"
     @messages << start + " been made for a total of $#{total_paid}."

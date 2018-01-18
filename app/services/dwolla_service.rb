@@ -1,11 +1,33 @@
 class DwollaService
   class << self
+    # Enable webhooks. Runs during instantiation and only for production.
+    if ENV["DWOLLA_ENVIRONMENT"] == "production" && Rails.env.production?
+      app_token = DWOLLA_CLIENT.auths.client
+
+      # Delete all current webhooks
+      webhooks = app_token.get "webhook-subscriptions"
+
+      webhooks._embedded["webhook-subscriptions"].each do |subscription|
+        app_token.delete subscription._links[:self][:href]
+      end
+
+      # Create new webhook
+      subscription_request_body = {
+        url: root_url + "dwolla/webhooks",
+        secret: ENV.fetch("DWOLLA_WEBHOOK_SECRET")
+      }
+
+      app_token.post "webhook-subscriptions", subscription_request_body
+    end
+
     Response = Struct.new(:success?, :response)
 
     def request(resource, *args)
       send(resource, *args)
     rescue DwollaV2::ValidationError => e
       Response.new(false, e._embedded.errors.map { |error| error_text(error) })
+    rescue DwollaV2::AccessDeniedError => e
+      Response.new(false, e.error.titlecase + ": " + e.error_description)
     rescue DwollaV2::Error => e
       Response.new(false, error_text(e))
     rescue OpenSSL::Cipher::CipherError
@@ -24,7 +46,7 @@ class DwollaService
 
     def mass_payment(payload)
       response = refresh_token!(User.admin).post("mass-payments", payload)
-      Response.new(true, response.headers[:location])
+      Response.new(true, response.response_headers[:location])
     end
 
     def mass_pay_items(url)
@@ -41,7 +63,7 @@ class DwollaService
 
     def transfer(payload)
       response = refresh_token!(User.admin).post("transfers", payload)
-      Response.new(true, response.headers["location"])
+      Response.new(true, response.response_headers["location"])
     end
 
     def funding_sources(user)

@@ -40,7 +40,7 @@ module Admin
     end
 
     def retrieve_funding_sources
-      dwolla_request = DwollaService.request(:funding_sources, User.admin)
+      dwolla_request = DwollaService.request(:funding_sources, current_user)
       if dwolla_request.success?
         @funding_sources = dwolla_request.response
       else

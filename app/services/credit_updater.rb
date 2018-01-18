@@ -23,7 +23,7 @@ class CreditUpdater
     ActiveRecord::Base.transaction do
       add_to_client_credit(@invoice.hours) if @client
       subtract_from_submitter_balance(@invoice.hours)
-      @invoice.status = 'denied'
+      @invoice.status = "denied"
       @invoice.save!
     end
   end
@@ -31,7 +31,7 @@ class CreditUpdater
   def process_payment_of_invoice!
     ActiveRecord::Base.transaction do
       subtract_from_submitter_balance(@invoice.hours)
-      @invoice.status = 'paid'
+      @invoice.status = "processing"
       @invoice.save!
     end
   end
