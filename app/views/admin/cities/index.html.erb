@@ -24,6 +24,8 @@
                 <td><%= Phonelib.parse(city.phone_number, city.country.code).national %></td>
                 <td>
                   <%= link_to "Edit", edit_admin_city_path(city), class: "btn btn-blue" %>
+                  <%= link_to "Preview", preview_admin_city_path(city), class: "btn btn-primary" %>
+                  <%= publish_or_remove_link(city) %>
                   <%= link_to "Destroy", admin_city_path(city), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to remove this city?" } %>
                 </td>
               </tr>

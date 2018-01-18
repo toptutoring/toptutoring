@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   #Clearance routes
   resource :session, controller: "sessions", only: [:new, :create]
 
+  resources :cities, only: [:show]
+
   scope module: "admin" do
     resources :users, only: [] do
       resource :masquerade, only: :create
@@ -86,6 +88,10 @@ Rails.application.routes.draw do
     resources :blog_posts
     namespace :admin do
       resources :cities do
+        member do
+          post "/publish" => "cities#publish"
+          get "/preview" => "cities#preview"
+        end
       end
       resources :countries
     end

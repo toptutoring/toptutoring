@@ -1,0 +1,76 @@
+<div class="container fs-16">
+  <% if action_name == "preview" %>
+    <%= link_to "Return to Admin City Index", admin_cities_path %>
+  <% end %>
+  <h1 class="fs-48 fw-300 text-center">Academic and Test Prep Tutoring by UC Berkeley Students in <%= @city.name %></h1>
+  <hr />
+  <p class="mt-30 fs-18 text-center">Get started with a tutor in <%= @city.name %> today!</p>
+  <p class="fs-18 text-center">Call us at <%= link_to @phone_number.national, "tel:#{@phone_number.international(false)}" %> for a free consultation.</p>
+
+  <div class="row mt-30 mb-30 mr-0 ml-0">
+    <p>Here at Top Tutoring, we can help you reach your academic goals and  obtain admission to your top choice schools. We offer tutoring for test prep in SAT and ACT, as well as all academic subjects such as Math, English, and Science. Currently, we offer online as well as in person tutoring depending on the availability of our tutors and your needs.</p>
+  </div>
+</div>
+
+<div class="bg-blue row mb-30 mr-0 ml-0 p-30">
+  <h4 class="text-center fs-36 fw-400">Types of Tutoring Available for <%= @city.name %></h4>
+  <div class="row mt-30 mr-0 ml-0">
+    <div class="col-sm-4 col-sm-offset-2 text-center">
+      <div class="icon-container icon-container-outline icon-container-round">
+        <i class="ion-ios-home-outline marketing-icon"></i>
+      </div>
+      <p class="fs-36 fw-300 mt-15">In-home</p>
+      <p>Receive top-notch tutoring from the comforts of your own home. We come straight to you so you do not have to travel.</p>
+    </div>
+    <div class="col-sm-4 text-center">
+      <div class="icon-container icon-container-outline icon-container-round">
+        <i class="ion-ios-monitor-outline marketing-icon"></i>
+      </div>
+      <p class="fs-36 fw-300 mt-15">Online</p>
+      <p>Use an online portal to receive your tutoring. You'll get the benefit of flexible scheduling options with the same excellent tutoring!</p>
+    </div>
+  </div>
+</div>
+
+<div class="container fs-16">
+  <div class="row mt-30 mb-30 mr-0 ml-0">
+    <div class="col-sm-6">
+      <h3 class="fs-48 fw-300 text-right">Personalized Tutoring in<br /><%= @city.name %></h3>
+    </div>
+    <div class="col-sm-6">
+      <p><%= @city.description %></p>
+    </div>
+  </div>
+
+  <h4 class="mt-30 fs-24 text-center">Your Customized Tutoring Plan</h4>
+
+  <div class="row mt-30 mr-0 ml-0">
+    <div class="col-sm-4 text-center">
+      <div class="icon-container icon-container-outline icon-container-round">
+        <i class="ion-ios-people-outline"></i>
+      </div>
+      <p class="fs-24 fw-300 mt-15">Match</p>
+      <p>Once we have an idea of what subject you need help with and your individual needs, you are matched with a highly qualified tutor.</p>
+    </div>
+    <div class="col-sm-4 text-center">
+      <div class="icon-container icon-container-outline icon-container-round">
+        <i class="ion-ios-compose-outline"></i>
+      </div>
+      <p class="fs-24 fw-300 mt-15">Personalized Instruction</p>
+      <p>Tutoring is catered to your learning style as well as strengths and weaknesses.</p>
+    </div>
+    <div class="col-sm-4 text-center">
+      <div class="icon-container icon-container-outline icon-container-round">
+        <i class="ion-arrow-graph-up-right"></i>
+      </div>
+      <p class="fs-24 fw-300 mt-15">Academic Success</p>
+      <p>The tutor will help you form new and essential connections and help you review and solidify what you have learned.</p>
+    </div>
+  </div>
+
+  <div class="row mt-30 mr-0 ml-0 p-30">
+    <p class="text-center fs-24">Get started with your academic journey in <%= @city.name %>!</p>
+    <p class="text-center fs-24">Call us at <%= link_to @phone_number.national, "tel:#{@phone_number.international(false)}" %> for a free consultation.</p>
+  </div>
+</div>
+

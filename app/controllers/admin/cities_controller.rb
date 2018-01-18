@@ -6,6 +6,23 @@ module Admin
       @cities = City.all.includes(:country)
     end
 
+    def preview
+      @city = City.find(params[:id])
+      @phone_number = Phonelib.parse(@city.phone_number, @city.country.code)
+      render "cities/show", layout: "authentication"
+    end
+
+    def publish
+      city = City.find(params[:id]).toggle(:published)
+      notice = city.published? ? "made public" : "removed from public view"
+      if city.save
+        flash.notice = "#{city.name} has been #{notice}."
+      else
+        flash.alert = "#{city.name} was unable to be #{notice}."
+      end
+      redirect_to admin_cities_path
+    end
+
     def new
       @city = City.new
       @countries = Country.all
