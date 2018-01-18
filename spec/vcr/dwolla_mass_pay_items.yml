@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api-sandbox.dwolla.com/mass-payments/02941cff-210e-429c-8ad1-a86c00719bc6/items
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer pH8RoJ4Ctn51XGw3r8dugHkSkQBf9q9vqjHSOqZNDmP426LzD6
+      Accept:
+      - application/vnd.dwolla.v1.hal+json
+      User-Agent:
+      - dwolla-v2-ruby 2.0.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 18 Jan 2018 07:16:00 GMT
+      Content-Type:
+      - application/vnd.dwolla.v1.hal+json
+      Content-Length:
+      - '1591'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d88744bd6f30e3904a14730b0f24c506d1516259760; expires=Fri, 18-Jan-19
+        07:16:00 GMT; path=/; domain=.dwolla.com; HttpOnly
+      X-Request-Id:
+      - 89b18468-b240-47ed-b11b-286f54073a9b
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 3defc4302a4f51b2-SJC
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"https://api-sandbox.dwolla.com/mass-payments/02941cff-210e-429c-8ad1-a86c00719bc6/items","type":"application/vnd.dwolla.v1.hal+json","resource-type":"mass-payment-item"},"first":{"href":"https://api-sandbox.dwolla.com/mass-payments/02941cff-210e-429c-8ad1-a86c00719bc6/items?&limit=25&offset=0","type":"application/vnd.dwolla.v1.hal+json","resource-type":"mass-payment-item"},"last":{"href":"https://api-sandbox.dwolla.com/mass-payments/02941cff-210e-429c-8ad1-a86c00719bc6/items?&limit=25&offset=0","type":"application/vnd.dwolla.v1.hal+json","resource-type":"mass-payment-item"}},"_embedded":{"items":[{"_links":{"self":{"href":"https://api-sandbox.dwolla.com/mass-payment-items/911323f4-d9bd-4c5a-a0c6-8f312670f125","type":"application/vnd.dwolla.v1.hal+json","resource-type":"mass-payment-item"},"mass-payment":{"href":"https://api-sandbox.dwolla.com/mass-payments/02941cff-210e-429c-8ad1-a86c00719bc6","type":"application/vnd.dwolla.v1.hal+json","resource-type":"mass-payment"},"destination":{"href":"https://api-sandbox.dwolla.com/accounts/092499dc-d0f0-45c9-b89e-c42d050cbb21","type":"application/vnd.dwolla.v1.hal+json","resource-type":"account"},"transfer":{"href":"https://api-sandbox.dwolla.com/transfers/1907e952-1cfc-e711-8104-0a595ef38714","type":"application/vnd.dwolla.v1.hal+json","resource-type":"transfer"}},"id":"911323f4-d9bd-4c5a-a0c6-8f312670f125","status":"success","amount":{"value":"10.00","currency":"USD"},"metadata":{"auth_uid":"092499dc-d0f0-45c9-b89e-c42d050cbb21","approver_id":"1","description":"Test","payee_id":"2"}}]},"total":1}'
+    http_version: 
+  recorded_at: Thu, 18 Jan 2018 07:16:00 GMT
+recorded_with: VCR 3.0.3

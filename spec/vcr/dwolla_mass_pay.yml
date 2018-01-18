@@ -1,0 +1,121 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox.dwolla.com/oauth/v2/token
+    body:
+      encoding: UTF-8
+      string: grant_type=refresh_token&refresh_token=hrJywggNipumNq3TuW8fHJ5wOgypXsctUR1ZfLKakX3C4FA8Ul
+    headers:
+      User-Agent:
+      - dwolla-v2-ruby 2.0.2
+      Authorization:
+      - Basic dzREdkNHckFLYWFsMEM2Qk50cHRtbmpiSFBJUU1ZT2VnMldib3dkWU9GY1I3T0hqVk46TmhsQ3JzSGl0MlZZaHF3Q2dmR09nWWRnd2ZhUVh2NHV4TkhxdHBvNW5pYU5oOVpFUHU=
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 18 Jan 2018 06:53:45 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d5f90353df53361722f6a5022a6bd88471516258424; expires=Fri, 18-Jan-19
+        06:53:44 GMT; path=/; domain=.dwolla.com; HttpOnly
+      - dtid=246b839c-d6eb-4917-a312-e23a8f47d9e2; expires=Tue, 18-Jan-2028 06:53:36
+        GMT; path=/; HttpOnly
+      Cache-Control:
+      - private
+      Content-Security-Policy-Report-Only:
+      - script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.dwolla.com dtlilztwypawv.cloudfront.net
+        *.googleapis.com *.gstatic.com *.googletagmanager.com *.googleads.g.doubleclick.net
+        *.google-analytics.com *.google.com *.facebook.com *.facebook.net *.adroll.com
+        *.adnxs.com *.googleadservices.com *.yahoo.com *.bidswitch.net *.twitter.com
+        *.rlcdn.com *.connexity.net static.chartbeat.com *.akamai.net *.optimizely.com
+        *.cdngc.net *.iovation.com safari-extension://* chrome-extension://* *.jobscore.com
+        hire.withgoogle.com js-agent.newrelic.com bam.nr-data.net s0.wp.com s1.wp.com
+        stats.wp.com *.ada.support data:; style-src 'self' 'unsafe-inline' cdn.dwolla.com
+        fonts.googleapis.com safari-extension://* chrome-extension://*; connect-src
+        'self' *.optimizely.com; report-uri /Home/CSPReport; object-src 'self' *.cdngc.net
+        *.iovation.com; default-src 'self'; font-src * data:; img-src * data:; frame-src
+        'self' *.dwolla.com *.facebook.com *.googletagmanager.com safari-extension://*
+        chrome-extension://* *.jobscore.com hire.withgoogle.com *.chartbeat.com
+      P3p:
+      - CP="CAO PSA OUR"
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Aspnetmvc-Version:
+      - '4.0'
+      X-Frame-Options:
+      - Deny
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 3defa390ee9c6c7c-SJC
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_links":{"account":{"href":"https://api-sandbox.dwolla.com/accounts/1ba9585f-6468-4d1e-844a-4a13fea0d605"}},"access_token":"lbBJ6RHHMQQlXfxl8UiOkXaOH5nLlkjqaI80twkCygRIFWfkjf","expires_in":3608,"refresh_token":"1G9sDtzcXT4IdHnZXkpFK8EGk6AwX8l9ynnJIQPyDoI2ce4zdn","refresh_expires_in":5184008,"token_type":"bearer","scope":"accountinfofull|email|transactions|send|funding","account_id":"1ba9585f-6468-4d1e-844a-4a13fea0d605"}'
+    http_version: 
+  recorded_at: Thu, 18 Jan 2018 06:53:45 GMT
+- request:
+    method: post
+    uri: https://api-sandbox.dwolla.com/mass-payments
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"source":{"href":"https://api-uat.dwolla.com/funding-sources/0b6f1c75-dd43-4495-b9bb-17387dafb553"}},"items":[{"_links":{"destination":{"href":"https://api-uat.dwolla.com/accounts/092499dc-d0f0-45c9-b89e-c42d050cbb21"}},"amount":{"currency":"USD","value":"10.00"},"metadata":{"auth_uid":"092499dc-d0f0-45c9-b89e-c42d050cbb21","payee_id":2,"approver_id":1,"description":"Test"}}]}'
+    headers:
+      Authorization:
+      - Bearer lbBJ6RHHMQQlXfxl8UiOkXaOH5nLlkjqaI80twkCygRIFWfkjf
+      Accept:
+      - application/vnd.dwolla.v1.hal+json
+      User-Agent:
+      - dwolla-v2-ruby 2.0.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Thu, 18 Jan 2018 06:53:49 GMT
+      Content-Type:
+      - application/vnd.dwolla.v1.hal+json
+      Content-Length:
+      - '0'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d71b52c07ceba9f14551b90b90fe08b611516258425; expires=Fri, 18-Jan-19
+        06:53:45 GMT; path=/; domain=.dwolla.com; HttpOnly
+      Location:
+      - https://api-sandbox.dwolla.com/mass-payments/02941cff-210e-429c-8ad1-a86c00719bc6
+      X-Request-Id:
+      - 80056f6c-26e9-4001-b86c-50849486dc60
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 3defa397ea16938a-SJC
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 18 Jan 2018 06:53:49 GMT
+recorded_with: VCR 3.0.3
