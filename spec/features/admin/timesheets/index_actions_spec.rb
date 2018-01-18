@@ -8,18 +8,24 @@ feature "Admin timesheet features" do
 
   scenario "when admin pays a timesheet" do
     funding_source
-    VCR.use_cassette("dwolla_authentication", record: :new_episodes) do
-      sign_in(admin)
-      visit admin_timesheets_path
 
-      expect(contractor.outstanding_balance).to eq 1
+    transfer_url = "transfer_url"
+    dwolla_stub_success(transfer_url)
 
-      click_on "Pay"
+    sign_in(admin)
+    visit admin_timesheets_path
 
-      expect(page).to have_content("Payment is being processed.")
-      expect(contractor.reload.outstanding_balance).to eq 0
-      expect(timesheet.reload.status).to eq "paid"
-    end
+    expect(contractor.outstanding_balance).to eq 1
+
+    click_on "Pay"
+
+    payout = Payout.last
+    expect(page).to have_content("Payment is being processed.")
+    expect(contractor.reload.outstanding_balance).to eq 0
+    expect(timesheet.reload.status).to eq "processing"
+    expect(timesheet.reload.payout).to eq payout
+    expect(payout.dwolla_transfer_url).to eq transfer_url
+    expect(payout.status).to eq "processing"
   end
 
   scenario "when admin denies a timesheet" do

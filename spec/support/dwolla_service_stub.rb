@@ -1,29 +1,18 @@
 module DwollaServiceStub
   Request = Struct.new(:success?, :response)
 
-  def token_refresh_stub
-    token_service = class_double("DwollaTokenRefresh").as_stubbed_const
-    expect(dwolla_service).to receive(:perform!) do 
-      DWOLLA_CLIENT.tokens.new(access_token: user.access_token,
-                               refresh_token: user.refresh_token)
-    end
+  def dwolla_stub_success(expected_content) 
+    stub(true, expected_content)
   end
 
-  def mass_pay_stub(result, expected_content) 
-    dwolla_service = class_double("DwollaService").as_stubbed_const
-    expect(dwolla_service).to receive(:request).twice do |arg1, _|
-      if arg1 == :mass_payment
-        Request.new(result, "url")
-      else
-        Request.new(result, expected_content)
-      end
-    end
+  def dwolla_stub_failure(expected_content)
+    stub(false, expected_content)
   end
 
-  def failed_mass_pay_stub(message)
+  def stub(result, expected_content)
     dwolla_service = class_double("DwollaService").as_stubbed_const
-    expect(dwolla_service).to receive(:request) do 
-      Request.new(false, [message])
+    expect(dwolla_service).to(receive(:request)).at_most(:twice) do 
+      Request.new(result, expected_content)
     end
   end
 end

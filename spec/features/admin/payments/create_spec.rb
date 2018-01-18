@@ -29,20 +29,25 @@ feature "Create payment for tutor" do
 
     scenario "and has dwolla auth" do
       funding_source
-      VCR.use_cassette("dwolla authentication", record: :new_episodes) do
-        sign_in(admin)
-        visit admin_tutors_path
-        click_on "Pay tutor"
 
-        find(".tutor").find(:xpath, "option[2]").select_option
-        fill_in "payout_amount", with: 15
-        fill_in "payout_description", with: "Payment for tutoring X hours"
-        click_button "Send Payment"
+      transfer_url = "transfer_url"
+      dwolla_stub_success(transfer_url)
 
-        expect(page).to have_content("Payment is being processed.")
-        # Standalone payment by admin does not take into account balances.
-        expect(tutor.reload.outstanding_balance).to eq 10
-      end
+      sign_in(admin)
+      visit admin_tutors_path
+      click_on "Pay tutor"
+
+      find(".tutor").find(:xpath, "option[2]").select_option
+      fill_in "payout_amount", with: 15
+      fill_in "payout_description", with: "Payment for tutoring X hours"
+      click_button "Send Payment"
+
+      payout = Payout.last
+      expect(payout.dwolla_transfer_url).to eq transfer_url
+      expect(payout.status).to eq "processing"
+      expect(page).to have_content("Payment is being processed.")
+      # Standalone payment by admin does not take into account balances.
+      expect(tutor.reload.outstanding_balance).to eq 10
     end
   end
 
@@ -62,46 +67,54 @@ feature "Create payment for tutor" do
 
       scenario "and admin has external auth" do
         funding_source
-        VCR.use_cassette("dwolla authentication", record: :new_episodes) do
-          sign_in(director)
-          visit admin_invoices_path
 
-          click_on "Pay"
+        transfer_url = "transfer_url"
+        dwolla_stub_success(transfer_url)
 
-          expect(page).to have_content("Payment is being processed.")
-          expect(tutor.reload.outstanding_balance).to eq 9
-        end
+        sign_in(director)
+        visit admin_invoices_path
+
+        click_on "Pay"
+
+        payout = Payout.last
+        expect(payout.dwolla_transfer_url).to eq transfer_url
+        expect(payout.status).to eq "processing"
+        expect(page).to have_content("Payment is being processed.")
+        # Standalone payment by admin does not take into account balances.
+        expect(tutor.reload.outstanding_balance).to eq 9
       end
 
       scenario "and payment exceeds tutor's balance" do
-        VCR.use_cassette("dwolla authentication", record: :new_episodes) do
-          tutor.update(outstanding_balance: 0)
-          funding_source
+        tutor.update(outstanding_balance: 0)
+        funding_source
 
-          sign_in(director)
-          visit admin_invoices_path
-          click_on "Pay"
+        sign_in(director)
+        visit admin_invoices_path
+        click_on "Pay"
 
-          expect(page).to have_content("This exceeds the maximum payment for this tutor.
+        expect(page).to have_content("This exceeds the maximum payment for this tutor.
           Please contact an administrator if you have any questions")
-        end
       end
     end
 
     context "and is paying himself" do 
       scenario "with valid credentials" do
-        VCR.use_cassette("dwolla authentication", record: :new_episodes) do
-          director_engagement = FactoryBot.create(:engagement, tutor_account: director.tutor_account, client_account: client.client_account, student_account: student_account)
-          FactoryBot.create(:invoice, submitter: director, client: client, engagement: director_engagement, hours: 1)
-          funding_source
+        director_engagement = FactoryBot.create(:engagement, tutor_account: director.tutor_account, client_account: client.client_account, student_account: student_account)
+        FactoryBot.create(:invoice, submitter: director, client: client, engagement: director_engagement, hours: 1)
+        funding_source
 
-          sign_in(director)
-          visit admin_invoices_path
-          click_on "Pay"
+        transfer_url = "transfer_url"
+        dwolla_stub_success(transfer_url)
 
-          expect(page).to have_content("Payment is being processed.")
-          expect(director.reload.outstanding_balance).to eq 9
-        end
+        sign_in(director)
+        visit admin_invoices_path
+        click_on "Pay"
+
+        payout = Payout.last
+        expect(payout.dwolla_transfer_url).to eq transfer_url
+        expect(payout.status).to eq "processing"
+        expect(page).to have_content("Payment is being processed.")
+        expect(director.reload.outstanding_balance).to eq 9
       end
     end
   end

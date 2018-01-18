@@ -3,31 +3,34 @@ require "rails_helper"
 feature "Set funding source" do
   let(:admin) { FactoryBot.create(:admin_user) }
   let(:auth_admin) { FactoryBot.create(:auth_admin_user) }
+  let(:response) { Struct.new(:name, :id) }
 
   scenario "goes to new" do
+    name = "Name of Funds"
+    dwolla_stub_success([])
+
     sign_in(admin)
-    VCR.use_cassette("dwolla funding sources") do
-      visit new_admin_funding_source_path
-      expect(page).to have_current_path(new_admin_funding_source_path)
-    end
+    visit new_admin_funding_source_path
+    expect(page).to have_current_path(new_admin_funding_source_path)
   end
 
   scenario "with invalid params" do
+    dwolla_stub_success([response.new("Name", "id")])
+
     sign_in(auth_admin)
-    VCR.use_cassette("dwolla funding sources") do
-      visit new_admin_funding_source_path
-      click_button "Set Funding source"
-      expect(page).to have_content("Funding source can't be blank")
-    end
+    visit new_admin_funding_source_path
+    click_button "Set Funding source"
+    expect(page).to have_content("Funding source can't be blank")
   end
 
   scenario "with valid params" do
+    name = "Name of Funds"
+    dwolla_stub_success([response.new(name, "id"), response.new("Balance", "id2")])
+
     sign_in(auth_admin)
-    VCR.use_cassette("dwolla funding sources") do
-      visit new_admin_funding_source_path
-      select "Balance", from: "funding_source_funding_source_id"
-      click_button "Set Funding source"
-      expect(page).to have_content("Funding source successfully set.")
-    end
+    visit new_admin_funding_source_path
+    select name, from: "funding_source_funding_source_id"
+    click_button "Set Funding source"
+    expect(page).to have_content("Funding source successfully set.")
   end
 end

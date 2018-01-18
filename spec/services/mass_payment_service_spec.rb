@@ -5,6 +5,7 @@ describe MassPaymentService do
   subject = MassPaymentService
   let(:admin) { FactoryBot.create(:auth_admin_user) }
   let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 4) }
+  let(:type) { "by_tutor" }
   let!(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
 
   context "for invoices" do
@@ -22,15 +23,16 @@ describe MassPaymentService do
       expect(Payout.count).to eq 0
       expected_payment_description = "Payment for invoices: #{tutor.invoices.pending.ids.join(', ')}."
 
-      mass_pay_stub true, [ { metadata: { auth_uid: tutor.auth_uid }, status: "success", _links: { transfer: { href: "transfer_url" } } } ]
+      mass_pay_url = "mass_pay_url"
+      dwolla_stub_success mass_pay_url
 
-      request = subject.new(Invoice.pending.by_tutor.group_by(&:submitter), admin).pay_all
+      request = subject.new(User.with_pending_invoices_attributes(type), admin, type).pay_all
 
       expect(request.success?).to be true
       expect(request.message).to contain_exactly "1 payment has been made for a total of $60.00."
       expect(Payout.count).to eq 1
       expect(Payout.sum(:amount_cents)).to eq 60_00
-      expect(Payout.last.dwolla_transfer_url).to eq "transfer_url"
+      expect(Payout.last.dwolla_mass_pay_url).to eq mass_pay_url
       expect(Payout.last.description).to eq expected_payment_description
       expect(Payout.last.destination).to eq tutor.auth_uid
       expect(Payout.last.funding_source).to eq funding_source.funding_source_id
@@ -40,9 +42,10 @@ describe MassPaymentService do
       expect(Payout.count).to eq 0
       count = tutor.invoices.pending.count
       error = "Error Message"
-      failed_mass_pay_stub error
 
-      request = subject.new(Invoice.pending.by_tutor.group_by(&:submitter), admin).pay_all
+      dwolla_stub_failure [error]
+
+      request = subject.new(User.with_pending_invoices_attributes(type), admin, type).pay_all
 
       expect(request.success?).to be false
       expect(request.message).to contain_exactly error
@@ -58,10 +61,10 @@ describe MassPaymentService do
       tutor_expected_payment_description = "Payment for invoices: #{tutor.invoices.pending.ids.join(', ')}."
       tutor2_expected_payment_description = "Payment for invoices: #{tutor2.invoices.pending.ids.join(', ')}."
 
-      mass_pay_stub true, [ { metadata: { auth_uid: tutor.auth_uid }, status: "success", _links: { transfer: { href: "transfer_url" } } },
-                            { metadata: { auth_uid: tutor2.auth_uid }, status: "success", _links: { transfer: { href: "transfer_url2" } } } ]
+      mass_pay_url = "mass_pay_url"
+      dwolla_stub_success mass_pay_url
 
-      request = subject.new(Invoice.pending.by_tutor.group_by(&:submitter), admin).pay_all
+      request = subject.new(User.with_pending_invoices_attributes(type), admin, type).pay_all
 
       tutor_payout = Payout.find_by destination: tutor.auth_uid
       tutor2_payout = Payout.find_by destination: tutor2.auth_uid
@@ -70,14 +73,15 @@ describe MassPaymentService do
       expect(request.message).to contain_exactly "2 payments have been made for a total of $90.00."
       expect(Payout.count).to eq 2
       expect(Payout.sum(:amount_cents)).to eq 90_00
-      expect(tutor_payout.dwolla_transfer_url).to eq "transfer_url"
+      expect(tutor_payout.dwolla_mass_pay_url).to eq mass_pay_url
       expect(tutor_payout.description).to eq tutor_expected_payment_description
-      expect(tutor2_payout.dwolla_transfer_url).to eq "transfer_url2"
+      expect(tutor2_payout.dwolla_mass_pay_url).to eq mass_pay_url
       expect(tutor2_payout.description).to eq tutor2_expected_payment_description
     end
 
     it "makes all pending invoices to processing" do
-      subject.new(Invoice.pending.by_tutor.group_by(&:submitter), admin)
+      subject.new(User.with_pending_invoices_attributes(type), admin, type)
+
       expect(invoice_pending.reload.status).to eq "processing"
       expect(invoice_pending2.reload.status).to eq "processing"
       expect(invoice_paid.reload.status).to eq "paid"
@@ -87,20 +91,23 @@ describe MassPaymentService do
 
   context "for timesheets" do
     it "pays only pending timesheets" do
-      FactoryBot.create(:contractor_account, user: tutor)
+      FactoryBot.create(:contractor_account, user: tutor, hourly_rate: 15)
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_contractor", status: "pending")
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_tutor", status: "pending")
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_contractor", hours: 1, status: "paid")
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_contractor", hours: 1, status: "pending")
 
-      mass_pay_stub true, [ { metadata: { auth_uid: tutor.auth_uid }, status: "success", _links: { transfer: { href: "transfer_url" } } } ]
+      mass_pay_url = "mass_pay_url"
+      dwolla_stub_success mass_pay_url
 
-      request = subject.new(Invoice.pending.by_contractor.group_by(&:submitter), admin).pay_all
+      type = "by_contractor"
+      request = subject.new(User.with_pending_invoices_attributes(type), admin, type).pay_all
 
       expect(request.success?).to be true
       expect(request.message).to contain_exactly "1 payment has been made for a total of $45.00."
       expect(Payout.count).to eq 1
       expect(Payout.sum(:amount_cents)).to eq 45_00
+      expect(Payout.last.dwolla_mass_pay_url).to eq mass_pay_url
     end
   end
 end
