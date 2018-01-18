@@ -8,7 +8,7 @@ feature "City crud specs" do
   scenario "admin visits index path" do
     sign_in(admin)
     city
-    visit cities_path
+    visit admin_cities_path
 
     expect(page).to have_link "Add a City"
     expect(page).to have_link "Edit"
@@ -24,7 +24,7 @@ feature "City crud specs" do
   scenario "admin adds a city without state" do
     country
     sign_in(admin)
-    visit new_city_path
+    visit new_admin_city_path
 
     city_name = "NewCityName"
     city_phone_number = "(510) 555-5555"
@@ -44,7 +44,7 @@ feature "City crud specs" do
   scenario "admin adds a city with state" do
     country
     sign_in(admin)
-    visit new_city_path
+    visit new_admin_city_path
 
     city_name = "NewCityName"
     city_phone_number = "(510) 555-5555"
@@ -66,7 +66,7 @@ feature "City crud specs" do
 
   scenario "editing a city with valid params" do
     sign_in(admin)
-    visit edit_city_path(city)
+    visit edit_admin_city_path(city)
 
     city_name = "NewCityName"
     city_phone_number = "(510) 444-4444"
@@ -85,7 +85,7 @@ feature "City crud specs" do
   scenario "admin removes a city" do
     sign_in(admin)
     name = city.name
-    visit cities_path
+    visit admin_cities_path
 
     click_on "Destroy"
 

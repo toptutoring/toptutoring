@@ -84,9 +84,11 @@ Rails.application.routes.draw do
     end
     # only Admin/Director has access to blogs and cities for now
     resources :blog_posts
-    resources :cities
-    resources :countries
-    resources :regions
+    namespace :admin do
+      resources :cities do
+      end
+      resources :countries
+    end
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("tutor") } do

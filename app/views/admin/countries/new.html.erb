@@ -33,8 +33,8 @@
                   <td><%= country.name %></td>
                   <td><%= country.code %></td>
                   <td>
-                    <%= link_to "Edit", edit_country_path(country), class: "btn btn-primary" %>
-                    <%= link_to "Destroy", country_path(country), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to remove this country?" } %>
+                    <%= link_to "Edit", edit_admin_country_path(country), class: "btn btn-primary" %>
+                    <%= link_to "Destroy", admin_country_path(country), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to remove this country?" } %>
                   </td>
                 </tr>
               <% end %>
