@@ -7,11 +7,12 @@ module MenuLinksHelper
     end
   end
 
-  def menu_link(path, title, icon_style)
+  def menu_link(path, title, icon_style, badge = nil)
     tag.li class: "panel" do
       link_to path, class: active?(path) do
-        tag.i(class: icon_style) +
-        tag.span(title, class: "sidebar-title")
+        concat tag.i(class: icon_style)
+        concat tag.span(title, class: "sidebar-title")
+        concat tag.span(badge, class: "badge bg-danger") if badge && badge > 0
       end
     end
   end
