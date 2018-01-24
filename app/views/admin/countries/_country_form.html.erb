@@ -1,5 +1,5 @@
 <%= link_to "ISO code must be a valid ISO-alpha-2 code.", "https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2", target: :blank %> 
-<%= form_for @country, :html => { class: "form-horizontal" } do |f| %>
+<%= form_for [:admin, @country], :html => { class: "form-horizontal" } do |f| %>
   <div class="col-sm-6">
     <div class="form-group m-5">
       <%= f.label :name, class: "control-label" %>

@@ -2,8 +2,8 @@
 <div class="row m-30">
   <div class="widget p-20">
     <div class="widget-body">
-      <%= link_to "Add a City", new_city_path, class: "btn btn-blue" %>
-      <%= link_to "Add a Country", new_country_path, class: "btn btn-primary" %>
+      <%= link_to "Add a City", new_admin_city_path, class: "btn btn-blue" %>
+      <%= link_to "Add a Country", new_admin_country_path, class: "btn btn-primary" %>
       <div class="table-responsive">
         <table class="table mb-0 table-striped table-hover">
           <thead>
@@ -23,8 +23,10 @@
                 <td><%= city.country.name %></td>
                 <td><%= Phonelib.parse(city.phone_number, city.country.code).national %></td>
                 <td>
-                  <%= link_to "Edit", edit_city_path(city), class: "btn btn-primary" %>
-                  <%= link_to "Destroy", city_path(city), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to remove this city?" } %>
+                  <%= link_to "Edit", edit_admin_city_path(city), class: "btn btn-blue" %>
+                  <%= link_to "Preview", preview_admin_city_path(city), class: "btn btn-primary" %>
+                  <%= publish_or_remove_link(city) %>
+                  <%= link_to "Destroy", admin_city_path(city), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to remove this city?" } %>
                 </td>
               </tr>
             <% end %>

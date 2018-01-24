@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   #Clearance routes
   resource :session, controller: "sessions", only: [:new, :create]
 
+  resources :cities, only: [:show]
+
   scope module: "admin" do
     resources :users, only: [] do
       resource :masquerade, only: :create
@@ -84,9 +86,15 @@ Rails.application.routes.draw do
     end
     # only Admin/Director has access to blogs and cities for now
     resources :blog_posts
-    resources :cities
-    resources :countries
-    resources :regions
+    namespace :admin do
+      resources :cities do
+        member do
+          post "/publish" => "cities#publish"
+          get "/preview" => "cities#preview"
+        end
+      end
+      resources :countries
+    end
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("tutor") } do

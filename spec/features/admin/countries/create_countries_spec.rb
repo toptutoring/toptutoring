@@ -7,7 +7,7 @@ feature "Country crud specs" do
   scenario "admin visits index path" do
     country
     sign_in(admin)
-    visit new_country_path
+    visit new_admin_country_path
 
     expect(page).to have_button "Create Country"
     expect(page).to have_link "Edit"
@@ -19,7 +19,7 @@ feature "Country crud specs" do
 
   scenario "admin adds a country" do
     sign_in(admin)
-    visit new_country_path
+    visit new_admin_country_path
 
     country_name = "NewCountryName"
     country_code = "code"
@@ -36,7 +36,7 @@ feature "Country crud specs" do
 
   scenario "editing a country with valid params" do
     sign_in(admin)
-    visit edit_country_path(country)
+    visit edit_admin_country_path(country)
 
     country_name = "NewCountryName"
     country_code = "code"
@@ -54,7 +54,7 @@ feature "Country crud specs" do
   scenario "admin removes a country" do
     sign_in(admin)
     name = country.name
-    visit new_country_path
+    visit new_admin_country_path
 
     click_on "Destroy"
 
