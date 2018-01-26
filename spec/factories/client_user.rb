@@ -6,7 +6,6 @@ FactoryBot.define do
     password      { "password" }
     roles         { Role.where(name: 'client') }
     access_state  { "enabled" }
-    customer_id   { "xxx" }
     online_academic_rate     { 20 }
     online_test_prep_rate    { 20 }
     online_academic_credit   { 20 }

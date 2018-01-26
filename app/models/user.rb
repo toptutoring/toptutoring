@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   # Associations
   has_one :signup, dependent: :destroy
+  has_one :stripe_account
   accepts_nested_attributes_for :signup
   has_many :students, class_name: "User", foreign_key: "client_id"
   has_one :student_account, dependent: :destroy
@@ -38,7 +39,6 @@ class User < ActiveRecord::Base
   end
 
   # Scopes #
-  scope :customer, ->(customer_id) { where(customer_id: customer_id) }
   scope :tutors, -> { joins(:roles).where(roles: { name: "tutor" }).distinct }
   scope :contractors, -> { joins(:roles).where(roles: { name: "contractor" }).distinct }
   scope :clients, -> { joins(:roles).where(roles: { name: "client" }).distinct }
@@ -93,10 +93,6 @@ class User < ActiveRecord::Base
 
   def has_role?(role)
     roles.find_by_name(role)
-  end
-
-  def is_customer?
-    customer_id.present?
   end
 
   def requires_dwolla?
