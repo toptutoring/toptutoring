@@ -4,8 +4,7 @@ class Payment < ActiveRecord::Base
   belongs_to :stripe_account
 
   # Validations #
-  validates_presence_of :payer_id, :hours_type, :card_holder_name,
-                        :last_four, :card_brand
+  validates_presence_of :payer_id, :hours_type
   validates :amount_cents, :rate_cents, :hours_purchased, numericality: { greater_than_or_equal_to: 1 }
 
   # Monetize amounts

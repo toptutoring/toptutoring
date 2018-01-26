@@ -1,13 +1,16 @@
 class PaymentService
   Result = Struct.new(:success?, :message)
 
-  def initialize(payment_params, token)
+  def initialize(source, payment_params, account = nil)
     @user = User.find(payment_params[:payer_id])
     @payment_params = payment_params
-    @token = token
+    # source must be a valid Stripe source, i.e. "tok_xxxx", or "card_xxxx"
+    @source = source
+    @account = account
   end
 
   def charge!
+    return Result.new(false, I18n.t("app.payment.failure")) unless source
     payment = build_payment
     process_payment!(payment)
   rescue Stripe::StripeError => e
@@ -17,12 +20,13 @@ class PaymentService
 
   private
 
-  attr_reader :user, :payment_params
+  attr_reader :user, :payment_params, :source, :account
 
   def build_payment
     payment = Payment.new(payment_params)
     payment.assign_attributes(description: payment_description,
-                              status: "succeeded", amount: amount, rate: rate)
+                              status: "succeeded", amount: amount, rate: rate,
+                              stripe_account: account)
     payment
   end
 
@@ -57,7 +61,7 @@ class PaymentService
   def process_payment!(payment)
     if payment.valid? && user_credit_valid
       charge = charge_with_stripe(payment)
-      payment.stripe_charge_id = charge.id
+      add_stripe_charge_data(payment, charge)
       payment.save
       user.save
       send_notices(payment)
@@ -65,6 +69,14 @@ class PaymentService
     else
       Result.new(false, payment.errors.full_messages)
     end
+  end
+
+  def add_stripe_charge_data(payment, charge)
+    payment.stripe_charge_id = charge.id
+    card = charge.source
+    payment.assign_attributes(stripe_source: card.id, last_four: card.last4,
+                              card_holder_name: card.name,
+                              card_brand: card.brand)
   end
 
   def user_credit_valid
@@ -82,11 +94,21 @@ class PaymentService
 
   def charge_with_stripe(payment)
     Stripe::Charge.create(
-      amount: payment.amount_cents,
-      currency: "usd",
-      source: @token,
-      description: payment.description
+      stripe_charge_params(payment)
     )
+  end
+
+  def stripe_charge_params(payment)
+    params = { amount: payment.amount_cents,
+               currency: "usd",
+               description: payment.description,
+               source: source }
+    params.merge!(customer: account.customer_id) if account
+    params
+  end
+
+  def academic?
+    academic_type == "academic"
   end
 
   def send_notices(payment)
