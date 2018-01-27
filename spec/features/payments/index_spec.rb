@@ -9,7 +9,7 @@ feature "Index Payments" do
     FactoryBot.create(:engagement, client_account: client.client_account)
 
     sign_in(client)
-    visit clients_payments_path
+    visit new_clients_payment_path
 
     expect(page).to have_content(l(payment.created_at, format: :date))
     expect(page).to have_content(payment.amount)

@@ -8,9 +8,6 @@ class Clients::PaymentsController < ApplicationController
     @hours_type_options << ["In-Person Academic Hours", "in_person_academic"] if current_user.in_person_academic_rate > 0
     @hours_type_options << ["In-Person Test Prep Hours", "in_person_test_prep"] if current_user.in_person_test_prep_rate > 0
     @account = current_user.stripe_account
-  end
-
-  def index
     @payments = Payment.from_user(current_user.id)
   end
 
@@ -19,11 +16,10 @@ class Clients::PaymentsController < ApplicationController
     results = PaymentService.new(source, payment_params, account).charge!
     if results.success?
       flash.notice = results.message
-      redirect_to clients_payments_path
     else
       flash.alert = results.message
-      redirect_to action: :new
     end
+    redirect_to action: :new
   end
 
   private
