@@ -8,7 +8,6 @@ class Engagement < ActiveRecord::Base
   # Engagements with invoices should not be destroyed
   has_many :invoices
   has_many :availabilities, dependent: :destroy
-  has_many :suggestions, dependent: :destroy
 
   #### Scopes ####
   scope :pending, -> { where(state: :pending).order('created_at DESC') }

@@ -34,17 +34,6 @@
                     <td><%= client.academic_credit %></td>
                   <% end %>
                 </tr>
-                <tr>
-                  <td colspan="7" class="text-right">
-                    <% pending_suggestion = engagement.suggestions.where(status: "pending").take %>
-                    <% if pending_suggestion %>
-                      <%= limit_suggestion_description_length("\"#{pending_suggestion.description}\"") %><br/>
-                      You have suggested <b><%= pending_suggestion.hours %> hours</b> for <%= engagement.student_name %>. <%= link_to "Edit your suggestion.", edit_tutors_suggestion_path(pending_suggestion.id) %>
-                    <% else %>
-                      You have no pending suggestions for <%= engagement.student_name %>. <%= link_to "Make a Suggestion.", new_tutors_suggestion_path(id: engagement) %>
-                    <% end %>
-                  </td>
-                </tr>
               <% end %>
             </tbody>
           </table>
