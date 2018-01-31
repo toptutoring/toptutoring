@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180118180546) do
+ActiveRecord::Schema.define(version: 20180131231237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,14 +214,6 @@ ActiveRecord::Schema.define(version: 20180118180546) do
     t.bigint "tutor_account_id", null: false
     t.index ["subject_id"], name: "index_subjects_tutor_accounts_on_subject_id"
     t.index ["tutor_account_id"], name: "index_subjects_tutor_accounts_on_tutor_account_id"
-  end
-
-  create_table "suggestions", id: :serial, force: :cascade do |t|
-    t.integer "engagement_id"
-    t.integer "suggested_minutes"
-    t.text "description"
-    t.text "status", default: "pending"
-    t.index ["engagement_id"], name: "index_suggestions_on_engagement_id"
   end
 
   create_table "tutor_accounts", force: :cascade do |t|
