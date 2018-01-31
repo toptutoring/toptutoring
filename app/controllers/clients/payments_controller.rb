@@ -33,7 +33,7 @@ class Clients::PaymentsController < ApplicationController
   end
 
   def check_for_engagements
-    return if current_user.client_account.engagements.any?
+    return if current_user.client_account.engagements.active.any?
     flash.notice = I18n.t("app.clients.payments.no_engagements")
     redirect_to dashboard_path
   end
