@@ -1,72 +1,70 @@
-<div class="col-md-6 unfloat center-block">
-  <div class="widget">
-    <div class="widget-heading">
-      <h3 class="widget-title pb-10 text-center">Invoice session</h3>
-      <p class="widget-hint">Use this form to log past sessions with your students</p>
-    </div>
-    <div class="widget-body">
-      <%= form_for [:tutors, @invoice], :html => { class: "form-horizontal" } do |f| %>
-        <% if current_user.has_role?("contractor") && current_user.has_role?("tutor") %>
-          <div class="form-group select-option">
-            <label for="submitter_type" class="col-sm-3 control-label">Submitting As</label>
-            <div class="col-sm-9">
-              <%= f.select(:submitter_type, options_for_select([["Tutor", "by_tutor"], ["Contractor", "by_contractor"]], "by_tutor"),
-                           {}, class: "form-control", required: true) %>
-          </div>
-          </div>
-        <% elsif current_user.has_role?("tutor") %>
-          <%= hidden_field_tag "invoice[submitter_type]", "by_tutor" %>
-        <% elsif current_user.has_role?("contractor") %>
-          <%= hidden_field_tag "invoice[submitter_type]", "by_contractor" %>
-        <% end %>
-
-        <% if current_user.has_role?("tutor") %>
-          <div class="row m-10 only-for-tutors">
-            <div class="col-sm-offset-3">
-              <%= f.radio_button :online, "true", checked: true %>
-              <%= f.label :online, "Online Session", value: "true", class: "pl-20" %>
-              <br/>
-              <%= f.radio_button :online, "false" %>
-              <%= f.label :online, "In-person Session", value: "false", class: "pl-20" %>
-            </div>
-          </div>
-
-          <div class="form-group select-option only-for-tutors">
-            <label for="student" class="col-sm-3 control-label">Student</label>
-            <div class="col-sm-9">
-              <%= f.select(:engagement_id, options_for_select(@tutor_engagements.map do |engagement|
-                ["#{engagement.student_name} for #{engagement.subject.name}", engagement.id]
-              end, @tutor_engagements.first ? @tutor_engagements.first.id : nil),
-              {}, class: "form-control invoice_tutor_student", required: true) %>
-          </div>
-          </div>
-
-          <div class="form-group only-for-tutors">
-            <label for="subject" class="col-sm-3 control-label">Main Subject Covered</label>
-            <div class="col-sm-9">
-              <%= f.text_field :subject, "aria-label" => "subject", class: "form-control", required: "required" %>
-            </div>
-          </div>
-        <% end %>
-
+<div class="widget">
+  <div class="widget-heading">
+    <h3 class="widget-title pb-10 text-center">Invoice session</h3>
+    <p class="widget-hint">Use this form to log past sessions with your students</p>
+  </div>
+  <div class="widget-body">
+    <%= form_for [:tutors, @invoice], :html => { class: "form-horizontal" } do |f| %>
+      <% if current_user.has_role?("contractor") && current_user.has_role?("tutor") %>
         <div class="form-group select-option">
-          <%= f.label :hours, class: "col-sm-3 control-label" %>
+          <label for="submitter_type" class="col-sm-3 control-label">Submitting As</label>
           <div class="col-sm-9">
-            <%= f.select(:hours, options_for_select([]), {}, class:"form-control invoice_hours", required: true, "aria-label" => "hours") %>
+            <%= f.select(:submitter_type, options_for_select([["Tutor", "by_tutor"], ["Contractor", "by_contractor"]], "by_tutor"),
+                         {}, class: "form-control", required: true) %>
+        </div>
+        </div>
+      <% elsif current_user.has_role?("tutor") %>
+        <%= hidden_field_tag "invoice[submitter_type]", "by_tutor" %>
+      <% elsif current_user.has_role?("contractor") %>
+        <%= hidden_field_tag "invoice[submitter_type]", "by_contractor" %>
+      <% end %>
+
+      <% if current_user.has_role?("tutor") %>
+        <div class="row m-10 only-for-tutors">
+          <div class="col-sm-offset-3">
+            <%= f.radio_button :online, "true", checked: true %>
+            <%= f.label :online, "Online Session", value: "true", class: "pl-20" %>
+            <br/>
+            <%= f.radio_button :online, "false" %>
+            <%= f.label :online, "In-person Session", value: "false", class: "pl-20" %>
           </div>
         </div>
 
-        <div class="form-group">
-          <%= f.label :description, class: "col-sm-3 control-label" %>
+        <div class="form-group select-option only-for-tutors">
+          <label for="student" class="col-sm-3 control-label">Student</label>
           <div class="col-sm-9">
-            <%= f.text_area :description, rows: 4, class:"form-control", placeholder: "Description", "aria-label" => "description", required: "required" %>
-          </div>
+            <%= f.select(:engagement_id, options_for_select(@tutor_engagements.map do |engagement|
+              ["#{engagement.student_name} for #{engagement.subject.name.titlecase}", engagement.id]
+            end, @tutor_engagements.first ? @tutor_engagements.first.id : nil),
+            {}, class: "form-control invoice_tutor_student", required: true) %>
+        </div>
         </div>
 
-        <div class="text-center">
-          <%= f.submit class: "btn btn-primary" %>
+        <div class="form-group only-for-tutors">
+          <label for="subject" class="col-sm-3 control-label">Main Subject Covered</label>
+          <div class="col-sm-9">
+            <%= f.text_field :subject, "aria-label" => "subject", class: "form-control", required: "required" %>
+          </div>
         </div>
       <% end %>
-    </div>
+
+      <div class="form-group select-option">
+        <%= f.label :hours, class: "col-sm-3 control-label" %>
+        <div class="col-sm-9">
+          <%= f.select(:hours, options_for_select([]), {}, class:"form-control invoice_hours", required: true, "aria-label" => "hours") %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :description, class: "col-sm-3 control-label" %>
+        <div class="col-sm-9">
+          <%= f.text_area :description, rows: 4, class:"form-control", placeholder: "Description", "aria-label" => "description", required: "required" %>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <%= f.submit class: "btn btn-primary" %>
+      </div>
+    <% end %>
   </div>
 </div>

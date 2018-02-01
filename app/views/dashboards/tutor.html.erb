@@ -1,13 +1,11 @@
 <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
 <div class="row">
-  <div class="col-md-9">
-    <%= render "students" %>
+    <div class="col-md-6">
+      <%= render "students" %>
+      <%= render partial: "invoice_form" %>
+    </div>
+    <div class="col-md-6">
+      <%= render "dashboards/tutors/balance_widget" %>
+    </div>
   </div>
-  <div class="col-md-3">
-    <%= render "dashboards/tutors/balance_widget" %>
-  </div>
-</div>
-
-<div class="row">
-  <%= render partial: "invoice_form" %>
 </div>
