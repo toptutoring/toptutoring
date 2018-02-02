@@ -103,7 +103,6 @@ Rails.application.routes.draw do
       resources :students, only: [:index]
       resources :invoices, only: [:index, :create, :destroy]
       resources :emails, only: [:index]
-      resources :suggestions
       resources :subjects, only: [:index, :update]
     end
     resources :users do
@@ -124,7 +123,6 @@ Rails.application.routes.draw do
       resources :tutors
       resource :request_tutor, only: [:destroy, :new, :create]
     end
-    resources :suggestions
     get "/dashboard" => "dashboards#client"
     resources :availability, only: [:new, :create, :update, :edit]
     post "/availability/dropdown_change" => "availability#dropdown_change"

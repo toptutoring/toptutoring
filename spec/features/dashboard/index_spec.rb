@@ -29,7 +29,6 @@ feature "Dashboard Index" do
     expect(page).to have_content("Dashboard")
     expect(page).to have_content("Purchase Hours")
     expect(page).to have_content("Past Payments")
-    expect(page).to have_content("Suggestions")
     expect(page).to have_content("Your Students")
     expect(page).to have_content("Invoices")
   end

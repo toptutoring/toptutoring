@@ -1,20 +1,13 @@
-<% if current_user.enabled? %>
-  <%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
-  <div class="row">
-    <div class="col-md-9">
-      <%= render "students" %>
-    </div>
-    <div class="col-md-3">
-      <%= render "dashboards/tutors/balance_widget" %>
-    </div>
+<%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
+<div class="row">
+  <div class="col-md-9">
+    <%= render "students" %>
   </div>
+  <div class="col-md-3">
+    <%= render "dashboards/tutors/balance_widget" %>
+  </div>
+</div>
 
-  <div class="row">
-    <% if @low_balance_engagements %>
-      <%= render "tutors/suggestions/suggestion_dashboard_form" %>
-      <%= render partial: "invoice_form", locals: { center: false } %>
-    <% else %>
-      <%= render partial: "invoice_form", locals: { center: true } %>
-    <% end %>
-  </div>
-<% end %>
+<div class="row">
+  <%= render partial: "invoice_form" %>
+</div>
