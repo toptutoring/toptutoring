@@ -6,19 +6,20 @@ module DashboardHelper
 
   def credit_widget_display(types, user)
     capture do
-      concat content_tag :h3, "Online"
       types.each do |type|
-        concat balance_string(type, user, "online")
-      end
-      concat content_tag :h3, "In-Person"
-      types.each do |type|
-        concat balance_string(type, user, "in_person")
+        concat balance_string(type, user)
       end
     end
   end
 
-  def balance_string(type, user, session_type)
-    prefix = type == "academic" ? "Academic Credits: " : "Test Prep Credits: "
-    content_tag :p, prefix + user.send(session_type + "_" + type + "_credit").to_s, class: "lead"
+  def balance_string(type, user)
+    prefix = type.humanize.capitalize + " Credit: "
+    online = "online_#{type}"
+    in_person = "in_person_#{type}"
+    if current_user.send(online + "_rate") > 0
+      content_tag :p, "Online " + prefix + user.send(online + "_credit").to_s, class: "lead"
+    elsif current_user.send(in_person + "_rate") > 0
+      content_tag :p, "In-Person " + prefix + user.send(in_person + "_credit").to_s, class: "lead"
+    end
   end
 end
