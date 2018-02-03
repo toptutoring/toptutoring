@@ -74,7 +74,6 @@ feature "Admin role features" do
     click_on "Add as contractor"
     expect(tutor.reload.roles).to contain_exactly(tutor_role, contractor_role)
     expect(tutor.reload.contractor_account).to be_truthy
-    expect(tutor.reload.contractor_account.contract).to be_truthy
 
     click_on "Add as director"
     expect(tutor.reload.roles).to contain_exactly(tutor_role, contractor_role, director_role)
@@ -91,6 +90,5 @@ feature "Admin role features" do
     click_on "Add as tutor"
     expect(contractor.reload.roles).to contain_exactly(tutor_role)
     expect(contractor.reload.tutor_account).to be_truthy
-    expect(contractor.reload.tutor_account.contract).to be_truthy
   end
 end

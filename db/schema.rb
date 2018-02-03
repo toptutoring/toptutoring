@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202191425) do
+ActiveRecord::Schema.define(version: 20180203183001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -259,9 +259,9 @@ ActiveRecord::Schema.define(version: 20180202191425) do
     t.decimal "online_academic_credit", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "online_test_prep_credit", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "outstanding_balance", precision: 10, scale: 2, default: "0.0", null: false
-    t.integer "online_academic_rate_cents", default: 2999, null: false
+    t.integer "online_academic_rate_cents", default: 0, null: false
     t.string "online_academic_rate_currency", default: "USD", null: false
-    t.integer "online_test_prep_rate_cents", default: 5999, null: false
+    t.integer "online_test_prep_rate_cents", default: 0, null: false
     t.string "online_test_prep_rate_currency", default: "USD", null: false
     t.integer "in_person_academic_rate_cents", default: 0, null: false
     t.string "in_person_academic_rate_currency", default: "USD", null: false
