@@ -14,10 +14,10 @@
                   <th>ID</th>
                   <th>Name</th>
                   <th>Access State</th>
-                  <th>Academic Rate</th>
-                  <th>Test Prep Rate</th>
-                  <th>Academic Credit</th>
-                  <th>Test Prep Credit</th>
+                  <th>Academic Rate(O/I)</th>
+                  <th>Test Prep Rate(O/I)</th>
+                  <th>Academic Credit(O/I)</th>
+                  <th>Test Prep Credit(O/I)</th>
                   <th>Action</th>
                   <th>Masquerade</th>
                 </tr>
@@ -36,10 +36,10 @@
                       </div>
                     </td>
                     <td><%= user.access_state %></td>
-                    <td><%= number_to_currency(user.academic_rate) %></td>
-                    <td><%= number_to_currency(user.test_prep_rate) %></td>
-                    <td><%= user.academic_credit.to_s + " hrs" %></td>
-                    <td><%= user.test_prep_credit.to_s + " hrs" %></td>
+                    <td><%= number_to_currency(user.online_academic_rate) %> / <%= number_to_currency(user.in_person_academic_rate) %></td>
+                    <td><%= number_to_currency(user.online_test_prep_rate) %> / <%= number_to_currency(user.in_person_test_prep_rate) %></td>
+                    <td><%= user.online_academic_credit.to_s + " hrs" %> / <%= user.in_person_academic_credit.to_s + " hrs" %></td>
+                    <td><%= user.online_test_prep_credit.to_s + " hrs" %> / <%= user.in_person_test_prep_credit.to_s + " hrs" %></td>
                     <td>
                       <%= link_to "Adjust Rates and Balances", edit_director_user_path(user), class: "btn btn-outline btn-success btn-sm" %>
                     </td>

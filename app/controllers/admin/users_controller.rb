@@ -33,8 +33,10 @@ module Admin
 
     def user_params
       params.require(:user).permit(:name, :email, :phone_number,
-                                   :test_prep_credit, :academic_credit,
-                                   :test_prep_rate, :academic_rate)
+                                   :in_person_academic_credit, :in_person_test_prep_credit,
+                                   :in_person_academic_rate, :in_person_test_prep_rate,
+                                   :online_test_prep_credit, :online_academic_credit,
+                                   :online_test_prep_rate, :online_academic_rate)
     end
 
     def set_user

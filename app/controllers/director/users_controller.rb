@@ -23,8 +23,10 @@ module Director
     private
 
     def user_params
-      params.require(:user).permit(:academic_credit, :test_prep_credit,
-                                   :academic_rate, :test_prep_rate)
+      params.require(:user).permit(:online_academic_credit, :online_test_prep_credit,
+                                   :online_academic_rate, :online_test_prep_rate,
+                                   :in_person_academic_credit, :in_person_test_prep_credit,
+                                   :in_person_academic_rate, :in_person_test_prep_rate)
     end
 
     def valid_inputs?
@@ -32,15 +34,19 @@ module Director
     end
 
     def valid_amount?
-      return true if money?(params[:user][:academic_rate]) &&
-                     money?(params[:user][:test_prep_rate])
+      return true if money?(params[:user][:online_academic_rate]) &&
+                     money?(params[:user][:online_test_prep_rate]) &&
+                     money?(params[:user][:in_person_academic_rate]) &&
+                     money?(params[:user][:in_person_test_prep_rate])
       flash.alert = "Rates must be in correct dollar values"
       false
     end
 
     def valid_credit?
-      return true if quarter_hours?(params[:user][:academic_credit]) &&
-                     quarter_hours?(params[:user][:test_prep_credit])
+      return true if quarter_hours?(params[:user][:online_academic_credit]) &&
+                     quarter_hours?(params[:user][:online_test_prep_credit]) &&
+                     quarter_hours?(params[:user][:in_person_academic_credit]) &&
+                     quarter_hours?(params[:user][:in_person_test_prep_credit])
       flash.alert = "Credits must be in quarter hours"
       false
     end
