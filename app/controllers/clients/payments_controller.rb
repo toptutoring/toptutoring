@@ -2,7 +2,12 @@ class Clients::PaymentsController < ApplicationController
   before_action :require_login, :check_for_engagements
 
   def new
-    @academic_types = current_user.client_account.academic_types_engaged
+    academic_types = current_user.client_account.academic_types_engaged
+    @hours_type_options = academic_types.each_with_object([]) do |type, object|
+      string = type.humanize.capitalize
+      object << ["Online " + string + " Hours", "online_" + type]
+      object << ["In-Person " + string + " Hours", "in_person_" + type]
+    end
   end
 
   def index

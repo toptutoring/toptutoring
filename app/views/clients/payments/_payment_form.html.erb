@@ -10,22 +10,14 @@
       </div>
       <div class="widget-body">
         <div class="widget-content">
-          <% if @academic_types.count > 1 %>
-            <div class="row">
-              <div class="col-xs-6 text-right">
-                <%= f.label :hours_type, "What hours would you like to purchase?" %>
-              </div>
-              <div class="col-xs-6">
-                <%= f.select :hours_type, options_for_select(@academic_types.map { |type| [type.humanize, type] }), class: "form-control input-lg", required: true %>
-              </div>
+          <div class="row">
+            <div class="col-xs-6 text-right">
+              <%= f.label :hours_type, "What hours would you like to purchase?" %>
             </div>
-          <% elsif @academic_types.include?("academic") %>
-            <%= f.label :hours_type, "Purchasing Academic Hours" %>
-            <%= f.hidden_field :hours_type, value: "academic" %>
-          <% else %>
-            <%= f.label :hours_type, "Purchasing Test Prep Hours" %>
-            <%= f.hidden_field :hours_type, value: "test_prep" %>
-          <% end %>
+            <div class="col-xs-6">
+              <%= f.select :hours_type, options_for_select(@hours_type_options), class: "form-control input-lg", required: true %>
+            </div>
+          </div>
 
           <div class="row">
             <div class="col-xs-6 text-right">
@@ -33,7 +25,8 @@
             </div>
             <div class="col-xs-6">
               <%= content_tag :h4, nil, class: "fw-300",
-                data: { academic: current_user.academic_rate.to_s, test: current_user.test_prep_rate.to_s },
+                data: { online_academic: current_user.online_academic_rate.to_s, online_test: current_user.online_test_prep_rate.to_s,
+              in_person_academic: current_user.in_person_academic_rate.to_s, in_person_test: current_user.in_person_test_prep_rate.to_s },
                 id: "hourly-rate-display" %>
             </div>
           </div>
@@ -67,7 +60,8 @@
 
             <div class="col-xs-2">
               <%= content_tag :h4, nil, class: "mb-20 fw-300 text-left",
-                data: { academic: current_user.academic_credit, test: current_user.test_prep_credit },
+                data: { online_academic: current_user.online_academic_credit, online_test: current_user.online_test_prep_credit,
+              in_person_academic: current_user.in_person_academic_credit, in_person_test: current_user.in_person_test_prep_credit },
                 id: "current-hours" %>
           </div>
 
