@@ -63,9 +63,9 @@ class CreditUpdater
   def client_low_balance?
     return nil unless @engagement
     if @engagement.academic?
-      @client.academic_credit <= 0.5
+      @client.online_academic_credit <= 0.5
     elsif @engagement.test_prep?
-      @client.test_prep_credit <= 0.5
+      @client.online_test_prep_credit <= 0.5
     end
   end
 
@@ -73,18 +73,34 @@ class CreditUpdater
 
   def subtract_from_client_credit(hours)
     if @engagement.academic?
-      @client.academic_credit -= hours
+      if @invoice.online?
+        @client.online_academic_credit -= hours
+      else
+        @client.in_person_academic_credit -= hours
+      end
     elsif @engagement.test_prep?
-      @client.test_prep_credit -= hours
+      if @invoice.online?
+        @client.online_test_prep_credit -= hours
+      else
+        @client.in_person_test_prep_credit -= hours
+      end
     end
     @client.save!
   end
 
   def add_to_client_credit(hours)
     if @engagement.academic?
-      @client.academic_credit += hours
+      if @invoice.online?
+        @client.online_academic_credit += hours
+      else
+        @client.in_person_academic_credit += hours
+      end
     elsif @engagement.test_prep?
-      @client.test_prep_credit += hours
+      if @invoice.online?
+        @client.online_test_prep_credit += hours
+      else
+        @client.in_person_test_prep_credit += hours
+      end
     end
     @client.save!
   end
@@ -108,18 +124,20 @@ class CreditUpdater
 
   def updated_amount
     if @engagement.academic?
-      @invoice.hours * @client.academic_rate
+      rate = @invoice.online? ? @client.online_academic_rate : @client.in_person_academic_rate
     elsif @engagement.test_prep?
-      @invoice.hours * @client.test_prep_rate
+      rate = @invoice.online? ? @client.online_test_prep_rate : @client.in_person_test_prep_rate
     else
     end
+    @invoice.hours * rate
   end
 
   def submitter_pay
     if @invoice.by_tutor?
-      rate = @submitter.tutor_account.contract.hourly_rate
+      account = @submitter.tutor_account
+      rate = @invoice.online? ? account.online_rate : account.in_person_rate
     elsif @invoice.by_contractor?
-      rate = @submitter.contractor_account.contract.hourly_rate
+      rate = @submitter.contractor_account.hourly_rate
     end
     @invoice.hours * rate
   end

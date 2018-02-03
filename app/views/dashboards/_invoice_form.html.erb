@@ -6,7 +6,6 @@
     </div>
     <div class="widget-body">
       <%= form_for [:tutors, @invoice], :html => { class: "form-horizontal" } do |f| %>
-
         <% if current_user.has_role?("contractor") && current_user.has_role?("tutor") %>
           <div class="form-group select-option">
             <label for="submitter_type" class="col-sm-3 control-label">Submitting As</label>
@@ -22,6 +21,16 @@
         <% end %>
 
         <% if current_user.has_role?("tutor") %>
+          <div class="row m-10 only-for-tutors">
+            <div class="col-sm-offset-3">
+              <%= f.radio_button :online, "true", checked: true %>
+              <%= f.label :online, "Online Session", value: "true", class: "pl-20" %>
+              <br/>
+              <%= f.radio_button :online, "false" %>
+              <%= f.label :online, "In-person Session", value: "false", class: "pl-20" %>
+            </div>
+          </div>
+
           <div class="form-group select-option only-for-tutors">
             <label for="student" class="col-sm-3 control-label">Student</label>
             <div class="col-sm-9">
