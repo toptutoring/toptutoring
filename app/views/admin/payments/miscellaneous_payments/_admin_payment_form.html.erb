@@ -2,8 +2,7 @@
   <div class="form-group">
     <%= f.label :receiving_account_id, "Tutor", :class => "col-sm-3 control-label" %>
     <div class="col-sm-9 select-option">
-      <i class="ion-chevron-down"></i>
-      <%= f.select(:receiving_account_id, options_for_select(@tutors.map{ |tutor| [tutor.name, tutor.tutor_account.id, { 'data-hourly-rate' => tutor.tutor_account.contract.hourly_rate }]}), {}, { class: "tutor", required: true }) %>
+      <%= f.select(:receiving_account_id, options_for_select(@tutors.map{ |tutor| [tutor.name, tutor.tutor_account.id]}), {}, { class: "tutor", required: true }) %>
     </div>
   </div>
 

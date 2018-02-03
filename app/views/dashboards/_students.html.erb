@@ -22,9 +22,9 @@
               <td class="text-center"><%= engagement.academic_type.humanize %></td>
               <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
               <% if engagement.academic? %>
-                <td class="text-center"><%= engagement.client.academic_credit %> hrs</td>
+                <td class="text-center"><%= engagement.client.online_academic_credit %> hrs</td>
               <% else %>
-                <td class="text-center"><%= engagement.client.test_prep_credit %> hrs</td>
+                <td class="text-center"><%= engagement.client.online_test_prep_credit %> hrs</td>
               <% end %>
             </tr>
           <% end %>

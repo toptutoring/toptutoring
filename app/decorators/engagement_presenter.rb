@@ -7,8 +7,8 @@ class EngagementPresenter < SimpleDelegator
 
   def client_balance
     results = []
-    academic_credit = @engagement.client.academic_credit
-    test_prep_credit = @engagement.client.test_prep_credit
+    academic_credit = @engagement.client.online_academic_credit
+    test_prep_credit = @engagement.client.online_test_prep_credit
     if !academic_credit.zero?
       results << "A: #{academic_credit.to_s} hrs"
     end
@@ -48,14 +48,14 @@ class EngagementPresenter < SimpleDelegator
   end
 
   def student_credit
-    @engagement.student.client.academic_credit + @engagement.student.client.test_prep_credit
+    @engagement.student.client.online_academic_credit + @engagement.student.client.online_test_prep_credit
   end
 
   def hourly_rate
     if self.academic?
-      self.client.academic_rate
+      self.client.online_academic_rate
     else
-      self.client.test_prep_rate
+      self.client.online_test_prep_rate
     end
   end
 end

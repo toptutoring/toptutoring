@@ -29,9 +29,9 @@
                   <td><%= engagement.subject.name %></td>
                   <td><%= engagement.academic_type.humanize %></td>
                   <% if engagement.test_prep? %>
-                    <td><%= client.test_prep_credit %></td>
+                    <td><%= client.online_test_prep_credit %></td>
                   <% else %>
-                    <td><%= client.academic_credit %></td>
+                    <td><%= client.online_academic_credit %></td>
                   <% end %>
                 </tr>
               <% end %>
