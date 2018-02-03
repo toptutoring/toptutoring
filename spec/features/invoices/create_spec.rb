@@ -3,8 +3,8 @@ require "rails_helper"
 feature "Create Invoice", js: true do
   let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 0) }
   let(:tutor_invalid) { FactoryBot.create(:tutor_user, :invalid_record, phone_number: nil, outstanding_balance: 0) }
-  let(:client) { FactoryBot.create(:client_user, academic_credit: 50, test_prep_credit: 50) }
-  let(:client_invalid) { FactoryBot.create(:client_user, :invalid_record, phone_number: nil, academic_credit: 50, test_prep_credit: 50) }
+  let(:client) { FactoryBot.create(:client_user, online_academic_credit: 50, online_test_prep_credit: 50) }
+  let(:client_invalid) { FactoryBot.create(:client_user, :invalid_record, phone_number: nil, online_academic_credit: 50, online_test_prep_credit: 50) }
   let(:student) { FactoryBot.create(:student_user, client: client) }
   let(:student_account) { FactoryBot.create(:student_account, user: student, client_account: client.client_account) }
   let(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, state: "active", student_account: student_account, client_account: client.client_account) }
@@ -36,7 +36,7 @@ feature "Create Invoice", js: true do
 
       expect(page).to have_content("Invoice has been created.")
       expect(tutor.reload.outstanding_balance).to eq(0.5)
-      expect(client.reload.academic_credit).to eq(49.5)
+      expect(client.reload.online_academic_credit).to eq(49.5)
     end
 
     scenario "legacy tutors without phone numbers do not prevent creation of invoice" do
@@ -51,7 +51,7 @@ feature "Create Invoice", js: true do
 
       expect(page).to have_content("Invoice has been created.")
       expect(tutor_invalid.reload.outstanding_balance).to eq(0.5)
-      expect(client.reload.academic_credit).to eq(49.5)
+      expect(client.reload.online_academic_credit).to eq(49.5)
     end
 
     scenario "legacy clients without phone numbers do not prevent creation of invoice" do
@@ -66,7 +66,7 @@ feature "Create Invoice", js: true do
 
       expect(page).to have_content("Invoice has been created.")
       expect(tutor.reload.outstanding_balance).to eq(0.5)
-      expect(client_invalid.reload.academic_credit).to eq(49.5)
+      expect(client_invalid.reload.online_academic_credit).to eq(49.5)
     end
 
     scenario "creates invoice as no show" do
@@ -82,13 +82,13 @@ feature "Create Invoice", js: true do
 
       expect(page).to have_content("Invoice has been created.")
       expect(tutor.reload.outstanding_balance).to eq(0)
-      expect(client.reload.academic_credit).to eq(50)
+      expect(client.reload.online_academic_credit).to eq(50)
       expect(Invoice.last.note).to eq("No Show")
     end
 
     scenario "creates invoice but client has a low balance" do
       engagement
-      engagement.client.update(academic_credit: 0.0)
+      engagement.client.update(online_academic_credit: 0.0)
 
       sign_in(tutor)
 

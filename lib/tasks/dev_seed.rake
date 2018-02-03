@@ -73,7 +73,7 @@ namespace :dev do
     tutor.token_expires_at = Time.current.to_i + 12.months.to_i
     tutor.access_state = "enabled"
     tutor.roles = Role.where(name: "tutor")
-    tutor.create_tutor_account!.create_contract!(hourly_rate: 40)
+    tutor.create_tutor_account!(online_rate: 40, in_person_rate: 50)
     tutor.save!
 
     # Update director
@@ -86,7 +86,7 @@ namespace :dev do
     director.token_expires_at = Time.current.to_i + 12.months.to_i
     director.access_state = "enabled"
     director.roles = Role.where(name: ["tutor", "director"])
-    director.create_tutor_account!.create_contract!(hourly_rate: 40)
+    director.create_tutor_account!(online_rate: 39, in_person_rate: 50)
     director.save!
 
     # Update admin
@@ -112,7 +112,7 @@ namespace :dev do
     contractor.access_state = "enabled"
     contractor.roles << Role.where(name: "contractor")
     contractor.save!
-    contractor.create_contractor_account!.create_contract!
+    contractor.create_contractor_account!(hourly_rate: 15)
 
     # Update engagements
     tutor.tutor_account.engagements.destroy_all
@@ -147,10 +147,14 @@ namespace :dev do
       payer_id: client.id)
     #Set the client default information for existing clients
     User.clients.each do |client|
-      client.academic_rate_cents = 29_99
-      client.test_prep_rate_cents = 59_99
-      client.academic_credit = 0.0
-      client.test_prep_credit = 0.0
+      client.online_academic_rate_cents = 29_99
+      client.online_test_prep_rate_cents = 59_99
+      client.online_academic_credit = 0.0
+      client.online_test_prep_credit = 0.0
+      client.in_person_academic_rate_cents = 59_99
+      client.in_person_test_prep_rate_cents = 69_99
+      client.in_person_academic_credit = 0.0
+      client.in_person_test_prep_credit = 0.0
       client.save
     end
   end

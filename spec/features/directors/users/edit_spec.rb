@@ -9,8 +9,8 @@ feature "Director edits user balance" do
       sign_in(director)
 
       visit edit_director_user_path(client)
-      fill_in "Academic Credit (in hours)", with: 2
-      fill_in "Test Prep Credit", with: 3.25
+      fill_in "Online Academic Credit (in hours)", with: 2
+      fill_in "Online Test Prep Credit", with: 3.25
       click_on "Update"
 
       expect(page).to have_content("Client info is successfully updated!")
@@ -20,8 +20,8 @@ feature "Director edits user balance" do
       sign_in(director)
 
       visit edit_director_user_path(client)
-      fill_in "Academic Rate", with: 10
-      fill_in "Test Prep Rate", with: 49.99
+      fill_in "Online Academic Rate", with: 10
+      fill_in "Online Test Prep Rate", with: 49.99
       click_on "Update"
 
       expect(page).to have_content("Client info is successfully updated!")
@@ -33,7 +33,7 @@ feature "Director edits user balance" do
       sign_in(director)
 
       visit edit_director_user_path(client)
-      fill_in "Academic Credit (in hours)", with: 0.001
+      fill_in "Online Academic Credit (in hours)", with: 0.001
       click_on "Update"
 
       expect(page).to have_content("Credits must be in quarter hours")
@@ -43,7 +43,7 @@ feature "Director edits user balance" do
       sign_in(director)
 
       visit edit_director_user_path(client)
-      fill_in "Test Prep Credit (in hours)", with: 0.001
+      fill_in "Online Test Prep Credit (in hours)", with: 0.001
       click_on "Update"
 
       expect(page).to have_content("Credits must be in quarter hours")
@@ -55,7 +55,7 @@ feature "Director edits user balance" do
       sign_in(director)
 
       visit edit_director_user_path(client)
-      fill_in "Academic Rate", with: 0.001
+      fill_in "Online Academic Rate", with: 0.001
       click_on "Update"
 
       expect(page).to have_content("Rates must be in correct dollar values")
@@ -65,7 +65,7 @@ feature "Director edits user balance" do
       sign_in(director)
 
       visit edit_director_user_path(client)
-      fill_in "Test Prep Rate", with: 0.123
+      fill_in "Online Test Prep Rate", with: 0.123
       click_on "Update"
 
       expect(page).to have_content("Rates must be in correct dollar values")
