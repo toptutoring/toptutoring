@@ -13,7 +13,7 @@ describe MassPaymentService do
     let(:student_account_user_nil) { FactoryBot.create(:student_account, user: nil, client_account: client.client_account) }
     let(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account) }
     let!(:invoice_pending) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement) }
-    let!(:invoice_pending2) { FactoryBot.create(:invoice, submitter: tutor, client: client, hourly_rate: client.test_prep_rate, engagement: engagement) }
+    let!(:invoice_pending2) { FactoryBot.create(:invoice, submitter: tutor, client: client, hourly_rate: client.online_test_prep_rate, engagement: engagement) }
     let!(:invoice_paid) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "paid") }
     let!(:invoice_nil) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: nil) }
 
@@ -73,7 +73,7 @@ describe MassPaymentService do
     subject { MassPaymentService.new("by_contractor", admin) }
 
     it "grabs all pending timesheet" do
-      FactoryBot.create(:contractor_account, user: tutor)
+      FactoryBot.create(:contractor_account, hourly_rate: 15, user: tutor)
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_contractor", status: "pending")
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_tutor", status: "pending")
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_contractor", hours: 1, status: "paid")

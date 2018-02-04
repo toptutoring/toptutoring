@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Admin invoice features' do
   let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 2) }
-  let(:client) { FactoryBot.create(:client_user, test_prep_credit: 2) }
+  let(:client) { FactoryBot.create(:client_user, online_test_prep_credit: 2) }
   let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
   let(:test_prep_subject) { FactoryBot.create(:subject, academic_type: "test_prep") }
   let(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, subject: test_prep_subject, student_account: student_account, client_account: client.client_account) }
@@ -31,13 +31,13 @@ feature 'Admin invoice features' do
     visit admin_invoices_path
 
     expect(tutor.outstanding_balance).to eq 2
-    expect(client.test_prep_credit).to eq 2
+    expect(client.online_test_prep_credit).to eq 2
 
     click_on "Deny"
 
     expect(page).to have_content('The invoice has been denied.')
     expect(tutor.reload.outstanding_balance).to eq 1
-    expect(client.reload.test_prep_credit).to eq 3
+    expect(client.reload.online_test_prep_credit).to eq 3
     expect(invoice.reload.status).to eq 'denied'
   end
 
@@ -47,7 +47,7 @@ feature 'Admin invoice features' do
     click_on "Edit"
 
     expect(tutor.outstanding_balance).to eq 2
-    expect(client.test_prep_credit).to eq 2
+    expect(client.online_test_prep_credit).to eq 2
     expect(page).to have_content('Submitter: ' + tutor.name)
     expect(page).to have_content('Description')
     expect(page).to have_content('Hours')
@@ -59,7 +59,7 @@ feature 'Admin invoice features' do
 
     expect(tutor.reload.outstanding_balance).to eq 4
     expect(invoice.reload.description).to eq "Changing Description"
-    expect(client.reload.test_prep_credit).to eq 0
+    expect(client.reload.online_test_prep_credit).to eq 0
     expect(invoice.reload.status).to eq 'pending'
   end
 end

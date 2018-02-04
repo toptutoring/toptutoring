@@ -12,8 +12,8 @@
       <label for="hourly-rate" class="col-md-2 control-label col-md-offset-2">Hourly rate</label>
       <div class="col-md-3">
         <p class="col-md-3 hourly-rate" id="rate"
-          data-academic="<%= current_user.academic_rate %>"
-          data-test-prep="<%= current_user.test_prep_rate %>"
+          data-academic="<%= current_user.online_academic_rate %>"
+          data-test-prep="<%= current_user.online_test_prep_rate %>"
           name="hourly_rate" placeholder="Hourly Rate" aria-label="Hourly Rate"/>
       </div>
     </div>
@@ -45,8 +45,8 @@
       <label for="payment_academic_type" class="col-sm-2 control-label">Tutoring Type</label>
       <div class="col-sm-4">
         <select name="payment[academic_type]" class="payment-academic-type">
-          <option value="Academic" data-academic="<%= current_user.academic_rate %>">Academic</option>
-          <option value="Test_Prep" data-test-prep="<%= current_user.test_prep_rate %>">Test Preparation</option>
+          <option value="Academic" data-academic="<%= current_user.online_academic_rate %>">Academic</option>
+          <option value="Test_Prep" data-test-prep="<%= current_user.online_test_prep_rate %>">Test Preparation</option>
         </select>
       </div>
     </div>

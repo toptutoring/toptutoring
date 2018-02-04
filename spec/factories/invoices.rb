@@ -4,16 +4,19 @@ FactoryBot.define do
     client       { FactoryBot.create(:client_user) }
     engagement   { FactoryBot.create(:engagement, tutor_account: submitter.tutor_account) }
     hours        { 2 }
-    hourly_rate  { engagement.academic? ? client.academic_rate : client.test_prep_rate }
+    hourly_rate  { engagement.academic? ? client.online_academic_rate : client.online_test_prep_rate }
     amount       { hourly_rate * hours }
+    online true
     submitter_type    { "by_tutor" }
     submitter_pay    { if submitter_type == "by_tutor"
-                         submitter.tutor_account.contract.hourly_rate * hours
+                         account = submitter.tutor_account
+                         rate = online ? account.online_rate : account.in_person_rate
+                         rate * hours
                        else
-                         submitter.contractor_account.contract.hourly_rate * hours
+                         submitter.contractor_account.hourly_rate * hours
                        end }
     description  { "This is an invoice" }
     subject      { "Subject" }
     status       { "pending" }
-    end
   end
+end

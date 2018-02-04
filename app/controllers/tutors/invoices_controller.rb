@@ -43,7 +43,7 @@ module Tutors
     def invoice_params
       params.require(:invoice)
             .permit(:engagement_id, :subject, :hours,
-                    :description, :submitter_type)
+                    :description, :submitter_type, :online)
             .merge(submitter: current_user, status: "pending",
                    submitter_pay: submitter_pay, client: @client,
                    amount: client_charge, hourly_rate: hourly_rate,
@@ -57,9 +57,9 @@ module Tutors
     def hourly_rate
       return nil unless @client
       if @engagement.academic?
-        @client.academic_rate
+        online? ? @client.online_academic_rate :  @client.in_person_academic_rate
       elsif @engagement.test_prep?
-        @client.test_prep_rate
+        online? ? @client.online_test_prep_rate : @client.in_person_test_prep_rate
       end
     end
 
@@ -70,11 +70,16 @@ module Tutors
 
     def submitter_pay
       if @by_tutor
-        submitter_rate = current_user.tutor_account.contract.hourly_rate
+        account = current_user.tutor_account
+        submitter_rate = online? ? account.online_rate : account.in_person_rate
       else
-        submitter_rate = current_user.contractor_account.contract.hourly_rate
+        submitter_rate = current_user.contractor_account.hourly_rate
       end
       submitter_rate * params[:invoice][:hours].to_f
+    end
+
+    def online?
+      @online ||= params[:invoice][:online] == "true"
     end
 
     def set_engagement_and_client

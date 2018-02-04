@@ -17,7 +17,7 @@ describe CreditUpdater do
       subject = CreditUpdater.new(invoice)
       hours = invoice.hours
       expect { subject.process_creation_of_invoice! }
-        .to change { client.reload.test_prep_credit }.by(-hours)
+        .to change { client.reload.online_test_prep_credit }.by(-hours)
     end
 
     it "Adjusts the submitter's balance up when a submitter's invoice is processed" do
@@ -46,7 +46,7 @@ describe CreditUpdater do
         old_hours = invoice.hours # 2 hours
         difference = new_hours - old_hours
         expect { subject.update_existing_invoice(new_params) }
-          .to change { client.reload.test_prep_credit }.by(-3)
+          .to change { client.reload.online_test_prep_credit }.by(-3)
       end
 
       it "Adjusts the submitter's balance up" do
@@ -64,7 +64,7 @@ describe CreditUpdater do
         old_hours = invoice.hours # 2 hours
         difference = new_hours - old_hours
         expect { subject.update_existing_invoice(new_params) }
-          .to change { invoice.reload.submitter_pay }.by(submitter.tutor_account.contract.hourly_rate * 3)
+          .to change { invoice.reload.submitter_pay }.by(submitter.tutor_account.online_rate * 3)
       end
 
       it "Updates amount charged to client" do
@@ -73,7 +73,7 @@ describe CreditUpdater do
         old_hours = invoice.hours # 2 hours
         difference = new_hours - old_hours
         expect { subject.update_existing_invoice(new_params) }
-          .to change { invoice.reload.amount }.by(client.test_prep_rate * 3)
+          .to change { invoice.reload.amount }.by(client.online_test_prep_rate * 3)
       end
     end
 
@@ -84,7 +84,7 @@ describe CreditUpdater do
         subject = CreditUpdater.new(invoice)
         old_hours = invoice.hours # 2 hours
         expect { subject.update_existing_invoice(new_params) }
-          .to change { client.reload.test_prep_credit }.by(1)
+          .to change { client.reload.online_test_prep_credit }.by(1)
       end
 
       it "Adjusts the submitter's balance down" do
@@ -105,7 +105,7 @@ describe CreditUpdater do
     end
 
     it "returns true when client credit is under 0.5" do
-      client.update(test_prep_credit: 0)
+      client.update(online_test_prep_credit: 0)
       subject = CreditUpdater.new(invoice)
       expect(subject.client_low_balance?)
         .to be true
@@ -113,7 +113,7 @@ describe CreditUpdater do
 
     it "also works for academic_credit" do
       engagement.update(subject: FactoryBot.create(:subject))
-      client.update(test_prep_credit: 0)
+      client.update(online_test_prep_credit: 0)
       subject = CreditUpdater.new(invoice)
       expect(subject.client_low_balance?)
         .to be false

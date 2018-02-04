@@ -11,7 +11,7 @@ FactoryBot.define do
     access_state  { "enabled" }
 
     after(:create) do |user, _|
-      user.create_tutor_account.create_contract(hourly_rate: 15)
+      user.create_tutor_account(online_rate: 15, in_person_rate: 20)
     end
   end
 end

@@ -7,7 +7,6 @@ class CreateTutorService
         @tutor = Clearance.configuration.user_model.new(user_params)
         @tutor.save!
         @tutor.create_tutor_account!
-        @tutor.tutor_account.create_contract!(hourly_rate: 15)
         add_subjects(subject_params)
       end
       NewTutorNotifierMailer.mail_admin_and_directors(@tutor).deliver_later

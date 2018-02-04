@@ -76,12 +76,18 @@ $(function() {
   function setBalanceTypeForPayment() {
     var type = $('#payment_hours_type').val();
     var hours;
-    if (type == 'academic') {
-      $('#hour-type').text("Academic Hours");
-      hours = $('#current-hours').data('academic');
-    } else {
-      $('#hour-type').text("Test Prep Hours");
-      hours = $('#current-hours').data('test');
+    if (type == 'online_academic') {
+      $('#hour-type').text("Online Academic Hours");
+      hours = $('#current-hours').data('online-academic');
+    } else if (type == 'online_test_prep') {
+      $('#hour-type').text("Online Test Prep Hours");
+      hours = $('#current-hours').data('online-test');
+    } else if (type == 'in_person_academic') {
+      $('#hour-type').text("In-Person Academic Hours");
+      hours = $('#current-hours').data('in-person-academic');
+    } else if (type == 'in_person_test_prep') {
+      $('#hour-type').text("In-Person Test Prep Hours");
+      hours = $('#current-hours').data('in-person-test');
     }
     hours = parseFloat(hours).toFixed(2);
     $('#current-hours').text(hours);
@@ -91,11 +97,16 @@ $(function() {
     var type = $('#payment_hours_type').val();
     var currentHours;
     var purchaseHours;
-    if (type == 'academic') {
-      currentHours = $('#current-hours').data('academic');
-    } else {
-      currentHours = $('#current-hours').data('test');
+    if (type == 'online_academic') {
+      currentHours = $('#current-hours').data('online-academic');
+    } else if (type == 'online_test_prep') {
+      currentHours = $('#current-hours').data('online-test');
+    } else if (type == 'in_person_academic') {
+      currentHours = $('#current-hours').data('in-person-academic');
+    } else if (type == 'in_person_test_prep') {
+      currentHours = $('#current-hours').data('in-person-test');
     }
+
     currentHours = parseFloat(currentHours);
     purchaseHours = parseFloat($("#payment_hours_purchased").val());
     if (isNaN(purchaseHours)) {
@@ -107,10 +118,14 @@ $(function() {
 
   function setHourlyRateForPayment() {
     var type = $('#payment_hours_type').val();
-    if (type == 'academic') {
-      rate = $('#hourly-rate-display').data('academic');
-    } else {
-      rate = $('#hourly-rate-display').data('test');
+    if (type == 'online_academic') {
+      rate = $('#hourly-rate-display').data('online-academic');
+    } else if (type == 'online_test_prep') {
+      rate = $('#hourly-rate-display').data('online-test');
+    } else if (type == 'in_person_academic') {
+      rate = $('#hourly-rate-display').data('in-person-academic');
+    } else if (type == 'in_person_test_prep') {
+      rate = $('#hourly-rate-display').data('in-person-test');
     }
     rate = parseFloat(rate).toFixed(2);
     $('#hourly-rate-display').text("$".concat(rate));
@@ -119,10 +134,14 @@ $(function() {
   function calculateAmountForPayment() {
     var type = $('#payment_hours_type').val();
     var rate;
-    if (type == 'academic') {
-      rate = $('#hourly-rate-display').data('academic');
-    } else {
-      rate = $('#hourly-rate-display').data('test');
+    if (type == 'online_academic') {
+      rate = $('#hourly-rate-display').data('online-academic');
+    } else if (type == 'online_test_prep') {
+      rate = $('#hourly-rate-display').data('online-test');
+    } else if (type == 'in_person_academic') {
+      rate = $('#hourly-rate-display').data('in-person-academic');
+    } else if (type == 'in_person_test_prep') {
+      rate = $('#hourly-rate-display').data('in-person-test');
     }
     rate = parseFloat(rate);
     var hours = parseFloat($("#payment_hours_purchased").val());

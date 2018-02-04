@@ -16,7 +16,7 @@ feature "Create payment as client" do
       expect(page).to have_content("Your Rate")
       expect(page).to have_content("Academic Hours")
       expect(page).to have_content("Credit card information")
-      expect(page).to have_content(client.academic_rate.to_s)
+      expect(page).to have_content(client.online_academic_rate.to_s)
     end
   end
 end

@@ -23,7 +23,7 @@ feature "Dashboard Index" do
     expect(page).to have_content("Type")
     expect(page).to have_content(active_engagement.academic_type.humanize)
     expect(page).to have_content("Your Balance")
-    expect(page).to have_content(client.academic_credit)
+    expect(page).to have_content(client.online_academic_credit)
     expect(page).to have_content("Request a Tutor")
     expect(page).to have_content("Contact Top Tutoring")
     expect(page).to have_content("Dashboard")
@@ -55,7 +55,7 @@ feature "Dashboard Index" do
     expect(page).to have_content(active_engagement.subject.name)
     expect(page).to have_content(active_engagement.academic_type.humanize)
     expect(page).to have_content(active_engagement.state)
-    expect(page).to have_content(active_engagement.client.test_prep_credit)
+    expect(page).to have_content(active_engagement.client.online_test_prep_credit)
   end
 
   scenario "when user is director" do

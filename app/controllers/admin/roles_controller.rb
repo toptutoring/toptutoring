@@ -12,7 +12,7 @@ module Admin
       user_role = create_role
       user_name = user_role.user.name
       role_name = user_role.role.name
-      flash.notice = "#{user_name} has been assigned the role of #{role_name}."
+      flash.notice = "#{user_name} has been assigned the role of #{role_name}. Please set rates."
       redirect_to admin_roles_path
     rescue ActiveRecord::RecordInvalid => e
       flash.alert = e.message
@@ -21,11 +21,11 @@ module Admin
 
     def destroy
       user_role = UserRole.find(params[:id])
-      user_role.destroy!
-      flash.notice = destroy_success_string(user_role.user, user_role.role)
-      redirect_to admin_roles_path
-    rescue ActiveRecord::ActiveRecordError => e
-      flash.alert = e.message
+      if user_role.destroy
+        flash.notice = destroy_success_string(user_role.user, user_role.role)
+      else
+        flash.alert = user_role.errors.full_messages
+      end
       redirect_to admin_roles_path
     end
 
@@ -50,9 +50,9 @@ module Admin
 
     def create_accounts(user, role)
       if role.name == "contractor"
-        user.create_contractor_account!.create_contract!
+        user.create_contractor_account!(hourly_rate: 15)
       elsif role.name == "tutor"
-        user.create_tutor_account!.create_contract!
+        user.create_tutor_account!
       end
     end
 

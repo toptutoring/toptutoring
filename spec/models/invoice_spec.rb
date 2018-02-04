@@ -17,7 +17,7 @@ RSpec.describe Invoice, type: :model do
     let(:submitter) { FactoryBot.create(:tutor_user) }
 
     it "calculates total owed to submitters for pending invoices with submitter type" do
-      FactoryBot.create(:contractor_account, user: submitter)
+      submitter.create_contractor_account(hourly_rate: 15)
       FactoryBot.create(:invoice, status: "pending", submitter: submitter, submitter_type: "by_contractor")
       FactoryBot.create(:invoice, status: "pending", hours: 1, submitter: submitter, submitter_type: "by_contractor")
       FactoryBot.create(:invoice, status: "paid", submitter: submitter, submitter_type: "by_contractor")

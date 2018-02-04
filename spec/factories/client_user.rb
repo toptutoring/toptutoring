@@ -7,10 +7,14 @@ FactoryBot.define do
     roles         { Role.where(name: 'client') }
     access_state  { "enabled" }
     customer_id   { "xxx" }
-    academic_rate     { 20 }
-    test_prep_rate    { 20 }
-    academic_credit   { 20 }
-    test_prep_credit  { 20 }
+    online_academic_rate     { 20 }
+    online_test_prep_rate    { 20 }
+    online_academic_credit   { 20 }
+    online_test_prep_credit  { 20 }
+    in_person_academic_rate     { 30 }
+    in_person_test_prep_rate    { 30 }
+    in_person_academic_credit   { 30 }
+    in_person_test_prep_credit  { 30 }
     signup   { FactoryBot.create(:signup) }
 
     trait :as_student do

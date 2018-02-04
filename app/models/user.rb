@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_one :student_account, dependent: :destroy
   has_one :client_account, dependent: :destroy
   has_one :tutor_account, dependent: :destroy
+  accepts_nested_attributes_for :tutor_account
   has_one :contractor_account, dependent: :destroy
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
@@ -31,7 +32,8 @@ class User < ActiveRecord::Base
   validate :credits_must_be_by_quarter_hours
 
   def credits_must_be_by_quarter_hours
-    return if academic_credit % 0.25 == 0.0 && test_prep_credit % 0.25 == 0.0
+    return if online_academic_credit % 0.25 == 0.0 && online_test_prep_credit % 0.25 == 0.0 &&
+      in_person_academic_credit % 0.25 == 0.0 && in_person_test_prep_credit % 0.25 == 0.0
     errors.add(:credits, "must be in quarter hours")
   end
 
@@ -50,8 +52,10 @@ class User < ActiveRecord::Base
   scope :all_without_admin, -> { joins(:roles).where("roles.name != ?", "admin").distinct }
 
   # Monetize Implementation for client
-  monetize :academic_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }
-  monetize :test_prep_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }
+  monetize :online_academic_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }
+  monetize :online_test_prep_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }
+  monetize :in_person_academic_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }
+  monetize :in_person_test_prep_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }
 
   #### State Machine ####
   state_machine :access_state, :initial => :disabled do

@@ -34,20 +34,24 @@ class PaymentService
     @hours ||= payment_params[:hours_purchased].to_f
   end
 
-  def academic_type
-    @academic_type ||= payment_params[:hours_type]
+  def hours_type
+    @hours_type ||= payment_params[:hours_type]
   end
 
   def rate
-    if academic_type == "academic"
-      user.academic_rate
-    elsif academic_type == "test_prep"
-      user.test_prep_rate
+    if hours_type == "online_academic"
+      user.online_academic_rate
+    elsif hours_type == "online_test_prep"
+      user.online_test_prep_rate
+    elsif hours_type == "in_person_academic"
+      user.in_person_academic_rate
+    elsif hours_type == "in_person_test_prep"
+      user.in_person_test_prep_rate
     end
   end
 
   def payment_description
-    "Purchase of #{hours} #{academic_type.humanize} hours."
+    "Purchase of #{hours} #{hours_type.humanize} hours."
   end
 
   def process_payment!(payment)
@@ -64,10 +68,14 @@ class PaymentService
   end
 
   def user_credit_valid
-    if academic?
-      user.academic_credit += hours
-    else
-      user.test_prep_credit += hours
+    if hours_type == "online_academic"
+      user.online_academic_credit += hours
+    elsif hours_type == "online_test_prep"
+      user.online_test_prep_credit += hours
+    elsif hours_type == "in_person_academic"
+      user.in_person_academic_credit += hours
+    elsif hours_type == "in_person_test_prep"
+      user.in_person_test_prep_credit += hours
     end
     user.valid?
   end
@@ -79,10 +87,6 @@ class PaymentService
       source: @token,
       description: payment.description
     )
-  end
-
-  def academic?
-    academic_type == "academic"
   end
 
   def send_notices(payment)
