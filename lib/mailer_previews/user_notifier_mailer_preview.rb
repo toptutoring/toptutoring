@@ -10,7 +10,7 @@ class UserNotifierMailerPreview < ActionMailer::Preview
                          :card_brand_and_four_digits, :card_holder_name,
                          :hours_type, :hours_purchased)
                     .new(Time.current, "24.99", "24.99", "Visa ending in 1234",
-                         "Client", "test_prep", "1.0")
+                         "Client", "online_test_prep", "1.0")
     UserNotifierMailer.send_payment_notice(client, payment)
   end
 end
