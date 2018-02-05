@@ -2,11 +2,11 @@ class Clients::PaymentsController < ApplicationController
   before_action :require_login, :check_for_engagements
 
   def new
-    @hours_type_options = []
-    @hours_type_options << ["Online Academic Hours", "online_academic"] if current_user.online_academic_rate > 0
-    @hours_type_options << ["Online Test Prep Hours", "online_test_prep"] if current_user.online_test_prep_rate > 0
-    @hours_type_options << ["In-Person Academic Hours", "in_person_academic"] if current_user.in_person_academic_rate > 0
-    @hours_type_options << ["In-Person Test Prep Hours", "in_person_test_prep"] if current_user.in_person_test_prep_rate > 0
+    @hours_type_options = current_user.client_account
+                                      .academic_types_engaged
+                                      .map do |type|
+                                        ["#{type.titlecase} Hours", type]
+                                      end
     @account = current_user.stripe_account
     @payments = Payment.from_user(current_user.id)
   end

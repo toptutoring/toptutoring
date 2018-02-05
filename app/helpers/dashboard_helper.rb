@@ -14,12 +14,8 @@ module DashboardHelper
 
   def balance_string(type, user)
     prefix = type.humanize.capitalize + " Credit: "
-    online = "online_#{type}"
-    in_person = "in_person_#{type}"
-    if current_user.send(online + "_rate") > 0
-      content_tag :p, "Online " + prefix + user.send(online + "_credit").to_s, class: "lead"
-    elsif current_user.send(in_person + "_rate") > 0
-      content_tag :p, "In-Person " + prefix + user.send(in_person + "_credit").to_s, class: "lead"
+    if current_user.send(type + "_rate") > 0
+      content_tag :p, prefix + user.send(type + "_credit").to_s, class: "lead"
     end
   end
 end
