@@ -10,7 +10,6 @@ module Tutors
       update_no_show_params if params[:invoice][:hours] == "no_show"
       create_invoice
       adjust_balances_and_save_records
-      set_flash_messages
       if @by_tutor
         redirect_to tutors_invoices_path
       else
@@ -96,14 +95,10 @@ module Tutors
     end
 
     def adjust_balances_and_save_records
-      @adjuster = CreditUpdater.new(@invoice)
-      @adjuster.process_creation_of_invoice!
-    end
-
-    def set_flash_messages
-      if @adjuster.errors
+      adjuster = CreditUpdater.new(@invoice).process_creation_of_invoice!
+      if adjuster.failed?
         flash.alert = "There was an error while creating your invoice."
-      elsif @adjuster.client_low_balance?
+      elsif adjuster.low_balance?
         flash.alert = "Your invoice has been created. However, your client is running low on their balance. Please consider making a suggestion to your client to add to their balance before scheduling any more sessions."
       else
         flash.notice = @by_tutor ? "Invoice has been created." : "Timesheet has been created."
