@@ -11,13 +11,9 @@
       <div class="widget-body">
         <div class="widget-content">
           <% if @hours_type_options.many? %>
-            <div class="row">
-              <div class="col-xs-6 text-right">
+            <div class="form-group select-option">
                 <%= f.label :hours_type, "What hours would you like to purchase?" %>
-              </div>
-              <div class="col-xs-6">
-                <%= f.select :hours_type, options_for_select(@hours_type_options), class: "form-control input-lg", required: true %>
-              </div>
+                <%= f.select :hours_type, options_for_select(@hours_type_options), { include_blank: false}, class: "form-control input-lg" %>
             </div>
           <% else %>
             <%= f.hidden_field :hours_type, value: @hours_type_options.first[1] %>
