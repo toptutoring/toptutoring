@@ -7,17 +7,21 @@
     <%= text_field_tag :card_address, "", placeholder: "Billing address", class: "form-control input-lg mt-20", required: true %>
   </div>
 
-  <div class="row">
-    <div class="col-xs-4">
-      <%= text_field_tag :card_unit_number, "", placeholder: "Apt or Unit #", class: "form-control input-lg mt-20" %>
-    </div>
+  <div>
+    <%= text_field_tag :card_unit_number, "", placeholder: "Apt or Unit #", class: "form-control input-lg mt-20" %>
+  </div>
 
+  <div class="row">
     <div class="col-xs-4">
       <%= text_field_tag :card_city, "", placeholder: "City", class: "form-control input-lg mt-20", required: true %>
     </div>
 
     <div class="col-xs-4">
       <%= render "card_state_options" %>
+    </div>
+
+    <div class="col-xs-4">
+      <%= text_field_tag :card_zip_code, "", placeholder: "Zip Code", class: "form-control input-lg mt-20", required: true %>
     </div>
   </div>
 

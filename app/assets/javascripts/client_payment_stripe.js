@@ -8,6 +8,7 @@ $(function() {
     var elements = stripe.elements();
 
     var card = elements.create('card', {
+      hidePostalCode: true,
       style: {
         base: {
           color: '#555',
@@ -43,6 +44,7 @@ $(function() {
       var options = { name: document.getElementById('card_holder_name').value,
                       address_line1: document.getElementById('card_address').value,
                       address_line2: document.getElementById('card_unit_number').value,
+                      address_zip: document.getElementById('card_zip_code').value,
                       address_city: document.getElementById('card_city').value,
                       address_state: document.getElementById('card_state').value }
 
