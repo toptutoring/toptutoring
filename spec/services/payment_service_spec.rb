@@ -21,7 +21,7 @@ describe CreateClientService do
     end
 
     it "successfully adjusts client academic credit" do
-      subject = client.test_prep_credit
+      subject = client.online_test_prep_credit
       PaymentService.new(token, payment_params, nil).charge!
 
       hours = payment_params[:hours_purchased].to_f
@@ -42,7 +42,7 @@ describe CreateClientService do
       subject = client.in_person_test_prep_credit
       payment_params[:hours_purchased] = "1.25"
       payment_params[:hours_type] = "in_person_test_prep"
-      PaymentService.new(payment_params, token).charge!
+      PaymentService.new(token, payment_params, nil).charge!
 
       hours = payment_params[:hours_purchased].to_f
       expect(subject).to eq(client.reload.in_person_test_prep_credit - hours)
