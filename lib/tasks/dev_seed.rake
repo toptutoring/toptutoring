@@ -10,7 +10,6 @@ namespace :dev do
     client.name = "Client"
     client.password = "password"
     client.phone_number = "5105555555"
-    client.customer_id = "cus_A45BGhlr4VjDcJ"
     client.access_state = "enabled"
     client.roles = Role.where(name: "client")
     client.save!
@@ -27,7 +26,6 @@ namespace :dev do
     client_new.name = "Client"
     client_new.password = "password"
     client_new.phone_number = "5105555555"
-    client_new.customer_id = nil
     client_new.access_state = "enabled"
     client_new.roles = Role.where(name: "client")
     client_new.save!
@@ -143,8 +141,11 @@ namespace :dev do
       amount_cents: 200_00,
       description: "Payment for Tutor",
       status: "succeeded",
-      customer_id: client.customer_id,
-      payer_id: client.id)
+      payer_id: client.id,
+      stripe_charge_id: "ch_42424242",
+      stripe_source: "tok_42424242",
+      stripe_account: client.stripe_account
+    )
     #Set the client default information for existing clients
     User.clients.each do |client|
       client.online_academic_rate_cents = 29_99

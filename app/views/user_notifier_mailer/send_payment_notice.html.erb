@@ -63,7 +63,7 @@
                 <tr>
                   <td colspan="2" style="padding:20px;border:1px solid white">
                     <p style="color:rgb(153,153,153);font-size:18px">Hours Purchased</p>
-                    <p><%= @payment.hours_type.humanize + " Hours @ $" + @payment.rate.to_s + "/hr" %></p>
+                    <p><%= @payment.hours_type.titlecase + " Hours @ $" + @payment.rate.to_s + "/hr" %></p>
                   </td>
                   <td style="padding:20px;border:1px solid white;text-align:right">
                     <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
