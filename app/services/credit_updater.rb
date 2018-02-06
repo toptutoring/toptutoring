@@ -14,6 +14,9 @@ class CreditUpdater
       add_to_submitter_balance(@invoice.hours)
       @invoice.save!
     end
+    Struct.new(:failed?, :low_balance?).new(false, client_low_balance?)
+  rescue ActiveRecord::RecordInvalid => e
+    Struct.new(:failed?).new(true)
   end
 
   def process_denial_of_invoice!
@@ -60,6 +63,8 @@ class CreditUpdater
     end
   end
 
+  private
+
   def client_low_balance?
     return nil unless @engagement
     if @engagement.academic?
@@ -69,7 +74,6 @@ class CreditUpdater
     end
   end
 
-  private
 
   def subtract_from_client_credit(hours)
     if @engagement.academic?

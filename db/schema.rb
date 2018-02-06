@@ -155,7 +155,6 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.integer "amount_cents"
     t.string "description"
     t.string "status"
-    t.string "customer_id"
     t.integer "payer_id"
     t.datetime "created_at"
     t.string "card_brand"
@@ -165,7 +164,10 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.string "hours_type"
     t.string "card_holder_name"
     t.decimal "hours_purchased", precision: 10, scale: 2
+    t.bigint "stripe_account_id"
+    t.string "stripe_source"
     t.index ["payer_id"], name: "index_payments_on_payer_id"
+    t.index ["stripe_account_id"], name: "index_payments_on_stripe_account_id"
   end
 
   create_table "payouts", force: :cascade do |t|
@@ -195,6 +197,14 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.bigint "subject_id"
     t.index ["subject_id"], name: "index_signups_on_subject_id"
     t.index ["user_id"], name: "index_signups_on_user_id"
+  end
+
+  create_table "stripe_accounts", force: :cascade do |t|
+    t.string "customer_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_stripe_accounts_on_user_id"
   end
 
   create_table "student_accounts", force: :cascade do |t|
@@ -246,7 +256,6 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128, null: false
     t.string "phone_number"
-    t.string "customer_id"
     t.string "auth_provider"
     t.string "auth_uid"
     t.string "encrypted_access_token"
@@ -283,8 +292,10 @@ ActiveRecord::Schema.define(version: 20180203183001) do
   add_foreign_key "engagements", "subjects"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "invoices", "engagements"
+  add_foreign_key "payments", "stripe_accounts"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "signups", "users"
+  add_foreign_key "stripe_accounts", "users"
   add_foreign_key "student_accounts", "client_accounts"
   add_foreign_key "student_accounts", "users"
   add_foreign_key "tutor_accounts", "users"

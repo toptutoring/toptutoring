@@ -6,6 +6,11 @@ class ClientAccount < ApplicationRecord
   validates_presence_of :user
 
   def academic_types_engaged
-    engagements.joins(:subject).pluck("subjects.academic_type").uniq
+    types = []
+    types << "online_academic" if user.online_academic_rate > 0
+    types << "online_test_prep" if user.online_test_prep_rate > 0
+    types << "in_person_academic" if user.in_person_academic_rate > 0
+    types << "in_person_test_prep" if user.in_person_test_prep_rate > 0
+    types
   end
 end

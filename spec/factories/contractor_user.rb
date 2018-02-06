@@ -6,7 +6,6 @@ FactoryBot.define do
     password      { "password" }
     roles         { Role.where(name: "contractor") }
     access_state  { "enabled" }
-    customer_id   { "xxx" }
 
     after(:create) do |user, _|
       user.create_contractor_account(hourly_rate: 15)

@@ -1,6 +1,5 @@
 <% if current_user.enabled? %>
   <%= menu_link(new_clients_payment_path, "Purchase Hours", "ion-card bg-success") %>
-  <%= menu_link(clients_payments_path, "Past Payments", "ion-clipboard bg-info") %>
   <%= link_to_client_students_or_tutors %>
   <%= menu_link(clients_invoices_path, "Invoices", "ion-document bg-danger") %>
 <% end %>

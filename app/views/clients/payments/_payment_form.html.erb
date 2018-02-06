@@ -11,13 +11,9 @@
       <div class="widget-body">
         <div class="widget-content">
           <% if @hours_type_options.many? %>
-            <div class="row">
-              <div class="col-xs-6 text-right">
+            <div class="form-group select-option">
                 <%= f.label :hours_type, "What hours would you like to purchase?" %>
-              </div>
-              <div class="col-xs-6">
-                <%= f.select :hours_type, options_for_select(@hours_type_options), class: "form-control input-lg", required: true %>
-              </div>
+                <%= f.select :hours_type, options_for_select(@hours_type_options), { include_blank: false}, class: "form-control input-lg" %>
             </div>
           <% else %>
             <%= f.hidden_field :hours_type, value: @hours_type_options.first[1] %>
@@ -84,15 +80,19 @@
 
   <div class="col-lg-6">
     <div class="widget">
+      <div class="widget-heading">
+        <h3 class="widget-title">Credit Card Information</h3>
+      </div>
       <div class="widget-body">
         <div class="widget-content">
-          <%= label :credit_card, "Credit Card Information" %>
-          <div>
-            <%= f.text_field :card_holder_name, placeholder: "Cardholder name", class: "form-control input-lg", required: true %>
-          </div>
-          <div id="card-element" class="form-control input-lg mt-20"></div>
-          <h4 id="card-error" class="fw-300 text-right"></h4>
-
+          <% if @account %>
+            <div class="form-group">
+              <%= hidden_field_tag :use_existing_card, true %>
+              <h4 class="fw-300 text-center">Using <%= @account.default_card_display %></h4>
+            </div>
+          <% else %>
+            <%= render "card_parameters" %>
+          <% end %>
           <div class="row m-0">
             <!-- button disabling is handled by javascript because Stripe validation requires javascript -->
             <%= submit_tag "Purchase Hours", class: "pull-right btn btn-primary", data: { disable_with: false } %>
@@ -101,6 +101,4 @@
       </div>
     </div>
   </div>
-
 <% end %>
-<%= javascript_include_tag STRIPE_JS_HOST %>

@@ -118,7 +118,7 @@ Rails.application.routes.draw do
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
     namespace :clients do
-      resources :payments, only: [:index, :new, :create]
+      resources :payments, only: [:new, :create]
       resources :students, only: [:show, :edit, :index, :new, :create]
       resources :invoices, only: [:index]
       resources :tutors

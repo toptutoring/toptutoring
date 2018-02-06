@@ -50,7 +50,7 @@ en:
       destroy: "Your request has been removed."
     payment:
       success: "Thank you for adding to your balance."
-      failuer: "There was an error submitting a payment with your credit card."
+      failure: "There was an error submitting a payment with your credit card."
     admin:
       users:
         remove_user_success: "%{name} has permanently been removed from the database."
