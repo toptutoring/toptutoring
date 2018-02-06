@@ -2,12 +2,12 @@
   <h3>Online Rates and Credit</h3>
   <div class="form-group">
     <%= f.label :online_academic_credit, "Online Academic Credit (in hours)" %>
-    <%= f.number_field :online_academic_credit, class: "form-control", step: 0.25, min: 0 %>
+    <%= f.number_field :online_academic_credit, class: "form-control", step: 0.25 %>
   </div>
 
   <div class="form-group">
     <%= f.label :online_test_prep_credit, "Online Test Prep Credit (in hours)" %>
-    <%= f.number_field :online_test_prep_credit, class: "form-control" %>
+    <%= f.number_field :online_test_prep_credit, class: "form-control", step: 0.25 %>
   </div>
 
   <div class="form-group">
@@ -29,12 +29,12 @@
   <h3>In Person Rates and Credit</h3>
   <div class="form-group">
     <%= f.label :in_person_academic_credit, "In Person Academic Credit (in hours)" %>
-    <%= f.number_field :in_person_academic_credit, class: "form-control", step: 0.25, min: 0 %>
+    <%= f.number_field :in_person_academic_credit, class: "form-control", step: 0.25 %>
   </div>
 
   <div class="form-group">
     <%= f.label :in_person_test_prep_credit, "In Person Test Prep Credit (in hours)" %>
-    <%= f.number_field :in_person_test_prep_credit, class: "form-control" %>
+    <%= f.number_field :in_person_test_prep_credit, class: "form-control", step: 0.25 %>
   </div>
 
   <div class="form-group">
