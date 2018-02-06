@@ -77,6 +77,7 @@ Rails.application.routes.draw do
       namespace :payments do
         resources :pay_all
       end
+      resources :feedbacks, only: [:index]
     end
     resources :engagements do
       member do
