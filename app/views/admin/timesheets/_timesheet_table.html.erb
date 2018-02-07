@@ -2,6 +2,7 @@
   <table class="table mb-0 table-striped table-hover">
     <thead>
       <tr>
+        <th class="col-lg-1 col-sm-1">Timesheet ID</th>
         <th class="col-lg-2 col-sm-1">Submitted By</th>
         <th class="col-lg-1 col-sm-1">Date Submitted</th>
         <th class="col-lg-1 col-sm-1">Total Hours</th>
@@ -14,8 +15,9 @@
     <tbody>
       <% timesheets.order(:submitter_id).each do |timesheet| %>
         <tr>
-          <td><%= name = timesheet.submitter.name %></td>
-          <td><%= timesheet.updated_at.strftime("%-m/%-e/%y") %></td>
+          <td><%= timesheet.id %></td>
+          <td><%= timesheet.submitter.name %></td>
+          <td><%= l(timesheet.updated_at, format: :date) %></td>
           <td><%= timesheet.hours %></td>
           <td><%= description = timesheet.description %></td>
           <td><%= number_to_currency(timesheet.submitter_pay) %></td>
