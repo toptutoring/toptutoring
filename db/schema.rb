@@ -90,6 +90,12 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "dwolla_events", force: :cascade do |t|
+    t.string "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "emails", id: :serial, force: :cascade do |t|
     t.string "subject"
     t.string "body"
@@ -146,8 +152,10 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.integer "submitter_type", default: 0
     t.string "note"
     t.boolean "online", default: true
+    t.bigint "payout_id"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id"
+    t.index ["payout_id"], name: "index_invoices_on_payout_id"
     t.index ["submitter_id"], name: "index_invoices_on_submitter_id"
   end
 
@@ -183,6 +191,8 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.bigint "receiving_account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "dwolla_mass_pay_url"
+    t.string "dwolla_mass_pay_item_url"
     t.index ["receiving_account_id", "receiving_account_type"], name: "index_payouts_receiver_account_and_type"
   end
 
@@ -293,6 +303,7 @@ ActiveRecord::Schema.define(version: 20180203183001) do
   add_foreign_key "feedbacks", "users"
   add_foreign_key "invoices", "engagements"
   add_foreign_key "payments", "stripe_accounts"
+  add_foreign_key "invoices", "payouts"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "signups", "users"
   add_foreign_key "stripe_accounts", "users"

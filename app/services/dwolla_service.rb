@@ -1,42 +1,89 @@
 class DwollaService
-  DWOLLA_WEBHOOK_EVENTS = ["bank_transfer_created",
-                           "bank_transfer_cancelled",
-                           "bank_transfer_failed",
-                           "bank_transfer_completed",
-                           "transfer_created",
-                           "transfer_cancelled",
-                           "transfer_failed",
-                           "transfer_reclaimed",
-                           "transfer_completed"].freeze
-
-  def self.funding_sources
-    return [] unless User.admin.auth_uid.present?
-    response = admin_account_token.get funding_sources_url
-    response._embedded["funding-sources"]
-  rescue DwollaV2::Error => e
-    Bugsnag.notify("Error retrieving funding_sources for admin: " + e.message)
-    []
-  rescue OpenSSL::Cipher::CipherError
-    []
-  end
-
-  def self.admin_account_token
-    DwollaTokenRefresh.new(User.admin.id).perform
-    # https://github.com/Dwolla/dwolla-v2-ruby#dwollav2token
-    DWOLLA_CLIENT.tokens.new(access_token: User.admin.access_token,
-                             refresh_token: User.admin.refresh_token)
-  end
-
   class << self
-    private
+    # Enable webhooks. Runs during instantiation and only for production.
+    if ENV["DWOLLA_ENVIRONMENT"] == "production" && Rails.env.production?
+      app_token = DWOLLA_CLIENT.auths.client
 
-    def funding_sources_url
-      ENV.fetch('DWOLLA_API_URL') + '/accounts/' + auth_uid + '/funding-sources'
+      # Delete all current webhooks
+      webhooks = app_token.get "webhook-subscriptions"
+
+      webhooks._embedded["webhook-subscriptions"].each do |subscription|
+        app_token.delete subscription._links[:self][:href]
+      end
+
+      # Create new webhook
+      subscription_request_body = {
+        url: root_url + "dwolla/webhooks",
+        secret: ENV.fetch("DWOLLA_WEBHOOK_SECRET")
+      }
+
+      app_token.post "webhook-subscriptions", subscription_request_body
     end
 
-    def auth_uid
-      return ENV.fetch('DWOLLA_DEV_ADMIN_AUTH_UID') if Rails.env.development?
-      User.admin.auth_uid
+    Response = Struct.new(:success?, :response)
+
+    def request(resource, *args)
+      send(resource, *args)
+    rescue DwollaV2::ValidationError => e
+      Response.new(false, e._embedded.errors.map { |error| error_text(error) })
+    rescue DwollaV2::AccessDeniedError => e
+      Response.new(false, e.error.titlecase + ": " + e.error_description)
+    rescue DwollaV2::Error => e
+      Response.new(false, error_text(e))
+    rescue OpenSSL::Cipher::CipherError
+      Response.new(false, "There was an error with OpenSSL.")
+    end
+
+    def refresh_token!(user)
+      new_token = DWOLLA_CLIENT.auths.refresh(account_token(user))
+      user.update(access_token: new_token.access_token,
+                  refresh_token: new_token.refresh_token,
+                  token_expires_at: Time.current + new_token.expires_in)
+      new_token
+    end
+
+    private
+
+    def mass_payment(payload)
+      response = refresh_token!(User.admin).post("mass-payments", payload)
+      Response.new(true, response.response_headers[:location])
+    end
+
+    def mass_pay_items(url)
+      response = account_token(User.admin).get(url + "/items")
+      items_array = response._embedded.items.map do |item|
+        item_hash = { auth_uid: item[:metadata][:auth_uid],
+                      status: item[:status],
+                      item_url: item._links[:self][:href] }
+        item_hash[:transfer_url] = item._links[:transfer][:href] if item._links[:transfer]
+        item_hash
+      end
+      Response.new(true, items_array)
+    end
+
+    def transfer(payload)
+      response = refresh_token!(User.admin).post("transfers", payload)
+      Response.new(true, response.response_headers["location"])
+    end
+
+    def funding_sources(user)
+      return Response.new(false, "User must authenticate with Dwolla") unless user.auth_uid
+      url = api_url + "/accounts/" + user.auth_uid + "/funding-sources"
+      response = account_token(user).get url
+      Response.new(true, response._embedded["funding-sources"])
+    end
+
+    def account_token(user)
+      DWOLLA_CLIENT.tokens.new(access_token: user.access_token,
+                               refresh_token: user.refresh_token)
+    end
+
+    def error_text(error)
+      error[:code] + ": " + error[:message]
+    end
+    
+    def api_url
+      ENV.fetch("DWOLLA_API_URL")
     end
   end
 end

@@ -1,104 +1,82 @@
 class MassPaymentService
-  attr_reader :messages, :errors, :payouts
+  Result = Struct.new(:success?, :message)
 
-  def initialize(type, approver)
-    @type = type
-    @approver = approver
+  def initialize(users, approver, type)
+    # Addtional attributes are added to the User object in ActiveRecord Query
+    # Each occurence has been commented
+    # See User.with_pending_invoices_attributes for more detail
     @funding_source = FundingSource.first
     @messages = []
-    @errors = []
-    @paid_users = []
-    @payouts = convert_all_pending_to_payouts
+    prepare_payouts_and_invoices(users, approver, type)
   end
 
   def pay_all
-    return if no_payouts?
-    @admin_account_token = DwollaService.admin_account_token
-    mass_pay = @admin_account_token.post "mass-payments", request_body
-    finalize_payouts(mass_pay.headers[:location])
-  rescue DwollaV2::ValidationError => e
-    @errors << "Dwolla Errors" + e._embedded.errors.to_s
-  rescue DwollaV2::Error => e
-    @errors << "Dwolla Error: " + e.message
-  rescue OpenSSL::Cipher::CipherError
-    @errors << "OpenSSL Error: There was an error with ciphering the access token."
-  end
-
-  def update_processing(status)
-    @paid_users.each do |user|
-      update_and_adjust_balances(user, status)
+    return no_payments_error if @payouts.empty?
+    request = DwollaService.request(:mass_payment, request_body)
+    if request.success?
+      finalize_payouts(request.response)
+      Result.new(true, @messages)
+    else
+      @invoices.update_all(payout_id: nil, status: "pending")
+      @payouts.destroy_all
+      Result.new(false, request.response)
     end
   end
 
   private
 
-  def no_payouts?
-    return false unless @payouts.empty?
-    @errors << "There were no payouts to be made."
-    ping_slack
-    true
+  def prepare_payouts_and_invoices(users, approver, type)
+    sort_valid_and_invalid_users(users)
+    new_payouts = approver.approved_payouts.create(payouts_params(type))
+    @payouts = approver.approved_payouts.where(id: new_payouts.map(&:id))
+    @invoices = Invoice.where(payout: @payouts)
+    @invoices.update_all(status: "processing")
   end
 
-  def convert_all_pending_to_payouts
-    users_to_pay = User.with_pending_invoices(@type)
-    create_payouts_for_users(users_to_pay)
+  def no_payments_error
+    no_payments_message
+    Result.new(false, @messages)
   end
 
-  def create_payouts_for_users(users_to_pay)
-    users_to_pay.each_with_object([]) do |user, payout_list|
-      pending_items = user_pending_items(user)
-      valid_hours = user.outstanding_balance >= pending_items.sum(:hours)
-      if user.has_valid_dwolla? && valid_hours
-        add_to_payouts(payout_list, user, pending_items)
-      else
-        @messages << invalid_user_message(user.name)
-      end
+  def no_payments_message
+    @messages << "No payments were made."
+  end
+
+  def sort_valid_and_invalid_users(users)
+    invalid_query = "outstanding_balance < SUM(invoices.hours) " \
+      "OR auth_uid IS NULL"
+    invalid_users = users.having(invalid_query)
+    create_invalid_messages(invalid_users) if invalid_users.any?
+    valid_query = "outstanding_balance >= SUM(invoices.hours) " \
+      "AND auth_uid IS NOT NULL"
+    @valid_users = users.having(valid_query)
+  end
+
+  def create_invalid_messages(invalid_users)
+    @messages = invalid_users.map do |user|
+      "Payment could not be processed for #{user.name}."
     end
   end
 
-  def user_pending_items(user)
-    return user.invoices.by_tutor.pending if @type == "by_tutor"
-    user.invoices.by_contractor.pending
-  end
-
-  def add_to_payouts(payout_list, user, pending_items)
-    payout_list << Payout.new(payout_params(user, pending_items))
-    pending_items.update_all(status: "processing")
-    @paid_users << user
-  end
-
-  def payout_params(user, pending_items)
-    ids = pending_items.pluck(:id).join(", ")
-    account = @type == "by_tutor" ? user.tutor_account : user.contractor_account
-    { amount: pending_items_total_pay(pending_items),
-      receiving_account: account, approver: @approver,
-      destination: user.auth_uid, funding_source: @funding_source.funding_source_id,
-      description: "Payment for invoices: #{ids}." }
-  end
-
-  def pending_items_total_pay(pending_items)
-    cents = pending_items.sum(:submitter_pay_cents)
-    Money.new(cents)
-  end
-
-  def invalid_user_message(name)
-    "There was an error making a payment for #{name}. Payment was not processed."
+  def payouts_params(type)
+    account_type = type == "by_tutor" ? :tutor_account : :contractor_account
+    @valid_users.map do |user|
+      # invoice_to_pay_ids and amount_cents are added using User.with_pending_invoices_attributes
+      { amount_cents: user.amount_cents, invoice_ids: user.invoice_to_pay_ids,
+        receiving_account: user.send(account_type), status: "processing",
+        destination: user.auth_uid, funding_source: @funding_source.funding_source_id,
+        description: "Payment for invoices: #{user.invoice_to_pay_ids.join(', ')}." }
+    end
   end
 
   def request_body
-    {
-      _links: {
-        source: {
-          href: source_url(@funding_source.funding_source_id)
-        }
-      },
-      items: payouts_array
-    }
+    { _links: { source: { href: @funding_source.url } },
+      items: payouts_array }
   end
 
   def payouts_array
-    @payouts.each_with_object([]) do |payout, result_array|
-      result_array << payout_hash(payout)
+    @payouts.map do |payout|
+      payout_hash(payout)
     end
   end
 
@@ -126,50 +104,28 @@ class MassPaymentService
     "#{ENV.fetch('DWOLLA_API_URL')}/accounts/#{id}"
   end
 
-  def source_url(id)
-    "#{ENV.fetch('DWOLLA_API_URL')}/funding-sources/#{id}"
-  end
-
-  def finalize_payouts(mass_url)
-    record_payouts(retrieve_items(mass_url))
-    set_final_message
-    ping_slack
-  end
-
-  def retrieve_items(mass_url)
-    items_response = @admin_account_token.get mass_url + "/items"
-    items_response[:_embedded][:items]
-  end
-
-  def record_payouts(items)
-    @payouts.each do |payout|
-      auth_id = payout.payee.auth_uid
-      payout_item = items.find { |item| auth_id == item[:metadata][:auth_uid] }
-      payout.status = "paid"
-      payout.dwolla_transfer_url = payout_item[:_links][:transfer][:href] unless payout_item.nil?
-      payout.save
+  def finalize_payouts(url)
+    @payouts.update_all(dwolla_mass_pay_url: url)
+    @valid_users.each do |user|
+      user.outstanding_balance -= user.invoice_hours
+      user.save
     end
+    final_message
   end
 
-  def set_final_message
-    total_paid = @payouts.map(&:amount).reduce(:+)
-    size = @payouts.size
+  def final_message
+    size = @payouts.count
+    if size >= 1
+      message_of_payments_paid(size)
+    else
+      no_payments_message
+    end
+    SlackNotifier.notify_mass_payment_made(@messages)
+  end
+
+  def message_of_payments_paid(size)
+    total_paid = Money.new(@payouts.sum(&:amount_cents))
     start = size == 1 ? "#{size} payment has" : "#{size} payments have"
     @messages << start + " been made for a total of $#{total_paid}."
-  end
-
-  def update_and_adjust_balances(user, status)
-    processing_invoices = user.invoices.where(status: "processing")
-    user.outstanding_balance -= processing_invoices.sum(:hours) if status == "paid"
-    ActiveRecord::Base.transaction do
-      processing_invoices.update_all(status: status)
-      user.save!
-    end
-  end
-
-  def ping_slack
-    messages = @messages.empty? ? nil : "\nMessages\n" + @messages.join("\n")
-    error_messages = @errors.empty? ? nil : "\nErrors\n" + @errors.join("\n")
-    SlackNotifier.notify_mass_payment_made(messages, error_messages)
   end
 end

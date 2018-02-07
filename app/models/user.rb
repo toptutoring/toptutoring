@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
   has_one :contractor_account, dependent: :destroy
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
-  has_many :invoices, ->(user) { unscope(:where).where("submitter_id = ? OR client_id = ?", user.id, user.id) }
+  has_many :invoices, foreign_key: "submitter_id"
+  has_many :pending_invoices, -> { where(status: "pending") }, class_name: "Invoice", foreign_key: "submitter_id"
   has_many :emails, class_name: "Email", foreign_key: "tutor_id", dependent: :destroy
   has_many :user_roles
   has_many :roles, through: :user_roles
@@ -96,7 +97,7 @@ class User < ActiveRecord::Base
   end
 
   def requires_dwolla?
-    roles.where(roles: { name: ['director', 'tutor', 'contractor', 'admin'] }).any?
+    roles.where(roles: { name: ["director", "tutor", "contractor", "admin"] }).any?
   end
 
   def has_valid_dwolla?
@@ -117,8 +118,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.with_pending_invoices(type)
-    join_sql = "JOIN invoices ON users.id = invoices.submitter_id"
-    joins(join_sql).where(invoices: {status: 'pending', submitter_type: type}).distinct
+  def self.with_pending_invoices_attributes(type)
+    account_type = type == "by_tutor" ? :tutor_account : :contractor_account
+    select_query = "users.*, SUM(invoices.submitter_pay_cents) " \
+      "AS amount_cents, array_agg(invoices.id ORDER BY invoices.id) " \
+      "AS invoice_to_pay_ids, SUM(invoices.hours) AS invoice_hours"
+    User.includes(account_type)
+        .joins(:pending_invoices)
+        .where(invoices: { submitter_type: type })
+        .group(:id).select(select_query)
   end
 end

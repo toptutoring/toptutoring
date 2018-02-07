@@ -116,7 +116,7 @@ GEM
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
-    dwolla_v2 (1.1.2)
+    dwolla_v2 (2.0.2)
       faraday (~> 0.9)
       faraday_middleware (~> 0.10)
       hashie (~> 3.4)
@@ -137,7 +137,7 @@ GEM
       webmock
     faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware (0.11.0.1)
+    faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
     fog-aws (2.0.0)
@@ -428,7 +428,7 @@ DEPENDENCIES
   codecov
   database_cleaner
   dotenv-rails
-  dwolla_v2 (~> 1.0)
+  dwolla_v2 (~> 2.0)
   factory_bot_rails
   fake_stripe
   fog-aws

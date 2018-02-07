@@ -28,10 +28,9 @@ class SlackNotifier
       ping(message, :leads)
     end
 
-    def notify_mass_payment_made(payment_messages, error_messages)
+    def notify_mass_payment_made(payment_messages)
       message = "A mass payment was attempted."
-      message += payment_messages if payment_messages
-      message += error_messages if error_messages
+      message += "\nMessages\n" + payment_messages.join("\n")
       ping(message, :general)
     end
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe CreateClientService do
+describe PaymentService do
   let(:client) { FactoryBot.create(:client_user) }
   let(:payment_params) { { hours_type: "online_academic", hours_purchased: "2.0", payer_id: client.id } }
   let(:token) { "tok_visa" }

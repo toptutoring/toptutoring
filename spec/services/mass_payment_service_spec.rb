@@ -1,13 +1,14 @@
 require "rails_helper"
+# Dwolla stub for this spec is defined in spec/support/dwolla_service_stub.rb
 
 describe MassPaymentService do
+  subject = MassPaymentService
   let(:admin) { FactoryBot.create(:auth_admin_user) }
   let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 4) }
+  let(:type) { "by_tutor" }
   let!(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
 
   context "for invoices" do
-    subject { MassPaymentService.new("by_tutor", admin) }
-
     let(:client) { FactoryBot.create(:client_user) }
     let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
     let(:student_account_user_nil) { FactoryBot.create(:student_account, user: nil, client_account: client.client_account) }
@@ -16,70 +17,97 @@ describe MassPaymentService do
     let!(:invoice_pending2) { FactoryBot.create(:invoice, submitter: tutor, client: client, hourly_rate: client.online_test_prep_rate, engagement: engagement) }
     let!(:invoice_paid) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "paid") }
     let!(:invoice_nil) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: nil) }
+    # factory sets hours for invoice to 2 so each invoice is worth 30_00 cents
 
     it "grabs all pending invoices and creates 1 payment for each user" do
-      expect(subject.payouts.count).to eq 1
-      # factory sets hours for invoice to 2 so each invoice is worth 3000 cents
-      expect(subject.payouts.sum(&:amount_cents)).to eq 6000
+      expect(Payout.count).to eq 0
+      expected_payment_description = "Payment for invoices: #{tutor.invoices.pending.ids.join(', ')}."
+
+      mass_pay_url = "mass_pay_url"
+      dwolla_stub_success mass_pay_url
+
+      request = subject.new(User.with_pending_invoices_attributes(type), admin, type).pay_all
+
+      expect(request.success?).to be true
+      expect(request.message).to contain_exactly "1 payment has been made for a total of $60.00."
+      expect(Payout.count).to eq 1
+      expect(Payout.sum(:amount_cents)).to eq 60_00
+      expect(Payout.last.dwolla_mass_pay_url).to eq mass_pay_url
+      expect(Payout.last.description).to eq expected_payment_description
+      expect(Payout.last.destination).to eq tutor.auth_uid
+      expect(Payout.last.funding_source).to eq funding_source.funding_source_id
+    end
+
+    it "does not make any payouts and sets invoices back to pending if dwolla api request fails" do
+      expect(Payout.count).to eq 0
+      count = tutor.invoices.pending.count
+      error = "Error Message"
+
+      dwolla_stub_failure [error]
+
+      request = subject.new(User.with_pending_invoices_attributes(type), admin, type).pay_all
+
+      expect(request.success?).to be false
+      expect(request.message).to contain_exactly error
+      expect(Payout.count).to eq 0
+      expect(tutor.reload.invoices.pending.count).to eq count
     end
 
     it "makes multiple payments if there are more than 1 payee" do
-      tutor2 = FactoryBot.create(:tutor_user, outstanding_balance: 2)
+      tutor2 = FactoryBot.create(:tutor_user, auth_uid: "another_uid", outstanding_balance: 2)
       engagement2 = FactoryBot.create(:engagement, tutor_account: tutor2.tutor_account, client_account: client.client_account, student_account: student_account_user_nil)
-      invoice2 = FactoryBot.create(:invoice, submitter: tutor2, client: client, engagement: engagement2)
+      FactoryBot.create(:invoice, submitter: tutor2, client: client, engagement: engagement2)
 
-      expect(subject.payouts.count).to eq 2
-      expect(subject.payouts.sum(&:amount_cents)).to eq 9000
+      tutor_expected_payment_description = "Payment for invoices: #{tutor.invoices.pending.ids.join(', ')}."
+      tutor2_expected_payment_description = "Payment for invoices: #{tutor2.invoices.pending.ids.join(', ')}."
+
+      mass_pay_url = "mass_pay_url"
+      dwolla_stub_success mass_pay_url
+
+      request = subject.new(User.with_pending_invoices_attributes(type), admin, type).pay_all
+
+      tutor_payout = Payout.find_by destination: tutor.auth_uid
+      tutor2_payout = Payout.find_by destination: tutor2.auth_uid
+
+      expect(request.success?).to be true
+      expect(request.message).to contain_exactly "2 payments have been made for a total of $90.00."
+      expect(Payout.count).to eq 2
+      expect(Payout.sum(:amount_cents)).to eq 90_00
+      expect(tutor_payout.dwolla_mass_pay_url).to eq mass_pay_url
+      expect(tutor_payout.description).to eq tutor_expected_payment_description
+      expect(tutor2_payout.dwolla_mass_pay_url).to eq mass_pay_url
+      expect(tutor2_payout.description).to eq tutor2_expected_payment_description
     end
 
     it "makes all pending invoices to processing" do
-      expect(subject.payouts.count).to eq 1
+      subject.new(User.with_pending_invoices_attributes(type), admin, type)
+
       expect(invoice_pending.reload.status).to eq "processing"
       expect(invoice_pending2.reload.status).to eq "processing"
       expect(invoice_paid.reload.status).to eq "paid"
       expect(invoice_nil.reload.status).to be nil
     end
-
-    it "records correct data for payment" do
-      expect(Payout.count).to eq 0
-      total_to_be_paid = tutor.invoices.pending.sum(:submitter_pay_cents)
-      VCR.use_cassette("dwolla_mass_payment", match_requests_on: [:method, :path]) do
-        subject.pay_all
-      end
-      expect(Payout.count).to eq 1
-      payout = Payout.last
-      expect(payout.dwolla_transfer_url).not_to be_nil
-      expect(payout.payee).to eq tutor
-      expect(payout.destination).to eq tutor.auth_uid
-      expect(payout.amount.cents).to eq total_to_be_paid
-      expect(payout.funding_source).to eq funding_source.funding_source_id
-      expect(payout.approver).to eq admin
-      expect(payout.description).to eq "Payment for invoices: #{invoice_pending.id}, #{invoice_pending2.id}."
-    end
-
-    describe "#update_processing" do
-      it "pays all pending invoices" do
-        subject.update_processing("paid")
-
-        expect(invoice_pending.reload.status).to eq "paid"
-        expect(invoice_pending2.reload.status).to eq "paid"
-        expect(invoice_paid.reload.status).to eq "paid"
-        expect(invoice_nil.reload.status).to be nil
-      end
-    end
   end
 
   context "for timesheets" do
-    subject { MassPaymentService.new("by_contractor", admin) }
-
-    it "grabs all pending timesheet" do
-      FactoryBot.create(:contractor_account, hourly_rate: 15, user: tutor)
+    it "pays only pending timesheets" do
+      FactoryBot.create(:contractor_account, user: tutor, hourly_rate: 15)
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_contractor", status: "pending")
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_tutor", status: "pending")
       FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_contractor", hours: 1, status: "paid")
+      FactoryBot.create(:invoice, submitter: tutor, submitter_type: "by_contractor", hours: 1, status: "pending")
 
-      expect(subject.payouts.count).to eq 1
-      expect(subject.payouts.sum(&:amount_cents)).to eq 3000
+      mass_pay_url = "mass_pay_url"
+      dwolla_stub_success mass_pay_url
+
+      type = "by_contractor"
+      request = subject.new(User.with_pending_invoices_attributes(type), admin, type).pay_all
+
+      expect(request.success?).to be true
+      expect(request.message).to contain_exactly "1 payment has been made for a total of $45.00."
+      expect(Payout.count).to eq 1
+      expect(Payout.sum(:amount_cents)).to eq 45_00
+      expect(Payout.last.dwolla_mass_pay_url).to eq mass_pay_url
     end
   end
 end

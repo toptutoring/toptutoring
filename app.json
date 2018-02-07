@@ -71,6 +71,9 @@
     "DWOLLA_URL": {
       "required": true
     },
+    "DWOLLA_WEBHOOK_SECRET": {
+      "required": true
+    },
     "ENCRYPTOR_KEY": {
       "required": true
     },

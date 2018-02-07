@@ -1,7 +1,7 @@
 require_relative "../../lib/strategies/dwolla"
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :dwolla, ENV.fetch("DWOLLA_APPLICATION_KEY"), ENV.fetch("DWOLLA_APPLICATION_SECRET")
+  provider :dwolla, ENV.fetch("DWOLLA_APPLICATION_KEY"), ENV.fetch("DWOLLA_APPLICATION_SECRET"), setup: true
 end
 
 OmniAuth.config.on_failure = Proc.new do |env|

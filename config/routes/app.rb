@@ -25,8 +25,10 @@ Rails.application.routes.draw do
   get "/reset_password" => "passwords#new", as: "reset_password"
 
   # Omniauth routes
-  get "/auth/dwolla/callback", to: "auth_callbacks#create"
+  get "/auth/:provider/setup", to: "auth_setup#setup"
+  get "/auth/:provider/callback", to: "auth_callbacks#create"
   get "/auth/failure", to: "auth_callbacks#failure"
+  post "/dwolla/webhooks", to: "webhooks/dwolla#update"
 
   #Clearance routes
   resource :session, controller: "sessions", only: [:new, :create]

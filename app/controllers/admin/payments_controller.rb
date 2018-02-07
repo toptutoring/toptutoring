@@ -25,11 +25,11 @@ module Admin
     end
 
     def create_payout
-      @payout = Payout.new(payout_params)
+      @payout = @invoice.build_payout(payout_params)
       if @payout.valid?
         process_payout
       else
-        flash[:danger] = @payout.errors.full_messages
+        flash.alert = @payout.errors.full_messages
       end
     end
 
@@ -53,20 +53,13 @@ module Admin
     end
 
     def process_payout
-      @transfer = PaymentGatewayDwolla.new(@payout)
-      @transfer.create_transfer
-      if @transfer.error.nil?
-        @payout.save!
+      result = DwollaPaymentService.charge!(@payout)
+      if result.success?
         adjust_balance_and_update_status_for_invoice
-        ping_slack
-        flash.notice = "Payment is being processed."
+        flash.notice = result.message
       else
-        flash[:danger] = @transfer.error
+        flash.alert = result.message
       end
-    end
-
-    def ping_slack
-      SlackNotifier.notify_payout_made(@payout)
     end
 
     def set_invoice

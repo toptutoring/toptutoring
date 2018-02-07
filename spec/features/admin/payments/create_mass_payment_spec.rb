@@ -19,20 +19,24 @@ feature "Create payment for tutor" do
       visit admin_invoices_path
       click_on "Pay All Invoices"
 
-      expect(page).to have_content("You must select a funding source before making a payment.")
+      expect(page).to have_content("Please select a funding source before making a payment.")
     end
 
     scenario "makes payment for tutors with and without dwolla authentication" do
-      VCR.use_cassette("dwolla_mass_payment", match_requests_on: [:method, :path]) do
-        funding_source
-        sign_in(admin)
-        visit admin_invoices_path
-        click_on "Pay All Invoices"
+      funding_source
 
-        expect(page).to have_content("There was an error making a payment for #{tutor_no_auth.name}. Payment was not processed.")
-        expect(page).to have_content("1 payment has been made for a total of $45.00")
-        expect(tutor.reload.outstanding_balance).to eq 0
-      end
+      mass_pay_url = "mass_pay_url"
+      dwolla_stub_success(mass_pay_url)
+
+      sign_in(admin)
+      visit admin_invoices_path
+      click_on "Pay All Invoices"
+
+      expect(Payout.count).to eq 1
+      expect(Payout.last.dwolla_mass_pay_url).to eq mass_pay_url
+      expect(page).to have_content("Payment could not be processed for #{tutor_no_auth.name}.")
+      expect(page).to have_content("1 payment has been made for a total of $45.00")
+      expect(tutor.reload.outstanding_balance).to eq 0
     end
   end
 end

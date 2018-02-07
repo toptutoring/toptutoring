@@ -10,9 +10,9 @@ module Admin
         if set_funding_source
           create_payout
         else
-          flash[:error] = "Funding source is not set. Please contact the administrator."
+          flash.alert = "Funding source is not set. Please contact the administrator."
         end
-        redirect_back fallback_location: dashboard_path
+        redirect_to new_admin_payments_miscellaneous_payment_path
       end
 
       private
@@ -26,7 +26,7 @@ module Admin
         if @payout.valid?
           process_payout
         else
-          flash[:danger] = @payout.errors.full_messages
+          flash.alert = @payout.errors.full_messages
         end
       end
 
@@ -44,13 +44,11 @@ module Admin
       end
 
       def process_payout
-        @transfer = PaymentGatewayDwolla.new(@payout)
-        @transfer.create_transfer
-        if @transfer.error.nil?
-          @payout.save!
-          flash.notice = "Payment is being processed."
+        result = DwollaPaymentService.charge!(@payout)
+        if result.success?
+          flash.notice = result.message
         else
-          flash[:danger] = @transfer.error
+          flash.alert = result.message
         end
       end
     end

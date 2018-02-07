@@ -2,7 +2,7 @@ module Admin
   class FundingSourcesController < ApplicationController
     before_action :require_login, :set_funding_source
     before_action :check_funding_source, only: :new
-    before_action :get_funding_sources, only: [:new, :edit]
+    before_action :retrieve_funding_sources, only: [:new, :edit]
 
     def new
       @funding_source = FundingSource.new
@@ -39,13 +39,14 @@ module Admin
       @funding_source  = FundingSource.first
     end
 
-    def get_funding_sources
-      @funding_sources = DwollaService.funding_sources
-    rescue DwollaV2::Error => e
-      @funding_sources = []
-      message = "DwollaV2 Error: #{e}"
-      Rails.logger.error(message)
-      flash[:danger] = message
+    def retrieve_funding_sources
+      dwolla_request = DwollaService.request(:funding_sources, current_user)
+      if dwolla_request.success?
+        @funding_sources = dwolla_request.response
+      else
+        @funding_sources = []
+        flash.alert = dwolla_request.response
+      end
     end
 
     def check_funding_source
