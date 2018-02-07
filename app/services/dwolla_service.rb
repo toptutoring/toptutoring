@@ -13,7 +13,7 @@ class DwollaService
 
       # Create new webhook
       subscription_request_body = {
-        url: root_url + "dwolla/webhooks",
+        url: "https://app.toptutoring.com/dwolla/webhooks",
         secret: ENV.fetch("DWOLLA_WEBHOOK_SECRET")
       }
 
