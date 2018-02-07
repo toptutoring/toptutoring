@@ -25,7 +25,7 @@
 
           <div class="form-group select-option">
             <%= f.label :subject_id, "Subject" %>
-            <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, class: "form-control", required: true %>
+            <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name", @engagement.subject.id), { prompt: "Subject" }, class: "form-control", required: true %>
           </div>
 
           <div class="text-center">
