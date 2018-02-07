@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="widget">
+      <div class="widget-heading">
+        <h3 class="widget-title text-center">Tutoring Engagement</h3>
+      </div>
+      <div class="widget-body">
+        <%= form_for Engagement.new do |f| %>
+
+          <div class="form-group select-option">
+            <%= f.label :tutor_account_id, "Tutor" %>
+            <%= f.select :tutor_account_id, options_from_collection_for_select(@tutor_accounts, :id, :name), { include_blank: true }, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :student_account_id, "Student" %>
+            <%= f.select :student_account_id, grouped_options_for_select(@students), { include_blank: false }, class: "form-control" %>
+          </div>
+
+          <div class="form-group select-option">
+            <%= f.label :subject_id, "Subject" %>
+            <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, class: "form-control", required: true %>
+          </div>
+
+          <div class="text-center">
+            <%= f.submit "Submit", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
