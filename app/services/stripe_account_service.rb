@@ -9,7 +9,8 @@ class StripeAccountService
       else
         stripe_customer = create_new_stripe_customer(user, token_id)
         account = user.create_stripe_account!(customer_id: stripe_customer.id)
-        Result.new(true, success(account.default_card), stripe_customer.default_source)
+        card_id = stripe_customer.default_source
+        Result.new(true, success(account.get_card(card_id)), card_id)
       end
     rescue Stripe::StripeError => e
       Bugsnag.notify("Stripe Error: " + e.message)

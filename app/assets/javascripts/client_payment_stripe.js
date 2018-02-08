@@ -41,24 +41,26 @@ $(function() {
     form.addEventListener('submit', function(event) {
       $('input[type=submit]').attr('disabled', true);
       event.preventDefault();
-      var options = { name: document.getElementById('card_holder_name').value,
-                      address_line1: document.getElementById('card_address').value,
-                      address_line2: document.getElementById('card_unit_number').value,
-                      address_zip: document.getElementById('card_zip_code').value,
-                      address_city: document.getElementById('card_city').value,
-                      address_state: document.getElementById('card_state').value }
+      if (document.getElementById("use_new_card").checked) {
+        var options = { name: document.getElementById('card_holder_name').value,
+          address_line1: document.getElementById('card_address').value,
+          address_line2: document.getElementById('card_unit_number').value,
+          address_zip: document.getElementById('card_zip_code').value,
+          address_city: document.getElementById('card_city').value,
+          address_state: document.getElementById('card_state').value }
 
-      stripe.createToken(card, options).then(function(result) {
-        if (result.error) {
-          // Inform the customer that there was an error
-          var errorElement = document.getElementById('card-error');
-          errorElement.textContent = result.error.message;
-          $('input[type=submit]').attr('disabled', false);
-        } else {
-          // Send the token to your server
-          stripeTokenHandler(result.token);
-        }
-      });
+        stripe.createToken(card, options).then(function(result) {
+          if (result.error) {
+            // Inform the customer that there was an error
+            var errorElement = document.getElementById('card-error');
+            errorElement.textContent = result.error.message;
+            $('input[type=submit]').attr('disabled', false);
+          } else {
+            // Send the token to your server
+            stripeTokenHandler(result.token);
+          }
+        });
+      }
     });
   }
 

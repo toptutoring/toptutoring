@@ -4,19 +4,6 @@ class StripeAccount < ApplicationRecord
 
   validates_presence_of :user, :customer_id
 
-  def default_source_id
-    customer.default_source
-  end
-
-  def default_card
-    # returns Stripe::Card object
-    get_card(default_source_id)
-  end
-
-  def default_source_display
-    card_display(default_card)
-  end
-
   def customer
     # returns Stripe::Customer object
     Stripe::Customer.retrieve(customer_id)
@@ -41,7 +28,16 @@ class StripeAccount < ApplicationRecord
   def sources
     customer.sources.all
   end
-  private
+
+  def card_options
+    sources.map do |card|
+      [card_display(card), card.id]
+    end
+  end
+
+  def default_display
+    card_display(sources.first)
+  end
 
   def card_display(card)
     "#{card.brand} ending in #{card.last4}"
