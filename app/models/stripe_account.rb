@@ -32,6 +32,12 @@ class StripeAccount < ApplicationRecord
     card
   end
 
+  def remove_card(card_id)
+    return false if sources.count <= 1
+    card = get_card(card_id).delete
+    card.deleted?
+  end
+
   def sources
     customer.sources.all
   end

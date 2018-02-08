@@ -19,6 +19,9 @@
                       <p><%= "#{payment.address_city}, #{payment.address_state} #{payment.address_zip}" %></p>
                     </div>
                   </td>
+                  <td>
+                    <%= link_to "Remove", clients_payment_method_path(id: payment.id), method: :delete, class: "btn btn-danger" %>
+                  </td>
                 </tr>
               <% end %>
             <% else %>

@@ -16,6 +16,18 @@ class StripeAccountService
       Result.new(false, "There was an error adding your card on file.")
     end
 
+    def remove_card!(user, card_id)
+      return Result.new(false, "No card to remove") unless user.stripe_account
+      if user.stripe_account.remove_card(card_id)
+        Result.new(true, "Card has been removed.")
+      else
+        Result.new(false, "Unable to remove card.")
+      end
+    rescue Stripe::StripeError => e
+      Bugsnag.notify("Stripe Error: " + e.message)
+      Result.new(false, "There was an error while removing your card.")
+    end
+
     private
 
     def create_new_stripe_customer(user, token_id)

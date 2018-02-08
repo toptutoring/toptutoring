@@ -13,12 +13,21 @@ module Clients
       redirect_to action: :index
     end
 
+    def destroy
+      result = StripeAccountService.remove_card!(current_user, card_id)
+      flash_message(result)
+      redirect_to action: :index
+    end
+
     private
 
     def token
       params.require(:stripe_token)
     end
 
+    def card_id
+      params.require(:id)
+    end
 
     def flash_message(result)
       if result.success?
