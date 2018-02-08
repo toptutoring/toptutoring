@@ -10,16 +10,28 @@ class StripeAccount < ApplicationRecord
 
   def default_card
     # returns Stripe::Card object
-    customer.sources.retrieve(default_source_id)
+    get_card(default_source_id)
   end
 
-  def default_card_display
-    card = default_card
-    "#{card.brand} ending in #{card.last4}"
+  def default_source_display
+    card_display(default_card)
   end
 
   def customer
     # returns Stripe::Customer object
     Stripe::Customer.retrieve(customer_id)
+  end
+
+  def get_card(card_id)
+    sources.retrieve(card_id)
+  end
+
+  def sources
+    customer.sources.all
+  end
+  private
+
+  def card_display(card)
+    "#{card.brand} ending in #{card.last4}"
   end
 end

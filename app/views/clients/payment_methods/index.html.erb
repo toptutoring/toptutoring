@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Your Payment Methods</h3>
+      </div>
+      <div class="widget-body">
+        <table class="table table-hover">
+          <tbody>
+            <% if @payment_methods.any? %>
+              <% @payment_methods.each do |payment| %>
+                <tr>
+                  <td>
+                    <div class="pull-left">
+                      <p class="lead"><%= payment.brand + " ending in " + payment.last4 %></p>
+                      <p><%= payment.name %></p>
+                      <p><%= payment.address_line1 %></p>
+                      <p><%= payment.address_line2 %></p>
+                      <p><%= "#{payment.address_city}, #{payment.address_state} #{payment.address_zip}" %></p>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <p>You do not have any payment methods saved</p>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
