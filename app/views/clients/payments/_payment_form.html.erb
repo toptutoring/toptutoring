@@ -1,8 +1,5 @@
-<!-- Styles for this form is defined in "stripe.scss" -->
-
-<%= form_for [:clients, Payment.new], id: "new_payment" do |f| %>
+<%= form_for [:clients, Payment.new], html: { class: "stripe_form" } do |f| %>
   <!--  Credit Card Inputs -->
-  <%= content_tag :div, nil, id: "stripe_publishable_key", data: { key: ENV['STRIPE_PUBLISHABLE_KEY'] } %>
   <div class="col-lg-6">
     <div class="widget">
       <div class="widget-heading">

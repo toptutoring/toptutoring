@@ -30,3 +30,22 @@
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Add a new card</h3>
+      </div>
+      <div class="widget-body">
+        <%= form_for clients_payment_methods_path, html: { class: "stripe_form" } do %>
+          <%= check_box_tag :use_new_card, "true", true, class: "hidden" %>
+          <%= render "clients/payments/card_parameters", div_class: nil, save_card_option: false %>
+          <div class="row m-0">
+            <%= submit_tag "Submit", class: "pull-right btn btn-primary", data: { disable_with: false } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

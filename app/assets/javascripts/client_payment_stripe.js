@@ -36,7 +36,7 @@ $(function() {
     });
 
     // Create Stripe Token upon submit
-    var form = document.getElementById('new_payment');
+    var form = document.getElementsByClassName('stripe_form')[0];
 
     form.addEventListener('submit', function(event) {
       $('input[type=submit]').attr('disabled', true);

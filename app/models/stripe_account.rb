@@ -26,6 +26,12 @@ class StripeAccount < ApplicationRecord
     sources.retrieve(card_id)
   end
 
+  def attach_card(token)
+    card = sources.create(source: token)
+    customer.save
+    card
+  end
+
   def sources
     customer.sources.all
   end
