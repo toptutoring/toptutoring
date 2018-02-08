@@ -49,7 +49,7 @@ describe PaymentService do
     end
 
     it "successfully charges a stored card" do
-      subject = PaymentService.new(stripe_account.default_source_id, payment_params, stripe_account).charge!
+      subject = PaymentService.new(stripe_account.customer.default_source, payment_params, stripe_account).charge!
 
       expect(subject.success?).to be true
     end
