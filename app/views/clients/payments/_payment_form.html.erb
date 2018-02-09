@@ -84,7 +84,7 @@
         <div class="widget-content">
           <% if @account %>
             <div class="form-group select-option mb-10">
-              <%= label_tag :card_id, "Use an existing Card" %>
+              <%= label_tag :card_id, "Payment Method" %>
               <% if @account.card_options.many? %>
                 <%= select_tag :card_id, options_for_select(@account.card_options, @account.customer.default_source), class: "form-control input-lg" %>
               <% else %>
@@ -95,7 +95,7 @@
             <%= link_to "Manage your payment options", clients_payment_methods_path %>
               <%= label_tag :use_new_card, class: "pull-right" do %>
                 <%= check_box_tag :use_new_card, "true", false %>
-                Use another card
+                Use a new card
               <% end %>
             </div>
           <% else %>

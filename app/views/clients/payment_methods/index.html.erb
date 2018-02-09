@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
     <div class="widget">
       <div class="widget-heading clearfix">
         <h3 class="widget-title pull-left">Your Payment Methods</h3>
@@ -12,7 +12,7 @@
                 <tr>
                   <td>
                     <div class="pull-left">
-                      <p class="lead"><%= payment.brand + " ending in " + payment.last4 %></p>
+                      <p class="lead"><%= payment.brand.upcase + " ending in " + payment.last4 %></p>
                       <p><%= payment.name %></p>
                       <p><%= payment.address_line1 %></p>
                       <p><%= payment.address_line2 %></p>
@@ -20,7 +20,7 @@
                     </div>
                   </td>
                   <td>
-                    <%= link_to "Remove", clients_payment_method_path(id: payment.id), method: :delete, class: "btn btn-danger" %>
+                    <%= link_to "Remove", clients_payment_method_path(id: payment.id), method: :delete, class: "btn btn-default" %>
                   </td>
                 </tr>
               <% end %>
@@ -35,7 +35,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
     <div class="widget">
       <div class="widget-heading clearfix">
         <h3 class="widget-title pull-left">Add a new card</h3>
