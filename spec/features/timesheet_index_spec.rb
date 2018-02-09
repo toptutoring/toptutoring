@@ -1,8 +1,7 @@
 require "rails_helper"
 
 feature "as a contractor reviewing timesheets" do
-  let(:contractor) { FactoryBot.create(:tutor_user, roles: Role.where(name: ["tutor", "contractor"]), outstanding_balance: 1) }
-  let!(:contractor_account) { FactoryBot.create(:contractor_account, user: contractor) }
+  let(:contractor) { FactoryBot.create(:contractor_user) }
   let!(:invoice) { FactoryBot.create(:invoice, submitter: contractor, submitter_type: "by_contractor", hours: 1) }
 
   scenario "when user has a timesheet" do
@@ -26,10 +25,11 @@ feature "as a contractor reviewing timesheets" do
   scenario "when user deletes a timesheet" do
     sign_in(contractor)
     visit timesheets_path
+    expect(contractor.contractor_account.balance_pending).to eq Money.new(15_00)
+
     click_on "Delete"
 
-    expect(contractor.outstanding_balance).to eq 1
     expect(page).to have_content("Timesheet deleted")
-    expect(contractor.reload.outstanding_balance).to eq 0
+    expect(contractor.reload.contractor_account.balance_pending).to eq 0
   end
 end
