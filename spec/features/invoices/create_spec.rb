@@ -6,8 +6,7 @@ feature "Create Invoice", js: true do
   let(:client) { FactoryBot.create(:client_user, online_academic_credit: 50, online_test_prep_credit: 50) }
   let(:client_invalid) { FactoryBot.create(:client_user, :invalid_record, phone_number: nil, online_academic_credit: 50, online_test_prep_credit: 50) }
   let(:student) { FactoryBot.create(:student_user, client: client) }
-  let(:student_account) { FactoryBot.create(:student_account, user: student, client_account: client.client_account) }
-  let(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, state: "active", student_account: student_account, client_account: client.client_account) }
+  let(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, state: "active", student_account: student.student_account, client_account: client.client_account) }
   let(:invoice) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement, student: student) }
   let(:email) { FactoryBot.create(:email, tutor: tutor, client: client) }
 
