@@ -30,7 +30,7 @@ class DwollaPaymentService
           value: payout.amount
         },
         metadata: {
-          concept: payout.description
+          description: "Top Tutoring payment for invoice ##{payout.invoices.ids}."
         }
       }
     end
