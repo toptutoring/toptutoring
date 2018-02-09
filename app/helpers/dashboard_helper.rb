@@ -15,7 +15,7 @@ module DashboardHelper
   def balance_string(type, user)
     prefix = type.titlecase + " Credit: "
     if current_user.send(type + "_rate") > 0
-      content_tag :p, prefix + user.send(type + "_credit").to_s, class: "lead"
+      content_tag :p, prefix + user.send(type + "_credit").to_s
     end
   end
 end
