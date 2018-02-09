@@ -11,7 +11,6 @@ class CreditUpdater
   def process_creation_of_invoice!
     ActiveRecord::Base.transaction do
       subtract_from_client_credit(@invoice.hours) if @client
-      add_to_submitter_balance(@invoice.hours)
       @invoice.save!
     end
     Struct.new(:failed?, :low_balance?).new(false, client_low_balance?)
@@ -22,7 +21,6 @@ class CreditUpdater
   def process_denial_of_invoice!
     ActiveRecord::Base.transaction do
       add_to_client_credit(@invoice.hours) if @client
-      subtract_from_submitter_balance(@invoice.hours)
       @invoice.status = "denied"
       @invoice.save!
     end
@@ -30,7 +28,6 @@ class CreditUpdater
 
   def process_payment_of_invoice!
     ActiveRecord::Base.transaction do
-      subtract_from_submitter_balance(@invoice.hours)
       @invoice.status = "processing"
       @invoice.save!
     end
@@ -39,7 +36,6 @@ class CreditUpdater
   def process_deletion_of_invoice!
     ActiveRecord::Base.transaction do
       add_to_client_credit(@invoice.hours) if @client
-      subtract_from_submitter_balance(@invoice.hours)
       @invoice.destroy
     end
   end
@@ -51,10 +47,8 @@ class CreditUpdater
     ActiveRecord::Base.transaction do
       absolute_amount = difference.abs
       if difference.positive?
-        add_to_submitter_balance(absolute_amount)
         subtract_from_client_credit(absolute_amount) if @client
       elsif difference.negative?
-        subtract_from_submitter_balance(absolute_amount)
         add_to_client_credit(absolute_amount) if @client
       else
         # Don't do anything if hours did not change
@@ -107,16 +101,6 @@ class CreditUpdater
       end
     end
     @client.save!
-  end
-
-  def add_to_submitter_balance(hours)
-    @submitter.outstanding_balance += hours
-    @submitter.save!
-  end
-
-  def subtract_from_submitter_balance(hours)
-    @submitter.outstanding_balance -= hours
-    @submitter.save!
   end
 
   def update_invoice(update_params)
