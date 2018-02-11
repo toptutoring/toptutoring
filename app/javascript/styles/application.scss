@@ -1,0 +1,93 @@
+.react-container-content {
+    height: 1500px;
+    width: 100%;
+    background-color: transparent;
+}
+
+.contact {
+    position: fixed;
+    top: 100px;
+    left: 70%;
+    width: 250px;
+    background-color: steelblue;
+    text-align: center;
+    border-radius: .5em;
+    padding: .5em;
+}
+
+.contact.collapsed {
+    top: 0;
+    width: 100%;
+    left: 0;
+    border-radius: 0;
+    display: flex;
+}
+
+.contact input {
+    margin-bottom: .125em;
+    border: none;
+    padding-left: .25em;
+    width: 90%;
+    line-height: 1.8;
+}
+
+.contact.collapsed input {
+    flex: auto;
+    margin-right: .25em;
+}
+
+.contact button {
+    margin-top: .5em;
+    width: 65%;
+    border: none;
+    background-color: darkslategray;
+    font-weight: bold;
+    color: white;
+}
+
+.contact.collapsed button {
+    flex: auto;
+    line-height: 1.8;
+    margin-top: 0;
+}
+
+.contact-form {
+    padding: .5em;
+    border-radius: .5em;
+    background-color: goldenrod;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.contact.collapsed .contact-form {
+    flex: auto;
+    display: flex;
+    border-radius: 0;
+}
+
+.contact-header {
+    float: left;
+    margin-left: .5em;
+    font-weight: bold;
+    margin-bottom: .25em;
+    font-size: 1.1em;
+    color: steelblue;
+}
+
+.contact.collapsed .contact-header {
+    margin: .5em;
+    white-space: nowrap;
+}
+
+.phone-number {
+    color: white;
+    font-size: 1.6em;
+    margin-bottom: .25em;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.contact.collapsed .phone-number {
+    margin: .4em .5em 0 .5em;
+    white-space: nowrap;
+}
