@@ -1,11 +1,16 @@
 import React from 'react';
 import phoneIcon from '../../assets/images/phone-white.png';
 
-export class Contact extends React.Component {
+export class ContactNav extends React.Component {
+    firstRender = true;
+
+    componentDidMount() {
+        this.firstRender = false;
+    }
 
     render() {
-        const classes = `contact ${this.props.isMobile ? 'mobile' : ''}`;
-        
+        const classes = `contact collapsed ${this.firstRender ? '' :
+            (this.props.isContactExpanded ? 'slide-up' : 'slide-down')}`;
         return (
             <div className={classes}>
                 <span className="phone-number">
