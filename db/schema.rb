@@ -188,6 +188,17 @@ ActiveRecord::Schema.define(version: 20180303012221) do
     t.index ["submitter_id"], name: "index_invoices_on_submitter_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "message_type"
+    t.string "title"
+    t.string "message"
+    t.boolean "read", default: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "payments", id: :serial, force: :cascade do |t|
     t.integer "amount_cents"
     t.string "description"
