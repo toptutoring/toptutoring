@@ -151,8 +151,8 @@ ActiveRecord::Schema.define(version: 20180212194122) do
     t.integer "amount_cents"
     t.integer "submitter_type", default: 0
     t.string "note"
-    t.bigint "payout_id"
     t.boolean "online", default: true
+    t.bigint "payout_id"
     t.integer "session_rating"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id"
