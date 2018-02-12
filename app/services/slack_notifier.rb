@@ -3,6 +3,7 @@ class SlackNotifier
     CHANNELS = {
       development: "#testing",
       leads: "#leads",
+      payments: "#payments",
       the_boss: "@tad",
       the_minion: "@ojameso",
       general: "#general"
@@ -31,15 +32,19 @@ class SlackNotifier
     def notify_mass_payment_made(payment_messages)
       message = "A mass payment was attempted."
       message += "\nMessages\n" + payment_messages.join("\n")
-      ping(message, :general)
+      ping(message, :payments)
     end
 
     def notify_client_payment(payment)
       return unless payment.persisted?
+      payer = payment.payer
+      accounts = payer.client_account.student_accounts
       message = "A payment has been made.\n" \
-        "By: #{payment.payer.name}\n" \
+        "By: #{payer.name}\n" \
+        "Student accounts: #{accounts.pluck(:name).join(', ')}\n" \
+        "Payment method: #{payment.card_brand_and_four_digits}\n" \
         "Amount: #{payment.amount}"
-      ping(message, :general)
+      ping(message, :payments)
     end
 
     def notify_payout_made(payout)
@@ -47,7 +52,7 @@ class SlackNotifier
         "By: #{payout.approver.name}\n" \
         "To: #{payout.receiving_account.user.name}\n" \
         "Amount: #{payout.amount}"
-      ping(message, :general)
+      ping(message, :payments)
     end
 
     def notify_new_engagement(engagement)
