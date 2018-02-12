@@ -1,0 +1,10 @@
+var notice = document.getElementById("<%= "notification_#{@notice.id}" %>")
+notice.parentNode.removeChild(notice)
+var count = document.getElementById("notification_count").children[0]
+  <% if @count >0 %>
+    count.innerText = <%= @count %>
+<% else %>
+    count.innerHTML = ""
+<% end %>
+
+console.log("Success!")

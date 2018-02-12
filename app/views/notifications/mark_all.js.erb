@@ -1,0 +1,4 @@
+var count = document.getElementById("notification_count").children[0]
+count.innerHTML = ""
+var list = document.getElementById("notification_list")
+list.innerHTML = "<%= escape_javascript(render("no_messages")) %>"
