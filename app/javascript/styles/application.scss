@@ -8,19 +8,28 @@
     position: fixed;
     top: 100px;
     left: 70%;
-    width: 250px;
-    background-color: steelblue;
+    width: 275px;
+    background-color: #012056;
     text-align: center;
     border-radius: .5em;
-    padding: .5em;
+    padding: .5em .5em 1em .5em;
+}
+
+.contact.mobile {
+    position: absolute;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
 }
 
 .contact.collapsed {
-    top: 0;
     width: 100%;
+    top: -100px;
     left: 0;
     border-radius: 0;
     display: flex;
+    padding: .5em
 }
 
 .contact input {
@@ -29,6 +38,7 @@
     padding-left: .25em;
     width: 90%;
     line-height: 1.8;
+    border-radius: .25em;
 }
 
 .contact.collapsed input {
@@ -40,9 +50,10 @@
     margin-top: .5em;
     width: 65%;
     border: none;
-    background-color: darkslategray;
+    background-color: goldenrod;
     font-weight: bold;
-    color: white;
+    color: #012056;
+    border-radius: .25em;
 }
 
 .contact.collapsed button {
@@ -54,7 +65,7 @@
 .contact-form {
     padding: .5em;
     border-radius: .5em;
-    background-color: goldenrod;
+    background-color: darkslategray;
     width: 95%;
     margin: 0 auto;
 }
@@ -62,7 +73,6 @@
 .contact.collapsed .contact-form {
     flex: auto;
     display: flex;
-    border-radius: 0;
 }
 
 .contact-header {
@@ -71,7 +81,12 @@
     font-weight: bold;
     margin-bottom: .25em;
     font-size: 1.1em;
-    color: steelblue;
+    color: white;
+}
+
+.contact.mobile .contact-header {
+    float: none;
+    display: block;
 }
 
 .contact.collapsed .contact-header {
@@ -90,4 +105,38 @@
 .contact.collapsed .phone-number {
     margin: .4em .5em 0 .5em;
     white-space: nowrap;
+}
+
+img.icon {
+    height: 32px;
+    width: 32px;
+    margin-right: .5em;
+}
+
+.contact.collapsed.slide-down {
+    animation-name: slide-down;
+    animation-duration: 0.25s;
+    top: 0;
+}
+
+.contact.collapsed.slide-up {
+    animation-name: slide-up;
+    animation-duration: 0.25s;
+    top: -100px;
+}
+
+@keyframes slide-down {
+    0% { top: -70px; }
+    25% { top: -45px; }
+    50% { top: -30px; }
+    75% { top: -15px; }
+    100% { top: 0; }
+}
+
+@keyframes slide-up {
+    0% { top: 0; }
+    25% { top: -15px; }
+    50% { top: -30px; }
+    75% { top: -45px; }
+    100% { top: -70px; }
 }
