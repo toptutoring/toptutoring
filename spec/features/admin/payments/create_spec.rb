@@ -2,11 +2,11 @@ require "rails_helper"
 
 feature "Create payment for tutor" do
   let(:admin) { FactoryBot.create(:auth_admin_user) }
-  let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 10) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:contract) { FactoryBot.create(:contract, user_id: tutor.id) }
   let(:client) { FactoryBot.create(:client_user) }
   let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
-  let(:director) { FactoryBot.create(:director_user, outstanding_balance: 10) }
+  let(:director) { FactoryBot.create(:director_user) }
   let(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
 
   context "when user is admin" do
@@ -47,7 +47,6 @@ feature "Create payment for tutor" do
       expect(payout.status).to eq "processing"
       expect(page).to have_content("Payment is being processed.")
       # Standalone payment by admin does not take into account balances.
-      expect(tutor.reload.outstanding_balance).to eq 10
     end
   end
 
@@ -81,19 +80,7 @@ feature "Create payment for tutor" do
         expect(payout.status).to eq "processing"
         expect(page).to have_content("Payment is being processed.")
         # Standalone payment by admin does not take into account balances.
-        expect(tutor.reload.outstanding_balance).to eq 9
-      end
-
-      scenario "and payment exceeds tutor's balance" do
-        tutor.update(outstanding_balance: 0)
-        funding_source
-
-        sign_in(director)
-        visit admin_invoices_path
-        click_on "Pay"
-
-        expect(page).to have_content("This exceeds the maximum payment for this tutor.
-          Please contact an administrator if you have any questions")
+        expect(tutor.reload.tutor_account.balance_pending).to eq 0
       end
     end
 
@@ -114,7 +101,7 @@ feature "Create payment for tutor" do
         expect(payout.dwolla_transfer_url).to eq transfer_url
         expect(payout.status).to eq "processing"
         expect(page).to have_content("Payment is being processed.")
-        expect(director.reload.outstanding_balance).to eq 9
+        expect(tutor.reload.tutor_account.balance_pending).to eq 0
       end
     end
   end

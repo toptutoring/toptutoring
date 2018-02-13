@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "Tutors change subjects" do
-  let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 20) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
 
   before(:each) do
     FactoryBot.create(:subject, name: "Math")

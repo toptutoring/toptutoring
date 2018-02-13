@@ -1,8 +1,8 @@
 require "rails_helper"
 
 feature "Create Invoice", js: true do
-  let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 0) }
-  let(:tutor_invalid) { FactoryBot.create(:tutor_user, :invalid_record, phone_number: nil, outstanding_balance: 0) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
+  let(:tutor_invalid) { FactoryBot.create(:tutor_user, :invalid_record, phone_number: nil) }
   let(:client) { FactoryBot.create(:client_user, online_academic_credit: 50, online_test_prep_credit: 50) }
   let(:client_invalid) { FactoryBot.create(:client_user, :invalid_record, phone_number: nil, online_academic_credit: 50, online_test_prep_credit: 50) }
   let(:student) { FactoryBot.create(:student_user, client: client) }
@@ -34,7 +34,7 @@ feature "Create Invoice", js: true do
       click_on "Create Invoice"
 
       expect(page).to have_content("Invoice has been created.")
-      expect(tutor.reload.outstanding_balance).to eq(0.5)
+      expect(tutor.reload.tutor_account.balance_pending).to eq(Money.new(7_50))
       expect(client.reload.online_academic_credit).to eq(49.5)
     end
 
@@ -49,7 +49,7 @@ feature "Create Invoice", js: true do
       click_on "Create Invoice"
 
       expect(page).to have_content("Invoice has been created.")
-      expect(tutor_invalid.reload.outstanding_balance).to eq(0.5)
+      expect(tutor_invalid.reload.tutor_account.balance_pending).to eq(Money.new(7_50))
       expect(client.reload.online_academic_credit).to eq(49.5)
     end
 
@@ -64,7 +64,7 @@ feature "Create Invoice", js: true do
       click_on "Create Invoice"
 
       expect(page).to have_content("Invoice has been created.")
-      expect(tutor.reload.outstanding_balance).to eq(0.5)
+      expect(tutor.reload.tutor_account.balance_pending).to eq(Money.new(7_50))
       expect(client_invalid.reload.online_academic_credit).to eq(49.5)
     end
 
@@ -80,7 +80,7 @@ feature "Create Invoice", js: true do
       click_on "Create Invoice"
 
       expect(page).to have_content("Invoice has been created.")
-      expect(tutor.reload.outstanding_balance).to eq(0)
+      expect(tutor.reload.tutor_account.balance_pending).to eq(0)
       expect(client.reload.online_academic_credit).to eq(50)
       expect(Invoice.last.note).to eq("No Show")
     end
@@ -103,7 +103,7 @@ feature "Create Invoice", js: true do
     scenario "creates timesheet" do
       engagement
       tutor.roles << Role.where(name: "contractor")
-      tutor.create_contractor_account.create_contract
+      tutor.create_contractor_account(hourly_rate: 15)
       sign_in(tutor)
 
       find("#invoice_submitter_type").find(:xpath, "option[3]").select_option
@@ -113,7 +113,7 @@ feature "Create Invoice", js: true do
       click_on "Create Invoice"
 
       expect(page).to have_content("Timesheet has been created.")
-      expect(tutor.reload.outstanding_balance).to eq(1)
+      expect(tutor.reload.contractor_account.balance_pending).to eq(Money.new(15_00))
     end
   end
 end

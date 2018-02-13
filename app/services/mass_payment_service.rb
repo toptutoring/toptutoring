@@ -43,13 +43,9 @@ class MassPaymentService
   end
 
   def sort_valid_and_invalid_users(users)
-    invalid_query = "outstanding_balance < SUM(invoices.hours) " \
-      "OR auth_uid IS NULL"
-    invalid_users = users.having(invalid_query)
+    invalid_users = users.having("auth_uid IS NULL")
     create_invalid_messages(invalid_users) if invalid_users.any?
-    valid_query = "outstanding_balance >= SUM(invoices.hours) " \
-      "AND auth_uid IS NOT NULL"
-    @valid_users = users.having(valid_query)
+    @valid_users = users.having("auth_uid IS NOT NULL")
   end
 
   def create_invalid_messages(invalid_users)
@@ -106,10 +102,6 @@ class MassPaymentService
 
   def finalize_payouts(url)
     @payouts.update_all(dwolla_mass_pay_url: url)
-    @valid_users.each do |user|
-      user.outstanding_balance -= user.invoice_hours
-      user.save
-    end
     final_message
   end
 

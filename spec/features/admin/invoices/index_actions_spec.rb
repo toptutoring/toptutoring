@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Admin invoice features" do
-  let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 2) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:client) { FactoryBot.create(:client_user, online_test_prep_credit: 2) }
   let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
   let(:test_prep_subject) { FactoryBot.create(:subject, academic_type: "test_prep") }
@@ -19,13 +19,13 @@ feature "Admin invoice features" do
     sign_in(admin)
     visit admin_invoices_path
 
-    expect(tutor.outstanding_balance).to eq 2
+    expect(tutor.tutor_account.balance_pending).to eq Money.new(15_00)
 
     click_on "Pay"
 
     payout = Payout.last
     expect(page).to have_content("Payment is being processed.")
-    expect(tutor.reload.outstanding_balance).to eq 1
+    expect(tutor.tutor_account.reload.balance_pending).to eq 0
     expect(invoice.reload.status).to eq "processing"
     expect(invoice.reload.payout).to eq payout
     expect(payout.dwolla_transfer_url).to eq transfer_url
@@ -36,13 +36,13 @@ feature "Admin invoice features" do
     sign_in(admin)
     visit admin_invoices_path
 
-    expect(tutor.outstanding_balance).to eq 2
+    expect(tutor.tutor_account.balance_pending).to eq Money.new(15_00)
     expect(client.online_test_prep_credit).to eq 2
 
     click_on "Deny"
 
     expect(page).to have_content("The invoice has been denied.")
-    expect(tutor.reload.outstanding_balance).to eq 1
+    expect(tutor.tutor_account.reload.balance_pending).to eq 0
     expect(client.reload.online_test_prep_credit).to eq 3
     expect(invoice.reload.status).to eq "denied"
   end
@@ -52,7 +52,7 @@ feature "Admin invoice features" do
     visit admin_invoices_path
     click_on "Edit"
 
-    expect(tutor.outstanding_balance).to eq 2
+    expect(tutor.tutor_account.balance_pending).to eq Money.new(15_00)
     expect(client.online_test_prep_credit).to eq 2
     expect(page).to have_content("Submitter: " + tutor.name)
     expect(page).to have_content("Description")
@@ -60,10 +60,10 @@ feature "Admin invoice features" do
 
     fill_in "Description", with: "Changing Description"
     fill_in "Hours", with: 3
-    
+
     click_on "Update"
 
-    expect(tutor.reload.outstanding_balance).to eq 4
+    expect(tutor.tutor_account.reload.balance_pending).to eq Money.new(45_00)
     expect(invoice.reload.description).to eq "Changing Description"
     expect(client.reload.online_test_prep_credit).to eq 0
     expect(invoice.reload.status).to eq "pending"

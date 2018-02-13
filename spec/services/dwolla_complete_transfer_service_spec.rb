@@ -41,13 +41,10 @@ describe DwollaCompleteTransferService do
 
       subject.perform!(dwolla_transfer_url, "failed")
 
-      hours = invoice.hours + invoice2.hours
       # all items related to transfer is updated
       expect(payout_processing.reload.status).to eq "failed"
       expect(invoice.reload.status).to eq "pending"
       expect(invoice2.reload.status).to eq "pending"
-      # canceled payout returns balance to user
-      expect(payout_processing.payee.outstanding_balance).to eq hours
       # all items not related are not updated
       expect(payout_pending.reload.status).to eq "pending"
       expect(payout_paid.reload.status).to eq "paid"

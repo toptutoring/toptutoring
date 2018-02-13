@@ -1,8 +1,39 @@
 <div class="widget">
   <div class="widget-heading clearfix">
-    <h3 class="widget-title">Your Balance</h3>
+    <h3 class="widget-title">Your Pending Invoices</h3>
     <div class="widget-body">
-      <p class="lead mt-30 text-center"><%= current_user.outstanding_balance %> hrs</p>
+      <% if @pending_invoices.any? %>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Submitted</th>
+                <th class="text-center">Student</th>
+                <th class="text-center">Session Type</th>
+                <th class="text-center">Hours</th>
+                <th class="text-center">Pay</th>
+              </tr>
+            </thead>
+            <tbody id="invoice_table">
+              <% @pending_invoices.each do |invoice| %>
+                <tr>
+                  <td><%= l invoice.created_at, format: :date %></td>
+                  <td class="text-center"><%= invoice.engagement.student_name %></td>
+                  <td class="text-center"><%= invoice.online ? "Online" : "In-Person" %></td>
+                  <td class="text-center"><%= invoice.hours %></td>
+                  <td class="text-center">$<%= invoice.submitter_pay %></td>
+                </tr>
+              <% end %>
+              <tfoot>
+                <td class="text-right" colspan="4">Total Pay</td>
+                <td class="text-center">$<%= Money.new @pending_invoices.sum(:submitter_pay_cents) %></td>
+              </tfoot>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="lead">You have no pending invoices.</p>
+      <% end %>
     </div>
   </div>
 </div>

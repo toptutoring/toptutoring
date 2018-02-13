@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180203183001) do
+ActiveRecord::Schema.define(version: 20180209004859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,8 +151,8 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.integer "amount_cents"
     t.integer "submitter_type", default: 0
     t.string "note"
-    t.boolean "online", default: true
     t.bigint "payout_id"
+    t.boolean "online", default: true
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id"
     t.index ["payout_id"], name: "index_invoices_on_payout_id"
@@ -277,7 +277,6 @@ ActiveRecord::Schema.define(version: 20180203183001) do
     t.integer "client_id"
     t.decimal "online_academic_credit", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "online_test_prep_credit", precision: 10, scale: 2, default: "0.0", null: false
-    t.decimal "outstanding_balance", precision: 10, scale: 2, default: "0.0", null: false
     t.integer "online_academic_rate_cents", default: 0, null: false
     t.string "online_academic_rate_currency", default: "USD", null: false
     t.integer "online_test_prep_rate_cents", default: 0, null: false
@@ -302,8 +301,8 @@ ActiveRecord::Schema.define(version: 20180203183001) do
   add_foreign_key "engagements", "subjects"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "invoices", "engagements"
-  add_foreign_key "payments", "stripe_accounts"
   add_foreign_key "invoices", "payouts"
+  add_foreign_key "payments", "stripe_accounts"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "signups", "users"
   add_foreign_key "stripe_accounts", "users"
