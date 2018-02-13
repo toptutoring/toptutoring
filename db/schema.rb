@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180209004859) do
+ActiveRecord::Schema.define(version: 20180212194122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,8 +151,9 @@ ActiveRecord::Schema.define(version: 20180209004859) do
     t.integer "amount_cents"
     t.integer "submitter_type", default: 0
     t.string "note"
-    t.bigint "payout_id"
     t.boolean "online", default: true
+    t.bigint "payout_id"
+    t.integer "session_rating"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["engagement_id"], name: "index_invoices_on_engagement_id"
     t.index ["payout_id"], name: "index_invoices_on_payout_id"

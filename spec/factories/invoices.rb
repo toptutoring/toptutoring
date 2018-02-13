@@ -18,5 +18,6 @@ FactoryBot.define do
     description  { "This is an invoice" }
     subject      { "Subject" }
     status       { "pending" }
+    session_rating { 4 }
   end
 end
