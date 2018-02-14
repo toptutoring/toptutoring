@@ -9,4 +9,13 @@ class AdminDirectorNotifierMailer < ApplicationMailer
          bcc: users.map(&:email),
          subject: "#{@new_user.name} has registered as a client")
   end
+
+  def notify_review_made(user, review)
+    @user = user
+    @review = review
+    users = User.admin_and_directors
+    mail(to: "noreply@toptutoring.com",
+         bcc: users.map(&:email),
+         subject: "#{@user.name} has submitted a review of #{@review.stars} stars")
+  end
 end

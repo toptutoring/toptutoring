@@ -15,6 +15,8 @@ class ReviewsController < ApplicationController
     @review = @reviewer.client_account.build_client_review(review_params)
     if @review.save
       flash.notice = "Thank you for your review!"
+      SlackNotifier.ping("A new review has been submitted by #{@reviewer.name}.", :leads)
+      AdminDirectorNotifierMailer.notify_review_made(@reviewer, @review).deliver_later
       render :submitted
     else
       flash.alert = "Sorry. There was a problem while submitting your review."
