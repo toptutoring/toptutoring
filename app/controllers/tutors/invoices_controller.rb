@@ -98,5 +98,10 @@ module Tutors
       flash.alert = "There was an error while processing your invoice. Please check with your tutor director if you have been set up yet to tutor this client." 
       redirect_to dashboard_path
     end
+
+    def send_emails
+      return unless @by_tutor
+      UserNotifierMailer.send_invoice_notice(@client, @invoice).deliver_later
+    end
   end
 end
