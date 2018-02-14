@@ -29,6 +29,7 @@ feature "Create Invoice", js: true do
 
       find("#invoice_hours").find(:xpath, "option[3]").select_option
       fill_in "invoice[subject]", with: "Mathmatics"
+      find("label[for=invoice_session_rating_5]").click
       fill_in "Description", with: "for this weeks payment"
 
       click_on "Create Invoice"
@@ -43,6 +44,7 @@ feature "Create Invoice", js: true do
       sign_in(tutor_invalid)
 
       find("#invoice_hours").find(:xpath, "option[3]").select_option
+      find("label[for=invoice_session_rating_4]").click
       fill_in "invoice[subject]", with: "Mathmatics"
       fill_in "Description", with: "for this weeks payment"
 
@@ -59,6 +61,7 @@ feature "Create Invoice", js: true do
 
       find("#invoice_hours").find(:xpath, "option[3]").select_option
       fill_in "invoice[subject]", with: "Mathmatics"
+      find("label[for=invoice_session_rating_3]").click
       fill_in "Description", with: "for this weeks payment"
 
       click_on "Create Invoice"
@@ -75,6 +78,7 @@ feature "Create Invoice", js: true do
 
       find("#invoice_hours").find(:xpath, "option[2]").select_option
       fill_in "invoice[subject]", with: "Mathmatics"
+      find("label[for=invoice_session_rating_2]").click
       fill_in "Description", with: "no show"
 
       click_on "Create Invoice"
@@ -93,6 +97,7 @@ feature "Create Invoice", js: true do
 
       find("#invoice_hours").find(:xpath, "option[3]").select_option
       fill_in "invoice[subject]", with: "Mathmatics"
+      find("label[for=invoice_session_rating_1]").click
       fill_in "Description", with: "for this weeks payment"
 
       click_on "Create Invoice"
