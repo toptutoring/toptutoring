@@ -3,6 +3,7 @@ class ClientAccount < ApplicationRecord
   has_many :student_accounts, dependent: :destroy
   has_many :engagements, dependent: :destroy
   has_many :invoices, through: :engagements
+  has_one :client_review
   validates_presence_of :user
 
   def academic_types_engaged

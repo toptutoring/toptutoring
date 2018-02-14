@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180212194122) do
+ActiveRecord::Schema.define(version: 20180213190826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,16 @@ ActiveRecord::Schema.define(version: 20180212194122) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_client_accounts_on_user_id"
+  end
+
+  create_table "client_reviews", force: :cascade do |t|
+    t.bigint "client_account_id"
+    t.text "review"
+    t.integer "stars"
+    t.boolean "permission_to_publish"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_account_id"], name: "index_client_reviews_on_client_account_id"
   end
 
   create_table "contractor_accounts", force: :cascade do |t|
@@ -296,6 +306,7 @@ ActiveRecord::Schema.define(version: 20180212194122) do
   add_foreign_key "blog_posts", "users"
   add_foreign_key "cities", "countries"
   add_foreign_key "client_accounts", "users"
+  add_foreign_key "client_reviews", "client_accounts"
   add_foreign_key "contractor_accounts", "users"
   add_foreign_key "engagements", "client_accounts"
   add_foreign_key "engagements", "student_accounts"
