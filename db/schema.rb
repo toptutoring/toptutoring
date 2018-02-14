@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214001144) do
+ActiveRecord::Schema.define(version: 20180214181255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -299,8 +299,10 @@ ActiveRecord::Schema.define(version: 20180214001144) do
     t.string "in_person_test_prep_rate_currency", default: "USD", null: false
     t.decimal "in_person_academic_credit", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "in_person_test_prep_credit", precision: 10, scale: 2, default: "0.0", null: false
+    t.string "unique_token"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
+    t.index ["unique_token"], name: "index_users_on_unique_token", unique: true
   end
 
   add_foreign_key "availabilities", "engagements"
