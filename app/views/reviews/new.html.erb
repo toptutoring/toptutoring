@@ -3,10 +3,10 @@
     <div class="widget p-15">
       <div class="widget-heading">
         <h3 class="widget-title text-center">Top Tutoring Review</h3>
-        <p class="widget-hint ml-15 mt-15 mb-0">Let us know how we're doing!</p>
+        <p class="widget-hint ml-15 mt-15 mb-0">Hello <%= @reviewer.name %>. Let us know how we're doing!</p>
       </div>
       <div class="widget-body pt-0">
-        <%= form_for @review, url: review_path, :html => { class: "form-horizontal" } do |f| %>
+        <%= form_for @review, url: review_path(token: @reviewer.unique_token), :html => { class: "form-horizontal" } do |f| %>
           <div class="form-group m-15 mt-0">
             <%= f.label :stars, "Rating", class: "control-label" %>
             <div>

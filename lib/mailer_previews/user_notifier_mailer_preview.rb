@@ -21,4 +21,8 @@ class UserNotifierMailerPreview < ActionMailer::Preview
       .new(Time.current, tutor, 1.75, "English", true)
     UserNotifierMailer.send_invoice_notice(client, invoice)
   end
+
+  def send_review_request
+    UserNotifierMailer.send_review_request(User.clients.last)
+  end
 end

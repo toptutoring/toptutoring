@@ -11,6 +11,7 @@ module Tutors
       update_no_show_params if params[:invoice][:hours] == "no_show"
       create_invoice
       adjust_balances_and_save_records
+      send_emails
       redirect_to dashboard_path
     end
 
@@ -102,6 +103,9 @@ module Tutors
     def send_emails
       return unless @by_tutor
       UserNotifierMailer.send_invoice_notice(@client, @invoice).deliver_later
+      if @client.client_account.send_review_email?
+        UserNotifierMailer.send_review_request(@client).deliver_later
+      end
     end
   end
 end

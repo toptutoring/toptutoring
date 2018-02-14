@@ -14,4 +14,10 @@ class ClientAccount < ApplicationRecord
     types << "in_person_test_prep" if user.in_person_test_prep_rate > 0
     types
   end
+
+  def send_review_email?
+    !review_requested &&
+      invoices.count >= 3 &&
+      invoices.five_star.any?
+  end
 end
