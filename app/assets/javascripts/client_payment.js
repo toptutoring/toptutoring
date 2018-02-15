@@ -96,9 +96,9 @@ $(function() {
     }
     rate = parseFloat(rate);
     var hours = parseFloat($("#payment_hours_purchased").val());
-    var total = (hours * rate).toFixed(2);
+    var total = Math.round(hours * rate * 100) / 100
     total = isNaN(total) ? '0.00' : total;
-    $('#payment-total-display').text("$".concat(total));
+    $('#payment-total-display').text("$".concat(total.toFixed(2)));
   };
 
   function toggleCardView() {

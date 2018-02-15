@@ -31,7 +31,7 @@ class PaymentService
   end
 
   def amount
-    hours * rate
+    (hours * rate.to_f * 100).round / 100.00
   end
 
   def hours
