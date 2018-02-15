@@ -31,16 +31,13 @@ class ReviewsController < ApplicationController
   end
 
   def set_reviewer
-    if token
-      @reviewer = User.find_by(unique_token: token)
-      return if @reviewer
-    end
+    @reviewer = User.clients.find_by(unique_token: token)
+    return if @reviewer
     flash.alert = "The requested resource does not exist."
     redirect_to sign_in_path
   end
 
   def token
-    return false unless params[:token]
-    params.require(:token)
+    params.require(:unique_token)
   end
 end

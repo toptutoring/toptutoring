@@ -16,7 +16,10 @@ Rails.application.routes.draw do
   post "/payments/one_time" => "one_time_payments#create"
   get "/confirmation" => "one_time_payments#confirmation"
   get "payment" => "pages#payment"
-  resource :review, only: [:new, :create]
+
+  # review routes
+  get ":unique_token/rate_us" => "reviews#new", as: "new_review"
+  post ":unique_token/rate_us" => "reviews#create", as: "create_review"
 
   # Client Signups
   get "/sign_up" => "users/clients#new", as: "client_sign_up"
