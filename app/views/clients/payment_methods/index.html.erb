@@ -21,7 +21,7 @@
                   </td>
                   <td>
                     <% if @payment_methods.count > 1 %>
-                      <%= link_to "Remove", clients_payment_method_path(id: payment.id), method: :delete, class: "btn btn-default" %>
+                      <%= link_to "Remove", clients_payment_method_path(id: payment.id), method: :delete, class: "btn btn-default", data: { confirm: "Are you sure you want to remove this card?" } %>
                     <% end %>
                   </td>
                 </tr>
