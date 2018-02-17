@@ -2,14 +2,27 @@ import React from 'react';
 import phoneIcon from '../../assets/images/phone-white.png';
 
 export class ContactNav extends React.Component {
-    firstRender = true;
+    validateForm() {
+        this.props.updateForm({
+            nameValid: !!this.props.contact.name.length,
+            telValid: !!this.props.contact.tel.length,
+            formValid: !!this.props.contact.name.length && !!this.props.contact.tel.length
+        });
+    }
 
-    componentDidMount() {
-        this.firstRender = false;
+    updateField(type, value) {
+        const nameValid = type === 'name' ? true : this.props.contact.nameValid;
+        const telValid = type === 'tel' ? true : this.props.contact.telValid
+        this.props.updateForm({
+            [type]: value,
+            nameValid,
+            telValid,
+            formValid: nameValid && telValid
+        });
     }
 
     render() {
-        const classes = `contact collapsed ${this.firstRender ? '' :
+        const classes = `contact collapsed ${this.props.isContactExpanded === undefined ? '' :
             (this.props.isContactExpanded ? 'slide-up' : 'slide-down')}`;
         return (
             <div className={classes}>
@@ -19,10 +32,10 @@ export class ContactNav extends React.Component {
                 </span>
                 <div className="contact-form">
                     <span className="contact-header">Contact us</span>
-                    <input placeholder="Name*" />
-                    <input placeholder="Phone*" />
-                    <input placeholder="Email" />
-                    <button>Submit</button>
+                    <input className={!this.props.contact.nameValid ? 'invalid' : ''} placeholder="Name*" value={this.props.contact.name} onChange={event => this.updateField('name', event.target.value)} />
+                    <input className={!this.props.contact.telValid ? 'invalid' : ''} placeholder="Phone*" type="tel" value={this.props.contact.tel} onChange={event => this.updateField('tel', event.target.value)} />
+                    <input placeholder="Email" type="email" value={this.props.contact.email} onChange={event => this.updateField('email', event.target.value)} />
+                    <button onClick={() => this.validateForm()}>Submit</button>
                 </div>
             </div>
         );
