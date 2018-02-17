@@ -5,7 +5,8 @@
     "coffeescript": "1.12.7",
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.1.1",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "@storybook/react": "^3.2.16",
