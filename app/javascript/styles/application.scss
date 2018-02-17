@@ -73,6 +73,7 @@
 .contact.collapsed .contact-form {
     flex: auto;
     display: flex;
+    width: 0;
 }
 
 .contact-header {
@@ -139,4 +140,14 @@ img.icon {
     50% { top: -30px; }
     75% { top: -45px; }
     100% { top: -70px; }
+}
+
+input.invalid {
+    background-color: indianred;
+}
+
+div.invalid {
+    color: indianred;
+    text-align: left;
+    margin-left: 1.25em;
 }
