@@ -19,7 +19,7 @@ feature "Dashboard Index" do
     expect(page).to have_content("Student")
     expect(page).to have_content(active_engagement.student.name)
     expect(page).to have_content("Subject")
-    expect(page).to have_content(active_engagement.subject.name)
+    expect(page).to have_content(active_engagement.subject.name.titlecase)
     expect(page).to have_content("Type")
     expect(page).to have_content(active_engagement.academic_type.humanize)
     expect(page).to have_content("Your Balance")
