@@ -27,7 +27,8 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:client_review).permit(:stars, :description, :review)
+    params.require(:client_review)
+          .permit(:stars, :description, :review, :permission_to_publish)
   end
 
   def set_reviewer
