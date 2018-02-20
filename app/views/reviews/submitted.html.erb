@@ -14,7 +14,7 @@
       </div>
       <div class="widget-body pt-0 ml-15">
         <h5>Rating</h5>
-        <p class="stars"><%= "★" * @review.stars %></p>
+        <p><%= review_stars(@review.stars) %></p>
         <h5>Review</h5>
         <p><%= @review.review %></p>
       </div>

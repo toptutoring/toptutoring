@@ -84,6 +84,7 @@ Rails.application.routes.draw do
         resources :pay_all
       end
       resources :feedbacks, only: [:index]
+      resources :client_reviews, only: [:index, :create]
     end
     resources :engagements do
       member do

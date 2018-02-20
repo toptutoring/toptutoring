@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Client Reviews</h3>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table mb-0 table-striped table-hover text-center">
+            <thead>
+              <tr>
+                <th class="text-center">Submitter</th>
+                <th class="text-center">Rating</th>
+                <th class="text-center">Publishable?</th>
+                <th class="col-xs-9 text-center">Review</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @reviews %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

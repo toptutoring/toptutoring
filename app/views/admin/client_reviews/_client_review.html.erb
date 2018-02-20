@@ -1,0 +1,6 @@
+<tr>
+  <td><%= client_review.client_account.user.name %></td>
+  <td><%= review_stars(client_review.stars) %></td>
+  <td><%= client_review.permission_to_publish ? "✔" : " ⃠" %></td>
+  <td class="text-left"><%= client_review.review %></td>
+</tr>
