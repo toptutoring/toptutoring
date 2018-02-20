@@ -125,6 +125,7 @@ Rails.application.routes.draw do
       resources :invoices, only: [:index]
       resources :tutors
       resource :request_tutor, only: [:destroy, :new, :create]
+      resources :payment_methods
     end
     get "/dashboard" => "dashboards#client"
     resources :availability, only: [:new, :create, :update, :edit]

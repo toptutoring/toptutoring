@@ -1,8 +1,5 @@
-<!-- Styles for this form is defined in "stripe.scss" -->
-
-<%= form_for [:clients, Payment.new], id: "new_payment" do |f| %>
+<%= form_for [:clients, Payment.new], html: { class: "stripe_form" } do |f| %>
   <!--  Credit Card Inputs -->
-  <%= content_tag :div, nil, id: "stripe_publishable_key", data: { key: ENV['STRIPE_PUBLISHABLE_KEY'] } %>
   <div class="col-lg-6">
     <div class="widget">
       <div class="widget-heading">
@@ -86,13 +83,25 @@
       <div class="widget-body">
         <div class="widget-content">
           <% if @account %>
-            <div class="form-group">
-              <%= hidden_field_tag :use_existing_card, true %>
-              <h4 class="fw-300 text-center">Using <%= @account.default_card_display %></h4>
+            <div class="form-group select-option mb-10">
+              <%= label_tag :card_id, "Payment Method" %>
+              <% if @account.card_options.many? %>
+                <%= select_tag :card_id, options_for_select(@account.card_options, @account.customer.default_source), class: "form-control input-lg" %>
+              <% else %>
+                <p class="form-control input-lg"><%= @account.default_display %></p>
+              <% end %>
+            </div>
+            <div class="mb-15">
+            <%= link_to "Manage your payment options", clients_payment_methods_path %>
+              <%= label_tag :use_new_card, class: "pull-right" do %>
+                <%= check_box_tag :use_new_card, "true", false %>
+                Use a new card
+              <% end %>
             </div>
           <% else %>
-            <%= render "card_parameters" %>
+            <%= check_box_tag :use_new_card, "true", true, class: "hidden" %>
           <% end %>
+          <%= render "card_parameters", div_class: "hidden", save_card_option: true%>
           <div class="row m-0">
             <!-- button disabling is handled by javascript because Stripe validation requires javascript -->
             <%= submit_tag "Purchase Hours", class: "pull-right btn btn-primary", data: { disable_with: false } %>
