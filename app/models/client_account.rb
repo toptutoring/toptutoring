@@ -16,8 +16,11 @@ class ClientAccount < ApplicationRecord
   end
 
   def send_review_email?
-    !review_requested &&
-      invoices.count >= 3 &&
-      invoices.five_star.any?
+    !review_requested && request_review?
+  end
+
+  def request_review?
+    false if client_review
+    invoices.count >= 3 && invoices.five_star.any?
   end
 end
