@@ -89,6 +89,7 @@
                 <%= select_tag :card_id, options_for_select(@account.card_options, @account.customer.default_source), class: "form-control input-lg" %>
               <% else %>
                 <p class="form-control input-lg"><%= @account.default_display %></p>
+                <%= hidden_field_tag :card_id, @account.customer.default_source %>
               <% end %>
             </div>
             <div class="mb-15">

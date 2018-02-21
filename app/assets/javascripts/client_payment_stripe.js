@@ -40,8 +40,8 @@ $(function() {
 
     form.addEventListener('submit', function(event) {
       $('input[type=submit]').attr('disabled', true);
-      event.preventDefault();
       if (document.getElementById("use_new_card").checked) {
+        event.preventDefault();
         var options = { name: document.getElementById('card_holder_name').value,
           address_line1: document.getElementById('card_address').value,
           address_line2: document.getElementById('card_unit_number').value,
