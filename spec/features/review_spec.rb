@@ -3,7 +3,7 @@ require "rails_helper"
 feature "Add a review" do
   let(:client) { FactoryBot.create(:client_user) }
 
-  scenario "when client gives a 5 star review" do
+  scenario "when client gives a 5 star review", js: true do
     visit new_review_path(client.unique_token)
     expect(page).to have_content("Hello #{client.name}. Let us know how we're doing!")
     expect(page).to have_content("Rating")
@@ -20,7 +20,7 @@ feature "Add a review" do
     expect(page).to have_content review_text
   end
 
-  scenario "when client gives less than a 5 star review" do
+  scenario "when client gives less than a 5 star review", js: true do
     visit new_review_path(client.unique_token)
 
     review_text = "This is a review"
