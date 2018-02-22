@@ -20,7 +20,7 @@ class PagesController < ApplicationController
     if valid_page?
       render "www/pages/#{params[:path]}"
     else
-      render "www/pages/404.html", status: :not_found
+      render "www/pages/404", status: :not_found
     end
   end
 
