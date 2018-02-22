@@ -55,34 +55,36 @@
             <table border="0" cellpadding="0" cellspacing="0" style="min-width:680px;margin:75px auto;border-collapse:collapse;border-spacing:0;color:rgb(51,51,51);background-color:rgb(245,245,245);border-radius:3px">
               <tbody>
                 <tr style="background-color:#fff">
-                  <td colspan="2" align="left">
+                  <td colspan="3" align="left">
                     <img height="60" src="https://app.toptutoring.com/assets/topTutoringFinal-e2ff8c7932bd9cbe79219aa308ae6160bc477bd8efc4cac3515864cbda6f56bc.png" style="border:none;padding:0;margin:0" alt="Top Tutoring" />
                   </td>
-                  <td align="right" style="font-size:32px;font-weight:300;color:rgb(153,153,153)"><p>Receipt</p></td>
+                  <td align="right" style="font-size:32px;font-weight:300;color:rgb(153,153,153)"><p>Invoice</p></td>
                 </tr>
                 <tr>
-                  <td colspan="2" style="padding:20px;border:1px solid white">
-                    <p style="color:rgb(153,153,153);font-size:18px">Hours Purchased</p>
-                    <p><%= @payment.hours_type.titlecase + " Hours @ $" + @payment.rate.to_s + "/hr" %></p>
-                  </td>
-                  <td style="padding:20px;border:1px solid white;text-align:right">
-                    <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
-                    <p><%= @payment.hours_purchased %></p>
+                  <td colspan="4" style="padding:20px;border:1px solid white">
+                    <p style="color:rgb(153,153,153);font-size:18px">Session Information</p>
                   </td>
                 </tr>
                 <tr height="80">
                   <td style="padding:20px;border-style:solid;border:1px solid white" valign="top">
                     <p style="color:rgb(153,153,153);font-size:18px">Date</p>
-                    <p><%= l(@payment.created_at, format: :long_date) %></p>
+                    <p><%= l @invoice.created_at, format: :date %></p>
                   </td>
-                  <td width="220" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
-                    <p style="color:rgb(153,153,153);font-size:18px">Billed To</p>
-                    <p><%= @payment.card_brand_and_four_digits %></p>
-                    <p><%= @payment.card_holder_name %></p>
+                  <td style="padding:20px;border-style:solid;border:1px solid white" valign="top">
+                    <p style="color:rgb(153,153,153);font-size:18px">Subject Covered</p>
+                    <p><%= @invoice.subject %></p>
                   </td>
-                  <td width="120" align="right" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
-                    <p style="color:rgb(153,153,153);font-size:18px">TOTAL</p>
-                    <p style="font-size:16px">$<%= @payment.amount %></p>
+                  <td style="padding:20px;border-style:solid;border:1px solid white" valign="top">
+                    <p style="color:rgb(153,153,153);font-size:18px">Tutor</p>
+                    <p><%= @invoice.submitter.name %></p>
+                  </td>
+                  <td style="padding:20px;border-style:solid;border:1px solid white" valign="top">
+                    <p style="color:rgb(153,153,153);font-size:18px">Hours</p>
+                    <p><%= @invoice.hours %></p>
+                  </td>
+                  <!-- <td width="120" align="right" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
+                    <p style="color:rgb(153,153,153);font-size:18px"></p>
+                    <p style="font-size:16px"><%= %></p> -->
                   </td>
                 </tr>
               </tbody>

@@ -1,0 +1,21 @@
+<div class="col-md-8 col-md-offset-2">
+  <div class="widget p-15">
+    <div class="widget-heading">
+      <h3 class="widget-title text-center">Top Tutoring Review</h3>
+      <% if @review.stars == 5 %>
+        <p class="widget-hint ml-15 mt-15 mb-0">We're thankful for your review! Please consider filling out a review on Google to help us reach more students.</p>
+        <div class="text-center">
+          <%= link_to  "Add a review to Google", "https://www.google.com/search?q=toptutoring&oq=toptutoring&aqs=chrome..69i57j69i60l5.5651j0j7&client=ms-android-verizon&sourceid=chrome-mobile&ie=UTF-8&dlnr=1&sei=D-ODWpScIMaJ0wLQ_aYY#dlnr=1&lrd=0x808f86be99eea345:0x86171e26aac1d6c0,3,5,,&trex=m_t:lcl_akp,rc_f:nav,rc_ludocids:9662224676969109184,rc_q:Top%2520Tutoring,ru_q:Top%2520Tutoring", target: :blank, class: "btn btn-blue mt-15" %>
+        </div>
+      <% else %>
+        <p class="widget-hint ml-15 mt-15 mb-0">Thank you for submitting a review.</p>
+      <% end %>
+    </div>
+    <div class="widget-body pt-0 ml-15">
+      <h5>Rating</h5>
+      <p><%= review_stars(@review.stars) %></p>
+      <h5>Review</h5>
+      <p><%= @review.review %></p>
+    </div>
+  </div>
+</div>

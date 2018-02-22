@@ -13,4 +13,16 @@ class UserNotifierMailerPreview < ActionMailer::Preview
                          "Client", "online_test_prep", "1.0")
     UserNotifierMailer.send_payment_notice(client, payment)
   end
+
+  def send_invoice_notice
+    client = Struct.new(:email).new("client@example.com")
+    tutor = Struct.new(:name).new("Tutor")
+    invoice = Struct.new(:created_at, :submitter, :hours, :subject, :online)
+      .new(Time.current, tutor, 1.75, "English", true)
+    UserNotifierMailer.send_invoice_notice(client, invoice)
+  end
+
+  def send_review_request
+    UserNotifierMailer.send_review_request(User.clients.last)
+  end
 end

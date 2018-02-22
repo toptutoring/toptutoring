@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   get "/confirmation" => "one_time_payments#confirmation"
   get "payment" => "pages#payment"
 
+  # review routes
+  get ":unique_token/rate_us" => "reviews#new", as: "new_review"
+  post ":unique_token/rate_us" => "reviews#create", as: "create_review"
+
   # Client Signups
   get "/sign_up" => "users/clients#new", as: "client_sign_up"
   post "/sign_up" => "users/clients#create", as: :users_clients
@@ -80,6 +84,7 @@ Rails.application.routes.draw do
         resources :pay_all
       end
       resources :feedbacks, only: [:index]
+      resources :client_reviews, only: [:index, :create]
     end
     resources :engagements do
       member do
