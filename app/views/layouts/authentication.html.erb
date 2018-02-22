@@ -21,24 +21,24 @@
       <!-- End Google Tag Manager -->
     <% end %>
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600' rel='stylesheet' type='text/css'>
+    <!-- Itim-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Itim">
+    <!-- Dancing Script -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing+Script">
     <!-- JQuery -->
     <%= javascript_include_tag '/plugins/jquery/dist/jquery.min.js' %>
-    <%= javascript_include_tag Ckeditor.cdn_url %>
     <!-- Bootstrap CSS-->
     <%= stylesheet_link_tag '/plugins/bootstrap/dist/css/bootstrap.min.css' %>
     <!-- Ionicons-->
     <%= stylesheet_link_tag '/plugins/Ionicons/css/ionicons.min.css' %>
-    <!-- Itim-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Itim">
     <!-- Font Awesome-->
     <%= stylesheet_link_tag '/plugins/font-awesome/css/font-awesome.min.css' %>
-    <!-- Dancing Script -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing+Script">
     <!-- Core CSS-->
     <%= stylesheet_link_tag '/build/css/first-layout.css' %>
     <%= stylesheet_link_tag :application, media: "all" %>
     <%= csrf_meta_tags %>
     <%= favicon_link_tag %>
+    <%= yield :head %>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
