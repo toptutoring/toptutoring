@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  layout "authentication", only: [:payment, :home]
+  layout "authentication", only: [:payment, :home, :show]
 
   def admin_dashboard
     render "admin_dashboard", :layout => false
@@ -16,7 +16,21 @@ class PagesController < ApplicationController
   def home
   end
 
+  def show
+    if valid_page?
+      render "www/pages/#{params[:path]}"
+    else
+      render "www/pages/404.html", status: :not_found
+    end
+  end
+
   def calendar
     render "calendar", :layout => false
+  end
+
+  private
+
+  def valid_page?
+    File.exist?(Pathname.new(Rails.root + "app/views/www/pages/#{params[:path]}.html.erb"))
   end
 end

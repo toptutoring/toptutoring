@@ -13,6 +13,7 @@ end
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   constraints WwwTopTutoring do
+    get "/*path" => "pages#show"
     root to: "pages#home"
   end
 end
