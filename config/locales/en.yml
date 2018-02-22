@@ -23,13 +23,13 @@ en:
     signup:
       client:
         success_message: |
-          Thank you for signing up for TopTutoring! We're excited to join you in your academic journey.
+          Thank you for signing up for Top Tutoring! We're excited to join you in your academic journey.
           While you wait for us to contact you, feel free to let us know about the student who will be receiving tutoring.
           You can create an account for the student, or have them use your account(recommended for younger children).
           Feel free to add as many students as you would like.
       client_student:
         success_message: |
-          Thank you for signing up for TopTutoring! We're excited to join you in your academic journey.
+          Thank you for signing up for Top Tutoring! We're excited to join you in your academic journey.
           While you wait for us to contact you, feel free to browse the site or request tutors directly through the app.
       tutors:
         success: "Thank you for signing up!" 
