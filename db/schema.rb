@@ -30,7 +30,10 @@ ActiveRecord::Schema.define(version: 20180228172000) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["published"], name: "index_blog_posts_on_published"
+    t.index ["slug"], name: "index_blog_posts_on_slug", unique: true
+    t.index ["title"], name: "index_blog_posts_on_title", unique: true
     t.index ["user_id"], name: "index_blog_posts_on_user_id"
   end
 
