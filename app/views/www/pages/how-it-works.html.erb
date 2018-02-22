@@ -1,81 +1,81 @@
 <section>
-<div class="container">
-  <div class="row">
+  <div class="container">
+    <div class="row">
       <div class="col-md-8 col-md-offset-2 col-sm-12 text-center">
-          <h4 class="uppercase mb80">how it works</h4>
-          <div class="tabbed-content icon-tabs">
-              <ul class="tabs">
-                  <li class="active">
-                      <div class="tab-title">
-                          <i class="icon ti ti-pencil-alt"></i>
-                          <span>Sign Up</span>
-                      </div>
-                      <div class="tab-content">
-                          <p>Sign up and create an account. Specify what subject you need help in, as well as your availability and hours desired so we can match you with a UC Berkeley tutor.</p>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="tab-title">
-                          <i class="icon ti ti-check-box"></i>
-                          <span>Match tutor</span>
-                      </div>
-                      <div class="tab-content">
-                          <p>
-                              After receiving your information, our staff will match you with a tutor best suited to your needs.&nbsp;</p>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="tab-title">
-                          <i class="icon ti ti-desktop"></i>
-                          <span>Get TUtored</span>
-                      </div>
-                      <div class="tab-content">
-                          <p>Now that you have been matched, you and your tutor will meet online via video conferencing or Skype at your specified time. Feel free to add and change your hours as needed.</p>
-                      </div>
-                  </li>
-              </ul>
-          </div>
-          <div class = "button-padding-top">
-            <a class="btn btn-lg btn-lg-blue" href="{{ site.client_sign_up_url }}" target="sign_up">sign up</a>
-          </div>
-     </div>
+        <h4 class="uppercase mb80">how it works</h4>
+        <div class="tabbed-content icon-tabs">
+          <ul class="tabs">
+            <li class="active">
+              <div class="tab-title">
+                <i class="icon ti ti-pencil-alt"></i>
+                <span>Sign Up</span>
+              </div>
+              <div class="tab-content">
+                <p>Sign up and create an account. Specify what subject you need help in, as well as your availability and hours desired so we can match you with a UC Berkeley tutor.</p>
+              </div>
+            </li>
+            <li>
+              <div class="tab-title">
+                <i class="icon ti ti-check-box"></i>
+                <span>Match tutor</span>
+              </div>
+              <div class="tab-content">
+                <p>
+                After receiving your information, our staff will match you with a tutor best suited to your needs.&nbsp;</p>
+              </div>
+            </li>
+            <li>
+              <div class="tab-title">
+                <i class="icon ti ti-desktop"></i>
+                <span>Get TUtored</span>
+              </div>
+              <div class="tab-content">
+                <p>Now that you have been matched, you and your tutor will meet online via video conferencing or Skype at your specified time. Feel free to add and change your hours as needed.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class = "button-padding-top">
+          <%= link_to "Sign Up", client_sign_up_url(subdomain: "app"), class: "btn btn-lg btn-lg-blue" %>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
 </section><section class="image-square left">
-    <div class="col-md-6 image">
-        <div class="background-image-holder">
-            <img alt="image" class="background-image" src="/img/coffeelaptop.jpg">
-        </div>
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/coffeelaptop" %>
     </div>
-    <div class="col-md-6 col-md-offset-1 content">
-        <h3>Easy Sign up</h3>
-        <p class="mb0">
-            Fill out our short form and one of our staff will get back to you shortly.&nbsp;</p>
-    </div>
+  </div>
+  <div class="col-md-6 col-md-offset-1 content">
+    <h3>Easy Sign up</h3>
+    <p class="mb0">
+    Fill out our short form and one of our staff will get back to you shortly.&nbsp;</p>
+  </div>
 </section><section class="image-square right">
-    <div class="col-md-6 image">
-        <div class="background-image-holder">
-            <img alt="image" class="background-image" src="/img/tutor.jpg">
-        </div>
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/tutor" %>
     </div>
-    <div class="col-md-6 content">
-        <h3>Qualified Tutors</h3>
-        <p class="mb0">
-            Our selection of highly academically qualified UC Berkeley tutors ensures you get the best tutor possible.</p>
-    </div>
+  </div>
+  <div class="col-md-6 content">
+    <h3>Qualified Tutors</h3>
+    <p class="mb0">
+    Our selection of highly academically qualified UC Berkeley tutors ensures you get the best tutor possible.</p>
+  </div>
 </section><section class="image-square left">
-    <div class="col-md-6 image">
-        <div class="background-image-holder">
-            <img alt="image" class="background-image" src="/img/writingcoffee.jpg">
-        </div>
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/writingcoffee" %>
     </div>
-    <div class="col-md-6 col-md-offset-1 content">
-        <h3>Results You Can Trust</h3>
-        <p class="mb0">
-            Because our tutors are all masters of their subjects and have rigorous academic training, you can assured that you are getting the most effective tutoring available, guaranteed.</p>
-        <div class = "button-padding-top">
-          <a class="btn btn-lg btn-lg-blue" href="{{ site.client_sign_up_url }}" target="sign_up">sign up</a>
-        </div>
+  </div>
+  <div class="col-md-6 col-md-offset-1 content">
+    <h3>Results You Can Trust</h3>
+    <p class="mb0">
+    Because our tutors are all masters of their subjects and have rigorous academic training, you can assured that you are getting the most effective tutoring available, guaranteed.</p>
+    <div class = "button-padding-top">
+      <%= link_to "Sign Up", client_sign_up_url(subdomain: "app"), class: "btn btn-lg btn-lg-blue" %>
     </div>
+  </div>
 </section>
