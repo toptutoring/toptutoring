@@ -1,0 +1,10 @@
+<div class="row mt-30 mb-30">
+  <div class="col-md-8 col-md-offset-2">
+    <% @posts.each do |post| %>
+      <div>
+        <h3><%= link_to post.title, pages_blog_post_path(post.slug) %></h3>
+        <%= tag.span l(post.publish_date) %>
+      </div>
+    <% end %>
+  </div>
+</div>

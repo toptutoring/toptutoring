@@ -13,6 +13,9 @@ end
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   constraints WwwTopTutoring do
+    namespace :pages, path: '' do
+      resources :blog_posts, path: "blog", param: :slug, only: [:index, :show]
+    end
     get "/*path" => "pages#show"
     root to: "pages#home"
   end

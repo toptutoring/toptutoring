@@ -1,0 +1,9 @@
+<div class="row mt-30 mb-30">
+  <div class="col-md-8 col-md-offset-2">
+    <%= tag.h1 @post.title, class: "p-10"%>
+    <p class="p-10"><b>Published Date: </b><%= @post.publish_date ? l(@post.publish_date) : "Not published" %></p>
+    <div class="p-10">
+      <%= raw @post.content %>
+    </div>
+  </div>
+</div>
