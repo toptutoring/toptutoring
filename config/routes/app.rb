@@ -1,13 +1,11 @@
-require "sidekiq/web"
-require 'router/subdomain_builder'
-
 class AppTopTutoring
   def self.matches?(request)
-    (splitter_leader(request.subdomain) == "app")
+    sub = request.subdomain
+    splitter_leader(sub) == "app" || sub.match("toptutoring-staging")
   end
 end
 
-Rails.application.routes.draw do
+def application_routes
   constraints AppTopTutoring do
     mount Sidekiq::Web, at: '/sidekiq' if Rails.env.development?
     get "/sign_in" => "sessions#new", as: "login"
