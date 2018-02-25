@@ -6,7 +6,8 @@
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "webpack-sass-loaders": "^1.0.0"
   },
   "devDependencies": {
     "@storybook/react": "^3.2.16",
