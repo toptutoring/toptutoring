@@ -27,8 +27,10 @@ export class ContactCollapsed extends React.Component {
         return (
             <div className={classes}>
                 <span className="phone-number">
-                    <img className="icon" src={phoneIcon} />
-                    Call (510) 842-5221
+                    <a href="tel:5108425221">
+                        <img className="icon" src={phoneIcon} />
+                        Call (510) 842-5221
+                    </a>
                 </span>
                 <div className="contact-form">
                     <span className="contact-header">Contact us</span>
