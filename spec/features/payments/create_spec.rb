@@ -19,7 +19,7 @@ feature "Create payment as client" do
     expect(page).to have_content("Academic Hours")
     expect(page).to have_content("Credit Card Information")
     expect(page).to have_content(client.online_academic_rate.to_s)
-    expect(page).to have_content(stripe_account.default_card_display)
+    expect(page).to have_content(stripe_account.default_display)
 
     fill_in "payment_hours_purchased", with: 2
     click_on "Purchase Hours"

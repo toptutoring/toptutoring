@@ -77,3 +77,53 @@ $bg_dark: #292929;
     display:none!important;
   }
 }
+
+// Star Rating
+.stars {
+  color: #f70;
+  font-size: 200%;
+}
+
+.star-rating {
+  float: left;
+  overflow: hidden;
+}
+.star-rating:not(:checked) > input {
+  position: absolute;
+  left: -80px;
+  top: 8px;
+  opacity: 0;
+}
+.star-rating:not(:checked) > label {
+  float:right;
+  width:1em;
+  padding:0 .1em;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size:200%;
+  line-height:1.2;
+  color:#ddd;
+}
+.star-rating:not(:checked) > label:before {
+  content: '★ ';
+}
+.star-rating > input:checked ~ label {
+  color: #f70;
+}
+.star-rating:not(:checked) > label:hover,
+.star-rating:not(:checked) > label:hover ~ label {
+  color: gold;
+}
+.star-rating > input:checked + label:hover,
+.star-rating > input:checked + label:hover ~ label,
+.star-rating > input:checked ~ label:hover,
+.star-rating > input:checked ~ label:hover ~ label,
+.star-rating > label:hover ~ input:checked ~ label {
+  color: #ea0;
+}
+.star-rating > label:active {
+  position:relative;
+  top:2px;
+  left:2px;
+}

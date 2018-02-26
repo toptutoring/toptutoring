@@ -1,6 +1,7 @@
 module Tutors
   class InvoicesController < ApplicationController
     before_action :require_login
+    before_action :authorize_tutor, only: :create
 
     def index
       @invoices = current_user.invoices.by_tutor.includes(:engagement, :client)
@@ -10,11 +11,8 @@ module Tutors
       update_no_show_params if params[:invoice][:hours] == "no_show"
       create_invoice
       adjust_balances_and_save_records
-      if @by_tutor
-        redirect_to tutors_invoices_path
-      else
-        redirect_to timesheets_path
-      end
+      send_emails
+      redirect_to dashboard_path
     end
 
     def destroy
@@ -32,16 +30,13 @@ module Tutors
 
     def create_invoice
       @by_tutor = params[:invoice][:submitter_type] == "by_tutor"
-      if @by_tutor
-        authorize_tutor
-        set_engagement_and_client
-      end
+      set_engagement_and_client if @by_tutor
       @invoice = Invoice.new(invoice_params)
     end
 
     def invoice_params
       params.require(:invoice)
-            .permit(:engagement_id, :subject, :hours,
+            .permit(:engagement_id, :subject, :hours, :session_rating,
                     :description, :submitter_type, :online)
             .merge(submitter: current_user, status: "pending",
                    submitter_pay: submitter_pay, client: @client,
@@ -87,13 +82,6 @@ module Tutors
       @client = @engagement.client
     end
 
-    def authorize_tutor
-      unless current_user.tutor_account.engagements.where(state: "active").exists?(params[:invoice][:engagement_id].to_i)
-        redirect_back(fallback_location: (request.referer || root_path),
-                      flash: { error: "There was an error while processing your invoice. Please check with your tutor director if you have been set up yet to tutor this client." }) and return
-      end
-    end
-
     def adjust_balances_and_save_records
       adjuster = CreditUpdater.new(@invoice).process_creation_of_invoice!
       if adjuster.failed?
@@ -102,6 +90,21 @@ module Tutors
         flash.alert = "Your invoice has been created. However, your client is running low on their balance. Please consider making a suggestion to your client to add to their balance before scheduling any more sessions."
       else
         flash.notice = @by_tutor ? "Invoice has been created." : "Timesheet has been created."
+      end
+    end
+
+    def authorize_tutor
+      return if params[:invoice][:submitter_type] == "by_contractor"
+      return if current_user.tutor_account.engagements.active.find_by_id(params[:invoice][:engagement_id])
+      flash.alert = "There was an error while processing your invoice. Please check with your tutor director if you have been set up yet to tutor this client." 
+      redirect_to dashboard_path
+    end
+
+    def send_emails
+      return unless @by_tutor
+      UserNotifierMailer.send_invoice_notice(@client, @invoice).deliver_later
+      if @client.client_account.send_review_email?
+        UserNotifierMailer.send_review_request(@client).deliver_later
       end
     end
   end

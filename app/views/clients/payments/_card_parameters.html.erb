@@ -1,4 +1,4 @@
-<div id="card_parameters">
+<%= tag.div id: "card_parameters", class: div_class do %>
   <div>
     <%= text_field_tag :card_holder_name, "", placeholder: "Cardholder name", class: "form-control input-lg", required: true %>
   </div>
@@ -17,7 +17,7 @@
     </div>
 
     <div class="col-xs-4">
-      <%= render "card_state_options" %>
+      <%= render "clients/payments/card_state_options" %>
     </div>
 
     <div class="col-xs-4">
@@ -28,12 +28,15 @@
   <div id="card-element" class="form-control input-lg mt-20"></div>
   <h4 id="card-error" class="fw-300 text-right"></h4>
 
-  <!-- <div class="form-group text-right">
-    <%= label_tag :save_card_information, class: "pl-20" do %>
-      <%= check_box_tag :save_card_information, "true", false %>
-      Save this card for future use
-    <% end %>
-  </div> -->
-</div>
+  <% if save_card_option %>
+    <div class="form-group text-right">
+      <%= label_tag :save_card_information, class: "pl-20" do %>
+        <%= check_box_tag :save_card_information, "true", false %>
+        Save this card for future use
+      <% end %>
+    </div> 
+  <% end %>
+<% end %>
 
+<%= content_tag :div, nil, id: "stripe_publishable_key", data: { key: ENV['STRIPE_PUBLISHABLE_KEY'] } %>
 <%= javascript_include_tag STRIPE_JS_HOST %>

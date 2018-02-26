@@ -5,7 +5,7 @@ class Payment < ActiveRecord::Base
 
   # Validations #
   validates_presence_of :payer_id, :hours_type
-  validates :amount_cents, :rate_cents, :hours_purchased, numericality: { greater_than_or_equal_to: 1 }
+  validates :amount_cents, :rate_cents, :hours_purchased, numericality: { greater_than_or_equal_to: 0.5 }
 
   # Monetize amounts
   monetize :amount_cents, :rate_cents

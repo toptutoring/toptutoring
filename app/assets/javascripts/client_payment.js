@@ -4,6 +4,12 @@ $(function() {
     calculateHoursForPayment();
     setHourlyRateForPayment();
     calculateAmountForPayment();
+    toggleCardView()
+
+    var new_card = document.getElementById('use_new_card')
+    if (new_card) {
+      new_card.addEventListener('click', toggleCardView)
+    }
 
     $('#payment_hours_type').on('change', function() {
       setBalanceTypeForPayment();
@@ -90,8 +96,25 @@ $(function() {
     }
     rate = parseFloat(rate);
     var hours = parseFloat($("#payment_hours_purchased").val());
-    var total = (hours * rate).toFixed(2);
+    var total = Math.round(hours * rate * 100) / 100
     total = isNaN(total) ? '0.00' : total;
-    $('#payment-total-display').text("$".concat(total));
+    $('#payment-total-display').text("$".concat(total.toFixed(2)));
+  };
+
+  function toggleCardView() {
+    var cardParams = document.getElementById("card_parameters");
+    if (document.getElementById('use_new_card').checked) {
+      cardParams.classList.remove("hidden");
+      document.getElementById('card_holder_name').required = true
+      document.getElementById('card_address').required = true
+      document.getElementById('card_zip_code').required = true
+      document.getElementById('card_city').required = true
+    } else {
+      cardParams.classList.add("hidden");
+      document.getElementById('card_holder_name').required = false
+      document.getElementById('card_address').required = false
+      document.getElementById('card_zip_code').required = false
+      document.getElementById('card_city').required = false
+    }
   };
 });

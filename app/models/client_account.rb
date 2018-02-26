@@ -3,6 +3,7 @@ class ClientAccount < ApplicationRecord
   has_many :student_accounts, dependent: :destroy
   has_many :engagements, dependent: :destroy
   has_many :invoices, through: :engagements
+  has_one :client_review
   validates_presence_of :user
 
   def academic_types_engaged
@@ -12,5 +13,14 @@ class ClientAccount < ApplicationRecord
     types << "in_person_academic" if user.in_person_academic_rate > 0
     types << "in_person_test_prep" if user.in_person_test_prep_rate > 0
     types
+  end
+
+  def send_review_email?
+    !review_requested && request_review?
+  end
+
+  def request_review?
+    false if client_review
+    invoices.count >= 3 && invoices.five_star.any?
   end
 end

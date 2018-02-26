@@ -1,0 +1,30 @@
+<table class="table table-responsive">
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <p>Hours Purchased</p>
+        <p><%= payment.hours_type.titlecase + " Hours @ $" + payment.rate.to_s + "/hr" %></p>
+      </td>
+      <td>
+        <p>Qty.</p>
+        <p><%= payment.hours_purchased %></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Date</p>
+        <p><%= l(payment.created_at, format: :long_date) %></p>
+      </td>
+      <td>
+        <p>Billed To</p>
+        <p><%= payment.card_brand_and_four_digits %></p>
+        <p><%= payment.card_holder_name %></p>
+      </td>
+      <td>
+        <p>TOTAL</p>
+        <p>$<%= payment.amount %></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
