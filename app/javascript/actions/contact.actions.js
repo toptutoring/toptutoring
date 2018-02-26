@@ -10,7 +10,7 @@ export function toggleIsMobile(payload) {
     return { type: TOGGLE_IS_MOBILE, payload };
 }
 
-export function toggleIsContactExpanded(payload) {
+export function toggleIsContactCollapsed(payload) {
     return { type: TOGGLE_IS_CONTACT_EXPANDED, payload };
 }
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Contact } from './contact.component';
-import { ContactNav } from './contact-nav.component';
+import { ContactCollapsed } from './contact-collapsed.component';
 import { createStore } from 'redux'
-import homeApp from '../reducers/home.reducer';
-import { updateContact, toggleIsContactExpanded, toggleIsMobile } from '../actions/home.actions';
+import contactApp from '../reducers/contact.reducer';
+import { updateContact, toggleIsContactCollapsed, toggleIsMobile } from '../actions/contact.actions';
 
-const store = createStore(homeApp);
+const store = createStore(contactApp);
 
 export class Home extends React.Component {
     storeSubscription;
@@ -31,11 +31,11 @@ export class Home extends React.Component {
         window.removeEventListener('resize', this.handleResize);
     }
     render() {
-        const firstRender = this.state.isContactExpanded === undefined;
+        const firstRender = this.state.isContactCollapsed === undefined;
         const contact = this.state.isMobile ? <Contact isMobile={true} contact={this.state.contact} updateForm={contact => this.updateContact(contact)}/> :
-            (firstRender || this.state.isContactExpanded ? <Contact isMobile={false} contact={this.state.contact} updateForm={contact => this.updateContact(contact)}/> : '');
+            (firstRender || !this.state.isContactCollapsed ? <Contact isMobile={false} contact={this.state.contact} updateForm={contact => this.updateContact(contact)}/> : '');
         const contactNav = this.state.isMobile ? '' :
-            <ContactNav isContactExpanded={this.state.isContactExpanded} contact={this.state.contact} updateForm={contact => this.updateContact(contact)}/>;
+            <ContactCollapsed isContactCollapsed={this.state.isContactCollapsed} contact={this.state.contact} updateForm={contact => this.updateContact(contact)}/>;
 
         return (
             <div>
@@ -52,11 +52,11 @@ export class Home extends React.Component {
     }
 
     setContactLayout(scrollTop) {
-        const firstRender = this.state.isContactExpanded === undefined;
-        if (scrollTop > 100 && (firstRender || this.state.isContactExpanded)) {
-            store.dispatch(toggleIsContactExpanded(false));
-        } else if (scrollTop <= 100 && !firstRender && !this.state.isContactExpanded) {
-            store.dispatch(toggleIsContactExpanded(true));
+        const firstRender = this.state.isContactCollapsed === undefined;
+        if (scrollTop > 100 && (firstRender || !this.state.isContactCollapsed)) {
+            store.dispatch(toggleIsContactCollapsed(true));
+        } else if (scrollTop <= 100 && !firstRender && this.state.isContactCollapsed) {
+            store.dispatch(toggleIsContactCollapsed(false));
         }
     }
 

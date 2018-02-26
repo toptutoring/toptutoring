@@ -1,7 +1,7 @@
 import React from 'react';
 import phoneIcon from '../../assets/images/phone-white.png';
 
-export class ContactNav extends React.Component {
+export class ContactCollapsed extends React.Component {
     validateForm() {
         this.props.updateForm({
             nameValid: !!this.props.contact.name.length,
@@ -22,8 +22,8 @@ export class ContactNav extends React.Component {
     }
 
     render() {
-        const classes = `contact collapsed ${this.props.isContactExpanded === undefined ? '' :
-            (this.props.isContactExpanded ? 'slide-up' : 'slide-down')}`;
+        const classes = `contact collapsed ${this.props.isContactCollapsed === undefined ? '' :
+            (this.props.isContactCollapsed ? 'slide-down' : 'slide-up')}`;
         return (
             <div className={classes}>
                 <span className="phone-number">
