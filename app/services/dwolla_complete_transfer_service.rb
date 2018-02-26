@@ -24,7 +24,6 @@ class DwollaCompleteTransferService
     def update_invoices_and_user(user, invoices, status)
       return invoices.update_all(status: "paid") if status == "paid"
       hours = invoices.sum(:hours)
-      user.outstanding_balance += hours
       user.save!
       invoices.update_all(status: "pending")
     end

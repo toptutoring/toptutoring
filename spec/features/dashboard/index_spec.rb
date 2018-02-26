@@ -19,7 +19,7 @@ feature "Dashboard Index" do
     expect(page).to have_content("Student")
     expect(page).to have_content(active_engagement.student.name)
     expect(page).to have_content("Subject")
-    expect(page).to have_content(active_engagement.subject.name)
+    expect(page).to have_content(active_engagement.subject.name.titlecase)
     expect(page).to have_content("Type")
     expect(page).to have_content(active_engagement.academic_type.humanize)
     expect(page).to have_content("Your Balance")
@@ -43,16 +43,15 @@ feature "Dashboard Index" do
 
     sign_in(tutor)
 
-    expect(page).to have_content("Your clients")
+    expect(page).to have_content("Your Students")
     expect(page).to have_content("Student Name")
     expect(page).to have_content("Subject")
-    expect(page).to have_content("Academic Type")
-    expect(page).to have_content("Credit")
     expect(page).to have_content("Status")
+    expect(page).to have_content("Credit")
+    expect(page).to have_content("Pending Invoices")
 
     expect(page).to have_content(active_engagement.student.name)
     expect(page).to have_content(active_engagement.subject.name)
-    expect(page).to have_content(active_engagement.academic_type.humanize)
     expect(page).to have_content(active_engagement.state)
     expect(page).to have_content(active_engagement.client.online_test_prep_credit)
   end

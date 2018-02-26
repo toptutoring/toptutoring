@@ -15,6 +15,7 @@ class Invoice < ActiveRecord::Base
   scope :pending, -> { where(status: "pending") }
   scope :not_pending, -> { where.not(status: "pending").order(:status) }
   scope :newest_first, -> { order("created_at DESC").limit(100) }
+  scope :five_star, -> { where(session_rating: 5) }
 
   enum submitter_type: [:by_tutor, :by_contractor]
 

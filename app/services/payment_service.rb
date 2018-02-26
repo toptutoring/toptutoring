@@ -1,5 +1,5 @@
 class PaymentService
-  Result = Struct.new(:success?, :message)
+  Result = Struct.new(:success?, :message, :payment)
 
   def initialize(source, payment_params, account = nil)
     @user = User.find(payment_params[:payer_id])
@@ -31,7 +31,7 @@ class PaymentService
   end
 
   def amount
-    hours * rate
+    (hours * rate.to_f * 100).round / 100.00
   end
 
   def hours
@@ -65,9 +65,9 @@ class PaymentService
       payment.save
       user.save
       send_notices(payment)
-      Result.new(true, I18n.t("app.payment.success"))
+      Result.new(true, I18n.t("app.payment.success"), payment)
     else
-      Result.new(false, payment.errors.full_messages)
+      Result.new(false, payment.errors.full_messages, nil)
     end
   end
 

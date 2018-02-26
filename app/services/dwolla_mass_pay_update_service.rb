@@ -37,8 +37,6 @@ class DwollaMassPayUpdateService
 
     def update_invoices_and_user(user, invoices)
       hours = invoices.sum(:hours)
-      user.outstanding_balance += hours
-      user.save!
       invoices.update_all(status: "pending")
     end
 

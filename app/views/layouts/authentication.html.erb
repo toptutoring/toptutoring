@@ -47,7 +47,9 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <%= render "authentication_header" %>
-    <%= render "flashes" %>
+    <div id="top-tutoring-flashes">
+      <%= render "flashes" %>
+    </div>
 
     <div class="main-container">
       <%= yield %>

@@ -9,29 +9,16 @@ module Admin
     end
 
     def create
-      if payout_within_balance?
-        create_payout
-      else
-        flash[:danger] = "This exceeds the maximum payment for this tutor.
-          Please contact an administrator if you have any questions"
-      end
-      redirect_back fallback_location: dashboard_path
-    end
-
-    private
-
-    def payout_within_balance?
-      @payee.outstanding_balance >= @invoice.hours
-    end
-
-    def create_payout
       @payout = @invoice.build_payout(payout_params)
       if @payout.valid?
         process_payout
       else
         flash.alert = @payout.errors.full_messages
       end
+      redirect_back fallback_location: dashboard_path
     end
+
+    private
 
     def payout_params
       {

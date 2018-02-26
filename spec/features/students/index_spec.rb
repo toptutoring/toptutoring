@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Students Index" do
-  let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 20) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:client) { FactoryBot.create(:client_user) }
   let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
   let!(:engagement) { FactoryBot.create(:engagement, client_account: client.client_account, tutor_account: tutor.tutor_account, student_account: student_account) }

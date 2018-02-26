@@ -4,7 +4,7 @@ require "rails_helper"
 describe MassPaymentService do
   subject = MassPaymentService
   let(:admin) { FactoryBot.create(:auth_admin_user) }
-  let(:tutor) { FactoryBot.create(:tutor_user, outstanding_balance: 4) }
+  let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:type) { "by_tutor" }
   let!(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
 
@@ -54,7 +54,7 @@ describe MassPaymentService do
     end
 
     it "makes multiple payments if there are more than 1 payee" do
-      tutor2 = FactoryBot.create(:tutor_user, auth_uid: "another_uid", outstanding_balance: 2)
+      tutor2 = FactoryBot.create(:tutor_user, auth_uid: "another_uid")
       engagement2 = FactoryBot.create(:engagement, tutor_account: tutor2.tutor_account, client_account: client.client_account, student_account: student_account_user_nil)
       FactoryBot.create(:invoice, submitter: tutor2, client: client, engagement: engagement2)
 

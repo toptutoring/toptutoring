@@ -19,22 +19,6 @@ describe CreditUpdater do
       expect { subject.process_creation_of_invoice! }
         .to change { client.reload.online_test_prep_credit }.by(-hours)
     end
-
-    it "Adjusts the submitter's balance up when a submitter's invoice is processed" do
-      subject = CreditUpdater.new(invoice)
-      hours = invoice.hours
-      expect { subject.process_creation_of_invoice! }
-        .to change { submitter.reload.outstanding_balance }.by(hours)
-    end
-  end
-
-  describe "#process_payment_of_invoice!" do
-    it "Adjusts the submitter's balance down when a submitter's invoice is processed" do
-      subject = CreditUpdater.new(invoice)
-      hours = invoice.hours
-      expect { subject.process_payment_of_invoice! }
-        .to change { submitter.reload.outstanding_balance }.by(-hours)
-    end
   end
 
   describe "#update_existing_invoice" do
@@ -47,15 +31,6 @@ describe CreditUpdater do
         difference = new_hours - old_hours
         expect { subject.update_existing_invoice(new_params) }
           .to change { client.reload.online_test_prep_credit }.by(-3)
-      end
-
-      it "Adjusts the submitter's balance up" do
-        subject = CreditUpdater.new(invoice)
-        new_hours = new_params["hours"].to_f
-        old_hours = invoice.hours # 2 hours
-        difference = new_hours - old_hours
-        expect { subject.update_existing_invoice(new_params) }
-          .to change { submitter.reload.outstanding_balance }.by(3)
       end
 
       it "Updates submitter_pay" do
@@ -85,14 +60,6 @@ describe CreditUpdater do
         old_hours = invoice.hours # 2 hours
         expect { subject.update_existing_invoice(new_params) }
           .to change { client.reload.online_test_prep_credit }.by(1)
-      end
-
-      it "Adjusts the submitter's balance down" do
-        new_hours = new_params["hours"].to_f
-        subject = CreditUpdater.new(invoice)
-        old_hours = invoice.hours # 2 hours
-        expect { subject.update_existing_invoice(new_params) }
-          .to change { submitter.reload.outstanding_balance }.by(-1)
       end
     end
   end

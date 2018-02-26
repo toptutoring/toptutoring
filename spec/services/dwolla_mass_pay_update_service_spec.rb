@@ -34,7 +34,6 @@ describe DwollaMassPayUpdateService do
       # failed items are recorded, user balance updated, and invoices set back to pending
       expect(payout_processing_failed.reload.dwolla_mass_pay_item_url).to eq failure_url
       expect(payout_processing_failed.status).to eq "failed"
-      expect(payout_processing_failed.payee.outstanding_balance).to eq invoice_failed.hours 
       expect(invoice_failed.reload.status).to eq "pending"
     end
 

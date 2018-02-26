@@ -6,6 +6,7 @@
         <th class="col-lg-1 col-sm-1">Tutor</th>
         <th class="col-lg-1 col-sm-1">Date Submitted</th>
         <th class="col-lg-1 col-sm-1">Type</th>
+        <th class="col-lg-1 col-sm-1">Rating</th>
         <th class="col-lg-1 col-sm-1">Client</th>
         <th class="col-lg-1 col-sm-1">Hours</th>
         <th class="col-lg-1 col-sm-1">Client Charge</th>
@@ -26,6 +27,7 @@
           <td><%= invoice.submitter.name %></td>
           <td><%= l(invoice.updated_at, format: :date) %></td>
           <td><%= invoice.engagement.academic_type.humanize %></td>
+          <td><%= invoice.session_rating %></td>
           <td><%= invoice.engagement.client.name %></td>
           <td><%= invoice.hours.to_s %></td>
           <td><%= number_to_currency(invoice.amount) %></td>

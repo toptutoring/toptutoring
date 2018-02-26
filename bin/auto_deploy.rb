@@ -104,7 +104,7 @@ class Deployer
   end
 
   def notify(message)
-    `#{TERMINAL_NOTIFIER} -title 'TopTutoring' -message '#{message}'`
+    `#{TERMINAL_NOTIFIER} -title 'Top Tutoring' -message '#{message}'`
   end
 
   def shell_error

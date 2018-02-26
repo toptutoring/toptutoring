@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   include Clearance::User
+  before_create :add_unique_token
 
   # Associations
   has_one :signup, dependent: :destroy
@@ -70,6 +71,10 @@ class User < ActiveRecord::Base
   end
 
   #### Setters ####
+
+  def add_unique_token
+    self.unique_token = SecureRandom.hex(3)
+  end
 
   def dwolla_access_token=(value)
     self.encrypted_access_token = nil

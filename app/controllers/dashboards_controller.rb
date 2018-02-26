@@ -16,6 +16,7 @@ class DashboardsController < ApplicationController
 
   def tutor
     @tutor_engagements = current_user.tutor_account.engagements.includes(:client_account)
+    @pending_invoices = current_user.invoices.by_tutor.pending
     @invoice = Invoice.new
   end
 

@@ -16,16 +16,18 @@ class Clients::PaymentsController < ApplicationController
     results = PaymentService.new(source, payment_params, account).charge!
     if results.success?
       flash.notice = results.message
+      @payment = results.payment
+      render "confirmation"
     else
       flash.alert = results.message
+      redirect_to action: :new
     end
-    redirect_to action: :new
   end
 
   private
 
   def determine_source
-    return current_user.stripe_account.default_source_id if use_existing_card?
+    return params.require(:card_id) unless use_new_card?
     return token_id unless save_card_info?
     result = StripeAccountService.create_account!(current_user, token_id)
     result.source
@@ -37,8 +39,8 @@ class Clients::PaymentsController < ApplicationController
           .merge(payer_id: current_user.id)
   end
 
-  def use_existing_card?
-    params[:use_existing_card] == "true"
+  def use_new_card?
+    params[:use_new_card] == "true"
   end
 
   def token_id
@@ -50,6 +52,7 @@ class Clients::PaymentsController < ApplicationController
   end
 
   def account
+    return nil if use_new_card? && !save_card_info?
     current_user.stripe_account
   end
 
