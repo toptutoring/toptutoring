@@ -1,6 +1,6 @@
 import {
-    updateContact, toggleIsContactExpanded, toggleIsMobile
-} from '../actions/home.actions';
+    updateContact, toggleIsContactCollapsed, toggleIsMobile
+} from '../actions/contact.actions';
   
   const initialState = {
       contact: {
@@ -11,7 +11,7 @@ import {
         telValid: true,
         formValid: undefined
       },
-      isContactExpanded: undefined,
+      isContactCollapsed: undefined,
       isMobile: false
   };
   
@@ -24,7 +24,7 @@ import {
             return { ...state, isMobile: action.payload };
         }
         case ('TOGGLE_IS_CONTACT_EXPANDED'): {
-            return { ...state, isContactExpanded: action.payload };
+            return { ...state, isContactCollapsed: action.payload };
         }
         default:
             return state;
