@@ -25,19 +25,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Itim">
     <!-- Dancing Script -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing+Script">
-    <!-- JQuery -->
-    <%= javascript_include_tag '/www/js/jquery.min.js' %>
 
-    <!-- Bootstrap CSS-->
-    <%= stylesheet_link_tag '/www/bootstrap.min.css' %>
-    <!-- Font Awesome-->
-    <%= stylesheet_link_tag '/www/font-awesome.min.css' %>
-    <!-- Core CSS-->
-    <%= stylesheet_link_tag '/www/themify-icons.css' %>
-    <%= stylesheet_link_tag '/www/theme.css' %>
-    <%= stylesheet_link_tag '/www/flexslider.css' %>
-    <%= stylesheet_link_tag '/www/custom.css' %>
-    <%= stylesheet_link_tag :application, media: "all" %>
+    <%= stylesheet_link_tag :www, media: "all" %>
 
     <%= csrf_meta_tags %>
     <%= favicon_link_tag %>
@@ -64,7 +53,6 @@
 
     <%= javascript_include_tag :application %>
     <!-- Required JS for template -->
-    <%= javascript_include_tag '/www/js/bootstrap.min.js' %>
     <%= javascript_include_tag '/www/js/scripts.js' %>
     <%= javascript_include_tag '/www/js/parallax.min.js' %>
     <%= javascript_include_tag '/www/js/smooth-scroll.min.js' %>
