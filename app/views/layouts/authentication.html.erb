@@ -26,16 +26,19 @@
     <!-- Dancing Script -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing+Script">
     <!-- JQuery -->
-    <%= javascript_include_tag '/plugins/jquery/dist/jquery.min.js' %>
+    <%= javascript_include_tag '/www/js/jquery.min.js' %>
+
     <!-- Bootstrap CSS-->
-    <%= stylesheet_link_tag '/plugins/bootstrap/dist/css/bootstrap.min.css' %>
-    <!-- Ionicons-->
-    <%= stylesheet_link_tag '/plugins/Ionicons/css/ionicons.min.css' %>
+    <%= stylesheet_link_tag '/www/bootstrap.min.css' %>
     <!-- Font Awesome-->
-    <%= stylesheet_link_tag '/plugins/font-awesome/css/font-awesome.min.css' %>
+    <%= stylesheet_link_tag '/www/font-awesome.min.css' %>
     <!-- Core CSS-->
-    <%= stylesheet_link_tag '/build/css/first-layout.css' %>
+    <%= stylesheet_link_tag '/www/themify-icons.css' %>
+    <%= stylesheet_link_tag '/www/theme.css' %>
+    <%= stylesheet_link_tag '/www/flexslider.css' %>
+    <%= stylesheet_link_tag '/www/custom.css' %>
     <%= stylesheet_link_tag :application, media: "all" %>
+
     <%= csrf_meta_tags %>
     <%= favicon_link_tag %>
     <%= yield :head %>
@@ -51,8 +54,10 @@
       <%= render "flashes" %>
     </div>
 
-    <div class="main-container">
-      <%= yield %>
+    <div class="page-content">
+      <div class="wrapper">
+        <%= yield %>
+      </div>
     </div>
 
     <%= render "footer" %>
