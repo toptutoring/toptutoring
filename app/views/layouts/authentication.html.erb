@@ -56,7 +56,18 @@
     </div>
 
     <%= render "footer" %>
-    <%= render "javascript" %>
+
+    <%= javascript_include_tag :application %>
+    <!-- Required JS for template -->
+    <%= javascript_include_tag '/www/js/bootstrap.min.js' %>
+    <%= javascript_include_tag '/www/js/scripts.js' %>
+    <%= javascript_include_tag '/www/js/parallax.min.js' %>
+    <%= javascript_include_tag '/www/js/smooth-scroll.min.js' %>
+    <%= javascript_include_tag '/www/js/flexslider.min.js' %>
+    <%= javascript_include_tag '/www/js/sign-up.js' %>
+
+    <%= render "misc_javascript" %>
+    <%= yield :javascript %>
     <%= render "css_overrides" %>
   </body>
 </html>

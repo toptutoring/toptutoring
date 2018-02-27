@@ -54,7 +54,30 @@
       <% end %>
     </div>
 
-    <%= render "javascript" %>
+    <%= javascript_include_tag :application %>
+    <!-- JS required for Sigma Styles -->
+    <!-- jQuery-->
+    <%= javascript_include_tag '/plugins/jquery/dist/jquery.min.js' %>
+    <!-- Bootstrap JavaScript-->
+    <%= javascript_include_tag '/plugins/bootstrap/dist/js/bootstrap.min.js' %>
+    <!-- Malihu Scrollbar-->
+    <%= javascript_include_tag '/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js' %>
+    <!-- Animo.js-->
+    <%= javascript_include_tag '/plugins/animo.js/animo.min.js' %>
+    <!-- Bootstrap Progressbar-->
+    <%= javascript_include_tag '/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js' %>
+    <!-- jQuery Easy Pie Chart-->
+    <%= javascript_include_tag '/plugins/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js' %>
+    <!-- jQuery Steps-->
+    <%= javascript_include_tag '/plugins/jquery.steps/build/jquery.steps.min.js' %>
+    <!-- Parsley -->
+    <%= javascript_include_tag '/plugins/parsley/parsley.min.js' %>
+    <!-- Core JS-->
+    <%= javascript_include_tag '/build/js/first-layout/app.js' %>
+    <%= javascript_include_tag '/build/js/first-layout/demo.js' %>
+    <%= javascript_include_tag '/build/js/page-content/forms/forms-wizard.js' %>
+
+    <%= render "misc_javascript" %>
     <%= render "css_overrides" %>
 
   </body>
