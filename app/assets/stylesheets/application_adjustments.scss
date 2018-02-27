@@ -55,3 +55,14 @@ input[type="email"] {
 input[type="email"]:focus {
   outline: 1px solid #ccc;
 }
+
+// Clearance Styles
+
+#clearance {
+  display: block;
+  padding: 96px 0;
+    position: relative;
+    overflow: hidden;
+    width: 555px;
+    margin: auto;
+}

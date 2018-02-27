@@ -1,24 +1,24 @@
-<div class="form-box-inner">
-  <h2 class="title text-center"><%= t(".title") %></h2>
+<section>
+  <div class="form-box-inner">
+    <h2 class="title text-center"><%= t(".title") %></h2>
     <div class="row">
 
       <div class="col-md-4 col-sm-12 col-xs-12 col-md-offset-4">
-          <p class="text-center"><%= t(".description") %></p>
+        <p class="text-center"><%= t(".description") %></p>
       </div>
 
       </br>
       <div class="form-container col-md-4 col-sm-12 col-xs-12 col-md-offset-4 col-sm-offset-0 col-sm-offset-0">
-          <%= form_for :password, url: password_path do |form| %>
-            <div class="form-group email">
-              <%= form.label :email, class: "sr-only" %>
-              <%= form.email_field :email, type: 'email', placeholder: "Your Email", class: "form-control login-email" %>
-            </div>
+        <%= form_for :password, url: password_path do |form| %>
+          <div class="form-group email">
+            <%= form.label :email, class: "sr-only" %>
+            <%= form.email_field :email, type: 'email', placeholder: "Your Email", value: @email, class: "form-control login-email" %>
+          </div>
 
-            <button type="submit" class="btn btn-block btn-primary">Send Instructions</button>
-
-          <% end %>
+          <%= form.submit "Send Instructions", class: "btn btn-lg btn-blue" %>
+        <% end %>
       </div>
 
     </div>
   </div>
-</div>
+</section>
