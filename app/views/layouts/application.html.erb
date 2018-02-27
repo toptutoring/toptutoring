@@ -20,9 +20,18 @@
       })(window,document,'script','dataLayer','GTM-PH4VQ5Z');</script>
       <!-- End Google Tag Manager -->
     <% end %>
-    <%= render "css_import" %>
+
+    <!-- Sigma Template Styles -->
+    <%= stylesheet_link_tag '/plugins/bootstrap/dist/css/bootstrap.min.css' %>
+    <%= stylesheet_link_tag '/plugins/Ionicons/css/ionicons.min.css' %>
+    <%= stylesheet_link_tag '/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css' %>
+    <%= stylesheet_link_tag '/plugins/animo.js/animate-animo.min.css' %>
+    <%= stylesheet_link_tag '/plugins/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %>
+    <%= stylesheet_link_tag '/plugins/jquery.steps/demo/css/jquery.steps.css' %>
+    <%= stylesheet_link_tag '/build/css/first-layout.css' %>
     <%= stylesheet_link_tag :application, media: "all" %>
-    <%= javascript_include_tag Ckeditor.cdn_url %>
+
+    <%= yield :head %>
     <%= csrf_meta_tags %>
     <%= favicon_link_tag %>
   </head>
