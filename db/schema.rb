@@ -22,6 +22,19 @@ ActiveRecord::Schema.define(version: 20180228172000) do
     t.index ["engagement_id"], name: "index_availabilities_on_engagement_id"
   end
 
+  create_table "blog_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "blog_categories_posts", id: false, force: :cascade do |t|
+    t.bigint "blog_post_id", null: false
+    t.bigint "blog_category_id", null: false
+    t.index ["blog_category_id"], name: "index_blog_categories_posts_on_blog_category_id"
+    t.index ["blog_post_id"], name: "index_blog_categories_posts_on_blog_post_id"
+  end
+
   create_table "blog_posts", force: :cascade do |t|
     t.string "title"
     t.text "content"
