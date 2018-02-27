@@ -28,18 +28,6 @@ header li a, .dropdown-menu li > a {
   padding: 2px;
 }
 
-// Button Styles
-
-.btn-blue {
-  background-color: $major_blue;
-  border-color: $deep_blue;
-  color: $foreground_white;
-}
-.btn-blue:hover {
-  background-color: $deep_blue;
-  color: $foreground_white;
-}
-
 // Input Styles
 
 input[type='number'] {

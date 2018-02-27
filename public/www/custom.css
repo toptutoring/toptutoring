@@ -147,26 +147,12 @@
   color: #59a4f0;
 }
 
-.btn-lg-blue {
-  border: 2px solid #59a4f0;
-  color: #59a4f0;
-}
-
-.btn-lg-blue:hover {
+.btn-blue:hover {
   background: #59a4f0;
   color: #fff;
 }
 
-.btn-lg-blue:visited {
-  color: #59a4f0;
-}
-
-.btn-sm-blue:hover {
-  background: #59a4f0;
-  color: #fff;
-}
-
-.btn-sm-blue:visited {
+.btn-blue:visited {
   color: #59a4f0;
 }
 
