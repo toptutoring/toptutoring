@@ -14,9 +14,8 @@ header li a, .dropdown-menu li > a {
 
 // Container Styles
 
-.main-container {
-  min-height: calc(100vh - 153px); // 98 + 55 (header/footer)
-  padding-bottom: 78px;
+.page-content {
+  min-height: calc(100vh - 149px); // 94 + 55 (header/footer)
 }
 
 // Sidebar Styles
@@ -41,4 +40,18 @@ input[type=number]::-webkit-outer-spin-button {
 // To ensure there's parity with stripe
 .form-control {
   font-family: sans-serif;
+}
+
+input[type="email"] {
+  background: #f5f5f5;
+  border: none;
+  width: 100%;
+  height: 50px;
+  padding-left: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  border-radius: 0;
+}
+input[type="email"]:focus {
+  outline: 1px solid #ccc;
 }
