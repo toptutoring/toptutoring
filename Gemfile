@@ -43,6 +43,7 @@ gem "carrierwave"
 gem "mini_magick"
 gem "ckeditor"
 gem "fog-aws"
+gem "geocoder"
 
 group :development do
   gem "listen"

@@ -160,6 +160,7 @@ GEM
       activesupport
       capybara
       i18n
+    geocoder (1.4.5)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     hashdiff (0.3.4)
@@ -433,6 +434,7 @@ DEPENDENCIES
   fake_stripe
   fog-aws
   formulaic
+  geocoder
   intercom-rails
   jquery-rails
   launchy
