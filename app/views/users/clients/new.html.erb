@@ -44,6 +44,10 @@
           <%= form.password_field :password, placeholder: "Password", class: "form-control input-lg mb-15", required: true %>
         </div>
 
+        <div class="col-sm-6">
+          <%= password_field_tag :confirm_password, nil, placeholder: "Confirm Password", class: "form-control input-lg mb-15", required: true %>
+        </div>
+
         <%= form.fields_for :signup do |client_field| %>
           <div class="col-xs-12">
             <%= form.label :comments %>

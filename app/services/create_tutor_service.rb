@@ -2,9 +2,10 @@ class CreateTutorService
   class << self
     Result = Struct.new(:success?, :user, :message)
 
-    def create!(user_params, subject_params)
+    def create!(user_params, password, subject_params)
+      @tutor = User.new(user_params)
+      return password_failure unless passwords_match?(user_params, password)
       ActiveRecord::Base.transaction do
-        @tutor = Clearance.configuration.user_model.new(user_params)
         @tutor.save!
         @tutor.create_tutor_account!
         add_subjects(subject_params)
@@ -20,6 +21,14 @@ class CreateTutorService
     #Add each subject that was selected on signup to the tutor
     def add_subjects(subject_params)
       @tutor.tutor_account.subject_ids = subject_params[:subjects]
+    end
+
+    def passwords_match?(params, password)
+      params[:password] == password
+    end
+
+    def password_failure
+      Result.new(false, @tutor, I18n.t("app.signup.password_fail"))
     end
   end
 end

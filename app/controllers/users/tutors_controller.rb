@@ -8,7 +8,7 @@ module Users
     end
 
     def create
-      results = CreateTutorService.create!(signups_params, tutor_subject_params)
+      results = CreateTutorService.create!(signups_params, password, tutor_subject_params)
       if results.success?
         sign_in(results.user)
         flash.notice = results.message
@@ -33,6 +33,10 @@ module Users
 
     def tutor_subject_params
       params.fetch(:tutor, {}).permit(subjects: [])
+    end
+
+    def password
+      params.require(:confirm_password)
     end
 
     def redirect_to_root

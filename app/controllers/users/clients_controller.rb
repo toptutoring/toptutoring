@@ -9,7 +9,7 @@ module Users
     end
 
     def create
-      result = CreateClientService.create!(signups_params, country_code)
+      result = CreateClientService.create!(signups_params, confirm_password, country_code)
       if result.success?
         sign_in(result.user)
         flash.notice = result.messages
@@ -23,6 +23,10 @@ module Users
 
     private
 
+    def confirm_password
+      params.require(:confirm_password)
+    end
+
     def signups_params
       params.require(:user)
             .permit(:first_name, :last_name, :phone_number, :email, :password,
@@ -31,6 +35,7 @@ module Users
     end
 
     def country_code
+      return "US" if Rails.env.development? || Rails.env.test?
       code = request.location.country_code
       code == "RD" ? "US" : code
     end
