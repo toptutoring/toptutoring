@@ -9,7 +9,7 @@ module Users
     end
 
     def create
-      result = CreateClientService.create!(signups_params)
+      result = CreateClientService.create!(signups_params, country_code)
       if result.success?
         sign_in(result.user)
         flash.notice = result.messages
@@ -28,6 +28,11 @@ module Users
             .permit(:name, :phone_number, :email, :password,
                     signup_attributes: [:student, :subject_id, :comments])
             .merge(roles: Role.where(name: "client"))
+    end
+
+    def country_code
+      code = request.location.country_code
+      code == "RD" ? "US" : code
     end
 
     def return_path(user)

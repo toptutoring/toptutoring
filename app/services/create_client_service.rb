@@ -2,9 +2,10 @@ class CreateClientService
   class << self
     Result = Struct.new(:success?, :user, :messages)
 
-    def create!(params)
+    def create!(params, code)
       ActiveRecord::Base.transaction do
         @user = Clearance.configuration.user_model.new(params)
+        @user.country_code = code
         @user.save!
         @user.enable!
         create_accounts!

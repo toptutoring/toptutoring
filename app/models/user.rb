@@ -29,9 +29,12 @@ class User < ActiveRecord::Base
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
 
   # Validation #
+  validates :phone_number,
+    phone: { possible: true, country_specifier: -> user { user.country_code } },
+    on: :create
   validates_presence_of :name, :email
   validates :email, uniqueness: true, on: :create
-  validates_presence_of :phone_number, on: :create
+  validates_presence_of :phone_number, :country_code, on: :create
   validate :credits_must_be_by_quarter_hours
 
   def credits_must_be_by_quarter_hours
