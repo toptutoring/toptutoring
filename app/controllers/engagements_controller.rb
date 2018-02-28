@@ -11,7 +11,7 @@ class EngagementsController < ApplicationController
   def new
     @students = ClientAccount.all.map do |account|
       next unless account.student_accounts.any?
-      [account.user.name, student_options(account)]
+      [account.user.full_name, student_options(account)]
     end
     @students.compact!
   end

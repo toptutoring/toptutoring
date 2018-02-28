@@ -2,21 +2,24 @@ require "rails_helper"
 
 describe CreateClientService do
   describe ".create!" do
-    let(:user_params) { { name: "Client",
+    let(:user_params) { { first_name: "ClientName",
+                          last_name: "ClientLastName",
                           phone_number: "510-555-5555",
                           email: "client_new@example.com",
                           password: "password",
                           signup_attributes: { student: false,
                                                subject: FactoryBot.create(:subject),
                                                comments: "Hello"} } }
-    let(:student_params) { { name: "Student",
+    let(:student_params) { { first_name: "StudentName",
+                             last_name: "StudentLastName",
                              phone_number: "510-555-5555",
                              email: "client_new@example.com",
                              password: "password",
                              signup_attributes: { student: true,
                                                   subject: FactoryBot.create(:subject),
                                                   comments: "Hello"} } }
-    let(:invalid_params) { { name: "Student",
+    let(:invalid_params) { { first_name: "Student",
+                             last_name: "StudentLastName",
                              phone_number: "510-555-5555",
                              email: "client_new@example.com",
                              password: "password",
@@ -29,7 +32,8 @@ describe CreateClientService do
 
       expect(subject.success?).to be true
       expect(subject.user.persisted?).to be true
-      expect(subject.user.name).to eq "Client"
+      expect(subject.user.first_name).to eq user_params[:first_name]
+      expect(subject.user.last_name).to eq user_params[:last_name]
       expect(subject.user.client_account).not_to be nil
       expect(subject.user.client_account.student_accounts.any?).to be false
       expect(subject.user.student_account).to be nil
@@ -41,7 +45,8 @@ describe CreateClientService do
 
       expect(subject.success?).to be true
       expect(subject.user.persisted?).to be true
-      expect(subject.user.name).to eq "Student"
+      expect(subject.user.first_name).to eq student_params[:first_name]
+      expect(subject.user.last_name).to eq student_params[:last_name]
       expect(subject.user.client_account).not_to be nil
       expect(subject.user.client_account.student_accounts.any?).to be true
       expect(subject.user.student_account).not_to be nil

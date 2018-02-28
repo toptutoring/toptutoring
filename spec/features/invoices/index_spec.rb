@@ -12,14 +12,14 @@ feature "Invoices Index" do
     visit tutors_invoices_path
 
     expect(page).to have_content("Invoices")
-    expect(page).to have_content("Student")
+    expect(page).to have_content("Client")
     expect(page).to have_content("Subject")
     expect(page).to have_content("Academic Type")
     expect(page).to have_content("Date")
     expect(page).to have_content("Description")
     expect(page).to have_content("Hours")
 
-    expect(page).to have_content(invoice.engagement.student.name)
+    expect(page).to have_content(invoice.engagement.client.full_name)
     expect(page).to have_content(invoice.engagement.subject.name)
     expect(page).to have_content(invoice.engagement.academic_type.humanize)
     expect(page).to have_content(invoice.created_at)

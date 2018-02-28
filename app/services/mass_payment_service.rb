@@ -50,7 +50,7 @@ class MassPaymentService
 
   def create_invalid_messages(invalid_users)
     @messages = invalid_users.map do |user|
-      "Payment could not be processed for #{user.name}."
+      "Payment could not be processed for #{user.full_name}."
     end
   end
 

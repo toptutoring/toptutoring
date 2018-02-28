@@ -119,7 +119,7 @@
 																</span>
 															</span>
 														</div>
-                              <div style="padding-top: 10px; padding-left: 30px;">Hello <%= @user.name %>,</div>
+                              <div style="padding-top: 10px; padding-left: 30px;">Hello <%= @user.full_name %>,</div>
 															<div style="padding-top: 10px; padding-left: 30px;">Thank you for signing up for Top Tutoring! We offer premium tutoring from the best universities to anywhere in the world.</div>
                               <div style="padding-top: 10px; padding-left: 30px;">Our tutor director has been notified of your sign up and will be in touch with you shortly. Feel free to give us a call at <%= Phonelib.parse(ENV["CONTACT_PHONE_NUMBER"] || "15108425221", :us).national %> if you have any questions.</div>
 															<div style="padding-top: 10px; padding-left: 30px;">Regards,</div>

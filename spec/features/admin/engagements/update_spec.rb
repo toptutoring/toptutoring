@@ -6,7 +6,7 @@ feature "Update engagements" do
   let(:client) { FactoryBot.create(:client_user) }
   let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
   let!(:engagement) { FactoryBot.create(:engagement, tutor_account: nil, student_account: student_account, client_account: client.client_account, state: "pending") }
-  let!(:tutor) { FactoryBot.create(:tutor_user, name: "Amazing Tutor") }
+  let!(:tutor) { FactoryBot.create(:tutor_user, first_name: "AmazingTutor") }
 
   context "when user is director" do
     scenario "updating a tutor for a pending engagement" do
@@ -27,7 +27,7 @@ feature "Update engagements" do
 
       expect(page).to have_content("Engagement successfully updated!")
       expect(page).to have_content("Student")
-      expect(page).to have_content(tutor.name)
+      expect(page).to have_content(tutor.full_name)
 
       click_link "Enable"
       expect(page).to have_content("Engagement successfully enabled!")

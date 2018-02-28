@@ -9,8 +9,10 @@ feature "Create user as first step of sign up process" do
       admin # creates admin user to check if email is sent to admin
       visit client_sign_up_path
 
-      name = "Client"
-      fill_in "user_name", with: name
+      name = "ClientName"
+      last_name = "ClientLastName"
+      fill_in "user_first_name", with: name
+      fill_in "user_last_name", with: last_name
       fill_in "user_email", with: "client@example.com"
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
@@ -21,6 +23,7 @@ feature "Create user as first step of sign up process" do
       expect(page).to have_current_path(new_clients_student_path)
       expect(page).to have_content(I18n.t("app.signup.client.success_message"))
       expect(page).to have_content(name)
+      expect(page).to have_content(last_name)
       # Email count should be 2 since an email is sent to both client and admin
       expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
@@ -29,8 +32,10 @@ feature "Create user as first step of sign up process" do
       admin # creates admin user to check if email is sent to admin
       visit client_sign_up_path
 
-      name = "Student"
-      fill_in "user_name", with: name
+      name = "StudentName"
+      last_name = "StudentLastName"
+      fill_in "user_first_name", with: name
+      fill_in "user_last_name", with: last_name
       fill_in "user_email", with: "student@example.com"
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
@@ -41,6 +46,7 @@ feature "Create user as first step of sign up process" do
       expect(page).to have_current_path(dashboard_path)
       expect(page).to have_content(I18n.t("app.signup.client_student.success_message"))
       expect(page).to have_content(name)
+      expect(page).to have_content(last_name)
       # Email count should be 2 since an email is sent to both client and admin
       expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
@@ -49,7 +55,10 @@ feature "Create user as first step of sign up process" do
       admin
       visit new_users_tutor_path
 
-      fill_in "user_name", with: "tutor"
+      name = "TutorName"
+      last_name = "TutorLastName"
+      fill_in "user_first_name", with: name
+      fill_in "user_last_name", with: last_name
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_email", with: "tutor@example.com"
       fill_in "user_password", with: "password"
@@ -57,6 +66,8 @@ feature "Create user as first step of sign up process" do
 
       expect(page).to have_current_path(dashboard_path)
       expect(page).to have_content(I18n.t("app.signup.tutors.success"))
+      expect(page).to have_content(name)
+      expect(page).to have_content(last_name)
     end
   end
 
@@ -64,7 +75,8 @@ feature "Create user as first step of sign up process" do
     scenario "with an invalid email" do
       visit client_sign_up_path
 
-      fill_in "user_name", with: "student"
+      fill_in "user_first_name", with: "StudentName"
+      fill_in "user_last_name", with: "StudentLastName"
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_email", with: "student"
       fill_in "user_password", with: "password"
@@ -76,7 +88,8 @@ feature "Create user as first step of sign up process" do
     scenario "when user is tutor" do
       visit new_users_tutor_path
 
-      fill_in "user_name", with: "tutor"
+      fill_in "user_first_name", with: "TutorName"
+      fill_in "user_last_name", with: "TutorLastName"
       fill_in "user_email", with: "tutor@example.com"
       click_button "Sign up"
 

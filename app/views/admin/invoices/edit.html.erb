@@ -6,7 +6,7 @@
       </div>
       <div class="widget-body">
         <%= form_for @invoice, url: admin_invoice_path(@invoice), html: { class: "form-horizontal" } do |f| %>
-          <p>Submitter: <%= @invoice.submitter.name %></p>
+          <p>Submitter: <%= @invoice.submitter.full_name %></p>
           <p>Date Submitted: <%= l(@invoice.created_at, format: :date) %></p>
 
           <div class="form-group">

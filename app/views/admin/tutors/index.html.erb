@@ -31,7 +31,7 @@
             <tbody>
               <% @tutors.each do |tutor| %>
                 <tr>
-                  <td><%= link_to tutor.name, admin_tutor_path(tutor) %></td>
+                  <td><%= link_to tutor.full_name, admin_tutor_path(tutor) %></td>
                   <td><%= tutor.email %></td>
                   <td class="text-center"><%= tutor.tutor_account.balance_pending %></td>
                   <td class="text-left">

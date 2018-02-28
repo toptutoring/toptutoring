@@ -10,16 +10,16 @@ feature "Masquerading" do
     sign_in(director)
     visit director_users_path
 
-    expect(page).to have_content("Hi, " + director.name)
+    expect(page).to have_content("Hi, " + director.full_name)
 
     click_on "Masquerade"
 
     expect(page).to have_content("Now masquerading as " + client.email)
-    expect(page).to have_content("Hi, " + client.name)
+    expect(page).to have_content("Hi, " + client.full_name)
 
     click_on "Stop Masquerading"
     expect(page).to have_content("Stopped masquerading")
-    expect(page).to have_content("Hi, " + director.name)
+    expect(page).to have_content("Hi, " + director.full_name)
   end
 
   scenario "when admins masquerade as clients" do
@@ -27,16 +27,16 @@ feature "Masquerading" do
     sign_in(admin)
     visit admin_users_path
 
-    expect(page).to have_content("Hi, " + admin.name)
+    expect(page).to have_content("Hi, " + admin.full_name)
 
     click_on "Masquerade"
 
     expect(page).to have_content("Now masquerading as " + client.email)
-    expect(page).to have_content("Hi, " + client.name)
+    expect(page).to have_content("Hi, " + client.full_name)
 
     click_on "Stop Masquerading"
     expect(page).to have_content("Stopped masquerading")
-    expect(page).to have_content("Hi, " + admin.name)
+    expect(page).to have_content("Hi, " + admin.full_name)
   end
 end
 

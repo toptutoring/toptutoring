@@ -25,7 +25,7 @@ module Users
 
     def signups_params
       params.require(:user)
-            .permit(:name, :phone_number, :email, :password,
+            .permit(:first_name, :last_name, :phone_number, :email, :password,
                     signup_attributes: [:student, :subject_id, :comments])
             .merge(roles: Role.where(name: "client"))
     end

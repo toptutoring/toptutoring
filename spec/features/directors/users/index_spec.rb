@@ -13,7 +13,7 @@ feature "Director client index" do
     expect(page).to have_content("ID")
     expect(page).to have_content(client.id)
     expect(page).to have_content("Name")
-    expect(page).to have_content(client.name)
+    expect(page).to have_content(client.full_name)
     expect(page).to have_content(client.email)
     expect(page).to have_content("Access State")
     expect(page).to have_content(client.access_state)

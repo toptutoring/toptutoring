@@ -11,7 +11,7 @@ feature "Profile" do
       sign_in(tutor)
       visit profile_path
 
-      expect(page).to have_content(tutor.name)
+      expect(page).to have_content(tutor.full_name)
       expect(page).to have_content(tutor.email)
       expect(page).to have_content(l(tutor.created_at, format: :date))
       expect(page).to have_content("Your Subjects")
@@ -23,16 +23,20 @@ feature "Profile" do
       visit edit_profile_path
 
       expect(page).to have_content("Profile")
-      expect(page).to have_content(tutor.name)
+      expect(page).to have_content(tutor.full_name)
 
-      name = "New Name"
-      fill_in "user_name", with: name
+      first_name = "NewName"
+      last_name = "NewLastName"
+      fill_in "user_first_name", with: first_name
+      fill_in "user_last_name", with: last_name
 
       click_button "Submit"
       
       expect(page).to have_content("Your profile has been updated.")
-      expect(page).to have_content(name)
-      expect(tutor.reload.name).to eq(name)
+      expect(page).to have_content(first_name)
+      expect(page).to have_content(last_name)
+      expect(tutor.reload.first_name).to eq(first_name)
+      expect(tutor.reload.last_name).to eq(last_name)
     end
   end
 
@@ -41,7 +45,7 @@ feature "Profile" do
       sign_in(client)
       visit profile_path
 
-      expect(page).to have_content(client.name)
+      expect(page).to have_content(client.full_name)
       expect(page).to have_content(client.email)
       expect(page).to have_content(l(client.created_at, format: :date))
     end
@@ -51,7 +55,7 @@ feature "Profile" do
       visit edit_profile_path
 
       expect(page).to have_content("Profile")
-      expect(page).to have_content(client.name)
+      expect(page).to have_content(client.full_name)
 
       number = "408-555-5555"
       fill_in "user_phone_number", with: number
@@ -69,7 +73,7 @@ feature "Profile" do
       sign_in(student)
       visit profile_path
 
-      expect(page).to have_content(student.name)
+      expect(page).to have_content(student.full_name)
       expect(page).to have_content(student.email)
       expect(page).to have_content(l(student.created_at, format: :date))
     end

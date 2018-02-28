@@ -120,7 +120,7 @@
             <div class="media mt-0">
               <div class="media-left avatar"><img src="../build/images/users/04.jpg" alt="" class="media-object img-circle"><span class="status bg-success"></span></div>
               <div class="media-right media-middle pl-0">
-                <p class="fs-12 mb-0">Hi, <%= current_user.name %> </p>
+                <p class="fs-12 mb-0">Hi, <%= current_user.full_name %> </p>
               </div>
             </div></a>
           <ul aria-labelledby="dropdownMenu2" class="dropdown-menu dropdown-menu-right fadeInUp icon animated" style="animation-duration: 0.2s; animation-delay: 0s; animation-timing-function: linear; animation-iteration-count: 1;">
@@ -146,7 +146,7 @@
             <div id="esp-user-profile" data-percent="66" style="height: 56px; width: 56px; line-height: 40px; padding: 8px;" class="easy-pie-chart"><img src="../build/images/users/04.jpg" alt="" class="avatar img-circle"></div>
           </div>
           <div style="overflow: visible" class="media-body media-middle">
-            <h4 class="media-heading fs-16"><%= current_user.name %></h4>
+            <h4 class="media-heading fs-16"><%= current_user.full_name %></h4>
             <div class="dropdown"><a id="dropdown-status" href="javascript:;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle"><span class="status bg-success"></span> Online <span class="caret"></span></a>
               <ul aria-labelledby="dropdown-status" class="dropdown-menu animated fadeInUp">
                 <li><a href="#">Offline</a></li>

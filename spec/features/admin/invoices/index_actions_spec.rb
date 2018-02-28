@@ -54,7 +54,7 @@ feature "Admin invoice features" do
 
     expect(tutor.tutor_account.balance_pending).to eq Money.new(15_00)
     expect(client.online_test_prep_credit).to eq 2
-    expect(page).to have_content("Submitter: " + tutor.name)
+    expect(page).to have_content("Submitter: " + tutor.full_name)
     expect(page).to have_content("Description")
     expect(page).to have_content("Hours")
 

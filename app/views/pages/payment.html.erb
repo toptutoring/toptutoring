@@ -59,7 +59,7 @@
 
             <% @student_engagements.each do |engagement| %>
               <tr>
-                <td><%= engagement.tutor.name %></td>
+                <td><%= engagement.tutor.full_name %></td>
                 <td><%= engagement.student_name %></td>
                 <td><%= get_suggested_hours(engagement) %> hours</td>
                 <td><%= engagement.academic_type.humanize %></td>

@@ -10,7 +10,7 @@ feature "Remove users" do
 
   context "when user is admin" do
     scenario "and removes a user" do
-      name = client.name
+      name = client.full_name
       sign_in(admin)
 
       expect(User.clients.any?).to be true
@@ -24,7 +24,7 @@ feature "Remove users" do
     end
 
     scenario "deletes associated student_accounts" do
-      name = client.name
+      name = client.full_name
       student
       sign_in(admin)
 
@@ -39,7 +39,7 @@ feature "Remove users" do
     end
 
     scenario "deletes associated engagements" do
-      name = client.name
+      name = client.full_name
       engagement
       sign_in(admin)
 
@@ -53,7 +53,7 @@ feature "Remove users" do
     end
 
     scenario "and fails removing a user with an invoiced engagement" do
-      name = client.name
+      name = client.full_name
       engagement
       FactoryBot.create(:invoice, engagement: engagement)
       sign_in(admin)
@@ -67,7 +67,7 @@ feature "Remove users" do
     end
 
     scenario "and fails removing a user with a payment" do
-      name = client.name
+      name = client.full_name
       engagement
       FactoryBot.create(:payment, payer: client)
       sign_in(admin)

@@ -14,7 +14,7 @@ class PaymentService
     payment = build_payment
     process_payment!(payment)
   rescue Stripe::StripeError => e
-    Bugsnag.notify("Stripe payment error for #{user.name + user.id.to_s}: " + e.message)
+    Bugsnag.notify("Stripe payment error for #{user.full_name + user.id.to_s}: " + e.message)
     Result.new(false, I18n.t("app.payment.failure"))
   end
 

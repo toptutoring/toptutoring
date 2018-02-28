@@ -19,8 +19,8 @@
               <tbody>
                 <% @emails.each do |email| %>
                   <tr>
-                    <td><%= email.client.try(:name) %></td>
-                    <td><%= email.tutor.try(:name) %></td>
+                    <td><%= email.client.try(:full_name) %></td>
+                    <td><%= email.tutor.try(:full_name) %></td>
                     <td><%= email.body %></td>
                     <td class="text-center"><%= email.created_at %></td>
                   </tr>

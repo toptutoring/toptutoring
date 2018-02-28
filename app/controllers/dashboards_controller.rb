@@ -24,7 +24,7 @@ class DashboardsController < ApplicationController
     @engagements = current_user.client_account
                                .engagements
                                .includes(:subject, :student_account, :availabilities, tutor_account: :user)
-                               .order("users.name")
+                               .order("users.first_name")
     @academic_types = current_user.client_account.academic_types_engaged
   end
 
@@ -32,7 +32,7 @@ class DashboardsController < ApplicationController
     @engagements = current_user.student_account
                                .engagements
                                .includes(:subject, :student_account, :availabilities, tutor_account: :user)
-                               .order("users.name")
+                               .order("users.first_name")
     @academic_types = current_user.student_account.academic_types_engaged
   end
 

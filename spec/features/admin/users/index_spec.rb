@@ -26,7 +26,7 @@ feature "List all users" do
       expect(page).to have_content("Action")
       expect(page).to have_content("Masquerade")
 
-      expect(page).to have_content(student.name)
+      expect(page).to have_content(student.full_name)
       expect(page).to have_content(student.email)
       expect(page).to have_content(student.phone_number)
       expect(page).to have_content(student.access_state)
@@ -34,7 +34,7 @@ feature "List all users" do
         expect(page).to have_content(role.humanize)
       end
 
-      expect(page).to have_content(director.name)
+      expect(page).to have_content(director.full_name)
       expect(page).to have_content(director.email)
       expect(page).to have_content(director.phone_number)
       expect(page).to have_content(director.access_state)
@@ -42,7 +42,7 @@ feature "List all users" do
         expect(page).to have_content(role.humanize)
       end
 
-      expect(page).to have_content(tutor.name)
+      expect(page).to have_content(tutor.full_name)
       expect(page).to have_content(tutor.email)
       expect(page).to have_content(tutor.phone_number)
       expect(page).to have_content(tutor.access_state)
@@ -50,7 +50,7 @@ feature "List all users" do
         expect(page).to have_content(role.humanize)
       end
 
-      expect(page).to have_content(client.name)
+      expect(page).to have_content(client.full_name)
       expect(page).to have_content(client.email)
       expect(page).to have_content(client.phone_number)
       expect(page).to have_content(client.access_state)

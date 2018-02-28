@@ -35,14 +35,24 @@ module Clients
 
     def student_params
       params.require(:user).permit(:email)
-            .merge(name: student_name, client_id: current_user.id,
+            .merge(first_name: student_first_name,
+                   last_name: student_last_name,
+                   client_id: current_user.id,
                    phone_number: current_user.phone_number,
                    password: SecureRandom.hex(10),
                    roles: Role.where(name: "student"))
     end
 
     def student_name
-      params.require(:name)
+      "#{student_first_name} #{student_last_name}"
+    end
+
+    def student_first_name
+      params.require(:first_name)
+    end
+
+    def student_last_name
+      params.require(:last_name)
     end
 
     def subject

@@ -15,7 +15,7 @@ feature "Passwords can be reset" do
     fill_in "password_reset_password", with: "newpassword"
     click_button "Save this password"
 
-    expect(page).to have_content(student.name)
+    expect(page).to have_content(student.full_name)
   end
 
   scenario "by generating token through reset password path" do

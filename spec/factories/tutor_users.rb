@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :tutor_user, class: User do
-    name                { "Tutor" }
+    first_name          { "TutorName" }
+    last_name           { "TutorLastName" }
     phone_number        { "(510)555-5555" }
     sequence(:email) { |n| "tutor_#{n}@example.com" }
     password            { "password" }

@@ -24,11 +24,11 @@
             <br />
             <%= invoice_note_label(invoice) %>
           </td>
-          <td><%= invoice.submitter.name %></td>
+          <td><%= invoice.submitter.full_name %></td>
           <td><%= l(invoice.updated_at, format: :date) %></td>
           <td><%= invoice.engagement.academic_type.humanize %></td>
           <td><%= invoice.session_rating %></td>
-          <td><%= invoice.engagement.client.name %></td>
+          <td><%= invoice.engagement.client.full_name %></td>
           <td><%= invoice.hours.to_s %></td>
           <td><%= number_to_currency(invoice.amount) %></td>
           <td><%= invoice.description %></td>

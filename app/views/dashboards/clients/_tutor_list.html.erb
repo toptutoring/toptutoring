@@ -20,7 +20,7 @@
             </thead>
             <% @engagements.each do |engagement| %>
               <tr>
-                <td><%= engagement.tutor ? engagement.tutor.name : 'Pending' %></td>
+                <td><%= engagement.tutor ? engagement.tutor.full_name : 'Pending' %></td>
                 <td><%= engagement.student_name %></td>
                 <td><%= engagement.subject.name.titlecase %></td>
                 <td><%= engagement.academic_type.humanize %></td>
