@@ -28,7 +28,7 @@ describe CreateClientService do
                                                   comments: "Hello"} } }
 
     it "creates user successfully when user is not a student" do
-      subject = CreateClientService.create!(user_params, "US")
+      subject = CreateClientService.create!(user_params, "password", "US")
 
       expect(subject.success?).to be true
       expect(subject.user.persisted?).to be true
@@ -41,7 +41,7 @@ describe CreateClientService do
     end
 
     it "creates user successfully when user is a student" do
-      subject = CreateClientService.create!(student_params, "US")
+      subject = CreateClientService.create!(student_params, "password", "US")
 
       expect(subject.success?).to be true
       expect(subject.user.persisted?).to be true
@@ -54,9 +54,17 @@ describe CreateClientService do
     end
 
     it "fails when params aren't valid" do
-      subject = CreateClientService.create!(invalid_params, "US")
+      subject = CreateClientService.create!(invalid_params, "password", "US")
 
       expect(subject.success?).to be false
+      expect(subject.user.persisted?).to be false
+    end
+
+    it "fails when passwords do not match" do
+      subject = CreateClientService.create!(invalid_params, "notpassword", "US")
+
+      expect(subject.success?).to be false
+      expect(subject.messages).to eq I18n.t("app.signup.password_fail") 
       expect(subject.user.persisted?).to be false
     end
   end

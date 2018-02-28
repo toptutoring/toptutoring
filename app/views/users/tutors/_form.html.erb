@@ -32,7 +32,7 @@
 
     <div class="col-md-12 form-group">
       <%= f.label :confirm_password %>
-      <%= password_field_tag :confirm_password, placeholder: "CONFIRM PASSWORD", class: "form-control mb-15 input-lg", required: true %>
+      <%= password_field_tag :confirm_password, nil, placeholder: "CONFIRM PASSWORD", class: "form-control mb-15 input-lg", required: true %>
     </div>
     <div class="col-md-12" style="margin-top:60px;">
       <%= render "tutor_checkbox_subjects", f: f %>

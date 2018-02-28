@@ -16,6 +16,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_email", with: "client@example.com"
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
+      fill_in "confirm_password", with: "password"
       find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
       find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
       click_button "Submit"
@@ -39,6 +40,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_email", with: "student@example.com"
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
+      fill_in "confirm_password", with: "password"
       find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
       find("#user_signup_attributes_student").find(:xpath, "option[3]").select_option
       click_button "Submit"
@@ -62,6 +64,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_email", with: "tutor@example.com"
       fill_in "user_password", with: "password"
+      fill_in "confirm_password", with: "password"
       click_button "Sign up"
 
       expect(page).to have_current_path(dashboard_path)
@@ -80,20 +83,39 @@ feature "Create user as first step of sign up process" do
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_email", with: "student"
       fill_in "user_password", with: "password"
+      fill_in "confirm_password", with: "password"
       click_button "Submit"
 
       expect(page).to have_content("Email is invalid")
     end
 
+    scenario "when password does not match" do
+      visit client_sign_up_path
+
+      fill_in "user_first_name", with: "StudentName"
+      fill_in "user_last_name", with: "StudentLastName"
+      fill_in "user_phone_number", with: "(510)555-5555"
+      fill_in "user_email", with: "student@example.com"
+      fill_in "user_password", with: "password"
+      fill_in "confirm_password", with: "notpassword"
+      click_button "Submit"
+
+      expect(page).to have_content(I18n.t("app.signup.password_fail"))
+    end
+
     scenario "when user is tutor" do
+      exisiting_email = "tutor@example.com"
+      FactoryBot.create(:tutor_user, email: exisiting_email)
       visit new_users_tutor_path
 
-      fill_in "user_first_name", with: "TutorName"
-      fill_in "user_last_name", with: "TutorLastName"
-      fill_in "user_email", with: "tutor@example.com"
+      fill_in "user_first_name", with: "NewTutorName"
+      fill_in "user_last_name", with: "NewTutorLastName"
+      fill_in "user_email", with: exisiting_email
+      fill_in "user_password", with: "password"
+      fill_in "confirm_password", with: "password"
       click_button "Sign up"
 
-      expect(page).to have_content("Password can't be blank")
+      expect(page).to have_content("Validation failed: Email has already been taken")
     end
   end
 end

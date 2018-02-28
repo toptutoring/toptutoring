@@ -6,7 +6,7 @@ require "rails_helper"
     let!(:tutor) { FactoryBot.create(:tutor_user) }
     let(:subject_id) { FactoryBot.create(:subject).id }
     let(:sign_up_params) { { user: { first_name: "FirstName", last_name: "LastName", phone_number: "(510)555-5555", email: "some_email@toptutoring.com",
-        password: 'some_password', signup_attributes: { student: false, subject_id: subject_id } } } }
+        password: "some_password", signup_attributes: { student: false, subject_id: subject_id } }, confirm_password: "some_password" } }
 
     it "does not send notifications to tutor" do
       director = FactoryBot.create(:director_user)
