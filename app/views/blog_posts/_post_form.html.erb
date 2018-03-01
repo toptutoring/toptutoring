@@ -6,15 +6,13 @@
     <%= @post.title || "Please add a title" %>
   </h1>
 
-  <p class="p-10"><b>Published:</b> <span id="blog-publish-date-display"><%= @post.publish_date ? l(@post.publish_date) : "Not published" %></span></p>
-
   <div class="p-10 editable" id="blog-content-contenteditable" contenteditable="true">
     <%= raw @post.content || "Please add content" %>
   </div>
 </div>
 
-<div class="col-md-2">
-  <div class="widget">
+<div class="col-md-3">
+  <div class="widget mb16">
     <%= form_for @post, html: { class: "mt-20 mb-20", id: "blog-form" } do |f| %>
       <div class="form-group">
         <%= f.label :publish_date %>
