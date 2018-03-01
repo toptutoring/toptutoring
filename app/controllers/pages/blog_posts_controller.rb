@@ -3,6 +3,7 @@ module Pages
     layout "authentication"
     def index
       @posts = BlogPost.published
+      @categories = BlogCategory.all
     end
 
     def show

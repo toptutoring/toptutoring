@@ -1,10 +1,63 @@
-<div class="row mt-30 mb-30">
-  <div class="col-md-8 col-md-offset-2">
-    <% @posts.each do |post| %>
-      <div>
-        <h3><%= link_to post.title, pages_blog_post_path(post.slug) %></h3>
-        <%= tag.span l(post.publish_date) %>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <% @posts.each do |post| %>
+          <div class="post-snippet mb64">
+            <div class="post-title">
+              <%= link_to pages_blog_post_path(post.slug) do %>
+                <h4 class="inline-block"><%= post.title %></h4>
+              <% end %>
+            </div>
+            <ul class="post-meta">
+
+              <% if post.blog_categories.any? %>
+                <li>
+                  <i class="ti-tag"></i>
+                  <span>Categorized as
+                    <% post.blog_categories.each do |category| %>
+                      <%= link_to category.name.titlecase, "#" %>
+                    <% end %>
+                  </span>
+                </li>
+              <% end %>
+            </ul>
+            <hr>
+            <%= raw post.excerpt %>
+            <%= link_to "Read More", pages_blog_post_path(post.slug) %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+
+      <div class="col-md-3 hidden-sm">
+        <div class="widget">
+          <h6 class="title">Blog Categories</h6>
+          <hr>
+          <ul class="link-list">
+            <% @categories.each do |category| %>
+              <li>
+                <%= link_to category.name.titlecase, "#" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <!--end of widget-->
+
+        <div class="widget">
+          <h6 class="title">Recent Posts</h6>
+          <hr>
+          <ul class="link-list recent-posts">
+            <% @posts.last(4).each do |post| %>
+              <li>
+                <%= link_to post.title, pages_blog_post_path(post.slug) %>
+                <span class="date"><%= l post.publish_date, format: :default %></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <!--end of widget-->
+      </div>
+
+    </div>
   </div>
-</div>
+</section>
