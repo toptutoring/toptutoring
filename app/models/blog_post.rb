@@ -1,5 +1,5 @@
 class BlogPost < ApplicationRecord
-  before_create :add_slug
+  before_save :add_slug
   belongs_to :user
   has_and_belongs_to_many :blog_categories
   validates_presence_of :title, :content, :publish_date, :user
@@ -9,6 +9,8 @@ class BlogPost < ApplicationRecord
   scope :unpublished, -> { where(published: false) }
 
   def add_slug
-    self.slug = self.title.downcase.gsub(" ", "-")
+    self.slug = title.downcase
+                     .gsub(/[^0-9A-Za-z\(\.\s]/, '')
+                     .tr(" .(", "-")
   end
 end
