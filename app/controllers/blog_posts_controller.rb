@@ -1,6 +1,7 @@
 class BlogPostsController < ApplicationController
   # for now, only for admin/director/contractor
   before_action :require_login
+  before_action :set_post, only: [:show, :edit]
   layout "authentication"
 
   def index
@@ -9,14 +10,6 @@ class BlogPostsController < ApplicationController
 
   def new
     @post = BlogPost.new
-  end
-
-  def edit
-    @post = BlogPost.find(params[:id])
-  end
-
-  def show
-    @post = BlogPost.find(params[:id])
   end
 
   def create
@@ -45,7 +38,11 @@ class BlogPostsController < ApplicationController
 
   def post_params
     params.require(:blog_post)
-          .permit(:title, :publish_date, :content)
+          .permit(:title, :publish_date, :excerpt, :content)
           .merge(user: current_user)
+  end
+
+  def set_post
+    @post = BlogPost.find(params[:id])
   end
 end
