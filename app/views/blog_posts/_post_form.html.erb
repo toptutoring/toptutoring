@@ -1,8 +1,9 @@
 <%= content_for :head do %>
   <%= javascript_include_tag Ckeditor.cdn_url %>
 <% end %>
-<div class="col-md-8 col-md-offset-2">
-  <h1 class="p-10 editable" id="blog-title-contenteditable" contenteditable="true">
+
+<div class="col-md-9">
+  <h3 class="inline-block mb-12" id="blog-title-display">
     <%= @post.title || "Please add a title" %>
   </h1>
 
