@@ -9,6 +9,10 @@
         </div>
       </div>
       <div class="col-md-3">
+        <p class="lead">Categories</p>
+        <% @post.blog_categories.each do |cat| %>
+          <p><%= cat.name %></p>
+        <% end %>
         <%= link_to "Edit Post", edit_blog_post_path(@post) %><br/>
         <%= link_to "All Posts", blog_posts_path %>
       </div>

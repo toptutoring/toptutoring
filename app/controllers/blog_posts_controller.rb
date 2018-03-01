@@ -15,22 +15,18 @@ class BlogPostsController < ApplicationController
   def create
     @post = BlogPost.new(post_params)
     if @post.save
-      flash.notice = "Post successfully created"
-      redirect_to action: :show, id: @post.id
+      wrap_up("created")
     else
-      flash.now[:alert] = @post.errors.full_messages
-      render :edit
+      failed_save
     end
   end
 
   def update
     @post = BlogPost.find(params[:id])
     if @post.update(post_params)
-      flash.notice = "Post successfully updated"
-      redirect_to action: :show, id: @post.id
+      wrap_up("updated")
     else
-      flash.now[:alert] = @post.errors.full_messages
-      render :edit
+      failed_save
     end
   end
 
@@ -38,8 +34,23 @@ class BlogPostsController < ApplicationController
 
   def post_params
     params.require(:blog_post)
-          .permit(:title, :publish_date, :excerpt, :content)
-          .merge(user: current_user)
+      .permit(:title, :publish_date, :excerpt, :content)
+      .merge(user: current_user)
+  end
+
+  def category_ids
+    params.fetch(:post, {}).permit(categories: [])[:categories]
+  end
+
+  def wrap_up(action)
+    @post.blog_category_ids = category_ids
+    flash.notice = "Post successfully #{action}"
+    redirect_to action: :show, id: @post.id
+  end
+
+  def failed_save
+    flash.now[:alert] = @post.errors.full_messages
+    render :edit
   end
 
   def set_post
