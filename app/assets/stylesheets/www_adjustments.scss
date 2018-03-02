@@ -5,6 +5,7 @@
 }
 
 // Email input to match template
+
 input[type="email"] {
   background: #f5f5f5;
   border: none;
@@ -29,3 +30,19 @@ input[type="email"]:focus {
     width: 555px;
     margin: auto;
 }
+
+// Adjusts alerts to have background
+.alert {
+  background: white;
+}
+
+// Alerts fixed position
+#top-tutoring-flashes {
+  width: 75%;
+  position: fixed;
+  top: 65px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 10;
+}
+

@@ -348,16 +348,16 @@
   height: calc(100% + 200px);
 }
 
-.postcontainer {
-  float: none;
-  margin: auto;
-}
-
 .phone-number {
   font-size: 80%;
   font-weight: 500;
   padding-left: 10px;
   letter-spacing: 1px;
+}
+
+.postcontainer {
+  float: none;
+  margin: auto;
 }
 
 .select-option i {

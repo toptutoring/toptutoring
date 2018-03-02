@@ -2,7 +2,7 @@ $(function() {
   if (document.getElementById('blog-content-contenteditable')) {
     CKEDITOR.inline('blog-content-contenteditable', { "customConfig":"<%= javascript_path "ckeditor/config.js" %>" });
 
-    document.getElementById('blog_post_title').onchange = function() {
+    document.getElementById('blog_post_title').oninput = function() {
       document.getElementById('blog-title-display').innerHTML = this.value;
     }
 
@@ -22,6 +22,12 @@ $(function() {
       appendInputs(form, options);
       form.submit();
     });
+
+    var categoryLink = document.getElementById("category_link")
+    categoryLink.onclick = function() {
+      var value = document.getElementById("category_name").value
+      this.href = "/blog_categories".concat("?category_name=".concat(value));
+    }
 
     function appendInputs(form, options) {
       var contentInput = document.createElement('input');
