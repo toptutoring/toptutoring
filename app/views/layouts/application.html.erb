@@ -28,6 +28,7 @@
     <%= stylesheet_link_tag '/plugins/animo.js/animate-animo.min.css' %>
     <%= stylesheet_link_tag '/plugins/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %>
     <%= stylesheet_link_tag '/plugins/jquery.steps/demo/css/jquery.steps.css' %>
+    <%= stylesheet_link_tag "/plugins/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" %>
 
     <%= yield :head %>
     <%= csrf_meta_tags %>
@@ -79,6 +80,7 @@
     <%= javascript_include_tag '/build/js/first-layout/app.js' %>
     <%= javascript_include_tag '/build/js/first-layout/demo.js' %>
     <%= javascript_include_tag '/build/js/page-content/forms/forms-wizard.js' %>
+    <%= javascript_include_tag '/plugins/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %>
 
     <%= render "misc_javascript" %>
     <%= render "css_overrides" %>
