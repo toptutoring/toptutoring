@@ -15,7 +15,7 @@ module Users
         flash.notice = result.messages
         redirect_to return_path(result.user)
       else
-        flash.alert = result.messages
+        flash.now[:alert] = result.messages
         @user = result.user
         render :new
       end

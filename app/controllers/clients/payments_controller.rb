@@ -15,7 +15,7 @@ class Clients::PaymentsController < ApplicationController
     source = determine_source
     results = PaymentService.new(source, payment_params, account).charge!
     if results.success?
-      flash.notice = results.message
+      flash.now[:notice] = results.message
       @payment = results.payment
       render "confirmation"
     else

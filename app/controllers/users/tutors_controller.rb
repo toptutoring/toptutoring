@@ -15,7 +15,7 @@ module Users
         redirect_to :root
       else
         @user = results.user
-        flash.alert = results.message
+        flash.now[:alert] = results.message
         render :new
       end
     end

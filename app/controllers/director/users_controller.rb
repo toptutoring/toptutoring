@@ -38,7 +38,7 @@ module Director
                      money?(params[:user][:online_test_prep_rate]) &&
                      money?(params[:user][:in_person_academic_rate]) &&
                      money?(params[:user][:in_person_test_prep_rate])
-      flash.alert = "Rates must be in correct dollar values"
+      flash.now[:alert] = "Rates must be in correct dollar values"
       false
     end
 
@@ -47,7 +47,7 @@ module Director
                      quarter_hours?(params[:user][:online_test_prep_credit]) &&
                      quarter_hours?(params[:user][:in_person_academic_credit]) &&
                      quarter_hours?(params[:user][:in_person_test_prep_credit])
-      flash.alert = "Credits must be in quarter hours"
+      flash.now[:alert] = "Credits must be in quarter hours"
       false
     end
 

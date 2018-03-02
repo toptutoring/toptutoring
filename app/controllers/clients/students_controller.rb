@@ -8,7 +8,7 @@ module Clients
         flash.notice = results.messages
         redirect_to clients_students_path
       else
-        flash.alert = results.messages
+        flash.now[:alert] = results.messages
         render :new
       end
     end
