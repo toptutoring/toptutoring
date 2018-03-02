@@ -72,7 +72,10 @@ def application_routes
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") || user.has_role?("director") } do
       scope module: :admin do
-        resources :blog_posts, module: :blogs
+        scope module: :blogs do
+          resources :blog_posts
+          resources :blog_categories
+        end
       end
       namespace :admin do
         resources :tutors, only: [:index, :show, :edit, :update]

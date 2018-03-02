@@ -34,16 +34,12 @@ class Admin::Blogs::BlogPostsController < ApplicationController
 
   def post_params
     params.require(:blog_post)
-      .permit(:title, :publish_date, :excerpt, :content)
-      .merge(user: current_user)
-  end
-
-  def category_ids
-    params.fetch(:post, {}).permit(categories: [])[:categories]
+          .permit(:title, :publish_date, :excerpt, :content,
+                  blog_category_ids: [])
+          .merge(user: current_user)
   end
 
   def wrap_up(action)
-    @post.blog_category_ids = category_ids
     flash.notice = "Post successfully #{action}"
     redirect_to action: :show, id: @post.id
   end

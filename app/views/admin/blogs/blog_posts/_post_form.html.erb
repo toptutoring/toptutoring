@@ -30,26 +30,34 @@
         <%= f.text_area :excerpt, maxlength: 140, rows: 5, class: "form-control" %>
       </div>
 
-      <div class="form-group">
+      <div>
         <%= f.label :blog_categories %>
-        <%= f.fields_for :blog_categories do |cat_field| %>
-          <div class="row">
-            <% BlogCategory.all.each do |category| %>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label>
-                    <%= check_box_tag "post[categories][]", category.id %>
-                    <span><%= category.name %></span>
-                  </label>
-                </div>
-              </div>
+        <hr />
+        <div class="form-group" id="blog_categories_container">
+          <%= f.collection_check_boxes :blog_category_ids, BlogCategory.all, :id, :name do |c| %>
+            <div class="pull-left pr16">
+              <%= c.check_box %>
+              <%= c.label %>
+            </div>
+          <% end %>
+        </div>
+
+        <hr />
+
+        <div class="row">
+          <div class="col-xs-9">
+            <%= text_field_tag :category_name, nil, placeholder: "Add a new category", class: "form-control mb16" %>
+          </div>
+          <div class="col-xs-3 text-center">
+            <%= link_to blog_categories_path, id: "category_link", method: :post, remote: true, class: "btn btn-blue btn-icon" do %>
+              <i class="ti-plus"></i>
             <% end %>
           </div>
-        <% end %>
+        </div>
       </div>
 
-      <%= f.submit class: "center-block btn btn-blue" %>
-    <% end %>
+        <%= f.submit class: "center-block btn btn-blue" %>
+      <% end %>
+      </div>
+      <%= link_to "All Posts", blog_posts_path %>
   </div>
-  <%= link_to "All Posts", blog_posts_path %>
-</div>

@@ -1,0 +1,4 @@
+<div class="form-group pull-left pr16">
+  <%= check_box_tag "blog_post[blog_category_ids][]", blog_category.id, true, id: "blog_post_blog_category_ids_#{blog_category.id}" %>
+    <%= label_tag "blog_post[blog_category_ids][]", blog_category.name, for: "blog_post_blog_category_ids_#{blog_category.id}" %>
+</div>
