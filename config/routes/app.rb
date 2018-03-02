@@ -71,6 +71,9 @@ def application_routes
     end
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") || user.has_role?("director") } do
+      scope module: :admin do
+        resources :blog_posts, module: :blogs
+      end
       namespace :admin do
         resources :tutors, only: [:index, :show, :edit, :update]
         resources :payments, only: [:new, :create, :index]
@@ -91,7 +94,6 @@ def application_routes
         end
       end
       # only Admin/Director has access to blogs and cities for now
-      resources :blog_posts
       namespace :admin do
         resources :cities do
           member do
@@ -149,8 +151,6 @@ def application_routes
       end
       resources :open_tok_rooms
       resources :timesheets
-      # only Admin/Director/Contractor has access to blogs for now
-      resources :blog_posts
     end
 
     # API

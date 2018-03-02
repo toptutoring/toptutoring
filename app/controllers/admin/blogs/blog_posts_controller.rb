@@ -1,4 +1,4 @@
-class BlogPostsController < ApplicationController
+class Admin::Blogs::BlogPostsController < ApplicationController
   # for now, only for admin/director/contractor
   before_action :require_login
   before_action :set_post, only: [:show, :edit]
