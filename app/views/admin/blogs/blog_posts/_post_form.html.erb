@@ -26,6 +26,11 @@
       </div>
 
       <div class="form-group">
+        <%= f.check_box :draft %>
+        <%= f.label :draft, "Save as draft?" %>
+      </div>
+
+      <div class="form-group">
         <%= f.label :excerpt, "Excerpt (max 140 characters)" %>
         <%= f.text_area :excerpt, maxlength: 140, rows: 5, class: "form-control" %>
       </div>

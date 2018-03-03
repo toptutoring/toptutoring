@@ -6,6 +6,7 @@ class Admin::Blogs::BlogPostsController < ApplicationController
 
   def index
     @posts = BlogPost.all
+    render layout: "application"
   end
 
   def new
@@ -30,12 +31,22 @@ class Admin::Blogs::BlogPostsController < ApplicationController
     end
   end
 
+  def publish
+    @post = BlogPost.find(params[:id])
+    if @post.update(draft: draft?)
+      flash.notice = "Post has been updated."
+    else
+      flash.alert = "Post could not be updated."
+    end
+    redirect_to action: :index
+  end
+
   private
 
   def post_params
     params.require(:blog_post)
           .permit(:title, :publish_date, :excerpt, :content,
-                  blog_category_ids: [])
+                  :draft, blog_category_ids: [])
           .merge(user: current_user)
   end
 
@@ -47,6 +58,10 @@ class Admin::Blogs::BlogPostsController < ApplicationController
   def failed_save
     flash.now[:alert] = @post.errors.full_messages
     render :edit
+  end
+
+  def draft?
+    params.require(:draft)
   end
 
   def set_post
