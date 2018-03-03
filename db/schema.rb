@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180301214002) do
+ActiveRecord::Schema.define(version: 20180303012221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,13 +39,13 @@ ActiveRecord::Schema.define(version: 20180301214002) do
     t.string "title"
     t.text "content"
     t.date "publish_date"
-    t.boolean "published", default: false
+    t.boolean "draft", default: false
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
     t.text "excerpt"
-    t.index ["published"], name: "index_blog_posts_on_published"
+    t.index ["draft"], name: "index_blog_posts_on_draft"
     t.index ["slug"], name: "index_blog_posts_on_slug", unique: true
     t.index ["title"], name: "index_blog_posts_on_title", unique: true
     t.index ["user_id"], name: "index_blog_posts_on_user_id"

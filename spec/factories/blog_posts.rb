@@ -3,7 +3,7 @@ FactoryBot.define do
     title        { "My Title" }
     content      { "MyText" }
     publish_date { "2017-12-30" }
-    published    { true }
+    draft    { true }
     user         { FactoryBot.create(:admin_user) }
   end
 end

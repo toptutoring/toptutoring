@@ -5,8 +5,8 @@ class BlogPost < ApplicationRecord
   validates_presence_of :title, :content, :publish_date, :user
   validates :title, :slug, uniqueness: true
   
-  scope :published, -> { where(published: true) }
-  scope :unpublished, -> { where(published: false) }
+  scope :published, -> { where(draft: false) }
+  scope :drafts, -> { where(draft: true) }
 
   def add_slug
     return unless title_changed?
