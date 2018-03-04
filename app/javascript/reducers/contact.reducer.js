@@ -7,8 +7,8 @@ import {
         name: '',
         tel: '',
         email: '',
-        nameValid: true,
-        telValid: true,
+        nameValid: undefined,
+        telValid: undefined,
         formValid: undefined
       },
       isContactCollapsed: undefined,
