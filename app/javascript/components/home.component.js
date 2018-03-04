@@ -1,6 +1,5 @@
 import React from 'react';
 import { Contact } from './contact.component';
-import { ContactCollapsed } from './contact-collapsed.component';
 import { createStore } from 'redux'
 import contactApp from '../reducers/contact.reducer';
 import { updateContact, toggleIsContactCollapsed, toggleIsMobile } from '../actions/contact.actions';
@@ -11,6 +10,7 @@ export class Home extends React.Component {
     storeSubscription;
     handleScroll = (event) => this.setContactLayout(event.target.documentElement.scrollTop);
     handleResize = () => this.setMobileLayout(window.document.body.clientWidth);
+    collapsePoint = 400;
 
     constructor() {
         super();
@@ -31,17 +31,24 @@ export class Home extends React.Component {
         window.removeEventListener('resize', this.handleResize);
     }
     render() {
-        const firstRender = this.state.isContactCollapsed === undefined;
-        const contact = this.state.isMobile ? <Contact isMobile={true} contact={this.state.contact} updateForm={contact => this.updateContact(contact)}/> :
-            (firstRender || !this.state.isContactCollapsed ? <Contact isMobile={false} contact={this.state.contact} updateForm={contact => this.updateContact(contact)}/> : '');
-        const contactNav = this.state.isMobile ? '' :
-            <ContactCollapsed isContactCollapsed={this.state.isContactCollapsed} contact={this.state.contact} updateForm={contact => this.updateContact(contact)}/>;
+        const contactOnPage =
+            <Contact 
+                position={this.state.isMobile ? 'mobile' : ''}
+                contact={this.state.contact}
+                updateForm={contact => this.updateContact(contact)}
+            />;
+        const contactOnTop = this.state.isMobile || this.state.isContactCollapsed === undefined ? '' :
+            <Contact 
+                position={`collapsed ${this.state.isContactCollapsed ? 'slide-down' : 'slide-up'}`}
+                contact={this.state.contact}
+                updateForm={contact => this.updateContact(contact)}
+            />;
 
         return (
             <div>
-                {contactNav}
-                {contact}
-                <div className="react-container-content"></div>
+                {contactOnTop}
+                {contactOnPage}
+                <div className="home-content"></div>
             </div>
 
         )
@@ -53,9 +60,9 @@ export class Home extends React.Component {
 
     setContactLayout(scrollTop) {
         const firstRender = this.state.isContactCollapsed === undefined;
-        if (scrollTop > 100 && (firstRender || !this.state.isContactCollapsed)) {
+        if (scrollTop > this.collapsePoint && (firstRender || !this.state.isContactCollapsed)) {
             store.dispatch(toggleIsContactCollapsed(true));
-        } else if (scrollTop <= 100 && !firstRender && this.state.isContactCollapsed) {
+        } else if (scrollTop <= this.collapsePoint && !firstRender && this.state.isContactCollapsed) {
             store.dispatch(toggleIsContactCollapsed(false));
         }
     }
