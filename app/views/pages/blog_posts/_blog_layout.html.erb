@@ -12,7 +12,7 @@
           <ul class="link-list">
             <% BlogCategory.all.each do |category| %>
               <li>
-                <%= link_to category.name.titlecase, "#" %>
+                <%= link_to category.name.titlecase, pages_blog_categories_path(category.name) %>
               </li>
             <% end %>
           </ul>

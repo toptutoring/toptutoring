@@ -3,7 +3,13 @@ module Pages
     layout "authentication"
     def index
       @posts = BlogPost.published
-      @categories = BlogCategory.all
+    end
+
+    def categories
+      @posts = BlogPost.published
+                       .joins(:blog_categories)
+                       .where(blog_categories: { name: cat_name })
+      render :index
     end
 
     def show
@@ -15,6 +21,10 @@ module Pages
 
     def slug
       params.require(:slug)
+    end
+
+    def cat_name
+      params.require(:name)
     end
   end
 end

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   application_routes
   constraints WwwTopTutoring do
     namespace :pages, path: "" do
+      get "/blog/categories/:name" => "blog_posts#categories", as: "blog_categories"
       resources :blog_posts, path: "blog", param: :slug, only: [:index, :show]
     end
     get "/*path" => "pages#show"
