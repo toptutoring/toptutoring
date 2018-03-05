@@ -14,6 +14,7 @@ class PagesController < ApplicationController
   end
 
   def home
+    render "www/pages/home"
   end
 
   def show

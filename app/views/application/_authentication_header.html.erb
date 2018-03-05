@@ -1,9 +1,9 @@
 <nav class="nav-container">
   <div class="nav-bar">
     <div class="module left">
-      <a href="https://toptutoring.com/">
+      <%= link_to root_url(subdomain: nil), class: "page-link logo-dark" do%>
         <img src="<%= image_url("topTutoringFinal.png") %>" class="logo">
-      </a>
+      <% end %>
       <span class="phone-number">
         (510) 842-5221
       </span>
@@ -16,19 +16,19 @@
       <div class="module left">
         <ul class="menu">
           <li>
-            <a class="page-link logo-dark" href="https://toptutoring.com/how_it_works/">How It Works</a>
+            <%= link_to "How It Works", root_url(subdomain: nil) + "how_it_works", class: "page-link logo-dark" %>
           </li>
           <li>
-            <a class="page-link logo-dark" href="https://toptutoring.com/about_us/">About us</a>
+            <%= link_to "About Us", root_url(subdomain: nil) + "about_us", class: "page-link logo-dark" %>
           </li>
           <li>
-            <a class="page-link logo-dark" href="https://toptutoring.com/top-tutors/">Our Tutors</a>
+            <%= link_to "Our Tutors", root_url(subdomain: nil) + "top-tutors", class: "page-link logo-dark" %>
           </li>
           <li>
-            <a class="page-link logo-dark" href="https://toptutoring.com/blog/">Blog</a>
+            <%= link_to "Blog", root_url(subdomain: nil) + "blog", class: "page-link logo-dark" %>
           </li>
           <li>
-            <a class="page-link logo-dark" href="https://toptutoring.com/contact/">Contact</a>
+            <%= link_to "Contact", root_url(subdomain: nil) + "contact", class: "page-link logo-dark" %>
           </li>
           <li>
             <%= link_to "Sign in", sign_in_url(subdomain: "app"), class: "page-link logo-dark" %>
