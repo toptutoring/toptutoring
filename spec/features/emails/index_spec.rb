@@ -17,7 +17,7 @@ feature 'Emails Index' do
     expect(page).to have_content('Client')
     expect(page).to have_content('Body')
     expect(page).to have_content('Date')
-    expect(page).to have_content(email.client.name)
+    expect(page).to have_content(email.client.full_name)
     expect(page).to have_content(email.body)
     expect(page).to have_content(email.created_at)
   end

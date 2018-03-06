@@ -14,7 +14,7 @@ module Clients
         SlackNotifier.notify_new_engagement(@engagement)
         redirect_to return_path
       else
-        flash.alert = I18n.t("app.request_tutor.failure")
+        flash.now[:alert] = I18n.t("app.request_tutor.failure")
         render :new
       end
     end

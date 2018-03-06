@@ -1,6 +1,10 @@
 <%= form_tag '/clients/students' do %>
   <div class="form-group form-group-lg">
-    <%= text_field_tag :name, nil, class:"form-control input-lg", required: true, placeholder: "Full Name" %>
+    <%= text_field_tag :first_name, nil, class:"form-control input-lg", required: true, placeholder: "First Name" %>
+  </div>
+
+  <div class="form-group form-group-lg">
+    <%= text_field_tag :last_name, nil, class:"form-control input-lg", required: true, placeholder: "Last Name" %>
   </div>
 
   <div class="form-group">

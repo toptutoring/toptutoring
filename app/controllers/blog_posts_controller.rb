@@ -25,7 +25,7 @@ class BlogPostsController < ApplicationController
       flash.notice = "Post successfully created"
       redirect_to action: :show, id: @post.id
     else
-      flash.alert = @post.errors.full_messages
+      flash.now[:alert] = @post.errors.full_messages
       render :edit
     end
   end
@@ -36,7 +36,7 @@ class BlogPostsController < ApplicationController
       flash.notice = "Post successfully updated"
       redirect_to action: :show, id: @post.id
     else
-      flash.alert = @post.errors.full_messages
+      flash.now[:alert] = @post.errors.full_messages
       render :edit
     end
   end

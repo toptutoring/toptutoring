@@ -11,7 +11,7 @@ class SlackNotifier
 
     def notify_user_signup_start(user)
       message = "A new user has signed up.\n" \
-        "Name: #{user.name}\n" \
+        "Name: #{user.full_name}\n" \
         "Phone Number: #{user.phone_number}\n" \
         "Email: #{user.email}\n" \
         "Comments: #{user.signup.comments}\n"
@@ -20,10 +20,10 @@ class SlackNotifier
 
     def notify_user_signed_up(user)
       if user.persisted?
-        message = "#{user.name} finished the sign up process.\n" \
+        message = "#{user.full_name} finished the sign up process.\n" \
           "Contact info for new client:\n" \
       else
-        message = "#{user.name} attempted to finish sign up, but failed.\n" \
+        message = "#{user.full_name} attempted to finish sign up, but failed.\n" \
       end
       message.concat("Email: #{user.email}\nPhone Number: #{user.phone_number}")
       ping(message, :leads)
@@ -40,7 +40,7 @@ class SlackNotifier
       payer = payment.payer
       accounts = payer.client_account.student_accounts
       message = "A payment has been made.\n" \
-        "By: #{payer.name}\n" \
+        "By: #{payer.full_name}\n" \
         "Student accounts: #{accounts.pluck(:name).join(', ')}\n" \
         "Payment method: #{payment.card_brand_and_four_digits}\n" \
         "Amount: #{payment.amount}"
@@ -49,14 +49,14 @@ class SlackNotifier
 
     def notify_payout_made(payout)
       message = "A payment has been made.\n" \
-        "By: #{payout.approver.name}\n" \
-        "To: #{payout.receiving_account.user.name}\n" \
+        "By: #{payout.approver.full_name}\n" \
+        "To: #{payout.receiving_account.user.full_name}\n" \
         "Amount: #{payout.amount}"
       ping(message, :payments)
     end
 
     def notify_new_engagement(engagement)
-      message = "#{engagement.client.name} has requested a new engagement.\n" \
+      message = "#{engagement.client.full_name} has requested a new engagement.\n" \
         "Student: #{engagement.student_name}\n" \
         "Subject: #{engagement.subject.name}"
       ping(message, :leads)

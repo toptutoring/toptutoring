@@ -19,9 +19,6 @@
     "AWS_ACCESS_KEY":{
       "required":true
     },
-    "CONTACT_PHONE_NUMBER":{
-      "required":true
-    },
     "EMAIL_RECIPIENTS":{
       "required":true
     },

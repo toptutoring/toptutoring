@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :contractor_user, class: User do
-    name          { "Contractor" }
-    phone_number  { "555-5555" }
+    first_name    { "ContractorName" }
+    last_name     { "ContractorLastName" }
+    phone_number  { "510-555-5555" }
     sequence(:email) { |n| "contractor#{n}@example.com" }
     password      { "password" }
     roles         { Role.where(name: "contractor") }

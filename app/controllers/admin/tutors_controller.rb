@@ -30,7 +30,7 @@ module Admin
     end
 
     def tutor_params
-      params.require(:user).permit(:name, :email, tutor_account_attributes: [:id, :online_rate, :in_person_rate])
+      params.require(:user).permit(:first_name, :last_name, :email, tutor_account_attributes: [:id, :online_rate, :in_person_rate])
     end
 
     def set_tutor

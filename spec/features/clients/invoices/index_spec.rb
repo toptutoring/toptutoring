@@ -21,7 +21,7 @@ feature "Clients Invoices Index" do
     expect(page).to have_content("Date")
     expect(page).to have_content("Hours")
 
-    expect(page).to have_content(invoice.engagement.student.name)
+    expect(page).to have_content(invoice.engagement.student.full_name)
     expect(page).to have_content(invoice.engagement.subject.name)
     expect(page).to have_content(invoice.engagement.academic_type.humanize)
     expect(page).to have_content(l(invoice.created_at, format: :date))

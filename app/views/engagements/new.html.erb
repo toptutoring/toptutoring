@@ -9,7 +9,7 @@
 
           <div class="form-group select-option">
             <%= f.label :tutor_account_id, "Tutor" %>
-            <%= f.select :tutor_account_id, options_from_collection_for_select(@tutor_accounts, :id, :name), { include_blank: true }, class: "form-control" %>
+            <%= f.select :tutor_account_id, options_from_collection_for_select(@tutor_accounts, :id, :full_name), { include_blank: true }, class: "form-control" %>
           </div>
 
           <div class="form-group">

@@ -15,9 +15,9 @@
                   <th class="col-md-2">Phone Number</th>
                   <th>Actions</th>
                 </tr>
-                <% User.where(id: UserRole.where(role_id: role.id).pluck(:user_id)).order(:name).each do |user| %>
+                <% User.where(id: UserRole.where(role_id: role.id).pluck(:user_id)).order(:first_name).each do |user| %>
                   <tr>
-                    <td><%= user.name %></td>
+                    <td><%= user.full_name %></td>
                     <td><%= user.email %></td>
                     <td><%= user.phone_number %></td>
                     <td>
@@ -65,7 +65,7 @@
                 </tr>
                 <% @unassigned.each do |user| %>
                   <tr>
-                    <td><%= user.name %></td>
+                    <td><%= user.full_name %></td>
                     <td><%= user.email %></td>
                     <td><%= user.phone_number %></td>
                     <td>

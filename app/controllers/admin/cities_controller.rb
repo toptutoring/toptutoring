@@ -39,7 +39,7 @@ module Admin
         flash.notice = "#{@city.name} has been added to the list of serviced cities."
         redirect_to admin_cities_path
       else
-        flash.alert = @city.errors.full_messages
+        flash.now[:alert] = @city.errors.full_messages
         @countries = Country.all
         render :new
       end
@@ -52,7 +52,7 @@ module Admin
         flash.notice = "#{@city.name} has been updated."
         redirect_to admin_cities_path
       else
-        flash.alert = @city.errors.full_messages
+        flash.now[:alert] = @city.errors.full_messages
         @countries = Country.all
         render :edit
       end

@@ -17,7 +17,7 @@ module Admin
         flash.notice = "#{@country.name} has been added to the list of serviced countries."
         redirect_to new_admin_country_path
       else
-        flash.alert = @country.errors.full_messages
+        flash.now[:alert] = @country.errors.full_messages
         @countries = Country.all
         render :new
       end
@@ -30,7 +30,7 @@ module Admin
         flash.notice = "#{@country.name} has been updated."
         redirect_to new_admin_country_path
       else
-        flash.alert = @country.errors.full_messages
+        flash.now[:alert] = @country.errors.full_messages
         render :edit
       end
     end

@@ -9,13 +9,13 @@ module Users
     end
 
     def create
-      result = CreateClientService.create!(signups_params)
+      result = CreateClientService.create!(signups_params, confirm_password, country_code)
       if result.success?
         sign_in(result.user)
         flash.notice = result.messages
         redirect_to return_path(result.user)
       else
-        flash.alert = result.messages
+        flash.now[:alert] = result.messages
         @user = result.user
         render :new
       end
@@ -23,11 +23,21 @@ module Users
 
     private
 
+    def confirm_password
+      params.require(:confirm_password)
+    end
+
     def signups_params
       params.require(:user)
-            .permit(:name, :phone_number, :email, :password,
+            .permit(:first_name, :last_name, :phone_number, :email, :password,
                     signup_attributes: [:student, :subject_id, :comments])
             .merge(roles: Role.where(name: "client"))
+    end
+
+    def country_code
+      return "US" if Rails.env.development? || Rails.env.test?
+      code = request.location.country_code
+      code == "RD" ? "US" : code
     end
 
     def return_path(user)

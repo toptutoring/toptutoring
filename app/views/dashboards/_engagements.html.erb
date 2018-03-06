@@ -23,7 +23,7 @@
               <% @pending_engagements.each do |engagement| %>
                 <tr>
                   <td><%= engagement.student_name %></td>
-                  <td><%= engagement.client.name %></td>
+                  <td><%= engagement.client.full_name %></td>
                   <td><%= cleanup_phone_number(engagement.client.phone_number) %></td>
                   <td class="text-center"><%= engagement.subject.name %></td>
                   <td class="text-center"><%= engagement.academic_type.humanize %></td>

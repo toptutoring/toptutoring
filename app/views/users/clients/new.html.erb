@@ -4,7 +4,12 @@
       <div class="text-center">
         <h4>Sign Up Process</h4>
       </div>
-      <p class="m-15">At Top Tutoring, it is our top priority to ensure you receive the best tutoring solution for your academic needs. You can either submit the provided form or call us at <a herf="tel:<%= ENV["CONTACT_PHONE_NUMBER"] || "15108425221" %>"><%= cleanup_phone_number(ENV["CONTACT_PHONE_NUMBER"] || "15108425221") %></a> to get in touch with one of our Tutoring Directors who will help you get started on your academic journey.</p>
+      <p class="m-15">At Top Tutoring, it is our top priority to ensure you receive the best tutoring solution for your academic needs. In order to get in touch with one of our Directors for a free consultation, you can either submit the provided form or call us at:</p>
+      <div class="text-center">
+        <a herf="tel:15108425221">
+          <%= cleanup_phone_number("15108425221") %>
+        </a> 
+      </div>
       <p class="m-15"> Already have an account?
       <%= link_to "Sign in", sign_in_path %>
       </p>
@@ -25,7 +30,11 @@
         <% end %>
 
         <div class="col-sm-6">
-          <%= form.text_field :name, type: "text", placeholder: "First and Last Name", class: "form-control input-lg mb-15", required: true %>
+          <%= form.text_field :first_name, type: "text", placeholder: "First Name", class: "form-control input-lg mb-15", required: true %>
+        </div>
+
+        <div class="col-sm-6">
+          <%= form.text_field :last_name, type: "text", placeholder: "Last Name", class: "form-control input-lg mb-15", required: true %>
         </div>
 
         <div class="col-sm-6">
@@ -38,6 +47,10 @@
 
         <div class="col-sm-6">
           <%= form.password_field :password, placeholder: "Password", class: "form-control input-lg mb-15", required: true %>
+        </div>
+
+        <div class="col-sm-6">
+          <%= password_field_tag :confirm_password, nil, placeholder: "Confirm Password", class: "form-control input-lg mb-15", required: true %>
         </div>
 
         <%= form.fields_for :signup do |client_field| %>
