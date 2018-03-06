@@ -1,10 +1,17 @@
-// Container Styles
+/* Table of contents
+   1. Container Styles
+   2. Email inputs
+   3. Clearance Styles
+   4. Alert Styles
+   5. Pagination Styles */
+
+// 1. Container Styles
 
 .page-content {
   min-height: calc(100vh - 149px); // 94 + 55 (header/footer)
 }
 
-// Email input to match template
+// 2. Email input to match template
 
 input[type="email"] {
   background: #f5f5f5;
@@ -20,7 +27,7 @@ input[type="email"]:focus {
   outline: 1px solid #ccc;
 }
 
-// Clearance Styles
+// 3. Clearance Styles
 
 #clearance {
   display: block;
@@ -31,12 +38,10 @@ input[type="email"]:focus {
     margin: auto;
 }
 
-// Adjusts alerts to have background
+// 4. Adjusts alerts to have background
 .alert {
   background: white;
 }
-
-// Alerts fixed position
 #top-tutoring-flashes {
   width: 75%;
   position: fixed;
@@ -46,3 +51,46 @@ input[type="email"]:focus {
   z-index: 10;
 }
 
+// 5. Pagination Styles
+.pagination {
+    display: block;
+    text-align: center;
+    margin: auto;
+}
+.pagination > * {
+    display: inline;
+    text-align: center;
+    font-weight: 400;
+    margin-right: 0.1em;
+    padding: 15px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #59a4f0;
+}
+.pagination a:visited {
+    color: #59a4f0;
+}
+.pagination a {
+    color: #59a4f0;
+}
+.pagination a:hover {
+    background: #59a4f0;
+    color: white;
+}
+.pagination a:active {
+    background: #59a4f0;
+    color: white;
+}
+.pagination .current {
+    background: #59a4f0;
+    color: white;
+}
+.pagination .disabled {
+    border-color: #C0C0C0;
+    color: #C0C0C0;
+}
+
+.label {
+  background-color: #59a4f0;
+}

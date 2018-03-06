@@ -2,19 +2,19 @@ module Pages
   class BlogPostsController < ApplicationController
     layout "authentication"
     def index
-      @posts = BlogPost.published
+      @posts = BlogPost.published.paginate(page: params[:page], per_page: 5)
     end
 
     def categories
       @posts = BlogPost.published
-                       .joins(:blog_categories)
+                       .includes(:blog_categories)
                        .where(blog_categories: { name: cat_name })
+                       .paginate(page: params[:page], per_page: 5)
       render :index
     end
 
     def show
-      @post = BlogPost.published.find_by(slug: slug)
-      render "www/pages/404", status: :not_found unless @post
+      @post = BlogPost.published.find_by!(slug: slug)
     end
 
     private

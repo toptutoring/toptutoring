@@ -24,4 +24,5 @@
       <%= link_to "Read More", pages_blog_post_path(post.slug) %>
     </div>
   <% end %>
+  <%= will_paginate @posts %>
 <% end %>
