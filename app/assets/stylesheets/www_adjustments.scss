@@ -1,9 +1,13 @@
-/* Table of contents
+/* 
+   Table of contents
    1. Container Styles
    2. Email inputs
    3. Clearance Styles
    4. Alert Styles
-   5. Pagination Styles */
+   5. Pagination Styles
+   6. Blog-Link Styles
+   7. Span Styles
+*/
 
 // 1. Container Styles
 
@@ -91,6 +95,12 @@ input[type="email"]:focus {
     color: #C0C0C0;
 }
 
+// 6. Blog-link Styles
+.link-list a:after {
+  content: "";
+}
+
+// 7. Span Styles
 .label {
   background-color: #59a4f0;
 }
