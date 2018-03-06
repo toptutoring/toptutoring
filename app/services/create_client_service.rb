@@ -14,7 +14,7 @@ class CreateClientService
       notify_through_slack_and_emails
       Result.new(true, @user, I18n.t(success_message))
     rescue ActiveRecord::RecordInvalid => e
-      Result.new(false, @user, e)
+      Result.new(false, @user, @user.errors.full_messages)
     end
 
     private
