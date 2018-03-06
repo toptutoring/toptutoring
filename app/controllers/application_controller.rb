@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def not_found
+    raise ActiveRecord::RecordNotFound.new("Not Found")
+  end
+
   def masquerading?
     session[:admin_id].present?
   end

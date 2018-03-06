@@ -18,11 +18,8 @@ class PagesController < ApplicationController
   end
 
   def show
-    if valid_page?
-      render "www/pages/#{params[:path]}"
-    else
-      render "www/pages/404", status: :not_found
-    end
+    not_found unless valid_page?
+    render "www/pages/#{params[:path]}"
   end
 
   def calendar
@@ -32,6 +29,6 @@ class PagesController < ApplicationController
   private
 
   def valid_page?
-    File.exist?(Pathname.new(Rails.root + "app/views/www/pages/#{params[:path]}.html.erb"))
+    template_exists? "www/pages/#{params[:path]}"
   end
 end
