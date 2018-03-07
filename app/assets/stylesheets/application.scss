@@ -1,6 +1,8 @@
-@import "custom";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "app/first-layout";
 @import "application_adjustments";
-@import "pages";
+@import "custom";
 @import "stripe";
 @import "opentok";
 @import "blog";

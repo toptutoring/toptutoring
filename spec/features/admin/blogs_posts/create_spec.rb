@@ -7,15 +7,15 @@ feature "Blog post crud specs", js: true do
   scenario "creating a post with valid params" do
     sign_in(admin)
     visit new_blog_post_path
-    blog_title = "A Title"
-    blog_content = "Content for blog"
-    find("#blog-title-contenteditable").base.send_keys(blog_title)
+    blog_title = "My Blog Title"
+    blog_content = "Content for my wonderful blog"
+    fill_in "blog_post_title", with: blog_title
     find("#blog-content-contenteditable").base.send_keys(blog_content)
     find("input[type='submit']", visible: false).click
 
     expect(page).to have_content "Post successfully created"
     expect(page).to have_content blog_title
-    expect(page).to have_content l(Date.current)
+    expect(page).to have_content Date.current.to_formatted_s(:long_ordinal)
     expect(page).to have_content blog_content
     expect(page).to have_link "Edit Post"
     expect(page).to have_link"All Posts"
@@ -25,9 +25,9 @@ feature "Blog post crud specs", js: true do
   scenario "editing a post with valid params" do
     sign_in(admin)
     visit edit_blog_post_path(post)
-    blog_title = "A Title"
-    blog_content = "Content for blog"
-    find("#blog-title-contenteditable").base.send_keys(blog_title)
+    blog_title = "My New Blog Title"
+    blog_content = "Content for my wonderful new blog"
+    fill_in "blog_post_title", with: blog_title
     find("#blog-content-contenteditable").base.send_keys(blog_content)
     find("input[type='submit']", visible: false).click
 
@@ -47,7 +47,7 @@ feature "Blog post crud specs", js: true do
     click_on post.title
 
     expect(page).to have_content post.title
-    expect(page).to have_content l(post.publish_date)
+    expect(page).to have_content post.publish_date.to_formatted_s(:long_ordinal)
     expect(page).to have_content ActionView::Base.full_sanitizer.sanitize(post.content)
     expect(page).to have_link "Edit Post"
     expect(page).to have_link"All Posts"

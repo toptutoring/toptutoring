@@ -20,9 +20,17 @@
       })(window,document,'script','dataLayer','GTM-PH4VQ5Z');</script>
       <!-- End Google Tag Manager -->
     <% end %>
-    <%= render "css_import" %>
+
     <%= stylesheet_link_tag :application, media: "all" %>
-    <%= javascript_include_tag Ckeditor.cdn_url %>
+    <!-- Sigma Template Plugins -->
+    <%= stylesheet_link_tag '/plugins/Ionicons/css/ionicons.min.css' %>
+    <%= stylesheet_link_tag '/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css' %>
+    <%= stylesheet_link_tag '/plugins/animo.js/animate-animo.min.css' %>
+    <%= stylesheet_link_tag '/plugins/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %>
+    <%= stylesheet_link_tag '/plugins/jquery.steps/demo/css/jquery.steps.css' %>
+    <%= stylesheet_link_tag "/plugins/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" %>
+
+    <%= yield :head %>
     <%= csrf_meta_tags %>
     <%= favicon_link_tag %>
   </head>
@@ -54,7 +62,27 @@
       <% end %>
     </div>
 
-    <%= render "javascript" %>
+    <%= javascript_include_tag :application %>
+    <!-- JS required for Sigma Styles -->
+    <!-- Malihu Scrollbar-->
+    <%= javascript_include_tag '/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js' %>
+    <!-- Animo.js-->
+    <%= javascript_include_tag '/plugins/animo.js/animo.min.js' %>
+    <!-- Bootstrap Progressbar-->
+    <%= javascript_include_tag '/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js' %>
+    <!-- jQuery Easy Pie Chart-->
+    <%= javascript_include_tag '/plugins/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js' %>
+    <!-- jQuery Steps-->
+    <%= javascript_include_tag '/plugins/jquery.steps/build/jquery.steps.min.js' %>
+    <!-- Parsley -->
+    <%= javascript_include_tag '/plugins/parsley/parsley.min.js' %>
+    <!-- Core JS-->
+    <%= javascript_include_tag '/build/js/first-layout/app.js' %>
+    <%= javascript_include_tag '/build/js/first-layout/demo.js' %>
+    <%= javascript_include_tag '/build/js/page-content/forms/forms-wizard.js' %>
+    <%= javascript_include_tag '/plugins/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %>
+
+    <%= render "misc_javascript" %>
     <%= render "css_overrides" %>
 
   </body>

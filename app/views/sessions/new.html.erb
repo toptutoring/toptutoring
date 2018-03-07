@@ -9,10 +9,10 @@
           <div class="widget-body pt-30 pb-30">
             <%= form_for :session, url: session_path do |form| %>
               <%= form.label :email, class: "sr-only"  %>
-              <%= form.email_field :email, type: "email", value: @user_email, class: "form-control input-lg mb-15", placeholder: "Email" %>
+              <%= form.email_field :email, type: "email", value: @user_email, placeholder: "Email" %>
 
               <%= form.label :password, class: "sr-only"  %>
-              <%= form.password_field :password, type: "password", class: "form-control input-lg mb-15", placeholder: "Password" %>
+              <%= form.password_field :password, type: "password", placeholder: "Password" %>
 
               <%= form.label :remember_me, class: "remember-me inline-block form-control-static" do %>
                 <%= form.check_box :remember_me %>
@@ -20,7 +20,8 @@
               <% end %>
               <%= link_to "Trouble signing in?", reset_password_path, class: "pull-right inline-block form-control-static" %>
 
-              <button type="submit" class="btn btn-lg btn-blue center-block">Login</button>
+
+              <%= form.submit "Login", class: "btn btn-lg btn-blue" %>
             <% end %>
           </div>
         </div>

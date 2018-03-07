@@ -1,0 +1,28 @@
+<%= render layout: "blog_layout" do %>
+  <% @posts.each do |post| %>
+    <div class="post-snippet mb64">
+      <div class="post-title">
+        <%= link_to pages_blog_post_path(post.slug) do %>
+          <h4 class="inline-block"><%= post.title %></h4>
+        <% end %>
+      </div>
+      <ul class="post-meta">
+
+        <% if post.blog_categories.any? %>
+          <li>
+            <i class="ti-tag"></i>
+            <span>Categorized as
+              <% post.blog_categories.each do |category| %>
+                <%= link_to category.name.titlecase, pages_blog_categories_path(category.name) %>
+              <% end %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+      <hr>
+      <%= raw post.excerpt %>
+      <%= link_to "Read More", pages_blog_post_path(post.slug) %>
+    </div>
+  <% end %>
+  <%= will_paginate @posts %>
+<% end %>

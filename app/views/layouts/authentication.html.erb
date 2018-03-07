@@ -21,24 +21,17 @@
       <!-- End Google Tag Manager -->
     <% end %>
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600' rel='stylesheet' type='text/css'>
-    <!-- JQuery -->
-    <%= javascript_include_tag '/plugins/jquery/dist/jquery.min.js' %>
-    <%= javascript_include_tag Ckeditor.cdn_url %>
-    <!-- Bootstrap CSS-->
-    <%= stylesheet_link_tag '/plugins/bootstrap/dist/css/bootstrap.min.css' %>
-    <!-- Ionicons-->
-    <%= stylesheet_link_tag '/plugins/Ionicons/css/ionicons.min.css' %>
     <!-- Itim-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Itim">
-    <!-- Font Awesome-->
-    <%= stylesheet_link_tag '/plugins/font-awesome/css/font-awesome.min.css' %>
     <!-- Dancing Script -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing+Script">
-    <!-- Core CSS-->
-    <%= stylesheet_link_tag '/build/css/first-layout.css' %>
-    <%= stylesheet_link_tag :application, media: "all" %>
+
+    <%= stylesheet_link_tag :www, media: "all" %>
+    <%= stylesheet_link_tag "/plugins/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" %>
+
     <%= csrf_meta_tags %>
     <%= favicon_link_tag %>
+    <%= yield :head %>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -51,12 +44,23 @@
       <%= render "flashes" %>
     </div>
 
-    <div class="main-container">
-      <%= yield %>
+    <div class="page-content">
+      <div class="wrapper">
+        <%= yield %>
+      </div>
     </div>
 
     <%= render "footer" %>
-    <%= render "javascript" %>
+
+    <%= javascript_include_tag :application %>
+    <!-- Required JS for template -->
+    <%= javascript_include_tag '/www/js/scripts.js' %>
+    <%= javascript_include_tag '/www/js/parallax.min.js' %>
+    <%= javascript_include_tag '/www/js/smooth-scroll.min.js' %>
+    <%= javascript_include_tag '/plugins/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %>
+
+    <%= render "misc_javascript" %>
+    <%= yield :javascript %>
     <%= render "css_overrides" %>
   </body>
 </html>

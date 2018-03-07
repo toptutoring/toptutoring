@@ -2,5 +2,4 @@
   document.getElementById('review-widget').innerHTML = "<%= j render "reviews/submitted" %>";
 <% end %>
 
-document.getElementById('top-tutoring-flashes').innerHTML = "<%= j render "application/flashes" %>";
-window.scrollTo(0, 0);
+renderTopTutoringFlashes("<%= j render "application/flashes" %>")

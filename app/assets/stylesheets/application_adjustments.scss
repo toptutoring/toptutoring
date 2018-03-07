@@ -12,13 +12,6 @@ header li a, .dropdown-menu li > a {
   padding: 0 20px;
 }
 
-// Container Styles
-
-.main-container {
-  min-height: calc(100vh - 153px); // 98 + 55 (header/footer)
-  padding-bottom: 78px;
-}
-
 // Sidebar Styles
 
 .menu-profile-icon {
@@ -27,17 +20,8 @@ header li a, .dropdown-menu li > a {
   line-height: 49px;
   padding: 2px;
 }
-
-// Button Styles
-
-.btn-blue {
-  background-color: $major_blue;
-  border-color: $deep_blue;
-  color: $foreground_white;
-}
-.btn-blue:hover {
-  background-color: $deep_blue;
-  color: $foreground_white;
+.navigation {
+  padding-bottom: 50vh;
 }
 
 // Input Styles
