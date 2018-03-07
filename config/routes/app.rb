@@ -91,6 +91,7 @@ def application_routes
           resources :pay_all
         end
         resources :feedbacks, only: [:index]
+        resources :client_reviews
       end
       resources :engagements do
         member do
