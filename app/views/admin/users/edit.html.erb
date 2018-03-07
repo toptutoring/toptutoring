@@ -39,8 +39,9 @@
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <div class="widget">
-        <div class="widget-heading">
-          <h3 class="widget-title text-center">Rates and Balance Adjustment</h3>
+        <div class="widget-heading pb-0">
+          <h3 class="widget-title text-center mb-15">Rates and Balance Adjustment</h3>
+          <p class="widget-hint">When rates are $0.00, rates and credits will not be shown to clients as well as tutors. Clients are only able to purchase credit types that have a rate.</p>
         </div>
         <div class="widget-body">
           <%= render partial: 'clients/edit_rates_and_balance_form', locals: { url: admin_user_path(@user) } %>
