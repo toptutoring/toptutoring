@@ -15,6 +15,37 @@ FS.identify('<%= current_user.id %>', {
   
   <div class="right-side-header">
     <ul class="notification-bar list-inline pull-right">
+      <% if current_user.has_role?("admin") %>
+        <li class="dropdown">
+          <a id="dropdownMenu1" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle header-icon bubble">
+            <i class="fs-24 icon ion-ios-email-outline" id="notification_count"><%= notification_count(current_user) %></i>
+          </a>
+          <div aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-right dm-medium fadeInUp animated" style="animation-duration: 0.2s; animation-delay: 0s; animation-timing-function: linear; animation-iteration-count: 1;">
+            <h5 class="dropdown-header">Your Notifications</h5>
+            <ul data-mcs-theme="minimal-dark" class="media-list mCustomScrollbar _mCS_2 mCS-autoHide" style="position: relative; overflow: visible;">
+              <div id="mCSB_2" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" style="max-height: 240px;" tabindex="0">
+                <div id="mCSB_2_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+                  <div id="notification_list">
+                    <%= user_notifications_list(current_user) %>
+                  </div>
+                </div>
+              </div>
+              <div id="mCSB_2_scrollbar_vertical" class="mCSB_scrollTools mCSB_2_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;">
+                <div class="mCSB_draggerContainer">
+                  <div id="mCSB_2_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; top: 0px; display: block; height: 144px; max-height: 206px;" oncontextmenu="return false;">
+                    <div class="mCSB_dragger_bar" style="line-height: 50px;">
+                    </div>
+                  </div>
+                  <div class="mCSB_draggerRail">
+                  </div>
+                </div>
+              </div>
+            </ul>
+            <div class="dropdown-footer"><%= link_to "Mark all as read", mark_all_notifications_path, method: :post, remote: true, class: "text-muted" %></div>
+          </div>
+        </li>
+      <% end %>
+
       <li class="dropdown">
         <a id="dropdownMenu2" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle header-icon">
           <div class="media mt-0">

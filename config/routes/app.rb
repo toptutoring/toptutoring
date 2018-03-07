@@ -45,6 +45,12 @@ def application_routes
       resource :masquerade, only: :destroy
     end
 
+    resources :notifications do
+      collection do
+        post "mark_all"
+      end
+    end
+
     resource :profile, only: [:edit, :show, :update]
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do

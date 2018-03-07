@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_one :signup, dependent: :destroy
   has_one :stripe_account
   accepts_nested_attributes_for :signup
+  has_many :notifications
   has_many :students, class_name: "User", foreign_key: "client_id"
   has_one :student_account, dependent: :destroy
   has_one :client_account, dependent: :destroy
