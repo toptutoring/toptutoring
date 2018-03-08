@@ -15,8 +15,8 @@ module EngagementHelper
       concat tag.p "Online: #{rate_credit_string(client, "online_academic")}"
       concat tag.p "In-Person: #{rate_credit_string(client, "in_person_academic")}"
     else
-      concat tag.p "Online: #{rate_credit_string(client, "online_in_person")}"
-      concat tag.p "In-Person: #{rate_credit_string(client, "in_person_in_person")}"
+      concat tag.p "Online: #{rate_credit_string(client, "online_test_prep")}"
+      concat tag.p "In-Person: #{rate_credit_string(client, "in_person_test_prep")}"
     end
   end
 
