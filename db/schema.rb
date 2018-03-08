@@ -268,6 +268,17 @@ ActiveRecord::Schema.define(version: 20180307210257) do
     t.index ["tutor_account_id"], name: "index_subjects_tutor_accounts_on_tutor_account_id"
   end
 
+  create_table "test_scores", force: :cascade do |t|
+    t.string "score"
+    t.string "badge"
+    t.bigint "subject_id"
+    t.bigint "tutor_account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_test_scores_on_subject_id"
+    t.index ["tutor_account_id"], name: "index_test_scores_on_tutor_account_id"
+  end
+
   create_table "tutor_accounts", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -345,5 +356,7 @@ ActiveRecord::Schema.define(version: 20180307210257) do
   add_foreign_key "stripe_accounts", "users"
   add_foreign_key "student_accounts", "client_accounts"
   add_foreign_key "student_accounts", "users"
+  add_foreign_key "test_scores", "subjects"
+  add_foreign_key "test_scores", "tutor_accounts"
   add_foreign_key "tutor_accounts", "users"
 end
