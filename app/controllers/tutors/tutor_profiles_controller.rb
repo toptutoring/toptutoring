@@ -2,7 +2,7 @@ module Tutors
   class TutorProfilesController < ApplicationController
     def show
       @tutor_account = current_user.tutor_account
-      ids = @tutor_account.exam_subjects.ids
+      ids = @tutor_account.test_subjects.ids
       @subjects = Subject.test_prep.where.not(id: ids)
     end
 

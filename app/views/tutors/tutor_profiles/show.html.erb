@@ -57,3 +57,50 @@
     </div>
   </div>
 </div>
+
+<div class="col-md-6">
+  <div class="widget">
+    <div class="widget-heading clearfix">
+      <h3 class="widget-title pb-10 text-center">Your Test Scores</h3>
+      <p class="widget-hint">Input your scores so we can share how awesome you are!</p>
+    </div>
+    <div class="widget-body text-center">
+      <table id="test_score_table" class="table table-bordered">
+        <% @tutor_account.test_scores.each do |score| %>
+          <tr id="test_score_<%= score.id %>">
+            <td><%= score.subject.name %></td>
+            <td><%= score.score %></td>
+            <td><%= link_to "Remove", tutors_test_score_path(score), remote: true, method: :delete, class: "btn btn-danger" %></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <%= form_for :test_score, url: tutors_test_scores_path, remote: true, html: { class: "form-horizontal" } do |ef| %>
+        <div class="row">
+          <div class ="col-lg-6">
+            <div class ="form-group select-option">
+              <div class="col-md-4">
+                <%= ef.label :subject_id, "Test", class: "control-label"  %>
+              </div>
+              <div class="col-md-8">
+                <%= ef.select :subject_id, options_from_collection_for_select(@subjects, :id, :name), { include_blank: false }, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+
+          <div class ="col-lg-6">
+            <div class ="form-group">
+              <div class="col-md-4">
+                <%= ef.label :score, class: "control-label"  %>
+              </div>
+              <div class="col-md-8">
+                <%= ef.number_field :score, required: true, class: "form-control"%>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%= ef.submit "Add Score", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -131,6 +131,7 @@ Rails.application.routes.draw do
           post "profile_picture" => "tutor_profiles#post_picture", as: :add_profile_picture
           delete "profile_picture" => "tutor_profiles#remove_picture", as: :remove_profile_picture
         end
+        resources :test_scores, only: [:create, :destroy, :update]
       end
       resources :users do
         member do
