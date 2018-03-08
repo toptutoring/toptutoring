@@ -7,6 +7,8 @@ class TutorAccount < ApplicationRecord
   has_one :contract, as: :account, dependent: :destroy
   has_many :payouts, as: :receiving_account
 
+  mount_uploader :profile_picture, ProfilePictureUploader
+
   monetize :online_rate_cents
   monetize :in_person_rate_cents
 
