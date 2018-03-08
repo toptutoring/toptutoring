@@ -126,6 +126,11 @@ Rails.application.routes.draw do
         resources :invoices, only: [:index, :create, :destroy]
         resources :emails, only: [:index]
         resources :subjects, only: [:index, :update]
+        resource :tutor_profile, only: [:show, :update]
+        scope :tutor_profile do
+          post "profile_picture" => "tutor_profiles#post_picture", as: :add_profile_picture
+          delete "profile_picture" => "tutor_profiles#remove_picture", as: :remove_profile_picture
+        end
       end
       resources :users do
         member do

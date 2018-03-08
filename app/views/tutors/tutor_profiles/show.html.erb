@@ -1,0 +1,59 @@
+<div class="col-md-6">
+  <div class="widget">
+    <div class="widget-heading clearfix">
+      <h3 class="widget-title pb-10 text-center">Your Public Profile Picture</h3>
+    </div>
+    <div class="widget-body text-center">
+      <div>
+        <%= image_tag @tutor_account.profile_picture, id: "tutor_profile_pic_display" %>
+
+        <% unless @tutor_account.profile_picture.file.nil? %>
+          <%= link_to "Remove Picture", tutors_remove_profile_picture_path, method: :delete, class: "btn btn-danger m-10" %>
+        <% end %>
+      </div>
+
+      <%= form_for :tutor_profile, url: tutors_add_profile_picture_path, html: { class: "form-horizontal" } do |pf| %>
+        <div class="row">
+          <div class="col-md-8">
+            <%= pf.file_field :profile_picture, required: true, class: "form-control input-lg" %>
+          </div>
+          <div class="col-md-4 text-center">
+            <%= pf.submit "Add Picture", class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="widget">
+    <div class="widget-heading clearfix">
+      <h3 class="widget-title pb-10 text-center">Edit Your Public Profile</h3>
+    </div>
+    <div class="widget-body">
+      <%= form_with model: current_user.tutor_account, url: tutors_tutor_profile_path, class: "form-horizontal" do |f| %>
+
+        <div class ="form-group">
+          <div class ="col-lg-4 text-right">
+            <%= f.label(:short_description, class: "control-label") %>
+          </div>
+          <div class="col-lg-8">
+            <%= f.text_area :short_description, rows: 4, class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <div class ="form-group">
+          <div class ="col-lg-4 text-right">
+            <%= f.label(:description, "Long Description", class: "control-label") %>
+          </div>
+          <div class="col-lg-8">
+            <%= f.text_area :description, rows: 10, class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <%= f.submit "Submit", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
