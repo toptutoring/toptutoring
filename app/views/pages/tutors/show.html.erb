@@ -1,0 +1,36 @@
+  <section>
+    <div class="container">
+      <div class="feed-item mb96 mb-xs-48">
+
+        <div class="row mb16 mb-xs-0">
+          <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
+            <h6 class="uppercase mb16 mb-xs-8">meet our tutors</h6>
+            <h3><%= @tutor.first_name %></h3>
+          </div>
+        </div>
+
+        <div class="row mb32 mb-xs-16">
+          <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+            <div class="text-center">
+              <% unless @tutor.tutor_account.profile_picture.file.nil? %>
+                <%= image_tag @tutor.tutor_account.profile_picture.url, class: "mb32 mb-xs-16 cast-shadow img-profile", alt: @tutor.full_name %>
+              <% end %>
+            </div>
+            <%= @tutor.tutor_account.description %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-primary">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <h3 class="mb0 inline-block p32 p0-xs">Ready to start your first tutoring session?</h3>
+          <%= link_to "Sign Up", sign_up_url(subdomain: "app"), class: "btn btn-lg btn-white mb8 mt-xs-24" %>
+        </div>
+      </div>
+    </div>
+  </section>
