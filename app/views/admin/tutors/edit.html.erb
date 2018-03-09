@@ -1,11 +1,46 @@
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6">
     <div class="widget">
       <div class="widget-heading">
         <h3 class="widget-title text-center"><%= @tutor.full_name %></h3>
       </div>
       <div class="widget-body">
         <%= render "tutor_form" %>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-heading">
+        <h3 class="widget-title text-center">Exam Scores</h3>
+      </div>
+      <div class="widget-body">
+        <table class="table table-bordered text-center">
+        <%= render partial: "test_score", collection: @tutor_account.test_scores %>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="widget">
+      <div class="widget-heading">
+        <h3 class="widget-title text-center">
+          Tutor Profile
+        </h3>
+      </div>
+      <div class="widget-body">
+        <div class="text-center mb-20">
+          <% unless @tutor_account.profile_picture.file.nil? %>
+            <%= image_tag @tutor_account.profile_picture.url %>
+          <% end %>
+        </div>
+        <p class="lead">Description</p>
+        <p><%= @tutor_account.description %></p>
+        <p class="lead">Blurb</p>
+        <p><%= @tutor_account.short_description %></p>
+        <div id="publish_link" class="text-center">
+          <%= render "publish_link" %>
+        </div>
       </div>
     </div>
   </div>

@@ -23,6 +23,7 @@
               <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th class="text-center">Published</th>
                 <th class="text-center">Balance</th>
                 <th>Action</th>
                 <th>Masquerade</th>
@@ -33,6 +34,13 @@
                 <tr>
                   <td><%= link_to tutor.full_name, admin_tutor_path(tutor) %></td>
                   <td><%= tutor.email %></td>
+                  <td class="text-center">
+                    <% if tutor.tutor_account.publish %>
+                      <i class="icon ion-checkmark-round text-primary"></i>
+                    <% else %>
+                      <i class="icon ion-close-round"></i>
+                    <% end %>
+                  </td>
                   <td class="text-center"><%= tutor.tutor_account.balance_pending %></td>
                   <td class="text-left">
                     <%= link_to "Edit", edit_admin_tutor_path(tutor), class: "btn btn-outline btn-success" %>

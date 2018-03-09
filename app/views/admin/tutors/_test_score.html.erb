@@ -1,0 +1,11 @@
+<tr>
+  <td><%= test_score.subject.name %></td>
+  <td><%= test_score.score %></td>
+  <td>
+    <% if test_score.badge %>
+      <%= link_to "Remove Badge", admin_tutor_account_badge_path(@tutor_account, badge_id: test_score), id: "score_link_#{test_score.id}", remote: true, method: :patch, class: "btn btn-default" %>
+    <% else %>
+      <%= link_to "Add Badge", admin_tutor_account_badge_path(@tutor_account, badge_id: test_score), id: "score_link_#{test_score.id}", remote: true, method: :patch, class: "btn btn-primary" %>
+    <% end %>
+  </td>
+</tr>
