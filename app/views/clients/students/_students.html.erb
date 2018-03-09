@@ -34,7 +34,7 @@
                       <%= engagement.subject.name %>
                     </td>
                     <td>
-                      <% if engagment.pending? && engagement.invoices.empty? %>
+                      <% if engagement.pending? && engagement.invoices.empty? %>
                         <%= link_to clients_request_tutor_path(id: engagement.id), method: "delete" do %>
                           <i class="ion-trash-b fs-18"></i>
                         <% end %>
