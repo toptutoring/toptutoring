@@ -9,6 +9,8 @@ class TutorAccount < ApplicationRecord
   has_many :test_scores, dependent: :destroy
   has_many :test_subjects, through: :test_scores, source: :subject
 
+  scope :published, -> { where(publish: true) }
+
   mount_uploader :profile_picture, ProfilePictureUploader
 
   monetize :online_rate_cents
