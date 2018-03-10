@@ -11,6 +11,9 @@
         <p class="fs-12 text-uppercase text-muted"><%= cleanup_phone_number(current_user.phone_number) %></p>
         <p><%= current_user.email %></p>
       </div>
+        <% if current_user.has_role?("tutor") %>
+          <%= link_to "Edit your public tutor profile", tutors_tutor_profile_path, class: "btn btn-block btn-primary" %>
+        <% end %>
     </div>
   </div>
 </div>
