@@ -13,47 +13,36 @@
                 <tr>
                   <th>#</th>
                   <th>Student</th>
-                  <th>Client</th>
                   <th>Tutor</th>
                   <th>Subject</th>
-                  <th class="text-center">Academic Type</th>
-                  <th class="text-center">Client Hourly Rate</th>
-                  <th class="text-center">Client balance</th>
+                  <th class="text-center">Client Rate / Credit</th>
                   <th class="text-center">Status</th>
                   <th class="text-center"></th>
                 </tr>
               </thead>
               <tbody>
-                <% @engagements.each do |engagement|
-                  representer = EngagementPresenter.new(engagement) %>
+                <% @engagements.each do |engagement| %>
                   <tr>
-                    <td><%= representer.id %></td>
-                    <td><%= representer.student_name %></td>
-                    <td><%= representer.client_name %></td>
-                    <td><%= representer.tutor_name %></td>
-                    <td><%= representer.subject %></td>
-                    <td class="text-center"><%= representer.engagement_academic_type %></td>
-                    <td class="text-center"><%= number_to_currency(representer.hourly_rate) %></td>
-                    <td class="text-center"><%= simple_format(representer.client_balance) %></td>
-                    <td class="text-center"><span class="label label-outline label-warning"><%= representer.state %></span></td>
+                    <td><%= engagement.id %></td>
+                    <td><% client_info(engagement) %></td>
+                    <td><%= engagement.tutor.try(:full_name) %></td>
+                    <td><% subject_info(engagement) %></td>
+                    <td class="text-center"><% rates_and_credits(engagement) %></td>
+                    <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
                     <td class="text-center">
-                      <%= link_to edit_engagement_path(representer.id) do %>
-                        <button type="button" class="btn btn-outline btn-success">Edit</button>
+                      <%= link_to edit_engagement_path(engagement) do %>
+                        <button type="button" class="btn btn-outline btn-success mr-15">Edit</button>
                       <% end %>
-                    </td>
-                    <% if representer.updated? && representer.pending? %>
-                      <td class="text-center">
-                        <%= link_to enable_engagement_path(representer) do %>
+                      <% if engagement.tutor_account && engagement.pending? %>
+                        <%= link_to enable_engagement_path(engagement) do %>
                           <button type="button" class="btn btn-outline btn-primary">Enable</button>
                         <% end %>
-                      </td>
-                    <% elsif representer.active? %>
-                      <td class="text-center">
-                        <%= link_to disable_engagement_path(representer.id) do %>
+                      <% elsif engagement.active? %>
+                        <%= link_to disable_engagement_path(engagement.id) do %>
                           <button type="button" class="btn btn-outline btn-danger">Disable</button>
                         <% end %>
-                      </td>
-                    <% end %>
+                      <% end %>
+                    </td>
                   </tr>
                 <% end %>
               </tbody>

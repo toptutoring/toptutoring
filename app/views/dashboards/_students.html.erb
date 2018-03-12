@@ -17,13 +17,9 @@
           <% @tutor_engagements.each do |engagement| %>
             <tr>
               <td><%= engagement.student_name %></td>
-              <td class="text-center"><%= engagement.subject.name %></td>
+              <td class="text-center"><%= engagement.subject.name.titlecase %></td>
               <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
-              <% if engagement.academic? %>
-                <td class="text-center"><%= engagement.client.online_academic_credit %> hrs</td>
-              <% else %>
-                <td class="text-center"><%= engagement.client.online_test_prep_credit %> hrs</td>
-              <% end %>
+              <td class="text-center"><% client_credits(engagement) %></td>
             </tr>
           <% end %>
         </tbody>

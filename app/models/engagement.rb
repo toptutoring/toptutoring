@@ -50,4 +50,8 @@ class Engagement < ActiveRecord::Base
   def tutor
     tutor_account.try(:user)
   end
+
+  def rate_for?(type)
+    client.send("#{type}_#{academic_type}_rate") > 0
+  end
 end
