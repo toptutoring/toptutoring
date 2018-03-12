@@ -48,7 +48,6 @@ export class Home extends React.Component {
             <div>
                 {contactOnTop}
                 {contactOnPage}
-                <div className="home-content"></div>
             </div>
 
         )
