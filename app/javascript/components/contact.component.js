@@ -31,7 +31,7 @@ export class Contact extends React.Component {
         
         return (
             <div className={`contact ${this.props.position}`}>
-                <span className="phone-number">
+                <span className="contact-phone-number">
                     <a href="tel:5108425221">
                         <img className="icon" src={phoneIcon} />
                         Call (510) 842-5221
