@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214181255) do
+ActiveRecord::Schema.define(version: 20180303012221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,15 +22,32 @@ ActiveRecord::Schema.define(version: 20180214181255) do
     t.index ["engagement_id"], name: "index_availabilities_on_engagement_id"
   end
 
+  create_table "blog_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "blog_categories_posts", id: false, force: :cascade do |t|
+    t.bigint "blog_post_id", null: false
+    t.bigint "blog_category_id", null: false
+    t.index ["blog_category_id"], name: "index_blog_categories_posts_on_blog_category_id"
+    t.index ["blog_post_id"], name: "index_blog_categories_posts_on_blog_post_id"
+  end
+
   create_table "blog_posts", force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.date "publish_date"
-    t.boolean "published", default: false
+    t.boolean "draft", default: false
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["published"], name: "index_blog_posts_on_published"
+    t.string "slug"
+    t.text "excerpt"
+    t.index ["draft"], name: "index_blog_posts_on_draft"
+    t.index ["slug"], name: "index_blog_posts_on_slug", unique: true
+    t.index ["title"], name: "index_blog_posts_on_title", unique: true
     t.index ["user_id"], name: "index_blog_posts_on_user_id"
   end
 
@@ -272,7 +289,7 @@ ActiveRecord::Schema.define(version: 20180214181255) do
   create_table "users", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name", null: false
+    t.string "first_name", null: false
     t.string "email"
     t.string "encrypted_password", limit: 128, null: false
     t.string "confirmation_token", limit: 128
@@ -300,6 +317,8 @@ ActiveRecord::Schema.define(version: 20180214181255) do
     t.decimal "in_person_academic_credit", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "in_person_test_prep_credit", precision: 10, scale: 2, default: "0.0", null: false
     t.string "unique_token"
+    t.string "country_code", default: "US"
+    t.string "last_name"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
     t.index ["unique_token"], name: "index_users_on_unique_token", unique: true

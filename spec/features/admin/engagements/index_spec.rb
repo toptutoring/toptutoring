@@ -25,7 +25,7 @@ feature "Index engagements" do
       expect(page).to have_content("Status")
 
       expect(page).to have_content(engagement.id)
-      expect(page).to have_content(engagement.student.name)
+      expect(page).to have_content(engagement.student.full_name)
       expect(page).to have_content(engagement.subject.name)
       expect(page).to have_content(presenter.engagement_academic_type)
       expect(page).to have_content(presenter.hourly_rate)
@@ -49,7 +49,7 @@ feature "Index engagements" do
       expect(page).to have_content("Client Hourly Rate")
       expect(page).to have_content("Status")
       expect(page).to have_content(engagement.id)
-      expect(page).to have_content(engagement.student.name)
+      expect(page).to have_content(engagement.student.full_name)
       expect(page).to have_content(engagement.subject.name)
       expect(page).to have_content(presenter.engagement_academic_type)
       expect(page).to have_content(presenter.hourly_rate)

@@ -1,0 +1,68 @@
+<%= content_for :head do %>
+  <%= javascript_include_tag Ckeditor.cdn_url %>
+<% end %>
+
+<div class="col-md-9">
+  <h3 class="inline-block mb-12" id="blog-title-display">
+    <%= @post.title || "Please add a title" %>
+    </h1>
+
+    <div class="p-10 editable" id="blog-content-contenteditable" contenteditable="true">
+      <%= raw @post.content || "Please add content" %>
+    </div>
+</div>
+
+<div class="col-md-3">
+  <div class="widget mb16">
+    <%= form_for @post, html: { class: "mt-20 mb-20", id: "blog-form" } do |f| %>
+      <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :publish_date %>
+        <%= f.text_field :publish_date, id: "datetimepicker4", value: @post.publish_date ? @post.publish_date.to_formatted_s(:long_ordinal) : Date.current.to_formatted_s(:long_ordinal), class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.check_box :draft %>
+        <%= f.label :draft, "Save as draft?" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :excerpt, "Excerpt (max 140 characters)" %>
+        <%= f.text_area :excerpt, maxlength: 140, rows: 5, class: "form-control" %>
+      </div>
+
+      <div>
+        <%= f.label :blog_categories %>
+        <hr />
+        <div class="form-group" id="blog_categories_container">
+          <%= f.collection_check_boxes :blog_category_ids, BlogCategory.all, :id, :name do |c| %>
+            <div class="pull-left pr16">
+              <%= c.check_box %>
+              <%= c.label %>
+            </div>
+          <% end %>
+        </div>
+
+        <hr />
+
+        <div class="row">
+          <div class="col-xs-9">
+            <%= text_field_tag :category_name, nil, placeholder: "Add a new category", class: "form-control mb16" %>
+          </div>
+          <div class="col-xs-3 text-center">
+            <%= link_to blog_categories_path, id: "category_link", method: :post, remote: true, class: "btn btn-blue btn-icon" do %>
+              <i class="ti-plus"></i>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+        <%= f.submit class: "center-block btn btn-blue" %>
+      <% end %>
+      </div>
+      <%= link_to "All Posts", blog_posts_path %>
+  </div>

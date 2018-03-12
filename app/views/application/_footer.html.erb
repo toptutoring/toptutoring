@@ -1,32 +1,33 @@
-<footer>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="footer-left">
+<footer class="footer-2 bg-dark pt96 pt-xs-40 footer-top-padding">
+  <div class="row fade-half">
+    <div class="col-sm-12">
+      <span class="footer-left">
         <ul class="col-md-12 col-xs-6">
           <li>
-            <a href="https://toptutoring.com/">Home</a>
+            <%= link_to "Home", root_url(subdomain: nil), class: "uppercase mb16 face-on-hover footer-link first" %>
           </li>
           <li>
-            <%= link_to "Find a tutor", client_sign_up_path %>
+            <%= link_to "Find a tutor", client_sign_up_url(subdomain: "app"), class: "uppercase mb16 fade-on-hover footer-link" %>
           </li>
           <li>
-            <a href="https://toptutoring.com/careers">Careers</a>
+            <%= link_to "Careers", root_url(subdomain: nil) + "careers", class: "uppercase mb16 face-on-hover footer-link" %>
           </li>
           <li>
-            <a href="https://toptutoring.com/blog">Blog</a>
+            <%= link_to "Blog", root_url(subdomain: nil) + "blog", class: "uppercase mb16 face-on-hover footer-link" %>
           </li>
           <li>
-            <a href="https://toptutoring.com/top-tutors">Our Tutors</a>
+            <%= link_to "Our Tutors", root_url(subdomain: nil) + "top-tutors", class: "uppercase mb16 face-on-hover footer-link" %>
           </li>
           <li>
-            <a href="https://toptutoring.com/about_us">About</a>
+            <%= link_to "About", root_url(subdomain: nil) + "about_us", class: "uppercase mb16 face-on-hover footer-link" %>
           </li>
           <li>
-            <a href="https://toptutoring.com/contact">Contact</a>
+            <%= link_to "Contact", root_url(subdomain: nil) + "contact", class: "uppercase mb16 face-on-hover footer-link last" %>
           </li>
         </ul>
-      </div>
+      </span>
       <span class="rights">© Copyright 2017 Top Tutoring - All Rights Reserved</span>
+      </div>
     </div>
   </div>
 </footer>

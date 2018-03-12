@@ -16,7 +16,7 @@ class UserNotifierMailer < ApplicationMailer
   def send_invoice_notice(user, invoice)
     @invoice = invoice
     mail(to: user.email,
-         subject: "You were invoiced for a session with #{@invoice.submitter.name}")
+         subject: "You were invoiced for a session with #{@invoice.submitter.full_name}")
   end
 
   def send_review_request(user)

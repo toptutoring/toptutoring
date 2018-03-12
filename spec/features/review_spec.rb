@@ -5,7 +5,7 @@ feature "Add a review" do
 
   scenario "when client gives a 5 star review", js: true do
     visit new_review_path(client.unique_token)
-    expect(page).to have_content("Hello #{client.name}. Let us know how we're doing!")
+    expect(page).to have_content("Hello #{client.full_name}. Let us know how we're doing!")
     expect(page).to have_content("Rating")
     expect(page).to have_content("Review")
 

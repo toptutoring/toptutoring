@@ -18,7 +18,7 @@
               <tbody>
                 <% @emails.each do |email| %>
                   <tr>
-                    <td><%= email.client&.name %></td>
+                    <td><%= email.client&.full_name %></td>
                     <td><%= email.body %></td>
                     <td><%= email.created_at %></td>
                   </tr>

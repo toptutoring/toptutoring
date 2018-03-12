@@ -8,11 +8,11 @@ class Email < ActiveRecord::Base
 
 
   def email_subject(invoice)
-    "#{invoice.hours} hours of tutoring invoiced by #{invoice.tutor.name}"
+    "#{invoice.hours} hours of tutoring invoiced by #{invoice.tutor.full_name}"
   end
 
   def email_body(invoice, client)
-    "#{invoice.tutor.name} has invoiced #{invoice.hours} hours of tutoring for #{invoice.engagement.subject.name}. " +
+    "#{invoice.tutor.full_name} has invoiced #{invoice.hours} hours of tutoring for #{invoice.engagement.subject.name}. " +
     "You have #{client.credit_status(invoice) <= 0 ? 0 : client.credit_status(invoice)} hours left in your hourly balance and payments " +
     "must be made in advance before the next tutoring sessions."
   end

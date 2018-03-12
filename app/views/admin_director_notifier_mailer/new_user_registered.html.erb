@@ -121,7 +121,7 @@
                                               </span>
                                             </div>
                                             <div style="padding-top: 10px; padding-left: 30px;">Hello,</div>
-                                            <div style="padding-top: 10px; padding-left: 30px;">We are writing to let you know that <%= @new_user.name %> has finished the sign up process and is waiting to be assigned a tutor. <%= @new_user.name %> may be contacted at <%= @phone %> or by email: <%= @new_user.email %>.</div>
+                                            <div style="padding-top: 10px; padding-left: 30px;">We are writing to let you know that <%= @new_user.full_name %> has finished the sign up process and is waiting to be assigned a tutor. <%= @new_user.full_name %> may be contacted at <%= @phone %> or by email: <%= @new_user.email %>.</div>
                                             <div style="padding-top: 10px; padding-left: 30px;"><strong>Email:</strong> <%= @new_user.email %></div>
                                             <div style="padding-top: 10px; padding-left: 30px;"><strong>Phone:</strong> <%= @phone %></div>
                                             <div style="padding-top: 10px; padding-left: 30px;"><strong>Subject:</strong> <%= @new_user.signup.subject.name %></div>

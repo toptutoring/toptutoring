@@ -21,6 +21,7 @@ en:
     add_student:
       success: "Successfully added!"
     signup:
+      password_fail: "Password does not match. Please try again."
       client:
         success_message: |
           Thank you for signing up for Top Tutoring! We're excited to join you in your academic journey.

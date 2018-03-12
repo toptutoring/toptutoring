@@ -21,7 +21,7 @@ describe MassPaymentService do
 
     it "grabs all pending invoices and creates 1 payment for each user" do
       expect(Payout.count).to eq 0
-      expected_payment_description = "Payment for invoices: #{tutor.invoices.pending.ids.join(', ')}."
+      expected_payment_description = "Payment for invoices: #{tutor.invoices.pending.order(:id).ids.join(', ')}."
 
       mass_pay_url = "mass_pay_url"
       dwolla_stub_success mass_pay_url
@@ -58,8 +58,8 @@ describe MassPaymentService do
       engagement2 = FactoryBot.create(:engagement, tutor_account: tutor2.tutor_account, client_account: client.client_account, student_account: student_account_user_nil)
       FactoryBot.create(:invoice, submitter: tutor2, client: client, engagement: engagement2)
 
-      tutor_expected_payment_description = "Payment for invoices: #{tutor.invoices.pending.ids.join(', ')}."
-      tutor2_expected_payment_description = "Payment for invoices: #{tutor2.invoices.pending.ids.join(', ')}."
+      tutor_expected_payment_description = "Payment for invoices: #{tutor.invoices.pending.order(:id).ids.join(', ')}."
+      tutor2_expected_payment_description = "Payment for invoices: #{tutor2.invoices.pending.order(:id).ids.join(', ')}."
 
       mass_pay_url = "mass_pay_url"
       dwolla_stub_success mass_pay_url

@@ -2,8 +2,8 @@ require "rails_helper"
 
 feature "Create payment for tutor" do
   let(:admin) { FactoryBot.create(:auth_admin_user) }
-  let(:tutor) { FactoryBot.create(:tutor_user, name: "Authorized") }
-  let(:tutor_no_auth) { FactoryBot.create(:tutor_user, name: "None", auth_uid: nil, access_token: nil, refresh_token: nil) }
+  let(:tutor) { FactoryBot.create(:tutor_user, first_name: "Authorized") }
+  let(:tutor_no_auth) { FactoryBot.create(:tutor_user, first_name: "None", auth_uid: nil, access_token: nil, refresh_token: nil) }
   let(:client) { FactoryBot.create(:client_user) }
   let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
   let!(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account) }
@@ -34,7 +34,7 @@ feature "Create payment for tutor" do
 
       expect(Payout.count).to eq 1
       expect(Payout.last.dwolla_mass_pay_url).to eq mass_pay_url
-      expect(page).to have_content("Payment could not be processed for #{tutor_no_auth.name}.")
+      expect(page).to have_content("Payment could not be processed for #{tutor_no_auth.full_name}.")
       expect(page).to have_content("1 payment has been made for a total of $45.00")
       expect(tutor.reload.tutor_account.balance_pending).to eq 0
     end

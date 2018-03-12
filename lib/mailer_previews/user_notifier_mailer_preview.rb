@@ -1,6 +1,6 @@
 class UserNotifierMailerPreview < ActionMailer::Preview
   def send_signup_email
-    client = Struct.new(:email, :name).new("client@example.com", "Client")
+    client = Struct.new(:email, :full_name).new("client@example.com", "Client")
     UserNotifierMailer.send_signup_email(client)
   end
 
@@ -16,7 +16,7 @@ class UserNotifierMailerPreview < ActionMailer::Preview
 
   def send_invoice_notice
     client = Struct.new(:email).new("client@example.com")
-    tutor = Struct.new(:name).new("Tutor")
+    tutor = Struct.new(:full_name).new("Tutor")
     invoice = Struct.new(:created_at, :submitter, :hours, :subject, :online)
       .new(Time.current, tutor, 1.75, "English", true)
     UserNotifierMailer.send_invoice_notice(client, invoice)

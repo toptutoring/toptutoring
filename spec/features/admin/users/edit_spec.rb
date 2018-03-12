@@ -12,7 +12,7 @@ feature "Edit user" do
 
     visit edit_admin_user_path(student)
 
-    fill_in "Name", with: "Jack"
+    fill_in "user_first_name", with: "Jack"
     click_on "Submit"
 
     visit admin_users_path
@@ -20,7 +20,7 @@ feature "Edit user" do
 
     visit edit_admin_user_path(tutor)
 
-    fill_in "Name", with: "Todd"
+    fill_in "user_first_name", with: "Todd"
     click_on "Submit"
 
     visit admin_users_path
@@ -28,7 +28,7 @@ feature "Edit user" do
 
     visit edit_admin_user_path(client)
 
-    fill_in "Name", with: "Brian"
+    fill_in "user_first_name", with: "Brian"
     click_on "Submit"
 
     visit admin_users_path
@@ -36,7 +36,7 @@ feature "Edit user" do
 
     visit edit_admin_user_path(director)
 
-    fill_in "Name", with: "Pierre"
+    fill_in "user_first_name", with: "Pierre"
     click_on "Submit"
 
     visit admin_users_path

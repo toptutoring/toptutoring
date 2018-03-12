@@ -50,7 +50,7 @@ feature "Admin timesheet features" do
 
     account = contractor.contractor_account
     expect(account.balance_pending).to eq Money.new(15_00)
-    expect(page).to have_content("Submitter: " + contractor.name)
+    expect(page).to have_content("Submitter: " + contractor.full_name)
     expect(page).to have_content("Description")
     expect(page).to have_content("Hours")
 

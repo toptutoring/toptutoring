@@ -8,14 +8,14 @@ module Users
     end
 
     def create
-      results = CreateTutorService.create!(signups_params, tutor_subject_params)
+      results = CreateTutorService.create!(signups_params, password, tutor_subject_params)
       if results.success?
         sign_in(results.user)
         flash.notice = results.message
         redirect_to :root
       else
         @user = results.user
-        flash.alert = results.message
+        flash.now[:alert] = results.message
         render :new
       end
     end
@@ -27,12 +27,16 @@ module Users
 
     def signups_params
       params.require(:user)
-            .permit(:name, :phone_number, :email, :password)
+            .permit(:first_name, :last_name, :phone_number, :email, :password)
             .merge(roles: Role.where(name: "tutor"), access_state: "enabled")
     end
 
     def tutor_subject_params
       params.fetch(:tutor, {}).permit(subjects: [])
+    end
+
+    def password
+      params.require(:confirm_password)
     end
 
     def redirect_to_root

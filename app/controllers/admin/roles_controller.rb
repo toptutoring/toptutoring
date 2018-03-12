@@ -10,7 +10,7 @@ module Admin
 
     def create
       user_role = create_role
-      user_name = user_role.user.name
+      user_name = user_role.user.full_name
       role_name = user_role.role.name
       flash.notice = "#{user_name} has been assigned the role of #{role_name}. Please set rates."
       redirect_to admin_roles_path
@@ -57,7 +57,7 @@ module Admin
     end
 
     def destroy_success_string(user, role)
-      "#{user.name} has been removed as a #{role.name}."
+      "#{user.full_name} has been removed as a #{role.name}."
     end
   end
 end

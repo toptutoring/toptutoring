@@ -15,7 +15,7 @@ class TutorAccount < ApplicationRecord
   # clears join table
   before_destroy { subjects.clear }
 
-  delegate :name, to: :user
+  delegate :full_name, to: :user
 
   def balance_pending
     Money.new invoices.pending.sum(:submitter_pay_cents)

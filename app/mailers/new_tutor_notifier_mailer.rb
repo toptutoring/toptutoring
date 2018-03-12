@@ -5,6 +5,6 @@ class NewTutorNotifierMailer < ApplicationMailer
     @new_user = new_user
     users = User.admin_and_directors
     mail(bcc: users.map(&:email),
-         subject: "#{@new_user.name} has just registered as a tutor")
+         subject: "#{@new_user.full_name} has just registered as a tutor")
   end
 end

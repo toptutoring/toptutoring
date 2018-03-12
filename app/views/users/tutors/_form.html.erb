@@ -6,8 +6,13 @@
   </p>
   <%= form_for @user, url: users_tutors_path(@user), html: { class: "form-vertical", id: "tutor-signup" } do |f| %>
     <div class="col-md-12 form-group">
-      <%= f.label :name %>
-      <%= f.text_field :name, type: "text", placeholder: "FULL NAME", class: "form-control mb-15 input-lg", required: true %>
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, type: "text", placeholder: "FIRST NAME", class: "form-control mb-15 input-lg", required: true %>
+    </div>
+
+    <div class="col-md-12 form-group">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, type: "text", placeholder: "LAST NAME", class: "form-control mb-15 input-lg", required: true %>
     </div>
 
     <div class="col-md-12 form-group">
@@ -25,6 +30,10 @@
       <%= f.password_field :password, placeholder: "PASSWORD", class: "form-control mb-15 input-lg", required: true %>
     </div>
 
+    <div class="col-md-12 form-group">
+      <%= f.label :confirm_password %>
+      <%= password_field_tag :confirm_password, nil, placeholder: "CONFIRM PASSWORD", class: "form-control mb-15 input-lg", required: true %>
+    </div>
     <div class="col-md-12" style="margin-top:60px;">
       <%= render "tutor_checkbox_subjects", f: f %>
     </div>

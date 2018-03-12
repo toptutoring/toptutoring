@@ -1,13 +1,15 @@
-<div class="row" id="review-widget">
-  <div class="col-md-6 col-md-offset-3">
-    <div class="widget p-15">
-      <div class="widget-heading">
-        <h3 class="widget-title text-center">Top Tutoring Review</h3>
-        <p class="widget-hint ml-15 mt-15 mb-0">Hello <%= @reviewer.name %>. Let us know how we're doing!</p>
-      </div>
-      <div class="widget-body pt-0">
-        <%= render "review_form", reviewer: @reviewer, review: @review %>
+<section>
+  <div class="row" id="review-widget">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="widget p-15">
+        <div class="widget-heading">
+          <h3 class="widget-title text-center">Top Tutoring Review</h3>
+        <p class="widget-hint ml-15 mt-15 mb-0">Hello <%= @reviewer.full_name %>. Let us know how we're doing!</p>
+        </div>
+        <div class="widget-body pt-0">
+          <%= render "review_form", reviewer: @reviewer, review: @review %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>

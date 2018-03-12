@@ -13,7 +13,8 @@ feature "Edit tutor" do
 
       expect(page).to have_content("Name")
       expect(page).to have_content("Email")
-      expect(page).to have_selector("input[value='#{tutor.name}']")
+      expect(page).to have_selector("input[value='#{tutor.first_name}']")
+      expect(page).to have_selector("input[value='#{tutor.last_name}']")
       expect(page).to have_selector("input[value='#{tutor.email}']")
     end
 
@@ -32,7 +33,7 @@ feature "Edit tutor" do
       sign_in(director)
       visit edit_admin_tutor_path(tutor)
 
-      fill_in "Name", with: "new tutor"
+      fill_in "user_first_name", with: "new tutor"
       fill_in "Email", with: "new_email@gmail.com"
 
       click_on "Submit"
@@ -56,7 +57,7 @@ feature "Edit tutor" do
       sign_in(admin)
       visit edit_admin_tutor_path(tutor)
 
-      fill_in "Name", with: "new tutor"
+      fill_in "user_first_name", with: "new tutor"
       fill_in "Email", with: "new_email@gmail.com"
 
       click_on "Submit"

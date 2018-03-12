@@ -1,0 +1,14 @@
+<tr>
+  <th><%= link_to blog_post.title, blog_post_path(blog_post) %></th>
+  <th><%= l blog_post.publish_date %></th>
+  <th><%= blog_post.draft? %></th>
+  <th>
+    <%= link_to "Edit", edit_blog_post_path(blog_post), class: "btn btn-primary mr-10" %>
+    <%= link_to "Delete", blog_post_path(blog_post), method: :delete, remote: true, class: "btn btn-danger mr-10" %>
+    <% if blog_post.draft? %>
+      <%= link_to "Publish", publish_blog_post_path(blog_post, draft: 0), class: "btn btn-info" %>
+    <% else %>
+      <%= link_to "Unpublish", publish_blog_post_path(blog_post, draft: 1), class: "btn btn-warning" %>
+    <% end %>
+  </th>
+</tr>

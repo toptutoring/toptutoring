@@ -16,7 +16,7 @@
       <% timesheets.order(:submitter_id).each do |timesheet| %>
         <tr>
           <td><%= timesheet.id %></td>
-          <td><%= timesheet.submitter.name %></td>
+          <td><%= timesheet.submitter.full_name %></td>
           <td><%= l(timesheet.updated_at, format: :date) %></td>
           <td><%= timesheet.hours %></td>
           <td><%= description = timesheet.description %></td>

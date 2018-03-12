@@ -6,7 +6,7 @@
   <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
     <script>
 FS.identify('<%= current_user.id %>', {
-  displayName: '<%= current_user.name %>',
+  displayName: '<%= current_user.full_name %>',
   email: '<%= current_user.email %>',
   role_str: '<%= current_user.try(:roles).try(:first).try(:name) %>',
 });
@@ -20,7 +20,7 @@ FS.identify('<%= current_user.id %>', {
           <div class="media mt-0">
             <div class="media-left"><i class="fs-24 icon ion-ios-person"></i><span class="status bg-success"></span></div>
             <div class="media-right media-middle pl-0">
-              <p class="fs-14 mb-0">Hi, <%= current_user.name %>
+              <p class="fs-14 mb-0">Hi, <%= current_user.full_name %>
             <i class="pl-5 icon ion-arrow-down-b"></i>
               </p>
             </div>

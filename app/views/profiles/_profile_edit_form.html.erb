@@ -8,10 +8,19 @@
 
         <div class ="form-group form-group-lg">
           <div class ="col-lg-4 text-right">
-            <%= label_tag(:name, "Name", class: "control-label") %>
+            <%= f.label(:first_name, class: "control-label") %>
           </div>
           <div class="col-lg-8">
-            <%= f.text_field :name, class: "form-control input-lg", required: true %>
+            <%= f.text_field :first_name, class: "form-control input-lg", required: true %>
+          </div>
+        </div>
+
+        <div class ="form-group form-group-lg">
+          <div class ="col-lg-4 text-right">
+            <%= f.label(:last_name, class: "control-label") %>
+          </div>
+          <div class="col-lg-8">
+            <%= f.text_field :last_name, class: "form-control input-lg", required: true %>
           </div>
         </div>
 

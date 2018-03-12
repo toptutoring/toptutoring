@@ -17,7 +17,7 @@ feature "Timesheet Index" do
     expect(page).to have_content("Total Pay")
     expect(page).to have_content("Status")
     expect(page).to have_content("Actions")
-    expect(page).to have_content(timesheet.submitter.name)
+    expect(page).to have_content(timesheet.submitter.full_name)
     expect(page).to have_content(timesheet.updated_at.strftime("%-m/%-e/%y"))
     expect(page).to have_content(timesheet.hours)
     expect(page).to have_content(timesheet.description)

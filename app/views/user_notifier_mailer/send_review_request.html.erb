@@ -61,7 +61,7 @@
                 </tr>
                 <tr height="80">
                   <td width="120" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
-                    <p>Hello <%= @user.name %>,</p><br/>
+                    <p>Hello <%= @user.full_name %>,</p><br/>
                     <p>
                     Thank you for using our services. We'd love to hear from you! Review our services <%= link_to "here", new_review_url(@user.unique_token) %>.
                     </p><br/>

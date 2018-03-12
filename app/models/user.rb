@@ -29,9 +29,12 @@ class User < ActiveRecord::Base
   attr_encrypted :refresh_token, key: ENV.fetch("ENCRYPTOR_KEY")
 
   # Validation #
-  validates_presence_of :name, :email
+  validates :phone_number,
+    phone: { possible: true, country_specifier: -> user { user.country_code } },
+    on: :create
+  validates_presence_of :first_name, :email
   validates :email, uniqueness: true, on: :create
-  validates_presence_of :phone_number, on: :create
+  validates_presence_of :phone_number, :country_code, on: :create
   validate :credits_must_be_by_quarter_hours
 
   def credits_must_be_by_quarter_hours
@@ -95,6 +98,10 @@ class User < ActiveRecord::Base
     self.encrypted_access_token_iv = nil
     self.token_expires_at = nil
     self.save!
+  end
+
+  def full_name
+    "#{first_name} #{last_name}".strip
   end
 
   def has_role?(role)

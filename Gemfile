@@ -43,6 +43,8 @@ gem "carrierwave"
 gem "mini_magick"
 gem "ckeditor"
 gem "fog-aws"
+gem "geocoder"
+gem 'will_paginate', '~> 3.1.0'
 
 group :development do
   gem "listen"

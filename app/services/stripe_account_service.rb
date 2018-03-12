@@ -33,7 +33,7 @@ class StripeAccountService
 
     def create_new_stripe_customer(user, token_id)
       Stripe::Customer.create(
-        description: "Customer account for #{user.name} with id ##{user.id}.",
+        description: "Customer account for #{user.full_name} with id ##{user.id}.",
         source: token_id
       )
     end

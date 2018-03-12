@@ -28,11 +28,11 @@ class EngagementPresenter < SimpleDelegator
   end
 
   def client_name
-    @engagement.client.name
+    @engagement.client.full_name
   end
 
   def tutor_name
-    @engagement.tutor.try(:name)
+    @engagement.tutor.try(:full_name)
   end
 
   def subject

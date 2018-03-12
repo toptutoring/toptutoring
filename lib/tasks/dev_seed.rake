@@ -7,7 +7,8 @@ namespace :dev do
 
     # Update client
     client = User.where(email: "client@example.com").first_or_initialize
-    client.name = "Client"
+    client.first_name = "Client"
+    client.last_name = "LastName"
     client.password = "password"
     client.phone_number = "5105555555"
     client.access_state = "enabled"
@@ -23,7 +24,8 @@ namespace :dev do
 
     # New client
     client_new = User.where(email: "clientnew@example.com").first_or_initialize
-    client_new.name = "Client"
+    client_new.first_name = "Client"
+    client_new.last_name = "LastName"
     client_new.password = "password"
     client_new.phone_number = "5105555555"
     client_new.access_state = "enabled"
@@ -39,7 +41,8 @@ namespace :dev do
 
     # Update student
     student1 = User.where(email: "student1@example.com").first_or_initialize
-    student1.name = "Student1"
+    student1.first_name = "Student1"
+    student1.last_name = "LastName"
     student1.email = "student1@example.com"
     student1.password = "password"
     student1.phone_number = "5105555555"
@@ -47,11 +50,12 @@ namespace :dev do
     student1.roles = Role.where(name: "student")
     student1.client_id = client.id
     student1.save!
-    student1.create_student_account!(client_account: client.client_account, name: student1.name)
+    student1.create_student_account!(client_account: client.client_account, name: student1.full_name)
 
     # Update student
     student2 = User.where(email: "student2@example.com").first_or_initialize
-    student2.name = "Student2"
+    student2.first_name = "Student2"
+    student2.last_name = "LastName"
     student2.email = "student2@example.com"
     student2.password = "password"
     student2.phone_number = "5105555555"
@@ -59,11 +63,12 @@ namespace :dev do
     student2.roles = Role.where(name: "student")
     student2.client_id = client.id
     student2.save!
-    student2.create_student_account!(client_account: client.client_account, name: student2.name)
+    student2.create_student_account!(client_account: client.client_account, name: student2.full_name)
 
     # Update tutor
     tutor = User.where(email: "tutor@example.com").first_or_initialize
-    tutor.name = "Tutor"
+    tutor.first_name = "Tutor"
+    tutor.last_name = "LastName"
     tutor.password = "password"
     tutor.phone_number = "5105555555"
     tutor.auth_provider = "dwolla"
@@ -76,7 +81,8 @@ namespace :dev do
 
     # Update director
     director = User.where(email: "director@example.com").first_or_initialize
-    director.name = "Director"
+    director.first_name = "Director"
+    director.last_name = "LastName"
     director.password = "password"
     director.phone_number = "5105555555"
     director.auth_provider = "dwolla"
@@ -89,7 +95,8 @@ namespace :dev do
 
     # Update admin
     admin = User.where(email: "admin@example.com").first_or_initialize
-    admin.name = "Admin"
+    admin.first_name = "Admin"
+    admin.last_name = "LastName"
     admin.password = "password"
     admin.phone_number = "5105555555"
     admin.auth_provider = "dwolla"
@@ -101,7 +108,8 @@ namespace :dev do
 
     # Create contractor
     contractor = User.where(email: "contractor@example.com").first_or_initialize
-    contractor.name = "Contractor"
+    contractor.first_name = "Contractor"
+    contractor.last_name = "LastName"
     contractor.password = "password"
     contractor.phone_number = "5105555555"
     contractor.auth_provider = "dwolla"

@@ -1,0 +1,33 @@
+<section>
+  <div class="container">
+    <div class="row m-30">
+      <div class="col-md-9">
+        <%= tag.h3 @post.title, class: "inline_block mb-12"%>
+        <div>
+          <%= raw @post.content %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="row mb16">
+          <p class="lead mb8">Publish Date</p>
+          <%= @post.publish_date ? @post.publish_date.to_formatted_s(:long_ordinal) : "Not published" %>
+        </div>
+        <div class="row mb16">
+          <p class="lead mb8">Categories</p>
+          <% @post.blog_categories.each do |cat| %>
+            <span class="label"><%= cat.name %></span>
+          <% end %>
+        </div>
+        <div class="row mb16">
+          <p class="lead mb8">Excerpt</p>
+          <%= @post.excerpt %>
+        </div>
+        <div class="row">
+          <%= link_to "Edit Post", edit_blog_post_path(@post) %><br/>
+          <%= link_to "New Post", new_blog_post_path %><br/>
+          <%= link_to "All Posts", blog_posts_path %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

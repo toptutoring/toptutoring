@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :client_user, class: User do
-    name          { "Client" }
+    first_name          { "ClientName" }
+    last_name          { "ClientLast" }
     phone_number  { "(510)555-5555" }
     sequence(:email) { |n| "client_#{n}@example.com" }
     password      { "password" }
@@ -29,7 +30,7 @@ FactoryBot.define do
       if user.signup.student
         user.client_account
             .student_accounts
-            .create(user: user, name: user.name)
+            .create(user: user, name: user.full_name)
       end
     end
   end

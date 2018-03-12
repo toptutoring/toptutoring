@@ -6,7 +6,7 @@
         <div class="col-md-4">
           <div class="form-group">
               <label>
-                <%= check_box_tag "tutor[subjects][]", subject.id %>
+                <%= check_box_tag "tutor[subjects][]", subject.id, false, id: "tutor_subject_#{subject.id}" %>
                 <span><%= subject.name %></span>
               </label>
           </div>
