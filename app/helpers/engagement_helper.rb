@@ -5,6 +5,7 @@ module EngagementHelper
   end
 
   def subject_info(engagement)
+    return concat tag.p "Other" if engagement.subject_id == 1
     concat tag.p engagement.academic_type.titlecase
     concat tag.p engagement.subject.name.titlecase
   end
