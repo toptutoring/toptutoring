@@ -2,14 +2,15 @@ class DashboardsController < ApplicationController
   before_action :require_login
 
   def admin
-    @pending_engagements = Engagement
-                           .pending
-                           .includes(:student_account,
-                                     :subject, tutor_account: :user, client_account: :user)
+    @pending_engagements = Engagement.pending
+                                     .includes(:student_account, :subject, 
+                                               :tutor_account, client_account: :user)
   end
 
   def director
-    @pending_engagements = Engagement.pending.includes(:student_account, :subject, tutor_account: :user, client_account: :user)
+    @pending_engagements = Engagement.pending
+                                     .includes(:student_account, :subject, 
+                                               :tutor_account, client_account: :user)
     @tutor_engagements = current_user.tutor_account.engagements
     @invoice = Invoice.new()
   end
