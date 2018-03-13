@@ -23,7 +23,7 @@ feature "Index tutors" do
       expect(page).to have_content(tutor.email)
       expect(page).to have_content(tutor.tutor_account.balance_pending)
       expect(page).to have_content("View All")
-      expect(page).to have_link("Edit")
+      expect(page).to have_link(href: edit_admin_tutor_path(tutor))
       expect(page).not_to have_link("Pay tutor")
     end
   end
@@ -43,7 +43,7 @@ feature "Index tutors" do
       expect(page).to have_content(tutor.email)
       expect(page).to have_content(tutor.tutor_account.balance_pending)
       expect(page).to have_content("View All")
-      expect(page).to have_link("Edit")
+      expect(page).to have_link(href: edit_admin_tutor_path(tutor))
       expect(page).to have_link("Pay tutor")
     end
 

@@ -12,7 +12,7 @@ feature "Masquerading" do
 
     expect(page).to have_content("Hi, " + director.full_name)
 
-    click_on "Masquerade"
+    find_link(href: user_masquerade_path(client)).click
 
     expect(page).to have_content("Now masquerading as " + client.email)
     expect(page).to have_content("Hi, " + client.full_name)
@@ -29,7 +29,7 @@ feature "Masquerading" do
 
     expect(page).to have_content("Hi, " + admin.full_name)
 
-    click_on "Masquerade"
+    find_link(href: user_masquerade_path(client)).click
 
     expect(page).to have_content("Now masquerading as " + client.email)
     expect(page).to have_content("Hi, " + client.full_name)

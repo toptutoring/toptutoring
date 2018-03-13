@@ -28,13 +28,16 @@ feature "Index engagements" do
       expect(page).to have_content(client.online_academic_rate)
       expect(page).to have_content(client.in_person_academic_rate)
       expect(page).to have_content(engagement.state)
-      expect(page).to have_link("Edit")
-      expect(page).to have_link("Disable")
+      expect(page).to have_css("tr#engagement_#{engagement.id}")
+      expect(page).to have_link(href: edit_engagement_path(engagement))
+      expect(page).to have_link(href: disable_engagement_path(engagement))
+      expect(page).to have_no_link(href: enable_engagement_path(engagement))
     end
   end
 
   context "when user is admin" do
     scenario "should see engagements" do
+      engagement.update(state: "pending")
       sign_in(admin)
       visit engagements_path
       expect(page).to have_content("Engagement")
@@ -51,8 +54,10 @@ feature "Index engagements" do
       expect(page).to have_content(client.online_academic_rate)
       expect(page).to have_content(client.in_person_academic_rate)
       expect(page).to have_content(engagement.state)
-      expect(page).to have_link("Edit")
-      expect(page).to have_link("Disable")
+      expect(page).to have_css("tr#engagement_#{engagement.id}")
+      expect(page).to have_link(href: edit_engagement_path(engagement))
+      expect(page).to have_link(href: enable_engagement_path(engagement))
+      expect(page).to have_no_link(href: disable_engagement_path(engagement))
     end
   end
 end

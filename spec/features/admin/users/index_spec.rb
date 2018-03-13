@@ -24,7 +24,6 @@ feature "List all users" do
       expect(page).to have_content("Access State")
       expect(page).to have_content("Roles")
       expect(page).to have_content("Action")
-      expect(page).to have_content("Masquerade")
 
       expect(page).to have_content(student.full_name)
       expect(page).to have_content(student.email)
@@ -33,6 +32,7 @@ feature "List all users" do
       student.roles.distinct.pluck(:name).each do |role|
         expect(page).to have_content(role.humanize)
       end
+      expect(page).to have_link(href: user_masquerade_path(student))
 
       expect(page).to have_content(director.full_name)
       expect(page).to have_content(director.email)
@@ -41,6 +41,7 @@ feature "List all users" do
       director.roles.distinct.pluck(:name).each do |role|
         expect(page).to have_content(role.humanize)
       end
+      expect(page).to have_link(href: user_masquerade_path(director))
 
       expect(page).to have_content(tutor.full_name)
       expect(page).to have_content(tutor.email)
@@ -49,14 +50,16 @@ feature "List all users" do
       tutor.roles.distinct.pluck(:name).each do |role|
         expect(page).to have_content(role.humanize)
       end
+      expect(page).to have_link(href: user_masquerade_path(tutor))
 
       expect(page).to have_content(client.full_name)
       expect(page).to have_content(client.email)
       expect(page).to have_content(client.phone_number)
       expect(page).to have_content(client.access_state)
-      student.roles.distinct.pluck(:name).each do |role|
+      client.roles.distinct.pluck(:name).each do |role|
         expect(page).to have_content(role.humanize)
       end
+      expect(page).to have_link(href: user_masquerade_path(client))
 
       sign_out
     end
