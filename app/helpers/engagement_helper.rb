@@ -10,6 +10,11 @@ module EngagementHelper
     concat tag.p engagement.subject.name.titlecase
   end
 
+  def engagement_state_label(engagement)
+    span_color = engagement.active? ? "label-success" : "label-warning"
+    tag.span engagement.state, class: "label label-outline #{span_color}"
+  end
+
   def rates_and_credits(engagement)
     client = engagement.client
     if engagement.academic?

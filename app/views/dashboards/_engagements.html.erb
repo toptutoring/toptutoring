@@ -27,7 +27,7 @@
                   <td><%= link_to_phone_number(engagement.client) %></td>
                   <td class="text-center"><%= engagement.subject.name %></td>
                   <td class="text-center"><%= engagement.academic_type.humanize %></td>
-                  <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
+                  <td class="text-center"><%= engagement_state_label(engagement) %></span></td>
                   <td class="text-center">
                     <%= link_to edit_engagement_path(engagement) do %>
                       <button type="button" class="btn btn-outline btn-primary">Edit</button>
