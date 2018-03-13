@@ -22,7 +22,7 @@
               </thead>
               <tbody>
                 <% @engagements.each do |engagement| %>
-                  <tr>
+                  <tr id="engagement_<%= engagement.id %>">
                     <td><%= engagement.id %></td>
                     <td><% client_info(engagement) %></td>
                     <td><%= engagement.tutor.try(:full_name) %></td>
@@ -30,18 +30,7 @@
                     <td class="text-center"><% rates_and_credits(engagement) %></td>
                     <td class="text-center"><%= engagement_state_label(engagement) %></td>
                     <td class="text-center">
-                      <%= link_to edit_engagement_path(engagement) do %>
-                        <button type="button" class="btn btn-outline btn-success mr-15">Edit</button>
-                      <% end %>
-                      <% if engagement.tutor_account && engagement.pending? %>
-                        <%= link_to enable_engagement_path(engagement) do %>
-                          <button type="button" class="btn btn-outline btn-primary">Enable</button>
-                        <% end %>
-                      <% elsif engagement.active? %>
-                        <%= link_to disable_engagement_path(engagement.id) do %>
-                          <button type="button" class="btn btn-outline btn-danger">Disable</button>
-                        <% end %>
-                      <% end %>
+                      <% actions_for_engagement(engagement) %>
                     </td>
                   </tr>
                 <% end %>

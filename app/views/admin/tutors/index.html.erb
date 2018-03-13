@@ -44,10 +44,13 @@
                   </td>
                   <td class="text-center"><%= tutor.tutor_account.balance_pending %></td>
                   <td class="text-left">
-                    <%= link_to "Edit", edit_admin_tutor_path(tutor), class: "btn btn-outline btn-success" %>
-                    <%= link_to "Remove", admin_user_path(tutor), class: "btn btn-outline btn-danger", method: :delete, data: { confirm: "This will permanently remove the user from the databse. Are you sure?" } %>
+                      <%= link_to edit_admin_tutor_path(tutor), data: { toggle: "tooltip", placement: "top", "original-title" => "Edit user info" }, class: "mr-15 fs-24" do %>
+                        <i class="icon ion-edit"></i>
+                      <% end %>
+                      <%= link_to admin_user_path(tutor), method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Remove/archive user from list", confirm: "This will permanently remove the user from the databse. Are you sure?" }, class: "mr-15 fs-24" do %>
+                        <i class="icon ion-android-archive"></i>
+                      <% end %>
                     <%= render "shared/masquerade_start_button", user: tutor %>
-                  </td>
                 </tr>
               <% end %>
             </tbody>
