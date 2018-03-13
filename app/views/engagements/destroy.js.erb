@@ -1,0 +1,7 @@
+<% if @engagement.destroyed? %>
+  var engagementRow = document.getElementById("engagement_<%= @engagement.id %>");
+  engagementRow.parentNode.removeChild(engagementRow);
+<% end %>
+
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0);

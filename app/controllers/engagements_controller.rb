@@ -1,10 +1,11 @@
 class EngagementsController < ApplicationController
   before_action :require_login
   before_action :set_tutors, only: [:new, :edit]
-  before_action :set_engagement, only: [:edit, :update, :enable, :disable]
+  before_action :set_engagement, only: [:edit, :update, :enable, :disable, :destroy]
 
   def index
-    @engagements = Engagement.order("created_at DESC")
+    @engagements = Engagement.processing
+                             .order("created_at DESC")
                              .includes(:subject, :student_account, client_account: :user, tutor_account: :user)
   end
 
@@ -38,21 +39,27 @@ class EngagementsController < ApplicationController
 
   def enable
     if @engagement.enable!
-      redirect_back(fallback_location: (request.referer || root_path),
-                     notice: "Engagement successfully enabled!")
+      flash.notice = "Engagement successfully enabled!"
     else
-      redirect_back(fallback_location: (request.referer || root_path),
-                    flash: { error: @engagement.errors.full_messages })
+      flash.alert = @engagement.errors.full_messages
     end
+    redirect_to action: :index
   end
 
   def disable
     if @engagement.disable!
-      redirect_back(fallback_location: (request.referer || root_path),
-                     notice: "Engagement successfully disabled!")
+      flash.notice = "Engagement successfully disabled and archived!"
     else
-      redirect_back(fallback_location: (request.referer || root_path),
-                    flash: { error: @engagement.errors.full_messages })
+      flash.alert = @engagement.errors.full_messages
+    end
+    redirect_to action: :index
+  end
+
+  def destroy
+    if @engagement.destroy
+      flash.now[:notice] = "Engagement has been removed."
+    else
+      flash.now[:alert] = @engagement.errors.full_messages
     end
   end
 
