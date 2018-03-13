@@ -12,6 +12,8 @@ class Engagement < ActiveRecord::Base
   #### Scopes ####
   scope :pending, -> { where(state: :pending).order('created_at DESC') }
   scope :active, -> { where(state: :active) }
+  scope :processing, -> { where.not(state: :archived) }
+  scope :archived, -> { where(state: :archived) }
 
   #### Validations ####
   validates_presence_of :subject
@@ -25,7 +27,7 @@ class Engagement < ActiveRecord::Base
     end
 
     event :disable do
-      transition :active => :pending
+      transition :active => :archived
     end
   end
 
