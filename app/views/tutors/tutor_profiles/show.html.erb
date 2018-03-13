@@ -35,6 +35,18 @@
         <div class ="form-group">
           <div class ="col-lg-4 text-right">
             <%= f.label(:short_description, class: "control-label") %>
+            <p>This description will be used for short blurbs</p>
+
+            <a href="#" data-toggle="modal" data-target=".modal-profile-blurb" class="label label-success">Example Profile Blurb</a>
+
+            <div tabindex="-1" role="dialog" aria-labelledby="profileBlurb" class="modal fade modal-profile-blurb" style="display: none;">
+              <div role="document" class="modal-dialog">
+                <div class="modal-content text-center">
+                  <%= image_tag "tutors/profile_blurb_example", width: "100%" %>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div class="col-lg-8">
             <%= f.text_area :short_description, rows: 4, class: "form-control", required: true %>
@@ -44,6 +56,17 @@
         <div class ="form-group">
           <div class ="col-lg-4 text-right">
             <%= f.label(:description, "Long Description", class: "control-label") %>
+            <p>This description will be used for your unique profile page and for introducing you to clients. Please take some thought into this section.</p>
+
+            <a href="#" data-toggle="modal" data-target=".modal-profile-page" class="label label-success">Example Profile Page</a>
+            <div tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade modal-profile-page" style="display: none;">
+              <div role="document" class="modal-dialog">
+                <div class="modal-content text-center">
+                  <%= image_tag "tutors/public_profile_example", width: "100%" %>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div class="col-lg-8">
             <%= f.text_area :description, rows: 10, class: "form-control", required: true %>
@@ -62,7 +85,6 @@
   <div class="widget">
     <div class="widget-heading clearfix">
       <h3 class="widget-title pb-10 text-center">Your Test Scores</h3>
-      <p class="widget-hint">Input your scores so we can share how awesome you are!</p>
     </div>
     <div class="widget-body text-center">
       <table id="test_score_table" class="table table-bordered">
