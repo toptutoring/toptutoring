@@ -124,6 +124,10 @@ class User < ActiveRecord::Base
     invoice.engagement.academic? ? academic_credit : test_prep_credit
   end
 
+  def phone_formatted(format = :national)
+    Phonelib.parse(phone_number, country_code).send(format)
+  end
+
   def notify_bugsnag
     if Rails.env.production?
       Bugsnag.notify("OpenSSL::Cipher::CipherError: Invalid tokens for user #{id}")
