@@ -4,6 +4,7 @@ module Tutors
 
     def index
       @tutor_engagements = current_user.tutor_account.engagements
+                                       .active
                                        .includes(:subject, :student_account)
                                        .order("student_accounts.name")
     end
