@@ -31,7 +31,6 @@ gem "responders"
 gem "state_machines"
 gem "state_machines-activerecord"
 gem "activemodel-serializers-xml"
-gem "intercom-rails"
 gem "cancancan", "~> 1.16"
 gem "money-rails", "~> 1"
 gem "clockwork", "~> 2.0"
@@ -45,6 +44,7 @@ gem "ckeditor"
 gem "fog-aws"
 gem "geocoder"
 gem 'will_paginate', '~> 3.1.0'
+# gem "intercom-rails" # Not currently using Intercom. Uncomment the intercom initializer to re-enable
 
 group :development do
   gem "listen"
