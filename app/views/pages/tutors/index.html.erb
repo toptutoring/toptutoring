@@ -16,7 +16,7 @@
         <div class="col-md-4 col-sm-6">
           <div class="image-caption hover-caption image-tile outer-title square-div">
             <%= link_to pages_tutor_path(tutor.user.first_name) do %>
-              <%= image_tag tutor.profile_picture.tile.url, alt: tutor.user.first_name %>
+              <%= image_tag tutor.profile_picture.tile.url, alt: tutor.user.first_name unless tutor.profile_picture.file.nil? %>
               <div class="caption">
                 <p>Learn more about <%= tutor.user.first_name %></p>
               </div>
