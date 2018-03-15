@@ -77,3 +77,20 @@ input[type=number]::-webkit-outer-spin-button {
   position: relative;
   max-width:90%;
 }
+
+
+// Flex Containers
+.row.flex  {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.flex.flex-center {
+  justify-content: center;
+}
+.row.flex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+.row.flex > [class*='col-'] .widget {
+  height: 100%;
+}
