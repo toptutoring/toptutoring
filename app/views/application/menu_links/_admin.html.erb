@@ -9,5 +9,5 @@
 <%= menu_link(new_admin_funding_source_path, "Funding Source", "icon ion-card bg-primary") %>
 <%= menu_link(admin_subjects_path, "Subjects", "icon ion-card bg-primary") %>
 <%= menu_link(admin_cities_path, "Cities", "icon ion-android-globe bg-success") %>
-<%= menu_link(admin_feedbacks_path, "User Comments", "icon ion-compose bg-success") %>
+<%= menu_link(admin_feedbacks_path, "User Comments", "icon ion-compose bg-success", Feedback.unread.count) %>
 <%= menu_link(blog_posts_path, "Blog Posts", "icon ion-compose bg-success") %>

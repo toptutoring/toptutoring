@@ -5,5 +5,5 @@
 <%= menu_link(admin_tutors_path, "Tutors", "icon ion-ios-contact bg-purple") %>
 <%= menu_link(admin_cities_path, "Cities", "icon ion-android-globe bg-success") %>
 <%= menu_link(admin_client_reviews_path, "Reviews", "icon ion-ios-email-outline bg-danger") %>
-<%= menu_link(admin_feedbacks_path, "User Comments", "icon ion-compose bg-success") %>
+<%= menu_link(admin_feedbacks_path, "User Comments", "icon ion-compose bg-success", Feedback.unread.count) %>
 <%= menu_link(blog_posts_path, "Blog Posts", "icon ion-compose bg-success") %>
