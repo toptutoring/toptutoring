@@ -19,7 +19,7 @@ feature "Tutors are able to update their profiles", js: true  do
     select("SAT", from: "Test")
     score = "1600"
     fill_in "Score", with: score
-    click_on "Add Score"
+    click_button "Add"
 
     expect(page).to have_content("Your score has been recorded.")
     expect(TestScore.last.score).to eq score

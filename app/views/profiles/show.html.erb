@@ -12,7 +12,7 @@
         <p><%= current_user.email %></p>
       </div>
         <% if current_user.has_role?("tutor") %>
-          <%= link_to "Edit your public tutor profile", tutors_tutor_profile_path, class: "btn btn-block btn-primary" %>
+          <%= link_to "Edit your public tutor profile", tutors_tutor_profile_path, class: "btn btn-primary mb-15" %>
         <% end %>
     </div>
   </div>
