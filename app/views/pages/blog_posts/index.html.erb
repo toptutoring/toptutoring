@@ -13,7 +13,7 @@
             <i class="ti-tag"></i>
             <span>Categorized as
               <% post.blog_categories.each do |category| %>
-                <%= link_to category.name.titlecase, pages_blog_categories_path(category.name) %>
+                <%= link_to category.name, pages_blog_categories_path(category.name) %>
               <% end %>
             </span>
           </li>

@@ -8,11 +8,10 @@ module Pages
     end
 
     def categories
-      @posts = BlogPost.published
-                       .order(publish_date: :desc)
-                       .includes(:blog_categories)
-                       .where(blog_categories: { name: cat_name })
-                       .paginate(page: params[:page], per_page: 5)
+      cat = BlogCategory.find_by(name: cat_name)
+      @posts = cat.blog_posts.published
+                  .order(:publish_date)
+                  .paginate(page: params[:page], per_page: 5)
       render :index
     end
 
