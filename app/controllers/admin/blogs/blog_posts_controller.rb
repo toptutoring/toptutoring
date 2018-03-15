@@ -5,7 +5,8 @@ class Admin::Blogs::BlogPostsController < ApplicationController
   layout "authentication"
 
   def index
-    @posts = BlogPost.all
+    @posts = BlogPost.all.order(publish_date: :desc)
+                     .paginate(page: params[:page], per_page: 20)
     render layout: "application"
   end
 

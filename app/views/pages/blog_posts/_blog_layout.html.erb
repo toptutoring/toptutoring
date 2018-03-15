@@ -21,7 +21,7 @@
           <h6 class="title">Recent Posts</h6>
           <hr>
           <ul class="link-list recent-posts">
-            <% (@posts || BlogPost.all).last(4).each do |post| %>
+            <% (@posts || BlogPost.all.order(publish_date: :desc)).last(4).each do |post| %>
               <li>
                 <%= link_to post.title, pages_blog_post_path(post.slug) %>
                 <span class="date"><%= l post.publish_date, format: :default %></span>
