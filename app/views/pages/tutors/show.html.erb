@@ -6,6 +6,9 @@
           <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
             <h3 class="uppercase color-primary mb40 mb-xs-24">meet our top tutors</h3>
             <h3><%= @tutor.first_name %></h3>
+            <% if @tutor.tutor_account.test_scores.where.not(badge: nil).any? %>
+              <i class="icon ti-medall test-badge test-badge-gold" data-toggle="tooltip" data-placement="left" data-original-title="This tutor is a top performer in <%= @tutor.tutor_account.test_scores.where.not(badge: nil).map { |score| score.subject.name }.join(", ") %>"></i>
+            <% end %>
           </div>
         </div>
 
