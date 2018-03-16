@@ -1,0 +1,50 @@
+<h3 class="career-header"><%= t('www.careers.header') %></h1>
+<section class="image-square left">
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/calendar" %>
+    </div>
+  </div>
+  <div class="col-md-6 col-md-offset-1 content">
+    <h3>A Schedule that Fits Your Needs</h3>
+    <p class="mb0">Fill out our short form and one of our staff will get back to you shortly.</p>
+  </div>
+</section>
+<section class="image-square right">
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/work-from-anywhere" %>
+    </div>
+  </div>
+  <div class="col-md-6 content">
+    <h3>Work From Anywhere</h3>
+    <p class="mb0">All that's needed is a computer and internet connection. Work from the convenience of your home, office, school, anywhere!</p>
+  </div>
+</section>
+<section class="image-square left">
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/calculator" %>
+    </div>
+  </div>
+  <div class="col-md-6 col-md-offset-1 content">
+    <h3>Consistent Income</h3>
+    <p class="mb0">We take care of the billing and student recruitment logistics so you can focus on what matters - tutoring.</p>
+    <div class = "button-padding-top">
+      <%= link_to "Sign Up", client_sign_up_url(subdomain: "app"), class: "btn btn-lg btn-blue" %>
+    </div>
+  </div>
+</section>
+<section class="image-square right">
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/work-with-us" %>
+    </div>
+  </div>
+  <div class="col-md-6 content">
+    <h3>A UC Berkeley Student or Graduate and Interested in Applying?</h3>
+    <p class="mb0"><%= link_to "Contact Us", root_url(subdomain: nil) + "contact", class: "btn btn-lg btn-blue" %></p>
+    <h3>Already Invited?</h3>
+    <p class="mb0"><%= link_to "Sign Up", sign_up_url(subdomain: "app"), class: "btn btn-lg btn-blue" %></p>
+  </div>
+</section>
