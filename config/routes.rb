@@ -89,6 +89,9 @@ Rails.application.routes.draw do
       end
       namespace :admin do
         resources :tutors, only: [:index, :show, :edit, :update]
+        resources :tutor_accounts do
+          patch "badge" =>"tutor_accounts#badge"
+        end
         resources :payments, only: [:new, :create, :index]
         resources :invoices, only: [:index, :edit, :update] do
           patch :deny, on: :member
@@ -126,6 +129,12 @@ Rails.application.routes.draw do
         resources :invoices, only: [:index, :create, :destroy]
         resources :emails, only: [:index]
         resources :subjects, only: [:index, :update]
+        resource :tutor_profile, only: [:show, :update]
+        scope :tutor_profile do
+          post "profile_picture" => "tutor_profiles#post_picture", as: :add_profile_picture
+          delete "profile_picture" => "tutor_profiles#remove_picture", as: :remove_profile_picture
+        end
+        resources :test_scores, only: [:create, :destroy, :update]
       end
       resources :users do
         member do

@@ -1,0 +1,149 @@
+<div class="row flex flex-center">
+  <div class="col-md-6">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pb-10 text-center">Your Public Profile Picture</h3>
+      </div>
+      <div class="widget-body text-center">
+        <div class="row">
+          <div class="col-xs-12">
+            <%= form_for :tutor_profile, url: tutors_add_profile_picture_path, html: { class: "hidden-form" } do |pf| %>
+              <%= pf.file_field :profile_picture, required: true, class: "file-input", onchange: "this.form.submit();" %>
+            <% end %>
+
+            <% if @tutor_account.profile_picture.file.nil? %>
+
+              <%= label_tag :tutor_profile_profile_picture do %>
+                <a class="btn btn-lg btn-primary">Add a picture</a>
+              <% end %>
+
+            <% else %>
+
+              <div class="profile-image-container">
+                <%= image_tag @tutor_account.profile_picture, id: "tutor_profile_pic_display", class: "mb-15" %>
+
+                <div class="profile-image-links">
+                  <%= link_to tutors_remove_profile_picture_path, method: :delete do %>
+                    <i class="icon ion-trash-b" data-toggle="tooltip" data-placement="top" data-original-title="Remove this profile picture"></i>
+                  <% end %>
+                  <%= label_tag :tutor_profile_profile_picture do %>
+                    <i class="icon ion-loop file-input-label" data-toggle="tooltip" data-placement="top" data-original-title="Change this profile picture"></i>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pb-10 text-center">Edit Your Public Profile</h3>
+      </div>
+      <div class="widget-body">
+        <%= form_with model: current_user.tutor_account, url: tutors_tutor_profile_path, class: "form-horizontal" do |f| %>
+
+          <div class ="form-group">
+            <div class ="col-lg-4 text-right">
+              <%= f.label(:short_description, "Short Description", class: "control-label") %>
+
+              <p><a href="#" data-toggle="modal" data-target=".modal-profile-blurb" class="btn btn-sm btn-default">Example Profile Blurb</a></p>
+
+              <div tabindex="-1" role="dialog" aria-labelledby="profileBlurb" class="modal fade modal-profile-blurb" style="display: none;">
+                <div role="document" class="modal-dialog">
+                  <div class="modal-content text-center">
+                    <%= image_tag "tutors/profile_blurb_example", width: "100%" %>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-lg-8">
+              <%= f.text_area :short_description, placeholder: "This description will be used for short blurbs", rows: 4, class: "form-control", required: true %>
+            </div>
+          </div>
+
+          <div class ="form-group">
+            <div class ="col-lg-4 text-right">
+              <%= f.label(:description, "Long Description", class: "control-label") %>
+
+              <p><a href="#" data-toggle="modal" data-target=".modal-profile-page" class="btn btn-sm btn-default">Example Profile Page</a></p>
+              <div tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade modal-profile-page" style="display: none;">
+                <div role="document" class="modal-dialog">
+                  <div class="modal-content text-center">
+                    <%= image_tag "tutors/public_profile_example", width: "100%" %>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-lg-8">
+              <%= f.text_area :description, placeholder: "This description will be used for your unique profile page and for introducing you to clients. Please take some thought into this section.", rows: 10, class: "form-control", required: true %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-4 text-center">
+              <%= f.submit "Submit", class: "btn btn-primary" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pb-10 text-center">Your Test Scores</h3>
+        <div class="widget-hint">
+          <p>Please input all of your test scores. The director will determine which scores are visible on your public tutor profile.</p>
+        </div>
+      </div>
+      <div class="widget-body text-center">
+        <table id="test_score_table" class="table table-bordered">
+          <% @tutor_account.test_scores.each do |score| %>
+            <tr id="test_score_<%= score.id %>">
+              <td><%= score.subject.name %></td>
+              <td><%= score.score %></td>
+              <td><%= link_to "Remove", tutors_test_score_path(score), remote: true, method: :delete, class: "btn btn-default" %></td>
+            </tr>
+          <% end %>
+        </table>
+
+        <%= form_for :test_score, url: tutors_test_scores_path, remote: true, html: { class: "form-horizontal" } do |ef| %>
+          <div class="row">
+            <div class ="col-md-5">
+              <div class ="form-group select-option">
+                <div class="col-md-3">
+                  <%= ef.label :subject_id, "Test", class: "control-label"  %>
+                </div>
+                <div class="col-md-9">
+                  <%= ef.select :subject_id, options_from_collection_for_select(@subjects, :id, :name), { include_blank: false }, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
+            <div class ="col-md-5">
+              <div class ="form-group">
+                <div class="col-md-3">
+                  <%= ef.label :score, class: "control-label"  %>
+                </div>
+                <div class="col-md-9">
+                  <%= ef.number_field :score, required: true, class: "form-control"%>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <%= ef.submit "Add", class: "btn btn-primary" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

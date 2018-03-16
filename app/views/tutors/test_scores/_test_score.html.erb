@@ -1,0 +1,5 @@
+<tr id="test_score_<%= test_score.id %>">
+  <td><%= test_score.subject.name %></td>
+  <td><%= test_score.score %></td>
+  <td><%= link_to "Remove", tutors_test_score_path(test_score), remote: true, method: :delete, class: "btn btn-danger" %></td>
+</tr>

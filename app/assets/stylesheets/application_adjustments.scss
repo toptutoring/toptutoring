@@ -41,3 +41,56 @@ input[type=number]::-webkit-outer-spin-button {
 .form-control {
   font-family: sans-serif;
 }
+.file-input {
+  position: absolute;
+  top: -2000px;
+  left: -2000px;
+}
+.file-input-label {
+  font-size: 24px;
+  color: blue;
+  cursor: pointer;
+}
+
+// Links
+
+.profile-image-links {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0,0,0,.25);
+  border-radius: 10%;
+  padding: 4px 4px 0px 8px;
+}
+.profile-image-links i {
+  font-size: 24px;
+  color: #fff;
+  margin-right: 10px;
+  opacity: .7;
+}
+.profile-image-links i:hover {
+  opacity: 1;
+}
+.profile-image-container {
+  display: inline-block;
+  margin: auto;
+  position: relative;
+  max-width:90%;
+}
+
+
+// Flex Containers
+.row.flex  {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.flex.flex-center {
+  justify-content: center;
+}
+.row.flex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+.row.flex > [class*='col-'] .widget {
+  height: 100%;
+}

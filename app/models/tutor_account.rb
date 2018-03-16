@@ -6,6 +6,12 @@ class TutorAccount < ApplicationRecord
   has_and_belongs_to_many :subjects
   has_one :contract, as: :account, dependent: :destroy
   has_many :payouts, as: :receiving_account
+  has_many :test_scores, dependent: :destroy
+  has_many :test_subjects, through: :test_scores, source: :subject
+
+  scope :published, -> { where(publish: true) }
+
+  mount_uploader :profile_picture, ProfilePictureUploader
 
   monetize :online_rate_cents
   monetize :in_person_rate_cents

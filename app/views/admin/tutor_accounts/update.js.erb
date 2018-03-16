@@ -1,0 +1,4 @@
+var div = document.getElementById('publish_link')
+div.innerHTML = "<%= j render "admin/tutors/publish_link" %>"
+renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0);

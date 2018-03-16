@@ -11,6 +11,7 @@ module Admin
 
     def show
       @tutor = User.find(params[:id])
+      @tutor_account = @tutor.tutor_account
     end
 
     def update
@@ -35,6 +36,7 @@ module Admin
 
     def set_tutor
       @tutor = User.find(params[:id])
+      @tutor_account = @tutor.tutor_account
     end
   end
 end

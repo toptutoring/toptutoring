@@ -1,0 +1,11 @@
+<% if @score.persisted? %>
+  var elem = document.querySelector("#test_score_subject_id > option[value=\"<%= @score.subject.id %>\"");
+  elem.parentNode.removeChild(elem);
+  document.getElementById("test_score_score").value = null;
+
+  var table = document.getElementById("test_score_table");
+  table.insertAdjacentHTML("beforeend", "<%= j render @score %>")
+<% end %>
+
+renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0);

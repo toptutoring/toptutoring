@@ -7,7 +7,7 @@ module Tutors
     end
 
     def update
-      current_user.tutor_account.subject_ids = subject_params[:subject_ids]
+      current_user.tutor_account.update(subject_params)
       flash.notice = I18n.t("app.tutors.subjects.update_success")
       redirect_to action: :index
     end
