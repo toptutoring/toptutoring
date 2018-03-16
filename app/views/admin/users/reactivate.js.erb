@@ -1,4 +1,4 @@
-<% if @user.archived? %>
+<% unless @user.archived? %>
     var userRow = document.getElementById("row_user_<%= @user.id %>");
 userTable = userRow.parentNode;
 userTable.removeChild(userRow);

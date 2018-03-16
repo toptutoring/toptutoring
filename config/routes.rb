@@ -57,7 +57,9 @@ Rails.application.routes.draw do
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
       namespace :admin do
-        resources :users, only: [:index, :edit, :destroy, :update]
+        resources :users, only: [:index, :edit, :destroy, :update] do
+          patch :reactivate, on: :member
+        end
         resources :timesheets
         resources :roles
         resources :subjects

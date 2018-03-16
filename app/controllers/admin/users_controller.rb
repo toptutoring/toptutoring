@@ -4,7 +4,7 @@ module Admin
     before_action :set_user, only: [:edit, :update]
 
     def index
-      @users = User.all_without_admin.order(:id)
+      @users = User.all_without_admin.order(:archived, :first_name)
     end
 
     def edit
@@ -34,7 +34,19 @@ module Admin
       @user.archived = true
       if @user.save!
         archive_engagements
+        set_previous_user
         flash.now[:notice] = "#{@user.full_name} has been archived"
+      else
+        flash.now[:alert] = @user.errors.full_messages
+      end
+    end
+
+    def reactivate
+      @user = User.find(params[:id])
+      @user.archived = false
+      if @user.save
+        set_previous_user
+        flash.now[:notice] = "#{@user.full_name} has been reactivated."
       else
         flash.now[:alert] = @user.errors.full_messages
       end
@@ -57,6 +69,12 @@ module Admin
              .engagements.update_all(state: "archived") if @user.student_account
         @user.tutor_account
              .engagements.update_all(state: "archived") if @user.tutor_account
+    end
+
+    def set_previous_user
+      ordered_ids = User.order(:archived, :first_name).ids
+      position = ordered_ids.find_index(@user.id)
+      @previous_user_id = ordered_ids[position - 1]
     end
 
     def set_user
