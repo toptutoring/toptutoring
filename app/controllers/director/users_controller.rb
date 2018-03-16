@@ -3,7 +3,7 @@ module Director
     before_action :require_login
 
     def index
-      @users = User.clients.order(:first_name)
+      @users = User.clients.active.order(:first_name)
     end
 
     def edit

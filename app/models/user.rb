@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
   end
 
   # Scopes #
+  scope :active, -> { where(archived: false) }
   scope :tutors, -> { joins(:roles).where(roles: { name: "tutor" }).distinct }
   scope :contractors, -> { joins(:roles).where(roles: { name: "contractor" }).distinct }
   scope :clients, -> { joins(:roles).where(roles: { name: "client" }).distinct }
