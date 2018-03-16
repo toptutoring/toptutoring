@@ -24,8 +24,6 @@ module TopTutoring
     config.paths["config/routes.rb"].concat(Dir[Rails.root.join("config/routes/*.rb")])
     config.autoload_paths += %W(#{config.root}/lib/cli)
     config.autoload_paths += %W(#{config.root}/app/services)
-    config.autoload_paths += %W(#{config.root}/routes/**)
-    config.autoload_paths += %W(#{config.root}/routes.rb)
     config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
     config.action_controller.action_on_unpermitted_parameters = :raise
     config.active_job.queue_adapter = :sidekiq
