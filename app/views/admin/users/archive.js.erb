@@ -1,0 +1,7 @@
+<% if @user.archived? %>
+    var user_row = document.getElementById("row_user_<%= @user.id %>");
+    user_row.parentNode.removeChild(user_row);
+<% end %>
+
+renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0)

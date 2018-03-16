@@ -88,6 +88,9 @@ Rails.application.routes.draw do
         end
       end
       namespace :admin do
+        resources :users, only: [] do
+          patch :archive, on: :member
+        end
         resources :tutors, only: [:index, :show, :edit, :update]
         resources :tutor_accounts do
           patch "badge" =>"tutor_accounts#badge"
@@ -103,15 +106,6 @@ Rails.application.routes.draw do
         end
         resources :feedbacks, only: [:index]
         resources :client_reviews
-      end
-      resources :engagements do
-        member do
-          get "/enable" => "engagements#enable"
-          get "/disable" => "engagements#disable"
-        end
-      end
-      # only Admin/Director has access to blogs and cities for now
-      namespace :admin do
         resources :cities do
           member do
             post "/publish" => "cities#publish"
@@ -119,6 +113,12 @@ Rails.application.routes.draw do
           end
         end
         resources :countries
+      end
+      resources :engagements do
+        member do
+          get "/enable" => "engagements#enable"
+          get "/disable" => "engagements#disable"
+        end
       end
     end
 

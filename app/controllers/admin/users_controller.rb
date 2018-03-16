@@ -29,6 +29,17 @@ module Admin
       redirect_to admin_users_path
     end
 
+    def archive
+      @user = User.find(params[:id])
+      @user.archived = true
+      if @user.save!
+        archive_engagements
+        flash.now[:notice] = "#{@user.full_name} has been archived"
+      else
+        flash.now[:alert] = @user.errors.full_messages
+      end
+    end
+
     private
 
     def user_params
@@ -37,6 +48,15 @@ module Admin
                                    :in_person_academic_rate, :in_person_test_prep_rate,
                                    :online_test_prep_credit, :online_academic_credit,
                                    :online_test_prep_rate, :online_academic_rate)
+    end
+
+    def archive_engagements
+        @user.client_account
+             .engagements.update_all(state: "archived") if @user.client_account
+        @user.student_account
+             .engagements.update_all(state: "archived") if @user.student_account
+        @user.tutor_account
+             .engagements.update_all(state: "archived") if @user.tutor_account
     end
 
     def set_user
