@@ -6,8 +6,8 @@
     </div>
   </div>
   <div class="col-md-6 col-md-offset-1 content">
-    <h3>A Schedule that Fits Your Needs</h3>
-    <p class="mb0">Fill out our short form and one of our staff will get back to you shortly.</p>
+    <h3><%= t('www.careers.schedule.header') %></h3>
+    <p class="mb0"><%= t('www.careers.schedule.blurb') %></p>
   </div>
 </section>
 <section class="image-square right">
@@ -17,8 +17,8 @@
     </div>
   </div>
   <div class="col-md-6 content">
-    <h3>Work From Anywhere</h3>
-    <p class="mb0">All that's needed is a computer and internet connection. Work from the convenience of your home, office, school, anywhere!</p>
+    <h3><%= t('www.careers.work_from_anywhere.header') %></h3>
+    <p class="mb0"><%= t('www.careers.work_from_anywhere.blurb') %></p>
   </div>
 </section>
 <section class="image-square left">
@@ -28,10 +28,10 @@
     </div>
   </div>
   <div class="col-md-6 col-md-offset-1 content">
-    <h3>Consistent Income</h3>
-    <p class="mb0">We take care of the billing and student recruitment logistics so you can focus on what matters - tutoring.</p>
+    <h3><%= t('www.careers.consitent_income.header') %></h3>
+    <p class="mb0"><%= t('www.careers.consitent_income.blurb') %></p>
     <div class = "button-padding-top">
-      <%= link_to "Sign Up", client_sign_up_url(subdomain: "app"), class: "btn btn-lg btn-blue" %>
+      <%= link_to t('app.signup.text'), client_sign_up_url(subdomain: "app"), class: "btn btn-lg btn-blue" %>
     </div>
   </div>
 </section>
@@ -42,9 +42,9 @@
     </div>
   </div>
   <div class="col-md-6 content">
-    <h3>A UC Berkeley Student or Graduate and Interested in Applying?</h3>
-    <p class="mb0"><%= link_to "Contact Us", root_url(subdomain: nil) + "contact", class: "btn btn-lg btn-blue" %></p>
-    <h3>Already Invited?</h3>
-    <p class="mb0"><%= link_to "Sign Up", sign_up_url(subdomain: "app"), class: "btn btn-lg btn-blue" %></p>
+    <h3><%= t('www.careers.interest') %></h3>
+    <p class="mb0"><%= link_to t('app.contact_us'), root_url(subdomain: nil) + "contact", class: "btn btn-lg btn-blue" %></p>
+    <h3><%= t('www.careers.already_invited') %></h3>
+    <p class="mb0"><%= link_to t('app.signup.text'), sign_up_url(subdomain: "app"), class: "btn btn-lg btn-blue" %></p>
   </div>
 </section>

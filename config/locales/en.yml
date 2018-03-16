@@ -20,7 +20,9 @@ en:
   app:
     add_student:
       success: "Successfully added!"
+    contact_us: Contact Us
     signup:
+      text: Sign Up
       password_fail: "Password does not match. Please try again."
       client:
         success_message: |
@@ -33,7 +35,7 @@ en:
           Thank you for signing up for Top Tutoring! We're excited to join you in your academic journey.
           While you wait for us to contact you, feel free to browse the site or request tutors directly through the app.
       tutors:
-        success: "Thank you for signing up!" 
+        success: "Thank you for signing up!"
     clients:
       dashboard:
         no_tutor_message: |
@@ -56,3 +58,17 @@ en:
       users:
         remove_user_success: "%{name} has permanently been removed from the database."
         remove_user_failure: "Failed to remove user from the database. Users with an invoiced engagement or a payment cannot be removed."
+  www:
+    careers:
+      header: Become A Part Of Our Community
+      schedule:
+        header: A Schedule that Fits Your Needs
+        blurb: Fill out our short form and one of our staff will get back to you shortly.
+      work_from_anywhere:
+        header: Work From Anywhere
+        blurb: All that's needed is a computer and internet connection. Work from the convenience of your home, office, school, anywhere!
+      consitent_income:
+        header: Consistent Income
+        blurb: We take care of the billing and student recruitment logistics so you can focus on what matters - tutoring.
+      interest: A UC Berkeley Student or Graduate and Interested in Applying?
+      already_invited: Already Invited?
