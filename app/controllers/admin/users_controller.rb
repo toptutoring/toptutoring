@@ -34,6 +34,7 @@ module Admin
       @user.archived = true
       if @user.save!
         archive_engagements
+        @tutor_view = params.require(:view) == "tutor"
         set_previous_user
         flash.now[:notice] = "#{@user.full_name} has been archived"
       else
@@ -45,6 +46,7 @@ module Admin
       @user = User.find(params[:id])
       @user.archived = false
       if @user.save
+        @tutor_view = params.require(:view) == "tutor"
         set_previous_user
         flash.now[:notice] = "#{@user.full_name} has been reactivated."
       else
@@ -72,9 +74,10 @@ module Admin
     end
 
     def set_previous_user
-      ordered_ids = User.order(:archived, :first_name).ids
-      position = ordered_ids.find_index(@user.id)
-      @previous_user_id = ordered_ids[position - 1]
+      user_set = @tutor_view ? User.tutors : User.all_without_admin
+      ordered_users = user_set.view_order
+      position = ordered_users.find_index(@user)
+      @previous_user = position.zero? ? nil : ordered_users[position - 1]
     end
 
     def set_user

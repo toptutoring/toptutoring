@@ -93,7 +93,9 @@ Rails.application.routes.draw do
         resources :users, only: [] do
           patch :archive, on: :member
         end
-        resources :tutors, only: [:index, :show, :edit, :update]
+        resources :tutors, only: [:index, :show, :edit, :update] do
+          patch :reactivate, on: :member, controller: :users
+        end
         resources :tutor_accounts do
           patch "badge" =>"tutor_accounts#badge"
         end

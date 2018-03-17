@@ -98,7 +98,7 @@ feature "Remove users" do
 
       visit admin_tutors_path
 
-      expect(page).to have_link(href: archive_admin_user_path(tutor))
+      expect(page).to have_link(href: archive_admin_user_path(tutor, view: "tutor"))
     end
   end
 end
