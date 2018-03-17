@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
   scope :assigned, -> { joins(:engagement).merge(Engagement.active) }
   scope :admin_and_directors, -> { joins(:roles).where("roles.name = ? OR roles.name = ?", "admin", "director").distinct }
   scope :all_without_admin, -> { joins(:roles).where("roles.name != ?", "admin").distinct }
+  scope :view_order, -> { order(:archived, :first_name, :last_name, :id) }
 
   # Monetize Implementation for client
   monetize :online_academic_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }

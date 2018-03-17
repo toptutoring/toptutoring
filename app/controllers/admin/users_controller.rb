@@ -4,7 +4,7 @@ module Admin
     before_action :set_user, only: [:edit, :update]
 
     def index
-      @users = User.all_without_admin.order(:archived, :first_name)
+      @users = User.all_without_admin.view_order
     end
 
     def edit
