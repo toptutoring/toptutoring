@@ -59,6 +59,7 @@ Rails.application.routes.draw do
       namespace :admin do
         resources :users, only: [:index, :edit, :destroy, :update] do
           patch :reactivate, on: :member
+          patch :archive, on: :member
         end
         resources :timesheets
         resources :roles
@@ -76,7 +77,9 @@ Rails.application.routes.draw do
       get "/dashboard" => "dashboards#director"
       namespace :director do
         resources :payments, only: [:index]
-        resources :users, only: [:index, :edit, :update]
+        resources :users, only: [:index, :edit, :update] do
+          patch :archive, on: :member
+        end
       end
     end
 
@@ -90,11 +93,9 @@ Rails.application.routes.draw do
         end
       end
       namespace :admin do
-        resources :users, only: [] do
-          patch :archive, on: :member
-        end
         resources :tutors, only: [:index, :show, :edit, :update] do
           patch :reactivate, on: :member, controller: :users
+          patch :archive, on: :member, controller: :users
         end
         resources :tutor_accounts do
           patch "badge" =>"tutor_accounts#badge"

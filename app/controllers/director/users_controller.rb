@@ -20,6 +20,17 @@ module Director
       end
     end
 
+    def archive
+      @user = User.find(params[:id])
+      @user.archived = true
+      if @user.save!
+        archive_engagements
+        flash.now[:notice] = "#{@user.full_name} has been archived"
+      else
+        flash.now[:alert] = @user.errors.full_messages
+      end
+    end
+
     private
 
     def user_params
@@ -57,6 +68,15 @@ module Director
 
     def quarter_hours?(value)
       (value.to_f % 0.25).zero?
+    end
+
+    def archive_engagements
+        @user.client_account
+             .engagements.update_all(state: "archived") if @user.client_account
+        @user.student_account
+             .engagements.update_all(state: "archived") if @user.student_account
+        @user.tutor_account
+             .engagements.update_all(state: "archived") if @user.tutor_account
     end
   end
 end

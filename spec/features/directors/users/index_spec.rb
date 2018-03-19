@@ -29,6 +29,6 @@ feature "Director client index" do
     expect(page).to have_content(client.in_person_test_prep_credit)
     expect(page).to have_content("Action")
     expect(page).to have_link(href: edit_director_user_path(client))
-    expect(page).to have_link(href: archive_admin_user_path(client))
+    expect(page).to have_link(href: archive_director_user_path(client))
   end
 end

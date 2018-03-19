@@ -17,7 +17,7 @@
       <%= link_to edit_admin_tutor_path(tutor), data: { toggle: "tooltip", placement: "top", "original-title" => "Edit user info" }, class: "mr-15 fs-24" do %>
         <i class="icon ion-edit"></i>
       <% end %>
-      <%= link_to archive_admin_user_path(tutor, view: "tutor"), method: :patch, remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Archive user from list", confirm: "Archiving the user will also archive all engagements. Are you sure you want to archive this user?" }, class: "mr-15 fs-24" do %>
+      <%= link_to archive_admin_tutor_path(tutor, view: "tutor"), method: :patch, remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Archive user from list", confirm: "Archiving the user will also archive all engagements. Are you sure you want to archive this user?" }, class: "mr-15 fs-24" do %>
         <i class="icon ion-android-archive"></i>
       <% end %>
       <% if current_user.has_role?("admin") %>
