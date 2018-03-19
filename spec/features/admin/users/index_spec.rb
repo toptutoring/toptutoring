@@ -26,7 +26,6 @@ feature "List all users" do
       expect(page).to have_content("Email")
       expect(page).to have_content("Date Added")
       expect(page).to have_content("Access State")
-      expect(page).to have_content("Roles")
       expect(page).to have_content("Action")
 
       expect(page).to have_content(student.full_name)
