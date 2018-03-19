@@ -60,27 +60,6 @@
 }
 
 @media (max-width: 990px) {
-  .career-image .content {
-    position: absolute;
-    top: 0;
-    z-index: 999;
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,0.9);
-  }
-  .career-image .wpb_content_element {
-    transform: translate(0, -50%);
-    position: relative;
-    top: 50%;
-  }
-
-  .career-image.image-square {
-    margin-bottom: 30px;
-    box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.1);
-  }
-}
-
-@media (max-width: 990px) {
   .image-square {
     height: auto;
     max-height: 100000px;
@@ -160,24 +139,9 @@
   border-color: #fff;
 }
 
-.careers-link {
-  padding-top: 10px;
-}
-
-.career-image.image-square {
-  height: 50vh;
-}
-
-.career-image .last-block {
-  padding: 6%;
-}
-
-.careers-padding {
-  padding: 70px 0;
-}
-
-.career-title {
-  padding-bottom: 15px;
+.career-header {
+  text-align: center;
+  padding: 70px;
 }
 
 .contact {
