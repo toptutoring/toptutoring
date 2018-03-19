@@ -4,7 +4,7 @@ module Admin
     before_action :set_tutor, only: [:edit, :update]
 
     def index
-      @tutors = User.tutors.view_order
+      @tutors = User.tutors.view_order.includes(:tutor_account)
       @subject_id = params[:subject_id]
       select_tutors unless @subject_id.nil? || @subject_id.empty?
     end

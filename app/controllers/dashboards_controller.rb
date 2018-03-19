@@ -3,13 +3,13 @@ class DashboardsController < ApplicationController
 
   def admin
     @pending_engagements = Engagement.pending
-                                     .includes(:student_account, :subject, 
+                                     .includes(:student_account, :subject, :invoices,
                                                :tutor_account, client_account: :user)
   end
 
   def director
     @pending_engagements = Engagement.pending
-                                     .includes(:student_account, :subject, 
+                                     .includes(:student_account, :subject, :invoices,
                                                :tutor_account, client_account: :user)
     @tutor_engagements = current_user.tutor_account.engagements
     @invoice = Invoice.new()

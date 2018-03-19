@@ -6,10 +6,12 @@ class EngagementsController < ApplicationController
   def index
     @engagements = Engagement.processing
                              .order(:state, "created_at DESC")
-                             .includes(:subject, :student_account, client_account: :user, tutor_account: :user)
+                             .includes(:subject, :student_account, :invoices,
+                                       client_account: :user, tutor_account: :user)
     @archived_engagements = Engagement.archived
                                       .order(:state, "created_at DESC")
-                                      .includes(:subject, :student_account, client_account: :user, tutor_account: :user)
+                                      .includes(:subject, :student_account, :invoices,
+                                                client_account: :user, tutor_account: :user)
   end
 
   def new
