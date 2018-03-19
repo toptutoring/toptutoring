@@ -59,6 +59,7 @@ class EngagementsController < ApplicationController
   end
 
   def destroy
+    return invoice_error if @engagement.invoices.any?
     if @engagement.destroy
       flash.now[:notice] = "Engagement has been removed."
     else
@@ -93,5 +94,9 @@ class EngagementsController < ApplicationController
     account.student_accounts.map do |student_account|
       [student_account.name, student_account.id]
     end
+  end
+
+  def invoice_error
+    flash.now[:alert] = "Engagements with invoices cannot be deleted."
   end
 end

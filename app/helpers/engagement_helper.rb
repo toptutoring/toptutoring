@@ -63,7 +63,7 @@ module EngagementHelper
       link_to disable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Archive this engagement", confirm: "Archive this engagement? Archiving will disable the tutor from viewing and invoicing this engagement." }, class: "fs-24" do 
         tag.i class: "icon ion-android-archive"
       end 
-    else 
+    elsif engagement.invoices.empty?
       link_to engagement_path(engagement), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this engagement", confirm: "This will permanently remove the engagement from the databse. Are you sure?" }, class: "fs-24" do 
         tag.i class: "icon ion-trash-b"
       end 
