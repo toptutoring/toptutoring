@@ -19,7 +19,7 @@
                 <%= image_tag @tutor.tutor_account.profile_picture.url, class: "mb32 mb-xs-16 cast-shadow img-profile", alt: @tutor.full_name %>
               <% end %>
             </div>
-            <%= @tutor.tutor_account.description %>
+            <%= raw @tutor.tutor_account.description.try(:gsub, "\r\n", "<br />") %>
           </div>
         </div>
 

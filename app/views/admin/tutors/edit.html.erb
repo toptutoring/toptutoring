@@ -35,7 +35,7 @@
           <% end %>
         </div>
         <p class="lead">Description</p>
-        <p><%= @tutor_account.description %></p>
+        <p><%= raw @tutor_account.description.try(:gsub, "\r\n", "<br />") %></p>
         <p class="lead">Blurb</p>
         <p><%= @tutor_account.short_description %></p>
         <div id="publish_link" class="text-center">
