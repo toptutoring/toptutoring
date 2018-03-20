@@ -57,7 +57,10 @@ Rails.application.routes.draw do
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
       namespace :admin do
-        resources :users, only: [:index, :edit, :destroy, :update]
+        resources :users, only: [:index, :edit, :destroy, :update] do
+          patch :reactivate, on: :member
+          patch :archive, on: :member
+        end
         resources :timesheets
         resources :roles
         resources :subjects
@@ -74,7 +77,9 @@ Rails.application.routes.draw do
       get "/dashboard" => "dashboards#director"
       namespace :director do
         resources :payments, only: [:index]
-        resources :users, only: [:index, :edit, :update]
+        resources :users, only: [:index, :edit, :update] do
+          patch :archive, on: :member
+        end
       end
     end
 
@@ -88,7 +93,10 @@ Rails.application.routes.draw do
         end
       end
       namespace :admin do
-        resources :tutors, only: [:index, :show, :edit, :update]
+        resources :tutors, only: [:index, :show, :edit, :update] do
+          patch :reactivate, on: :member, controller: :users
+          patch :archive, on: :member, controller: :users
+        end
         resources :tutor_accounts do
           patch "badge" =>"tutor_accounts#badge"
         end
@@ -103,15 +111,6 @@ Rails.application.routes.draw do
         end
         resources :feedbacks, only: [:index]
         resources :client_reviews
-      end
-      resources :engagements do
-        member do
-          get "/enable" => "engagements#enable"
-          get "/disable" => "engagements#disable"
-        end
-      end
-      # only Admin/Director has access to blogs and cities for now
-      namespace :admin do
         resources :cities do
           member do
             post "/publish" => "cities#publish"
@@ -119,6 +118,12 @@ Rails.application.routes.draw do
           end
         end
         resources :countries
+      end
+      resources :engagements do
+        member do
+          get "/enable" => "engagements#enable"
+          get "/disable" => "engagements#disable"
+        end
       end
     end
 

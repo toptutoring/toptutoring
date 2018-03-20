@@ -12,42 +12,16 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Access State</th>
+                  <th class="col-xs-3">Name</th>
                   <th>Academic Rate(O/I)</th>
                   <th>Test Prep Rate(O/I)</th>
                   <th>Academic Credit(O/I)</th>
                   <th>Test Prep Credit(O/I)</th>
                   <th>Action</th>
-                  <th>Masquerade</th>
                 </tr>
               </thead>
               <tbody>
-                <% @users.each do |user| %>
-                  <tr>
-                    <td><a href="javascript:;"><%= user.id %></a></td>
-                    <td>
-                      <div class="media">
-                        <div class="media-body">
-                          <h5 class="media-heading"><%= user.full_name %></h5>
-                          <p class="text-muted mb-0"><%= cleanup_phone_number(user.phone_number) %></p>
-                          <p class="text-muted mb-0"><%= user.email.downcase %></p>
-                        </div>
-                      </div>
-                    </td>
-                    <td><%= user.access_state %></td>
-                    <td><%= number_to_currency(user.online_academic_rate) %> / <%= number_to_currency(user.in_person_academic_rate) %></td>
-                    <td><%= number_to_currency(user.online_test_prep_rate) %> / <%= number_to_currency(user.in_person_test_prep_rate) %></td>
-                    <td><%= user.online_academic_credit.to_s + " hrs" %> / <%= user.in_person_academic_credit.to_s + " hrs" %></td>
-                    <td><%= user.online_test_prep_credit.to_s + " hrs" %> / <%= user.in_person_test_prep_credit.to_s + " hrs" %></td>
-                    <td>
-                      <%= link_to "Adjust Rates and Balances", edit_director_user_path(user), class: "btn btn-outline btn-success btn-sm" %>
-                    </td>
-                    <td>
-                      <%= render 'shared/masquerade_start_button', user: user %>
-                    </td>
-                  </tr>
-                <% end %>
+                <%= render @users %>
               </tbody>
             </table>
           </div>

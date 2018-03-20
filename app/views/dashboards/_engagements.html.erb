@@ -21,32 +21,16 @@
             </thead>
             <tbody>
               <% @pending_engagements.each do |engagement| %>
-                <tr>
+                <tr id="engagement_<%= engagement.id %>">
                   <td><%= engagement.student_name %></td>
                   <td><%= engagement.client.full_name %></td>
-                  <td><%= cleanup_phone_number(engagement.client.phone_number) %></td>
+                  <td><%= link_to_phone_number(engagement.client) %></td>
                   <td class="text-center"><%= engagement.subject.name %></td>
                   <td class="text-center"><%= engagement.academic_type.humanize %></td>
-                  <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
+                  <td class="text-center"><%= engagement_state_label(engagement) %></span></td>
                   <td class="text-center">
-                    <%= link_to edit_engagement_path(engagement) do %>
-                      <button type="button" class="btn btn-outline btn-primary">Edit</button>
-                    <% end %>
-                  <% if engagement.updated? && engagement.pending? %>
-                    <td class="text-center">
-                      <%= link_to enable_engagement_path(engagement) do %>
-                        <button type="button" class="btn btn-outline btn-success">Enable</button>
-                      <% end %>
-                    </td>
-                  <% elsif engagement.active? %>
-                    <td class="text-center">
-                      <%= link_to disable_engagement_path(engagement) do %>
-                        <button type="button" class="btn btn-outline btn-danger">Disable</button>
-                      <% end %>
-                    </td>
-                  <% else %>
-                    <td></td>
-                  <% end %>
+                    <% actions_for_engagement(engagement) %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>

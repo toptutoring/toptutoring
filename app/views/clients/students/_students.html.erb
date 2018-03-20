@@ -21,7 +21,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% account.engagements.each do |engagement| %>
+                <% account.engagements.processing.each do |engagement| %>
                   <tr>
                     <td>
                       <% if engagement.tutor.present? %>

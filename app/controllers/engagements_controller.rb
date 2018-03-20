@@ -1,11 +1,17 @@
 class EngagementsController < ApplicationController
   before_action :require_login
   before_action :set_tutors, only: [:new, :edit]
-  before_action :set_engagement, only: [:edit, :update, :enable, :disable]
+  before_action :set_engagement, only: [:edit, :update, :enable, :disable, :destroy]
 
   def index
-    @engagements = Engagement.order("created_at DESC")
-                             .includes(:subject, :student_account, client_account: :user, tutor_account: :user)
+    @engagements = Engagement.processing
+                             .order(:state, "created_at DESC")
+                             .includes(:subject, :student_account, :invoices,
+                                       client_account: :user, tutor_account: :user)
+    @archived_engagements = Engagement.archived
+                                      .order(:state, "created_at DESC")
+                                      .includes(:subject, :student_account, :invoices,
+                                                client_account: :user, tutor_account: :user)
   end
 
   def new
@@ -38,21 +44,28 @@ class EngagementsController < ApplicationController
 
   def enable
     if @engagement.enable!
-      redirect_back(fallback_location: (request.referer || root_path),
-                     notice: "Engagement successfully enabled!")
+      flash.notice = "Engagement successfully enabled!"
     else
-      redirect_back(fallback_location: (request.referer || root_path),
-                    flash: { error: @engagement.errors.full_messages })
+      flash.alert = @engagement.errors.full_messages
     end
+    redirect_to action: :index
   end
 
   def disable
     if @engagement.disable!
-      redirect_back(fallback_location: (request.referer || root_path),
-                     notice: "Engagement successfully disabled!")
+      flash.notice = "Engagement successfully disabled and archived!"
     else
-      redirect_back(fallback_location: (request.referer || root_path),
-                    flash: { error: @engagement.errors.full_messages })
+      flash.alert = @engagement.errors.full_messages
+    end
+    redirect_to action: :index
+  end
+
+  def destroy
+    return invoice_error if @engagement.invoices.any?
+    if @engagement.destroy
+      flash.now[:notice] = "Engagement has been removed."
+    else
+      flash.now[:alert] = @engagement.errors.full_messages
     end
   end
 
@@ -83,5 +96,9 @@ class EngagementsController < ApplicationController
     account.student_accounts.map do |student_account|
       [student_account.name, student_account.id]
     end
+  end
+
+  def invoice_error
+    flash.now[:alert] = "Engagements with invoices cannot be deleted."
   end
 end

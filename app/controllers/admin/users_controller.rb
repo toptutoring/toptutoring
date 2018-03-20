@@ -4,7 +4,7 @@ module Admin
     before_action :set_user, only: [:edit, :update]
 
     def index
-      @users = User.all_without_admin.order(:id)
+      @users = User.all_without_admin.view_order
     end
 
     def edit
@@ -29,6 +29,31 @@ module Admin
       redirect_to admin_users_path
     end
 
+    def archive
+      @user = User.find(params[:id])
+      @user.archived = true
+      if @user.save!
+        archive_engagements
+        @tutor_view = params.require(:view) == "tutor"
+        set_previous_user
+        flash.now[:notice] = "#{@user.full_name} has been archived"
+      else
+        flash.now[:alert] = @user.errors.full_messages
+      end
+    end
+
+    def reactivate
+      @user = User.find(params[:id])
+      @user.archived = false
+      if @user.save
+        @tutor_view = params.require(:view) == "tutor"
+        set_previous_user
+        flash.now[:notice] = "#{@user.full_name} has been reactivated."
+      else
+        flash.now[:alert] = @user.errors.full_messages
+      end
+    end
+
     private
 
     def user_params
@@ -37,6 +62,22 @@ module Admin
                                    :in_person_academic_rate, :in_person_test_prep_rate,
                                    :online_test_prep_credit, :online_academic_credit,
                                    :online_test_prep_rate, :online_academic_rate)
+    end
+
+    def archive_engagements
+        @user.client_account
+             .engagements.update_all(state: "archived") if @user.client_account
+        @user.student_account
+             .engagements.update_all(state: "archived") if @user.student_account
+        @user.tutor_account
+             .engagements.update_all(state: "archived") if @user.tutor_account
+    end
+
+    def set_previous_user
+      user_set = @tutor_view ? User.tutors : User.all_without_admin
+      ordered_users = user_set.view_order
+      position = ordered_users.find_index(@user)
+      @previous_user = position.zero? ? nil : ordered_users[position - 1]
     end
 
     def set_user

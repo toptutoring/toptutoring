@@ -20,7 +20,7 @@
         <% end %>
       </ul>
       <hr>
-      <%= raw post.excerpt %>
+      <%= raw post.excerpt.try(:gsub, "\r\n", "<br />") %>
       <%= link_to "Read More", pages_blog_post_path(post.slug) %>
     </div>
   <% end %>

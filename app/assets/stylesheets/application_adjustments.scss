@@ -78,7 +78,6 @@ input[type=number]::-webkit-outer-spin-button {
   max-width:90%;
 }
 
-
 // Flex Containers
 .row.flex  {
   display: flex;
@@ -93,4 +92,14 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .row.flex > [class*='col-'] .widget {
   height: 100%;
+}
+
+// Table Row Styles
+tr.archived-row {
+  background: #f6f6f6;
+}
+
+// Margin Styles
+.mt-4 {
+  margin-top: 4px !important;
 }

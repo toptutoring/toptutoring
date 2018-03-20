@@ -1,0 +1,11 @@
+<tr id="engagement_<%= engagement.id %>" class="<%= "archived-row" if engagement.state == "archived" %>">
+  <td><%= engagement.id %></td>
+  <td><% client_info(engagement) %></td>
+  <td><%= engagement.tutor.try(:full_name) %></td>
+  <td><% subject_info(engagement) %></td>
+  <td class="text-center"><% rates_and_credits(engagement) %></td>
+  <td class="text-center"><%= engagement_state_label(engagement) %></td>
+  <td class="text-center">
+    <% actions_for_engagement(engagement) %>
+  </td>
+</tr>

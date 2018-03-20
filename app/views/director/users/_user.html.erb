@@ -1,0 +1,25 @@
+<tr id="row_user_<%= user.id %>">
+  <td><a href="javascript:;"><%= user.id %></a></td>
+  <td>
+    <div class="media">
+      <div class="media-body">
+        <h5 class="media-heading"><%= user.full_name %></h5>
+        <p class="text-muted mb-0"><%= cleanup_phone_number(user.phone_number) %></p>
+        <p class="text-muted mb-0"><%= user.email.downcase %></p>
+      </div>
+    </div>
+  </td>
+  <td><%= number_to_currency(user.online_academic_rate) %> / <%= number_to_currency(user.in_person_academic_rate) %></td>
+  <td><%= number_to_currency(user.online_test_prep_rate) %> / <%= number_to_currency(user.in_person_test_prep_rate) %></td>
+  <td><%= user.online_academic_credit.to_s + " hrs" %> / <%= user.in_person_academic_credit.to_s + " hrs" %></td>
+  <td><%= user.online_test_prep_credit.to_s + " hrs" %> / <%= user.in_person_test_prep_credit.to_s + " hrs" %></td>
+  <td>
+    <%= link_to edit_director_user_path(user), data: { toggle: "tooltip", placement: "top", "original-title" => "Edit user rates and balances" }, class: "mr-15 fs-24"  do %>
+      <i class="icon ion-edit"></i>
+    <% end %>
+    <%= link_to archive_director_user_path(user), method: :patch, remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Archive user from list", confirm: "Archiving the user will also archive all engagements. Are you sure you want to archive this user?" }, class: "mr-15 fs-24" do %>
+      <i class="icon ion-android-archive"></i>
+    <% end %>
+    <%= render 'shared/masquerade_start_button', user: user %>
+  </td>
+</tr>

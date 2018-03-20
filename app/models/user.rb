@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
   end
 
   # Scopes #
+  scope :active, -> { where(archived: false) }
   scope :tutors, -> { joins(:roles).where(roles: { name: "tutor" }).distinct }
   scope :contractors, -> { joins(:roles).where(roles: { name: "contractor" }).distinct }
   scope :clients, -> { joins(:roles).where(roles: { name: "client" }).distinct }
@@ -55,6 +56,7 @@ class User < ActiveRecord::Base
   scope :assigned, -> { joins(:engagement).merge(Engagement.active) }
   scope :admin_and_directors, -> { joins(:roles).where("roles.name = ? OR roles.name = ?", "admin", "director").distinct }
   scope :all_without_admin, -> { joins(:roles).where("roles.name != ?", "admin").distinct }
+  scope :view_order, -> { order(:archived, :first_name, :last_name, :id) }
 
   # Monetize Implementation for client
   monetize :online_academic_rate_cents, :numericality => { :greater_than_or_equal_to => 0 }
@@ -122,6 +124,10 @@ class User < ActiveRecord::Base
 
   def credit_status(invoice)
     invoice.engagement.academic? ? academic_credit : test_prep_credit
+  end
+
+  def phone_formatted(format = :national)
+    Phonelib.parse(phone_number, country_code).send(format)
   end
 
   def notify_bugsnag

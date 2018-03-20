@@ -73,7 +73,7 @@ feature "Dashboard Index" do
     expect(page).to have_content(pending_engagement.subject.name)
     expect(page).to have_content(pending_engagement.academic_type.humanize)
     expect(page).to have_content(pending_engagement.state)
-    expect(page).to have_link("Edit")
+    expect(page).to have_link(href: edit_engagement_path(pending_engagement))
   end
 
   scenario "when user is contractor" do
