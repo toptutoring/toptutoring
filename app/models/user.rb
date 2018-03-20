@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   has_one :contractor_account, dependent: :destroy
   accepts_nested_attributes_for :students
   belongs_to :client, class_name: "User", foreign_key: "client_id"
+  has_many :referrals, class_name: "User", foreign_key: "referrer_id"
+  belongs_to :referrer, class_name: "User", foreign_key: "referrer_id"
   has_many :invoices, foreign_key: "submitter_id"
   has_many :pending_invoices, -> { where(status: "pending") }, class_name: "Invoice", foreign_key: "submitter_id"
   has_many :emails, class_name: "Email", foreign_key: "tutor_id", dependent: :destroy
