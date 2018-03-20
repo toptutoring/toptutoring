@@ -106,7 +106,21 @@
             <%= render "card_parameters", div_class: "hidden", save_card_option: true%>
             <div class="row m-0">
               <!-- button disabling is handled by javascript because Stripe validation requires javascript -->
+              <div tabindex="-1" role="dialog" aria-labelledby="profileBlurb" class="modal fade modal-referral-information" style="display: none;">
+                <div role="document" class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Top Tutoring Referral Program</h4>
+                    </div>
+                    <div class="modal-body">
+                    <p>Get one free hour of tutoring for each successful referral! Have your friend mention you when signing-up, and receive one free hour of credit after your friend has received 5 hours of tutoring. If you have both online and in-person tutoring, the free hour will be credited towards your in-person tutoring.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <%= submit_tag "Purchase Hours", class: "pull-right btn btn-primary", data: { disable_with: false } %>
+              <a href="#" data-toggle="modal" data-target=".modal-referral-information" class="pull-right btn btn-default mr-10">Get free credits!</a>
             </div>
           </div>
         </div>
