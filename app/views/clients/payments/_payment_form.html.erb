@@ -110,10 +110,19 @@
                 <div role="document" class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h4 class="modal-title">Top Tutoring Referral Program</h4>
+                      <h4 class="modal-title text-success">Get Free Credits</h4>
                     </div>
                     <div class="modal-body">
-                    <p>Get one free hour of tutoring for each successful referral! Have your friend mention you when signing-up, and receive one free hour of credit after your friend has received 5 hours of tutoring. If you have both online and in-person tutoring, the free hour will be credited towards your in-person tutoring.</p>
+                      <p>Receive one free hour of tutoring after your friend has their first session.</p>
+                      <p>Share your unique referral url and start earning free credits!</p>
+                      <blockquote>
+                        <span><%= referral_url(current_user.unique_token, subdomain: "app") %></span>
+                        <%= text_area_tag :referral_url, referral_url(current_user.unique_token, subdomain: "app"), class: "copy-input" %>
+                        <div onclick="copyToClipboard('referral_url')" class="btn btn-outline btn-success ml-10" data-toggle="tooltip" data-placement"top" data-original-title="Copy url to clipboard">
+                          <i class="icon ion-clipboard fs-18 text-default"></i>
+                        </div>
+                        <span id="copy-confirm" class="copy-confirm label label-success">Copied</span>
+                      </blockquote>
                     </div>
                   </div>
                 </div>
