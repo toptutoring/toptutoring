@@ -1,0 +1,6 @@
+<section>
+  <div class="col-lg-6 col-lg-offset-3">
+    <h3 class="text-center"><%= @referrer.full_name %> invited you to try Top Tutoring!</h3>
+    <%= render "users/clients/new_client_form", submit_url: referrals_path %>
+  </div>
+</section>
