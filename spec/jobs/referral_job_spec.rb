@@ -18,9 +18,21 @@ describe ReferralJob, type: :job do
       expect(referrer.online_test_prep_credit).to eq 0
     end
 
-    after do
-      clear_enqueued_jobs
-      clear_performed_jobs
+    it "doesn't add credits if referral already claimed" do
+      original_credit = referrer.in_person_test_prep_credit
+      referred_client.update(referral_claimed: true)
+      subject.perform_now(referred_client.id)
+
+      expect(referred_client.reload.referral_claimed).to be_truthy
+      expect(referrer.reload.in_person_test_prep_credit).to eq original_credit
+      expect(referrer.in_person_academic_credit).to eq 0
+      expect(referrer.online_academic_credit).to eq 0
+      expect(referrer.online_test_prep_credit).to eq 0
     end
+  end
+
+  after do
+    clear_enqueued_jobs
+    clear_performed_jobs
   end
 end
