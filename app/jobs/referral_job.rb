@@ -5,6 +5,7 @@ class ReferralJob < ActiveJob::Base
     @client = User.find(id)
     @referrer = @client.referrer
     return unless perform_referral_update
+    UserNotifierMailer.send_referral_claimed_notice(@referrer, @client)
   end
 
   private 

@@ -25,4 +25,11 @@ class UserNotifierMailerPreview < ActionMailer::Preview
   def send_review_request
     UserNotifierMailer.send_review_request(User.clients.last)
   end
+
+  def send_referral_claimed_notice
+    account = Struct.new(:highest_rate_type).new("online_test_prep")
+    client = Struct.new(:email, :full_name, :client_account, :online_test_prep_credit)
+                   .new("client@example.com", "Client Name", account, 3)
+    UserNotifierMailer.send_referral_claimed_notice(client, User.clients.last)
+  end
 end
