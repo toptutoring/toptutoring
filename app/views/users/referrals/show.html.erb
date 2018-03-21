@@ -1,3 +1,11 @@
+<%= content_for :meta_tags do %>
+  <meta property="og:url"           content="<%= url_for(subdomain: "app") %>" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Top Tutoring" />
+  <meta property="og:description"   content="Receive top class tutoring" />
+  <meta property="og:image"         content="<%= image_url("topTutoringFinal.png") %>" />
+<% end %>
+
 <section>
   <div class="col-lg-6 col-lg-offset-3">
     <h3 class="text-center"><%= @referrer.full_name %> invited you to try Top Tutoring!</h3>

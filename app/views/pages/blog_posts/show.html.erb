@@ -1,3 +1,11 @@
+<%= content_for :meta_tags do %>
+  <meta property="og:url"           content="<%= url_for(subdomain: "app") %>" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="<%= @post.title %>" />
+  <meta property="og:description"   content="<%= @post.excerpt %>" />
+  <meta property="og:image"         content="<%= image_url("topTutoringFinal.png") %>" />
+<% end %>
+
 <%= render layout: "blog_layout" do %>
   <div class="post-snippet mb64">
     <article>
