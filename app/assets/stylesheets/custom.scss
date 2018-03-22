@@ -114,3 +114,26 @@ $bg_dark: #292929;
   top:2px;
   left:2px;
 }
+
+// Position elements
+.p-relative {
+  position: relative;
+}
+
+
+// Subject Confirm Boxes
+.confirm {
+  opacity: 0;
+  transition: opacity 0.3s; 
+}
+.confirm.show {
+  opacity: 1;
+}
+.confirm.subject-confirm {
+  position: absolute;
+  margin: auto;
+  left: 15px;
+  right: 15px;
+  top: -6px;
+}
+

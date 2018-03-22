@@ -1,4 +1,11 @@
 <tr>
   <td><%= subject.name %></td>
+  <td><%= subject.tutor_accounts.count %></td>
+  <td class="p-relative">
+    <%= form_with model: subject, url: switch_category_admin_subject_path(subject), local: false do |f| %>
+      <%= f.select :category, options_for_select(Subject.categories.values.map { |cat| [cat.titlecase, cat] }, subject.category), { include_blank: true }, onchange: "Rails.fire(this.form, 'submit');", id: "select_subject_#{subject.id}", class: "form-control" %>
+    <% end %>
+    <span id="confirm_subject_<%= subject.id %>" class="label label-success confirm subject-confirm">Updated!</span>
+  </td>
   <td><%= type_options(subject) %></td>
 </tr>

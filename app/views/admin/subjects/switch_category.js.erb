@@ -1,0 +1,13 @@
+<% if @updated %>
+  var subjectConfirm = document.getElementById("confirm_subject_<%= @subject.id %>")
+  subjectConfirm.classList.add("show");
+  
+  setTimeout(function() {
+    subjectConfirm.classList.remove('show');
+  }, 600);
+<% else %>
+  var subjectSelect = document.getElementById("select_subject_<%= @subject.id %>")
+  subjectSelect.value = "<%= @subject.reload.category %>"
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+  window.scrollTo(0, 0);
+<% end %>

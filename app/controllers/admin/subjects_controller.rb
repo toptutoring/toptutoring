@@ -9,9 +9,15 @@ module Admin
       if update_status
         flash.notice = "Tutoring Type has been changed to #{@type} for #{@subject.name}."
       else
-        flash[:error] = "Could not update tutoring type for #{@subject.name}."
+        flash.alert = "Could not update tutoring type for #{@subject.name}."
       end
       redirect_to action: "index"
+    end
+
+    def switch_category
+      @subject = Subject.find(params[:id])
+      @updated = @subject.update(subject_params)
+      flash.now[:alert] = @subject.errors.full_messages unless @updated
     end
 
     private
@@ -23,6 +29,10 @@ module Admin
       elsif @type == "Test Prep"
         @subject.test_prep!
       end
+    end
+
+    def subject_params
+      params.require(:subject).permit(:category)
     end
   end
 end
