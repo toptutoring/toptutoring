@@ -1,0 +1,7 @@
+<% if @subject.destroyed? %>
+  var subjectRow = document.getElementById("subject_row_<%= @subject.id %>");
+  subjectRow.parentNode.removeChild(subjectRow);
+<% end %>
+
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0);

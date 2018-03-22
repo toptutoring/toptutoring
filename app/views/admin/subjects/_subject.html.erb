@@ -1,4 +1,4 @@
-<tr>
+<tr id="subject_row_<%= subject.id %>">
   <td><%= subject.name %></td>
   <td><%= subject.tutor_accounts.count %></td>
   <td class="p-relative">
@@ -8,4 +8,9 @@
     <span id="confirm_subject_<%= subject.id %>" class="label label-success confirm subject-confirm">Updated!</span>
   </td>
   <td><%= type_options(subject) %></td>
+  <td>
+    <%= link_to admin_subject_path(subject), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this subject", confirm: "This will permanently remove the subject from the database. Are you sure?" }, class: "fs-24" do %>
+      <i class="icon ion-trash-b"></i>
+      <% end %>
+  </td>
 </tr>

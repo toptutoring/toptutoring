@@ -20,6 +20,14 @@ module Admin
       flash.now[:alert] = @subject.errors.full_messages unless @updated
     end
 
+    def destroy
+      @subject = Subject.find(params[:id])
+      @subject.destroy
+      flash.now.notice = "#{@subject.name} has been removed."
+    rescue ActiveRecord::InvalidForeignKey => e
+      flash.now.alert = "#{@subject.name} is currently associated with an engagement. It cannot be removed."
+    end
+
     private
 
     def update_status

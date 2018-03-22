@@ -63,7 +63,7 @@ module EngagementHelper
         tag.i class: "icon ion-android-archive"
       end 
     elsif engagement.invoices.empty?
-      link_to engagement_path(engagement), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this engagement", confirm: "This will permanently remove the engagement from the databse. Are you sure?" }, class: "fs-24" do 
+      link_to engagement_path(engagement), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this engagement", confirm: "This will permanently remove the engagement from the database. Are you sure?" }, class: "fs-24" do 
         tag.i class: "icon ion-trash-b"
       end 
     end 
