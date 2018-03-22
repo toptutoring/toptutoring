@@ -113,7 +113,7 @@
                       <h4 class="modal-title text-success">Get Free Credits</h4>
                     </div>
                     <div class="modal-body">
-                      <p>Receive one free hour of tutoring after your friend has their first session.</p>
+                      <p>Receive one free hour of tutoring after your friend has their first hour of tutoring.</p>
                       <p>Share your unique referral url and start earning free credits!</p>
                       <blockquote>
                         <span><%= referral_url(current_user.unique_token, subdomain: "app") %></span>
@@ -129,7 +129,7 @@
               </div>
 
               <%= submit_tag "Purchase Hours", class: "pull-right btn btn-primary", data: { disable_with: false } %>
-              <a href="#" data-toggle="modal" data-target=".modal-referral-information" class="pull-right btn btn-default mr-10">Get free credits!</a>
+              <a href="#" data-toggle="modal" data-target=".modal-referral-information" class="pull-right btn btn-outline btn-success mr-10">Get Free Credits</a>
             </div>
           </div>
         </div>
