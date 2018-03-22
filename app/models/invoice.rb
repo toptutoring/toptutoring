@@ -32,4 +32,9 @@ class Invoice < ActiveRecord::Base
   def self.tutor_pending_total
     Money.new(by_tutor.pending.sum(:submitter_pay_cents))
   end
+
+  def hours_type
+    string = online? ? "online_" : "in_person_"
+    string.concat(engagement.academic_type)
+  end
 end

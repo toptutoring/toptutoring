@@ -78,13 +78,33 @@
                     <p style="color:rgb(153,153,153);font-size:18px">Tutor</p>
                     <p><%= @invoice.submitter.full_name %></p>
                   </td>
-                  <td style="padding:20px;border-style:solid;border:1px solid white" valign="top">
+                  <td style="padding:20px;border-style:solid;border:1px solid white;text-align:right" valign="top">
                     <p style="color:rgb(153,153,153);font-size:18px">Hours</p>
                     <p><%= @invoice.hours %></p>
                   </td>
                   <!-- <td width="120" align="right" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
                     <p style="color:rgb(153,153,153);font-size:18px"></p>
                     <p style="font-size:16px"><%= %></p> -->
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3" style="padding:20px;border:1px solid white">
+                    <p style="color:rgb(153,153,153);font-size:18px">Previous Balance</p>
+                    <p><%= @invoice.hours_type.titlecase + " Hours" %></p>
+                  </td>
+                  <td style="padding:20px;border:1px solid white;text-align:right">
+                    <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
+                    <p><%= @user.send(@invoice.hours_type + "_credit") + @invoice.hours %> hrs</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3" style="padding:20px;border:1px solid white">
+                    <p style="color:rgb(153,153,153);font-size:18px">Current Balance</p>
+                    <p><%= @invoice.hours_type.titlecase + " Hours" %></p>
+                  </td>
+                  <td style="padding:20px;border:1px solid white;text-align:right">
+                    <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
+                    <p><%= @user.send(@invoice.hours_type + "_credit") %> hrs</p>
                   </td>
                 </tr>
               </tbody>

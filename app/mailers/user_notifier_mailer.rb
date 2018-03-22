@@ -8,14 +8,16 @@ class UserNotifierMailer < ApplicationMailer
   end
 
   def send_payment_notice(user, payment)
+    @user = user
     @payment = payment
-    mail(to: user.email,
+    mail(to: @user.email,
          subject: "You have made a purchase of #{@payment.hours_purchased} of tutoring")
   end
 
   def send_invoice_notice(user, invoice)
+    @user = user
     @invoice = invoice
-    mail(to: user.email,
+    mail(to: @user.email,
          subject: "You were invoiced for a session with #{@invoice.submitter.full_name}")
   end
 
