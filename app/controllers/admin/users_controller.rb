@@ -61,7 +61,8 @@ module Admin
                                    :in_person_academic_credit, :in_person_test_prep_credit,
                                    :in_person_academic_rate, :in_person_test_prep_rate,
                                    :online_test_prep_credit, :online_academic_credit,
-                                   :online_test_prep_rate, :online_academic_rate)
+                                   :online_test_prep_rate, :online_academic_rate,
+                                   :referrer_id, :referral_claimed)
     end
 
     def archive_engagements

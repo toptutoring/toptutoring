@@ -66,6 +66,7 @@ describe CreditUpdater do
 
   describe "#client_low_balance?" do
     it "returns false when client credit is over 0.5" do
+      client.update(online_test_prep_credit: 10)
       subject = CreditUpdater.new(invoice)
       expect(subject.send(:client_low_balance?))
         .to be false
@@ -81,6 +82,7 @@ describe CreditUpdater do
     it "also works for academic_credit" do
       engagement.update(subject: FactoryBot.create(:subject))
       client.update(online_test_prep_credit: 0)
+      client.update(online_academic_credit: 10)
       subject = CreditUpdater.new(invoice)
       expect(subject.send(:client_low_balance?))
         .to be false

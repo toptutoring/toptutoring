@@ -91,6 +91,11 @@ module Tutors
       else
         flash.notice = @by_tutor ? "Invoice has been created." : "Timesheet has been created."
       end
+      ReferralJob.perform_later(@client.id) if !adjuster.failed? && referral_conditions_met?
+    end
+
+    def referral_conditions_met?
+      @by_tutor && @client.referrer_id && !@client.referral_claimed
     end
 
     def authorize_tutor
@@ -103,9 +108,8 @@ module Tutors
     def send_emails
       return unless @by_tutor
       UserNotifierMailer.send_invoice_notice(@client, @invoice).deliver_later
-      if @client.client_account.send_review_email?
-        UserNotifierMailer.send_review_request(@client).deliver_later
-      end
+      return unless @client.client_account.send_review_email?
+      UserNotifierMailer.send_review_request(@client).deliver_later
     end
   end
 end

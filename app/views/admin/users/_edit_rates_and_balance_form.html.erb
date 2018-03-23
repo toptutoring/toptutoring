@@ -52,6 +52,17 @@
       <%= f.number_field :in_person_test_prep_rate, class: "form-control", step: 0.01, min: 0 %>
     </div>
   </div>
+
+  <h3>Referrals</h3>
+  <div class="form-group">
+    <%= f.label :referrer_id, "Referred By" %>
+    <%= f.select :referrer_id, options_from_collection_for_select(User.clients, :id, :full_name), { include_blank: true }, class: "form-control" %>
+    <div class="mt-5">
+      <%= f.check_box :referral_claimed %>
+      <%= f.label :referral_claimed, "Referral Claimed", class: "ml-5" %>
+    </div>
+  </div>
+
   <div class="text-center form-group">
     <%= f.submit "Update", class: "btn btn-primary" %>
   </div>

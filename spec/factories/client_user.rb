@@ -9,12 +9,12 @@ FactoryBot.define do
     access_state  { "enabled" }
     online_academic_rate     { 20 }
     online_test_prep_rate    { 20 }
-    online_academic_credit   { 20 }
-    online_test_prep_credit  { 20 }
+    online_academic_credit   { 0 }
+    online_test_prep_credit  { 0 }
     in_person_academic_rate     { 30 }
     in_person_test_prep_rate    { 30 }
-    in_person_academic_credit   { 30 }
-    in_person_test_prep_credit  { 30 }
+    in_person_academic_credit   { 0 }
+    in_person_test_prep_credit  { 0 }
     signup   { FactoryBot.create(:signup) }
 
     trait :as_student do

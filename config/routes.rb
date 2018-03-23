@@ -193,6 +193,7 @@ Rails.application.routes.draw do
 
     # Users
     resources :users, only: [:edit, :update]
+    resources :referrals, param: :unique_token, module: "users", only: [:show, :create]
 
     # Tutor signup.
     namespace :users do

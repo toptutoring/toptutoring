@@ -15,6 +15,11 @@ class ClientAccount < ApplicationRecord
     types
   end
 
+  def highest_rate_type
+    return nil if academic_types_engaged.empty?
+    academic_types_engaged.sort_by { |type| user.send(type + "_rate") }.last
+  end
+
   def send_review_email?
     !review_requested && request_review?
   end

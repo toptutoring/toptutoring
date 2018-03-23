@@ -44,7 +44,7 @@
           <p class="widget-hint">When rates are $0.00, rates and credits will not be shown to clients as well as tutors. Clients are only able to purchase credit types that have a rate.</p>
         </div>
         <div class="widget-body">
-          <%= render partial: 'clients/edit_rates_and_balance_form', locals: { url: admin_user_path(@user) } %>
+          <%= render "edit_rates_and_balance_form", url: admin_user_path(@user) %>
         </div>
       </div>
     </div>

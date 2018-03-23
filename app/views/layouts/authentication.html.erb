@@ -10,6 +10,7 @@
       https://github.com/calebthompson/title#usage
     %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <%= yield :meta_tags %>
     <title>Top Tutoring</title>
     <!-- Google Tag Manager -->
     <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>

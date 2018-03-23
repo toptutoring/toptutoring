@@ -55,18 +55,49 @@
             <table border="0" cellpadding="0" cellspacing="0" style="min-width:680px;margin:75px auto;border-collapse:collapse;border-spacing:0;color:rgb(51,51,51);background-color:rgb(255,255,255);border-radius:3px">
               <tbody>
                 <tr>
-                  <td align="left">
+                  <td colspan="2" align="left">
                     <img height="60" src="<%= image_url "topTutoringFinal.png" %>" style="border:none;padding:0;margin:0;display:block;margin:auto;" alt="Top Tutoring" />
                   </td>
                 </tr>
                 <tr height="80">
-                  <td width="120" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
-                    <p>Hello <%= @user.full_name %>,</p><br/>
+                  <td width="120" colspan="2" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
+                    <p>Hello <%= @referrer.full_name %>,</p><br/>
                     <p>
-                    Thank you for using our services. We'd love to hear from you! Review our services <%= link_to "here", new_review_url(@user.unique_token) %>.
+                    Thank you for sharing our services with your friends. One of your referrals just finished their fifth hour of tutoring with us and as a thank you, we've added 1 hour of credit to your account. We hope you continue to enjoy our services!
                     </p><br/>
                     <p>Regards,</p>
                     <p>Top Tutoring</p>
+                  </td>
+                </tr>
+
+                <tr style="color:rgb(51,51,51);background-color:rgb(245,245,245);border-radius:3px">
+                  <td style="padding:20px;border:1px solid white">
+                    <p style="color:rgb(153,153,153);font-size:18px">Previous Balance</p>
+                    <p><%= @rate_type.titlecase + " Hours" %></p>
+                  </td>
+                  <td style="padding:20px;border:1px solid white;text-align:right">
+                    <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
+                    <p><%= @referrer.send(@rate_type + "_credit") - 1 %> hrs</p>
+                  </td>
+                </tr>
+                <tr style="color:rgb(51,51,51);background-color:rgb(245,245,245);border-radius:3px">
+                  <td style="padding:20px;border:1px solid white">
+                    <p style="color:rgb(153,153,153);font-size:18px">Hours Credited</p>
+                    <p><%= @rate_type.titlecase + " Hours" %></p>
+                  </td>
+                  <td style="padding:20px;border:1px solid white;text-align:right">
+                    <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
+                    <p>1 hrs</p>
+                  </td>
+                </tr>
+                <tr style="color:rgb(51,51,51);background-color:rgb(245,245,245);border-radius:3px">
+                  <td style="padding:20px;border-style:solid;border:1px solid white" valign="top">
+                    <p style="color:rgb(153,153,153);font-size:18px">Date</p>
+                    <p><%= l(Date.current) %></p>
+                  </td>
+                  <td width="120" align="right" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
+                    <p style="color:rgb(153,153,153);font-size:18px">TOTAL</p>
+                    <p style="font-size:16px"><%= @referrer.send(@rate_type + "_credit") %> hrs</p>
                   </td>
                 </tr>
               </tbody>

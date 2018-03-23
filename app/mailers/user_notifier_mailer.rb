@@ -25,4 +25,11 @@ class UserNotifierMailer < ApplicationMailer
     mail(to: user.email,
          subject: "We would appreciate your review and feedback!")
   end
+
+  def send_referral_claimed_notice(referrer, referred)
+    @referrer = referrer
+    @rate_type = @referrer.client_account.highest_rate_type
+    mail(to: referrer.email,
+         subject: "Thank you for your referral!")
+  end
 end
