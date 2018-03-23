@@ -1,18 +1,16 @@
 module EngagementHelper
-  def client_info(engagement)
-    concat tag.p "Student: #{engagement.student_name}"
-    concat tag.p "Client: #{engagement.client.full_name}"
-  end
-
   def subject_info(engagement)
-    return concat tag.p "Other" if engagement.subject_id == 1
-    concat tag.p engagement.academic_type.titlecase
-    concat tag.p engagement.subject.name.titlecase
+    return tag.p "Other" if engagement.subject_id == 1
+    tag.p engagement.subject.name
   end
 
   def engagement_state_label(engagement)
-    span_color = engagement.active? ? "label-success" : "label-warning"
-    tag.span engagement.state, class: "label label-outline #{span_color}"
+    icon_type = case engagement.state
+                when "active" then "play text-success"
+                when "pending" then "clock text-default"
+                else "stop text-danger"
+                end
+    tag.icon class: "mr-10 icon ion-#{icon_type}"
   end
 
   def rates_and_credits(engagement)
@@ -26,10 +24,11 @@ module EngagementHelper
     end
   end
 
+
   def rate_credit_string(client, type)
     rate = client.send(type + "_rate")
     credit = client.send(type + "_credit")
-    "#{rate} / #{credit}"
+    "$#{rate} / #{credit} hrs"
   end
 
   def client_credits(engagement)
