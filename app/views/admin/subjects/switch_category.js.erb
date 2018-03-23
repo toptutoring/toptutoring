@@ -1,10 +1,6 @@
 <% if @updated %>
-  var subjectConfirm = document.getElementById("confirm_subject_<%= @subject.id %>")
-  subjectConfirm.classList.add("show");
-  
-  setTimeout(function() {
-    subjectConfirm.classList.remove('show');
-  }, 600);
+  var subjectConfirm = document.getElementById("cat_confirm_subject_<%= @subject.id %>")
+  confirmDialogShow(subjectConfirm);
 <% else %>
   var subjectSelect = document.getElementById("select_subject_<%= @subject.id %>")
   subjectSelect.value = "<%= @subject.reload.category %>"

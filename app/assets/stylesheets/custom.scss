@@ -121,12 +121,12 @@ $bg_dark: #292929;
 }
 
 
-// Subject Confirm Boxes
+// Custom Confirm Dialog Boxes
 .confirm {
   opacity: 0;
   transition: opacity 0.3s; 
 }
-.confirm.show {
+.confirm.show-confirm {
   opacity: 1;
 }
 .confirm.subject-confirm {
@@ -136,4 +136,13 @@ $bg_dark: #292929;
   right: 15px;
   top: -6px;
 }
+.copy-input {
+  position: absolute;
+  left: -2000px;
+}
 
+// Custom Inputs
+.display-input {
+  background: inherit;
+  padding: 0;
+}

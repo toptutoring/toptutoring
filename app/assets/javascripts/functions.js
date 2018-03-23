@@ -2,14 +2,18 @@ renderTopTutoringFlashes = function(html) {
   document.getElementById('top-tutoring-flashes').innerHTML = html;
 }
 
-copyToClipboard = function(copy_id) {
-  var copyText = document.getElementById(copy_id);
+copyToClipboard = function(copyId, confirmId) {
+  var copyText = document.getElementById(copyId);
   copyText.select();
-  document.execCommand("Copy");
-  var copyConfirm = document.getElementById("copy-confirm");
-  copyConfirm.classList.add("show-confirm");
+  document.execCommand('Copy');
+  var copyConfirm = document.getElementById(confirmId);
+  confirmDialogShow(copyConfirm);
+}
 
+confirmDialogShow = function(confirmElement) {
+  confirmElement.classList.add('show-confirm');
+  
   setTimeout(function() {
-    copyConfirm.classList.remove('show-confirm');
+    confirmElement.classList.remove('show-confirm');
   }, 600);
 }

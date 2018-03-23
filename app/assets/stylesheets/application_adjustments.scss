@@ -103,16 +103,3 @@ tr.archived-row {
 .mt-4 {
   margin-top: 4px !important;
 }
-
-// Copy Feature Styles
-.copy-input {
-  position: absolute;
-  left: -2000px;
-}
-.copy-confirm {
-  opacity: 0;
-  transition: opacity 0.3s; 
-} 
-.copy-confirm.show-confirm {
-  opacity: 1;
-}

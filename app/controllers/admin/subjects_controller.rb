@@ -1,5 +1,6 @@
 module Admin
   class SubjectsController < ApplicationController
+    before_action :set_subject, only: [:update, :switch_category, :update_name, :destroy]
     def index
       @subjects = Subject.all.order(:name)
       @category_options = Subject.categories.values.map { |cat| [cat.titlecase, cat] }
@@ -16,7 +17,6 @@ module Admin
     end
 
     def update
-      @subject = Subject.find(params[:id])
       if update_status
         flash.notice = "Tutoring Type has been changed to #{@type} for #{@subject.name}."
       else
@@ -26,13 +26,16 @@ module Admin
     end
 
     def switch_category
-      @subject = Subject.find(params[:id])
       @updated = @subject.update(category_params)
       flash.now[:alert] = @subject.errors.full_messages unless @updated
     end
 
+    def update_name
+      @updated = @subject.update(name_params)
+      flash.now[:alert] = @subject.errors.full_messages unless @updated
+    end
+
     def destroy
-      @subject = Subject.find(params[:id])
       @subject.destroy
       flash.now.notice = "#{@subject.name} has been removed."
     rescue ActiveRecord::InvalidForeignKey => e
@@ -54,8 +57,16 @@ module Admin
       params.require(:subject).permit(:category)
     end
 
+    def name_params
+      params.require(:subject).permit(:name)
+    end
+
     def subject_params
       params.require(:subject).permit(:name, :category, :academic_type)
+    end
+
+    def set_subject
+      @subject = Subject.find(params[:id])
     end
   end
 end

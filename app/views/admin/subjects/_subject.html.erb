@@ -1,12 +1,17 @@
 <tr id="subject_row_<%= subject.id %>">
-  <td><%= subject.name %></td>
+  <td class="p-relative">
+    <%= form_with model: subject, url: update_name_admin_subject_path(subject) do |f| %>
+      <%= f.text_field :name, onchange: "Rails.fire(this.form, 'submit');", id: "name_input_subject_#{subject.id}", class: "display-input form-control" %>
+    <% end %>
+    <span id="name_confirm_subject_<%= subject.id %>" class="label label-success confirm subject-confirm">Updated!</span>
+  </td>
   <td class="text-center"><%= subject.tutor_accounts.count %></td>
   <td class="text-center"><%= subject.engagements.count %></td>
   <td class="p-relative text-center">
     <%= form_with model: subject, url: switch_category_admin_subject_path(subject) do |f| %>
       <%= f.select :category, options_for_select(@category_options, subject.category), { include_blank: true }, onchange: "Rails.fire(this.form, 'submit');", id: "select_subject_#{subject.id}", class: "form-control" %>
     <% end %>
-    <span id="confirm_subject_<%= subject.id %>" class="label label-success confirm subject-confirm">Updated!</span>
+    <span id="cat_confirm_subject_<%= subject.id %>" class="label label-success confirm subject-confirm">Updated!</span>
   </td>
   <td class="text-center"><%= type_options(subject) %></td>
   <td class="text-center">
