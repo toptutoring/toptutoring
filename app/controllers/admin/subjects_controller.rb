@@ -2,6 +2,17 @@ module Admin
   class SubjectsController < ApplicationController
     def index
       @subjects = Subject.all.order(:name)
+      @category_options = Subject.categories.values.map { |cat| [cat.titlecase, cat] }
+    end
+
+    def create
+      @subject = Subject.new(subject_params)
+      if @subject.save
+        flash.notice = "#{@subject.name} has been created."
+      else
+        flash.alert = @subject.errors.full_messages
+      end
+      redirect_to action: :index
     end
 
     def update
@@ -16,7 +27,7 @@ module Admin
 
     def switch_category
       @subject = Subject.find(params[:id])
-      @updated = @subject.update(subject_params)
+      @updated = @subject.update(category_params)
       flash.now[:alert] = @subject.errors.full_messages unless @updated
     end
 
@@ -39,8 +50,12 @@ module Admin
       end
     end
 
-    def subject_params
+    def category_params
       params.require(:subject).permit(:category)
+    end
+
+    def subject_params
+      params.require(:subject).permit(:name, :category, :academic_type)
     end
   end
 end
