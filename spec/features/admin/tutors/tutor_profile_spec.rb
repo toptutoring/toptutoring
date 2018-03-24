@@ -28,12 +28,12 @@ feature "Editing tutor profiles", js: true do
 
       score = TestScore.first
       find_link("Add Badge", href: admin_tutor_account_badge_path(tutor.tutor_account, badge_id: score)).click
-      expect(score.reload.badge).to be_truthy
       expect(page).to have_link("Remove Badge", href: admin_tutor_account_badge_path(tutor.tutor_account, badge_id: score))
       expect(page).to have_content("Badge has been added.")
+      expect(score.reload.badge).to be_truthy
       find_link("Remove Badge", href: admin_tutor_account_badge_path(tutor.tutor_account, badge_id: score)).click
-      expect(score.reload.badge).to be_falsey
       expect(page).to have_link("Add Badge", href: admin_tutor_account_badge_path(tutor.tutor_account, badge_id: score))
+      expect(score.reload.badge).to be_falsey
     end
 
     scenario "publishing a tutor's profile" do
