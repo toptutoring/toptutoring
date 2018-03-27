@@ -11,7 +11,9 @@ class BlogPost < ApplicationRecord
   def add_slug
     return unless title_changed?
     self.slug = title.downcase
-                     .gsub(/[^0-9A-Za-z\(\.\s]/, '')
-                     .tr(" .(", "-")
+                     .gsub(/[^0-9A-Za-z$-_.+!*'()\s]/, '')
+                     .squish
+                     .tr(" ", "-")
+                     .concat("-#{id}")
   end
 end
