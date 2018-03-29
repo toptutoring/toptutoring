@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 feature "Update engagements" do
   let(:admin) { FactoryBot.create(:admin_user) }
@@ -16,7 +16,9 @@ feature "Update engagements" do
       expect(page).to have_link(href: edit_engagement_path(engagement))
       expect(page).not_to have_link( href: enable_engagement_path(engagement))
 
-      find_link(href: edit_engagement_path(engagement)).click
+      within("#engagement_#{engagement.id}") do
+        find_link(href: edit_engagement_path(engagement)).click
+      end
 
       expect(page).to have_content("Tutor")
       expect(page).to have_content("Student")
@@ -29,10 +31,16 @@ feature "Update engagements" do
       expect(page).to have_content("Student")
       expect(page).to have_content(tutor.full_name)
 
-      find_link(href: enable_engagement_path(engagement)).click
+      within("#engagement_#{engagement.id}") do
+        find_link(href: enable_engagement_path(engagement)).click
+      end
+
       expect(page).to have_content("Engagement successfully enabled!")
 
-      find_link(href: disable_engagement_path(engagement)).click
+      within("#engagement_#{engagement.id}") do
+        find_link(href: disable_engagement_path(engagement)).click
+      end
+
       expect(page).to have_content("Engagement successfully disabled and archived!")
     end
   end

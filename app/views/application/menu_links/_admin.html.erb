@@ -1,6 +1,6 @@
 <%= menu_link(admin_payments_path, "Payment History", "ion-card bg-success") %>
 <%= menu_link(admin_tutors_path, "Tutors", "icon ion-ios-contact bg-purple") %>
-<%= menu_link(engagements_path, "Engagements", "icon ion-ios-contact bg-primary") %>
+<%= menu_link(engagements_path, "Engagements", "icon ion-ios-contact bg-primary", Engagement.pending.count) %>
 <%= menu_link(admin_users_path, "Users", "icon ion-ios-contact bg-success") %>
 <%= menu_link(admin_roles_path, "Roles", "icon ion-ios-clock bg-success") %>
 <%= menu_link(admin_invoices_path, "Invoices", "icon ion-clipboard bg-primary", Invoice.by_tutor.pending.count) %>
