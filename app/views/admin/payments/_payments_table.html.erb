@@ -1,0 +1,18 @@
+<div id="<%= div_id %>" role="tabpanel" aria-labelledby="<%= div_id %>-tab" class="tab-pane fade <%= "active in" if active %>">
+  <div class="table-responsive">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th class="text-center">Date</th>
+          <th><%= title %></th>
+          <th class="text-center">Description</th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "admin/payments/payment", collection: payments %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,68 +1,20 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="widget">
       <div class="widget-heading clearfix">
         <h3 class="widget-title pull-left">Client Payments</h3>
       </div>
       <div class="widget-body">
-        <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>Client</th>
-                <th class="text-center">Amount</th>
-                <th class="text-center">Description</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @client_payments.each do |payment| %>
-                <tr>
-                  <td><%= payment.payer_name %></td>
-                  <td class="text-center"><%= number_to_currency(payment.amount) %></td>
-                  <td class="text-center"><%= payment.description %></td>
-                  <td class="text-center"><%= payment.status %></td>
-                  <td class="text-center"><%= l(payment.created_at, format: :date) %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="widget">
-      <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Tutor Payments</h3>
-      </div>
-      <div class="widget-body">
-        <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>Approver</th>
-                <th>Payee</th>
-                <th class="text-center">Amount</th>
-                <th class="text-center">Description</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @tutor_payments.each do |payout| %>
-                <tr>
-                  <td><%= payout.approver.full_name  %></td>
-                  <td><%= payout.payee.full_name  %></td>
-                  <td class="text-center"><%= number_to_currency(payout.amount) %></td>
-                  <td class="text-center"><%= payout.description %></td>
-                  <td class="text-center"><%= payout.status %></td>
-                  <td class="text-center"><%= l(payout.created_at, format: :date) %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+        <div role="tabpanel">
+          <ul role="tablist" class="nav nav-tabs nav-justified mb-15">
+            <li role="presentation" class="active"><a id="client-payments-tab" href="#client-payments" role="tab" data-toggle="tab" aria-controls="client-payments" aria-expanded="true">Client Payments</a></li>
+            <li role="presentation" class=""><a id="tutor-payouts-tab" href="#tutor-payouts" role="tab" data-toggle="tab" aria-controls="tutor-payouts" aria-expanded="false">Tutor Payouts</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <%= render "admin/payments/payments_table", payments: @payments, active: true, div_id: "client-payments", title: "Client" %>
+            <%= render "admin/payments/payments_table", payments: @payouts, active: false, div_id: "tutor-payouts", title: "Payee" %>
+          </div>
         </div>
       </div>
     </div>

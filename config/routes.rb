@@ -64,6 +64,7 @@ Rails.application.routes.draw do
           patch :switch_category, on: :member
           patch :update_name, on: :member
         end
+        resources :payments, only: :index
         namespace :payments do
           resource :miscellaneous_payment, only: [:new, :create]
         end
@@ -93,6 +94,7 @@ Rails.application.routes.draw do
         end
       end
       namespace :admin do
+        resources :payments, only: [:new, :create]
         resources :tutors, only: [:index, :show, :edit, :update] do
           patch :reactivate, on: :member, controller: :users
           patch :archive, on: :member, controller: :users
@@ -100,7 +102,6 @@ Rails.application.routes.draw do
         resources :tutor_accounts do
           patch "badge" =>"tutor_accounts#badge"
         end
-        resources :payments, only: [:new, :create, :index]
         resources :invoices, only: [:index, :edit, :update] do
           patch :deny, on: :member
         end

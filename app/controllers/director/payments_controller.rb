@@ -3,8 +3,9 @@ module Director
     before_action :require_login
 
     def index
-      @client_payments = Payment.all
-      @tutor_payments = current_user.approved_payouts
+      @payments = Payment.order(created_at: :desc)
+      @payouts = Payout.tutors.order(created_at: :desc).where(approver: current_user)
+      render "admin/payments/index"
     end
   end
 end
