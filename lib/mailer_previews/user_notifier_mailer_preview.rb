@@ -5,7 +5,8 @@ class UserNotifierMailerPreview < ActionMailer::Preview
   end
 
   def send_payment_notice
-    client = Struct.new(:email).new("client@example.com")
+    client = Struct.new(:email, :online_test_prep_credit)
+                   .new("client@example.com", 5.0)
     payment = Struct.new(:created_at, :amount, :rate,
                          :card_brand_and_four_digits, :card_holder_name,
                          :hours_type, :hours_purchased)
@@ -15,10 +16,10 @@ class UserNotifierMailerPreview < ActionMailer::Preview
   end
 
   def send_invoice_notice
-    client = Struct.new(:email).new("client@example.com")
+    client = Struct.new(:email, "online_test_prep_credit").new("client@example.com", 5.0)
     tutor = Struct.new(:full_name).new("Tutor")
-    invoice = Struct.new(:created_at, :submitter, :hours, :subject, :online)
-      .new(Time.current, tutor, 1.75, "English", true)
+    invoice = Struct.new(:created_at, :submitter, :hours, :subject, :online, :hours_type)
+                    .new(Time.current, tutor, 1.75, "English", true, "online_test_prep")
     UserNotifierMailer.send_invoice_notice(client, invoice)
   end
 
