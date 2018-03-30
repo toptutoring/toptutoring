@@ -125,6 +125,7 @@ Rails.application.routes.draw do
           get "/disable" => "engagements#disable"
         end
       end
+      get "/test-migration", to: "pages#home"
     end
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("tutor") } do
