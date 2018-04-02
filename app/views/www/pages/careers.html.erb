@@ -31,7 +31,7 @@
     <h3><%= t('www.careers.consistent_income.header') %></h3>
     <p class="mb0"><%= t('www.careers.consistent_income.blurb') %></p>
     <div class = "button-padding-top">
-      <%= link_to t('app.signup.text'), client_sign_up_url(subdomain: "app"), class: "btn btn-lg btn-blue" %>
+      <%= link_to t('app.signup.text'), users_tutors_signup_url(subdomain: "app"), class: "btn btn-lg btn-blue" %>
     </div>
   </div>
 </section>
@@ -43,8 +43,8 @@
   </div>
   <div class="col-md-6 content">
     <h3><%= t('www.careers.interest') %></h3>
-    <p class="mb0"><%= link_to t('app.contact_us'), root_url(subdomain: nil) + "contact", class: "btn btn-lg btn-blue" %></p>
+    <p class="mb0"><%= link_to t('app.contact_us'), "/contact", class: "btn btn-lg btn-blue" %></p>
     <h3><%= t('www.careers.already_invited') %></h3>
-    <p class="mb0"><%= link_to t('app.signup.text'), sign_up_url(subdomain: "app"), class: "btn btn-lg btn-blue" %></p>
+    <p class="mb0"><%= link_to t('app.signup.text'), users_tutors_signup_url(subdomain: "app"), class: "btn btn-lg btn-blue" %></p>
   </div>
 </section>
