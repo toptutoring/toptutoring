@@ -10,7 +10,7 @@
           <h6 class="title">Blog Categories</h6>
           <hr>
             <% BlogCategory.all.each do |category| %>
-                <%= link_to pages_blog_categories_path(category.name) do %>
+                <%= link_to pages_blog_category_path(category.name) do %>
                   <span class="label"><%= category.name %></span>
                 <% end %>
             <% end %>
