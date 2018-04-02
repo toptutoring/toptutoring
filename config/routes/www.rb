@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   constraints WwwTopTutoring do
     namespace :pages, path: "" do
       resources :tutors, path: "top-tutors", param: :first_name, only: [:index, :show]
-      get "/blog/categories/:name" => "blog_posts#categories", as: "blog_categories"
+      namespace :blog do
+        resources :categories, param: :name, only: [:index, :show]
+      end
       resources :blog_posts, path: "blog", param: :slug, only: [:index, :show]
     end
     get "/*path" => "pages#show"
