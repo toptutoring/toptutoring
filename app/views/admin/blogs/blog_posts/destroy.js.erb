@@ -1,0 +1,8 @@
+<% if @post.destroyed? %>
+  var postRow = document.getElementById("blog_post_<%= @post.id %>");
+  postTable = postRow.parentNode;
+  postTable.removeChild(postRow);
+<% end %>
+
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0)

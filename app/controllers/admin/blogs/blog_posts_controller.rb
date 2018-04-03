@@ -42,6 +42,15 @@ class Admin::Blogs::BlogPostsController < ApplicationController
     redirect_to action: :index
   end
 
+  def destroy
+    @post = BlogPost.find(params[:id])
+    if @post.destroy
+      flash.now.notice = "Post \"#{@post.title}\" has been removed."
+    else
+      flash.now.alert = "Post \"#{@post.title}\" could not be removed."
+    end
+  end
+
   private
 
   def post_params
