@@ -2,7 +2,13 @@
   <div class="col-sm-12">
     <div class="widget">
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Subjects</h3>
+        <h3 class="widget-title pull-left">
+          Subjects
+        </h3>
+        <a href="#" data-toggle="modal" data-target="#new_subject_modal" class="pull-right btn">
+          Add a new subject
+        </a>
+        <%= render "new_subject_modal" %>
       </div>
       <div class="widget-body">
         <%= render "subject_table", subjects: @subjects %>

@@ -14,11 +14,11 @@ feature "Blog post crud specs", js: true do
     find("input[type='submit']", visible: false).click
 
     expect(page).to have_content "Post successfully created"
+    expect(page).to have_link "Edit Post"
+    expect(page).to have_link"All Posts"
     expect(page).to have_content blog_title
     expect(page).to have_content Date.current.to_formatted_s(:long_ordinal)
     expect(page).to have_content blog_content
-    expect(page).to have_link "Edit Post"
-    expect(page).to have_link"All Posts"
     expect(BlogPost.count).to be 1
   end
 
@@ -31,6 +31,7 @@ feature "Blog post crud specs", js: true do
     find("#blog-content-contenteditable").base.send_keys(blog_content)
     find("input[type='submit']", visible: false).click
 
+    expect(page).to have_content "Post successfully updated"
     expect(page).to have_content blog_title
     expect(page).to have_content blog_content
     expect(BlogPost.count).to be 1
@@ -46,10 +47,10 @@ feature "Blog post crud specs", js: true do
     
     click_on post.title
 
+    expect(page).to have_link "Edit Post"
+    expect(page).to have_link"All Posts"
     expect(page).to have_content post.title
     expect(page).to have_content post.publish_date.to_formatted_s(:long_ordinal)
     expect(page).to have_content ActionView::Base.full_sanitizer.sanitize(post.content)
-    expect(page).to have_link "Edit Post"
-    expect(page).to have_link"All Posts"
   end
 end

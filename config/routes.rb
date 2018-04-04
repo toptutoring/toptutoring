@@ -63,7 +63,10 @@ Rails.application.routes.draw do
         end
         resources :timesheets
         resources :roles
-        resources :subjects
+        resources :subjects do
+          patch :switch_category, on: :member
+          patch :update_name, on: :member
+        end
         namespace :payments do
           resource :miscellaneous_payment, only: [:new, :create]
         end

@@ -9,4 +9,11 @@ class Subject < ActiveRecord::Base
 
   enum academic_type: { academic: "academic",
                         test_prep: "test_prep" }
+  enum category: { english: "english",
+                   foreign_language: "foreign_language",
+                   history: "history",
+                   math: "math",
+                   science: "science",
+                   test_preparation: "test_prep",
+                   other: "other" }
 end

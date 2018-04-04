@@ -118,10 +118,10 @@
                       <blockquote>
                         <span><%= referral_url(current_user.unique_token, subdomain: "app") %></span>
                         <%= text_area_tag :referral_url, referral_url(current_user.unique_token, subdomain: "app"), class: "copy-input" %>
-                        <div onclick="copyToClipboard('referral_url')" class="btn btn-outline btn-success ml-10" data-toggle="tooltip" data-placement"top" data-original-title="Copy url to clipboard">
+                        <div onclick="copyToClipboard('referral_url', 'copy-confirm')" class="btn btn-outline btn-success ml-10" data-toggle="tooltip" data-placement"top" data-original-title="Copy url to clipboard">
                           <i class="icon ion-clipboard fs-18 text-default"></i>
                         </div>
-                        <span id="copy-confirm" class="copy-confirm label label-success">Copied</span>
+                        <span id="copy-confirm" class="confirm label label-success">Copied</span>
                       </blockquote>
                     </div>
                   </div>

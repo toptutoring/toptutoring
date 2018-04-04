@@ -1,0 +1,9 @@
+<% if @updated %>
+  var subjectConfirm = document.getElementById("name_confirm_subject_<%= @subject.id %>")
+  confirmDialogShow(subjectConfirm);
+<% else %>
+  var subjectSelect = document.getElementById("name_input_subject_<%= @subject.id %>")
+  subjectSelect.value = "<%= @subject.reload.name %>"
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+  window.scrollTo(0, 0);
+<% end %>

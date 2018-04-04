@@ -35,10 +35,10 @@ feature "Tutors are able to update their profiles", js: true  do
     expect(page).not_to have_css("option", text: score.subject.name)
     expect(page).to have_link("Remove", href: tutors_test_score_path(score))
     click_link "Remove"
-    expect(TestScore.count).to eq 0
     expect(page).to have_content("Your score has been removed.")
     expect(page).to have_css("option", text: score.subject.name)
     expect(page).not_to have_link("Remove", href: tutors_test_score_path(score))
+    expect(TestScore.count).to eq 0
   end
 
   scenario "when updating descriptions" do
