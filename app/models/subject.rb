@@ -14,6 +14,6 @@ class Subject < ActiveRecord::Base
                    history: "history",
                    math: "math",
                    science: "science",
-                   test_preparation: "test_prep",
+                   test_preparation: "test_preparation",
                    other: "other" }
 end
