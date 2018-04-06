@@ -17,12 +17,9 @@ Rails.application.routes.draw do
   constraints AppTopTutoring do
     mount Sidekiq::Web, at: '/sidekiq' if Rails.env.development?
     get "/sign_in" => "sessions#new", as: "login"
-    get "/example_dashboard" => "pages#example_dashboard"
-    get "/calendar" => "pages#calendar"
     get "/one_time_payment" => "one_time_payments#new"
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
-    get "payment" => "pages#payment"
 
     # review routes
     get ":unique_token/rate_us" => "reviews#new", as: "new_review"
@@ -203,11 +200,6 @@ Rails.application.routes.draw do
       resources :tutors, only: [:new, :create]
       get "tutors/signup" => "tutors#signup"
     end
-
-    # Demo dashboards
-    get "/tutor-dashboard" => "pages#tutor_dashboard"
-    get "/director-dashboard" => "pages#director_dashboard"
-    get "/admin-dashboard" => "pages#admin_dashboard"
 
     root "sessions#new"
   end
