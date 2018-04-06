@@ -55,15 +55,15 @@ module EngagementHelper
 
   def misc_action_link(engagement)
     if engagement.tutor_account && engagement.pending? 
-       link_to enable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Enable this engagement", confirm: "Enable this engagement?" }, class: "fs-24" do 
+       link_to enable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Enable this engagement", confirm: "Enable this engagement?" }, class: "mr-15 fs-24" do 
         tag.i class: "icon ion-play"
       end 
     elsif engagement.active? 
-      link_to disable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Archive this engagement", confirm: "Archive this engagement? Archiving will disable the tutor from viewing and invoicing this engagement." }, class: "fs-24" do 
+      link_to disable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Archive this engagement", confirm: "Archive this engagement? Archiving will disable the tutor from viewing and invoicing this engagement." }, class: "mr-15 fs-24" do 
         tag.i class: "icon ion-android-archive"
       end 
     elsif engagement.invoices.empty?
-      link_to engagement_path(engagement), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this engagement", confirm: "This will permanently remove the engagement from the database. Are you sure?" }, class: "fs-24" do 
+      link_to engagement_path(engagement), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this engagement", confirm: "This will permanently remove the engagement from the database. Are you sure?" }, class: "mr-15 fs-24" do 
         tag.i class: "icon ion-trash-b"
       end 
     end 
