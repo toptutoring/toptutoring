@@ -5,10 +5,12 @@ module Pages
       @posts = BlogPost.published
                        .order(publish_date: :desc)
                        .paginate(page: params[:page], per_page: 5)
+      @page_title = "Top Tutoring | Blog"
     end
 
     def show
       @post = BlogPost.published.find_by!(slug: slug)
+      @page_title = @post.title
     end
 
     private

@@ -11,7 +11,7 @@
     %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <%= yield :meta_tags %>
-    <title>Top Tutoring</title>
+    <title><%= yield :page_title %></title>
     <!-- Google Tag Manager -->
     <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
