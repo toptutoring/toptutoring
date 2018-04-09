@@ -3,29 +3,25 @@
     <h3 class="widget-title">Your Tutors</h3>
     <!-- begin widget -->
     <div class="widget-body">
-      <% if @engagements.empty? %>
-        <!-- Request a Tutor -->
-        <p class="mt-30"><%= I18n.t("app.clients.dashboard.no_tutor_message") %></p>
-      <% else %>
-        <div class="table-responsive mt-15 mb-0">
-          <table class="table mb-0 table-striped table-hover">
-            <thead>
-              <tr>
-                <th class="col-lg-3 col-sm-2">Tutor</th>
-                <th class="col-lg-3 col-sm-2">Student</th>
-                <th class="col-lg-4 col-sm-3">Subject</th>
-                <th class="col-lg-1 col-sm-1">Type</th>
-                <th class="col-lg-1 col-sm-1"></th>
-              </tr>
-            </thead>
-            <% @engagements.each do |engagement| %>
-              <tr>
-                <td><%= engagement.tutor ? engagement.tutor.full_name : 'Pending' %></td>
-                <td><%= engagement.student_name %></td>
-                <td><%= engagement.subject.name.titlecase %></td>
-                <td><%= engagement.academic_type.humanize %></td>
-                <td>
-                  <!-- 
+      <div class="table-responsive mt-15 mb-0">
+        <table class="table mb-0 table-striped table-hover">
+          <thead>
+            <tr>
+              <th class="col-lg-3 col-sm-2">Tutor</th>
+              <th class="col-lg-3 col-sm-2">Student</th>
+              <th class="col-lg-4 col-sm-3">Subject</th>
+              <th class="col-lg-1 col-sm-1">Type</th>
+              <th class="col-lg-1 col-sm-1"></th>
+            </tr>
+          </thead>
+          <% @engagements.each do |engagement| %>
+            <tr>
+              <td><%= engagement.tutor ? engagement.tutor.full_name : 'Pending' %></td>
+              <td><%= engagement.student_name %></td>
+              <td><%= engagement.subject.name.titlecase %></td>
+              <td><%= engagement.academic_type.humanize %></td>
+              <td>
+                <!-- 
                   <% if engagement.availabilities.empty? %>
                     <% availability_url = new_availability_url(engagement.availabilities.build) %>
                   <% else %>
@@ -33,14 +29,13 @@
                   <% end %>
                   <% # TODO enable this feature when availabilites feature is stable %>
                   <a class="pull-right" data-toggle="tooltip" title="Let us know when you are available for this tutor." href="<%= availability_url %>"><i class="ion-clock fs-18"></i></a>
-                  -->
-                </td>
-              </tr>
-            <% end %>
-          </table>
-        </div>
-      <% end %>
-    <!-- end of widget -->
+                -->
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+      <!-- end of widget -->
     </div>
   </div>
 </div>

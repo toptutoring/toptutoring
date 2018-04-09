@@ -2,6 +2,10 @@ module Clients
   class StudentsController < ApplicationController
     before_action :require_login
 
+    def new
+      @subject_id = current_user.client_account.engagements.any? ? nil : current_user.signup.subject_id
+    end
+
     def create
       results = create_student!
       if results.success?
@@ -15,7 +19,7 @@ module Clients
 
     def index
       @student_accounts = current_user.client_account.student_accounts
-      render :new if @student_accounts.empty?
+      redirect_to action: :new if @student_accounts.empty?
     end
 
     def show

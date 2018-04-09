@@ -22,7 +22,7 @@
 
   <%= fields_for Engagement.new do |engagement_field| %>
     <div class="form-group form-group-lg select-option">
-      <%= engagement_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, class: "form-control input-lg", required: true %>
+      <%= engagement_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name", @subject_id), { prompt: "Subject" }, class: "form-control input-lg", required: true %>
     </div>
   <% end %>
 

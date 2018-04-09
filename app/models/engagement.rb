@@ -56,4 +56,9 @@ class Engagement < ActiveRecord::Base
   def rate_for?(type)
     client.send("#{type}_#{academic_type}_rate") > 0
   end
+
+  def low_balance?
+    client.send("online_#{academic_type}_credit") < 0 || 
+      client.send("in_person_#{academic_type}_credit") < 0
+  end
 end
