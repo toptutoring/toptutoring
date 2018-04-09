@@ -3,6 +3,7 @@ module Pages
     layout "authentication"
     def index
       @tutor_accounts = TutorAccount.published.limit(9).includes(:user)
+      @page_title = "Top Tutoring | Our Top Tutors"
     end
 
     def show
@@ -10,6 +11,7 @@ module Pages
                    .where(tutor_accounts: { publish: true })
                    .find_by(first_name: name_param)
       not_found unless @tutor
+      @page_title = "Top Tutoring | Meet #{@tutor.first_name}"
     end
 
     private

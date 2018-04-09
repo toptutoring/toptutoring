@@ -12,4 +12,8 @@ module ApplicationHelper
   def current_year
     CURRENT_YEAR || Date.current.year
   end
+
+  def page_title(page_title = "Top Tutoring")
+    content_for :page_title, page_title
+  end
 end

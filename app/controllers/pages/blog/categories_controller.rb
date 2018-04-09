@@ -11,6 +11,7 @@ module Pages
         @posts = cat.blog_posts.published
                     .order(:publish_date)
                     .paginate(page: params[:page], per_page: 5)
+        @page_title = "Top Tutoring | Blog | #{cat.name}"
         render "pages/blog_posts/index"
       end
 
