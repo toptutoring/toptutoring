@@ -6,6 +6,7 @@ FactoryBot.define do
     stripe_charge_id { "ch_xxx" }
     last_four { "xxxx" }
     card_brand { "Visa" }
+    status { "succeeded" }
 
     trait :hourly_purchase do
       description  { "Purchase of 2 hours" }
