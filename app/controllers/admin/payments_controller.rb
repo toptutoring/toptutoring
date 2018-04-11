@@ -5,7 +5,6 @@ module Admin
     
     def index
       @payments = Payment.order(created_at: :desc).includes(:payer)
-      @payouts = Payout.tutors.order(created_at: :desc)
     end
 
     def create
