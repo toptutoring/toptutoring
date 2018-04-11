@@ -1,8 +1,8 @@
 <tr>
-  <td class="text-center"><%= l(payment.created_at, format: :date) %></td>
-  <td><%= payment.class == Payment ? payment.payer_name : payment.payee.full_name  %></td>
   <td class="text-center">
     <%= status_icon payment.status %>
   </td>
-  <td class="text-center"><%= number_to_currency(payment.amount) %></td>
+  <td><%= l(payment.created_at, format: :date) %></td>
+  <td><%= payment.class == Payment ? payment.payer_name : payment.payee.full_name  %></td>
+  <td><%= number_to_currency(payment.amount) %></td>
 </tr>
