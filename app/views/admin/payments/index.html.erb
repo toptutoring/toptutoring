@@ -6,6 +6,7 @@
       </div>
       <div class="widget-body">
         <%= render "admin/payments/payments_table", payments: @payments, title: "Client" %>
+        <%= will_paginate @payouts %>
       </div>
     </div>
   </div>

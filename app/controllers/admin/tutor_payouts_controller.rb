@@ -1,7 +1,10 @@
 module Admin
   class TutorPayoutsController < ApplicationController
     def index
-      @payouts = Payout.tutors.order(created_at: :desc)
+      @type = "Tutor"
+      @payouts = Payout.tutors
+                       .order(created_at: :desc)
+                       .paginate(page: params[:page], per_page: 10)
     end
   end
 end

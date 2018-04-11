@@ -2,10 +2,11 @@
   <div class="col-md-12">
     <div class="widget">
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Tutor Payments</h3>
+        <h3 class="widget-title pull-left"><%= @type %> Payments</h3>
       </div>
       <div class="widget-body">
-        <%= render "admin/payments/payments_table", payments: @payouts, title: "Tutor" %>
+        <%= render "admin/payments/payments_table", payments: @payouts, title: @type %>
+        <%= will_paginate @payouts %>
       </div>
     </div>
   </div>

@@ -4,7 +4,9 @@ module Admin
     before_action :set_funding_source, :validate_funding_source, :set_invoice, :set_payee, only: :create
     
     def index
-      @payments = Payment.order(created_at: :desc).includes(:payer)
+      @payments = Payment.order(created_at: :desc)
+                         .includes(:payer)
+                         .paginate(page: params[:page], per_page: 10)
     end
 
     def create
