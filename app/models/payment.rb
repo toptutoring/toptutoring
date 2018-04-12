@@ -21,4 +21,8 @@ class Payment < ActiveRecord::Base
   def card_brand_and_four_digits
     card_brand + " ending in ..." + last_four
   end
+
+  def payer_name
+    payer ? payer.full_name : card_holder_name
+  end
 end
