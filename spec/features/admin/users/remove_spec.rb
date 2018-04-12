@@ -77,7 +77,7 @@ feature "Remove users" do
     scenario "and fails removing a user with a payment" do
       name = client.full_name
       engagement
-      FactoryBot.create(:payment, payer: client)
+      FactoryBot.create(:payment, :hourly_purchase, payer: client)
       sign_in(admin)
 
       visit admin_users_path
