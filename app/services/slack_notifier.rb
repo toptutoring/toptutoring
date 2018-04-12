@@ -47,6 +47,17 @@ class SlackNotifier
       ping(message, :payments)
     end
 
+    def notify_one_time_payment(payment)
+      return unless payment.persisted?
+      message = "A payment has been made.\n" \
+        "Type: One Time Payment\n" \
+        "Cardholder Name: #{payment.card_holder_name}\n" \
+        "Payment method: #{payment.card_brand_and_four_digits}\n" \
+        "Email: #{payment.payer_email}\n" \
+        "Amount: #{payment.amount}"
+      ping(message, :payments)
+    end
+
     def notify_payout_made(payout)
       message = "A payment has been made.\n" \
         "By: #{payout.approver.full_name}\n" \

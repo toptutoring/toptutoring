@@ -14,6 +14,12 @@ class UserNotifierMailer < ApplicationMailer
          subject: "You have made a purchase of #{@payment.hours_purchased} of tutoring")
   end
 
+  def send_one_time_payment_notice(payment)
+    @payment = payment
+    mail(to: @payment.payer_email,
+         subject: "You have made a one time payment of $#{@payment.amount} to Top Tutoring")
+  end
+
   def send_invoice_notice(user, invoice)
     @user = user
     @invoice = invoice

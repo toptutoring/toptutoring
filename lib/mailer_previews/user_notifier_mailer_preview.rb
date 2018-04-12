@@ -15,6 +15,14 @@ class UserNotifierMailerPreview < ActionMailer::Preview
     UserNotifierMailer.send_payment_notice(client, payment)
   end
 
+  def send_one_time_payment_notice
+    payment = Struct.new(:created_at, :amount, :payer_email,
+                         :card_brand_and_four_digits, :card_holder_name)
+                    .new(Time.current, "100.00", "test@example.com",
+                         "Visa ending in 1234", "Client Name")
+    UserNotifierMailer.send_one_time_payment_notice(payment)
+  end
+
   def send_invoice_notice
     client = Struct.new(:email, "online_test_prep_credit").new("client@example.com", 5.0)
     tutor = Struct.new(:full_name).new("Tutor")

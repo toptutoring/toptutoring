@@ -52,7 +52,7 @@ en:
       failure: "There was an error while processing your request."
       destroy: "Your request has been removed."
     payment:
-      success: "Thank you for adding to your balance."
+      success: "Thank you for your payment."
       failure: "There was an error submitting a payment with your credit card."
     admin:
       users:

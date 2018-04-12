@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   constraints AppTopTutoring do
     mount Sidekiq::Web, at: '/sidekiq' if Rails.env.development?
     get "/sign_in" => "sessions#new", as: "login"
-    get "/one_time_payment" => "one_time_payments#new"
+    get "/payments/one_time" => "one_time_payments#new", as: "one_time_payment"
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
 
@@ -149,9 +149,6 @@ Rails.application.routes.draw do
     end
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("client") } do
-      get "/one_time_payment" => "one_time_payments#new"
-      post "/payments/one_time" => "one_time_payments#create"
-      get "/confirmation" => "one_time_payments#confirmation"
       namespace :clients do
         resources :payments, only: [:new, :create]
         resources :students, only: [:show, :edit, :index, :new, :create]

@@ -12,7 +12,6 @@ class Clients::PaymentsController < ApplicationController
   end
 
   def create
-    source = determine_source
     results = PaymentService.new(source, payment_params, account).charge!
     if results.success?
       flash.now[:notice] = results.message
@@ -26,7 +25,7 @@ class Clients::PaymentsController < ApplicationController
 
   private
 
-  def determine_source
+  def source
     return params.require(:card_id) unless use_new_card?
     return token_id unless save_card_info?
     result = StripeAccountService.create_account!(current_user, token_id)

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature "Index Payments" do
   let(:client) { FactoryBot.create(:client_user) }
-  let!(:payment) { FactoryBot.create(:payment, payer_id: client.id, amount_cents: 200_00,
+  let!(:payment) { FactoryBot.create(:payment, :hourly_purchase, payer_id: client.id, amount_cents: 200_00,
                                      status: "paid", description: "initial payment") }
 
   scenario "show all user's past payments" do

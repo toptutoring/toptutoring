@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322180423) do
+ActiveRecord::Schema.define(version: 20180410193930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,8 @@ ActiveRecord::Schema.define(version: 20180322180423) do
     t.decimal "hours_purchased", precision: 10, scale: 2
     t.bigint "stripe_account_id"
     t.string "stripe_source"
+    t.string "payer_email"
+    t.boolean "one_time", default: false
     t.index ["payer_id"], name: "index_payments_on_payer_id"
     t.index ["stripe_account_id"], name: "index_payments_on_stripe_account_id"
   end
