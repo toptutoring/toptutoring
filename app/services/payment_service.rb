@@ -116,6 +116,10 @@ class PaymentService
 
   def send_notices
     if payment.one_time
+      UserNotifierMailer.send_one_time_payment_notice(payment)
+                        .deliver_later
+      SlackNotifier.notify_one_time_payment(payment)
+    else
       UserNotifierMailer.send_payment_notice(user, payment)
                         .deliver_later
       SlackNotifier.notify_client_payment(payment)
