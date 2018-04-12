@@ -41,26 +41,12 @@
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- End Google Tag Manager (noscript) -->
     <% end %>
-    <%= render "user_header" %>
 
-    <div class="main-container">
-      <% if current_user.enabled? %>
-        <%= render "menu" %>
-        <div class="page-container">
-          <div class="page-content container-fluid">
-            <div id="top-tutoring-flashes">
-              <%= render "flashes" %>
-            </div>
-            <%= yield %>
-          </div>
-        </div>
-      <% else %>
-        <div class="p-20">
-          <%= render "flashes" %>
-          <%= yield %>
-        </div>
-      <% end %>
-    </div>
+    <% if current_user %>
+      <%= render "shared/sign_in_view" %>
+    <% else %>
+      <%= render "shared/signed_out_view" %>
+    <% end %>
 
     <%= javascript_include_tag :application %>
     <!-- JS required for Sigma Styles -->
@@ -82,6 +68,5 @@
 
     <%= render "misc_javascript" %>
     <%= render "css_overrides" %>
-
   </body>
 </html>
