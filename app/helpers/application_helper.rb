@@ -5,8 +5,11 @@ module ApplicationHelper
     link_to user.phone_formatted || "", "tel:#{user.phone_formatted(:sanitized)}"
   end
 
-  def cleanup_phone_number number
-    Phonelib.parse(number, :us).national
+  def cleanup_phone_number(number, country_code = nil)
+    phone_number = Phonelib.parse(number, country_code)
+    tag.a href: "tel:#{phone_number.international.tr(" ", "")}" do 
+      phone_number.national 
+    end
   end
 
   def current_year
