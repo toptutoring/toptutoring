@@ -9,7 +9,7 @@ module Users
     end
 
     def create
-      result = CreateClientService.create!(signups_params, confirm_password, country_code)
+      result = CreateClientService.create!(signups_params, confirm_password)
       if result.success?
         sign_in(result.user)
         flash.notice = result.messages
@@ -31,13 +31,8 @@ module Users
       params.require(:user)
             .permit(:first_name, :last_name, :phone_number, :email, :password,
                     :zip, signup_attributes: [:student, :subject_id, :comments])
-            .merge(roles: Role.where(name: "client"))
-    end
-
-    def country_code
-      return "US" if Rails.env.development? || Rails.env.test?
-      code = request.location.country_code
-      code == "RD" ? "US" : code
+            .merge(roles: Role.where(name: "client"),
+                   country_code: country_code)
     end
 
     def return_path(user)
