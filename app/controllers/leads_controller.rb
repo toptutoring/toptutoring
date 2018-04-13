@@ -6,7 +6,7 @@ class LeadsController < ApplicationController
 
   def create
     @lead = Lead.new(lead_params)
-    @lead.save
+    SlackNotifier.notify_new_lead(@lead) if @lead.save
   end
 
   def update

@@ -10,23 +10,24 @@ class SlackNotifier
     }.freeze
 
     def notify_user_signup_start(user)
-      message = "A new user has signed up.\n" \
-        "Name: #{user.full_name}\n" \
-        "Phone Number: #{user.phone_number}\n" \
-        "Email: #{user.email}\n" \
-        "Comments: #{user.signup.comments}\n"
+      phone = Phonelib.parse(user.phone_number, user.country_code)
+      message = "A new user has signed up.\n"
+      message.concat lead_message(user, phone, user.signup.comments)
       ping(message, :leads)
     end
 
-    def notify_user_signed_up(user)
-      if user.persisted?
-        message = "#{user.full_name} finished the sign up process.\n" \
-          "Contact info for new client:\n" \
-      else
-        message = "#{user.full_name} attempted to finish sign up, but failed.\n" \
-      end
-      message.concat("Email: #{user.email}\nPhone Number: #{user.phone_number}")
+    def notify_new_lead(lead)
+      phone = Phonelib.parse(lead.phone_number, lead.country_code)
+      message = "A user has left their contact info.\n"
+      message.concat lead_message(lead, phone, lead.comments)
       ping(message, :leads)
+    end
+
+    def lead_message(lead, phone, comments)
+      "Name: #{lead.full_name}\n" \
+        "Phone Number: #{phone.national}\n" \
+        "Email: #{lead.email}\n" \
+        "Comments: #{comments}\n"
     end
 
     def notify_mass_payment_made(payment_messages)
