@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="widget">
       <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left"><%= @type %> Payments</h3>
+        <h3 class="widget-title pull-left"><%= @type %> Payouts</h3>
       </div>
       <div class="widget-body">
         <h5>Total amount paid: $<%= Money.new @payouts.sum(:amount_cents) %></h3>
