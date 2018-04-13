@@ -5,6 +5,8 @@ class Lead < ApplicationRecord
     on: :create
   validates_presence_of :first_name, :last_name, :email, :zip
 
+  scope :active, -> { where(archived: false) }
+
   def full_name
     first_name + " " + last_name
   end

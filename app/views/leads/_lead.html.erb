@@ -1,0 +1,35 @@
+<tr id="lead_row_<%= lead.id %>">
+  <td><%= l lead.created_at, format: :date %></td>
+  <td>
+    <a href="#lead_info_modal_<%= lead.id %>" data-toggle="modal" aria-expanded="false">
+      <h5 class="media-heading pull-left mt-4 mr-10">
+        <%= lead.full_name %>
+      </h5>
+    </a>
+  </td>
+  <td><%= cleanup_phone_number lead.phone_number, lead.country_code %></td>
+  <td>
+    <%= link_to lead_path(lead), method: "patch", remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Archive lead from list", confirm: "Are you sure you want to archive this lead?" }, class: "mr-15 fs-24" do %>
+      <i class="icon ion-android-archive"></i>
+    <% end %>
+  </td>
+
+  <div tab-index="-1" role="dialog" class="modal fade" id="lead_info_modal_<%= lead.id %>">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title"><%= lead.full_name %></h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-4">Phone Number</div><div class="col-xs-8"><%= cleanup_phone_number lead.phone_number, lead.country_code %></div>
+            <div class="col-xs-4">Email</div><div class="col-xs-8"><%= lead.email %></div>
+            <div class="col-xs-4">Zip</div><div class="col-xs-8"><%= lead.zip %></div>
+            <div class="col-xs-4">Subject</div><div class="col-xs-8"><%= lead.subject.try(:name) %></div>
+            <div class="col-xs-4">Comments</div><div class="col-xs-8"><%= lead.comments %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</tr>

@@ -12,6 +12,7 @@
   </ul>
 </li>
 
+<%= menu_link(leads_path, "Leads", "icon ion-ios-person bg-primary", Lead.active.count) %>
 <%= menu_link(admin_invoices_path, "Invoices", "icon ion-clipboard bg-primary", Invoice.by_tutor.pending.count) %>
 <%= menu_link(engagements_path, "Engagements", "icon ion-ios-contact bg-primary", Engagement.pending.count) %>
 <%= menu_link(director_users_path, "Clients", "icon ion-ios-contact bg-danger") %>

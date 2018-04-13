@@ -1,7 +1,23 @@
 class LeadsController < ApplicationController
+  def index
+    @leads = Lead.active
+                 .order(created_at: :desc)
+  end
+
   def create
     @lead = Lead.new(lead_params)
     @lead.save
+  end
+
+  def update
+    @lead = Lead.find(params[:id])
+    if @lead.update(archived: true)
+      @archived = true
+      @count = Lead.active.count
+      flash.now.notice = "Archived lead."
+    else
+      flash.now.alert = "Unable to archive lead."
+    end
   end
 
   private
