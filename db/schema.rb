@@ -189,6 +189,21 @@ ActiveRecord::Schema.define(version: 20180417175135) do
     t.index ["submitter_id"], name: "index_invoices_on_submitter_id"
   end
 
+  create_table "leads", force: :cascade do |t|
+    t.string "email"
+    t.string "phone_number"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "country_code"
+    t.bigint "subject_id"
+    t.text "comments"
+    t.integer "zip"
+    t.boolean "archived", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_leads_on_subject_id"
+  end
+
   create_table "payments", id: :serial, force: :cascade do |t|
     t.integer "amount_cents"
     t.string "description"
