@@ -41,8 +41,6 @@ Rails.application.routes.draw do
     #Clearance routes
     resource :session, controller: "sessions", only: [:new, :create]
 
-    resources :cities, only: [:show]
-
     scope module: "admin" do
       resources :users, only: [] do
         resource :masquerade, only: :create
