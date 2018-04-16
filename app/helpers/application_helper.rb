@@ -16,4 +16,14 @@ module ApplicationHelper
   def page_title(page_title = "Top Tutoring")
     content_for :page_title, page_title
   end
+
+  def status_icon(status)
+    icon_type = case status
+                when "paid" then "ion-checkmark-round text-success"
+                when "succeeded" then "ion-checkmark-round text-success"
+                when "denied" then "ion-close-round text-danger"
+                else "ion-clock text-default"
+                end
+    tag.i class: "icon #{icon_type}"
+  end
 end
