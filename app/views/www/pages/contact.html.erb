@@ -2,7 +2,7 @@
 <section>
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 col-md-5">
+      <div class="col-sm-6 col-md-5 col-md-offset-1">
         <h4 class="uppercase">contact us</h4>
         <p>
         We’d love to hear from you. Please fill out the following form to inquire about tutoring, rates or other questions and we'll get back to you shortly.
@@ -12,13 +12,13 @@
         <br />P: <%= cleanup_phone_number("15108425221") %>
         </p>
         <hr>
-        <%= image_tag "www/mailbox.jpg", class: "contact-us-image" %>
+        <%= image_tag "www/mailbox.jpg", class: "not-visible-xs" %>
 
         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br>
         </p>
       </div>
-      <div class="col-sm-6 col-md-5 col-md-offset-1">
-        <%= form_with model: Lead, url: leads_path do |f| %>
+      <div class="col-sm-6 col-md-5">
+        <%= form_with model: Lead, url: leads_path, id: "contact-form" do |f| %>
 
           <div class="col-sm-6">
             <%= f.text_field :first_name, type: "text", placeholder: "First Name", required: true %>
@@ -52,7 +52,6 @@
           <div class="col-xs-12">
             <%= f.submit "Send Message", class: "btn btn-success" %>
           </div>
-          <div id="confirmation-message" class="hidden"></div>
         <% end %>
       </div>
     </div>

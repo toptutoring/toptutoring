@@ -1,10 +1,10 @@
-confirmation = document.getElementById("confirmation-message");
-confirmation.classList.remove("hidden");
 <% if @lead.persisted? %>
-    confirmation.classList.add("form-success");
-    confirmation.innerHTML = "<p><%= t "www.contact.confirmation" %></p>"
+  form = document.getElementById("contact-form");
+  parentDiv = form.parentNode
+  parentDiv.removeChild(form)
+  parentDiv.innerHTML = "<p class=\"text-center\"><%= t "www.contact.confirmation" %></p>"
 <% else %>
-    confirmation.classList.add("form-error");
-    confirmation.innerHTML = "<p><%= t "www.contact.failure" %></p>"
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+  window.scrollTo(0, 0);
 <% end %>
 

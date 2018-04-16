@@ -19,6 +19,7 @@ class SlackNotifier
     def notify_new_lead(lead)
       phone = Phonelib.parse(lead.phone_number, lead.country_code)
       message = "A user has left their contact info.\n"
+      message.concat("Lead failed to save. #{lead.errors.full_messages.join(", ")}") unless lead.persisted?
       message.concat lead_message(lead, phone, lead.comments)
       ping(message, :leads)
     end
