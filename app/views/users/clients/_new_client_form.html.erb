@@ -25,6 +25,10 @@
   </div>
 
   <div class="col-sm-6">
+    <%= form.text_field :zip, placeholder: "Zip Code", pattern: "\\d{5}", required: true %>
+  </div>
+
+  <div class="col-sm-12">
     <%= form.email_field :email, type: "text", placeholder: "Email", required: true %>
   </div>
 
