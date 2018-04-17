@@ -1,6 +1,6 @@
 class LeadsController < ApplicationController
   def index
-    @leads = Lead.active
+    @leads = Lead.all
                  .order(created_at: :desc)
                  .paginate(page: params[:page], per_page: 10)
   end
@@ -14,11 +14,19 @@ class LeadsController < ApplicationController
   def update
     @lead = Lead.find(params[:id])
     if @lead.update(archived: true)
-      @archived = true
-      @count = Lead.active.count
-      flash.now.notice = "Archived lead."
+      flash.notice = "Lead has been archived"
     else
-      flash.now.alert = "Unable to archive lead."
+      flash.alert = "Unable to archive lead. #{errrors}"
+    end
+    redirect_to action: :index
+  end
+
+  def destroy
+    @lead = Lead.find(params[:id])
+    if @lead.destroy
+      flash.now.notice = "Lead has been deleted."
+    else
+      flash.now.alert = "Unable to delete lead. #{errors}"
     end
   end
 
@@ -30,5 +38,9 @@ class LeadsController < ApplicationController
                   :phone_number, :email,
                   :subject_id, :comments)
           .merge(country_code: country_code)
+  end
+
+  def errors
+    @lead.errors.full_messages.join(", ")
   end
 end

@@ -1,4 +1,4 @@
-<tr id="lead_row_<%= lead.id %>">
+<tr id="lead_row_<%= lead.id %>" class="<%= "archived-row" if lead.archived? %>">
   <td><%= l lead.created_at, format: :date %></td>
   <td>
     <a href="#lead_info_modal_<%= lead.id %>" data-toggle="modal" aria-expanded="false">
@@ -9,8 +9,14 @@
   </td>
   <td><%= cleanup_phone_number lead.phone_number, lead.country_code %></td>
   <td>
-    <%= link_to lead_path(lead), method: "patch", remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Archive lead from list", confirm: "Are you sure you want to archive this lead?" }, class: "mr-15 fs-24" do %>
-      <i class="icon ion-android-archive"></i>
+    <% unless lead.archived? %>
+      <%= link_to lead_path(lead), method: "patch", data: { toggle: "tooltip", placement: "top", "original-title" => "Archive lead from list", confirm: "Are you sure you want to archive this lead?" }, class: "mr-15 fs-24" do %>
+        <i class="icon ion-android-archive"></i>
+      <% end %>
+    <% end %>
+
+    <%= link_to lead_path(lead), method: "delete", remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Remove lead permanently from list", confirm: "Are you sure you want to remove this lead? permanently?" }, class: "mr-15 fs-24" do %>
+      <i class="icon ion-trash-b"></i>
     <% end %>
   </td>
 
