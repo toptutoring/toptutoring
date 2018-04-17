@@ -14,6 +14,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_first_name", with: name
       fill_in "user_last_name", with: last_name
       fill_in "user_email", with: "client@example.com"
+      fill_in "Zip Code", with: 94501
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
       fill_in "confirm_password", with: "password"
@@ -38,6 +39,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_first_name", with: name
       fill_in "user_last_name", with: last_name
       fill_in "user_email", with: "student@example.com"
+      fill_in "Zip Code", with: 94501
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
       fill_in "confirm_password", with: "password"
@@ -81,6 +83,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_first_name", with: "StudentName"
       fill_in "user_last_name", with: "StudentLastName"
       fill_in "user_phone_number", with: "(510)555-5555"
+      fill_in "Zip Code", with: 94501
       fill_in "user_email", with: "student"
       fill_in "user_password", with: "password"
       fill_in "confirm_password", with: "password"
@@ -95,6 +98,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_first_name", with: "StudentName"
       fill_in "user_last_name", with: "StudentLastName"
       fill_in "user_phone_number", with: "(510)555-5555"
+      fill_in "Zip Code", with: 94501
       fill_in "user_email", with: "student@example.com"
       fill_in "user_password", with: "password"
       fill_in "confirm_password", with: "notpassword"
@@ -129,6 +133,7 @@ feature "Create user as first step of sign up process" do
         fill_in "user_last_name", with: last_name
         fill_in "user_email", with: "client@example.com"
         fill_in "user_phone_number", with: "02-312-3456"
+        fill_in "Zip Code", with: 94501 # not a korean zip, but required currently
         fill_in "user_password", with: "password"
         fill_in "confirm_password", with: "password"
         find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
@@ -148,6 +153,7 @@ feature "Create user as first step of sign up process" do
         fill_in "user_last_name", with: "Last Name"
         fill_in "user_email", with: "client@example.com"
         fill_in "user_phone_number", with: "555-5555" # invalid korean number
+        fill_in "Zip Code", with: 94501 # not a korean zip, but required currently
         fill_in "user_password", with: "password"
         fill_in "confirm_password", with: "password"
         find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option

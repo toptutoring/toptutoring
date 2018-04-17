@@ -10,8 +10,6 @@ feature "Director client index" do
 
     visit director_users_path
 
-    expect(page).to have_content("ID")
-    expect(page).to have_content(client.id)
     expect(page).to have_content("Name")
     expect(page).to have_content(client.full_name)
     expect(page).to have_content(client.email)
