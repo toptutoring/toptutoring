@@ -1,9 +1,12 @@
 <tr id="row_user_<%= user.id %>">
-  <td><a href="javascript:;"><%= user.id %></a></td>
   <td>
     <div class="media">
       <div class="media-body">
-        <h5 class="media-heading"><%= user.full_name %></h5>
+        <a href="#user_info_modal_<%= user.id %>" data-toggle="modal" aria-expanded="false">
+          <h5 class="media-heading mt-4 mr-10">
+            <%= user.full_name %>
+          </h5>
+        </a>
         <p class="text-muted mb-0"><%= cleanup_phone_number(user.phone_number) %></p>
         <p class="text-muted mb-0"><%= user.email.downcase %></p>
       </div>
@@ -22,4 +25,5 @@
     <% end %>
     <%= render 'shared/masquerade_start_button', user: user %>
   </td>
+  <%= render "admin/users/user_modal", user: user %>
 </tr>

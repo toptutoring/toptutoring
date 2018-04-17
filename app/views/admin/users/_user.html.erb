@@ -45,21 +45,5 @@
       <%= render 'shared/masquerade_start_button', user: user %>
     <% end %>
   </td>
+  <%= render "user_modal", user: user %>
 </tr>
-<div tab-index="-1" role="dialog" class="modal fade" id="user_info_modal_<%= user.id %>">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title"><%= user.full_name %></h5>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-xs-4">User Id</div><div class="col-xs-8"><%= user.id %></div>
-          <div class="col-xs-4">Date Added</div><div class="col-xs-8"><%= l(user.created_at, format: :date) %></div>
-          <div class="col-xs-4">Access State</div><div class="col-xs-8"><%= user.access_state %></div>
-          <div class="col-xs-4">Archive Status</div><div class="col-xs-8"><%= user.archived %></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
