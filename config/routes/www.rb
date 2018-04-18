@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       end
       resources :blog_posts, path: "blog", param: :slug, only: [:index, :show]
     end
+    get "/:slug" => "cities#show", param: :slug, constraints: { slug: /(\w+-)+tutoring/ }
     get "/*path" => "pages#show"
     root to: "pages#home"
   end
