@@ -30,7 +30,7 @@ module Users
     def signups_params
       params.require(:user)
             .permit(:first_name, :last_name, :phone_number, :email, 
-                    :password, :referrer_id,
+                    :password, :referrer_id, :zip,
                     signup_attributes: [:student, :subject_id, :comments])
             .merge(roles: Role.where(name: "client"))
     end
