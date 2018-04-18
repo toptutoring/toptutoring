@@ -22,7 +22,6 @@ class ApplicationController < ActionController::Base
   end
 
   def country_code
-    return "US" if Rails.env.development? || Rails.env.test?
     code = request.location.country_code
     code == "RD" ? "US" : code
   end
