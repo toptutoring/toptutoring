@@ -8,7 +8,11 @@ class AddSlugToCities < ActiveRecord::Migration[5.1]
     validates :slug, uniqueness: true
 
     def add_slug
-      self.slug = name.downcase.tr(' ', '-').concat('-tutoring')
+      if state
+        self.slug = "#{name}-#{state}".downcase.tr(' ', '-').concat('-tutoring')
+      else
+        self.slug = name.downcase.tr(' ', '-').concat('-tutoring')
+      end
     end
   end
 
