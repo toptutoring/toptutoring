@@ -26,7 +26,7 @@ $(function() {
     var categoryLink = document.getElementById("category_link")
     categoryLink.onclick = function() {
       var value = document.getElementById("category_name").value
-      this.href = "/blog_categories".concat("?category_name=".concat(value));
+      this.href = "/blog_categories/form_create".concat("?category_name=".concat(value));
     }
 
     function appendInputs(form, options) {

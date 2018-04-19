@@ -54,7 +54,7 @@
             <%= text_field_tag :category_name, nil, placeholder: "Add a new category", class: "form-control mb16" %>
           </div>
           <div class="col-xs-3 text-center">
-            <%= link_to blog_categories_path, id: "category_link", method: :post, remote: true, class: "btn btn-blue btn-icon" do %>
+            <%= link_to form_create_blog_categories_path, id: "category_link", method: :post, remote: true, class: "btn btn-blue btn-icon" do %>
               <i class="ti-plus"></i>
             <% end %>
           </div>

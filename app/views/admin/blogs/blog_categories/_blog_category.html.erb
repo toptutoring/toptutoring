@@ -1,4 +1,14 @@
-<div class="form-group pull-left pr16">
-  <%= check_box_tag "blog_post[blog_category_ids][]", blog_category.id, true, id: "blog_post_blog_category_ids_#{blog_category.id}" %>
-    <%= label_tag "blog_post[blog_category_ids][]", blog_category.name, for: "blog_post_blog_category_ids_#{blog_category.id}" %>
-</div>
+<tr id="category_<%= blog_category.id %>">
+  <td class="p-relative">
+    <%= form_with model: blog_category, url: blog_category_path(blog_category) do |f| %>
+      <%= text_field_tag :category_name, blog_category.name, onchange: "Rails.fire(this.form, 'submit');", id: "name_input_blog_category#{blog_category.id}", class: "display-input form-control" %>
+    <% end %>
+    <span id="name_confirm_blog_category<%= blog_category.id %>" class="label label-success confirm center-confirm">Updated!</span>
+  </td>
+  <td class="text-center"><%= blog_category.blog_posts.count %></td>
+  <td class="text-center">
+    <%= link_to blog_category_path(blog_category), method: :delete, remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Remove \"#{blog_category.name}\" permanently", confirm: "This will permanently remove the \"#{blog_category.name}\" from all blog posts. Are you sure?" }, class: "mr-15 fs-24" do %>
+      <i class="icon ion-trash-b"></i>
+    <% end %>
+  </td>
+</tr>

@@ -1,0 +1,36 @@
+<h1>Blog Categories</h1>
+<div class="row mt-30 mb-30">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="widget p-20">
+      <div class="widget-header">
+        <%= link_to "Back to Blog Posts", blog_posts_path, class: "btn" %> 
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <%= form_with model: BlogCategory.new, url: blog_categories_path, local: true, class: "mb-30" do |f| %>
+            <div class="row">
+              <div class="col-md-6">
+                <%= text_field_tag :category_name, nil, placeholder: "New Category", class: "form-control mb-15" %>
+              </div>
+              <div class="col-md-6 text-center">
+                <%= f.submit "Create Blog Category", class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% end %>
+          <table class="table mb-0 table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th class="text-center">Count</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @categories %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
