@@ -10,7 +10,7 @@
         <div class="widget">
           <h6 class="title">Blog Categories</h6>
           <hr>
-            <% BlogCategory.all.each do |category| %>
+            <% BlogCategory.joins(:blog_posts).distinct.order(:name).each do |category| %>
                 <%= link_to pages_blog_category_path(category.name) do %>
                   <span class="label"><%= category.name %></span>
                 <% end %>
