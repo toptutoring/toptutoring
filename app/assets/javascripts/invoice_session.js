@@ -5,12 +5,12 @@ $(function() {
   function setHoursDropDown() {
     $('.invoice_hours').empty();
     $('.invoice_hours').append($('<option>', {
-      value: 0,
-      text : "24 hour Cancellation (No hours are charged)"
+      value: '',
+      text : "Choose hours"
     }));
     $('.invoice_hours').append($('<option>', {
       value: 'no_show',
-      text : "No show"
+      text : "No show or cancellation less than 24 hours"
     }));
     create_hour_options(5);
   };
