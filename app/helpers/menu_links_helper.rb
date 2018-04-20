@@ -12,7 +12,7 @@ module MenuLinksHelper
       link_to path, class: active?(path) do
         concat tag.i(class: icon_style)
         concat tag.span(title, class: "sidebar-title")
-        concat tag.span(badge, class: "badge bg-danger") if badge && badge > 0
+        concat tag.span(badge, id: "badge_#{title}", class: "badge bg-danger") if badge && badge > 0
       end
     end
   end

@@ -8,7 +8,7 @@ module Users
     end
 
     def create
-      result = CreateClientService.create!(signups_params, confirm_password, country_code)
+      result = CreateClientService.create!(signups_params, confirm_password)
       if result.success?
         sign_in(result.user)
         flash.notice = result.messages
@@ -32,7 +32,7 @@ module Users
             .permit(:first_name, :last_name, :phone_number, :email, 
                     :password, :referrer_id, :zip,
                     signup_attributes: [:student, :subject_id, :comments])
-            .merge(roles: Role.where(name: "client"))
+            .merge(roles: Role.where(name: "client"), country_code: country_code)
     end
 
     def confirm_password

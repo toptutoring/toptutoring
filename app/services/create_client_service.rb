@@ -2,11 +2,10 @@ class CreateClientService
   class << self
     Result = Struct.new(:success?, :user, :messages)
 
-    def create!(params, password, code)
+    def create!(params, password)
       @user = User.new(params)
       return password_failure unless passwords_match?(params, password)
       ActiveRecord::Base.transaction do
-        @user.country_code = code
         @user.save!
         @user.enable!
         create_accounts!

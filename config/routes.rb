@@ -127,6 +127,7 @@ Rails.application.routes.draw do
           get "/disable" => "engagements#disable"
         end
       end
+      resources :leads
     end
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("tutor") } do

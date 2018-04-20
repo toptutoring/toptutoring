@@ -2,81 +2,58 @@
 <section>
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 col-md-5">
+      <div class="col-sm-6 col-md-5 col-md-offset-1">
         <h4 class="uppercase">contact us</h4>
         <p>
         We’d love to hear from you. Please fill out the following form to inquire about tutoring, rates or other questions and we'll get back to you shortly.
         </p>
-        <div class="text-center">
-          <a href="tel:15108425221">
-            <%= cleanup_phone_number("15108425221") %>
-          </a> 
-        </div>
-        <%= image_tag "www/mailbox.jpg", class: "contact-us-image" %>
+        <hr>
+        <p>E: tutor@toptutoring.com
+        <br />P: <%= cleanup_phone_number("15108425221") %>
+        </p>
+        <hr>
+        <%= image_tag "www/mailbox.jpg", class: "not-visible-xs" %>
 
         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br>
         </p>
       </div>
-      <div class="col-sm-6 col-md-5 col-md-offset-1">
-        <div id='success-message' class="submit-form-message"></div>
-        <div id='gform'>
-          <form action="https://docs.google.com/forms/d/1jdebJ6lksNeJK3BPMofnqNmWyl_IWo9PBc7PvdCXHaE/formResponse" method="POST" id="ss-form" class="contact-us-form"target="hidden_iframe">
-            <input type="text" required="required" class="validate-required form-control signup-input name" jsname="YPqjbf" name="entry.1144948821" aria-describedby="i.desc.726993212 i.err.726993212" value=""  id="entry_1144948821" dir="auto" aria-label="Name  " title="" placeholder="Full Name">
+      <div class="col-sm-6 col-md-5">
+        <%= form_with model: Lead, url: leads_path, id: "contact-form" do |f| %>
 
-            <div class = "col-md-8 no-padding-left">
-              <input type="text" name="entry.1850342302" required="required" jsname="YPqjbf" value="" class="ss-q-short valid mail form-control signup-input email" aria-describedby="i.desc.1861065760 i.err.1861065760" id="entry_1850342302" dir="auto" aria-label="Email  " title="" placeholder="Email">
-            </div>
+          <div class="col-sm-6">
+            <%= f.text_field :first_name, type: "text", placeholder: "First Name", required: true %>
+          </div>
 
-            <div class = "col-md-4 no-padding-right">
-              <input type="text" name="entry.1990649636" required="required" jsname="YPqjbf" aria-describedby="i.desc.1443178175 i.err.1443178175" value="" aria-label="ZipCode" dir="auto" id="entry_1990649636" value="" title="" placeholder="Zip Code" class="form-control signup-input">
-            </div>
+          <div class="col-sm-6">
+            <%= f.text_field :last_name, type: "text", placeholder: "Last Name", required: true %>
+          </div>
 
-            <input type="text" name="entry.1316140474" required="required" jsname="YPqjbf" aria-describedby="i.desc.1253279784 i.err.1253279784" value="" class="ss-q-short valid phone2 form-control signup-input" id="entry_1316140474" dir="auto" aria-label="Phone  " title="" placeholder="Phone">
+          <div class="col-sm-6">
+            <%= f.text_field :phone_number, placeholder: "Phone Number", required: true %>
+          </div>
 
-            <input type="text" name="entry.1385223114" required="required" jsname="YPqjbf" aria-describedby="i.desc.563891140 i.err.563891140"  value="" class="ss-q-short valid subject form-control signup-input subject" id="entry_1385223114" dir="auto" aria-label="Subject" title="" placeholder="Subject">
+          <div class="col-sm-6">
+            <%= f.number_field :zip, type: "text", pattern: "\\d{5}", max_length: 5, placeholder: "Zip Code", required: true %>
+          </div>
 
-            <textarea placeholder="Message (Optional)" name="entry.1976405812" jsname="YPqjbf" class="ss-q-long valid signup-input message" id="entry_1976405812" dir="auto" aria-label="Message" rows="7"></textarea>
+          <div class="col-sm-12">
+            <%= f.email_field :email, type: "text", placeholder: "Email", required: true %>
+          </div>
 
-            <button type="submit" class="btn btn-blue">Send Message</button>
-          </form>
-        </div>
+          <div class="col-sm-12 select-option">
+            <i class="ti-angle-down"></i>
+            <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, id: "subject_id", required: true %>
+          </div>
+
+          <div class="col-xs-12">
+            <%= f.text_area :comments, placeholder: "Comments", rows: "3" %>
+          </div>
+
+          <div class="col-xs-12">
+            <%= f.submit "Send Message", class: "btn btn-success" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
 </section>
-
-<script type="text/javascript">
-
-var form = document.getElementById("gform");
-
-  form.addEventListener('submit', function(event) {
-    $('input[type=submit]').attr('disabled', true);
-    event.preventDefault();
-
-    $.ajax({
-    url: "https://docs.google.com/forms/d/1jdebJ6lksNeJK3BPMofnqNmWyl_IWo9PBc7PvdCXHaE/formResponse",
-      data: {
-        "entry.1144948821": document.getElementById("entry_1144948821").value,
-        "entry.1850342302": document.getElementById("entry_1850342302").value,
-        "entry.1990649636": document.getElementById("entry_1990649636").value,
-        "entry.1316140474": document.getElementById("entry_1316140474").value,
-        "entry.1385223114": document.getElementById("entry_1385223114").value,
-        "entry.1976405812": document.getElementById("entry_1976405812").value 
-      },
-      type: "POST",
-      dataType: "xml",
-      statusCode: {
-        0: function() {
-        },
-        200: function() {
-          console.log("yay");
-        }
-      }
-    });
-
-    form.innerHTML = ''
-    var div = document.getElementById("success-message");
-    div.innerHTML = "Thank you! Your message has been received. We'll get back to you soon.";
-  });
-
-</script>

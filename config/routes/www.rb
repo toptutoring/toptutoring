@@ -9,6 +9,7 @@ end
 
 Rails.application.routes.draw do
   constraints WwwTopTutoring do
+    resources :leads, only: :create
     namespace :pages, path: "" do
       resources :tutors, path: "top-tutors", param: :first_name, only: [:index, :show]
       namespace :blog do

@@ -72,3 +72,6 @@ en:
         blurb: We take care of the billing and student recruitment logistics so you can focus on what matters - tutoring.
       interest: A UC Berkeley Student or Graduate and Interested in Applying?
       already_invited: Already Invited?
+    contact:
+      confirmation: "Thank you for your submission, we will be in touch shortly."
+      failure: "Sorry, we were unable to record your message. Please ensure the form has been filled out correctly and try again."
