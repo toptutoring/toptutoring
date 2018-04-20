@@ -3,7 +3,7 @@
     <%= form_with model: subject, url: update_name_admin_subject_path(subject) do |f| %>
       <%= f.text_field :name, onchange: "Rails.fire(this.form, 'submit');", id: "name_input_subject_#{subject.id}", class: "display-input form-control" %>
     <% end %>
-    <span id="name_confirm_subject_<%= subject.id %>" class="label label-success confirm subject-confirm">Updated!</span>
+    <span id="name_confirm_subject_<%= subject.id %>" class="label label-success confirm center-confirm">Updated!</span>
   </td>
   <td class="text-center"><%= subject.tutor_accounts.count %></td>
   <td class="text-center"><%= subject.engagements.count %></td>

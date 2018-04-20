@@ -90,7 +90,9 @@ Rails.application.routes.draw do
           resources :blog_posts do
             get :publish, on: :member
           end
-          resources :blog_categories
+          resources :blog_categories do
+            post :form_create, on: :collection
+          end
         end
       end
       namespace :admin do

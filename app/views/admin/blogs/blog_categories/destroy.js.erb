@@ -1,0 +1,7 @@
+<% if @category.destroyed? %>
+  var categoryRow = document.getElementById("category_<%= @category.id %>");
+  categoryRow.parentNode.removeChild(categoryRow);
+<% end %>
+
+renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0)

@@ -129,11 +129,10 @@ $bg_dark: #292929;
 .confirm.show-confirm {
   opacity: 1;
 }
-.confirm.subject-confirm {
+.confirm.center-confirm {
   position: absolute;
-  margin: auto;
-  left: 15px;
-  right: 15px;
+  width: 100px;
+  left: 25%;
   top: -6px;
 }
 .copy-input {

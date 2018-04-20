@@ -29,4 +29,8 @@ module ApplicationHelper
                 end
     tag.i class: "icon #{icon_type}"
   end
+
+  def true_production
+    (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production?
+  end
 end
