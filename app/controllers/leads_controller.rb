@@ -1,7 +1,7 @@
 class LeadsController < ApplicationController
   def index
     @leads = Lead.all
-                 .order(created_at: :desc)
+                 .order(:archived, created_at: :desc)
                  .paginate(page: params[:page], per_page: 10)
   end
 
