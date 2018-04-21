@@ -7,6 +7,7 @@ module ApplicationHelper
 
   def cleanup_phone_number(number, country_code = nil)
     phone_number = Phonelib.parse(number, country_code)
+    return if phone_number.international.nil?
     tag.a href: "tel:#{phone_number.international.tr(" ", "")}" do 
       phone_number.national 
     end
