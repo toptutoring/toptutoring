@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   # Validation #
   validates :phone_number,
     phone: { possible: true, country_specifier: -> user { user.country_code } },
-    on: :create
+    if: :phone_number_changed?
   validates_presence_of :first_name, :email
   validates :email, uniqueness: true, on: :create
   validates_presence_of :phone_number, :country_code, on: :create
