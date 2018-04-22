@@ -24,7 +24,7 @@
                     <%= engagement.student_name %>
                   </td>
                   <td><%= engagement.client.full_name %></td>
-                  <td><%= link_to_phone_number(engagement.client) %></td>
+                  <td><%= phone_number_display(engagement.client) %></td>
                   <td><%= engagement.subject.name %></td>
                   <td><% actions_for_engagement(engagement) %></td>
                 </tr>

@@ -3,4 +3,8 @@ class City < ApplicationRecord
 
   validates :phone_number, phone: { possible: true, country_specifier: -> city { city.country.code } }
   validates_presence_of :name, :description, :country_id, :phone_number
+
+  def country_code
+    country.code
+  end
 end

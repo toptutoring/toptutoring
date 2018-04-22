@@ -1,6 +1,6 @@
 <tr id="row_user_<%= tutor.id %>" class="<%= "archived-row" if tutor.archived? %>">
   <td><%= link_to tutor.full_name, admin_tutor_path(tutor) %></td>
-  <td><%= link_to_phone_number(tutor) %></td>
+  <td><%= phone_number_display(tutor) %></td>
   <td><%= tutor.email %></td>
   <td class="text-center">
     <% if tutor.tutor_account.publish %>

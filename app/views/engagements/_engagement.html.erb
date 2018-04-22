@@ -32,7 +32,7 @@
             <% rates_and_credits(engagement) %>
           </div>
           <p class= "col-xs-4">Client Email</p><p class="col-xs-8"><%= engagement.client.email %></p>
-          <p class= "col-xs-4">Client Phone Number</p><p class="col-xs-8"><%= link_to_phone_number engagement.client %></p>
+          <p class= "col-xs-4">Client Phone Number</p><p class="col-xs-8"><%= phone_number_display engagement.client %></p>
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@
             <%= user.full_name %>
           </h5>
         </a>
-        <p class="text-muted mb-0"><%= cleanup_phone_number(user.phone_number) %></p>
+        <p class="text-muted mb-0"><%= phone_number_display(user) %></p>
         <p class="text-muted mb-0"><%= user.email.downcase %></p>
       </div>
     </div>

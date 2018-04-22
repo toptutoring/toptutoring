@@ -1,18 +1,6 @@
 module ApplicationHelper
   CURRENT_YEAR = "2018"
 
-  def link_to_phone_number(user)
-    link_to user.phone_formatted || "", "tel:#{user.phone_formatted(:sanitized)}"
-  end
-
-  def cleanup_phone_number(number, country_code = nil)
-    phone_number = Phonelib.parse(number, country_code)
-    return if phone_number.international.nil?
-    tag.a href: "tel:#{phone_number.international.tr(" ", "")}" do 
-      phone_number.national 
-    end
-  end
-
   def current_year
     CURRENT_YEAR || Date.current.year
   end
