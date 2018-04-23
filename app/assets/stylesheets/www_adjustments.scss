@@ -9,6 +9,7 @@
    7. Span Styles
    8. Test Badge Styles
    9. Slick Carousel Styles
+   10. Icon Containers
 */
 
 // 1. Container Styles
@@ -133,4 +134,15 @@ input[type="email"]:focus {
   color: #222;
   font-size: 24px;
   margin-left: 15px;
+}
+
+// 10. Icon Containers
+.icon-container {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+.icon-container > i {
+  font-size: 60px;
+  color: #555;
 }
