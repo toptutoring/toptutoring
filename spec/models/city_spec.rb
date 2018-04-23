@@ -11,6 +11,9 @@ RSpec.describe City, type: :model do
     it { should validate_presence_of(:description) }
     it { should validate_presence_of (:country_id) }
     it { should validate_presence_of(:phone_number) }
+    it { should validate_presence_of(:address) }
+    it { should validate_presence_of(:state) }
+    it { should validate_presence_of(:zip) }
     it { should validate_uniqueness_of(:slug).ignoring_case_sensitivity }
   end
 
