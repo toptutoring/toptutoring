@@ -12,4 +12,12 @@ class City < ApplicationRecord
     url = state ? "#{name}-#{state}" : name
     self.slug = url.downcase.tr(' ', '-').concat('-tutoring')
   end
+
+  def country_code
+    country.code
+  end
+
+  def name_state_zip
+    "#{name}, #{state.upcase} #{zip}"
+  end
 end
