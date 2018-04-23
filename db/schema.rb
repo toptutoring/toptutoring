@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 20180426000008) do
     t.bigint "country_id"
     t.boolean "published", default: false
     t.string "slug"
+    t.string "address"
+    t.integer "zip"
     t.index ["country_id"], name: "index_cities_on_country_id"
     t.index ["slug"], name: "index_cities_on_slug", unique: true
   end
