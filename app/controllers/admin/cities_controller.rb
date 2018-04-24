@@ -69,7 +69,7 @@ module Admin
     def city_params
       params.require(:city)
             .permit(:country_id, :name, :state, :phone_number,
-                    :address, :zip, :description)
+                    :address, :zip, :description, :picture)
     end
   end
 end
