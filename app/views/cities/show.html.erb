@@ -21,13 +21,13 @@
       <div class="col-md-6 text-right">
         <ol class="breadcrumb breadcrumb-2">
           <li>
-            <%= link_to "About", root_url(subdomain: nil) + "about_us" %>
+            <%= link_to "About", "#about", onclick: "smoothScroll(event, this);" %>
           </li>
           <li>
-            <%= link_to "How It Works", "#how_it_works" %>
+            <%= link_to "How It Works", "#how_it_works", onclick: "smoothScroll(event, this);" %>
           </li>
           <li>
-            <%= link_to "Contact", "#contact" %>
+            <%= link_to "Contact", "#contact", onclick: "smoothScroll(event, this);" %>
           </li>
         </ol>
       </div>
