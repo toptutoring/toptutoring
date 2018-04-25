@@ -14,7 +14,7 @@
           <%= @city.name %> Tutoring
         </h2>
         <h4>
-          Top-Tier Academic and Test Prep Tutoring In <%= "#{@city.name}, #{@city.state.upcase}" %><br />
+          <%= t("www.cities.sub_title", location: "#{@city.name}, #{@city.state.upcase}") %><br />
           <%= phone_number_display @city, styles: "lead" %>
         </h4>
       </div>
@@ -39,9 +39,9 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-10 col-sm-offset-1 text-center">
-        <h3 class="uppercase color-primary mb40">TOP tutors from uc berkeley&nbsp;</h3>
-        <p class="lead">Struggling with a subject or need to improve your test scores? At Top Tutoring in <%= @city.name %> we provide tutoring for all academic subjects and the ACT/SAT. All our tutors in <%= @city.name %> are from UC Berkeley and have scored in the top percentiles on their college entrance exams and have complete mastery over the subjects they tutor. Our tutors have also been carefully selected to ensure that you only have the brightest, most compassionate tutors to help you on your way to academic success.<br><br>Through our personalized approach with one-on-one tutoring, our tutors in <%= @city.name %> craft a personalized plan to work with your strengths and weaknesses to give you the most effective results. We also offer the flexibility of both online and in-person tutoring for your various scheduling and budgeting needs.<br><br>
-        </p>
+        <h3 class="uppercase color-primary mb40"><%= t("www.cities.about.title") %></h3>
+        <p class="lead"><%= t("www.cities.about.content", city: @city.name) %></p>
+        <p class="lead"><%= t("www.cities.about.content2", city: @city.name) %></p>
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 text-center">
-        <h3 class="uppercase mb0">How it works</h3>
+        <h3 class="uppercase mb0"><%= t("www.cities.how_it_works.title") %></h3>
       </div>
     </div>
   </div>
@@ -64,9 +64,9 @@
         <div class="feature feature-2 filled text-center">
           <div class="text-center">
             <i class="ti ti-user icon-sm"></i>
-            <h5 class="uppercase">match with a tutor</h5>
+            <h5 class="uppercase"><%= t("www.cities.how_it_works.match.title") %></h5>
           </div>
-          <p>After a free consultation with our tutor director, you will be matched with a tutor near <%= @city.name%> best suited to your particular needs and learning style.</p>
+          <p><%= t("www.cities.how_it_works.match.content", city: @city.name) %></p>
         </div>
 
       </div>
@@ -74,11 +74,9 @@
         <div class="feature feature-2 filled text-center">
           <div class="text-center">
             <i class="ti ti-bookmark-alt icon-sm"></i>
-            <h5 class="uppercase">Personalized Instruction</h5>
+            <h5 class="uppercase"><%= t("www.cities.how_it_works.personalize.title") %></h5>
           </div>
-          <p>
-          Through one-on-one tutoring, our tutors in <%= @city.name %> can craft a personalized plan to work with your strengths and weaknesses to give you the most effective results.
-          </p>
+          <p><%= t("www.cities.how_it_works.personalize.content", city: @city.name) %></p>
         </div>
 
       </div>
@@ -86,9 +84,9 @@
         <div class="feature feature-2 filled text-center">
           <div class="text-center">
             <i class="ti ti-star icon-sm"></i>
-            <h5 class="uppercase">academic success</h5>
+            <h5 class="uppercase"><%= t("www.cities.how_it_works.success.title") %></h5>
           </div>
-          <p>Under your tutor's guidance, prepare to learn new strategies and make new and essential connections to master your subject!</p>
+          <p><%= t("www.cities.how_it_works.success.content") %></p>
         </div>
 
       </div>
@@ -114,20 +112,20 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <h6 class="uppercase">our subjects</h6>
+        <h6 class="uppercase"><%= t("www.cities.subjects.title") %></h6>
         <hr class="mb120 mb-xs-24">
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-10">
-        <h1 class="thin">Here is a sampling of some subjects we tutor</h1>
+        <h1 class="thin"><%= t("www.cities.subjects.sub_title") %></h1>
       </div>
     </div>
 
     <div class="row mb120 mb-xs-24">
       <div class="col-md-6 col-sm-8">
-        <p class="lead">Don't see your subject? Most likely we have a tutor that can help you. Contact our office at <%= phone_number_display @city %> for more information</p>
+        <p class="lead"><%= raw t("www.cities.subjects.content", phone_link: phone_number_display(@city)) %></p>
       </div>
     </div>
 
@@ -203,9 +201,8 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6 col-md-5">
-        <h4 class="uppercase">Contact us</h4>
-        <p>
-        Interested in our tutoring services or want more information about our rates? Please call our office or fill out the following form and a tutor director will be in contact with you shortly.</p>
+        <h4 class="uppercase"><%= t("app.contact_us") %></h4>
+        <p><%= t("www.contact.content") %></p>
         <hr>
         <p>E: tutor@toptutoring.com                        <br>P: <%= phone_number_display @city %></p>
         <hr>
@@ -223,7 +220,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 text-center">
-        <h3 class="mb0 inline-block p32 p0-xs">Ready to improve your grades and test scores?&nbsp;</h3>
+        <h3 class="mb0 inline-block p32 p0-xs"><%= t("www.signup.header") %>&nbsp;</h3>
         <%= link_to "sign up", sign_up_url(subdomain: "app"), class: "btn btn-lg btn-white mb8 mt-xs-24" %>
       </div>
     </div>
