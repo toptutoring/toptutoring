@@ -1,31 +1,23 @@
 class DwollaCompleteTransferService
   class << self
-    def perform!(url, status)
-      ActiveRecord::Base.transaction do
-        payout = Payout.find_by(dwolla_transfer_url: url)
-        if payout
-          update_payout(payout, status)
-        else
-          Rails.logger.info "Could not find processing payout with transfer url: #{url}"
-        end
-      end
+    def perform!(event)
+      payout = event.payout
+      return update_payout(payout, event.payout_status) if payout 
+      Rails.logger.warn "Failure - Could not find processing payout with transfer url: #{event.resource_url}"
+      false
     end
+    
+    private
 
     def update_payout(payout, status)
-      if payout.status == "processing"
-        invoices = payout.invoices.where(status: "processing")
-        update_invoices_and_user(payout.payee, invoices, status)
-        payout.update!(status: status)
+      Rails.logger.info "Updating payout #{payout.id} to #{status}."
+      if payout.update_status_and_invoices(status)
+        Rails.logger.info "Success - Updated payout #{payout.id} to #{payout.status}."
+        true
       else
-        Rails.logger.info "Payout #{payout.id} is not processing. Current status: #{payout.status}."
+        Rails.logger.warn "Failure - Unable to update payout #{payout.id} to #{payout.status}."
+        false
       end
-    end
-
-    def update_invoices_and_user(user, invoices, status)
-      return invoices.update_all(status: "paid") if status == "paid"
-      hours = invoices.sum(:hours)
-      user.save!
-      invoices.update_all(status: "pending")
     end
   end
 end
