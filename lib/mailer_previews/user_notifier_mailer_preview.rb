@@ -26,8 +26,8 @@ class UserNotifierMailerPreview < ActionMailer::Preview
   def send_invoice_notice
     client = Struct.new(:email, "online_test_prep_credit").new("client@example.com", 5.0)
     tutor = Struct.new(:full_name).new("Tutor")
-    invoice = Struct.new(:created_at, :submitter, :hours, :subject, :online, :hours_type)
-                    .new(Time.current, tutor, 1.75, "English", true, "online_test_prep")
+    invoice = Struct.new(:created_at, :submitter, :hours, :subject, :online, :hours_type, :session_date, :description)
+                    .new(Time.current, tutor, 1.75, "English", true, "online_test_prep", Date.current, lorem_ipsum)
     UserNotifierMailer.send_invoice_notice(client, invoice)
   end
 
@@ -40,5 +40,11 @@ class UserNotifierMailerPreview < ActionMailer::Preview
     client = Struct.new(:email, :full_name, :client_account, :online_test_prep_credit)
                    .new("client@example.com", "Client Name", account, 3)
     UserNotifierMailer.send_referral_claimed_notice(client, User.clients.last)
+  end
+
+  private
+  
+  def lorem_ipsum
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
   end
 end
