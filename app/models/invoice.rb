@@ -10,6 +10,7 @@ class Invoice < ActiveRecord::Base
   with_options if: :by_tutor? do |invoice|
     invoice.validates_presence_of :client_id, :engagement_id, :subject,
                                   :hourly_rate_cents, :amount_cents
+    invoice.validate :valid_session_date
   end
 
   scope :pending, -> { where(status: "pending") }
@@ -36,5 +37,9 @@ class Invoice < ActiveRecord::Base
   def hours_type
     string = online? ? "online_" : "in_person_"
     string.concat(engagement.academic_type)
+  end
+
+  def valid_session_date
+    errors.add(:session_date, "cannot be in the future.") if session_date > Date.current
   end
 end
