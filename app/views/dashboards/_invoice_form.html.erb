@@ -11,7 +11,7 @@
           <div class="col-sm-9">
             <%= f.select(:submitter_type, options_for_select([["Tutor", "by_tutor"], ["Contractor", "by_contractor"]], "by_tutor"),
                          {}, class: "form-control", required: true) %>
-        </div>
+          </div>
         </div>
       <% elsif current_user.has_role?("tutor") %>
         <%= hidden_field_tag "invoice[submitter_type]", "by_tutor" %>
@@ -37,7 +37,7 @@
               ["#{engagement.student_name} for #{engagement.subject.name.titlecase}", engagement.id]
             end, @tutor_engagements.first ? @tutor_engagements.first.id : nil),
             {}, class: "form-control invoice_tutor_student", required: true) %>
-        </div>
+          </div>
         </div>
 
         <div class="form-group only-for-tutors">
@@ -76,7 +76,43 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :description, class: "col-sm-3 control-label" %>
+        <div class="col-sm-3 text-right">
+          <%= f.label :description, class: "control-label" %>
+          <p>Please take note that this description will be seen by your client.</p>
+          <a href="#" data-toggle="modal" data-target=".modal-description-example" class="btn btn-sm btn-default">Example Descriptions</a>
+
+          <div tabindex="-1" role="dialog" aria-labelledby="descriptionExample" class="modal fade modal-description-example" style="display: none;">
+            <div role="document" class="modal-dialog">
+              <div class="modal-content text-center">
+                <div class="modal-header">
+                  <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                  <h4 id="descriptionExample" class="modal-title">Example Descriptions</h4>
+                </div>
+                <div class="modal-body text-left">
+                  <h5>Good examples</h5>
+                  <ul>
+                    <li>Complete sentences, subject/content covered, progress indication, and recommendations.
+                      <ul>
+                        <li>John and I spent our session reviewing his English essay. After our session, John had more confidence with his essay. It would be good to work with John on his writing more regularly.</li>
+                        <li>I really enjoyed my session with Emilee. She was cordial, respectful, and willing to learn. We covered finding the area of a parallelogram. She seemed very confused about it when we first started, but by the end of the session, she clearly had a better understanding of the various ideas involved such as height, base, unit squared, etc. With a little bit more tutoring, I'm sure she can excel in math.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <h5>Poor examples</h5>
+                  <ul>
+                    <li><p>Incomplete sentences, no indication of student progress and understanding, and no further guidance or recommendation.</p>
+                      <ul>
+                        <li>Graphs, interval notation, domain, range, end behavior.</li>
+                        <li>sat essay writing from 10 to 12</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
         <div class="col-sm-9">
           <%= f.text_area :description, rows: 6, class:"form-control", "aria-label" => "description", required: "required" %>
         </div>
