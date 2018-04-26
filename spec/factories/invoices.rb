@@ -19,5 +19,6 @@ FactoryBot.define do
     subject      { "Subject" }
     status       { "pending" }
     session_rating { 4 }
+    session_date { Date.current }
   end
 end

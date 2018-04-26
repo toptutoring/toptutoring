@@ -1,16 +1,28 @@
 require "rails_helper"
 
 RSpec.describe Invoice, type: :model do
-  it { should validate_presence_of(:submitter_id) }
-  it { should validate_presence_of(:submitter_type) }
-  it { should validate_presence_of(:description) }
-  it { should validate_presence_of(:hours) }
-  # for tutors only
-  it { should validate_presence_of(:client_id) }
-  it { should validate_presence_of(:engagement_id) }
-  it { should validate_presence_of(:subject) }
-  it { should validate_presence_of(:hourly_rate_cents) }
-  it { should validate_presence_of(:amount_cents) }
+  context "validations" do
+    subject { FactoryBot.create(:invoice) }
+    it { should validate_presence_of(:submitter_id) }
+    it { should validate_presence_of(:submitter_type) }
+    it { should validate_presence_of(:description) }
+    it { should validate_presence_of(:hours) }
+    context "when submitted by tutor" do
+      before :each do
+        subject.submitter_type = "by_tutor"
+      end
+      it { should validate_presence_of(:client_id) }
+      it { should validate_presence_of(:engagement_id) }
+      it { should validate_presence_of(:subject) }
+      it { should validate_presence_of(:hourly_rate_cents) }
+      it { should validate_presence_of(:amount_cents) }
+
+      it "validates that session date is not in the future" do
+        subject.session_date = Date.tomorrow
+        expect(subject.valid?).to be false
+      end
+    end
+  end
 
   describe ".contractor_pending_total" do
     subject = Invoice
