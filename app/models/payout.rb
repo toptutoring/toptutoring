@@ -14,4 +14,16 @@ class Payout < ApplicationRecord
   def payee
     receiving_account.user
   end
+
+  def update_status_and_invoices(new_status)
+    return false if status == new_status
+    ActiveRecord::Base.transaction do
+      invoice_status = new_status == "paid" ? "paid" : "pending"
+      invoices.update_all(status: invoice_status)
+      update!(status: new_status)
+      reload
+    end
+  rescue ActiveRecord::RecordInvalid
+    false
+  end
 end
