@@ -18,4 +18,13 @@ class AdminDirectorNotifierMailer < ApplicationMailer
          bcc: users.map(&:email),
          subject: "#{@user.full_name} has submitted a review of #{@review.stars} stars")
   end
+  
+  def new_lead(lead)
+    @lead = lead
+    @phone = Phonelib.parse(lead.phone_number, lead.country_code).national
+    users = User.admin_and_directors
+    mail(to: "noreply@toptutoring.com",
+         bcc: users.map(&:email),
+         subject: "#{@lead.full_name} has left their contact information")
+  end
 end
