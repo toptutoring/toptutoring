@@ -78,7 +78,7 @@
                                             <div style="padding-top: 10px; padding-left: 30px;">Hello,</div>
                                             <div style="padding-top: 10px; padding-left: 30px;">We are writing to let you know that <%= @lead.full_name %> left their contact. <%= @lead.full_name %> may be contacted at <%= @phone %> or by email: <%= @lead.email %>.</div>
                                             <div style="padding-top: 10px; padding-left: 30px;"><strong>Email:</strong> <%= @lead.email %></div>
-                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Phone:</strong> <%= @phone %></div>
+                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Phone:</strong> <%= phone_number_display @lead %></div>
                                             <div style="padding-top: 10px; padding-left: 30px;"><strong>Subject:</strong> <%= @lead.subject.name %></div>
                                             <div style="padding-top: 10px; padding-left: 30px;"><strong>Comments:</strong> <%= @lead.comments %></div>
                                             <div style="padding-top: 10px; padding-left: 30px;">Regards,</div>

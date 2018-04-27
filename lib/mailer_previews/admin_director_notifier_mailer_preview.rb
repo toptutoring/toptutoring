@@ -3,8 +3,8 @@ class AdminDirectorNotifierMailerPreview < ActionMailer::Preview
     subject = Struct.new(:name).new("Math")
     client_info = Struct.new(:subject, :comments)
                         .new(subject, nil)
-    client = Struct.new(:phone_number, :email, :full_name, :created_at, :signup)
-                   .new("510-555-5555", "client@example.com", "Client", Time.current, client_info)
+    client = Struct.new(:phone_number, :email, :full_name, :created_at, :signup, :country_code)
+                   .new("510-555-5555", "client@example.com", "Client", Time.current, client_info, "us")
     AdminDirectorNotifierMailer.new_user_registered(client)
   end
 

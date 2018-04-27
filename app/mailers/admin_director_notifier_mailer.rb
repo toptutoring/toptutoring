@@ -1,9 +1,9 @@
 class AdminDirectorNotifierMailer < ApplicationMailer
   default from: 'tutor@toptutoring.com'
+  helper PhoneNumberHelper
 
   def new_user_registered(new_user)
     @new_user = new_user
-    @phone = Phonelib.parse(new_user.phone_number, :us).national
     users = User.admin_and_directors
     mail(to: "noreply@toptutoring.com",
          bcc: users.map(&:email),
@@ -21,7 +21,6 @@ class AdminDirectorNotifierMailer < ApplicationMailer
   
   def new_lead(lead)
     @lead = lead
-    @phone = Phonelib.parse(lead.phone_number, lead.country_code).national
     users = User.admin_and_directors
     mail(to: "noreply@toptutoring.com",
          bcc: users.map(&:email),
