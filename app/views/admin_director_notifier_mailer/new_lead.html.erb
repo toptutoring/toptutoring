@@ -76,11 +76,11 @@
                                               </span>
                                             </div>
                                             <div style="padding-top: 10px; padding-left: 30px;">Hello,</div>
-                                            <div style="padding-top: 10px; padding-left: 30px;">We are writing to let you know that <%= @new_user.full_name %> has finished the sign up process and is waiting to be assigned a tutor. <%= @new_user.full_name %> may be contacted at <%= phone_number_display @new_user %> or by email: <%= @new_user.email %>.</div>
-                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Email:</strong> <%= @new_user.email %></div>
-                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Phone:</strong> <%= phone_number_display @new_user %></div>
-                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Subject:</strong> <%= @new_user.signup.subject.name %></div>
-                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Comments:</strong> <%= @new_user.signup.comments %></div>
+                                            <div style="padding-top: 10px; padding-left: 30px;">We are writing to let you know that <%= @lead.full_name %> left their contact. <%= @lead.full_name %> may be contacted at <%= @phone %> or by email: <%= @lead.email %>.</div>
+                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Email:</strong> <%= @lead.email %></div>
+                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Phone:</strong> <%= phone_number_display @lead %></div>
+                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Subject:</strong> <%= @lead.subject.name %></div>
+                                            <div style="padding-top: 10px; padding-left: 30px;"><strong>Comments:</strong> <%= @lead.comments %></div>
                                             <div style="padding-top: 10px; padding-left: 30px;">Regards,</div>
                                             <div style="padding-left: 30px;">Top Tutoring</div>
                                           </td>
