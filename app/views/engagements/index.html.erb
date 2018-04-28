@@ -4,47 +4,22 @@
       <div class="widget">
         <div class="widget-heading clearfix">
           <h3 class="widget-title pull-left">Engagements</h3>
-          <%= link_to "Add a new engagement", new_engagement_path, class: "pull-right btn btn-primary" %>
+          <%= link_to "Add a new engagement", new_engagement_path, class: "pull-right btn" %>
         </div>
         <div class="widget-body">
           <div class="table-responsive">
             <table class="table mb-0">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Student</th>
                   <th>Tutor</th>
                   <th>Subject</th>
-                  <th class="text-center">Client Rate / Credit</th>
-                  <th class="text-center">Status</th>
-                  <th class="text-center"></th>
+                  <th class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <% @engagements.each do |engagement| %>
-                  <tr>
-                    <td><%= engagement.id %></td>
-                    <td><% client_info(engagement) %></td>
-                    <td><%= engagement.tutor.try(:full_name) %></td>
-                    <td><% subject_info(engagement) %></td>
-                    <td class="text-center"><% rates_and_credits(engagement) %></td>
-                    <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
-                    <td class="text-center">
-                      <%= link_to edit_engagement_path(engagement) do %>
-                        <button type="button" class="btn btn-outline btn-success mr-15">Edit</button>
-                      <% end %>
-                      <% if engagement.tutor_account && engagement.pending? %>
-                        <%= link_to enable_engagement_path(engagement) do %>
-                          <button type="button" class="btn btn-outline btn-primary">Enable</button>
-                        <% end %>
-                      <% elsif engagement.active? %>
-                        <%= link_to disable_engagement_path(engagement.id) do %>
-                          <button type="button" class="btn btn-outline btn-danger">Disable</button>
-                        <% end %>
-                      <% end %>
-                    </td>
-                  </tr>
-                <% end %>
+                  <%= render @engagements %>
+                  <%= render partial: "engagement", collection: @archived_engagements %>
               </tbody>
             </table>
           </div>

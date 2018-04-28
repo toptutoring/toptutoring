@@ -3,7 +3,7 @@
   <% if current_user.enabled? %>
     <a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
   <% end %>
-  <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
+  <% if true_production %>
     <script>
 FS.identify('<%= current_user.id %>', {
   displayName: '<%= current_user.full_name %>',

@@ -1,0 +1,5 @@
+<% if @tutor_account.publish %>
+  <%= link_to "Unpublish", admin_tutor_account_path(@tutor_account, publish: false), remote: true, method: :patch, class: "btn btn-default" %>
+<% else %>
+  <%= link_to "Publish", admin_tutor_account_path(@tutor_account, publish: true), remote: true, method: :patch, class: "btn btn-primary" %>
+<% end %>

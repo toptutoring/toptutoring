@@ -1,0 +1,30 @@
+<tr id="row_user_<%= tutor.id %>" class="<%= "archived-row" if tutor.archived? %>">
+  <td><%= link_to tutor.full_name, admin_tutor_path(tutor) %></td>
+  <td><%= phone_number_display(tutor) %></td>
+  <td><%= tutor.email %></td>
+  <td class="text-center">
+    <% if tutor.tutor_account.publish %>
+      <i class="icon ion-checkmark-round text-primary"></i>
+    <% else %>
+      <i class="icon ion-close-round"></i>
+    <% end %>
+  </td>
+  <td class="text-center"><%= tutor.tutor_account.balance_pending %></td>
+  <td class="text-left">
+    <% if tutor.archived? %>
+      <%= link_to "Reactivate", reactivate_admin_tutor_path(tutor, view: "tutor"), method: :patch, remote: true, data: { confirm: "Are you sure you want to reactivate this user?" }, class: "btn" %>
+    <% else %>
+      <%= link_to edit_admin_tutor_path(tutor), data: { toggle: "tooltip", placement: "top", "original-title" => "Edit user info" }, class: "mr-15 fs-24" do %>
+        <i class="icon ion-edit"></i>
+      <% end %>
+      <%= link_to archive_admin_tutor_path(tutor, view: "tutor"), method: :patch, remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Archive user from list", confirm: "Archiving the user will also archive all engagements. Are you sure you want to archive this user?" }, class: "mr-15 fs-24" do %>
+        <i class="icon ion-android-archive"></i>
+      <% end %>
+      <% if current_user.has_role?("admin") %>
+        <%= link_to admin_user_path(tutor), method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Remove user permanently", confirm: "This will permanently remove the user from the database. Are you sure?" }, class: "mr-15 fs-24" do %>
+          <i class="icon ion-trash-b"></i>
+        <% end %>
+      <% end %>
+    <%= render "shared/masquerade_start_button", user: tutor %>
+    <% end %>
+</tr>

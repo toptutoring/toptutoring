@@ -1,0 +1,21 @@
+<% unless @user.archived? %>
+  var userRow = document.getElementById("row_user_<%= @user.id %>");
+  userTable = userRow.parentNode;
+  userTable.removeChild(userRow);
+
+  <% if @tutor_view %>
+      <% user_html = j render "admin/tutors/tutor", tutor: @user %>
+  <% else %>
+      <% user_html = j render @user %>
+  <% end %>
+
+  <% if @previous_user %>
+    var rowPrevious = document.getElementById("row_user_<%= @previous_user.id %>");
+    rowPrevious.insertAdjacentHTML("afterend", "<%= user_html %>")
+  <% else %>
+    userTable.insertAdjacentHTML("afterbegin", "<%= user_html %>")
+  <% end %>
+<% end %>
+
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0)

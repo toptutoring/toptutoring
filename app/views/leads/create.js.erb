@@ -1,0 +1,10 @@
+<% if @lead.persisted? %>
+  form = document.getElementById("contact-form");
+  parentDiv = form.parentNode
+  parentDiv.removeChild(form)
+  parentDiv.innerHTML = "<p class=\"text-center\"><%= t "www.contact.confirmation" %></p>"
+<% else %>
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+  window.scrollTo(0, 0);
+<% end %>
+

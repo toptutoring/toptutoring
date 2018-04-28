@@ -7,9 +7,7 @@
         </div>
         <p class="m-15">At Top Tutoring, it is our top priority to ensure you receive the best tutoring solution for your academic needs. In order to get in touch with one of our Directors for a free consultation, you can either submit the provided form or call us at:</p>
         <div class="text-center">
-          <a href="tel:15108425221">
-            <%= cleanup_phone_number("15108425221") %>
-          </a> 
+          <%= phone_number_display("15108425221") %>
         </div>
         <p class="m-15"> Already have an account?
         <%= link_to "Sign in", sign_in_path %>
@@ -18,63 +16,7 @@
       </div>
 
       <div class="col-lg-6">
-        <%= form_for @user, url: users_clients_path(@user), html: { class: "signup-form", id: "client-signup" } do |form| %>
-
-          <%= form.fields_for :signup do |client_field| %>
-            <div class="col-sm-6 col-lg-6 mb-15 select-option">
-              <i class="ti-angle-down"></i>
-              <%= client_field.select :student, [["My Child", false], ["Myself", true]], { prompt: "This is for..." }, { required: true } %>
-            </div>
-
-            <div class="col-sm-6 col-lg-6 mb-15 select-option">
-              <i class="ti-angle-down"></i>
-              <%= client_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, { required: true } %>
-            </div>
-          <% end %>
-
-          <div class="col-sm-6">
-            <%= form.text_field :first_name, type: "text", placeholder: "First Name", required: true %>
-          </div>
-
-          <div class="col-sm-6">
-            <%= form.text_field :last_name, type: "text", placeholder: "Last Name", required: true %>
-          </div>
-
-          <div class="col-sm-6">
-            <%= form.text_field :phone_number, placeholder: "Phone Number", required: true %>
-          </div>
-
-          <div class="col-sm-6">
-            <%= form.email_field :email, type: "text", placeholder: "Email", required: true %>
-          </div>
-
-          <div class="col-sm-6">
-            <%= form.password_field :password, placeholder: "Password", required: true %>
-          </div>
-
-          <div class="col-sm-6">
-            <%= password_field_tag :confirm_password, nil, placeholder: "Confirm Password", class: "form-control input-lg mb-15", required: true %>
-          </div>
-
-          <%= form.fields_for :signup do |client_field| %>
-            <div class="col-xs-12">
-              <%= client_field.text_area :comments, placeholder: "Comments", rows: "3" %>
-            </div>
-          <% end %>
-
-          <div class="col-md-12 text-center mb-15">
-            <%= form.submit "Submit", class: "btn btn-lg btn-blue" %>
-          </div>
-
-          <div class="col-md-12">
-            <p class="note text-center">
-            By signing up, you agree to our
-            <a href="https://toptutoring.com/terms_of_service/">terms of service</a>
-            and
-            <a href="https://toptutoring.com/privacy_policy/">privacy policy</a>.
-            </p>
-          </div>
-        <% end %>
+        <%= render "new_client_form", submit_url: users_clients_path %>
       </div>
     </div>
   </section>

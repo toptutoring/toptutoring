@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row flex">
   <%= render "profile_box" %>
-  <div class="col-lg-8 text-center" style="display:block">
+  <div class="col-lg-8 text-center">
     <div class="widget">
       <div class="widget-head">
       </div>
@@ -8,9 +8,12 @@
         <i class="text-center icon ion-ios-person fs-120"></i>
         <!-- <img src="<%=  %>" width="100" alt="Profile Image" class="img-circle"> -->
         <h4 class="mt-20 mb-5 text-black"><%= current_user.full_name %></h4>
-        <p class="fs-12 text-uppercase text-muted"><%= cleanup_phone_number(current_user.phone_number) %></p>
+        <p class="fs-12 text-uppercase text-muted"><%= phone_number_display(current_user, link: false) %></p>
         <p><%= current_user.email %></p>
       </div>
+        <% if current_user.has_role?("tutor") %>
+          <%= link_to "Edit your public tutor profile", tutors_tutor_profile_path, class: "btn btn-primary mb-15" %>
+        <% end %>
     </div>
   </div>
 </div>

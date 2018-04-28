@@ -1,0 +1,15 @@
+<div class="table-responsive">
+  <table class="table table-hover mb-0">
+    <thead>
+      <tr>
+        <th class="col-xs-1 text-center">Status</th>
+        <th>Date</th>
+        <th><%= title %></th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "admin/payments/payment", collection: payments %>
+    </tbody>
+  </table>
+</div>

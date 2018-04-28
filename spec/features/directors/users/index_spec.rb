@@ -10,13 +10,9 @@ feature "Director client index" do
 
     visit director_users_path
 
-    expect(page).to have_content("ID")
-    expect(page).to have_content(client.id)
     expect(page).to have_content("Name")
     expect(page).to have_content(client.full_name)
     expect(page).to have_content(client.email)
-    expect(page).to have_content("Access State")
-    expect(page).to have_content(client.access_state)
     expect(page).to have_content("Academic Rate(O/I)")
     expect(page).to have_content(client.online_academic_rate)
     expect(page).to have_content(client.in_person_academic_rate)
@@ -30,6 +26,7 @@ feature "Director client index" do
     expect(page).to have_content(client.online_test_prep_credit)
     expect(page).to have_content(client.in_person_test_prep_credit)
     expect(page).to have_content("Action")
-    expect(page).to have_content("Adjust Rates and Balances")
+    expect(page).to have_link(href: edit_director_user_path(client))
+    expect(page).to have_link(href: archive_director_user_path(client))
   end
 end

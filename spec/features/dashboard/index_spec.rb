@@ -64,16 +64,15 @@ feature "Dashboard Index" do
     expect(page).to have_content("Pending Engagements")
     expect(page).to have_content("Student Name")
     expect(page).to have_content("Client Name")
+    expect(page).to have_content("Phone Number")
     expect(page).to have_content("Subject")
-    expect(page).to have_content("Academic Type")
-    expect(page).to have_content("Status")
+    expect(page).to have_content("Actions")
 
     expect(page).to have_content(pending_engagement.student_name)
     expect(page).to have_content(pending_engagement.client.full_name)
     expect(page).to have_content(pending_engagement.subject.name)
-    expect(page).to have_content(pending_engagement.academic_type.humanize)
-    expect(page).to have_content(pending_engagement.state)
-    expect(page).to have_link("Edit")
+    expect(page).to have_css(".ion-clock")
+    expect(page).to have_link(href: edit_engagement_path(pending_engagement))
   end
 
   scenario "when user is contractor" do

@@ -1,0 +1,59 @@
+<% page_title("Top Tutoring | Contact") %>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-md-5 col-md-offset-1">
+        <h4 class="uppercase">contact us</h4>
+        <p>
+        We’d love to hear from you. Please fill out the following form to inquire about tutoring, rates or other questions and we'll get back to you shortly.
+        </p>
+        <hr>
+        <p>E: tutor@toptutoring.com
+        <br />P: <%= phone_number_display("15108425221") %>
+        </p>
+        <hr>
+        <%= image_tag "www/mailbox.jpg", class: "not-visible-xs" %>
+
+        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br>
+        </p>
+      </div>
+      <div class="col-sm-6 col-md-5">
+        <%= form_with model: Lead, url: leads_path, id: "contact-form" do |f| %>
+
+          <div class="col-sm-6">
+            <%= f.text_field :first_name, type: "text", placeholder: "First Name", required: true %>
+          </div>
+
+          <div class="col-sm-6">
+            <%= f.text_field :last_name, type: "text", placeholder: "Last Name", required: true %>
+          </div>
+
+          <div class="col-sm-6">
+            <%= f.text_field :phone_number, placeholder: "Phone Number", required: true %>
+          </div>
+
+          <div class="col-sm-6">
+            <%= f.number_field :zip, type: "text", pattern: "\\d{5}", max_length: 5, placeholder: "Zip Code", required: true %>
+          </div>
+
+          <div class="col-sm-12">
+            <%= f.email_field :email, type: "text", placeholder: "Email", required: true %>
+          </div>
+
+          <div class="col-sm-12 select-option">
+            <i class="ti-angle-down"></i>
+            <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, id: "subject_id", required: true %>
+          </div>
+
+          <div class="col-xs-12">
+            <%= f.text_area :comments, placeholder: "Comments", rows: "3" %>
+          </div>
+
+          <div class="col-xs-12">
+            <%= f.submit "Send Message", class: "btn btn-success" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

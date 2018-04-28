@@ -1,0 +1,9 @@
+<% if @updated %>
+  var categoryConfirm = document.getElementById("name_confirm_blog_category<%= @category.id %>")
+  confirmDialogShow(categoryConfirm);
+<% else %>
+  var categoryInput = document.getElementById("name_input_blog_category<%= @category.id %>")
+  categoryInput.value = "<%= @category.reload.name %>"
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+  window.scrollTo(0, 0);
+<% end %>

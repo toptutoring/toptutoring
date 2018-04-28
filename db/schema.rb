@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180303012221) do
+ActiveRecord::Schema.define(version: 20180420201609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,6 @@ ActiveRecord::Schema.define(version: 20180303012221) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
-    t.string "country"
     t.string "state"
     t.string "phone_number"
     t.text "description"
@@ -61,7 +60,9 @@ ActiveRecord::Schema.define(version: 20180303012221) do
     t.datetime "updated_at", null: false
     t.bigint "country_id"
     t.boolean "published", default: false
+    t.string "slug"
     t.index ["country_id"], name: "index_cities_on_country_id"
+    t.index ["slug"], name: "index_cities_on_slug", unique: true
   end
 
   create_table "ckeditor_assets", force: :cascade do |t|
@@ -155,6 +156,7 @@ ActiveRecord::Schema.define(version: 20180303012221) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "read", default: false
     t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
@@ -188,6 +190,21 @@ ActiveRecord::Schema.define(version: 20180303012221) do
     t.index ["submitter_id"], name: "index_invoices_on_submitter_id"
   end
 
+  create_table "leads", force: :cascade do |t|
+    t.string "email"
+    t.string "phone_number"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "country_code"
+    t.bigint "subject_id"
+    t.text "comments"
+    t.integer "zip"
+    t.boolean "archived", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_leads_on_subject_id"
+  end
+
   create_table "payments", id: :serial, force: :cascade do |t|
     t.integer "amount_cents"
     t.string "description"
@@ -203,6 +220,8 @@ ActiveRecord::Schema.define(version: 20180303012221) do
     t.decimal "hours_purchased", precision: 10, scale: 2
     t.bigint "stripe_account_id"
     t.string "stripe_source"
+    t.string "payer_email"
+    t.boolean "one_time", default: false
     t.index ["payer_id"], name: "index_payments_on_payer_id"
     t.index ["stripe_account_id"], name: "index_payments_on_stripe_account_id"
   end
@@ -259,6 +278,7 @@ ActiveRecord::Schema.define(version: 20180303012221) do
   create_table "subjects", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "academic_type", default: "academic"
+    t.string "category"
   end
 
   create_table "subjects_tutor_accounts", id: false, force: :cascade do |t|
@@ -266,6 +286,17 @@ ActiveRecord::Schema.define(version: 20180303012221) do
     t.bigint "tutor_account_id", null: false
     t.index ["subject_id"], name: "index_subjects_tutor_accounts_on_subject_id"
     t.index ["tutor_account_id"], name: "index_subjects_tutor_accounts_on_tutor_account_id"
+  end
+
+  create_table "test_scores", force: :cascade do |t|
+    t.string "score"
+    t.string "badge"
+    t.bigint "subject_id"
+    t.bigint "tutor_account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_test_scores_on_subject_id"
+    t.index ["tutor_account_id"], name: "index_test_scores_on_tutor_account_id"
   end
 
   create_table "tutor_accounts", force: :cascade do |t|
@@ -276,6 +307,10 @@ ActiveRecord::Schema.define(version: 20180303012221) do
     t.string "online_rate_currency", default: "USD", null: false
     t.integer "in_person_rate_cents", default: 0, null: false
     t.string "in_person_rate_currency", default: "USD", null: false
+    t.string "description"
+    t.string "short_description"
+    t.string "profile_picture"
+    t.boolean "publish", default: false
     t.index ["user_id"], name: "index_tutor_accounts_on_user_id"
   end
 
@@ -319,6 +354,10 @@ ActiveRecord::Schema.define(version: 20180303012221) do
     t.string "unique_token"
     t.string "country_code", default: "US"
     t.string "last_name"
+    t.boolean "archived", default: false
+    t.integer "referrer_id"
+    t.boolean "referral_claimed", default: false
+    t.integer "zip"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
     t.index ["unique_token"], name: "index_users_on_unique_token", unique: true
@@ -336,11 +375,14 @@ ActiveRecord::Schema.define(version: 20180303012221) do
   add_foreign_key "feedbacks", "users"
   add_foreign_key "invoices", "engagements"
   add_foreign_key "invoices", "payouts"
+  add_foreign_key "invoices", "users", column: "submitter_id"
   add_foreign_key "payments", "stripe_accounts"
   add_foreign_key "payments", "users", column: "payer_id"
   add_foreign_key "signups", "users"
   add_foreign_key "stripe_accounts", "users"
   add_foreign_key "student_accounts", "client_accounts"
   add_foreign_key "student_accounts", "users"
+  add_foreign_key "test_scores", "subjects"
+  add_foreign_key "test_scores", "tutor_accounts"
   add_foreign_key "tutor_accounts", "users"
 end

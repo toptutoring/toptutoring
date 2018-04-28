@@ -32,7 +32,7 @@
         <li class="media">
           <div class="media-left"><i class="ion-iphone"></i></div>
           <div class="media-body">
-            <p>Phone: <%= cleanup_phone_number(current_user.phone_number) %></p>
+            <p>Phone: <%= phone_number_display(current_user, link: false) %></p>
           </div>
         </li>
         <% if current_user.requires_dwolla? %>

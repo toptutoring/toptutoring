@@ -1,111 +1,136 @@
 <%= form_for [:clients, Payment.new], html: { class: "stripe_form" } do |f| %>
   <!--  Credit Card Inputs -->
-  <div class="col-lg-6">
-    <div class="widget">
-      <div class="widget-heading">
-        <h3 class="widget-title">Purchase Hours</h3>
-      </div>
-      <div class="widget-body">
-        <div class="widget-content">
-          <% if @hours_type_options.many? %>
-            <div class="form-group select-option">
+  <div class="row flex">
+    <div class="col-xs-12 col-md-6">
+      <div class="widget">
+        <div class="widget-heading">
+          <h3 class="widget-title">Purchase Hours</h3>
+        </div>
+        <div class="widget-body">
+          <div class="widget-content">
+            <% if @hours_type_options.many? %>
+              <div class="form-group select-option">
                 <%= f.label :hours_type, "What hours would you like to purchase?" %>
                 <%= f.select :hours_type, options_for_select(@hours_type_options), { include_blank: false}, class: "form-control input-lg" %>
-            </div>
-          <% else %>
-            <%= f.hidden_field :hours_type, value: @hours_type_options.first[1] %>
-          <% end %>
+              </div>
+            <% else %>
+              <%= f.hidden_field :hours_type, value: @hours_type_options.first[1] %>
+            <% end %>
 
-          <div class="row">
-            <div class="col-xs-6 text-right">
-              <h4 class="fw-300 mb-20">Your Rate</h4>
+            <div class="row">
+              <div class="col-xs-6 text-right">
+                <h4 class="fw-300 mb-20">Your Rate</h4>
+              </div>
+              <div class="col-xs-6">
+                <%= content_tag :h4, nil, class: "fw-300",
+                  data: { online_academic: current_user.online_academic_rate.to_s, online_test: current_user.online_test_prep_rate.to_s,
+                          in_person_academic: current_user.in_person_academic_rate.to_s, in_person_test: current_user.in_person_test_prep_rate.to_s },
+                          id: "hourly-rate-display" %>
             </div>
-            <div class="col-xs-6">
-              <%= content_tag :h4, nil, class: "fw-300",
-                data: { online_academic: current_user.online_academic_rate.to_s, online_test: current_user.online_test_prep_rate.to_s,
-                        in_person_academic: current_user.in_person_academic_rate.to_s, in_person_test: current_user.in_person_test_prep_rate.to_s },
-                        id: "hourly-rate-display" %>
-          </div>
-          </div>
+            </div>
 
-          <div class="row">
-            <div class="col-xs-6 text-right">
-              <h4 class="mb-20">
-                <%= f.label :hours_purchased, "Hours", class: "fw-300 m-0" %>
-              </h4>
+            <div class="row">
+              <div class="col-xs-6 text-right">
+                <h4 class="mb-20">
+                  <%= f.label :hours_purchased, "Hours", class: "fw-300 m-0" %>
+                </h4>
+              </div>
+              <div class="col-xs-6">
+                <%= f.number_field :hours_purchased, value: 1, min: 0.5, step: "0.25", class: "form-control input-lg" %>
+              </div>
             </div>
-            <div class="col-xs-6">
-              <%= f.number_field :hours_purchased, value: 1, min: 0.5, step: "0.25", class: "form-control input-lg" %>
-            </div>
-          </div>
 
-          <hr/>
+            <hr/>
 
-          <div class="row">
-            <div class="col-xs-6 text-right">
-              <h4 class="mb-20 fw-300">Your Total</h4>
+            <div class="row">
+              <div class="col-xs-6 text-right">
+                <h4 class="mb-20 fw-300">Your Total</h4>
+              </div>
+              <div id="payment-total" class="col-xs-6">
+                <h4 id="payment-total-display" class="mb-20 fw-400">$0.00</h4>
+              </div>
             </div>
-            <div id="payment-total" class="col-xs-6">
-              <h4 id="payment-total-display" class="mb-20 fw-400">$0.00</h4>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-xs-6 text-right">
-              <h4 id="hour-type" class="mb-20 fw-300"></h4>
+            <div class="row">
+              <div class="col-xs-6 text-right">
+                <h4 id="hour-type" class="mb-20 fw-300"></h4>
+              </div>
+
+              <div class="col-xs-2">
+                <%= content_tag :h4, nil, class: "mb-20 fw-300 text-left",
+                  data: { online_academic: current_user.online_academic_credit, online_test: current_user.online_test_prep_credit,
+                          in_person_academic: current_user.in_person_academic_credit, in_person_test: current_user.in_person_test_prep_credit },
+                          id: "current-hours" %>
+            </div>
+
+            <div class="col-xs-1">
+              <h4 class="mb-20 fw-300 text-center">→</h4>
             </div>
 
             <div class="col-xs-2">
-              <%= content_tag :h4, nil, class: "mb-20 fw-300 text-left",
-                data: { online_academic: current_user.online_academic_credit, online_test: current_user.online_test_prep_credit,
-                        in_person_academic: current_user.in_person_academic_credit, in_person_test: current_user.in_person_test_prep_credit },
-                        id: "current-hours" %>
-          </div>
-
-          <div class="col-xs-1">
-            <h4 class="mb-20 fw-300 text-center">→</h4>
-          </div>
-
-          <div class="col-xs-2">
-            <h4 id="after-purchase-hours" class="mb-20 fw-300 text-right"></h4>
-          </div>
+              <h4 id="after-purchase-hours" class="mb-20 fw-300 text-right"></h4>
+            </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="col-lg-6">
-    <div class="widget">
-      <div class="widget-heading">
-        <h3 class="widget-title">Credit Card Information</h3>
-      </div>
-      <div class="widget-body">
-        <div class="widget-content">
-          <% if @account %>
-            <div class="form-group select-option mb-10">
-              <%= label_tag :card_id, "Payment Method" %>
-              <% if @account.card_options.many? %>
-                <%= select_tag :card_id, options_for_select(@account.card_options, @account.customer.default_source), class: "form-control input-lg" %>
-              <% else %>
-                <p class="form-control input-lg"><%= @account.default_display %></p>
-                <%= hidden_field_tag :card_id, @account.customer.default_source %>
-              <% end %>
+    <div class="col-xs-12 col-md-6">
+      <div class="widget">
+        <div class="widget-heading">
+          <h3 class="widget-title">Credit Card Information</h3>
+        </div>
+        <div class="widget-body">
+          <div class="widget-content">
+            <% if @account %>
+              <div class="form-group select-option mb-10">
+                <%= label_tag :card_id, "Payment Method" %>
+                <% if @account.card_options.many? %>
+                  <%= select_tag :card_id, options_for_select(@account.card_options, @account.customer.default_source), class: "form-control input-lg" %>
+                <% else %>
+                  <p class="form-control input-lg"><%= @account.default_display %></p>
+                  <%= hidden_field_tag :card_id, @account.customer.default_source %>
+                <% end %>
+              </div>
+              <div class="mb-15">
+                <%= link_to "Manage your payment options", clients_payment_methods_path %>
+                <%= label_tag :use_new_card, class: "pull-right" do %>
+                  <%= check_box_tag :use_new_card, "true", false %>
+                  Use a new card
+                <% end %>
+              </div>
+            <% else %>
+              <%= check_box_tag :use_new_card, "true", true, class: "hidden" %>
+            <% end %>
+            <%= render "card_parameters", div_class: "hidden", save_card_option: true%>
+            <div class="row m-0">
+              <!-- button disabling is handled by javascript because Stripe validation requires javascript -->
+              <div tabindex="-1" role="dialog" aria-labelledby="profileBlurb" class="modal fade modal-referral-information" style="display: none;">
+                <div role="document" class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title text-success">Get Free Credits</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>Receive one free hour of tutoring after your friend has their first hour of tutoring.</p>
+                      <p>Share your unique referral url and start earning free credits!</p>
+                      <blockquote>
+                        <span><%= referral_url(current_user.unique_token, subdomain: "app") %></span>
+                        <%= text_area_tag :referral_url, referral_url(current_user.unique_token, subdomain: "app"), class: "copy-input" %>
+                        <div onclick="copyToClipboard('referral_url', 'copy-confirm')" class="btn btn-outline btn-success ml-10" data-toggle="tooltip" data-placement"top" data-original-title="Copy url to clipboard">
+                          <i class="icon ion-clipboard fs-18 text-default"></i>
+                        </div>
+                        <span id="copy-confirm" class="confirm label label-success">Copied</span>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <%= submit_tag "Purchase Hours", class: "pull-right btn btn-primary", data: { disable_with: false } %>
+              <a href="#" data-toggle="modal" data-target=".modal-referral-information" class="pull-right btn btn-outline btn-success mr-10">Get Free Credits</a>
             </div>
-            <div class="mb-15">
-            <%= link_to "Manage your payment options", clients_payment_methods_path %>
-              <%= label_tag :use_new_card, class: "pull-right" do %>
-                <%= check_box_tag :use_new_card, "true", false %>
-                Use a new card
-              <% end %>
-            </div>
-          <% else %>
-            <%= check_box_tag :use_new_card, "true", true, class: "hidden" %>
-          <% end %>
-          <%= render "card_parameters", div_class: "hidden", save_card_option: true%>
-          <div class="row m-0">
-            <!-- button disabling is handled by javascript because Stripe validation requires javascript -->
-            <%= submit_tag "Purchase Hours", class: "pull-right btn btn-primary", data: { disable_with: false } %>
           </div>
         </div>
       </div>

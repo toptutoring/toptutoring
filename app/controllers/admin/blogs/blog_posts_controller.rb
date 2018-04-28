@@ -5,7 +5,8 @@ class Admin::Blogs::BlogPostsController < ApplicationController
   layout "authentication"
 
   def index
-    @posts = BlogPost.all
+    @posts = BlogPost.all.order(publish_date: :desc)
+                     .paginate(page: params[:page], per_page: 20)
     render layout: "application"
   end
 
@@ -39,6 +40,15 @@ class Admin::Blogs::BlogPostsController < ApplicationController
       flash.alert = "Post could not be updated."
     end
     redirect_to action: :index
+  end
+
+  def destroy
+    @post = BlogPost.find(params[:id])
+    if @post.destroy
+      flash.now.notice = "Post \"#{@post.title}\" has been removed."
+    else
+      flash.now.alert = "Post \"#{@post.title}\" could not be removed."
+    end
   end
 
   private

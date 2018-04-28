@@ -1,0 +1,13 @@
+<% unless @score.persisted? %>
+    var select_group = document.querySelector("#test_score_subject_id");
+    var option = document.createElement("option");
+    option.innerHTML = "<%= @score.subject.name %>";
+    option.value = "<%= @score.subject.id %>";
+
+    select_group.prepend(option);
+    
+    var score = document.getElementById("test_score_<%= @score.id %>")
+    score.parentNode.removeChild(score)
+<% end %>
+
+renderTopTutoringFlashes("<%= j render "application/flashes" %>");

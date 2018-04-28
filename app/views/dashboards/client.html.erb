@@ -1,15 +1,29 @@
 <!-- left main -->
+<% unless @engagements.active.any? %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="widget">
+        <div class="widget-heading">
+          <h3 class="widget-title">Welcome to Top Tutoring</h3>
+          <div class="widget-body">
+            <p>Thank you for signing-up! If you haven't been contacted already, our director will be in touch with you shortly. Otherwise, we'll be notifying you once we have a tutor match. Thank you for your patience!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 <div class="row">
   <div class="col-lg-8">
     <!-- tutor blocks -->
+    <% if @engagements.any? %>
     <%= render "dashboards/clients/tutor_list" %>
+  <% end %>
     <!-- comment block -->
     <%= render "dashboards/clients/comment_form" %>
   </div>
-  <!-- left main end -->
-  <!-- right sidebar -->
   <div class="col-lg-4">
-    <%= render "dashboards/clients/balance_widget" if current_user.client_account.engagements.any? %>
+    <%= render "dashboards/clients/balance_widget" if @engagements.active.any? %>
     <%= render "dashboards/clients/request_tutor_link" %>
   </div>
   <!-- right sidebar end -->

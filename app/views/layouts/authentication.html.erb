@@ -10,9 +10,10 @@
       https://github.com/calebthompson/title#usage
     %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Top Tutoring</title>
+    <%= yield :meta_tags %>
+    <title><%= yield :page_title %></title>
     <!-- Google Tag Manager -->
-    <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
+    <% if true_production %>
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -26,6 +27,7 @@
     <!-- Dancing Script -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing+Script">
 
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" %>
     <%= stylesheet_link_tag :www, media: "all" %>
     <%= stylesheet_link_tag "/plugins/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" %>
 

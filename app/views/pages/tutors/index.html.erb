@@ -1,0 +1,49 @@
+<% page_title(@page_title) %>
+<section class="bg-secondary">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 text-center">
+        <h3 class="uppercase color-primary mb40 mb-xs-24">meet our top tutors</h3>
+        <p class="lead">Read about some of our featured tutors</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="row flex">
+
+      <% @tutor_accounts.each do |tutor| %>
+        <div class="col-md-4 col-sm-6">
+          <div class="image-caption hover-caption image-tile outer-title square-div">
+            <%= link_to pages_tutor_path(tutor.user.first_name) do %>
+              <%= image_tag tutor.profile_picture.tile.url, alt: tutor.user.first_name unless tutor.profile_picture.file.nil? %>
+              <div class="caption">
+                <p>Learn more about <%= tutor.user.first_name %></p>
+              </div>
+            <% end %>
+          </div>
+          <div class="title mb16 text-center">
+            <%= link_to pages_tutor_path(tutor.user.first_name) do %>
+              <h4 class="uppercase mb0"><%= tutor.user.first_name %></h4>
+            <% end %>
+          </div>
+          <p class="mb0">
+          <%= tutor.short_description %>
+          </p>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</section>
+<section class="bg-primary">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3 class="mb0 inline-block p32 p0-xs">Ready to start your first tutoring session?</h3>
+          <%= link_to "Sign Up", sign_up_url(subdomain: "app"), class: "btn btn-lg btn-white mb8 mt-xs-24" %>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,7 @@
+<% if @category.persisted? %>
+  var container = document.getElementById("blog_categories_container")
+  container.insertAdjacentHTML("beforeend", "<%= j render "category_checkbox", blog_category: @category %>")
+  document.getElementById("category_name").value = ""
+<% end %>
+
+renderTopTutoringFlashes("<%= j render "application/flashes" %>")

@@ -1,0 +1,40 @@
+<% page_title(@page_title) %>
+<section>
+  <div class="container">
+    <div class="feed-item mb96 mb-xs-48">
+
+      <div class="row mb16 mb-xs-0">
+        <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
+          <h3 class="uppercase color-primary mb40 mb-xs-24">meet our top tutors</h3>
+          <h3><%= @tutor.first_name %></h3>
+          <% if @tutor.tutor_account.test_scores.where.not(badge: nil).any? %>
+            <i class="icon ti-medall test-badge test-badge-gold" data-toggle="tooltip" data-placement="left" data-original-title="This tutor is a top performer in <%= @tutor.tutor_account.test_scores.where.not(badge: nil).map { |score| score.subject.name }.join(", ") %>"></i>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row mb32 mb-xs-16">
+        <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+          <div class="text-center">
+            <% unless @tutor.tutor_account.profile_picture.file.nil? %>
+              <%= image_tag @tutor.tutor_account.profile_picture.url, class: "mb32 mb-xs-16 cast-shadow img-profile", alt: @tutor.full_name %>
+            <% end %>
+          </div>
+          <%= raw @tutor.tutor_account.description.try(:gsub, "\r\n", "<br />") %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="bg-primary">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3 class="mb0 inline-block p32 p0-xs">Ready to start your first tutoring session?</h3>
+        <%= link_to "Sign Up", sign_up_url(subdomain: "app"), class: "btn btn-lg btn-white mb8 mt-xs-24" %>
+      </div>
+    </div>
+  </div>
+</section>

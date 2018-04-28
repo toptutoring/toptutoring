@@ -1,4 +1,12 @@
-<%= render layout: "blog_layout" do %>
+<%= content_for :meta_tags do %>
+  <meta property="og:url"           content="<%= url_for(subdomain: "app") %>" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="<%= @post.title %>" />
+  <meta property="og:description"   content="<%= @post.excerpt %>" />
+  <meta property="og:image"         content="<%= image_url("topTutoringFinal.png") %>" />
+<% end %>
+
+<%= render layout: "pages/blog_posts/blog_layout" do %>
   <div class="post-snippet mb64">
     <article>
       <div class="post-title">
@@ -17,8 +25,10 @@
 
     </article>
 
-    <!-- Go to www.addthis.com/dashboard to customize your tools -->
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592c8482ca63f984"></script>
+    <% if true_production %>
+      <!-- Go to www.addthis.com/dashboard to customize your tools -->
+      <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592c8482ca63f984"></script>
+    <% end %>
 
   </div>
 <% end %>

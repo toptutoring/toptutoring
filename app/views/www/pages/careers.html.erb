@@ -1,0 +1,51 @@
+<% page_title("Top Tutoring | Careers") %>
+<h3 class="career-header"><%= t('www.careers.header') %></h1>
+<section class="image-square left">
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/calendar.jpg" %>
+    </div>
+  </div>
+  <div class="col-md-6 col-md-offset-1 content">
+    <h3><%= t('www.careers.schedule.header') %></h3>
+    <p class="mb0"><%= t('www.careers.schedule.blurb') %></p>
+  </div>
+</section>
+<section class="image-square right">
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/work-from-anywhere.jpg" %>
+    </div>
+  </div>
+  <div class="col-md-6 content">
+    <h3><%= t('www.careers.work_from_anywhere.header') %></h3>
+    <p class="mb0"><%= t('www.careers.work_from_anywhere.blurb') %></p>
+  </div>
+</section>
+<section class="image-square left">
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/calculator.jpg" %>
+    </div>
+  </div>
+  <div class="col-md-6 col-md-offset-1 content">
+    <h3><%= t('www.careers.consistent_income.header') %></h3>
+    <p class="mb0"><%= t('www.careers.consistent_income.blurb') %></p>
+    <div class = "button-padding-top">
+      <%= link_to t('app.signup.text'), users_tutors_signup_url(subdomain: "app"), class: "btn btn-lg btn-blue" %>
+    </div>
+  </div>
+</section>
+<section class="image-square right">
+  <div class="col-md-6 image">
+    <div class="background-image-holder">
+      <%= image_tag "www/work-with-us.jpg" %>
+    </div>
+  </div>
+  <div class="col-md-6 content">
+    <h3><%= t('www.careers.interest') %></h3>
+    <p class="mb0"><%= link_to t('app.contact_us'), "/contact", class: "btn btn-lg btn-blue" %></p>
+    <h3><%= t('www.careers.already_invited') %></h3>
+    <p class="mb0"><%= link_to t('app.signup.text'), users_tutors_signup_url(subdomain: "app"), class: "btn btn-lg btn-blue" %></p>
+  </div>
+</section>

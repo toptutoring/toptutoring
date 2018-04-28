@@ -8,7 +8,7 @@ feature "Remove users" do
   let(:director) { FactoryBot.create(:director_user) }
   let(:engagement) { FactoryBot.create(:engagement, tutor_account: nil, client_account: client.client_account, student_account: student.student_account) }
 
-  context "when user is admin" do
+  context "when user is admin", js: true do
     scenario "and removes a user" do
       name = client.full_name
       sign_in(admin)
@@ -16,7 +16,9 @@ feature "Remove users" do
       expect(User.clients.any?).to be true
 
       visit admin_users_path
-      click_on "Remove"
+      page.accept_confirm do
+        find_link(href: admin_user_path(client)).click
+      end
 
       expect(page).to have_content(t("app.admin.users.remove_user_success", name: name))
       expect(User.clients.any?).to be false
@@ -31,7 +33,9 @@ feature "Remove users" do
       expect(User.students.any?).to be true
 
       visit admin_users_path
-      click_on "Remove", match: :first
+      page.accept_confirm do
+        find_link(href: admin_user_path(client)).click
+      end
 
       expect(page).to have_content(t("app.admin.users.remove_user_success", name: name))
       expect(User.students.any?).to be false
@@ -46,7 +50,9 @@ feature "Remove users" do
       expect(Engagement.any?).to be true
 
       visit admin_users_path
-      click_on "Remove", match: :first
+      page.accept_confirm do
+        find_link(href: admin_user_path(client)).click
+      end
 
       expect(page).to have_content(t("app.admin.users.remove_user_success", name: name))
       expect(Engagement.any?).to be false
@@ -59,7 +65,9 @@ feature "Remove users" do
       sign_in(admin)
 
       visit admin_users_path
-      click_on "Remove", match: :first
+      page.accept_confirm do
+        find_link(href: admin_user_path(client)).click
+      end
 
       expect(page).to have_content(t("app.admin.users.remove_user_failure", name: name))
       expect(ClientAccount.any?).to be true
@@ -69,11 +77,13 @@ feature "Remove users" do
     scenario "and fails removing a user with a payment" do
       name = client.full_name
       engagement
-      FactoryBot.create(:payment, payer: client)
+      FactoryBot.create(:payment, :hourly_purchase, payer: client)
       sign_in(admin)
 
       visit admin_users_path
-      click_on "Remove", match: :first
+      page.accept_confirm do
+        find_link(href: admin_user_path(client)).click
+      end
 
       expect(page).to have_content(t("app.admin.users.remove_user_failure", name: name))
       expect(ClientAccount.any?).to be true
@@ -88,7 +98,7 @@ feature "Remove users" do
 
       visit admin_tutors_path
 
-      expect(page).to have_content("Remove")
+      expect(page).to have_link(href: archive_admin_tutor_path(tutor, view: "tutor"))
     end
   end
 end

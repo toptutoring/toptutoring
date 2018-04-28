@@ -1,0 +1,49 @@
+<tr id="row_user_<%= user.id %>" class="<%= "archived-row" if user.archived? %>">
+  <td>
+    <div class="media">
+      <div class="media-body">
+        <div>
+          <a href="#user_info_modal_<%= user.id %>" data-toggle="modal" aria-expanded="false">
+            <h5 class="media-heading pull-left mt-4 mr-10">
+              <%= user.full_name %>
+            </h5>
+          </a>
+          <% user.roles.distinct.each do |role| %>
+            <% if role.name == 'director' %>
+              <span class="label label-outline label-purple">Director</span>
+            <% end %>
+            <% if role.name == 'client' %>
+              <span class="label label-outline label-success">Client</span>
+            <% end %>
+            <% if role.name == 'tutor' %>
+              <span class="label label-outline label-primary">Tutor</span>
+            <% end %>
+            <% if role.name == 'student' %>
+              <span class="label label-outline label-danger">Student</span>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="clearfix"></div>
+        <p class="text-muted mb-0"><%= phone_number_display(user) %></p>
+      </div>
+    </div>
+  </td>
+  <td class="user-id"><%= user.email.downcase %></td>
+  <td>
+    <% if user.archived? %>
+      <%= link_to "Reactivate", reactivate_admin_user_path(user, view: "users"), method: :patch, remote: true, data: { confirm: "Are you sure you want to reactivate this user?" }, class: "btn" %>
+    <% else %>
+      <%= link_to edit_admin_user_path(user), data: { toggle: "tooltip", placement: "top", "original-title" => "Edit user info" }, class: "mr-15 fs-24" do %>
+        <i class="icon ion-edit"></i>
+      <% end %>
+      <%= link_to archive_admin_user_path(user, view: "users"), method: :patch, remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Archive user from list", confirm: "Archiving the user will also archive all engagements. Are you sure you want to archive this user?" }, class: "mr-15 fs-24" do %>
+        <i class="icon ion-android-archive"></i>
+      <% end %>
+      <%= link_to admin_user_path(user), method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Remove user permanently", confirm: "This will permanently remove the user from the database. Are you sure?" }, class: "mr-15 fs-24" do %>
+        <i class="icon ion-trash-b"></i>
+      <% end %>
+      <%= render 'shared/masquerade_start_button', user: user %>
+    <% end %>
+  </td>
+  <%= render "user_modal", user: user %>
+</tr>

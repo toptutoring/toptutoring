@@ -5,7 +5,7 @@
         <h3 class="widget-title text-center">Editing <%= @user.full_name %></h3>
       </div>
       <div class="widget-body">
-        <%= render partial: 'clients/edit_rates_and_balance_form', locals: { url: director_user_path(@user) } %>
+        <%= render "admin/users/edit_rates_and_balance_form", url: director_user_path(@user) %>
       </div>
     </div>
   </div>

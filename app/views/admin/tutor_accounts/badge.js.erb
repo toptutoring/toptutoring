@@ -1,0 +1,13 @@
+var link = document.getElementById('score_link_<%= @score.id %>');
+<% if @score.badge %>
+    link.innerHTML = "Remove Badge";
+link.classList.remove("btn-primary");
+link.classList.add("btn-default");
+<% else %>
+    link.innerHTML = "Add Badge";
+link.classList.remove("btn-default");
+link.classList.add("btn-primary");
+<% end %>
+
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0);

@@ -1,0 +1,10 @@
+<% if @lead.destroyed? %>
+  var leadRow = document.getElementById("lead_row_<%= @lead.id %>");
+  leadRow.parentNode.removeChild(leadRow);
+<% end %>
+
+renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+<% unless @lead.archived? %>
+  updateBadges("badge_Leads", <%= Lead.active.count %>)
+<% end %>
+window.scrollTo(0, 0);

@@ -20,7 +20,7 @@
         </div>
         <div class="row mb16">
           <p class="lead mb8">Excerpt</p>
-          <%= @post.excerpt %>
+          <%= raw @post.excerpt.try(:gsub, "\r\n", "<br />") %>
         </div>
         <div class="row">
           <%= link_to "Edit Post", edit_blog_post_path(@post) %><br/>

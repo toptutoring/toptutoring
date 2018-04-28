@@ -62,12 +62,32 @@
                 </tr>
                 <tr>
                   <td colspan="2" style="padding:20px;border:1px solid white">
+                    <p style="color:rgb(153,153,153);font-size:18px">Previous Balance</p>
+                    <p><%= @payment.hours_type.titlecase + " Hours" %></p>
+                  </td>
+                  <td style="padding:20px;border:1px solid white;text-align:right">
+                    <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
+                    <p><%= @user.send(@payment.hours_type + "_credit") - @payment.hours_purchased.to_f %> hrs</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="padding:20px;border:1px solid white">
                     <p style="color:rgb(153,153,153);font-size:18px">Hours Purchased</p>
                     <p><%= @payment.hours_type.titlecase + " Hours @ $" + @payment.rate.to_s + "/hr" %></p>
                   </td>
                   <td style="padding:20px;border:1px solid white;text-align:right">
                     <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
-                    <p><%= @payment.hours_purchased %></p>
+                    <p><%= @payment.hours_purchased %> hrs</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="padding:20px;border:1px solid white">
+                    <p style="color:rgb(153,153,153);font-size:18px">Current Balance</p>
+                    <p><%= @payment.hours_type.titlecase + " Hours" %></p>
+                  </td>
+                  <td style="padding:20px;border:1px solid white;text-align:right">
+                    <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
+                    <p><%= @user.send(@payment.hours_type + "_credit") %> hrs</p>
                   </td>
                 </tr>
                 <tr height="80">

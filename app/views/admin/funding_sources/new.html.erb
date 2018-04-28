@@ -12,7 +12,7 @@
           <%= form.select :funding_source_id,  options_from_collection_for_select(@funding_sources, :id, :name), {}, class:"wpcf7-form-control wpcf7-select", required: true %>
         </div>
 
-          <%= form.submit "Set Funding source", class: "btn btn-blue margin-top-md center-block", date: { dismiss: "modal" }%>
+          <%= form.submit "Set Funding source", class: "btn btn-primary margin-top-md center-block", date: { dismiss: "modal" }%>
       <% end %>
       </div>
     </div>

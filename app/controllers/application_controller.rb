@@ -13,8 +13,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def admin?
+    current_user.has_role?("admin")
+  end
+
   def not_found
     raise ActiveRecord::RecordNotFound.new("Not Found")
+  end
+
+  def country_code
+    code = request.location.country_code
+    code == "RD" ? "US" : code
   end
 
   def masquerading?

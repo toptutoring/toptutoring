@@ -6,7 +6,7 @@ describe CreateClientService do
                           last_name: "ClientLastName",
                           phone_number: "510-555-5555",
                           email: "client_new@example.com",
-                          password: "password",
+                          password: "password", country_code: "US",
                           signup_attributes: { student: false,
                                                subject: FactoryBot.create(:subject),
                                                comments: "Hello"} } }
@@ -14,7 +14,7 @@ describe CreateClientService do
                              last_name: "StudentLastName",
                              phone_number: "510-555-5555",
                              email: "client_new@example.com",
-                             password: "password",
+                             password: "password", country_code: "US",
                              signup_attributes: { student: true,
                                                   subject: FactoryBot.create(:subject),
                                                   comments: "Hello"} } }
@@ -22,13 +22,13 @@ describe CreateClientService do
                              last_name: "StudentLastName",
                              phone_number: "510-555-5555",
                              email: "client_new@example.com",
-                             password: "password",
+                             password: "password", country_code: "US",
                              signup_attributes: { student: true,
                                                   subject: nil, # Subject is invalid
                                                   comments: "Hello"} } }
 
     it "creates user successfully when user is not a student" do
-      subject = CreateClientService.create!(user_params, "password", "US")
+      subject = CreateClientService.create!(user_params, "password")
 
       expect(subject.success?).to be true
       expect(subject.user.persisted?).to be true
@@ -43,7 +43,8 @@ describe CreateClientService do
 
     it "creates user successfully when user is from a different country" do
       user_params[:phone_number] = "02-312-3456"
-      subject = CreateClientService.create!(user_params, "password", "KR")
+      user_params[:country_code] = "KR"
+      subject = CreateClientService.create!(user_params, "password")
 
       expect(subject.success?).to be true
       expect(subject.user.persisted?).to be true
@@ -57,7 +58,7 @@ describe CreateClientService do
     end
 
     it "creates user successfully when user is not a student" do
-      subject = CreateClientService.create!(user_params, "password", "US")
+      subject = CreateClientService.create!(user_params, "password")
 
       expect(subject.success?).to be true
       expect(subject.user.persisted?).to be true
@@ -70,7 +71,7 @@ describe CreateClientService do
     end
 
     it "fails when params aren't valid" do
-      subject = CreateClientService.create!(invalid_params, "password", "US")
+      subject = CreateClientService.create!(invalid_params, "password")
 
       expect(subject.success?).to be false
       expect(subject.user.persisted?).to be false
@@ -78,7 +79,7 @@ describe CreateClientService do
 
     it "fails when phone number is invalid" do
       user_params[:phone_number] = "510555"
-      subject = CreateClientService.create!(user_params, "password", "US")
+      subject = CreateClientService.create!(user_params, "password")
 
       expect(subject.success?).to be false
       expect(subject.user.persisted?).to be false
@@ -86,14 +87,15 @@ describe CreateClientService do
 
     it "fails when phone number is invalid for a different country" do
       user_params[:phone_number] = "02-312-345"
-      subject = CreateClientService.create!(user_params, "password", "KR")
+      user_params[:country_code] = "KR"
+      subject = CreateClientService.create!(user_params, "password")
 
       expect(subject.success?).to be false
       expect(subject.user.persisted?).to be false
     end
 
     it "fails when passwords do not match" do
-      subject = CreateClientService.create!(invalid_params, "notpassword", "US")
+      subject = CreateClientService.create!(invalid_params, "notpassword")
 
       expect(subject.success?).to be false
       expect(subject.messages).to eq I18n.t("app.signup.password_fail") 

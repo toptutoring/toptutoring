@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Top Tutoring</title>
     <!-- Google Tag Manager -->
-    <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
+    <% if true_production %>
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -35,32 +35,18 @@
     <%= favicon_link_tag %>
   </head>
   <body>
-    <% if (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production? %>
+    <% if true_production %>
       <!-- Google Tag Manager (noscript) -->
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PH4VQ5Z"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- End Google Tag Manager (noscript) -->
     <% end %>
-    <%= render "user_header" %>
 
-    <div class="main-container">
-      <% if current_user.enabled? %>
-        <%= render "menu" %>
-        <div class="page-container">
-          <div class="page-content container-fluid">
-            <div id="top-tutoring-flashes">
-              <%= render "flashes" %>
-            </div>
-            <%= yield %>
-          </div>
-        </div>
-      <% else %>
-        <div class="p-20">
-          <%= render "flashes" %>
-          <%= yield %>
-        </div>
-      <% end %>
-    </div>
+    <% if current_user %>
+      <%= render "shared/sign_in_view" %>
+    <% else %>
+      <%= render "shared/signed_out_view" %>
+    <% end %>
 
     <%= javascript_include_tag :application %>
     <!-- JS required for Sigma Styles -->
@@ -74,8 +60,6 @@
     <%= javascript_include_tag '/plugins/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js' %>
     <!-- jQuery Steps-->
     <%= javascript_include_tag '/plugins/jquery.steps/build/jquery.steps.min.js' %>
-    <!-- Parsley -->
-    <%= javascript_include_tag '/plugins/parsley/parsley.min.js' %>
     <!-- Core JS-->
     <%= javascript_include_tag '/build/js/first-layout/app.js' %>
     <%= javascript_include_tag '/build/js/first-layout/demo.js' %>
@@ -84,6 +68,5 @@
 
     <%= render "misc_javascript" %>
     <%= render "css_overrides" %>
-
   </body>
 </html>
