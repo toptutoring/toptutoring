@@ -37,7 +37,7 @@ module Tutors
     def invoice_params
       params.require(:invoice)
             .permit(:engagement_id, :subject, :hours, :session_rating,
-                    :description, :submitter_type, :online)
+                    :description, :session_date, :submitter_type, :online)
             .merge(submitter: current_user, status: "pending",
                    submitter_pay: submitter_pay, client: @client,
                    amount: client_charge, hourly_rate: hourly_rate,

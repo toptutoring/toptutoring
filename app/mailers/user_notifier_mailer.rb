@@ -24,7 +24,7 @@ class UserNotifierMailer < ApplicationMailer
     @user = user
     @invoice = invoice
     mail(to: @user.email,
-         subject: "You were invoiced for a session with #{@invoice.submitter.full_name}")
+         subject: "Summary of your tutoring session with #{@invoice.submitter.full_name} on #{l(invoice.session_date, format: :with_weekday)}")
   end
 
   def send_review_request(user)

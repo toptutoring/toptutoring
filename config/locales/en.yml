@@ -4,7 +4,7 @@ en:
       default:
         "%b %-d, %Y"
       with_weekday:
-        "%a %m/%d/%y"
+        "%A, %B %-d"
   time:
     formats:
       default:
