@@ -1,9 +1,9 @@
 class DwollaMassPayUpdateService
   class << self
-    def perform!(url)
-      request = DwollaService.request(:mass_pay_items, url)
+    def perform!(event)
+      request = DwollaService.request(:mass_pay_items, event.resource_url)
       if request.success?
-        payouts = Payout.where(dwolla_mass_pay_url: url, status: "processing")
+        payouts = event.mass_pay_payouts
         update_payouts(payouts, request.response)
       else
         record_payouts
@@ -26,27 +26,15 @@ class DwollaMassPayUpdateService
     end
 
     def save_payout(payout, item)
-      if item[:status] == "failed"
-        invoices = payout.invoices.where(status: "processing")
-        update_invoices_and_user(payout.payee, invoices)
-        payout.status = "failed"
-      end
-      adjust_payout_data(payout, item)
-      payout.save!
-    end
-
-    def update_invoices_and_user(user, invoices)
-      hours = invoices.sum(:hours)
-      invoices.update_all(status: "pending")
-    end
-
-    def adjust_payout_data(payout, item)
+      payout.update_status_and_invoices("failed") if item[:status] == "failed"
       payout.dwolla_transfer_url = item[:transfer_url]
       payout.dwolla_mass_pay_item_url = item[:item_url]
+      payout.save!
+      Rails.logger.info "Updated payout with mass pay item url #{item[:item_url]}."
     end
 
     def error_finding_payout(item)
-      Rails.logger.info "Unable to find payout for mass pay item #{item[:item_url]}."
+      Rails.logger.warn "Unable to find payout for mass pay item #{item[:item_url]}."
     end
   end
 end
