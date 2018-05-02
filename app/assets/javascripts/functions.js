@@ -26,3 +26,8 @@ updateBadges = function(title_id, count) {
     badge.parentNode.removeChild(badge);
   };
 };
+
+smoothScroll = function(e, link) {
+  e.preventDefault();
+  document.querySelector(link.attributes.href.value).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}

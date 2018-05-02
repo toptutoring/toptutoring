@@ -8,7 +8,6 @@ module Admin
 
     def preview
       @city = City.find(params[:id])
-      @phone_number = Phonelib.parse(@city.phone_number, @city.country.code)
       render "cities/show", layout: "authentication"
     end
 
@@ -69,7 +68,8 @@ module Admin
 
     def city_params
       params.require(:city)
-        .permit(:country_id, :name, :state, :phone_number, :description)
+            .permit(:country_id, :name, :state, :phone_number,
+                    :address, :zip, :description, :picture)
     end
   end
 end

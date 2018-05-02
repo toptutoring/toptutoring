@@ -73,5 +73,29 @@ en:
       interest: A UC Berkeley Student or Graduate and Interested in Applying?
       already_invited: Already Invited?
     contact:
+      content: "Interested in our tutoring services or want more information about our rates? Please call our office or fill out the following form and a tutor director will be in contact with you shortly."
       confirmation: "Thank you for your submission, we will be in touch shortly."
       failure: "Sorry, we were unable to record your message. Please ensure the form has been filled out correctly and try again."
+    cities:
+      sub_title: "Top-Tier Academic and Test Prep Tutoring In %{location}"
+      about:
+        title: "TOP tutors from uc berkeley"
+        content: "Struggling with a subject or need to improve your test scores? At Top Tutoring in %{city} we provide tutoring for all academic subjects and the ACT/SAT. All our tutors in %{city} are from UC Berkeley and have scored in the top percentiles on their college entrance exams and have complete mastery over the subjects they tutor. Our tutors have also been carefully selected to ensure that you only have the brightest, most compassionate tutors to help you on your way to academic success."
+        content2: "Through our personalized approach with one-on-one tutoring, our tutors in %{city} craft a personalized plan to work with your strengths and weaknesses to give you the most effective results. We also offer the flexibility of both online and in-person tutoring for your various scheduling and budgeting needs."
+      how_it_works:
+        title: "How it works"
+        match: 
+          title: "match with a tutor"
+          content: "After a free consultation with our tutor director, you will be matched with a tutor near %{city} best suited to your particular needs and learning style."
+        personalize:
+          title: "Personalized Instruction"
+          content: "Through one-on-one tutoring, our tutors in %{city} can craft a personalized plan to work with your strengths and weaknesses to give you the most effective results."
+        success:
+          title: "academic success"
+          content: "Under your tutor's guidance, prepare to learn new strategies and make new and essential connections to master your subject!"
+      subjects:
+        title: "our subjects"
+        sub_title: "Here is a sampling of some subjects we tutor"
+        content: "Don't see your subject? Most likely we have a tutor that can help you. Contact our office at %{phone_link} for more information"
+    signup:
+      header: "Ready to improve your grades and test scores?"

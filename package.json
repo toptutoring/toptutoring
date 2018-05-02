@@ -5,7 +5,9 @@
     "coffeescript": "1.12.7",
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.1.1",
+    "react-slick": "^0.23.1",
+    "sass-loader": "^7.0.1"
   },
   "devDependencies": {
     "@storybook/react": "^3.2.16",
