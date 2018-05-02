@@ -44,6 +44,7 @@ gem "ckeditor"
 gem "fog-aws"
 gem "geocoder"
 gem 'will_paginate', '~> 3.1.0'
+gem "sitemap_generator"
 # gem "intercom-rails" # Not currently using Intercom. Uncomment the intercom initializer to re-enable
 
 group :development do

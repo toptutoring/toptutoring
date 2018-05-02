@@ -33,3 +33,4 @@
 
 # Ignore local upload images
 /public/uploads
+/public/sitemap.xml.gz
