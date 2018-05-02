@@ -6,6 +6,8 @@ class City < ApplicationRecord
   validates_presence_of :name, :description, :country_id, :phone_number, :state, :zip, :address
   validates :slug, uniqueness: true
 
+  scope :published, -> { where(published: true) }
+
   mount_uploader :picture, CityPictureUploader
 
   def add_slug

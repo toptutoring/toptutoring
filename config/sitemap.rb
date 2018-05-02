@@ -46,4 +46,8 @@ SitemapGenerator::Sitemap.create do
   TutorAccount.published.find_each do |account|
     add pages_tutor_path(account.user.first_name)
   end
+
+  City.published.find_each do |city|
+    add public_city_path(city.slug)
+  end
 end
