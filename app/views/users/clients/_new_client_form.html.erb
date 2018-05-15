@@ -57,9 +57,9 @@
   <div class="col-md-12">
     <p class="note text-center">
     By signing up, you agree to our
-    <a href="https://toptutoring.com/terms_of_service/">terms of service</a>
-    and
-    <a href="https://toptutoring.com/privacy_policy/">privacy policy</a>.
+    <%= link_to 'terms of service', clients_terms_of_service_path, target: :blank %>
+      and
+    <%= link_to 'privacy policy', clients_privacy_policy_path, target: :blank %>
     </p>
   </div>
 <% end %>
