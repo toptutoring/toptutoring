@@ -36,6 +36,7 @@ en:
           While you wait for us to contact you, feel free to browse the site or request tutors directly through the app.
       tutors:
         success: "Thank you for signing up!"
+        agreement_fail: "You must agree to the non-solicitation agreement to sign up as a tutor."
     clients:
       dashboard:
         no_tutor_message: |
