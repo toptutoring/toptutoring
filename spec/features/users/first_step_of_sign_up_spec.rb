@@ -67,6 +67,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_email", with: "tutor@example.com"
       fill_in "user_password", with: "password"
       fill_in "confirm_password", with: "password"
+      check "agreement"
       click_button "Sign up"
 
       expect(page).to have_current_path(dashboard_path)
@@ -114,14 +115,29 @@ feature "Create user as first step of sign up process" do
 
       fill_in "user_first_name", with: "NewTutorName"
       fill_in "user_last_name", with: "NewTutorLastName"
+      fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_email", with: exisiting_email
+      fill_in "user_password", with: "password"
+      fill_in "confirm_password", with: "password"
+      check "agreement"
+      click_button "Sign up"
+
+      expect(page).to have_content("Email has already been taken")
+    end
+
+    scenario "when user is tutor and does not check agreement" do
+      visit new_users_tutor_path
+
+      fill_in "user_first_name", with: "NewTutorName"
+      fill_in "user_last_name", with: "NewTutorLastName"
+      fill_in "user_phone_number", with: "(510)555-5555"
+      fill_in "user_email", with: "tutor@example.com"
       fill_in "user_password", with: "password"
       fill_in "confirm_password", with: "password"
       click_button "Sign up"
 
-      expect(page).to have_content("Validation failed: Email has already been taken")
+      expect(page).to have_content(I18n.t("app.signup.tutors.agreement_fail"))
     end
-
     context "when user is from another country" do
       scenario "and inputs a valid phone number" do
         visit client_sign_up_path

@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     # Client Signups
     get "/sign_up" => "users/clients#new", as: "client_sign_up"
     post "/sign_up" => "users/clients#create", as: :users_clients
+    get "/terms_of_service" => "users/clients#terms_of_service", as: :clients_terms_of_service
+    get "/privacy_policy" => "users/clients#privacy_policy", as: :clients_privacy_policy
 
     resource :password, only: [:create, :edit]
     get "/reset_password" => "passwords#new", as: "reset_password"

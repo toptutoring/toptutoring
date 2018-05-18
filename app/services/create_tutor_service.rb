@@ -2,33 +2,35 @@ class CreateTutorService
   class << self
     Result = Struct.new(:success?, :user, :message)
 
-    def create!(user_params, password, subject_params)
+    def create!(agreement_accepted, user_params, password)
       @tutor = User.new(user_params)
-      return password_failure unless passwords_match?(user_params, password)
-      ActiveRecord::Base.transaction do
-        @tutor.save!
-        @tutor.create_tutor_account!
-        add_subjects(subject_params)
+      return failure if invalid?(agreement_accepted, user_params, password)
+      if @tutor.save
+        NewTutorNotifierMailer.mail_admin_and_directors(@tutor).deliver_later
+        Result.new(true, @tutor, I18n.t("app.signup.tutors.success"))
+      else
+        Result.new(false, @tutor, @tutor.errors.full_messages)
       end
-      NewTutorNotifierMailer.mail_admin_and_directors(@tutor).deliver_later
-      Result.new(true, @tutor, I18n.t("app.signup.tutors.success"))
-    rescue ActiveRecord::RecordInvalid => e
-      Result.new(false, @tutor, e)
     end
 
     private
 
-    #Add each subject that was selected on signup to the tutor
-    def add_subjects(subject_params)
-      @tutor.tutor_account.subject_ids = subject_params[:subjects]
+    def invalid?(agreement_accepted, params, password)
+      if !agreement_accepted
+        @error = I18n.t("app.signup.tutors.agreement_fail")
+      elsif passwords_invalid?(params, password)
+        @error = I18n.t("app.signup.password_fail")
+      else
+        false
+      end
     end
 
-    def passwords_match?(params, password)
-      params[:password] == password
+    def passwords_invalid?(params, password)
+      params[:password] != password
     end
 
-    def password_failure
-      Result.new(false, @tutor, I18n.t("app.signup.password_fail"))
+    def failure
+      Result.new(false, @tutor, @error)
     end
   end
 end

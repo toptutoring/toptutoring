@@ -5,34 +5,31 @@ module Users
 
     def new
       @user = User.new
+      @user.build_tutor_account
     end
 
     def create
-      results = CreateTutorService.create!(signups_params, password, tutor_subject_params)
+      results = CreateTutorService.create!(agreement_accepted,
+                                           signups_params,
+                                           password)
       if results.success?
-        sign_in(results.user)
-        flash.notice = results.message
-        redirect_to :root
+        successful_redirect(results)
       else
-        @user = results.user
-        flash.now[:alert] = results.message
-        render :new
+        rerender_form(results)
       end
-    end
-
-    def signup
     end
 
     private
 
-    def signups_params
-      params.require(:user)
-            .permit(:first_name, :last_name, :phone_number, :email, :password)
-            .merge(roles: Role.where(name: "tutor"), access_state: "enabled")
+    def agreement_accepted
+      params[:agreement].present?
     end
 
-    def tutor_subject_params
-      params.fetch(:tutor, {}).permit(subjects: [])
+    def signups_params
+      params.require(:user)
+            .permit(:first_name, :last_name, :phone_number, :email, :password,
+                   tutor_account_attributes: { subject_ids: [] })
+            .merge(roles: Role.where(name: "tutor"), access_state: "enabled")
     end
 
     def password
@@ -41,6 +38,18 @@ module Users
 
     def redirect_to_root
       redirect_to root_path
+    end
+
+    def successful_redirect(results)
+      sign_in(results.user)
+      flash.notice = results.message
+      redirect_to :root
+    end
+
+    def rerender_form(results)
+      @user = results.user
+      flash.now[:alert] = results.message
+      render :new
     end
   end
 end
