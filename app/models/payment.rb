@@ -2,6 +2,7 @@ class Payment < ActiveRecord::Base
   # Associations #
   belongs_to :payer, class_name: "User", foreign_key: "payer_id"
   belongs_to :stripe_account
+  has_many :refunds
 
   # Validations for purchases
   validates_presence_of :payer_id, :hours_type, unless: :one_time
