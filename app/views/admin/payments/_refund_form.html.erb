@@ -1,0 +1,27 @@
+<p>This payment can be refunded up to <%= payment.refundable_hours %> hours.</p>
+<%= form_with scope: :refund, url: admin_payment_refunds_path(payment), local: true do |f| %>
+  <fieldset class="mb-10">
+    <div class="col-sm-3">
+      <%= f.label :hours, "Hours to refund" %>
+    </div>
+    <div class="col-sm-9">
+      <%= f.number_field :hours, step: 0.25, min: 0, max: payment.refundable_hours, class: "form-control", required: true %>
+    </div>
+  </fieldset>
+
+  <fieldset class="mb-10">
+    <div class="col-sm-3">
+      <%= f.label :reason, "Reason" %>
+    </div>
+    <div class="col-sm-9">
+      <%= f.text_area :reason, placeholder: "Please give a reason for the refund", resize: :none, rows: 3, class: "form-control", required: true %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <div class="col-xs-12">
+      <%= f.submit "Refund", class: "btn btn-default pull-right" %>
+    </div>
+  </fieldset>
+  </div>
+<% end %>

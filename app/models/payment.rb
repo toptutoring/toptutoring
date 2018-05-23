@@ -18,6 +18,8 @@ class Payment < ActiveRecord::Base
 
   # Scopes #
   scope :from_user, ->(payer_id) { where(payer_id: payer_id) }
+  scope :succeeded, -> { where(status: "succeeded") }
+  scope :refunded, -> { where(status: "refunded") }
 
   def card_brand_and_four_digits
     card_brand + " ending in ..." + last_four
