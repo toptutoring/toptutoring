@@ -96,7 +96,9 @@ Rails.application.routes.draw do
         end
       end
       namespace :admin do
-        resources :payments, only: [:index, :new, :create]
+        resources :payments, only: [:index, :new, :create] do
+          resources :refunds, module: :payments, only: :create
+        end
         resources :tutor_payouts, only: :index
         resources :tutors, only: [:index, :show, :edit, :update] do
           patch :reactivate, on: :member, controller: :users
