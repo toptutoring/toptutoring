@@ -27,5 +27,6 @@ module TopTutoring
     config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
     config.action_controller.action_on_unpermitted_parameters = :raise
     config.active_job.queue_adapter = :sidekiq
+    config.time_zone = "Pacific Time (US & Canada)"
   end
 end
