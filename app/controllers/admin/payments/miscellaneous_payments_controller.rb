@@ -12,7 +12,7 @@ module Admin
         else
           flash.alert = "Funding source is not set. Please contact the administrator."
         end
-        redirect_to new_admin_payments_miscellaneous_payment_path
+        redirect_to new_admin_miscellaneous_payment_path
       end
 
       private
