@@ -8,6 +8,14 @@ class Refund < ApplicationRecord
   delegate :rate_cents, to: :payment
 
   def set_amount
-    self.amount_cents = (hours * rate_cents).round
+    self.amount_cents = calculate_amount_cents
+  end
+
+  def calculate_amount_cents
+    if payment.refundable_hours == hours
+      payment.amount_cents - payment.refunds.sum(:amount_cents)
+    else
+      (hours * rate_cents).floor
+    end
   end
 end

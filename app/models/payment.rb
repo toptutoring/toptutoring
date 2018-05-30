@@ -37,7 +37,7 @@ class Payment < ActiveRecord::Base
 
   def set_amount
     return if one_time
-    self.amount_cents = (hours_purchased * rate_cents).round
+    self.amount_cents = (hours_purchased * rate_cents).floor
   end
 
   def set_default_description
