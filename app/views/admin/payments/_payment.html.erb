@@ -1,8 +1,15 @@
+<% is_payment = payment.class == Payment %>
 <tr>
   <td class="text-center">
     <%= status_icon payment.status %>
   </td>
   <td><%= l(payment.created_at, format: :date) %></td>
-  <td><%= payment.class == Payment ? payment.payer_name : payment.payee.full_name  %></td>
+  <td><%=  is_payment ? payment.payer_name : payment.payee.full_name  %></td>
   <td><%= number_to_currency(payment.amount) %></td>
+  <td>
+    <% if is_payment && current_user.has_role?("admin") %>
+      <%= link_to "Refund", "#refund_payment_#{payment.id}", data: { toggle: :modal }, class: "btn btn-success" %>
+      <%= render "payment_modal", payment: payment %>
+    <% end %>
+  </td>
 </tr>

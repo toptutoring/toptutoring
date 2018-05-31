@@ -5,7 +5,7 @@
         <h3 class="widget-title pull-left">Client Payments</h3>
       </div>
       <div class="widget-body">
-        <h5>Total amount received: $<%= Money.new @payments.sum(:amount_cents) %></h3>
+        <h5>Total amount received: $<%= Money.new(Payment.sum(:amount_cents) - Refund.sum(:amount_cents)) %></h3>
         <%= render "admin/payments/payments_table", payments: @payments, title: "Client" %>
         <%= will_paginate @payouts %>
       </div>

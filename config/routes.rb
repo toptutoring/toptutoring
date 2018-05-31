@@ -66,9 +66,8 @@ Rails.application.routes.draw do
         end
         resources :tutor_payouts, only: :index
         resources :contractor_payouts, only: :index
-        namespace :payments do
-          resource :miscellaneous_payment, only: [:new, :create]
-        end
+        resource :miscellaneous_payment, module: "payments", only: [:new, :create]
+        post "payments/:payment_id/refunds", to: "payments/refunds#create", as: :payment_refunds
       end
       resources :open_tok_rooms
       mount Sidekiq::Web, at: "/sidekiq" unless Rails.env.development?

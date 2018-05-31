@@ -13,6 +13,7 @@ module ApplicationHelper
     icon_type = case status
                 when "paid" then "ion-checkmark-round text-success"
                 when "succeeded" then "ion-checkmark-round text-success"
+                when "refunded" then "ion-cash text-default"
                 when "denied" then "ion-close-round text-danger"
                 else "ion-clock text-default"
                 end

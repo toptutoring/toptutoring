@@ -96,7 +96,7 @@ $(function() {
     }
     rate = parseFloat(rate);
     var hours = parseFloat($("#payment_hours_purchased").val());
-    var total = Math.round(hours * rate * 100) / 100
+    var total = Math.floor(hours * rate * 100) / 100.0
     total = isNaN(total) ? '0.00' : total;
     $('#payment-total-display').text("$".concat(total.toFixed(2)));
   };

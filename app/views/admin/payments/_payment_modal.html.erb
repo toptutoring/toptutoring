@@ -1,0 +1,34 @@
+<div tab-index="-1" role="dialog" class="modal fade" id="<%= "refund_payment_#{payment.id}" %>">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Payment #<%= payment.id %> by <%= payment.payer.full_name %></h3>
+      </div>
+      <div class="modal-body">
+        <p><b>Payment #<%= payment.id %> Details</b></p>
+        <p>Date: <%= l payment.created_at, format: :date %></p>
+        <p>Description: <%= payment.description %></p>
+        <p>Hours: <%= payment.hours_purchased %></p>
+        <p>Hours Type: <%= payment.hours_type.humanize %></p>
+        <p>Amount: $<%= payment.amount %></p>
+
+        <% if payment.status == "refunded" %>
+          <% payment.refunds.each do |r| %>
+            <hr />
+            <p><b>Refund #<%= r.id %> Details</b></p>
+            <p>Date: <%= l r.created_at, format: :date %></p>
+            <p>Reason: <%= r.reason %></p>
+            <p>Hours: <%= r.hours %></p>
+            <p>Amount: $<%= r.amount %></p>
+          <% end %>
+        <% end %>
+          <hr />
+        <% if payment.fully_refunded? %>
+          <b>This payment has been fully refunded.</b>
+        <% else %>
+          <%= render "refund_form", payment: payment %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

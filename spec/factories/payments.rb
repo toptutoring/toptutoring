@@ -10,19 +10,19 @@ FactoryBot.define do
 
     trait :hourly_purchase do
       description  { "Purchase of 2 hours" }
-      payer        { FactoryBot.create(:client_user) }
+      association :payer, factory: :client_user
       rate_cents   { 20_00 }
       hours_purchased { 2 }
-      hours_type { "academic" }
+      hours_type { "online_academic" }
 
       after(:create) do |payment, _|
-        payment.stripe_account = payment.payer.stripe_account unless payment.payer
+        payment.stripe_account = payment.payer.stripe_account if payment.payer
       end
     end
 
     trait :one_time_payment do
       payer_email { "client@example.com" }
-      description  { "One Time Payment for Clinet" }
+      description  { "One Time Payment for Client" }
       one_time { true }
     end
   end

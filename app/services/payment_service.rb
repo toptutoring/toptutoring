@@ -26,32 +26,10 @@ class PaymentService
   end
 
   def assign_attributes
-    payment.assign_attributes(description: description,
-                              amount_cents: amount_cents,
-                              rate_cents: rate_cents, stripe_account: account)
-  end
-
-  def description
-    hours = payment.hours_purchased
-    type = payment.hours_type.humanize
-    "Purchase of #{hours} #{type} hours."
-  end
-
-  def amount_cents
-    (payment.hours_purchased * rate_cents).round
-  end
-
-  def rate_cents
-    case payment.hours_type
-    when "online_academic"
-      user.online_academic_rate_cents
-    when "online_test_prep"
-      user.online_test_prep_rate_cents
-    when "in_person_academic"
-      user.in_person_academic_rate_cents
-    when "in_person_test_prep"
-      user.in_person_test_prep_rate_cents
-    end
+    payment.set_rate
+    payment.set_amount
+    payment.set_default_description
+    payment.stripe_account = account
   end
 
   def user

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180502172819) do
+ActiveRecord::Schema.define(version: 20180518233409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -250,6 +250,18 @@ ActiveRecord::Schema.define(version: 20180502172819) do
     t.index ["receiving_account_id", "receiving_account_type"], name: "index_payouts_receiver_account_and_type"
   end
 
+  create_table "refunds", force: :cascade do |t|
+    t.string "stripe_refund_id"
+    t.bigint "payment_id"
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "USD", null: false
+    t.decimal "hours", precision: 10, scale: 2, default: "0.0", null: false
+    t.text "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["payment_id"], name: "index_refunds_on_payment_id"
+  end
+
   create_table "roles", id: :serial, force: :cascade do |t|
     t.string "name"
   end
@@ -384,6 +396,7 @@ ActiveRecord::Schema.define(version: 20180502172819) do
   add_foreign_key "invoices", "users", column: "submitter_id"
   add_foreign_key "payments", "stripe_accounts"
   add_foreign_key "payments", "users", column: "payer_id"
+  add_foreign_key "refunds", "payments"
   add_foreign_key "signups", "users"
   add_foreign_key "stripe_accounts", "users"
   add_foreign_key "student_accounts", "client_accounts"
