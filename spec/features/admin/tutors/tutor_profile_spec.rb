@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "Editing tutor profiles", js: true do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:director) { FactoryBot.create(:director_user) }
   let(:tutor) { FactoryBot.create(:tutor_user) }
 

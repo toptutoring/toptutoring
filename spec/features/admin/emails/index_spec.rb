@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Emails Index' do
   scenario 'when user is admin' do
-    admin = FactoryBot.create(:admin_user)
+    admin = User.admin
     tutor = FactoryBot.create(:tutor_user)
     client = FactoryBot.create(:client_user)
     student_account = FactoryBot.create(:student_account, client_account: client.client_account)

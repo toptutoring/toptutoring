@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Remove users" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:student) { FactoryBot.create(:student_user, client: client) }
   let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:client) { FactoryBot.create(:client_user) }

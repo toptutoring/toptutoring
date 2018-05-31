@@ -14,6 +14,9 @@ Role.where(name: "client").first_or_create
 Role.where(name: "student").first_or_create
 Role.where(name: "contractor").first_or_create
 
+if Rails.env.test?
+  FactoryBot.create(:admin_user) 
+end
+
 # Run seeds for development environment
 Rake::Task['dev:seed'].invoke if Rails.env.development? || Rails.env.staging?
-

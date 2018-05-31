@@ -1,11 +1,10 @@
 require "rails_helper"
 
 feature "Set funding source" do
-  let(:admin) { FactoryBot.create(:admin_user) }
-  let(:auth_admin) { FactoryBot.create(:auth_admin_user) }
+  let(:admin) { User.admin }
   let(:response) { Struct.new(:name, :id) }
 
-  scenario "goes to new" do
+  scenario "goes to new when admin is not authorized" do
     name = "Name of Funds"
     dwolla_stub_success([])
 
@@ -17,7 +16,7 @@ feature "Set funding source" do
   scenario "with invalid params" do
     dwolla_stub_success([response.new("Name", "id")])
 
-    sign_in(auth_admin)
+    sign_in(admin)
     visit new_admin_funding_source_path
     click_button "Set Funding source"
     expect(page).to have_content("Funding source can't be blank")
@@ -27,7 +26,7 @@ feature "Set funding source" do
     name = "Name of Funds"
     dwolla_stub_success([response.new(name, "id"), response.new("Balance", "id2")])
 
-    sign_in(auth_admin)
+    sign_in(admin)
     visit new_admin_funding_source_path
     select name, from: "funding_source_funding_source_id"
     click_button "Set Funding source"

@@ -4,6 +4,6 @@ FactoryBot.define do
     content      { "MyText" }
     publish_date { "2017-12-30" }
     draft    { true }
-    user         { FactoryBot.create(:admin_user) }
+    user         { User.admin }
   end
 end

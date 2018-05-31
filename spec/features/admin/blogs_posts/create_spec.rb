@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Blog post crud specs", js: true do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:post) { FactoryBot.create(:blog_post) }
   
   scenario "creating a post with valid params" do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "Edit tutor" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:director) { FactoryBot.create(:director_user) }
   let(:tutor) { FactoryBot.create(:tutor_user) }
 

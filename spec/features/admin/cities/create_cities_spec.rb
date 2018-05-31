@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "City crud specs" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:city) { FactoryBot.create(:city) }
   let(:country) { FactoryBot.create(:country) }
   

@@ -23,7 +23,7 @@ require "rails_helper"
       post :create, params: sign_up_params
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
-      expect(ActionMailer::Base.deliveries.map(&:bcc)).to include([director.email])
+      expect(ActionMailer::Base.deliveries.last.bcc).to include(director.email)
     end
 
     it "sends notifications to tutor director" do
@@ -32,16 +32,17 @@ require "rails_helper"
       post :create, params: sign_up_params
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
-      expect(ActionMailer::Base.deliveries.map(&:bcc)).to include([tutor.email])
+      expect(ActionMailer::Base.deliveries.last.bcc).to include(tutor.email)
     end
 
     it "sends notifications to admin" do
-      admin = FactoryBot.create(:admin_user)
+      admin = User.admin
 
       post :create, params: sign_up_params
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
-      expect(ActionMailer::Base.deliveries.map(&:bcc)).to include([admin.email])
+      expect(ActionMailer::Base.deliveries.first.bcc).to include(admin.email)
+      expect(ActionMailer::Base.deliveries.last.bcc).to include(admin.email)
     end
   end
 end

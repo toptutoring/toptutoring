@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "Index engagements" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let!(:student) { FactoryBot.create(:student_user) }
 
   context "when admin creates an engagement" do

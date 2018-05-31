@@ -4,7 +4,7 @@ feature "Admin role features" do
   let(:contractor) { FactoryBot.create(:contractor_user) }
   let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:director) { FactoryBot.create(:director_user) }
-  let(:admin) { FactoryBot.create(:auth_admin_user) }
+  let(:admin) { User.admin }
 
   let(:director_role) { Role.find_by_name("director") }
   let(:tutor_role) { Role.find_by_name("tutor") }

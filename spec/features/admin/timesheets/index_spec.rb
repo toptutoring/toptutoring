@@ -2,7 +2,7 @@ require "rails_helper"
 
 feature "Timesheet Index" do
   let(:contractor) { FactoryBot.create(:contractor_user) }
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let!(:timesheet) { FactoryBot.create(:invoice, submitter: contractor, submitter_type: "by_contractor", status: "pending", hours: 1) }
 
   scenario "when user is admin" do

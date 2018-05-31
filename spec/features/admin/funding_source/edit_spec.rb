@@ -1,11 +1,10 @@
 require "rails_helper"
 
 feature "Edit funding source" do
-  let(:admin) { FactoryBot.create(:auth_admin_user) }
+  let(:admin) { User.admin }
   let(:response) { Struct.new(:name, :id) }
 
   scenario "redirects to edit and has valid form" do
-    admin = FactoryBot.create(:auth_admin_user)
     funding_source = FactoryBot.create(:funding_source)
     name = "Name of Funds"
     dwolla_stub_success([response.new(name, funding_source.funding_source_id), response.new("Balance", "id")])
@@ -18,7 +17,6 @@ feature "Edit funding source" do
   end
 
   scenario "with invalid params" do
-    admin = FactoryBot.create(:auth_admin_user)
     dwolla_stub_success([])
 
     sign_in(admin)
@@ -30,7 +28,6 @@ feature "Edit funding source" do
   end
 
   scenario "with valid params" do
-    admin = FactoryBot.create(:auth_admin_user)
     name = "Name of Funds"
     dwolla_stub_success([response.new(name, "id")])
 

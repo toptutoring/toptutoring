@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe AdminDirectorNotifierMailer do
-  let!(:admin) { FactoryBot.create(:admin_user) }
+  let!(:admin) { User.admin }
   let!(:director) { FactoryBot.create(:director_user) }
   let(:client) { build_stubbed(:client_user) }
   let (:email) { AdminDirectorNotifierMailer.new_user_registered(client) }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "Index tutors" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:director) { FactoryBot.create(:director_user) }
   let(:tutor) { FactoryBot.create(:tutor_user, first_name: "Someone") }
   let(:tutor2) { FactoryBot.create(:tutor_user, first_name: "Another") }
