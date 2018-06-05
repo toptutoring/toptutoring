@@ -25,7 +25,7 @@ class ClientAccount < ApplicationRecord
   end
 
   def request_review?
-    false if client_review
+    return false if client_review
     invoices.count >= 3 && invoices.five_star.any?
   end
 end
