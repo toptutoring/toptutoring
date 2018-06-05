@@ -3,7 +3,7 @@ class ClientAccount < ApplicationRecord
   has_many :student_accounts, dependent: :destroy
   has_many :engagements, dependent: :destroy
   has_many :invoices, through: :engagements
-  has_one :client_review
+  has_many :client_reviews
   validates_presence_of :user
 
   def academic_types_engaged
@@ -25,7 +25,7 @@ class ClientAccount < ApplicationRecord
   end
 
   def request_review?
-    return false if client_review
-    invoices.count >= 3 && invoices.five_star.any?
+    return false if client_reviews.any?
+    invoices.count >= 2 && invoices.four_five_star.any?
   end
 end
