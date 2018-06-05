@@ -20,10 +20,6 @@ class ClientAccount < ApplicationRecord
     academic_types_engaged.sort_by { |type| user.send(type + "_rate") }.last
   end
 
-  def send_review_email?
-    !review_requested && request_review?
-  end
-
   def request_review?
     return false if client_reviews.any?
     invoices.count >= 2 && invoices.four_five_star.any?
