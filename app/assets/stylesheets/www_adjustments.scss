@@ -10,6 +10,7 @@
    8. Test Badge Styles
    9. Slick Carousel Styles
    10. Icon Containers
+   11. Btn Styles
 */
 
 // 1. Container Styles
@@ -145,4 +146,16 @@ input[type="email"]:focus {
 .icon-container > i {
   font-size: 60px;
   color: #555;
+}
+
+// 11. Button Styles
+.btn.btn-primary {
+  background: #fff;
+  border-color: #47b475;
+  color: #47b475;
+}
+.btn.btn-primary:hover {
+  background: #47b475;
+  border-color: #47b475;
+  color: #fff;
 }
