@@ -1,0 +1,14 @@
+<div class="widget-heading">
+  <h3 class="widget-title text-center">Top Tutoring Review</h3>
+</div>
+
+<div class="widget-body pt-0">
+  <p><%= review_stars(@review.stars) %></p>
+
+  <% if @review.stars == 5 %>
+    <p><%= t("app.clients.reviews.request_external_review_html", href: link_to("Google", "https://www.google.com/search?q=toptutoring&oq=toptutoring&aqs=chrome..69i57j69i60l5.5651j0j7&client=ms-android-verizon&sourceid=chrome-mobile&ie=UTF-8&dlnr=1&sei=D-ODWpScIMaJ0wLQ_aYY#dlnr=1&lrd=0x808f86be99eea345:0x86171e26aac1d6c0,3,5,,&trex=m_t:lcl_akp,rc_f:nav,rc_ludocids:9662224676969109184,rc_q:Top%2520Tutoring,ru_q:Top%2520Tutoring", target: :blank)) %></p>
+  <% else %>
+    <p><%= t("app.clients.reviews.request_internal_review") %></p>
+    <%= render "update_form" %>
+  <% end %>
+</div>

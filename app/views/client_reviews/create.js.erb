@@ -1,0 +1,7 @@
+<% if @updated %>
+  document.getElementById('review-widget').innerHTML = "<%= j render "update_confirmation" %>";
+<% elsif @review.persisted? %>
+  document.getElementById('review-widget').innerHTML = "<%= j render "submitted" %>";
+<% end %>
+
+renderTopTutoringFlashes("<%= j render "application/flashes" %>")

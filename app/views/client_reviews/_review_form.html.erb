@@ -1,0 +1,24 @@
+<%= form_with model: ClientReview.new, class: "form-horizontal" do |f| %>
+  <div class="row mb24">
+    <div class="col-xs-12">
+      <%= f.label :stars, "Rating", class: "control-label" %>
+      <div>
+        <fieldset class="star-rating">
+          <%= f.radio_button :stars, 5, id: "client_review_stars_5", required: true %><%= f.label :stars, nil, value: 5 %>
+          <%= f.radio_button :stars, 4, id: "client_review_stars_4" %><%= f.label :stars, nil, value: 4 %>
+          <%= f.radio_button :stars, 3, id: "client_review_stars_3" %><%= f.label :stars, nil, value: 3 %>
+          <%= f.radio_button :stars, 2, id: "client_review_stars_2" %><%= f.label :stars, nil, value: 2 %>
+          <%= f.radio_button :stars, 1, id: "client_review_stars_1" %><%= f.label :stars, nil, value: 1 %>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <% unless current_user %>
+    <%= hidden_field_tag :unique_token, @user.unique_token %>
+  <% end %>
+
+  <div class="text-center mt-10">
+    <%= f.submit "Submit Rating", class: "btn btn-primary", data: { disable: true } %>
+  </div>
+<% end %>

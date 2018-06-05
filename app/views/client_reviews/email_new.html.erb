@@ -1,0 +1,13 @@
+<section>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3" id="review-widget">
+      <div class="widget-heading">
+        <h3 class="widget-title text-center">Top Tutoring Rating</h3>
+      </div>
+      <div class="widget-body pt-0">
+        <p><%= t("app.clients.reviews.request_rating", name: @user.full_name) %></p>
+        <%= render "client_reviews/review_form" %>
+      </div>
+    </div>
+  </div>
+</section>

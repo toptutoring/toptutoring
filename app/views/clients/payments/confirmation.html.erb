@@ -11,13 +11,13 @@
   </div>
   <% if current_user.client_account.request_review? %>
     <div class="col-md-6">
-      <div class="widget p-15">
+      <div class="widget p-15" id="review-widget">
         <div class="widget-heading">
-          <h3 class="widget-title text-center">Top Tutoring Review</h3>
-          <p class="widget-hint ml-15 mt-15 mb-0">Hello <%= current_user.full_name %>. Let us know how we're doing!</p>
+          <h3 class="widget-title text-center">Top Tutoring Rating</h3>
         </div>
         <div class="widget-body pt-0">
-          <%= render "reviews/review_form", review: current_user.client_account.build_client_review, reviewer: current_user %>
+          <p><%= t("app.clients.reviews.request_rating", name: current_user.full_name) %></p>
+          <%= render "client_reviews/review_form" %>
         </div>
       </div>
     </div>
