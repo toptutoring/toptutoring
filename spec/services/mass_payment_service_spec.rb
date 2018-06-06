@@ -3,7 +3,7 @@ require "rails_helper"
 
 describe MassPaymentService do
   subject = MassPaymentService
-  let(:admin) { FactoryBot.create(:auth_admin_user) }
+  let(:admin) { User.admin }
   let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:type) { "by_tutor" }
   let!(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }

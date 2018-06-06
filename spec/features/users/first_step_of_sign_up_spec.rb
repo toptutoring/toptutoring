@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Create user as first step of sign up process" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let!(:subject_academic) { FactoryBot.create(:subject) }
 
   context "with valid params" do

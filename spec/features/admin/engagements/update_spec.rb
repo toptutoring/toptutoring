@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Update engagements" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:director) { FactoryBot.create(:director_user) }
   let(:client) { FactoryBot.create(:client_user) }
   let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }

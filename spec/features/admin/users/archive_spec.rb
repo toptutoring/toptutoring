@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Archive user" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:client) { FactoryBot.create(:client_user) }
   let!(:engagement) { FactoryBot.create(:engagement, tutor_account: nil, client_account: client.client_account, state: "active") }

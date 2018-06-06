@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Blog Categories Index" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let!(:blog_category) { FactoryBot.create(:blog_category) }
 
   before :each do

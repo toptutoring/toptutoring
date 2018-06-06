@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Create payment for tutor" do
-  let(:admin) { FactoryBot.create(:auth_admin_user) }
+  let(:admin) { User.admin }
   let(:tutor) { FactoryBot.create(:tutor_user, first_name: "Authorized") }
   let(:tutor_no_auth) { FactoryBot.create(:tutor_user, first_name: "None", auth_uid: nil, access_token: nil, refresh_token: nil) }
   let(:client) { FactoryBot.create(:client_user) }

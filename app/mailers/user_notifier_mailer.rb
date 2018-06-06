@@ -1,5 +1,5 @@
 class UserNotifierMailer < ApplicationMailer
-  default from: 'tutor@toptutoring.com'
+  default from: 'tutor@toptutoring.com', bcc: -> { User.admin.email }
 
   def send_signup_email(user)
     @user = user
@@ -11,7 +11,7 @@ class UserNotifierMailer < ApplicationMailer
     @user = user
     @payment = payment
     mail(to: @user.email,
-         subject: "You have made a purchase of #{@payment.hours_purchased} of tutoring")
+         subject: "You have made a purchase of #{@payment.hours_purchased} hours of tutoring")
   end
 
   def send_one_time_payment_notice(payment)

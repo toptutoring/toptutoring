@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "Index engagements" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:director) { FactoryBot.create(:director_user) }
   let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:client) { FactoryBot.create(:client_user) }

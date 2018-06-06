@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Subjects Index' do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:subject_academic) { FactoryBot.create(:subject) }
   let(:subject_test_prep) { FactoryBot.create(:subject, academic_type: 'test_prep') }
 

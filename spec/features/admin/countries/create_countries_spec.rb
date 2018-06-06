@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Country crud specs" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:country) { FactoryBot.create(:country) }
   
   scenario "admin visits index path" do

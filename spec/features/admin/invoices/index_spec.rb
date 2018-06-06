@@ -4,7 +4,7 @@ feature 'Invoices Index' do
   let(:tutor) { FactoryBot.create(:tutor_user) }
   let(:client) { FactoryBot.create(:client_user) }
   let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let!(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account) }
   let!(:invoice) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
 

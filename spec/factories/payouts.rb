@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :payout do
-    approver { FactoryBot.create(:admin_user) }
+    approver { User.admin }
     description "Payment for 10hrs of tutoring."
     destination "recipient_dwolla_code"
     dwolla_transfer_url "dwolla_transfer_url"

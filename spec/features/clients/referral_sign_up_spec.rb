@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "User signs up as referral" do
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
   let(:client) { FactoryBot.create(:client_user) }
   let!(:subject_academic) { FactoryBot.create(:subject) }
 

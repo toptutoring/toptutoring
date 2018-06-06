@@ -7,7 +7,7 @@ feature "Admin invoice features" do
   let(:test_prep_subject) { FactoryBot.create(:subject, academic_type: "test_prep") }
   let(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, subject: test_prep_subject, student_account: student_account, client_account: client.client_account) }
   let!(:invoice) { FactoryBot.create(:invoice, submitter: tutor, client: client, engagement: engagement, status: "pending", hourly_rate: 59, hours: 1) }
-  let(:admin) { FactoryBot.create(:auth_admin_user) }
+  let(:admin) { User.admin }
   let(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
 
   scenario "when admin pays a single invoice" do

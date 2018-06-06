@@ -3,7 +3,7 @@ require "rails_helper"
 feature "Masquerading" do
   let!(:client) { FactoryBot.create(:client_user) }
   let(:director) { FactoryBot.create(:director_user) }
-  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:admin) { User.admin }
 
   scenario "when directors masquerade as clients" do
     client
