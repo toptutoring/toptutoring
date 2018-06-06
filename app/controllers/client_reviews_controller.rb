@@ -25,16 +25,30 @@ class ClientReviewsController < ApplicationController
   private
 
   def set_user
-    @user ||= current_user || User.find_by(unique_token: params.require(:unique_token))
+    @user ||= current_user || user_by_token
+  end
+
+  def user_by_token
+    User.find_by(unique_token: params.require(:unique_token))
   end
 
   def review_params
     params.require(:client_review)
           .permit(:stars)
+          .merge(review_link: review_link,
+                 review_source: review_source)
   end
 
   def update_params
     params.require(:client_review)
           .permit(:review, :permission_to_publish)
+  end
+
+  def review_link
+    @user.client_account.review_link || ENV.fetch("DEFAULT_REVIEW_LINK")
+  end
+
+  def review_source
+    @user.client_account.review_source || ENV.fetch("DEFAULT_REVIEW_SOURCE")
   end
 end
