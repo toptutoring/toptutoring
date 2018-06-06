@@ -7,17 +7,13 @@ module Admin
       @users = User.all_without_admin.view_order
     end
 
-    def edit
-      @user_role = @user.roles.first.name.capitalize 
-    end
-
     def update
       if @user.update_attributes(user_params)
-        redirect_to admin_users_path, notice: 'User successfully updated!'
+        flash.now.notice = 'User successfully updated!'
       else
-        flash.alert = @user.errors.full_messages
-        redirect_to edit_admin_user_path(@user)
+        flash.now.alert = @user.errors.full_messages
       end
+      render :edit
     end
 
     def destroy
@@ -62,7 +58,8 @@ module Admin
                                    :in_person_academic_rate, :in_person_test_prep_rate,
                                    :online_test_prep_credit, :online_academic_credit,
                                    :online_test_prep_rate, :online_academic_rate,
-                                   :referrer_id, :referral_claimed)
+                                   :referrer_id, :referral_claimed,
+                                   client_account_attributes: [:id, :review_source, :review_link])
     end
 
     def archive_engagements

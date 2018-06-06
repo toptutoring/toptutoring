@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="widget">
+      <div class="widget-heading pb-0">
+        <h3 class="widget-title text-center mb-15">Client Account Info</h3>
+      </div>
+      <div class="widget-body">
+        <%= form_for(@user, url: url) do |f| %>
+          <h3>Rates and Balances</h3>
+          <p class="widget-hint">When rates are $0.00, rates and credits will not be shown to clients as well as tutors. Clients are only able to purchase credit types that have a rate.</p>
+
+          <h3>Online Rates and Credit</h3>
+          <div class="form-group">
+            <%= f.label :online_academic_credit, "Online Academic Credit (in hours)" %>
+            <%= f.number_field :online_academic_credit, class: "form-control", step: 0.25 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :online_test_prep_credit, "Online Test Prep Credit (in hours)" %>
+            <%= f.number_field :online_test_prep_credit, class: "form-control", step: 0.25 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :online_academic_rate, "Online Academic Rate" %>
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <%= f.number_field :online_academic_rate, class: "form-control", step: 0.01, min: 0 %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :online_test_prep_rate, "Online Test Prep Rate" %>
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <%= f.number_field :online_test_prep_rate, class: "form-control", step: 0.01, min: 0 %>
+            </div>
+          </div>
+
+          <h3>In Person Rates and Credit</h3>
+          <div class="form-group">
+            <%= f.label :in_person_academic_credit, "In Person Academic Credit (in hours)" %>
+            <%= f.number_field :in_person_academic_credit, class: "form-control", step: 0.25 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :in_person_test_prep_credit, "In Person Test Prep Credit (in hours)" %>
+            <%= f.number_field :in_person_test_prep_credit, class: "form-control", step: 0.25 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :in_person_academic_rate, "In Person Academic Rate" %>
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <%= f.number_field :in_person_academic_rate, class: "form-control", step: 0.01, min: 0 %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :in_person_test_prep_rate, "In Person Test Prep Rate" %>
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <%= f.number_field :in_person_test_prep_rate, class: "form-control", step: 0.01, min: 0 %>
+            </div>
+          </div>
+
+          <h3>Referrals</h3>
+          <div class="form-group">
+            <%= f.label :referrer_id, "Referred By" %>
+            <%= f.select :referrer_id, options_from_collection_for_select(User.clients, :id, :full_name), { include_blank: true }, class: "form-control" %>
+            <div class="mt-5">
+              <%= f.check_box :referral_claimed %>
+              <%= f.label :referral_claimed, "Referral Claimed", class: "ml-5" %>
+            </div>
+          </div>
+
+          <h3>Review Source</h3>
+          <%= f.fields_for :client_account do |ca| %>
+            <div class="form-group">
+              <%= ca.label :review_source %>
+              <%= ca.text_field :review_source, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= ca.label :review_link %>
+              <%= ca.text_field :review_link, class: "form-control" %>
+            </div>
+          <% end %>
+
+          <div class="text-center form-group">
+            <%= f.submit "Update", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
