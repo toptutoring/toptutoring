@@ -29,7 +29,6 @@ class UserNotifierMailer < ApplicationMailer
 
   def send_review_request(user)
     @user = user
-    @user.client_account.update(review_requested: true)
     mail(to: user.email,
          subject: "We would appreciate your review and feedback!")
   end
