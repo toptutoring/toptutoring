@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title><%= yield :title %></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-      /* Email styles need to be inline */
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+    <style type="text/css">
+      a { text-decoration: none; }
+      p { margin: 0; padding: 0; }
     </style>
   </head>
 
-  <body>
-    <%= yield %>
+  <body style="margin:0;padding:0;width:100%;">
+    <table style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:rgb(51,51,51);background-color:rgb(255,255,255);font-size:14px;width:95%;margin:0 2.5%;padding:0;border:0;border-spacing:0;border-collapse:collapse;table-layout:fixed;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;-ms-text-size-adjust:100%">
+      <tbody>
+        <tr>
+          <td valign="top" width="100%" style="margin:0;padding:0;">
+            <%= yield %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>

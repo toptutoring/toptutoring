@@ -15,13 +15,13 @@ RSpec.describe ClientAccount, type: :model do
 
     it "validates presence of review location if review link is present" do
       subject = client.client_account
-      subject.assign_attributes(review_link: "https://www.toptutoring.com")
+      subject.assign_attributes(review_link: "https://www.example.com")
       expect(subject.valid?).to be false
     end
 
     it "should be valid if both location and link is provided" do
       subject = client.client_account
-      subject.assign_attributes(review_source: "location", review_link: "https://www.toptutoring.com")
+      subject.assign_attributes(review_source: "location", review_link: "https://www.example.com")
       expect(subject.valid?).to be true
     end
 

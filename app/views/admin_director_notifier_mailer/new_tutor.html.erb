@@ -1,0 +1,10 @@
+<% content_for(:title) { "New Tutor Sign Up" } %>
+
+<%= render layout: "layouts/mailers/standard" do %>
+  <p>Hello,</p>
+  <br/>
+  <p>We are writing to let you know that <%= @new_user.full_name %>,  with email <%= @new_user.email %> has registered as a tutor at <%= @new_user.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%Y-%m-%d %I:%M %p") %>!</p>
+  <br/>
+  <p>Regards,</p>
+  <p>Top Tutoring</p>
+<% end %>

@@ -28,7 +28,7 @@ class CreateStudentService
     student = User.create!(params)
     student.enable!
     student.forgot_password!
-    SetStudentPasswordMailer.mail_student(student).deliver_later
+    StudentMailer.set_password(student).deliver_later
     @student_account.update!(user: student)
   end
 

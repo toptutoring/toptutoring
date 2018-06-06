@@ -5,7 +5,7 @@ require "rails_helper"
     let(:user) { FactoryBot.create(:client_user) }
     let!(:tutor) { FactoryBot.create(:tutor_user) }
     let(:subject_id) { FactoryBot.create(:subject).id }
-    let(:sign_up_params) { { user: { first_name: "FirstName", last_name: "LastName", phone_number: "(510)555-5555", email: "some_email@toptutoring.com",
+    let(:sign_up_params) { { user: { first_name: "FirstName", last_name: "LastName", phone_number: "(510)555-5555", email: "some_email@example.com",
         password: "some_password", signup_attributes: { student: false, subject_id: subject_id } }, confirm_password: "some_password" } }
 
     it "does not send notifications to tutor" do
@@ -14,7 +14,7 @@ require "rails_helper"
       post :create, params: sign_up_params
 
       expect(ActionMailer::Base.deliveries.count).to eq(2)
-      expect(ActionMailer::Base.deliveries.first.to).to eq(["some_email@toptutoring.com"])
+      expect(ActionMailer::Base.deliveries.first.to).to eq(["some_email@example.com"])
     end
 
     it "sends notifications to director" do

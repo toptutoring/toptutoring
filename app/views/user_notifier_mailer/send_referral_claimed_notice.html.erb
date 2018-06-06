@@ -1,116 +1,47 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" /><!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=Edge" /><!--<![endif]--><!--[if (gte mso 9)|(IE)]><style type="text/css">
-      table {border-collapse: collapse;}
-      table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
-      img {-ms-interpolation-mode: bicubic;}
-      </style>
-    <![endif]-->
-    <style type="text/css">
-    body {
-      font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-      color: #000000;
-      background-color: #FFFFFF;
-      font-size: 14px;
-      min-width: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: arial, sans-serif;
-    }
-    body a {
-      color: #1188e6;
-      text-decoration: none;
-    }
-    p { margin: 0; padding: 0; }
-    table[class="wrapper"] {
-      width:100% !important;
-      table-layout: fixed;
-      -webkit-font-smoothing: antialiased;
-      -webkit-text-size-adjust: 100%;
-      -moz-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-    }
-    img[class="max-width"] {
-      max-width: 100% !important;
-    }
-    body, p, div { 
-      font-family: arial,sans-serif;
-    }
-    </style>
-  </head>
+<% content_for(:title) { "Invoice Notice" } %>
 
-  <body yahoofix="true">
-    <table border="0" cellpadding="0" cellspacing="0" class="wrapper" width="100%">
+<%= render layout: "layouts/mailers/standard" do %>
+  <p>Hello <%= @referrer.full_name %>,</p>
+  <br/>
+  <p>Thank you for sharing our services with your friends. One of your referrals just finished their fifth hour of tutoring with us and as a thank you, we've added 1 hour of credit to your account. We hope you continue to enjoy our services!</p>
+  <br/>
+  <p>Regards,</p>
+  <p>Top Tutoring</p>
+
+  <%= content_for :extra do %>
+    <table style="margin-top:30px;border:0;border-spacing:0;border-collapse:collapse;width:100%;background-color:rgb(245,245,245);">
       <tbody>
         <tr>
-          <td valign="top" width="100%">
-            <!--[if (gte mso 9)|(IE)]>
-              <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-              <td>
-            <![endif]-->
-
-            <table border="0" cellpadding="0" cellspacing="0" style="min-width:680px;margin:75px auto;border-collapse:collapse;border-spacing:0;color:rgb(51,51,51);background-color:rgb(255,255,255);border-radius:3px">
-              <tbody>
-                <tr>
-                  <td colspan="2" align="left">
-                    <img height="60" src="https://app.toptutoring.com/assets/topTutoringFinal-e2ff8c7932bd9cbe79219aa308ae6160bc477bd8efc4cac3515864cbda6f56bc.png" style="border:none;padding:0;margin:0;display:block;margin:auto;" alt="Top Tutoring" />
-                  </td>
-                </tr>
-                <tr height="80">
-                  <td width="120" colspan="2" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
-                    <p>Hello <%= @referrer.full_name %>,</p><br/>
-                    <p>
-                    Thank you for sharing our services with your friends. One of your referrals just finished their fifth hour of tutoring with us and as a thank you, we've added 1 hour of credit to your account. We hope you continue to enjoy our services!
-                    </p><br/>
-                    <p>Regards,</p>
-                    <p>Top Tutoring</p>
-                  </td>
-                </tr>
-
-                <tr style="color:rgb(51,51,51);background-color:rgb(245,245,245);border-radius:3px">
-                  <td style="padding:20px;border:1px solid white">
-                    <p style="color:rgb(153,153,153);font-size:18px">Previous Balance</p>
-                    <p><%= @rate_type.titlecase + " Hours" %></p>
-                  </td>
-                  <td style="padding:20px;border:1px solid white;text-align:right">
-                    <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
-                    <p><%= @referrer.send(@rate_type + "_credit") - 1 %> hrs</p>
-                  </td>
-                </tr>
-                <tr style="color:rgb(51,51,51);background-color:rgb(245,245,245);border-radius:3px">
-                  <td style="padding:20px;border:1px solid white">
-                    <p style="color:rgb(153,153,153);font-size:18px">Hours Credited</p>
-                    <p><%= @rate_type.titlecase + " Hours" %></p>
-                  </td>
-                  <td style="padding:20px;border:1px solid white;text-align:right">
-                    <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
-                    <p>1 hrs</p>
-                  </td>
-                </tr>
-                <tr style="color:rgb(51,51,51);background-color:rgb(245,245,245);border-radius:3px">
-                  <td style="padding:20px;border-style:solid;border:1px solid white" valign="top">
-                    <p style="color:rgb(153,153,153);font-size:18px">Date</p>
-                    <p><%= l(Date.current) %></p>
-                  </td>
-                  <td width="120" align="right" style="padding:20px;border-style:solid;border:1px solid white" valign="top">
-                    <p style="color:rgb(153,153,153);font-size:18px">TOTAL</p>
-                    <p style="font-size:16px"><%= @referrer.send(@rate_type + "_credit") %> hrs</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <!--[if (gte mso 9)|(IE)]>
-              </td>
-              </tr>
-              </table>
-            <![endif]-->
+          <td style="padding:20px;border:1px solid rgb(255,255,255);">
+            <p style="color:rgb(153,153,153);font-size:18px">Previous Balance</p>
+            <p><%= @rate_type.titlecase %> Hours</p>
+          </td>
+          <td style="padding:20px;border:1px solid rgb(255,255,255);text-align:right;">
+            <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
+            <p><%= @current_credits - 1 %> hrs</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px;border:1px solid rgb(255,255,255);">
+            <p style="color:rgb(153,153,153);font-size:18px">Hours Credited</p>
+            <p><%= @rate_type.titlecase %> Hours</p>
+          </td>
+          <td style="padding:20px;border:1px solid rgb(255,255,255);text-align:right;">
+            <p style="color:rgb(153,153,153);font-size:18px">Qty.</p>
+            <p>+1 hrs</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px;border:1px solid rgb(255,255,255)" valign="top">
+            <p style="color:rgb(153,153,153);font-size:18px">Date</p>
+            <p><%= l(Date.current) %></p>
+          </td>
+          <td width="120" align="right" style="padding:20px;border:1px solid rgb(255,255,255);" valign="top">
+            <p style="color:rgb(153,153,153);font-size:18px">TOTAL</p>
+            <p><strong><%= @current_credits %> hrs</strong></p>
           </td>
         </tr>
       </tbody>
     </table>
-  </body>
-</html>
+  <% end %>
+<% end %>

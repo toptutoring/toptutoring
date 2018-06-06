@@ -20,4 +20,9 @@ class AdminDirectorNotifierMailerPreview < ActionMailer::Preview
                    .new("510-555-5555", "client@example.com", "Client", Time.current, subject, "I'm leaving a comment", "us")
     AdminDirectorNotifierMailer.new_lead(lead)
   end
+
+  def new_tutor
+    tutor = Struct.new(:email, :full_name, :created_at).new("tutor@example.com", "Tutor", Time.current)
+    AdminDirectorNotifierMailer.new_tutor(tutor)
+  end
 end

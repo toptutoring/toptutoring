@@ -32,7 +32,7 @@ feature "Add a review" do
   end
 
   scenario "when client gives a 5 star review and has a location/link set", js: true do
-    link = "https://www.toptutoring.com"
+    link = "https://www.example.com"
     location = "Top Tutoring"
     client.client_account.update(review_link: link, review_source: location)
     make_purchase(client)

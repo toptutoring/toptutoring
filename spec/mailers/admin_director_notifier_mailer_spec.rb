@@ -9,7 +9,7 @@ describe AdminDirectorNotifierMailer do
   it "delivers an notification email" do
     email.deliver_now
     expect(email.bcc).to include(admin.email, director.email)
-    expect(email.from).to eq(["tutor@toptutoring.com"])
+    expect(email.from).to eq([ENV.fetch("MAILER_SENDER")])
     expect(email.subject).to eq("#{client.full_name} has registered as a client")
     expect(ActionMailer::Base.deliveries.count).to eq(1)
   end

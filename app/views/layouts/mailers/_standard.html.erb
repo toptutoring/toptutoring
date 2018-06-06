@@ -1,0 +1,19 @@
+<table style="border:0;border-spacing:0;border-collapse:collapse;min-width:350px;max-width:650px;margin:75px auto;background-color:inherit;">
+  <tbody>
+    <tr>
+      <td>
+        <%= image_tag image_url("topTutoringFinal.png"), style: "height: 60px;border: none;padding: 0;display: block;margin: auto;", alt: "Top Tutoring" %>
+      </td>
+    </tr>
+    <tr>
+      <td style="margin-top:20px;" valign="top">
+        <%= yield %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= yield :extra %>
+      </td>
+    </tr>
+  </tbody>
+</table>
