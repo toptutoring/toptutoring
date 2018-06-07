@@ -28,6 +28,7 @@ class SlackNotifier
       "Name: #{lead.full_name}\n" \
         "Phone Number: #{phone.national}\n" \
         "Email: #{lead.email}\n" \
+        "Zip: #{lead.zip}\n" \
         "Comments: #{comments}\n"
     end
 

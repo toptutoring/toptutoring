@@ -16,8 +16,8 @@ class AdminDirectorNotifierMailerPreview < ActionMailer::Preview
 
   def new_lead
     subject = Struct.new(:name).new("Math")
-    lead = Struct.new(:phone_number, :email, :full_name, :created_at, :subject, :comments, :country_code)
-                   .new("510-555-5555", "client@example.com", "Client", Time.current, subject, "I'm leaving a comment", "us")
+    lead = Struct.new(:phone_number, :email, :full_name, :created_at, :subject, :comments, :country_code, :zip)
+                   .new("510-555-5555", "client@example.com", "Client", Time.current, subject, "I'm leaving a comment", "us", 94501)
     AdminDirectorNotifierMailer.new_lead(lead)
   end
 
