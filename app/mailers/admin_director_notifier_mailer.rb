@@ -29,4 +29,13 @@ class AdminDirectorNotifierMailer < ApplicationMailer
     mail(bcc: users.map(&:email),
          subject: "#{@new_user.full_name} has just registered as a tutor")
   end
+
+  def new_engagement(engagement)
+    @engagement = engagement
+    @client = engagement.client
+    @student_name = engagement.student_name
+    users = User.admin_and_directors
+    mail(bcc: users.map(&:email),
+         subject: "#{@client.full_name} has requested a new engagement for #{@student_name}")
+  end
 end
