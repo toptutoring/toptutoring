@@ -150,7 +150,9 @@ Rails.application.routes.draw do
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("client") } do
       namespace :clients do
-        resources :payments, only: [:new, :create]
+        resources :payments, only: [:new, :create] do
+          get "confirmation", on: :collection
+        end
         resources :students, only: [:show, :edit, :index, :new, :create]
         resources :invoices, only: [:index]
         resources :tutors

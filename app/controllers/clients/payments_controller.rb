@@ -14,13 +14,15 @@ class Clients::PaymentsController < ApplicationController
   def create
     results = PaymentService.new(source, payment_params, account).charge!
     if results.success?
-      flash.now[:notice] = results.message
-      @payment = results.payment
-      render "confirmation"
+      redirect_to({ action: :confirmation }, notice: results.message)
     else
       flash.alert = results.message
       redirect_to action: :new
     end
+  end
+
+  def confirmation
+    @payment = current_user.payments_made.last
   end
 
   private
