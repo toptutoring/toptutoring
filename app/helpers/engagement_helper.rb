@@ -24,7 +24,6 @@ module EngagementHelper
     end
   end
 
-
   def rate_credit_string(client, type)
     rate = client.send(type + "_rate")
     credit = client.send(type + "_credit")
@@ -43,29 +42,33 @@ module EngagementHelper
   end
 
   def actions_for_engagement(engagement)
-    concat edit_link(engagement)    
-    concat misc_action_link(engagement)
+    concat engagement_edit_link(engagement)    
+    concat engagement_enable_link(engagement) if engagement.able_to_enable?
+    concat engagement_delete_link(engagement) if engagement.able_to_delete?
+    concat engagement_archive_link(engagement) if engagement.active?
   end
 
-  def edit_link(engagement)
+  def engagement_edit_link(engagement)
     link_to edit_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Edit this engagement" }, class: "mr-15 fs-24" do 
       tag.i class: "icon ion-edit"
     end 
   end
 
-  def misc_action_link(engagement)
-    if engagement.tutor_account && engagement.pending? 
-       link_to enable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Enable this engagement", confirm: "Enable this engagement?" }, class: "mr-15 fs-24" do 
-        tag.i class: "icon ion-play"
-      end 
-    elsif engagement.active? 
-      link_to disable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Archive this engagement", confirm: "Archive this engagement? Archiving will disable the tutor from viewing and invoicing this engagement." }, class: "mr-15 fs-24" do 
-        tag.i class: "icon ion-android-archive"
-      end 
-    elsif engagement.invoices.empty?
-      link_to engagement_path(engagement), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this engagement", confirm: "This will permanently remove the engagement from the database. Are you sure?" }, class: "mr-15 fs-24" do 
-        tag.i class: "icon ion-trash-b"
-      end 
+  def engagement_delete_link(engagement)
+    link_to engagement_path(engagement), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this engagement", confirm: "This will permanently remove the engagement from the database. Are you sure?" }, class: "mr-15 fs-24" do 
+      tag.i class: "icon ion-trash-b"
+    end 
+  end
+
+  def engagement_enable_link(engagement)
+    link_to enable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Enable this engagement", confirm: "Enable this engagement?" }, class: "mr-15 fs-24" do 
+      tag.i class: "icon ion-play"
+    end 
+  end
+
+  def engagement_archive_link(engagement)
+    link_to disable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Archive this engagement", confirm: "Archive this engagement? Archiving will disable the tutor from viewing and invoicing this engagement." }, class: "mr-15 fs-24" do 
+      tag.i class: "icon ion-android-archive"
     end 
   end
 end
