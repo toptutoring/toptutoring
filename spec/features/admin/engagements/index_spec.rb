@@ -8,7 +8,7 @@ feature "Index engagements" do
   let(:student_account) { FactoryBot.create(:student_account, client_account: client.client_account) }
   let!(:engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account, state: "active") }
   let!(:pending_engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account, state: "pending") }
-
+  let!(:archived_engagement) { FactoryBot.create(:engagement, tutor_account: tutor.tutor_account, student_account: student_account, client_account: client.client_account, state: "archived") }
 
   context "when user is director" do
     scenario "should see engagements" do
@@ -28,6 +28,7 @@ feature "Index engagements" do
       expect(page).to have_no_link(href: enable_engagement_path(engagement))
       expect(page).to have_no_link(href: disable_engagement_path(pending_engagement))
       expect(page).to have_link(href: enable_engagement_path(pending_engagement))
+      expect(page).to have_link(href: enable_engagement_path(archived_engagement))
     end
   end
 
@@ -48,6 +49,7 @@ feature "Index engagements" do
       expect(page).to have_no_link(href: disable_engagement_path(engagement))
       expect(page).to have_no_link(href: disable_engagement_path(pending_engagement))
       expect(page).to have_link(href: enable_engagement_path(pending_engagement))
+      expect(page).to have_link(href: enable_engagement_path(archived_engagement))
     end
   end
 end
