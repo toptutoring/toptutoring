@@ -46,6 +46,7 @@ en:
       payments:
         no_engagements: "Don't worry about payments for now. Let us set you up with a tutor first."
       reviews:
+        heading: Top Tutoring Review
         request_rating: "Hello %{name}. Let us know how we're doing!"
         request_permission: "I give permission to publish this review on Top Tutoring."
         thank_you: "Thank you for submitting a review!"

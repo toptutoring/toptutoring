@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6<%= current_user.client_account.request_review? ? "" : " col-md-offset-3"%>">
+  <div class="col-md-6 col-md-offset-3">
     <div class="widget p-15">
       <div class="widget-heading">
         <h3 class="widget-title text-center">Payment Confirmation</h3>
@@ -9,17 +9,8 @@
       </div>
     </div>
   </div>
-  <% if current_user.client_account.request_review? %>
-    <div class="col-md-6">
-      <div class="widget p-15" id="review-widget">
-        <div class="widget-heading">
-          <h3 class="widget-title text-center">Top Tutoring Rating</h3>
-        </div>
-        <div class="widget-body pt-0">
-          <p><%= t("app.clients.reviews.request_rating", name: current_user.full_name) %></p>
-          <%= render "client_reviews/review_form" %>
-        </div>
-      </div>
-    </div>
-  <% end %>
 </div>
+
+<% if current_user.client_account.request_review? %>
+  <%= render "review_modal" %>
+<% end %>

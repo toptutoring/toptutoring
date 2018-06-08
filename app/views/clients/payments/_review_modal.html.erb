@@ -1,0 +1,18 @@
+<div tab-index="-1" role="dialog" class="modal fade" id="review_modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title"><%= t "app.clients.reviews.heading" %></h5>
+      </div>
+      <div class="modal-body" id="review_contents">
+        <p><%= t("app.clients.reviews.request_rating", name: current_user.full_name) %></p>
+        <%= render "client_reviews/review_form" %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  window.onload = function() {
+    $("#review_modal").modal("show");
+  }
+</script>
