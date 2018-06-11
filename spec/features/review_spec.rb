@@ -29,6 +29,10 @@ feature "Add a review" do
 
     expect(page).to have_content I18n.t("app.clients.reviews.request_external_review_html", href: ENV.fetch("DEFAULT_REVIEW_SOURCE"))
     expect(page).to have_link href: ENV.fetch("DEFAULT_REVIEW_LINK")
+    review = ClientReview.last
+    expect(review.stars).to eq 5
+    expect(review.review_link).to eq ENV.fetch("DEFAULT_REVIEW_LINK")
+    expect(review.review_source).to eq ENV.fetch("DEFAULT_REVIEW_SOURCE")
   end
 
   scenario "when client gives a 5 star review and has a location/link set", js: true do
@@ -44,6 +48,10 @@ feature "Add a review" do
 
     expect(page).to have_content I18n.t("app.clients.reviews.request_external_review_html", href: location)
     expect(page).to have_link href: link
+    review = ClientReview.last
+    expect(review.stars).to eq 5
+    expect(review.review_link).to eq link
+    expect(review.review_source).to eq location
   end
 
   scenario "when client gives less than a 5 star review", js: true do
@@ -57,5 +65,9 @@ feature "Add a review" do
 
     expect(page).to have_content I18n.t("app.clients.reviews.thank_you")
     expect(page).to have_content review_text
+
+    review = ClientReview.last
+    expect(review.stars).to eq 4
+    expect(review.review).to eq review_text
   end
 end
