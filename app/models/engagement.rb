@@ -24,6 +24,7 @@ class Engagement < ActiveRecord::Base
   state_machine :state, :initial => :pending do
     event :enable do
       transition :pending => :active
+      transition :archived => :active
     end
 
     event :disable do
@@ -60,5 +61,13 @@ class Engagement < ActiveRecord::Base
   def low_balance?
     client.send("online_#{academic_type}_credit") < 0 || 
       client.send("in_person_#{academic_type}_credit") < 0
+  end
+
+  def able_to_enable?
+    !active? && tutor_account.present?
+  end
+
+  def able_to_delete?
+    invoices.none? && !active?
   end
 end
