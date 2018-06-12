@@ -29,7 +29,7 @@
           <p class= "col-xs-4">Client Since</p><p class="col-xs-8"><%= l engagement.client.created_at, format: :long_date %></p>
           <p class= "col-xs-4">Client Rates and Credits</p>
           <div class="col-xs-8">
-            <% rates_and_credits(engagement) %>
+            <% engagement_rates_and_credits(engagement) %>
           </div>
           <p class= "col-xs-4">Client Email</p><p class="col-xs-8"><%= engagement.client.email %></p>
           <p class= "col-xs-4">Client Phone Number</p><p class="col-xs-8"><%= phone_number_display engagement.client %></p>
