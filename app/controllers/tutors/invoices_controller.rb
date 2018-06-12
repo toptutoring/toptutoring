@@ -108,8 +108,6 @@ module Tutors
     def send_emails
       return unless @by_tutor
       UserNotifierMailer.send_invoice_notice(@client, @invoice).deliver_later
-      return unless @client.client_account.send_review_email?
-      UserNotifierMailer.send_review_request(@client).deliver_later
     end
   end
 end

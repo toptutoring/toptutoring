@@ -1,4 +1,4 @@
 class ClientReview < ApplicationRecord
   belongs_to :client_account
-  validates_presence_of :stars, :review
+  validates_presence_of :stars
 end

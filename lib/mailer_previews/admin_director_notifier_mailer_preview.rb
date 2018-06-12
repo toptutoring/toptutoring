@@ -10,14 +10,32 @@ class AdminDirectorNotifierMailerPreview < ActionMailer::Preview
 
   def notify_review_made
     client = Struct.new(:full_name).new("Client")
-    review = Struct.new(:stars, :review).new(5, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt5, \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"in culpa qui officia deserunt mollit anim id est laborum.")
+    review = Struct.new(:stars, :review).new(5, lorem_ipsum)
     AdminDirectorNotifierMailer.notify_review_made(client, review)
   end
 
   def new_lead
     subject = Struct.new(:name).new("Math")
-    lead = Struct.new(:phone_number, :email, :full_name, :created_at, :subject, :comments, :country_code)
-                   .new("510-555-5555", "client@example.com", "Client", Time.current, subject, "I'm leaving a comment", "us")
+    lead = Struct.new(:phone_number, :email, :full_name, :created_at, :subject, :comments, :country_code, :zip)
+                   .new("510-555-5555", "client@example.com", "Client", Time.current, subject, "I'm leaving a comment", "us", 94501)
     AdminDirectorNotifierMailer.new_lead(lead)
+  end
+
+  def new_tutor
+    tutor = Struct.new(:email, :full_name, :created_at).new("tutor@example.com", "Tutor", Time.current)
+    AdminDirectorNotifierMailer.new_tutor(tutor)
+  end
+
+  def new_engagement
+    client = Struct.new(:email, :full_name, :phone_number, :country_code).new("client@example.com", "Client", "510-555-5555", "us")
+    subject = Struct.new(:name).new("Math")
+    engagement = Struct.new(:client, :student_name, :subject).new(client, "Student", subject)
+    AdminDirectorNotifierMailer.new_engagement(engagement)
+  end
+
+  private
+
+  def lorem_ipsum
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt5, \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"in culpa qui officia deserunt mollit anim id est laborum."
   end
 end

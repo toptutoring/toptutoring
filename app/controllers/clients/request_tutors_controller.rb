@@ -12,6 +12,7 @@ module Clients
       if @engagement.save
         flash.notice = I18n.t("app.request_tutor.success")
         SlackNotifier.notify_new_engagement(@engagement)
+        AdminDirectorNotifierMailer.new_engagement(@engagement).deliver_later
         redirect_to return_path
       else
         flash.now[:alert] = I18n.t("app.request_tutor.failure")

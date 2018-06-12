@@ -45,6 +45,14 @@ en:
           We're excited to have you on board and looking forward to assigning you your first tutor!
       payments:
         no_engagements: "Don't worry about payments for now. Let us set you up with a tutor first."
+      reviews:
+        heading: Top Tutoring Review
+        request_rating: "Hello %{name}. Let us know how we're doing!"
+        request_permission: "I give permission to publish this review on Top Tutoring."
+        thank_you: "Thank you for submitting a review!"
+        request_external_review_html: "Thank you for giving us 5 stars! Please consider sharing your experience on %{href} to help other customers like yourself."
+        request_internal_review: "We're thankful for your rating! Please let us know how we can better serve you."
+        error: "Sorry, there was a problem processing your review. Please try again or contact an administrator."
     tutors:
       subjects:
         update_success: "Your subjects have been updated."

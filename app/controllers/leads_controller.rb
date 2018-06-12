@@ -7,12 +7,12 @@ class LeadsController < ApplicationController
 
   def create
     @lead = Lead.new(lead_params)
-    SlackNotifier.notify_new_lead(@lead) 
     if @lead.save
       AdminDirectorNotifierMailer.new_lead(@lead).deliver_later
     else
       flash.now.alert = t("www.contact.failure") 
     end
+    SlackNotifier.notify_new_lead(@lead) 
   end
 
   def update

@@ -204,7 +204,8 @@
         <h4 class="uppercase"><%= t("app.contact_us") %></h4>
         <p><%= t("www.contact.content") %></p>
         <hr>
-        <p>E: tutor@toptutoring.com                        <br>P: <%= phone_number_display @city %></p>
+        <p>E: <%= ENV.fetch("MAILER_SENDER") %>
+        <br>P: <%= phone_number_display @city %></p>
         <hr>
         <p><%= @city.address %><br><%= @city.name_state_zip %>&nbsp; &nbsp; &nbsp;&nbsp;<br>
         </p>

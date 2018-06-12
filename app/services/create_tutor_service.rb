@@ -6,7 +6,7 @@ class CreateTutorService
       @tutor = User.new(user_params)
       return failure if invalid?(agreement_accepted, user_params, password)
       if @tutor.save
-        NewTutorNotifierMailer.mail_admin_and_directors(@tutor).deliver_later
+        AdminDirectorNotifierMailer.new_tutor(@tutor).deliver_later
         Result.new(true, @tutor, I18n.t("app.signup.tutors.success"))
       else
         Result.new(false, @tutor, @tutor.errors.full_messages)

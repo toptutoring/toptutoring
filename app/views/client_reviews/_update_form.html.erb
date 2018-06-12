@@ -1,0 +1,24 @@
+<%= form_with model: @review, method: :patch, class: "form-horizontal" do |f| %>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label :review, "Review", class: "control-label" %>
+      <%= f.text_area :review, class: "mb0 form-control", rows: 5, required: true, id: "client_review_review" %>
+    </div>
+  </div>
+
+  <div class="row mb24">
+    <div class="col-xs-12">
+      <%= f.label :permission_to_publish, class: "control-label", for: "permission" do %>
+        <%= f.check_box :permission_to_publish, id: "permission", class: "mr-5" %> <%= t("app.clients.reviews.request_permission") %>
+      <% end %>
+    </div>
+  </div>
+
+  <% unless current_user %>
+    <%= hidden_field_tag :unique_token, @user.unique_token %>
+  <% end %>
+
+  <div class="text-center mt-10">
+    <%= f.submit "Submit Review", class: "btn btn-primary", data: { disable: true } %>
+  </div>
+<% end %>

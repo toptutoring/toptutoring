@@ -83,6 +83,12 @@
     "SSL_APPLICATION_HOST": {
       "required": true
     },
+    "DEFAULT_REVIEW_LINK": {
+      "required": true
+    },
+    "DEFAULT_REVIEW_SOURCE": {
+      "required": true
+    },
     "REDIS_PROVIDER": {
       "required": true
     }

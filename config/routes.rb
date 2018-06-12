@@ -21,10 +21,6 @@ Rails.application.routes.draw do
     post "/payments/one_time" => "one_time_payments#create"
     get "/confirmation" => "one_time_payments#confirmation"
 
-    # review routes
-    get ":unique_token/rate_us" => "reviews#new", as: "new_review"
-    post ":unique_token/rate_us" => "reviews#create", as: "create_review"
-
     # Client Signups
     get "/sign_up" => "users/clients#new", as: "client_sign_up"
     post "/sign_up" => "users/clients#create", as: :users_clients
@@ -40,7 +36,7 @@ Rails.application.routes.draw do
     get "/auth/failure", to: "auth_callbacks#failure"
     post "/dwolla/webhooks", to: "webhooks/dwolla#update"
 
-    #Clearance routes
+    # Clearance routes
     resource :session, controller: "sessions", only: [:new, :create]
 
     scope module: "admin" do
@@ -154,7 +150,9 @@ Rails.application.routes.draw do
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("client") } do
       namespace :clients do
-        resources :payments, only: [:new, :create]
+        resources :payments, only: [:new, :create] do
+          get "confirmation", on: :collection
+        end
         resources :students, only: [:show, :edit, :index, :new, :create]
         resources :invoices, only: [:index]
         resources :tutors
@@ -166,6 +164,10 @@ Rails.application.routes.draw do
       post "/availability/dropdown_change" => "availability#dropdown_change"
       post "/dashboard/feedback" => "feedback#create"
     end
+
+    # Review Routes/No Auth
+    get ":unique_token/rate_us" => "client_reviews#email_new", as: "email_review"
+    resources :client_reviews, only: [:create, :update]
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("student") } do
       get "/dashboard" => "dashboards#student"

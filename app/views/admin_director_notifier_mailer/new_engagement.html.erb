@@ -1,0 +1,14 @@
+<% content_for(:title) { "New Engagement" } %>
+
+<%= render layout: "layouts/mailers/standard" do %>
+  <p>Hello,</p>
+  <br/>
+  <p>We are writing to let you know that <%= @client.full_name %> has requested a new engagement for <%= @student_name %>.</p>
+  <br/>
+  <p><strong>Subject:</strong> <%= @engagement.subject.name %></p>
+  <p><strong>Email:</strong> <%= @client.email %></p>
+  <p><strong>Phone:</strong> <%= phone_number_display @client %></p>
+  <br/>
+  <p>Regards,</p>
+  <p>Top Tutoring</p>
+<% end %>

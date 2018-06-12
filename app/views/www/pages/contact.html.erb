@@ -8,7 +8,7 @@
         We’d love to hear from you. Please fill out the following form to inquire about tutoring, rates or other questions and we'll get back to you shortly.
         </p>
         <hr>
-        <p>E: tutor@toptutoring.com
+        <p>E: <%= ENV.fetch("MAILER_SENDER") %>
         <br />P: <%= phone_number_display("15108425221") %>
         </p>
         <hr>

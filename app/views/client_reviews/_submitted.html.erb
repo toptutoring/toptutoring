@@ -1,0 +1,8 @@
+<p><%= review_stars(@review.stars) %></p>
+
+<% if @review.stars == 5 %>
+  <p><%= t("app.clients.reviews.request_external_review_html", href: review_external_link(@user)) %></p>
+<% else %>
+  <p><%= t("app.clients.reviews.request_internal_review") %></p>
+  <%= render "update_form" %>
+<% end %>

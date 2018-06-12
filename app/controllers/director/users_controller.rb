@@ -38,7 +38,8 @@ module Director
                                    :online_academic_rate, :online_test_prep_rate,
                                    :in_person_academic_credit, :in_person_test_prep_credit,
                                    :in_person_academic_rate, :in_person_test_prep_rate,
-                                   :referrer_id, :referral_claimed)
+                                   :referrer_id, :referral_claimed,
+                                   client_account_attributes: [:id, :review_source, :review_link])
     end
 
     def valid_inputs?

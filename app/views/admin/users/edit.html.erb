@@ -2,7 +2,7 @@
   <div class="col-md-6 col-md-offset-3">
     <div class="widget">
       <div class="widget-heading">
-        <h3 class="widget-title text-center"><%= @user_role %></h3>
+        <h3 class="widget-title text-center">User Profile</h3>
       </div>
       <div class="widget-body">
         <%= form_for(@user, url: admin_user_path(@user)) do |f| %>
@@ -35,18 +35,6 @@
   </div>
 </div>
 
-<% if @user_role == 'Client' %>
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="widget">
-        <div class="widget-heading pb-0">
-          <h3 class="widget-title text-center mb-15">Rates and Balance Adjustment</h3>
-          <p class="widget-hint">When rates are $0.00, rates and credits will not be shown to clients as well as tutors. Clients are only able to purchase credit types that have a rate.</p>
-        </div>
-        <div class="widget-body">
-          <%= render "edit_rates_and_balance_form", url: admin_user_path(@user) %>
-        </div>
-      </div>
-    </div>
-  </div>
+<% if @user.client_account %>
+  <%= render "client_account_form_widget", url: admin_user_path(@user) %>
 <% end %>

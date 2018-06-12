@@ -1,12 +1,2 @@
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <div class="widget">
-      <div class="widget-heading">
-        <h3 class="widget-title text-center">Editing <%= @user.full_name %></h3>
-      </div>
-      <div class="widget-body">
-        <%= render "admin/users/edit_rates_and_balance_form", url: director_user_path(@user) %>
-      </div>
-    </div>
-  </div>
-</div>
+<h1 class="text-center">Editing <%= @user.full_name %></h1>
+<%= render "admin/users/client_account_form_widget", url: director_user_path(@user) %>

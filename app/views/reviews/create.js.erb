@@ -1,5 +1,0 @@
-<% if @review.persisted? %>
-  document.getElementById('review-widget').innerHTML = "<%= j render "reviews/submitted" %>";
-<% end %>
-
-renderTopTutoringFlashes("<%= j render "application/flashes" %>")

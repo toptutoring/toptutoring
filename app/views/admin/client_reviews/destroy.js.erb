@@ -1,0 +1,8 @@
+<% if @review.destroyed? %>
+  var reviewRow = document.getElementById("row_review_<%= @review.id %>");
+  reviewTable = reviewRow.parentNode;
+  reviewTable.removeChild(reviewRow);
+<% end %>
+
+renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0)

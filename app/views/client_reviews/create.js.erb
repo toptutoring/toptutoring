@@ -1,0 +1,5 @@
+<% if @updated %>
+  document.getElementById('review_contents').innerHTML = "<%= j render "update_confirmation" %>";
+<% elsif @review.persisted? %>
+  document.getElementById('review_contents').innerHTML = "<%= j render "submitted" %>";
+<% end %>

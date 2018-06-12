@@ -1,6 +1,11 @@
-<tr>
+<tr id="row_review_<%= client_review.id %>">
   <td><%= client_review.client_account.user.full_name if client_review.client_account %></td>
   <td><%= review_stars(client_review.stars) %></td>
   <td><%= client_review.permission_to_publish ? "✔" : " ⃠" %></td>
   <td class="text-left"><%= client_review.review %></td>
+  <td class="text-center">
+    <%= link_to admin_client_review_path(client_review), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Remove review permanently", confirm: "This will permanently remove the review from the database. Are you sure?" }, class: "mr-15 fs-24" do %>
+      <i class="icon ion-trash-b"></i>
+    <% end %>
+  </td>
 </tr>
