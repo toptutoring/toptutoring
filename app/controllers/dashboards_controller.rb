@@ -27,7 +27,6 @@ class DashboardsController < ApplicationController
                                .processing
                                .includes(:subject, :student_account, :availabilities, tutor_account: :user)
                                .order("users.first_name")
-    @academic_types = current_user.client_account.academic_types_engaged
   end
 
   def student

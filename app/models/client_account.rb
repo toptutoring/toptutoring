@@ -10,13 +10,13 @@ class ClientAccount < ApplicationRecord
   validates_presence_of :review_link, if: :review_source?
   before_validation :set_text_fields_to_nil_if_empty
 
+  ENGAGEMENT_TYPES = %w[online_academic in_person_academic
+                        online_test_prep in_person_test_prep].freeze
+
   def academic_types_engaged
-    types = []
-    types << "online_academic" if user.online_academic_rate > 0
-    types << "online_test_prep" if user.online_test_prep_rate > 0
-    types << "in_person_academic" if user.in_person_academic_rate > 0
-    types << "in_person_test_prep" if user.in_person_test_prep_rate > 0
-    types
+    ENGAGEMENT_TYPES.select do |type|
+      user.rate_set?(type)
+    end
   end
 
   def highest_rate_type

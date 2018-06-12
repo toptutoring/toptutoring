@@ -4,15 +4,16 @@ module DashboardHelper
       is using Dwolla in order to make transfers. Please click the button below to authenticate with Dwolla."
   end
 
-  def credit_widget_display(types, user)
+  def dashboard_credit_widget_display(user)
+    account = user.client_account
     capture do
-      types.each do |type|
-        concat balance_string(type, user)
+      account.academic_types_engaged.each do |type|
+        concat dashboard_client_balance_string(type, user)
       end
     end
   end
 
-  def balance_string(type, user)
+  def dashboard_client_balance_string(type, user)
     prefix = type.titlecase + " Credit: "
     if current_user.send(type + "_rate") > 0
       content_tag :p, prefix + user.send(type + "_credit").to_s
