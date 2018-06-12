@@ -68,8 +68,14 @@ module EngagementHelper
   end
 
   def engagement_archive_link(engagement)
-    link_to disable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Archive this engagement", confirm: "Archive this engagement? Archiving will disable the tutor from viewing and invoicing this engagement." }, class: "mr-15 fs-24" do
+    link_to disable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Archive this engagement", confirm: engagement_archive_confirmation(engagement) }, class: "mr-15 fs-24" do
       tag.i class: "icon ion-android-archive"
     end
+  end
+
+  def engagement_archive_confirmation(engagement)
+    string = "Are you sure you want to archive this engagement? " \
+      "Archiving will disable the tutor from viewing and invoicing this engagement."
+    engagement.credits_remaining? ? string.prepend("Client currently has a positive credit balance. ") : string
   end
 end

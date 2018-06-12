@@ -86,4 +86,10 @@ class Engagement < ActiveRecord::Base
       client.send(credit_type) <= 0
     end
   end
+
+  def credits_remaining?
+    relevant_credits.any? do |credit_type|
+      client.send(credit_type) > 0
+    end
+  end
 end
