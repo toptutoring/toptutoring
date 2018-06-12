@@ -23,16 +23,12 @@ class Engagement < ActiveRecord::Base
   #### State Machine ####
   state_machine :state, :initial => :pending do
     event :enable do
-      transition :pending => :active
-      transition :archived => :active
+      transition :pending => :active, if: [:tutor_account, :rates_are_set?]
+      transition :archived => :active, if: [:tutor_account, :rates_are_set?]
     end
 
     event :disable do
       transition :active => :archived
-    end
-
-    state :active do
-      validate :rates_are_set?
     end
   end
 
@@ -58,10 +54,6 @@ class Engagement < ActiveRecord::Base
     @tutor ||= tutor_account.try(:user)
   end
 
-  def able_to_enable?
-    !active? && tutor_account.present?
-  end
-
   def able_to_delete?
     invoices.none? && !active?
   end
@@ -71,8 +63,7 @@ class Engagement < ActiveRecord::Base
   end
 
   def rates_are_set?
-    return if rate_for?("online") || rate_for?("in_person")
-    errors.add(:rate, "must be set before you enable this engagement")
+    rate_for?("online") || rate_for?("in_person")
   end
 
   def relevant_credits

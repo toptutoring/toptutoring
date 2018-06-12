@@ -44,7 +44,7 @@ module EngagementHelper
 
   def actions_for_engagement(engagement)
     concat engagement_edit_link(engagement)
-    concat engagement_enable_link(engagement) if engagement.able_to_enable?
+    concat engagement_enable_link(engagement) if engagement.can_enable?
     concat engagement_delete_link(engagement) if engagement.able_to_delete?
     concat engagement_archive_link(engagement) if engagement.active?
   end
