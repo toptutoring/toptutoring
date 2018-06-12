@@ -139,6 +139,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def rate_set?(type)
+    send("#{type}_rate") > 0
+  end
+
   def self.with_pending_invoices_attributes(type)
     account_type = type == "by_tutor" ? :tutor_account : :contractor_account
     select_query = "users.*, SUM(invoices.submitter_pay_cents) " \

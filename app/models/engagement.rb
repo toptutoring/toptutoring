@@ -30,6 +30,10 @@ class Engagement < ActiveRecord::Base
     event :disable do
       transition :active => :archived
     end
+
+    state :active do
+      validate :rates_are_set?
+    end
   end
 
   delegate :academic?, :test_prep?, :academic_type, to: :subject
@@ -54,20 +58,32 @@ class Engagement < ActiveRecord::Base
     tutor_account.try(:user)
   end
 
-  def rate_for?(type)
-    client.send("#{type}_#{academic_type}_rate") > 0
-  end
-
-  def low_balance?
-    client.send("online_#{academic_type}_credit") < 0 || 
-      client.send("in_person_#{academic_type}_credit") < 0
-  end
-
   def able_to_enable?
     !active? && tutor_account.present?
   end
 
   def able_to_delete?
     invoices.none? && !active?
+  end
+
+  def rate_for?(tutoring_type)
+    client.rate_set?("#{tutoring_type}_#{academic_type}")
+  end
+
+  def rates_are_set?
+    return if rate_for?("online") || rate_for?("in_person")
+    errors.add(:rate, "must be set before you enable this engagement")
+  end
+
+  def relevant_credits
+    %w[online in_person].each_with_object([]) do |type, array|
+      array << "#{type}_#{academic_type}_credit" if rate_for?(type)
+    end
+  end
+
+  def low_balance?
+    relevant_credits.any? do |credit_type|
+      client.send(credit_type) <= 0
+    end
   end
 end
