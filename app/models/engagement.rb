@@ -39,7 +39,7 @@ class Engagement < ActiveRecord::Base
   delegate :academic?, :test_prep?, :academic_type, to: :subject
 
   def client
-    client_account.user
+    @client ||= client_account.user
   end
 
   def updated?
@@ -47,15 +47,15 @@ class Engagement < ActiveRecord::Base
   end
 
   def student_name
-    student_account.name
+    @student_name ||= student_account.name
   end
 
   def student
-    student_account.try(:user)
+    @student ||= student_account.try(:user)
   end
 
   def tutor
-    tutor_account.try(:user)
+    @tutor ||= tutor_account.try(:user)
   end
 
   def able_to_enable?
@@ -76,7 +76,7 @@ class Engagement < ActiveRecord::Base
   end
 
   def relevant_credits
-    %w[online in_person].each_with_object([]) do |type, array|
+    @relevant_credits ||= %w[online in_person].each_with_object([]) do |type, array|
       array << "#{type}_#{academic_type}_credit" if rate_for?(type)
     end
   end
