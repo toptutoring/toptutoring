@@ -1,44 +1,35 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="widget">
-      <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Students</h3>
-      </div>
-      <div class="widget-body">
-        <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Client</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Subject</th>
-                <th>Tutoring Type</th>
-                <th>Credits</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @tutor_engagements.each do |engagement| %>
-                <tr>
-                  <% client = engagement.client %>
-                  <td><%= engagement.student_name %></td>
-                  <td><%= client.full_name %></td>
-                  <td><%= client.email %></td>
-                  <td><%= phone_number_display(client) %></td>
-                  <td><%= engagement.subject.name %></td>
-                  <td><%= engagement.academic_type.humanize %></td>
-                  <% if engagement.test_prep? %>
-                    <td><%= client.online_test_prep_credit %></td>
-                  <% else %>
-                    <td><%= client.online_academic_credit %></td>
-                  <% end %>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+<%= render "layouts/page_widget", title: "Students" do %>
+  <div class="table-responsive">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Client</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Subject</th>
+          <th>Tutoring Type</th>
+          <th>Credits</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tutor_engagements.each do |engagement| %>
+          <tr>
+            <% client = engagement.client %>
+            <td><%= engagement.student_name %></td>
+            <td><%= client.full_name %></td>
+            <td><%= client.email %></td>
+            <td><%= phone_number_display(client) %></td>
+            <td><%= engagement.subject.name %></td>
+            <td><%= engagement.academic_type.humanize %></td>
+            <% if engagement.test_prep? %>
+              <td><%= client.online_test_prep_credit %></td>
+            <% else %>
+              <td><%= client.online_academic_credit %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-</div>
+<% end %>

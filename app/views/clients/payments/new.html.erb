@@ -1,39 +1,30 @@
 <%= render "payment_form" %>
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="widget">
-      <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Purchases</h3>
-      </div>
-      <div class="widget-body">
-        <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Amount</th>
-                <th class="text-center">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% if @payments.present? %>
-                <% @payments.each do |payment| %>
-                  <tr>
-                    <td><%= l(payment.created_at, format: :date) %></td>
-                    <td><%= number_to_currency(payment.amount) %></td>
-                    <td class="text-center"><%= payment.description %></td>
-                  </tr>
-                <% end %>
-              <% else %>
-                <tr>
-                  <td> No payments to display </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+<%= render "layouts/page_widget", title: "Purchases" do %>
+  <div class="table-responsive">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Amount</th>
+          <th class="text-center">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @payments.present? %>
+          <% @payments.each do |payment| %>
+            <tr>
+              <td><%= l(payment.created_at, format: :date) %></td>
+              <td><%= number_to_currency(payment.amount) %></td>
+              <td class="text-center"><%= payment.description %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td> No payments to display </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-</div>
+<% end %>
