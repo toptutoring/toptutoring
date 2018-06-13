@@ -11,6 +11,7 @@ class Engagement < ActiveRecord::Base
 
   #### Scopes ####
   scope :pending, -> { where(state: :pending).order('created_at DESC') }
+  scope :not_pending, -> { where.not(state: :pending).order('created_at DESC') }
   scope :active, -> { where(state: :active) }
   scope :processing, -> { where.not(state: :archived) }
   scope :archived, -> { where(state: :archived) }

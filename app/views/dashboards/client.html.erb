@@ -1,5 +1,5 @@
 <!-- left main -->
-<% unless @engagements.active.any? %>
+<% unless @engagements.not_pending.any? %>
   <div class="row">
     <div class="col-xs-12">
       <div class="widget">
