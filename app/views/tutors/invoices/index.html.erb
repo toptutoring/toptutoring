@@ -1,4 +1,6 @@
-<div class="page-content container-fluid">
-<%= render "invoices/invoice_table_layout", type: "Pending", invoices: @invoices.pending %>
-<%= render "invoices/invoice_table_layout", type: "Processed", invoices: @invoices.not_pending %>
-</div>
+<%= render "layouts/page_widget", title: "Pending Invoices" do %>
+  <%= render "invoice_table", invoices: @invoices.pending %>
+<% end %>
+<%= render "layouts/page_widget", title: "Processed Invoices" do %>
+  <%= render "invoice_table", invoices: @invoices.not_pending %>
+<% end %>
