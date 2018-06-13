@@ -1,5 +1,5 @@
-<% confirm_message = "This will pay all pending timesheets for a total of #{number_to_currency(total_for_all)}. Are you sure?" %>
 <% link_title = "Pay All #{type.capitalize}: #{number_to_currency(total_for_all)}" %>
 <% link_classes = "pull-right btn btn-sm btn-outline btn-primary" %>
 <% invoice_type = type == 'invoices' ? 'by_tutor' : 'by_contractor' %>
-<%= link_to link_title, admin_payments_pay_all_index_path(pay_type: invoice_type), method: :post, class: link_classes, data: { disable_with: "Submitting", confirm: confirm_message } %>
+<%= link_to link_title, "#pay_all_confirm", class: link_classes, data: { toggle: "modal" }, aria: { opened: false } %>
+<% render_alert_modal "pay_all_confirm", admin_payments_pay_all_index_path(pay_type: invoice_type), "This will pay all pending timesheets for a total of #{number_to_currency(total_for_all)}. Are you sure?", link_method: :post %>

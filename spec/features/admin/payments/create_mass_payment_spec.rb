@@ -18,6 +18,7 @@ feature "Create payment for tutor" do
       sign_in(admin)
       visit admin_invoices_path
       click_on "Pay All Invoices"
+      click_on "Ok"
 
       expect(page).to have_content("Please select a funding source before making a payment.")
     end
@@ -31,6 +32,7 @@ feature "Create payment for tutor" do
       sign_in(admin)
       visit admin_invoices_path
       click_on "Pay All Invoices"
+      click_on "Ok"
 
       expect(Payout.count).to eq 1
       expect(Payout.last.dwolla_mass_pay_url).to eq mass_pay_url
