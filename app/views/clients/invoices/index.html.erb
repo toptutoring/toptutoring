@@ -1,3 +1,5 @@
 <div class="page-content container-fluid">
-  <%= render "invoices/invoice_table_layout", type: nil, invoices: @invoices %>
+  <%= render "layouts/page_widget", title: "Tutoring History" do %>
+    <%= render "invoice_table", invoices: @invoices %>
+  <% end %>
 </div>
