@@ -3,7 +3,9 @@ namespace :dev do
     # Create Subjects
     Subject.where(name: "Biology").first_or_create!
     Subject.where(name: "Algebra").first_or_create!
-    Subject.where(name: "English_Literature").first_or_create!
+    Subject.where(name: "English Literature").first_or_create!
+    Subject.where(name: "SAT", academic_type: "test_prep").first_or_create!
+    Subject.where(name: "ACT", academic_type: "test_prep").first_or_create!
 
     # Update client
     client = User.where(email: "client@example.com").first_or_initialize
