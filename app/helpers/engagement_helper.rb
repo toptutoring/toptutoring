@@ -49,6 +49,12 @@ module EngagementHelper
     concat engagement_archive_link(engagement) if engagement.active?
   end
 
+  def confirmation_modals_for_engagement(engagement)
+    engagement_enable_modal(engagement) if engagement.can_enable?
+    engagement_delete_modal(engagement) if engagement.able_to_delete?
+    engagement_archive_modal(engagement) if engagement.active?
+  end
+
   def engagement_edit_link(engagement)
     link_to edit_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Edit this engagement" }, class: "mr-15 fs-24" do
       tag.i class: "icon ion-edit"
@@ -56,26 +62,53 @@ module EngagementHelper
   end
 
   def engagement_delete_link(engagement)
-    link_to engagement_path(engagement), remote: true, method: :delete, data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this engagement", confirm: "This will permanently remove the engagement from the database. Are you sure?" }, class: "mr-15 fs-24" do
-      tag.i class: "icon ion-trash-b"
+    link_to "#delete_engagement_#{engagement.id}", data: { toggle: "modal" }, aria: { opened: false }, class: "mr-15 fs-24" do
+      tag.i class: "icon ion-trash-b", data: { toggle: "tooltip", placement: "top", "original-title" => "Delete this engagement" }
     end
+  end
+
+  def engagement_delete_modal(engagement)
+    render_alert_modal("delete_engagement_#{engagement.id}",
+                       engagement_path(engagement),
+                       "This will permanently remove the engagement from the database. Are you sure?",
+                       remote: true, link_method: :delete, title: "Confirm removing engagement")
+                       
   end
 
   def engagement_enable_link(engagement)
-    link_to enable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Enable this engagement", confirm: "Enable this engagement?" }, class: "mr-15 fs-24" do
-      tag.i class: "icon ion-play"
+    link_to "#enable_engagement_#{engagement.id}", data: { toggle: "modal" }, aria: { opened: false }, class: "mr-15 fs-24" do
+      tag.i class: "icon ion-play", data: { toggle: "tooltip", placement: "top", "original-title" => "Enable this engagement" }
     end
+  end
+
+  def engagement_enable_modal(engagement)
+    render_alert_modal("enable_engagement_#{engagement.id}",
+                       enable_engagement_path(engagement),
+                       "Are you sure you want to enable this engagement?",
+                       title: "Confirm enabling engagement")
   end
 
   def engagement_archive_link(engagement)
-    link_to disable_engagement_path(engagement), data: { toggle: "tooltip", placement: "top", "original-title" => "Archive this engagement", confirm: engagement_archive_confirmation(engagement) }, class: "mr-15 fs-24" do
-      tag.i class: "icon ion-android-archive"
+    link_to "#alert_archive_#{engagement.id}", data: { toggle: "modal" }, aria: { opened: false }, class: "mr-15 fs-24" do
+      tag.i class: "icon ion-android-archive", data: { toggle: "tooltip", placement: "top", "original-title" => "Archive this engagement" }
     end
   end
 
-  def engagement_archive_confirmation(engagement)
-    string = "Are you sure you want to archive this engagement? " \
-      "Archiving will disable the tutor from viewing and invoicing this engagement."
-    engagement.credits_remaining? ? string.prepend("Client currently has a positive credit balance. ") : string
+  def engagement_archive_modal(engagement)
+    render_alert_modal("alert_archive_#{engagement.id}",
+                       disable_engagement_path(engagement),
+                       engagement_archive_confirmation, 
+                       engagement_archive_alert_hash(engagement))
+  end
+  
+  def engagement_archive_confirmation
+    "Are you sure you want to archive this engagement? " \
+    "Archiving will disable the tutor from viewing and invoicing this engagement."
+  end
+
+  def engagement_archive_alert_hash(engagement)
+   result = { title: "Confirm archiving engagement" }
+   return result unless engagement.credits_remaining?
+   result.tap { |result| result[:warning] = "Client currently has a positive credit balance" }
   end
 end

@@ -23,4 +23,10 @@ module ApplicationHelper
   def true_production
     (ENV["DWOLLA_ENVIRONMENT"] == "production") && Rails.env.production?
   end
+
+  def render_alert_modal(id, action, message, link_method: :get, remote: false, title: "Please Confirm", warning: nil)
+    concat render("application/alert_modal", title: title, id: id,
+                  confirmation_action: action, message: message,
+                  warning: warning, remote: remote, link_method: link_method)
+  end
 end
