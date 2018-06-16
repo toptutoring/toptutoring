@@ -1,3 +1,6 @@
-<%= render "timesheet_table_layout", type: "Pending", timesheets: @timesheets.pending %>
-
-<%= render "timesheet_table_layout", type: "Processed", timesheets: @timesheets.not_pending %>
+<%= render "layouts/page_widget", title: "Pending Invoices" do %>
+  <%= render "timesheet_table", timesheets: @timesheets.pending %>
+<% end %>
+<%= render "layouts/page_widget", title: "Processed Invoices" do %>
+  <%= render "timesheet_table", timesheets: @timesheets.not_pending %>
+<% end %>

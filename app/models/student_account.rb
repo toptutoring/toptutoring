@@ -13,10 +13,6 @@ class StudentAccount < ApplicationRecord
     client_account.user
   end
 
-  def academic_types_engaged
-    engagements.joins(:subject).pluck("subjects.academic_type").uniq
-  end
-
   def tutors
     User.joins(:tutor_account).where(tutor_accounts: { id: tutor_accounts.ids })
   end

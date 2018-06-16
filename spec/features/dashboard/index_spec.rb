@@ -26,16 +26,17 @@ feature "Dashboard Index" do
     expect(page).to have_content(client.online_academic_credit)
     expect(page).to have_content("Request a Tutor")
     expect(page).to have_content("Contact Top Tutoring")
-    expect(page).to have_content("Dashboard")
-    expect(page).to have_content("Purchase Hours")
-    expect(page).to have_content("Your Students")
-    expect(page).to have_content("Invoices")
+    expect(page).to have_link("Dashboard")
+    expect(page).to have_link("Purchase Hours")
+    expect(page).to have_link("Your Students")
+    expect(page).to have_link("Tutoring History")
   end
 
   scenario "when user is client who is a student" do
     sign_in(client_student)
 
-    expect(page).not_to have_content("Your Students")
+    expect(page).not_to have_link("Your Students")
+    expect(page).to have_link("Your Tutors")
   end
 
   scenario "when user is tutor" do

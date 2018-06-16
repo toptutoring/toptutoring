@@ -43,7 +43,7 @@ class EngagementsController < ApplicationController
   end
 
   def enable
-    if @engagement.enable!
+    if @engagement.enable
       flash.notice = "Engagement successfully enabled!"
     else
       flash.alert = @engagement.errors.full_messages

@@ -2,7 +2,7 @@
   <div class="widget-heading">
     <h3 class="widget-title">Your Balance</h3>
     <div class="widget-body">
-      <%= credit_widget_display(@academic_types, current_user) %>
+      <%= dashboard_credit_widget_display(current_user) %>
       <%= link_to 'Add more hours', new_clients_payment_path %>
     </div>
   </div>

@@ -1,35 +1,18 @@
-<div class="row">
-  <div class="col-sm-12">
-    <div class="widget">
-      <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Client Reviews</h3>
-        <%= form_for admin_client_reviews_path, html: { class: "col-sm-8 col-xs-12 pull-right" } do %>
-            <div class="pull-right">
-              <%= submit_tag "Request Review", class: "pull-right btn btn-success" %>
-            </div>
-            <div class="col-xs-6 pull-right">
-            <%= select_tag :user_id, options_from_collection_for_select(@clients, :id, :full_name) {}, class: "form-control" %>
-            </div>
-        <% end %>
-      </div>
-      <div class="widget-body">
-        <div class="table-responsive">
-          <table class="table mb-0 table-striped table-hover text-center">
-            <thead>
-              <tr>
-                <th class="text-center">Submitter</th>
-                <th class="text-center">Rating</th>
-                <th class="text-center">Publishable?</th>
-                <th class="col-xs-9 text-center">Review</th>
-                <th class="col-xs-9 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= render @reviews %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+<%= render "layouts/page_widget", title: "Reviews", heading_html: render("request_review_form") do %>
+  <div class="table-responsive">
+    <table class="table mb-0 table-striped table-hover text-center">
+      <thead>
+        <tr>
+          <th class="text-center">Submitter</th>
+          <th class="text-center">Rating</th>
+          <th class="text-center">Publishable?</th>
+          <th class="col-xs-9 text-center">Review</th>
+          <th class="col-xs-9 text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @reviews %>
+      </tbody>
+    </table>
   </div>
-</div>
+<% end %>

@@ -3,7 +3,9 @@ namespace :dev do
     # Create Subjects
     Subject.where(name: "Biology").first_or_create!
     Subject.where(name: "Algebra").first_or_create!
-    Subject.where(name: "English_Literature").first_or_create!
+    Subject.where(name: "English Literature").first_or_create!
+    Subject.where(name: "SAT", academic_type: "test_prep").first_or_create!
+    Subject.where(name: "ACT", academic_type: "test_prep").first_or_create!
 
     # Update client
     client = User.where(email: "client@example.com").first_or_initialize
@@ -24,10 +26,10 @@ namespace :dev do
 
     # New client
     client_new = User.where(email: "clientnew@example.com").first_or_initialize
-    client_new.first_name = "Client"
+    client_new.first_name = "ClientNew"
     client_new.last_name = "LastName"
     client_new.password = "password"
-    client_new.phone_number = "5105555555"
+    client_new.phone_number = "4085555555"
     client_new.access_state = "enabled"
     client_new.roles = Role.where(name: "client")
     client_new.save!
@@ -38,6 +40,16 @@ namespace :dev do
     signup2.subject = Subject.last
     signup2.student = false
     signup2.save!
+
+    #Set the client default information for existing clients
+    User.clients.each do |client|
+      client.update(online_academic_rate_cents: 29_99,
+                    online_test_prep_rate_cents: 59_99,
+                    in_person_academic_rate_cents: 59_99,
+                    in_person_test_prep_rate_cents: 69_99)
+    end
+    client.reload
+    client_new.reload
 
     # Update student
     student1 = User.where(email: "student1@example.com").first_or_initialize
@@ -154,17 +166,5 @@ namespace :dev do
       stripe_source: "tok_42424242",
       stripe_account: client.stripe_account
     )
-    #Set the client default information for existing clients
-    User.clients.each do |client|
-      client.online_academic_rate_cents = 29_99
-      client.online_test_prep_rate_cents = 59_99
-      client.online_academic_credit = 0.0
-      client.online_test_prep_credit = 0.0
-      client.in_person_academic_rate_cents = 59_99
-      client.in_person_test_prep_rate_cents = 69_99
-      client.in_person_academic_credit = 0.0
-      client.in_person_test_prep_credit = 0.0
-      client.save
-    end
   end
 end

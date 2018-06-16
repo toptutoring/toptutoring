@@ -24,19 +24,15 @@ class DashboardsController < ApplicationController
   def client
     @engagements = current_user.client_account
                                .engagements
-                               .processing
                                .includes(:subject, :student_account, :availabilities, tutor_account: :user)
                                .order("users.first_name")
-    @academic_types = current_user.client_account.academic_types_engaged
   end
 
   def student
     @engagements = current_user.student_account
                                .engagements
-                               .processing
                                .includes(:subject, :student_account, :availabilities, tutor_account: :user)
                                .order("users.first_name")
-    @academic_types = current_user.student_account.academic_types_engaged
   end
 
   def contractor

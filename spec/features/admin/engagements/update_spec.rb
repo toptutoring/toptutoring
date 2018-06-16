@@ -32,13 +32,13 @@ feature "Update engagements" do
       expect(page).to have_content(tutor.full_name)
 
       within("#engagement_#{engagement.id}") do
-        find_link(href: enable_engagement_path(engagement)).click
+        first(:link, href: enable_engagement_path(engagement)).click
       end
 
       expect(page).to have_content("Engagement successfully enabled!")
 
       within("#engagement_#{engagement.id}") do
-        find_link(href: disable_engagement_path(engagement)).click
+        first(:link, href: disable_engagement_path(engagement)).click
       end
 
       expect(page).to have_content("Engagement successfully disabled and archived!")

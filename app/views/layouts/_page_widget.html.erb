@@ -1,0 +1,14 @@
+<% heading_html = local_assigns.fetch(:heading_html, nil) %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left"><%= title %></h3>
+        <%= raw heading_html %>
+      </div>
+      <div class="widget-body">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</div>

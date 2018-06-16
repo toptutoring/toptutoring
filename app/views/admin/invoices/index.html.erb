@@ -1,3 +1,7 @@
-<%= render "invoices/invoice_table_layout", type: 'Pending', invoices: @invoices.pending %>
+<%= render "layouts/page_widget", title: "Pending Invoices", heading_html: pay_all_link(@invoices.pending, 'invoices') do %>
+  <%= render "invoice_table", invoices: @invoices.pending %>
+<% end %>
 
-<%= render "invoices/invoice_table_layout", type: 'Processed', invoices: @invoices.not_pending %>
+<%= render "layouts/page_widget", title: "Processing Invoices" do %>
+  <%= render "invoice_table", invoices: @invoices.not_pending %>
+<% end %>

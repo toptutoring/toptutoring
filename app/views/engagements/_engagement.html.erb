@@ -2,39 +2,14 @@
   <td>
     <%= engagement_state_label(engagement) %>
     <a href="#engagement_info_modal_<%= engagement.id %>" class="<%= "text-danger" if engagement.low_balance? %>" data-toggle="modal" aria-expanded="false" class="mr-10">
-    <%= engagement.student_account.name %>
-  </a>
+      <%= engagement.student_account.name %>
+    </a>
+    <%= render "engagement_modal", engagement: engagement %>
   </td>
   <td><%= engagement.tutor.try(:full_name) %></td>
   <td><%= subject_info(engagement) %></td>
   <td>
     <% actions_for_engagement(engagement) %>
+    <% confirmation_modals_for_engagement(engagement) %>
   </td>
 </tr>
-
-<div tab-index="-1" role="dialog" class="modal fade" id="engagement_info_modal_<%= engagement.id %>">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-        <h3 class="modal-title pull-left">Engagement for <%= engagement.student_account.name %></h3>
-        <div class="pull-right">
-          <% actions_for_engagement(engagement) %>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <p class= "col-xs-4">Engagement ID</p><p class="col-xs-8"><%= engagement.id %></p>
-          <p class= "col-xs-4">Client</p><p class="col-xs-8"><%= engagement.client.full_name %></p>
-          <p class= "col-xs-4">Client Since</p><p class="col-xs-8"><%= l engagement.client.created_at, format: :long_date %></p>
-          <p class= "col-xs-4">Client Rates and Credits</p>
-          <div class="col-xs-8">
-            <% rates_and_credits(engagement) %>
-          </div>
-          <p class= "col-xs-4">Client Email</p><p class="col-xs-8"><%= engagement.client.email %></p>
-          <p class= "col-xs-4">Client Phone Number</p><p class="col-xs-8"><%= phone_number_display engagement.client %></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>

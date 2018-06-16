@@ -19,7 +19,7 @@
               <td><%= engagement.student_name %></td>
               <td class="text-center"><%= engagement.subject.name.titlecase %></td>
               <td class="text-center"><span class="label label-outline label-warning"><%= engagement.state %></span></td>
-              <td class="text-center"><% client_credits(engagement) %></td>
+              <td class="text-center"><% engagement_client_credits(engagement) %></td>
             </tr>
           <% end %>
         </tbody>

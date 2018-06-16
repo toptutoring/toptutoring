@@ -1,0 +1,8 @@
+<%= form_for admin_client_reviews_path, html: { class: "col-sm-8 col-xs-12 pull-right" } do %>
+    <div class="pull-right">
+      <%= submit_tag "Request Review", class: "pull-right btn btn-success" %>
+    </div>
+    <div class="col-xs-6 pull-right">
+    <%= select_tag :user_id, options_from_collection_for_select(@clients, :id, :full_name) {}, class: "form-control" %>
+    </div>
+<% end %>

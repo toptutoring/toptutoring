@@ -1,31 +1,19 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="widget">
-
-      <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">Clients</h3>
-      </div>
-
-      <div class="widget-body">
-        <div class="table-responsive">
-          <table id="admin-user-table" style="width: 100%" class="table table-hover dt-responsive nowrap">
-              <thead>
-                <tr>
-                  <th class="col-xs-3">Name</th>
-                  <th>Academic Rate(O/I)</th>
-                  <th>Test Prep Rate(O/I)</th>
-                  <th>Academic Credit(O/I)</th>
-                  <th>Test Prep Credit(O/I)</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <%= render @users %>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+<%= render "layouts/page_widget", title: "Clients" do %>
+  <div class="table-responsive">
+    <table id="admin-user-table" style="width: 100%" class="table table-hover dt-responsive nowrap">
+      <thead>
+        <tr>
+          <th class="col-xs-3">Name</th>
+          <th>Academic Rate(O/I)</th>
+          <th>Test Prep Rate(O/I)</th>
+          <th>Academic Credit(O/I)</th>
+          <th>Test Prep Credit(O/I)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @users %>
+      </tbody>
+    </table>
   </div>
-</div>
+<% end %>

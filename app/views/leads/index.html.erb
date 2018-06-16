@@ -1,15 +1,4 @@
-<div class="row">
-  <div class="col-sm-12">
-    <div class="widget">
-      <div class="widget-heading clearfix">
-        <h3 class="widget-title pull-left">
-          Leads
-        </h3>
-      </div>
-      <div class="widget-body">
-        <%= render "leads_table" %>
-        <%= will_paginate @leads %>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render "layouts/page_widget", title: "Leads" do %>
+  <%= render "leads_table" %>
+  <%= will_paginate @leads %>
+<% end %>

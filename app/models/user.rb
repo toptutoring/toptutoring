@@ -133,10 +133,8 @@ class User < ActiveRecord::Base
     Phonelib.parse(phone_number, country_code).send(format)
   end
 
-  def notify_bugsnag
-    if Rails.env.production?
-      Bugsnag.notify("OpenSSL::Cipher::CipherError: Invalid tokens for user #{id}")
-    end
+  def rate_set?(type)
+    send("#{type}_rate") > 0
   end
 
   def self.with_pending_invoices_attributes(type)
