@@ -12,20 +12,18 @@ feature "Archive user" do
 
     visit admin_users_path
 
-    page.accept_confirm do
-      find_link(href: archive_admin_user_path(client, view: "users")).click
-    end
+    click_link("archive_user_link_#{client.id}")
+    click_link("confirm-modal-link")
 
-    expect(page).to have_link("Reactivate", href: reactivate_admin_user_path(client, view: "users"))
+    expect(page).to have_content "#{client.full_name} has been archived"
     expect(engagement.reload.state).to eq "archived"
     expect(tutor_engagement.reload.state).to eq "archived"
     expect(client.reload.archived).to eq true
 
-    page.accept_confirm do
-      find_link("Reactivate", href: reactivate_admin_user_path(client, view: "users")).click
-    end
+    within("#row_user_#{client.id}") { find_link("Reactivate").click }
+    click_link("confirm-modal-link")
 
-    expect(page).to have_link(href: archive_admin_user_path(client, view: "users"))
+    expect(page).to have_link("archive_user_link_#{client.id}")
     expect(engagement.reload.state).to eq "archived"
     expect(tutor_engagement.reload.state).to eq "archived"
     expect(client.reload.archived).to eq false
@@ -36,11 +34,10 @@ feature "Archive user" do
 
     visit admin_users_path
 
-    page.accept_confirm do
-      find_link(href: archive_admin_user_path(tutor, view: "users")).click
-    end
+    click_link("archive_user_link_#{tutor.id}")
+    click_link("confirm-modal-link")
 
-    expect(page).to have_link("Reactivate", href: reactivate_admin_user_path(tutor, view: "users"))
+    expect(find("#row_user_#{tutor.id}")).to have_link("Reactivate")
     expect(engagement.reload.state).to eq "active"
     expect(tutor_engagement.reload.state).to eq "archived"
     expect(tutor.reload.archived).to eq true

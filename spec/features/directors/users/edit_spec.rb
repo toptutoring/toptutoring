@@ -8,7 +8,7 @@ feature "Director edits user balance" do
     scenario "for credits" do
       sign_in(director)
 
-      visit edit_director_user_path(client)
+      visit edit_director_client_path(client)
       fill_in "Online Academic Credit (in hours)", with: 2
       fill_in "Online Test Prep Credit", with: 3.25
       click_on "Update"
@@ -19,7 +19,7 @@ feature "Director edits user balance" do
     scenario "for rates" do
       sign_in(director)
 
-      visit edit_director_user_path(client)
+      visit edit_director_client_path(client)
       fill_in "Online Academic Rate", with: 10
       fill_in "Online Test Prep Rate", with: 49.99
       click_on "Update"
@@ -32,7 +32,7 @@ feature "Director edits user balance" do
     scenario "for academic credit" do
       sign_in(director)
 
-      visit edit_director_user_path(client)
+      visit edit_director_client_path(client)
       fill_in "Online Academic Credit (in hours)", with: 0.001
       click_on "Update"
 
@@ -42,7 +42,7 @@ feature "Director edits user balance" do
     scenario "for test prep credit" do
       sign_in(director)
 
-      visit edit_director_user_path(client)
+      visit edit_director_client_path(client)
       fill_in "Online Test Prep Credit (in hours)", with: 0.001
       click_on "Update"
 
@@ -54,7 +54,7 @@ feature "Director edits user balance" do
     scenario "for academic rate" do
       sign_in(director)
 
-      visit edit_director_user_path(client)
+      visit edit_director_client_path(client)
       fill_in "Online Academic Rate", with: 0.001
       click_on "Update"
 
@@ -64,7 +64,7 @@ feature "Director edits user balance" do
     scenario "for academic rate" do
       sign_in(director)
 
-      visit edit_director_user_path(client)
+      visit edit_director_client_path(client)
       fill_in "Online Test Prep Rate", with: 0.123
       click_on "Update"
 

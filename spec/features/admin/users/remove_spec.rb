@@ -16,9 +16,8 @@ feature "Remove users" do
       expect(User.clients.any?).to be true
 
       visit admin_users_path
-      page.accept_confirm do
-        find_link(href: admin_user_path(client)).click
-      end
+      click_link("remove_user_link_#{client.id}")
+      click_link("confirm-modal-link")
 
       expect(page).to have_content(t("app.admin.users.remove_user_success", name: name))
       expect(User.clients.any?).to be false
@@ -33,9 +32,9 @@ feature "Remove users" do
       expect(User.students.any?).to be true
 
       visit admin_users_path
-      page.accept_confirm do
-        find_link(href: admin_user_path(client)).click
-      end
+      
+      click_link("remove_user_link_#{client.id}")
+      click_link("confirm-modal-link")
 
       expect(page).to have_content(t("app.admin.users.remove_user_success", name: name))
       expect(User.students.any?).to be false
@@ -50,9 +49,8 @@ feature "Remove users" do
       expect(Engagement.any?).to be true
 
       visit admin_users_path
-      page.accept_confirm do
-        find_link(href: admin_user_path(client)).click
-      end
+      click_link("remove_user_link_#{client.id}")
+      click_link("confirm-modal-link")
 
       expect(page).to have_content(t("app.admin.users.remove_user_success", name: name))
       expect(Engagement.any?).to be false
@@ -65,9 +63,8 @@ feature "Remove users" do
       sign_in(admin)
 
       visit admin_users_path
-      page.accept_confirm do
-        find_link(href: admin_user_path(client)).click
-      end
+      click_link("remove_user_link_#{client.id}")
+      click_link("confirm-modal-link")
 
       expect(page).to have_content(t("app.admin.users.remove_user_failure", name: name))
       expect(ClientAccount.any?).to be true
@@ -81,9 +78,8 @@ feature "Remove users" do
       sign_in(admin)
 
       visit admin_users_path
-      page.accept_confirm do
-        find_link(href: admin_user_path(client)).click
-      end
+      click_link("remove_user_link_#{client.id}")
+      click_link("confirm-modal-link")
 
       expect(page).to have_content(t("app.admin.users.remove_user_failure", name: name))
       expect(ClientAccount.any?).to be true
@@ -98,7 +94,8 @@ feature "Remove users" do
 
       visit admin_tutors_path
 
-      expect(page).to have_link(href: archive_admin_tutor_path(tutor, view: "tutor"))
+      expect(page).not_to have_link("remove_user_link_#{tutor.id}")
+      expect(page).to have_link("archive_user_link_#{tutor.id}")
     end
   end
 end

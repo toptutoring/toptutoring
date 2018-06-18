@@ -5,14 +5,16 @@ feature "Masquerading" do
   let(:director) { FactoryBot.create(:director_user) }
   let(:admin) { User.admin }
 
-  scenario "when directors masquerade as clients" do
+  scenario "when directors masquerade as clients", js: true do
     client
     sign_in(director)
-    visit director_users_path
+    visit director_clients_path
 
     expect(page).to have_content("Hi, " + director.full_name)
 
-    find_link(href: user_masquerade_path(client)).click
+    
+    click_link("masquerade_link_#{client.id}")
+    click_link("confirm-modal-link")
 
     expect(page).to have_content("Now masquerading as " + client.email)
     expect(page).to have_content("Hi, " + client.full_name)
@@ -22,14 +24,15 @@ feature "Masquerading" do
     expect(page).to have_content("Hi, " + director.full_name)
   end
 
-  scenario "when admins masquerade as clients" do
+  scenario "when admins masquerade as clients", js: true do
     client
     sign_in(admin)
     visit admin_users_path
 
     expect(page).to have_content("Hi, " + admin.full_name)
 
-    find_link(href: user_masquerade_path(client)).click
+    click_link("masquerade_link_#{client.id}")
+    click_link("confirm-modal-link")
 
     expect(page).to have_content("Now masquerading as " + client.email)
     expect(page).to have_content("Hi, " + client.full_name)
