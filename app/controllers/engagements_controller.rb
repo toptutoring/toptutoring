@@ -45,19 +45,23 @@ class EngagementsController < ApplicationController
   def enable
     if @engagement.enable
       flash.notice = "Engagement successfully enabled!"
+      @refresh = true
+      @view = params.require(:view)
     else
       flash.alert = @engagement.errors.full_messages
     end
-    redirect_to action: :index
+    render "refresh"
   end
 
   def disable
     if @engagement.disable!
       flash.notice = "Engagement successfully disabled and archived!"
+      @refresh = true
+      @view = params.require(:view)
     else
       flash.alert = @engagement.errors.full_messages
     end
-    redirect_to action: :index
+    render "refresh"
   end
 
   def destroy

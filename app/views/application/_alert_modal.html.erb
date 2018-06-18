@@ -1,17 +1,15 @@
-<div tab-index="-1" role="dialog" class="modal fade" id="<%= id %>">
+<div tab-index="-1" role="dialog" class="modal fade" id="confirm-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header border-none <%= warning ? "bg-danger" : "bg-primary" %>" border="none">
-        <h3 class="modal-title pull-left"><%= title %></h3>
+      <div class="modal-header border-none">
+        <h3 id="confirm-modal-header" class="modal-title pull-left"></h3>
       </div>
       <div class="modal-body">
-        <% if warning %>
-          <p class="text-danger"><%= warning %></p>
-        <% end %>
-        <p><%= message %></p>
+        <p id="confirm-modal-warning" class="text-danger"></p>
+        <p id="confirm-modal-body"></p>
         <div class="row mt-15">
           <div class="col-xs-12">
-            <%= link_to "Ok", confirmation_action, data: { dismiss: "modal" }, method: link_method, remote: remote, class: "btn btn-success pull-right ml-10" %>
+            <%= link_to "Ok", "#", id: "confirm-modal-link", data: { dismiss: "modal" }, class: "btn btn-success pull-right ml-10" %>
             <button type="button" data-dismiss="modal" class="btn btn-default pull-right">Cancel</button>
           </div>
         </div>

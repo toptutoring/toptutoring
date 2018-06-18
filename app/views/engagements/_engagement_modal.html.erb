@@ -4,23 +4,37 @@
       <div class="modal-header">
         <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
         <h3 class="modal-title pull-left">Engagement for <%= engagement.student_account.name %></h3>
-        <div class="pull-right">
-          <% actions_for_engagement(engagement) %>
-        </div>
       </div>
       <div class="modal-body">
         <div class="row">
           <p class= "col-xs-4">Engagement ID</p><p class="col-xs-8"><%= engagement.id %></p>
+        </div>
+        <div class="row">
           <p class= "col-xs-4">Client</p><p class="col-xs-8"><%= engagement.client.full_name %></p>
+        </div>
+        <div class="row">
           <p class= "col-xs-4">Client Since</p><p class="col-xs-8"><%= l engagement.client.created_at, format: :long_date %></p>
+        </div>
+        <div class="row">
           <p class= "col-xs-4">Client Rates and Credits</p>
           <div class="col-xs-8">
             <% engagement_rates_and_credits(engagement) %>
           </div>
+        </div>
+        <div class="row">
           <p class= "col-xs-4">Client Email</p><p class="col-xs-8"><%= engagement.client.email %></p>
+        </div>
+        <div class="row">
           <p class= "col-xs-4">Client Phone Number</p><p class="col-xs-8"><%= phone_number_display engagement.client %></p>
+        </div>
+        <div class="row">
+          <div class= "col-xs-4 visible-xs">Tutor</div><div class="col-xs-8 visible-xs"><%= engagement.tutor ? engagement.tutor.full_name : "Unassigned" %></div>
+        </div>
+        <div class="row">
+          <div class= "col-xs-4 visible-xs">Subject</div><div class="col-xs-8 visible-xs"><%= engagement.subject.name %></div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>

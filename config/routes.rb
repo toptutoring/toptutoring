@@ -120,8 +120,8 @@ Rails.application.routes.draw do
       end
       resources :engagements do
         member do
-          get "/enable" => "engagements#enable"
-          get "/disable" => "engagements#disable"
+          patch "/enable" => "engagements#enable"
+          patch "/disable" => "engagements#disable"
         end
       end
       resources :leads
