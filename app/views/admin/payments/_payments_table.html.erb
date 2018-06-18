@@ -6,7 +6,9 @@
         <th>Date</th>
         <th><%= title %></th>
         <th>Amount</th>
-        <th>Actions</th>
+        <% if controller_name == "payments" && current_user.admin? %>
+          <th>Actions</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
