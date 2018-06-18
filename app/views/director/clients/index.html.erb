@@ -1,6 +1,5 @@
 <%= render "layouts/page_widget", title: "Clients" do %>
-  <div class="table-responsive">
-    <table id="admin-user-table" style="width: 100%" class="table table-hover dt-responsive nowrap">
+    <table id="admin-user-table" style="width: 100%" class="table table-bordered">
       <thead>
         <tr>
           <th class="col-xs-3">Name</th>
@@ -12,8 +11,9 @@
         </tr>
       </thead>
       <tbody>
-        <%= render @users %>
+        <%= render partial: "user", collection: @users %>
       </tbody>
     </table>
-  </div>
 <% end %>
+
+<%= render "layouts/data_tables_dependencies", table_id: "admin-user-table" %>

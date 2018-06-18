@@ -16,14 +16,15 @@
 </li>
 
 <%= menu_link(leads_path, "Leads", "icon ion-ios-person bg-primary", Lead.active.count) %>
-<%= menu_link(admin_tutors_path, "Tutors", "icon ion-ios-contact bg-purple") %>
 <%= menu_link(engagements_path, "Engagements", "icon ion-ios-contact bg-primary", Engagement.pending.count) %>
 <%= menu_link(admin_users_path, "Users", "icon ion-ios-contact bg-success") %>
+<%= menu_link(director_clients_path, "Clients", "icon ion-ios-contact bg-danger") %>
+<%= menu_link(admin_tutors_path, "Tutors", "icon ion-ios-contact bg-purple") %>
 <%= menu_link(admin_roles_path, "Roles", "icon ion-ios-clock bg-success") %>
 <%= menu_link(admin_invoices_path, "Invoices", "icon ion-clipboard bg-primary", Invoice.by_tutor.pending.count) %>
 <%= menu_link(admin_timesheets_path, "Timesheets", "icon ion-cash bg-success", Invoice.by_contractor.pending.count) %>
-<%= menu_link(admin_client_reviews_path, "Reviews", "icon ion-ios-email-outline bg-danger") %>
 <%= menu_link(new_admin_funding_source_path, "Funding Source", "icon ion-card bg-primary") %>
+<%= menu_link(admin_client_reviews_path, "Reviews", "icon ion-ios-email-outline bg-danger") %>
 <%= menu_link(admin_subjects_path, "Subjects", "icon ion-card bg-primary") %>
 <%= menu_link(admin_cities_path, "Cities", "icon ion-android-globe bg-success") %>
 <%= menu_link(admin_feedbacks_path, "User Comments", "icon ion-compose bg-success", Feedback.unread.count) %>

@@ -1,7 +1,7 @@
 <% link_title = "Pay All #{type.capitalize}: #{number_to_currency(total_for_all)}" %>
 <% link_classes = "pull-right btn btn-sm btn-outline btn-primary" %>
 <% invoice_type = type == 'invoices' ? 'by_tutor' : 'by_contractor' %>
-<% render_confirm_link(link_title, admin_payments_pay_all_index_path(pay_type: invoice_type),
+<% render_confirm_link(link_title, admin_payments_pay_all_index_path(pay_type: invoice_type), "pay_all_link",
                        confirm_title: link_title,
                        confirm_message: "This will pay all pending timesheets for a total of #{number_to_currency(total_for_all)}. Are you sure?",
                        link_method: :post,

@@ -113,6 +113,10 @@ class User < ActiveRecord::Base
     roles.find_by_name(role)
   end
 
+  def admin?
+    has_role?("admin")
+  end
+
   def requires_dwolla?
     roles.where(roles: { name: ["director", "tutor", "contractor", "admin"] }).any?
   end

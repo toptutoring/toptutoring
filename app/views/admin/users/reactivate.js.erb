@@ -1,20 +1,23 @@
 <% unless @user.archived? %>
   var userRow = document.getElementById("row_user_<%= @user.id %>");
-  userTable = userRow.parentNode;
+  var userTable = userRow.parentNode;
+  var rowPrevious = userRow.previousElementSibling
   userTable.removeChild(userRow);
 
-  <% if @tutor_view %>
-      <% user_html = j render "admin/tutors/tutor", tutor: @user %>
-  <% else %>
-      <% user_html = j render @user %>
-  <% end %>
+<% case params.require(:view)
+when "tutor"
+  user_html = j render "admin/tutors/tutor", tutor: @user
+when "client"
+  user_html = j render "director/clients/user", user: @user
+else
+  user_html = j render @user
+end %>
 
-  <% if @previous_user %>
-    var rowPrevious = document.getElementById("row_user_<%= @previous_user.id %>");
-    rowPrevious.insertAdjacentHTML("afterend", "<%= user_html %>")
-  <% else %>
-    userTable.insertAdjacentHTML("afterbegin", "<%= user_html %>")
-  <% end %>
+  if (rowPrevious === null) {
+    userTable.insertAdjacentHTML("afterbegin", "<%= user_html %>");
+} else {
+    rowPrevious.insertAdjacentHTML("afterend", "<%= user_html %>");
+}
 <% end %>
 
   renderTopTutoringFlashes("<%= j render "application/flashes" %>");

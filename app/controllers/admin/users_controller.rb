@@ -17,12 +17,11 @@ module Admin
     end
 
     def destroy
-      user = User.find(params[:id]).destroy
-      flash.notice = t("app.admin.users.remove_user_success", name: user.full_name)
-      redirect_to admin_users_path
+      @user = User.find(params[:id])
+      @user.destroy
+      flash.now.notice = t("app.admin.users.remove_user_success", name: @user.full_name)
     rescue ActiveRecord::ActiveRecordError => e
-      flash.alert = t("app.admin.users.remove_user_failure")
-      redirect_to admin_users_path
+      flash.now.alert = t("app.admin.users.remove_user_failure")
     end
 
     def archive
@@ -30,11 +29,9 @@ module Admin
       @user.archived = true
       if @user.save!
         archive_engagements
-        @tutor_view = params.require(:view) == "tutor"
-        set_previous_user
-        flash.now[:notice] = "#{@user.full_name} has been archived"
+        flash.now.notice = "#{@user.full_name} has been archived"
       else
-        flash.now[:alert] = @user.errors.full_messages
+        flash.now.alert = @user.errors.full_messages
       end
     end
 
@@ -42,11 +39,9 @@ module Admin
       @user = User.find(params[:id])
       @user.archived = false
       if @user.save
-        @tutor_view = params.require(:view) == "tutor"
-        set_previous_user
-        flash.now[:notice] = "#{@user.full_name} has been reactivated."
+        flash.now.notice = "#{@user.full_name} has been reactivated."
       else
-        flash.now[:alert] = @user.errors.full_messages
+        flash.now.alert = @user.errors.full_messages
       end
     end
 
@@ -69,13 +64,6 @@ module Admin
              .engagements.update_all(state: "archived") if @user.student_account
         @user.tutor_account
              .engagements.update_all(state: "archived") if @user.tutor_account
-    end
-
-    def set_previous_user
-      user_set = @tutor_view ? User.tutors : User.all_without_admin
-      ordered_users = user_set.view_order
-      position = ordered_users.find_index(@user)
-      @previous_user = position.zero? ? nil : ordered_users[position - 1]
     end
 
     def set_user

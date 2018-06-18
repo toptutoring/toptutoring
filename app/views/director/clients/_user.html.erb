@@ -17,13 +17,7 @@
   <td><%= user.online_academic_credit.to_s + " hrs" %> / <%= user.in_person_academic_credit.to_s + " hrs" %></td>
   <td><%= user.online_test_prep_credit.to_s + " hrs" %> / <%= user.in_person_test_prep_credit.to_s + " hrs" %></td>
   <td>
-    <%= link_to edit_director_user_path(user), data: { toggle: "tooltip", placement: "top", "original-title" => "Edit user rates and balances" }, class: "mr-15 fs-24"  do %>
-      <i class="icon ion-edit"></i>
-    <% end %>
-    <%= link_to archive_director_user_path(user), method: :patch, remote: true, data: { toggle: "tooltip", placement: "top", "original-title" => "Archive user from list", confirm: "Archiving the user will also archive all engagements. Are you sure you want to archive this user?" }, class: "mr-15 fs-24" do %>
-      <i class="icon ion-android-archive"></i>
-    <% end %>
-    <%= render 'shared/masquerade_start_button', user: user %>
+    <% admin_user_actions(user, "client") %>
   </td>
   <%= render "admin/users/user_modal", user: user %>
 </tr>
