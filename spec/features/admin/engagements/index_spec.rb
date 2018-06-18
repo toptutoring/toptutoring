@@ -23,12 +23,12 @@ feature "Index engagements" do
       expect(page).to have_content(engagement.student.full_name)
       expect(page).to have_content(engagement.subject.name)
       expect(page).to have_css("tr#engagement_#{engagement.id}")
-      expect(page).to have_link(href: edit_engagement_path(engagement))
-      expect(page).to have_link(href: disable_engagement_path(engagement))
-      expect(page).to have_no_link(href: enable_engagement_path(engagement))
-      expect(page).to have_no_link(href: disable_engagement_path(pending_engagement))
-      expect(page).to have_link(href: enable_engagement_path(pending_engagement))
-      expect(page).to have_link(href: enable_engagement_path(archived_engagement))
+      expect(page).to have_css("#edit_engagement_link_#{engagement.id}")
+      expect(page).to have_css("#archive_engagement_link_#{engagement.id}")
+      expect(page).not_to have_css("#enable_engagement_link_#{engagement.id}")
+      expect(page).not_to have_css("#archive_engagement_link_#{pending_engagement.id}")
+      expect(page).to have_css("#enable_engagement_link_#{pending_engagement.id}")
+      expect(page).to have_css("#enable_engagement_link_#{archived_engagement.id}")
     end
   end
 
@@ -44,12 +44,12 @@ feature "Index engagements" do
       expect(page).to have_content(engagement.student.full_name)
       expect(page).to have_content(engagement.subject.name)
       expect(page).to have_css("tr#engagement_#{engagement.id}")
-      expect(page).to have_link(href: edit_engagement_path(engagement))
-      expect(page).to have_link(href: enable_engagement_path(engagement))
-      expect(page).to have_no_link(href: disable_engagement_path(engagement))
-      expect(page).to have_no_link(href: disable_engagement_path(pending_engagement))
-      expect(page).to have_link(href: enable_engagement_path(pending_engagement))
-      expect(page).to have_link(href: enable_engagement_path(archived_engagement))
+      expect(page).to have_css("#edit_engagement_link_#{engagement.id}")
+      expect(page).to have_css("#enable_engagement_link_#{engagement.id}")
+      expect(page).not_to have_css("#archive_engagement_link_#{engagement.id}")
+      expect(page).not_to have_css("#archive_engagement_link_#{pending_engagement.id}")
+      expect(page).to have_css("#enable_engagement_link_#{pending_engagement.id}")
+      expect(page).to have_css("#enable_engagement_link_#{archived_engagement.id}")
     end
   end
 end
