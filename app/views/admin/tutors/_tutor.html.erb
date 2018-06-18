@@ -1,8 +1,9 @@
 <tr id="row_user_<%= tutor.id %>" class="<%= "archived-row" if tutor.archived? %>">
   <td><%= link_to tutor.full_name, admin_tutor_path(tutor) %></td>
+  <td class="not-visible-xs text-center"><%= l tutor.created_at, format: :date %></td>
   <td class="not-visible-xs"><%= phone_number_display(tutor) %></td>
   <td class="not-visible-xs"><%= tutor.email %></td>
-  <td class="text-center not-visible-xs">
+  <td class="text-center not-visible-md">
     <% if tutor.tutor_account.publish %>
       <i class="icon ion-checkmark-round text-primary"></i>
     <% else %>

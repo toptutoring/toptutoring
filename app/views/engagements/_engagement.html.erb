@@ -5,9 +5,10 @@
       <%= engagement.student_account.name %>
     </a>
   </td>
+  <td class="not-visible-xs text-center"><%= l engagement.created_at, format: :date %></td>
   <td class="not-visible-xs"><%= engagement.tutor.try(:full_name) %></td>
   <td class="not-visible-xs"><%= subject_info(engagement) %></td>
-  <td>
+  <td class="text-center">
     <% actions_for_engagement(engagement, "engagements") %>
   </td>
   <%= render "engagement_modal", engagement: engagement %>

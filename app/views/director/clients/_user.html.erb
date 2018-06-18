@@ -12,11 +12,12 @@
       </div>
     </div>
   </td>
-  <td><%= number_to_currency(user.online_academic_rate) %> / <%= number_to_currency(user.in_person_academic_rate) %></td>
-  <td><%= number_to_currency(user.online_test_prep_rate) %> / <%= number_to_currency(user.in_person_test_prep_rate) %></td>
-  <td><%= user.online_academic_credit.to_s + " hrs" %> / <%= user.in_person_academic_credit.to_s + " hrs" %></td>
-  <td><%= user.online_test_prep_credit.to_s + " hrs" %> / <%= user.in_person_test_prep_credit.to_s + " hrs" %></td>
-  <td>
+  <td class="not-visible-xs text-center"><%= l user.created_at, format: :date %></td>
+  <td class="not-visible-xs"><%= number_to_currency(user.online_academic_rate) %> / <%= number_to_currency(user.in_person_academic_rate) %></td>
+  <td class="not-visible-xs"><%= number_to_currency(user.online_test_prep_rate) %> / <%= number_to_currency(user.in_person_test_prep_rate) %></td>
+  <td class="not-visible-sm"><%= user.online_academic_credit.to_s + " hrs" %> / <%= user.in_person_academic_credit.to_s + " hrs" %></td>
+  <td class="not-visible-sm"><%= user.online_test_prep_credit.to_s + " hrs" %> / <%= user.in_person_test_prep_credit.to_s + " hrs" %></td>
+  <td class="text-center">
     <% admin_user_actions(user, "client") %>
   </td>
   <%= render "admin/users/user_modal", user: user %>

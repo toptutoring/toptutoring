@@ -43,10 +43,15 @@ module EngagementHelper
   end
 
   def actions_for_engagement(engagement, view)
-    engagement_edit_link(engagement)
-    engagement_enable_link(engagement, view) if engagement.can_enable?
-    engagement_delete_link(engagement) if engagement.able_to_delete?
-    engagement_archive_link(engagement, view) if engagement.active?
+    if engagement.archived?
+      engagement_reactivate_link(engagement, view)
+      engagement_delete_link(engagement) if engagement.able_to_delete?
+    else
+      engagement_edit_link(engagement)
+      engagement_enable_link(engagement, view) if engagement.pending?
+      engagement_delete_link(engagement) if engagement.able_to_delete?
+      engagement_archive_link(engagement, view) if engagement.active?
+    end
   end
 
   def engagement_edit_link(engagement)
@@ -73,6 +78,17 @@ module EngagementHelper
                              confirm_title: "Confirm enabling engagement")
   end
 
+  def engagement_reactivate_link(engagement, view)
+    render_confirm_link("Reactivate",
+                        enable_engagement_path(engagement, view: view),
+                        "enable_engagement_link_#{engagement.id}",
+                        classes: "btn",
+                        link_method: :patch,
+                        remote: true,
+                        confirm_message: "Are you sure you want to enable this engagement?",
+                        confirm_title: "Confirm enabling engagement")
+  end
+
   def engagement_archive_link(engagement, view)
     render_icon_confirm_link("ion-android-archive", "Archive this engagement",
                              disable_engagement_path(engagement, view: view),
@@ -82,7 +98,7 @@ module EngagementHelper
 
   def engagement_archive_confirmation
     "Are you sure you want to archive this engagement? " \
-    "Archiving will disable the tutor from viewing and invoicing this engagement."
+      "Archiving will disable the tutor from viewing and invoicing this engagement."
   end
 
   def engagement_archive_alert_hash(engagement)

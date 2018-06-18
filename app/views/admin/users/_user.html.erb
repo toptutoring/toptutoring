@@ -28,8 +28,9 @@
       </div>
     </div>
   </td>
-  <td class="not-visible-xs"><%= user.email.downcase %></td>
-  <td>
+  <td class="not-visible-xs text-center"><%= l user.created_at, format: :date %></td>
+  <td class="not-visible-xs text-center"><%= user.email.downcase %></td>
+  <td class="text-center">
     <% admin_user_actions(user, "user") %>
   </td>
   <%= render "user_modal", user: user %>

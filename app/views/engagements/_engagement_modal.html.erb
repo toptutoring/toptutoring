@@ -27,11 +27,14 @@
         <div class="row">
           <p class= "col-xs-4">Client Phone Number</p><p class="col-xs-8"><%= phone_number_display engagement.client %></p>
         </div>
-        <div class="row">
-          <div class= "col-xs-4 visible-xs">Tutor</div><div class="col-xs-8 visible-xs"><%= engagement.tutor ? engagement.tutor.full_name : "Unassigned" %></div>
+        <div class="row visible-xs">
+          <div class= "col-xs-4">Tutor</div><div class="col-xs-8 visible-xs"><%= engagement.tutor ? engagement.tutor.full_name : "Unassigned" %></div>
         </div>
-        <div class="row">
-          <div class= "col-xs-4 visible-xs">Subject</div><div class="col-xs-8 visible-xs"><%= engagement.subject.name %></div>
+        <div class="row visible-xs">
+          <div class= "col-xs-4">Subject</div><div class="col-xs-8 visible-xs"><%= engagement.subject.name %></div>
+        </div>
+        <div class="row visible-xs">
+          <div class= "col-xs-4">Date Requested</div><div class="col-xs-8 visible-xs"><%= l engagement.created_at, format: :long_date %></div>
         </div>
       </div>
     </div>
