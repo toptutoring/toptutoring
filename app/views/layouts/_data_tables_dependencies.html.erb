@@ -1,3 +1,4 @@
+<% order = local_assigns.fetch(:order, "asc") %>
 <%= content_for :javascripts do %>
   <%= javascript_include_tag '/plugins/datatables.net/js/jquery.dataTables.min.js' %>
   <%= javascript_include_tag '/plugins/datatables.net/js/jquery.dataTables.min.js' %>
@@ -18,7 +19,8 @@
   <script>
     $(document).ready(function() {
       $('#<%= table_id %>').DataTable({
-        fixedHeader: true
+        fixedHeader: true,
+        order:[0, "<%= order %>"]
       });
     });
   </script>
