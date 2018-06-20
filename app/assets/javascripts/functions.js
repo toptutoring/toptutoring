@@ -31,3 +31,9 @@ smoothScroll = function(e, link) {
   e.preventDefault();
   document.querySelector(link.attributes.href.value).scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+createDataTable = function(tableID, order) {
+  $(tableID).DataTable({
+    order:[0, order]
+  });
+}

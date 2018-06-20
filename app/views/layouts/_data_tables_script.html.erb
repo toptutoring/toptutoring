@@ -1,0 +1,6 @@
+<% order = local_assigns.fetch(:order, "asc") %>
+<%= content_for :javascripts do %>
+  <script>
+    createDataTable('<%= table_id %>','<%= order %>');
+  </script>
+<% end %>

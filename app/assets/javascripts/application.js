@@ -13,5 +13,6 @@
 //= require rails-ujs
 //= require jquery
 //= require bootstrap-sprockets
+//= require dataTables/dataTables
 
 //= require_tree .

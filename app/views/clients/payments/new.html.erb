@@ -30,5 +30,5 @@
 <% end %>
 
 <% if @payments.any? %>
-  <%= render "layouts/data_tables_dependencies", table_id: "payment-table", order: "desc" %>
+  <%= render "layouts/data_tables_script", table_id: "#payment-table", order: "desc" %>
 <% end %>
