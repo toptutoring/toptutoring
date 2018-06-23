@@ -59,6 +59,7 @@ Rails.application.routes.draw do
         end
         resources :tutor_payouts, only: :index
         resources :contractor_payouts, only: :index
+        resources :contractors, only: :index
         resource :miscellaneous_payment, module: "payments", only: [:new, :create]
         post "payments/:payment_id/refunds", to: "payments/refunds#create", as: :payment_refunds
       end

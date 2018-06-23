@@ -9,6 +9,8 @@ when "tutor"
   user_html = j render "admin/tutors/tutor", tutor: @user
 when "client"
   user_html = j render "director/clients/user", user: @user
+when "contractor"
+  user_html = j render "admin/contractors/contractor", contractor: @user
 else
   user_html = j render @user
 end %>
