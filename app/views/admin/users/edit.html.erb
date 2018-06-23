@@ -35,7 +35,5 @@
   </div>
 </div>
 
-<% if @user.client_account %>
-  <%= render "client_account_form_widget", url: admin_user_path(@user) %>
-<% end %>
+<%= render "client_account_form_widget", user: @user, url: admin_user_path(@user) if @user.client_account %>
 <%= render "contractor_account_form_widget", account: @user.contractor_account, url: admin_contractor_path(@user) if @user.contractor_account %>
