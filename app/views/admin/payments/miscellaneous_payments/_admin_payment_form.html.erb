@@ -2,7 +2,7 @@
   <div class="form-group">
     <%= f.label :receiving_account_id, "Tutor", :class => "col-sm-3 control-label" %>
     <div class="col-sm-9 select-option">
-      <%= f.select(:receiving_account_id, options_for_select(@tutors.map{ |tutor| [tutor.full_name, tutor.tutor_account.id]}), {}, { class: "tutor", required: true }) %>
+      <%= f.select(:receiving_account_id, options_for_select(@tutors.map{ |tutor| [tutor.full_name, tutor.tutor_account.id]}), {}, { class: "form-control", required: true }) %>
     </div>
   </div>
 
