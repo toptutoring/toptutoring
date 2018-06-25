@@ -1,6 +1,7 @@
 namespace :dev do
   task seed: :environment do
     # Create Subjects
+    Subject.where(name: "Other - If you do not see your subject").first_or_create!
     Subject.where(name: "Biology").first_or_create!
     Subject.where(name: "Algebra").first_or_create!
     Subject.where(name: "English Literature").first_or_create!
