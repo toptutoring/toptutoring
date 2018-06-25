@@ -16,7 +16,7 @@
 
             <div class="form-group form-group-lg select-option">
               <%= f.label :subject_id, "Subject" %>
-              <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Choose one of the following" }, class: "form-control input-lg", required: true %>
+              <%= f.select :subject_id, grouped_options_for_select(subject_grouped_select_options), { prompt: "Choose one of the following" }, class: "form-control input-lg", required: true %>
             </div>
 
             <div class="text-center">
