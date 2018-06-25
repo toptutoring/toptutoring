@@ -1,9 +1,8 @@
-<% if @user.archived? %>
+<% if @user.destroyed? %>
   var userRow = document.getElementById("row_user_<%= @user.id %>");
-  userTable = userRow.parentNode;
+  var userTable = userRow.parentNode;
   userTable.removeChild(userRow);
-
 <% end %>
 
-renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
 window.scrollTo(0, 0)

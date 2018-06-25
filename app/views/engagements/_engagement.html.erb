@@ -4,12 +4,12 @@
     <a href="#engagement_info_modal_<%= engagement.id %>" class="<%= "text-danger" if engagement.low_balance? %>" data-toggle="modal" aria-expanded="false" class="mr-10">
       <%= engagement.student_account.name %>
     </a>
-    <%= render "engagement_modal", engagement: engagement %>
   </td>
-  <td><%= engagement.tutor.try(:full_name) %></td>
-  <td><%= subject_info(engagement) %></td>
-  <td>
-    <% actions_for_engagement(engagement) %>
-    <% confirmation_modals_for_engagement(engagement) %>
+  <td class="not-visible-xs text-center"><%= l engagement.created_at, format: :date %></td>
+  <td class="not-visible-xs"><%= engagement.tutor.try(:full_name) %></td>
+  <td class="not-visible-xs"><%= subject_info(engagement) %></td>
+  <td class="text-center">
+    <% actions_for_engagement(engagement, "engagements") %>
   </td>
+  <%= render "engagement_modal", engagement: engagement %>
 </tr>

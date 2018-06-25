@@ -1,12 +1,12 @@
 <%= render "layouts/page_widget", title: "Engagements", heading_html: link_to("Add a new engagement", new_engagement_path, class: "pull-right btn") do %>
-  <div class="table-responsive">
-    <table class="table mb-0">
+    <table id="engagements_table" style="width: 100%" class="table table-bordered">
       <thead>
         <tr>
           <th>Student</th>
-          <th>Tutor</th>
-          <th>Subject</th>
-          <th>Actions</th>
+          <th class="not-visible-xs text-center">Date Requested</th>
+          <th class="not-visible-xs">Tutor</th>
+          <th class="not-visible-xs">Subject</th>
+          <th class="text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -14,5 +14,6 @@
         <%= render partial: "engagement", collection: @archived_engagements %>
       </tbody>
     </table>
-  </div>
 <% end %>
+
+<%= render "layouts/data_tables_script", table_id: "#engagements_table" %>

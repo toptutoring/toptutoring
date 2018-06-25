@@ -1,0 +1,20 @@
+<%= render "layouts/page_widget", title: "Clients" do %>
+    <table id="admin-user-table" style="width: 100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="col-xs-6 col-sm-4 col-md-3">Name</th>
+          <th class="not-visible-xs text-center">Date Joined</th>
+          <th class="not-visible-xs">Academic Rate(O/I)</th>
+          <th class="not-visible-xs">Test Prep Rate(O/I)</th>
+          <th class="not-visible-sm">Academic Credit(O/I)</th>
+          <th class="not-visible-sm">Test Prep Credit(O/I)</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "user", collection: @users %>
+      </tbody>
+    </table>
+<% end %>
+
+<%= render "layouts/data_tables_script", table_id: "#admin-user-table" %>

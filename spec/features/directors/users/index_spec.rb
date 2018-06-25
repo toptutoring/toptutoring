@@ -8,7 +8,7 @@ feature "Director client index" do
   scenario "when director visits index page" do
     sign_in(director)
 
-    visit director_users_path
+    visit director_clients_path
 
     expect(page).to have_content("Name")
     expect(page).to have_content(client.full_name)
@@ -26,7 +26,7 @@ feature "Director client index" do
     expect(page).to have_content(client.online_test_prep_credit)
     expect(page).to have_content(client.in_person_test_prep_credit)
     expect(page).to have_content("Action")
-    expect(page).to have_link(href: edit_director_user_path(client))
-    expect(page).to have_link(href: archive_director_user_path(client))
+    expect(page).to have_link("edit_user_link_#{client.id}")
+    expect(page).to have_link("archive_user_link_#{client.id}")
   end
 end

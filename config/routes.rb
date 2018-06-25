@@ -50,10 +50,7 @@ Rails.application.routes.draw do
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") } do
       namespace :admin do
-        resources :users, only: [:index, :edit, :destroy, :update] do
-          patch :reactivate, on: :member
-          patch :archive, on: :member
-        end
+        resources :users, only: [:index, :edit, :destroy, :update]
         resources :timesheets
         resources :roles
         resources :subjects do
@@ -62,6 +59,7 @@ Rails.application.routes.draw do
         end
         resources :tutor_payouts, only: :index
         resources :contractor_payouts, only: :index
+        resources :contractors, only: [:index, :update]
         resource :miscellaneous_payment, module: "payments", only: [:new, :create]
         post "payments/:payment_id/refunds", to: "payments/refunds#create", as: :payment_refunds
       end
@@ -72,11 +70,6 @@ Rails.application.routes.draw do
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("director") } do
       get "/dashboard" => "dashboards#director"
-      namespace :director do
-        resources :users, only: [:index, :edit, :update] do
-          patch :archive, on: :member
-        end
-      end
     end
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") || user.has_role?("director") } do
@@ -91,12 +84,13 @@ Rails.application.routes.draw do
         end
       end
       namespace :admin do
+        resources :users, only: [] do
+          patch :reactivate, on: :member
+          patch :archive, on: :member
+        end
         resources :payments, only: [:index, :new, :create]
         resources :tutor_payouts, only: :index
-        resources :tutors, only: [:index, :show, :edit, :update] do
-          patch :reactivate, on: :member, controller: :users
-          patch :archive, on: :member, controller: :users
-        end
+        resources :tutors, only: [:index, :show, :edit, :update]
         resources :tutor_accounts do
           patch "badge" =>"tutor_accounts#badge"
         end
@@ -118,10 +112,13 @@ Rails.application.routes.draw do
         end
         resources :countries
       end
+      namespace :director do
+        resources :clients, only: [:index, :edit, :update]
+      end
       resources :engagements do
         member do
-          get "/enable" => "engagements#enable"
-          get "/disable" => "engagements#disable"
+          patch "/enable" => "engagements#enable"
+          patch "/disable" => "engagements#disable"
         end
       end
       resources :leads

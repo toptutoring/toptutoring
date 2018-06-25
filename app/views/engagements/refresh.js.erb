@@ -1,0 +1,18 @@
+<% if @refresh %>
+  var engagementRow = document.getElementById("engagement_<%= @engagement.id %>");
+  var engagementTable = engagementRow.parentNode;
+  engagementTable.removeChild(engagementRow);
+
+  <% if @view == "engagements" %>
+    var rowPrevious = engagementRow.previousElementSibling;
+    var engagementHTML = "<%= j render "engagement", engagement: @engagement %>"
+    if (rowPrevious === null) {
+      engagementTable.insertAdjacentHTML("afterbegin", engagementHTML);
+    } else {
+      rowPrevious.insertAdjacentHTML("afterend",  engagementHTML);
+    }
+  <% end %>
+<% end %>
+
+  renderTopTutoringFlashes("<%= j render "application/flashes" %>");
+window.scrollTo(0, 0)

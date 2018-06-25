@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    current_user.has_role?("admin")
+    current_user.admin?
   end
 
   def not_found

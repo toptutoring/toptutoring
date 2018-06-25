@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="widget">
+      <div class="widget-heading pb-0">
+        <h3 class="widget-title text-center mb-15">Contractor Account Info</h3>
+      </div>
+      <div class="widget-body">
+        <%= form_with model: account, url: url, local: true do |f| %>
+          <div class="form-group">
+            <%= f.label :hourly_rate %>
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <%= f.number_field :hourly_rate, class: "form-control", step: 0.01, min: 0 %>
+            </div>
+          </div>
+          <div class="text-center">
+            <%= f.submit "Adjust Rate", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

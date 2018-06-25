@@ -1,33 +1,34 @@
 <%= render "layouts/page_widget", title: "Tutors" do %>
-  <div class="row">
+  <div class="row mb-15">
     <%= form_tag admin_tutors_path, method: :get, class: "p-0 pull-left col-xs-10" do %>
       <div class="col-md-6 col-xs-10 m-0 select-option">
         <%= select_tag "subject_id", options_from_collection_for_select(Subject.all, :id, :name, @subject_id), prompt: "View All", onchange: "this.form.submit();", class: "form-control fw-400 pull-left pr-30" %>
       </div>
     <% end %>
 
-    <% if current_user.has_role?("admin") %>
+    <% if current_user.admin? %>
       <div class="col-xs-2">
         <%= link_to "Pay tutor", new_admin_miscellaneous_payment_path, class: "btn pull-right", style: "margin-left:20px;"%>
       </div>
     <% end %>
   </div>
 
-  <div class="table-responsive">
-    <table class="table mb-0">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Phone Number</th>
-          <th>Email</th>
-          <th class="text-center">Published</th>
-          <th class="text-center">Balance</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render partial: "tutor", collection: @tutors %>
-      </tbody>
-    </table>
-  </div>
+  <table id="admin-tutor-table" class="table table-bordered mt-15 mb-0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th class="not-visible-xs text-center">Date Joined</th>
+        <th class="not-visible-xs">Phone Number</th>
+        <th class="not-visible-xs">Email</th>
+        <th class="text-center not-visible-md">Published</th>
+        <th class="text-center not-visible-xs">Balance</th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "tutor", collection: @tutors %>
+    </tbody>
+  </table>
 <% end %>
+
+<%= render "layouts/data_tables_script", table_id: "#admin-tutor-table" %>

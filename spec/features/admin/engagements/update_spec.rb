@@ -9,16 +9,14 @@ feature "Update engagements" do
   let!(:tutor) { FactoryBot.create(:tutor_user, first_name: "AmazingTutor") }
 
   context "when user is director" do
-    scenario "updating a tutor for a pending engagement" do
+    scenario "updating a tutor for a pending engagement", js: true do
       sign_in(director)
 
       expect(page).to have_content("Pending Engagements")
       expect(page).to have_link(href: edit_engagement_path(engagement))
       expect(page).not_to have_link( href: enable_engagement_path(engagement))
 
-      within("#engagement_#{engagement.id}") do
-        find_link(href: edit_engagement_path(engagement)).click
-      end
+      click_link("edit_engagement_link_#{engagement.id}")
 
       expect(page).to have_content("Tutor")
       expect(page).to have_content("Student")
@@ -28,18 +26,16 @@ feature "Update engagements" do
       click_button "Submit"
 
       expect(page).to have_content("Engagement successfully updated!")
-      expect(page).to have_content("Student")
+      expect(page).to have_content(student_account.name)
       expect(page).to have_content(tutor.full_name)
 
-      within("#engagement_#{engagement.id}") do
-        first(:link, href: enable_engagement_path(engagement)).click
-      end
+      click_link("enable_engagement_link_#{engagement.id}")
+      click_link("confirm-modal-link")
 
       expect(page).to have_content("Engagement successfully enabled!")
 
-      within("#engagement_#{engagement.id}") do
-        first(:link, href: disable_engagement_path(engagement)).click
-      end
+      click_link("archive_engagement_link_#{engagement.id}")
+      click_link("confirm-modal-link")
 
       expect(page).to have_content("Engagement successfully disabled and archived!")
     end

@@ -13,7 +13,7 @@ feature "Create payment for tutor" do
   let!(:invoice3) { FactoryBot.create(:invoice, submitter: tutor_no_auth, client: client, engagement: engagement_no_auth, status: "pending", hourly_rate: 59, hours: 1) }
   let(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
 
-  context "when user is admin" do
+  context "when user is admin", js: true do
     scenario "and attempts to pay invoice when funding source is not set" do
       sign_in(admin)
       visit admin_invoices_path

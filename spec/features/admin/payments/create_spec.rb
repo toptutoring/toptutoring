@@ -19,7 +19,7 @@ feature "Create payment for tutor" do
       visit admin_tutors_path
       click_on "Pay tutor"
 
-      find(".tutor").find(:xpath, "option[1]").select_option
+      select tutor.full_name, from: "Tutor"
       fill_in "payout_amount", with: 100
       fill_in "payout_description", with: "Payment for tutoring X hours"
       click_button "Send Payment"
@@ -37,7 +37,7 @@ feature "Create payment for tutor" do
       visit admin_tutors_path
       click_on "Pay tutor"
 
-      find(".tutor").find(:xpath, "option[2]").select_option
+      select tutor.full_name, from: "Tutor"
       fill_in "payout_amount", with: 15
       fill_in "payout_description", with: "Payment for tutoring X hours"
       click_button "Send Payment"

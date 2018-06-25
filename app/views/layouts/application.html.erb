@@ -48,6 +48,7 @@
       <%= render "shared/signed_out_view" %>
     <% end %>
 
+    <%= render "application/alert_modal" %>
     <%= javascript_include_tag :application %>
     <!-- JS required for Sigma Styles -->
     <!-- Malihu Scrollbar-->
@@ -68,5 +69,6 @@
 
     <%= render "misc_javascript" %>
     <%= render "css_overrides" %>
+    <%= yield :javascripts %>
   </body>
 </html>

@@ -1,0 +1,19 @@
+<%= render "layouts/page_widget", title: "Contractors" do %>
+  <table id="admin-contractors-table" class="table table-bordered mt-15 mb-0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th class="not-visible-xs text-center">Date Joined</th>
+        <th class="not-visible-xs">Phone Number</th>
+        <th class="not-visible-xs">Email</th>
+        <th class="not-visible-xs">Hourly Rate</th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "contractor", collection: @contractors %>
+    </tbody>
+  </table>
+<% end %>
+
+<%= render "layouts/data_tables_script", table_id: "#admin-contractors-table" %>
