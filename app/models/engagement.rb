@@ -55,6 +55,10 @@ class Engagement < ActiveRecord::Base
     @tutor ||= tutor_account.try(:user)
   end
 
+  def able_to_enable?
+    !active? && tutor_account.present?
+  end
+
   def able_to_delete?
     invoices.none? && !active?
   end

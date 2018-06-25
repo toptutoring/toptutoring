@@ -32,8 +32,17 @@ smoothScroll = function(e, link) {
   document.querySelector(link.attributes.href.value).scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-createDataTable = function(tableID, order) {
+createDataTable = function(tableID, order, lengthOption) {
+  var lengthMenu
+
+  if (lengthOption == "5") {
+    lengthMenu =  [[5, 10, 15, -1], [5, 10, 15, "All"]]
+  } else {
+    lengthMenu = [[10, 20, 50, -1], [10, 20, 50, "All"]] 
+  }
+
   $(tableID).DataTable({
-    order:[0, order]
+    order:[0, order],
+    "lengthMenu": lengthMenu
   });
 }
