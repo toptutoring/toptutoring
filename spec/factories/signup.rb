@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :signup do
-    subject  { Subject.first_or_create(name: 'Math') }
+    subject  { Subject.last || FactoryBot.create(:subject) }
     student  { false }
 
     trait :as_student do

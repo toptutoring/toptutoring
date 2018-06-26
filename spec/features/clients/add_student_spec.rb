@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Add student" do
-  let!(:subject) { FactoryBot.create(:subject) }
+  let!(:engagement_subject) { FactoryBot.create(:subject) }
   let(:existing_client) { FactoryBot.create(:client_user) }
   let(:client) { FactoryBot.create(:client_user) }
 
@@ -16,7 +16,7 @@ feature "Add student" do
     fill_in "first_name", with: first_name
     fill_in "last_name", with: last_name
     uncheck "create_user_account"
-    find("#engagement_subject_id").find(:xpath, "option[2]").select_option
+    select engagement_subject.name, from: "engagement_subject_id"
     click_on "Submit"
 
     expect(page).to have_content("Successfully added!")
@@ -34,7 +34,7 @@ feature "Add student" do
     fill_in "first_name", with: first_name
     fill_in "last_name", with: last_name
     fill_in "user_email", with: email
-    find("#engagement_subject_id").find(:xpath, "option[2]").select_option
+    select engagement_subject.name, from: "engagement_subject_id"
     click_on "Submit"
 
     expect(page).to have_content("Successfully added!")
@@ -51,7 +51,7 @@ feature "Add student" do
     fill_in "first_name", with: "Student"
     fill_in "last_name", with: "LastName"
     fill_in "user_email", with: email
-    find("#engagement_subject_id").find(:xpath, "option[2]").select_option
+    select engagement_subject.name, from: "engagement_subject_id"
     click_on "Submit"
 
     expect(page).to have_content("Email has already been taken")

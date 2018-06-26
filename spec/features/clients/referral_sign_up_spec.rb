@@ -20,7 +20,7 @@ feature "User signs up as referral" do
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
       fill_in "confirm_password", with: "password"
-      find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
+      select subject_academic.name, from: "user_signup_attributes_subject_id"
       find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
       click_button "Submit"
 

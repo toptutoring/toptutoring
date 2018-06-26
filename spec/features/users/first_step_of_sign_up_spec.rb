@@ -18,7 +18,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
       fill_in "confirm_password", with: "password"
-      find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
+      select subject_academic.name, from: "user_signup_attributes_subject_id"
       find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
       click_button "Submit"
 
@@ -43,7 +43,7 @@ feature "Create user as first step of sign up process" do
       fill_in "user_phone_number", with: "(510)555-5555"
       fill_in "user_password", with: "password"
       fill_in "confirm_password", with: "password"
-      find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
+      select subject_academic.name, from: "user_signup_attributes_subject_id"
       find("#user_signup_attributes_student").find(:xpath, "option[3]").select_option
       click_button "Submit"
 
@@ -152,7 +152,7 @@ feature "Create user as first step of sign up process" do
         fill_in "Zip Code", with: 94501 # not a korean zip, but required currently
         fill_in "user_password", with: "password"
         fill_in "confirm_password", with: "password"
-        find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
+        select subject_academic.name, from: "user_signup_attributes_subject_id"
         find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
         click_button "Submit"
 
@@ -172,7 +172,7 @@ feature "Create user as first step of sign up process" do
         fill_in "Zip Code", with: 94501 # not a korean zip, but required currently
         fill_in "user_password", with: "password"
         fill_in "confirm_password", with: "password"
-        find("#user_signup_attributes_subject_id").find(:xpath, "option[2]").select_option
+        select subject_academic.name, from: "user_signup_attributes_subject_id"
         find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
         click_button "Submit"
 
