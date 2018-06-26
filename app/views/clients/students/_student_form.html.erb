@@ -1,10 +1,10 @@
 <%= form_tag '/clients/students' do %>
-  <div class="form-group form-group-lg">
-    <%= text_field_tag :first_name, nil, class:"form-control input-lg", required: true, placeholder: "First Name" %>
+  <div class="form-group">
+    <%= text_field_tag :first_name, nil, class:"form-control", required: true, placeholder: "First Name" %>
   </div>
 
-  <div class="form-group form-group-lg">
-    <%= text_field_tag :last_name, nil, class:"form-control input-lg", required: true, placeholder: "Last Name" %>
+  <div class="form-group">
+    <%= text_field_tag :last_name, nil, class:"form-control", required: true, placeholder: "Last Name" %>
   </div>
 
   <div class="form-group">
@@ -15,14 +15,14 @@
   </div>
 
   <%= fields_for User.new do |user_field| %>
-    <div class="form-group form-group-lg">
-      <%= user_field.email_field :email, class:"form-control input-lg", placeholder: "Email (ony required if creating account for student)" %>
+    <div class="form-group">
+      <%= user_field.email_field :email, class:"form-control", placeholder: "Email (ony required if creating account for student)" %>
     </div>
   <% end %>
 
   <%= fields_for Engagement.new do |engagement_field| %>
-    <div class="form-group form-group-lg select-option">
-      <%= engagement_field.select :subject_id, grouped_options_for_select(subject_grouped_select_options), { prompt: "Subject" }, class: "form-control input-lg", required: true %>
+    <div class="form-group select-option chosen">
+      <%= engagement_field.select :subject_id, grouped_options_for_select(subject_grouped_select_options), {}, data: { placeholder: "Please choose one of the following..." }, class: "chosen-select form-control", required: true %>
     </div>
   <% end %>
 

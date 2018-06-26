@@ -6,20 +6,19 @@
       </div>
       <div class="widget-body">
         <%= form_for Engagement.new do |f| %>
-
           <div class="form-group select-option">
             <%= f.label :tutor_account_id, "Tutor" %>
-            <%= f.select :tutor_account_id, options_from_collection_for_select(@tutor_accounts, :id, :full_name), { include_blank: true }, class: "form-control" %>
+            <%= f.select :tutor_account_id, options_from_collection_for_select(@tutor_accounts, :id, :full_name), {}, data: { placeholder: "Please choose one of the following tutors..." }, class: "chosen-select form-control", required: true %>
           </div>
 
-          <div class="form-group">
+          <div class="form-group select-option chosen">
             <%= f.label :student_account_id, "Student" %>
-            <%= f.select :student_account_id, grouped_options_for_select(@students), { include_blank: false }, class: "form-control" %>
+            <%= f.select :student_account_id, grouped_options_for_select(@students), {}, data: { placeholder: "Please choose one of the following students..." }, class: "chosen-select form-control", required: true %>
           </div>
 
-          <div class="form-group select-option">
+          <div class="form-group select-option chosen">
             <%= f.label :subject_id, "Subject" %>
-            <%= f.select :subject_id, grouped_options_for_select(subject_grouped_select_options), { prompt: "Subject" }, { class: "form-control", required: true } %>
+            <%= f.select :subject_id, grouped_options_for_select(subject_grouped_select_options), {}, data: { placeholder: "Please choose one of the following subjects..." }, class: "chosen-select form-control", required: true %>
           </div>
 
           <div class="text-center">
