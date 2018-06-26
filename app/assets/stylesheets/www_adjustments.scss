@@ -11,6 +11,7 @@
    9. Slick Carousel Styles
    10. Icon Containers
    11. Btn Styles
+   12. Chosen-Select Styles
 */
 
 // 1. Container Styles
@@ -159,3 +160,54 @@ input[type="email"]:focus {
   border-color: #47b475;
   color: #fff;
 }
+
+// 12. Chosen-Select Styles
+.select-option.chosen {
+  overflow: visible;
+}
+.chosen-container a.chosen-single  {
+  border: none;
+  text-transform: uppercase;
+  background: #f5f5f5;
+  color: inherit;
+  height: 50px;
+  border-radius: 0px;
+  padding: 0px;
+  margin: 0px;
+  box-shadow: none;
+}
+.chosen-container.chosen-container-active.chosen-with-drop a.chosen-single  {
+  background-image: none;
+  border: 1px solid #c5c5c5;
+  border-radius: 0;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+}
+.chosen-container a.chosen-single div {
+  display: none;
+}
+.chosen-container.chosen-container-single .chosen-search {
+  background: inherit;
+}
+.chosen-container .chosen-drop {
+  border: 1px solid #c5c5c5;
+  border-radius: 0;
+}
+.chosen-container .chosen-results li.highlighted {
+  background-image: none;
+  background: #f5f5f5;
+  color: inherit;
+}
+.chosen-container .chosen-single span {
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 50px;
+  padding-left: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 11px;
+  color: #777;
+}
+.chosen-drop {
+  display: block;
+  background: #f5f5f5;
+}
+
