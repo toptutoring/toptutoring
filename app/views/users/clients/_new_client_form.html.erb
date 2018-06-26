@@ -6,9 +6,9 @@
       <%= client_field.select :student, [["My Child", false], ["Myself", true]], { prompt: "This is for..." }, { required: true } %>
     </div>
 
-    <div class="col-sm-6 col-lg-6 mb-15 select-option">
+    <div class="col-sm-6 col-lg-6 mb-15 select-option chosen">
       <i class="ti-angle-down"></i>
-      <%= client_field.select :subject_id, grouped_options_for_select(subject_grouped_select_options), { prompt: "Subject" }, { required: true } %>
+      <%= client_field.select :subject_id, grouped_options_for_select(subject_grouped_select_options), {}, data: { placeholder: "Subject" }, class: "chosen-select", required: true %>
     </div>
   <% end %>
 
