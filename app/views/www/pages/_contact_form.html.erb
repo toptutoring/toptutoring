@@ -19,9 +19,9 @@
     <%= f.email_field :email, type: "text", placeholder: "Email", required: true %>
   </div>
 
-  <div class="col-sm-12 select-option">
+  <div class="col-sm-12 select-option chosen">
     <i class="ti-angle-down"></i>
-    <%= f.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, id: "subject_id", required: true %>
+    <%= f.select :subject_id, grouped_options_for_select(subject_grouped_select_options), {}, data: { placeholder: "Subject" }, class: "chosen-select", required: true %>
   </div>
 
   <div class="col-xs-12">
