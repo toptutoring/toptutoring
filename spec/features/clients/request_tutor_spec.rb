@@ -10,7 +10,7 @@ feature "Request tutors" do
     sign_in(client)
     visit new_clients_request_tutor_path(student_account_id: student.student_account.id)
 
-    find("#engagement_subject_id").find(:xpath, "option[2]").select_option
+    select Subject.last.name, from: "engagement_subject_id"
     click_on "Submit"
 
     expect(page).to have_content(I18n.t("app.request_tutor.success"))
@@ -20,7 +20,7 @@ feature "Request tutors" do
     sign_in(client_as_student)
     visit new_clients_request_tutor_path
 
-    find("#engagement_subject_id").find(:xpath, "option[2]").select_option
+    select Subject.last.name, from: "engagement_subject_id"
     click_on "Submit"
 
     expect(page).to have_content(I18n.t("app.request_tutor.success"))

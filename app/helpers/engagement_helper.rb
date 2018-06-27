@@ -48,7 +48,7 @@ module EngagementHelper
       engagement_delete_link(engagement) if engagement.able_to_delete?
     else
       engagement_edit_link(engagement)
-      engagement_enable_link(engagement, view) if engagement.pending?
+      engagement_enable_link(engagement, view) if engagement.able_to_enable?
       engagement_delete_link(engagement) if engagement.able_to_delete?
       engagement_archive_link(engagement, view) if engagement.active?
     end

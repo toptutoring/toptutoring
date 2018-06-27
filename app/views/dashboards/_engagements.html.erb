@@ -5,23 +5,24 @@
         <h3 class="widget-title pull-left">Pending Engagements</h3>
       </div>
       <div class="widget-body">
-        <div class="table-responsive">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>Student Name</th>
-                <th>Client Name</th>
-                <th>Phone Number</th>
-                <th>Subject</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= render partial: "engagement", collection: @pending_engagements %>
-            </tbody>
-          </table>
-        </div>
+        <table id="director-pending-engagements-table" class="table table-striped table-responsive mb-0">
+          <thead>
+            <tr>
+              <th class="not-visible-xs">Date</th>
+              <th>Student Name</th>
+              <th class="not-visible-xs">Client Name</th>
+              <th>Phone Number</th>
+              <th class="not-visible-xs">Subject</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render partial: "engagement", collection: @pending_engagements %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
+
+<%= render "layouts/data_tables_script", table_id: "#director-pending-engagements-table", length: 5, order: "desc" %>

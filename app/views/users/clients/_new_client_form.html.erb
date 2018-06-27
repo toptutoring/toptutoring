@@ -8,7 +8,7 @@
 
     <div class="col-sm-6 col-lg-6 mb-15 select-option">
       <i class="ti-angle-down"></i>
-      <%= client_field.select :subject_id, options_from_collection_for_select(Subject.all.order(:name), "id", "name"), { prompt: "Subject" }, { required: true } %>
+      <%= client_field.select :subject_id, grouped_options_for_select(subject_grouped_select_options), { prompt: "Subject" }, { required: true } %>
     </div>
   <% end %>
 

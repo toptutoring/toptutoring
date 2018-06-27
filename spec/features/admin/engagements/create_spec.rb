@@ -11,7 +11,7 @@ feature "Index engagements" do
       visit engagements_path
       click_on "Add a new engagement"
 
-      find("#engagement_subject_id").find(:xpath, "option[2]").select_option
+      select Subject.last.name, from: "engagement_subject_id"
       click_on "Submit"
 
       engagement = Engagement.last
