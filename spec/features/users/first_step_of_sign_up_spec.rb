@@ -138,6 +138,7 @@ feature "Create user as first step of sign up process" do
 
       expect(page).to have_content(I18n.t("app.signup.tutors.agreement_fail"))
     end
+
     context "when user is from another country" do
       scenario "and inputs a valid phone number" do
         visit client_sign_up_path
