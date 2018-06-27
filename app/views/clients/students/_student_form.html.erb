@@ -22,7 +22,7 @@
 
   <%= fields_for Engagement.new do |engagement_field| %>
     <div class="form-group select-option chosen">
-      <%= engagement_field.select :subject_id, grouped_options_for_select(subject_grouped_select_options), {}, data: { placeholder: "Please choose one of the following..." }, class: "chosen-select form-control", required: true %>
+      <%= engagement_field.select :subject_id, grouped_options_for_select(subject_grouped_select_options), { include_blank: true }, data: { placeholder: "Please choose one of the following..." }, class: "chosen-select form-control" %>
     </div>
   <% end %>
 

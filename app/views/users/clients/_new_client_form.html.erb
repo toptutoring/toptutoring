@@ -8,7 +8,7 @@
 
     <div class="col-sm-6 col-lg-6 mb-15 select-option chosen">
       <i class="ti-angle-down"></i>
-      <%= client_field.select :subject_id, grouped_options_for_select(subject_grouped_select_options), {}, data: { placeholder: "Subject" }, class: "chosen-select", required: true %>
+      <%= client_field.select :subject_id, grouped_options_for_select(subject_grouped_select_options), { include_blank: true }, data: { placeholder: "Subject" }, class: "chosen-select" %>
     </div>
   <% end %>
 
