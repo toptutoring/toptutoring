@@ -104,18 +104,19 @@ RSpec.describe Engagement, type: :model do
 
   describe "#low_balance?" do
     it "returns true if client has credits for online but none for in person test type" do
-      client.update(online_test_prep_credit: 1)
+      client.update(in_person_test_prep_credit: -1, online_test_prep_credit: 1)
      subject = FactoryBot.create(:engagement, subject: test_subject, client_account: client.client_account)
       expect(subject.low_balance?).to be true
     end
 
     it "returns true if client has credits for in person but none for online test type" do
-      client.update(in_person_test_prep_credit: 1)
+      client.update(in_person_test_prep_credit: 1, online_test_prep_credit: -1)
       subject = FactoryBot.create(:engagement, subject: test_subject, client_account: client.client_account)
       expect(subject.low_balance?).to be true
     end
 
     it "returns true if client has no credits for any type" do
+      client.update(in_person_academic_credit: -1, online_academic_credit: -1)
       subject = FactoryBot.create(:engagement, subject: academic_subject, client_account: client.client_account)
       expect(subject.low_balance?).to be true
     end
@@ -127,13 +128,13 @@ RSpec.describe Engagement, type: :model do
     end
 
     it "returns true if client has credits for different type than test" do
-      client.update(in_person_academic_credit: 1)
+      client.update(in_person_academic_credit: 1, in_person_test_prep_credit: -1, online_test_prep_credit: -1)
       subject = FactoryBot.create(:engagement, subject: test_subject, client_account: client.client_account)
       expect(subject.low_balance?).to be true
     end
 
     it "returns true if client has credits for different type than academic" do
-      client.update(in_person_test_prep_credit: 1)
+      client.update(in_person_test_prep_credit: 1, in_person_academic_credit: -1, online_academic_credit: -1)
       subject = FactoryBot.create(:engagement, subject: academic_subject, client_account: client.client_account)
       expect(subject.low_balance?).to be true
     end
