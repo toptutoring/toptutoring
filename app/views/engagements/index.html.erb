@@ -2,6 +2,7 @@
     <table id="engagements_table" style="width: 100%" class="table table-bordered">
       <thead>
         <tr>
+          <th class="text-center">St</th>
           <th>Student</th>
           <th class="not-visible-xs text-center">Date Requested</th>
           <th class="not-visible-xs">Tutor</th>
@@ -16,4 +17,4 @@
     </table>
 <% end %>
 
-<%= render "layouts/data_tables_script", table_id: "#engagements_table" %>
+<%= render "layouts/data_tables_script", table_id: "#engagements_table", order: "desc" %>

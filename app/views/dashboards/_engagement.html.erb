@@ -1,7 +1,6 @@
 <tr id="engagement_<%= engagement.id %>">
   <td class="not-visible-xs"><%= l engagement.created_at, format: :date %></td>
   <td>
-    <%= engagement_state_label(engagement) %>
     <%= engagement.student_name %>
   </td>
   <td class="not-visible-xs"><%= engagement.client.full_name %></td>
