@@ -69,10 +69,11 @@ feature "Dashboard Index" do
     expect(page).to have_content("Subject")
     expect(page).to have_content("Actions")
 
+    number = Phonelib.parse(client.phone_number, client.country_code)
     expect(page).to have_content(pending_engagement.student_name)
     expect(page).to have_content(pending_engagement.client.full_name)
+    expect(page).to have_content(number.national)
     expect(page).to have_content(pending_engagement.subject.name)
-    expect(page).to have_css(".ion-clock")
     expect(page).to have_link(href: edit_engagement_path(pending_engagement))
   end
 

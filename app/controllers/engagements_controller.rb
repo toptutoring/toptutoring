@@ -5,13 +5,13 @@ class EngagementsController < ApplicationController
 
   def index
     @engagements = Engagement.processing
-                             .order(:state, "created_at DESC")
                              .includes(:subject, :student_account, :invoices,
                                        client_account: :user, tutor_account: :user)
+                             .order("student_accounts.name")
     @archived_engagements = Engagement.archived
-                                      .order(:state, "created_at DESC")
                                       .includes(:subject, :student_account, :invoices,
                                                 client_account: :user, tutor_account: :user)
+                             .order("student_accounts.name")
   end
 
   def new

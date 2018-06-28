@@ -5,12 +5,18 @@ module EngagementHelper
   end
 
   def engagement_state_label(engagement)
-    icon_type = case engagement.state
-                when "active" then "play text-success"
-                when "pending" then "clock text-default"
-                else "stop text-danger"
+    case engagement.state
+                when "active"
+                  text = "►"
+                  style = "text-success"
+                when "pending"
+                  text = "○"
+                  style = "text-default"
+                else
+                  text = "■"
+                  style = "text-danger"
                 end
-    tag.icon class: "mr-10 icon ion-#{icon_type}"
+    tag.span text, class: "#{style}", style: "width:50px;"
   end
 
   def engagement_rates_and_credits(engagement)

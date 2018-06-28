@@ -79,7 +79,7 @@ class Engagement < ActiveRecord::Base
 
   def low_balance?
     relevant_credits.any? do |credit_type|
-      client.send(credit_type) <= 0
+      client.send(credit_type) < 0
     end
   end
 

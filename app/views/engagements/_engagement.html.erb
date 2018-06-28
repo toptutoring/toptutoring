@@ -1,6 +1,7 @@
 <tr id="engagement_<%= engagement.id %>" class="<%= "archived-row" if engagement.state == "archived" %>">
-  <td>
+  <td class="text-center">
     <%= engagement_state_label(engagement) %>
+  <td>
     <a href="#engagement_info_modal_<%= engagement.id %>" class="<%= "text-danger" if engagement.low_balance? %>" data-toggle="modal" aria-expanded="false" class="mr-10">
       <%= engagement.student_account.name %>
     </a>
