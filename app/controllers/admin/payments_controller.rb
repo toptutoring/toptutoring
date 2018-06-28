@@ -5,7 +5,8 @@ module Admin
     
     def index
       @payments = Payment.order(created_at: :desc)
-                         .includes(:payer, :refunds)
+                         .includes(:payer)
+      @refunds = Refund.includes(payment: :payer)
     end
 
     def create

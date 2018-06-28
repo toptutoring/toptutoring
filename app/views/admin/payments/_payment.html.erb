@@ -1,14 +1,16 @@
-<tr>
+<tr class="<%= payment.class == Refund ? "text-danger" : nil %>">
+  <td class="text-center"><%= l(payment.created_at, format: :date) %></td>
   <td class="text-center">
     <%= payment_status_icon payment.status %>
   </td>
-  <td><%= l(payment.created_at, format: :date) %></td>
   <td><%= controller_name == "payments" ?  payment.payer_name : payment.payee.full_name  %></td>
-  <td><%= number_to_currency(payment.amount) %></td>
-  <% if controller_name == "payments" && current_user.admin? %>
+  <td><%= payment_amount_display_text(payment) %></td>
+  <% if payment.class == Payment && current_user.admin? %>
     <td>
       <%= link_to "Refund", "#refund_payment_#{payment.id}", data: { toggle: :modal }, class: "btn btn-success" %>
       <%= render "payment_modal", payment: payment %>
     </td>
+  <% elsif current_user.admin? %>
+    <td></td>
   <% end %>
 </tr>

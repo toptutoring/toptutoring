@@ -12,7 +12,7 @@ module PaymentHelper
                 when "paid" then "ion-checkmark-round text-success"
                 when "succeeded" then "ion-checkmark-round text-success"
                 when "refunded" then "ion-cash text-default"
-                when "refund" then "ion-refresh text-success"
+                when "refund" then "ion-refresh text-danger"
                 when "denied" then "ion-close-round text-danger"
                 else "ion-clock text-default"
                 end

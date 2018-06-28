@@ -5,7 +5,7 @@ class Refund < ApplicationRecord
 
   monetize :amount_cents, numericality: { greater_than: 0 }
 
-  delegate :rate_cents, to: :payment
+  delegate :rate_cents, :payer_name, to: :payment
 
   def set_amount
     self.amount_cents = calculate_amount_cents
@@ -17,5 +17,9 @@ class Refund < ApplicationRecord
     else
       (hours * rate_cents).floor
     end
+  end
+
+  def status
+    "refund"
   end
 end
