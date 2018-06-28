@@ -9,14 +9,23 @@
         </a>
         <p class="text-muted mb-0"><%= phone_number_display(user) %></p>
         <p class="text-muted mb-0"><%= user.email.downcase %></p>
+        <% unless user.student_account %>
+          <% user.client_account.student_accounts.each do |student| %>
+            <p class="text-muted mb-0"><%= student.name %></p>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </td>
   <td class="not-visible-xs text-center"><%= l user.created_at, format: :date %></td>
-  <td class="not-visible-xs"><%= number_to_currency(user.online_academic_rate) %> / <%= number_to_currency(user.in_person_academic_rate) %></td>
-  <td class="not-visible-xs"><%= number_to_currency(user.online_test_prep_rate) %> / <%= number_to_currency(user.in_person_test_prep_rate) %></td>
-  <td class="not-visible-sm"><%= user.online_academic_credit.to_s + " hrs" %> / <%= user.in_person_academic_credit.to_s + " hrs" %></td>
-  <td class="not-visible-sm"><%= user.online_test_prep_credit.to_s + " hrs" %> / <%= user.in_person_test_prep_credit.to_s + " hrs" %></td>
+  <td class="not-visible-xs">
+    <p><%= number_to_currency(user.online_academic_rate) %> / <%= number_to_currency(user.in_person_academic_rate) %></p>
+    <p><%= user.online_academic_credit.to_s + " hrs" %> / <%= user.in_person_academic_credit.to_s + " hrs" %></p>
+  </td>
+  <td class="not-visible-xs">
+    <p><%= number_to_currency(user.online_test_prep_rate) %> / <%= number_to_currency(user.in_person_test_prep_rate) %></p>
+    <p><%= user.online_test_prep_credit.to_s + " hrs" %> / <%= user.in_person_test_prep_credit.to_s + " hrs" %></p>
+  </td>
   <td class="text-center">
     <% admin_user_actions(user, "client") %>
   </td>
