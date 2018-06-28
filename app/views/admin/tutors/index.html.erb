@@ -1,13 +1,13 @@
 <%= render "layouts/page_widget", title: "Tutors" do %>
   <div class="row pb-20">
     <%= form_tag admin_tutors_path, method: :get, class: "col-md-2 col-sm-4 col-xs-10" do %>
-      <div class="select-option">
-        <%= select_tag "subject_id", grouped_options_for_select(subject_grouped_select_options, @subject_id), prompt: "View All", onchange: "this.form.submit();", class: "form-control" %>
+      <div class="select-option chosen">
+        <%= select_tag "subject_id", grouped_options_for_select(subject_grouped_select_options, @subject_id), prompt: "View All", data: { placeholder: "View All" }, onchange: "this.form.submit();", class: "chosen-select form-control" %>
       </div>
     <% end %>
 
     <% if current_user.admin? %>
-      <div class="col-xs-2">
+      <div class="col-xs-2 pull-right">
         <%= link_to "Pay tutor", new_admin_miscellaneous_payment_path, class: "btn pull-right", style: "margin-left:20px;"%>
       </div>
     <% end %>

@@ -48,6 +48,7 @@ feature "Index tutors" do
     end
 
     scenario "can search tutors by subject", js: true do
+      require "chosen-rails/rspec"
       tutor.tutor_account.subjects = [subject1]
       tutor2.tutor_account.subjects = [subject2]
       sign_in(admin)
@@ -56,12 +57,12 @@ feature "Index tutors" do
       expect(page).to have_content(tutor.full_name)
       expect(page).to have_content(tutor2.full_name)
 
-      select subject1.name, from: "subject_id"
+      chosen_select subject1.name, from: "subject_id"
 
       expect(page).to have_content(tutor.full_name)
       expect(page).not_to have_content(tutor2.full_name)
 
-      select subject2.name, from: "subject_id"
+      chosen_select subject2.name, from: "subject_id"
 
       expect(page).not_to have_content(tutor.full_name)
       expect(page).to have_content(tutor2.full_name)
