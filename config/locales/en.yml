@@ -45,6 +45,7 @@ en:
           We're excited to have you on board and looking forward to assigning you your first tutor!
       payments:
         no_engagements: "Don't worry about payments for now. Let us set you up with a tutor first."
+        refund_description: "Refund for payment made on %{payment_date}."
       reviews:
         heading: Top Tutoring Review
         request_rating: "Hello %{name}. Let us know how we're doing!"

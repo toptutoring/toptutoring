@@ -8,7 +8,7 @@ class Clients::PaymentsController < ApplicationController
                                         ["#{type.titlecase} Hours", type]
                                       end
     @account = current_user.stripe_account
-    @payments = Payment.from_user(current_user.id).order(created_at: :desc)
+    @payments = current_user.payments_made.includes(:refunds).order(created_at: :desc)
   end
 
   def create
