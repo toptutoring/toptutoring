@@ -53,8 +53,8 @@ class User < ActiveRecord::Base
   scope :clients, -> { joins(:roles).where(roles: { name: "client" }).distinct }
   scope :students, -> { joins(:roles).where(roles: { name: "student" }).distinct }
   scope :admin, -> { joins(:roles).where(roles: { name: "admin" }).distinct.first || [] }
-  scope :with_external_auth, -> { where.not(encrypted_access_token: nil) & where.not(encrypted_refresh_token: nil) }
-  scope :tutors_with_external_auth, -> { tutors.with_external_auth }
+  scope :with_dwolla_auth, -> { where.not(auth_uid: nil) }
+  scope :tutors_with_dwolla_auth, -> { tutors.with_dwolla_auth }
   scope :enabled, -> { where(access_state: "enabled") }
   scope :assigned, -> { joins(:engagement).merge(Engagement.active) }
   scope :admin_and_directors, -> { joins(:roles).where("roles.name = ? OR roles.name = ?", "admin", "director").distinct }

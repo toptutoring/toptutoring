@@ -3,7 +3,7 @@ module Admin
     class MiscellaneousPaymentsController < ApplicationController
       def new
         @payout = Payout.new
-        @tutors = User.includes(:tutor_account).tutors_with_external_auth
+        @tutors = User.includes(:tutor_account).tutors_with_dwolla_auth
       end
 
       def create
