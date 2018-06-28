@@ -1,20 +1,26 @@
-<%= render "layouts/page_widget", title: "Engagements", heading_html: link_to("Add a new engagement", new_engagement_path, class: "pull-right btn") do %>
-    <table id="engagements_table" style="width: 100%" class="table table-bordered">
-      <thead>
-        <tr>
-          <th class="text-center">St</th>
-          <th>Student</th>
-          <th class="not-visible-xs text-center">Date Requested</th>
-          <th class="not-visible-xs">Tutor</th>
-          <th class="not-visible-xs">Subject</th>
-          <th class="text-center">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render @engagements %>
-        <%= render partial: "engagement", collection: @archived_engagements %>
-      </tbody>
-    </table>
+<%= render "layouts/page_widget", title: "Engagements", heading_html: link_to("Add a new engagement", new_engagement_path, class: "pull-right btn p-0") do %>
+  <div class="row pb-20">
+    <%= form_tag engagements_path, method: :get, class: "col-md-2 col-sm-4 col-xs-12" do %>
+      <div class="select-option">
+        <%= select_tag "state", options_for_select([["Active", "active"], ["Pending", "pending"], ["Archived", "archived"]], @state), prompt: "View All", onchange: "this.form.submit();", class: "form-control" %>
+      </div>
+    <% end %>
+  </div>
+  <table id="engagements_table" style="width: 100%" class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">St</th>
+        <th>Student</th>
+        <th class="not-visible-xs text-center">Date Requested</th>
+        <th class="not-visible-xs">Tutor</th>
+        <th class="not-visible-xs">Subject</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @engagements %>
+    </tbody>
+  </table>
 <% end %>
 
 <%= render "layouts/data_tables_script", table_id: "#engagements_table", order: "desc" %>

@@ -1,8 +1,8 @@
 <%= render "layouts/page_widget", title: "Tutors" do %>
-  <div class="row mb-15">
-    <%= form_tag admin_tutors_path, method: :get, class: "p-0 pull-left col-xs-10" do %>
-      <div class="col-md-6 col-xs-10 m-0 select-option">
-        <%= select_tag "subject_id", options_from_collection_for_select(Subject.all, :id, :name, @subject_id), prompt: "View All", onchange: "this.form.submit();", class: "form-control fw-400 pull-left pr-30" %>
+  <div class="row pb-20">
+    <%= form_tag admin_tutors_path, method: :get, class: "col-md-2 col-sm-4 col-xs-10" do %>
+      <div class="select-option">
+        <%= select_tag "subject_id", grouped_options_for_select(subject_grouped_select_options, @subject_id), prompt: "View All", onchange: "this.form.submit();", class: "form-control" %>
       </div>
     <% end %>
 

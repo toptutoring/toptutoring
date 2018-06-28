@@ -56,12 +56,12 @@ feature "Index tutors" do
       expect(page).to have_content(tutor.full_name)
       expect(page).to have_content(tutor2.full_name)
 
-      find("#subject_id").find(:xpath, "option[2]").select_option
+      select subject1.name, from: "subject_id"
 
       expect(page).to have_content(tutor.full_name)
       expect(page).not_to have_content(tutor2.full_name)
 
-      find("#subject_id").find(:xpath, "option[3]").select_option
+      select subject2.name, from: "subject_id"
 
       expect(page).not_to have_content(tutor.full_name)
       expect(page).to have_content(tutor2.full_name)
