@@ -4,14 +4,10 @@ class EngagementsController < ApplicationController
   before_action :set_engagement, only: [:edit, :update, :enable, :disable, :destroy]
 
   def index
-    @engagements = Engagement.processing
+    @engagements = Engagement.order("student_accounts.name")
                              .includes(:subject, :student_account, :invoices,
                                        client_account: :user, tutor_account: :user)
-                             .order("student_accounts.name")
-    @archived_engagements = Engagement.archived
-                                      .includes(:subject, :student_account, :invoices,
-                                                client_account: :user, tutor_account: :user)
-                             .order("student_accounts.name")
+    @engagements = @engagements.where(state: state) if state
   end
 
   def new
@@ -104,5 +100,9 @@ class EngagementsController < ApplicationController
 
   def invoice_error
     flash.now[:alert] = "Engagements with invoices cannot be deleted."
+  end
+
+  def state
+    @state ||= params[:state].presence
   end
 end
