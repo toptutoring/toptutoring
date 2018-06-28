@@ -1,6 +1,6 @@
 <tr>
   <td class="text-center">
-    <%= status_icon payment.status %>
+    <%= payment_status_icon payment.status %>
   </td>
   <td><%= l(payment.created_at, format: :date) %></td>
   <td><%= controller_name == "payments" ?  payment.payer_name : payment.payee.full_name  %></td>
