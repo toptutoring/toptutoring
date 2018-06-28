@@ -5,8 +5,7 @@ module Admin
 
     def index
       @tutors = User.tutors.view_order.includes(:tutor_account)
-      @subject_id = params[:subject_id]
-      select_tutors unless @subject_id.nil? || @subject_id.empty?
+      select_tutors if subject_id
     end
 
     def show
@@ -37,6 +36,10 @@ module Admin
     def set_tutor
       @tutor = User.find(params[:id])
       @tutor_account = @tutor.tutor_account
+    end
+
+    def subject_id
+      @subject_id ||= params[:subject_id].presence
     end
   end
 end
