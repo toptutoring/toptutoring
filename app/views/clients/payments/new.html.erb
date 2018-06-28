@@ -13,11 +13,18 @@
       <tbody>
         <% if @payments.present? %>
           <% @payments.each do |payment| %>
-            <tr>
+            <tr id="payment_row_<%= payment.id %>">
               <td><%= l(payment.created_at, format: :date) %></td>
               <td><%= number_to_currency(payment.amount) %></td>
               <td class="text-center"><%= payment.description %></td>
             </tr>
+            <% payment.refunds.each do |refund| %>
+              <tr class="text-success" id="refund_row_<%= refund.id %>">
+                <td><%= l(refund.created_at, format: :date) %></td>
+                <td>(<%= number_to_currency(refund.amount) %>)</td>
+                <td class="text-center"><%= t("app.clients.payments.refund_description", payment_date: l(payment.created_at, format: :date)) %></td>
+              </tr>
+            <% end %>
           <% end %>
         <% else %>
           <tr>

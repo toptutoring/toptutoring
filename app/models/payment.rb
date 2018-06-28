@@ -17,7 +17,6 @@ class Payment < ActiveRecord::Base
   monetize :amount_cents, :rate_cents, allow_nil: true
 
   # Scopes #
-  scope :from_user, ->(payer_id) { where(payer_id: payer_id) }
   scope :succeeded, -> { where(status: "succeeded") }
   scope :refunded, -> { where(status: "refunded") }
 
