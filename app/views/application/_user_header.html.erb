@@ -1,18 +1,22 @@
 <header>
   <%= render "shared/environment_banner" %>
-  <% if current_user.enabled? %>
-    <a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
-  <% end %>
+  <a href="javascript:;" role="button" class="hamburger-menu pull-left"><span></span></a>
+
   <% if true_production %>
-    <script>
-FS.identify('<%= current_user.id %>', {
-  displayName: '<%= current_user.full_name %>',
-  email: '<%= current_user.email %>',
-  role_str: '<%= current_user.try(:roles).try(:first).try(:name) %>',
-});
-    </script>
+    <!-- FullStory identifying script -->
+    <%= content_for :javascripts do %>
+      <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+          FS.identify('<%= current_user.id %>', {
+            displayName: '<%= current_user.full_name %>',
+            email: '<%= current_user.email %>',
+            role_str: '<%= current_user.try(:roles).try(:first).try(:name) %>',
+          });
+        });
+      </script>
+    <% end %>  
   <% end %>  
-  
+
   <div class="right-side-header">
     <ul class="notification-bar list-inline pull-right">
       <li class="dropdown">
