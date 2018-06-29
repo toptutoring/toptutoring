@@ -56,11 +56,12 @@ class Payment < ActiveRecord::Base
   end
 
   def fully_refunded?
+    return false unless hours_purchased
     hours_purchased == refunds.sum(:hours)
   end
 
   def refundable_hours
-    return nil if one_time
+    return nil if one_time || !hours_purchased
     hours_purchased - refunds.sum(:hours)
   end
 end

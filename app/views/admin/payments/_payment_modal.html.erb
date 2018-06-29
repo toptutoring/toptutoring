@@ -8,8 +8,10 @@
         <p><b>Payment #<%= payment.id %> Details</b></p>
         <p>Date: <%= l payment.created_at, format: :date %></p>
         <p>Description: <%= payment.description %></p>
-        <p>Hours: <%= payment.hours_purchased %></p>
-        <p>Hours Type: <%= payment.hours_type.humanize %></p>
+        <% if payment.hours_purchased %>
+          <p>Hours: <%= payment.hours_purchased %></p>
+          <p>Hours Type: <%= payment.hours_type.humanize %></p>
+        <% end %>
         <p>Amount: $<%= payment.amount %></p>
 
         <% if payment.status == "refunded" %>
@@ -23,10 +25,12 @@
           <% end %>
         <% end %>
           <hr />
-        <% if payment.fully_refunded? %>
+        <% if payment.fully_refunded? && payment.stripe_charge_id %>
           <b>This payment has been fully refunded.</b>
-        <% else %>
+        <% elsif payment.stripe_charge_id %>
           <%= render "refund_form", payment: payment %>
+        <% else %>
+          <b>This payment cannot be refunded through the app.</b>
         <% end %>
       </div>
     </div>

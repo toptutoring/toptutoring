@@ -5,8 +5,8 @@ module Admin
     
     def index
       @payments = Payment.order(created_at: :desc)
-                         .includes(:payer, :refunds)
-                         .paginate(page: params[:page], per_page: 10)
+                         .includes(:payer)
+      @refunds = Refund.includes(payment: :payer)
     end
 
     def create

@@ -1,5 +1,4 @@
 <%= render "layouts/page_widget", title: "Client Payments" do %>
   <h5>Total amount received: $<%= Money.new(Payment.sum(:amount_cents) - Refund.sum(:amount_cents)) %></h3>
-  <%= render "admin/payments/payments_table", payments: @payments, title: "Client" %>
-  <%= will_paginate @payouts %>
+  <%= render "admin/payments/payments_table", payments: @payments, title: "Client", refunds: @refunds %>
 <% end %>
