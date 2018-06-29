@@ -3,7 +3,8 @@
   <meta property="og:type"          content="website" />
   <meta property="og:title"         content="<%= @post.title %>" />
   <meta property="og:description"   content="<%= @post.excerpt %>" />
-  <meta property="og:image"         content="<%= image_url("topTutoringFinal.png") %>" />
+  <meta property="og:image"         content="" />
+  <meta property="og:image:alt"     content="<%= @post.title %>" />
 <% end %>
 
 <%= render layout: "pages/blog_posts/blog_layout" do %>
