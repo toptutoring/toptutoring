@@ -42,7 +42,7 @@
 
   <%= form.fields_for :signup do |client_field| %>
     <div class="col-xs-12">
-      <%= client_field.text_area :comments, placeholder: "Comments", rows: "3" %>
+      <%= client_field.text_area :comments, placeholder: "Comments", rows: "3", maxLength: 1500 %>
     </div>
   <% end %>
 
