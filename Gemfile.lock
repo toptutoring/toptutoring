@@ -226,7 +226,7 @@ GEM
     mustermann (1.0.2)
     newrelic_rpm (4.2.0.334)
     nio4r (2.1.0)
-    nokogiri (1.8.2)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     normalize-rails (3.0.3)
     oauth2 (1.4.0)
