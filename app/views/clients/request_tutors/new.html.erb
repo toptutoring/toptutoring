@@ -5,18 +5,18 @@
           <h3 class="widget-title">Request a Tutor</h3>
         <div class="widget-body">
           <%= form_for(@engagement, url: clients_request_tutor_path) do |f| %>
-            <div class="form-group form-group-lg select-option">
+            <div class="form-group select-option">
               <% if current_user.student_account %>
                 <%= f.hidden_field :student_account_id, value: current_user.student_account.id %>
               <% else %>
                   <%= f.label :student_account_id, "Student" %>
-                  <%= f.select :student_account_id, options_from_collection_for_select(current_user.client_account.student_accounts, "id", "name", @student_account_id), { include_blank: false }, class: "form-control input-lg" %>
+                  <%= f.select :student_account_id, options_from_collection_for_select(current_user.client_account.student_accounts, "id", "name", @student_account_id), { include_blank: false }, class: "form-control" %>
               <% end %>
             </div>
 
-            <div class="form-group form-group-lg select-option">
+            <div class="form-group select-option chosen">
               <%= f.label :subject_id, "Subject" %>
-              <%= f.select :subject_id, grouped_options_for_select(subject_grouped_select_options), { prompt: "Choose one of the following" }, class: "form-control input-lg", required: true %>
+              <%= f.select :subject_id, grouped_options_for_select(subject_grouped_select_options), { include_blank: true }, data: { placeholder: "Please choose one of the following..." }, class: "chosen-select form-control" %>
             </div>
 
             <div class="text-center">

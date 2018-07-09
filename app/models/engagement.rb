@@ -56,7 +56,7 @@ class Engagement < ActiveRecord::Base
   end
 
   def able_to_enable?
-    !active? && tutor_account.present?
+    !active? && tutor_account.present? && rates_are_set?
   end
 
   def able_to_delete?

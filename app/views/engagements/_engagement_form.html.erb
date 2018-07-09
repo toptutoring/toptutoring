@@ -1,0 +1,31 @@
+<%= form_for @engagement do |f| %>
+  <div class="form-group select-option">
+    <%= f.label :tutor_account_id, "Tutor" %>
+    <%= f.select :tutor_account_id, options_from_collection_for_select(@tutor_accounts, :id, :full_name, @engagement.tutor_account_id), {include_blank: true}, data: { placeholder: "Please choose one of the following tutors..." }, class: "chosen-select form-control" %>
+  </div>
+
+  <% if @engagement.persisted? %>
+    <div class="form-group">
+      <%= f.label :student_acount_id, "Student" %>
+      <%= f.text_field :student_acount_id, value: @engagement.student_name, disabled: true, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :client_account_id, "Client" %>
+      <%= f.text_field :client_account_id, value: @engagement.client.full_name, disabled: true, class: "form-control" %>
+    </div>
+  <% else %>
+    <div class="form-group select-option chosen">
+      <%= f.label :student_account_id, "Student" %>
+      <%= f.select :student_account_id, grouped_options_for_select(@students, @engagement.student_account_id), {include_blank: true}, data: { placeholder: "Please choose one of the following students..." }, class: "chosen-select form-control" %>
+    </div>
+  <% end %>
+
+  <div class="form-group select-option chosen">
+    <%= f.label :subject_id, "Subject" %>
+    <%= f.select :subject_id, grouped_options_for_select(subject_grouped_select_options, @engagement.subject_id), {include_blank: true}, data: { placeholder: "Please choose one of the following subjects..." }, class: "chosen-select form-control" %>
+  </div>
+
+  <div class="text-center">
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,6 +1,8 @@
 require "rails_helper"
+require "chosen-rails/rspec"
 
 feature "Leaving a comment" do
+  let!(:new_subject) { FactoryBot.create(:subject) }
   before :each do
     unset_subdomain
   end
@@ -10,7 +12,6 @@ feature "Leaving a comment" do
   end
 
   scenario "with valid email and password", js: true do
-    FactoryBot.create(:subject)
     visit "/contact"
 
     expect(Lead.count).to eq 0
@@ -25,7 +26,7 @@ feature "Leaving a comment" do
     fill_in "Phone Number", with: phone_number
     fill_in "Email", with: email
     fill_in "Zip Code", with: zip
-    find("#subject_id").find(:xpath, "option[2]").select_option
+    chosen_select new_subject.name, from: "subject_id"
     click_button "Send Message"
 
     expect(page).to have_content(t "www.contact.confirmation")

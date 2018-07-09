@@ -12,6 +12,7 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require chosen-jquery
 //= require bootstrap-sprockets
 //= require dataTables/dataTables
 

@@ -1,6 +1,6 @@
 class EngagementsController < ApplicationController
   before_action :require_login
-  before_action :set_tutors, only: [:new, :edit]
+  before_action :set_tutors, :set_students, only: [:new, :edit]
   before_action :set_engagement, only: [:edit, :update, :enable, :disable, :destroy]
 
   def index
@@ -11,21 +11,23 @@ class EngagementsController < ApplicationController
   end
 
   def new
-    @students = ClientAccount.all.map do |account|
-      next unless account.student_accounts.any?
-      [account.user.full_name, student_options(account)]
-    end
-    @students.compact!
+    @engagement = Engagement.new
+  end
+
+  def edit
+    render :new
   end
 
   def create
-    engagement = Engagement.new(new_engagement_params)
-    if engagement.save
+    @engagement = Engagement.new(new_engagement_params)
+    if @engagement.save
       flash.notice = "Engagement successfully created!"
       redirect_to action: :index
     else
-      flash.alert = engagement.errors.full_messages
-      redirect_to action: :new
+      flash.alert = @engagement.errors.full_messages
+      set_tutors
+      set_students
+      render :new
     end
   end
 
@@ -104,5 +106,13 @@ class EngagementsController < ApplicationController
 
   def state
     @state ||= params[:state].presence
+  end
+
+  def set_students
+    @students = ClientAccount.all.map do |account|
+      next unless account.student_accounts.any?
+      [account.user.full_name, student_options(account)]
+    end
+    @students.compact!
   end
 end

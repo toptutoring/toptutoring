@@ -1,4 +1,5 @@
 require "rails_helper"
+require "chosen-rails/rspec"
 
 feature "Update engagements" do
   let(:admin) { User.admin }
@@ -22,7 +23,7 @@ feature "Update engagements" do
       expect(page).to have_content("Student")
       expect(page).to have_content("Client")
 
-      find("#engagement_tutor_account_id").find(:xpath, "option[2]").select_option
+      chosen_select tutor.full_name, from: "engagement_tutor_account_id"
       click_button "Submit"
 
       expect(page).to have_content("Engagement successfully updated!")
