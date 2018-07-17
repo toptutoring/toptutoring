@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def country_code
     code = request.location.country_code
-    code == "RD" ? "US" : code
+    code == "RD" ? "US" : code || "US"
   end
 
   def masquerading?
