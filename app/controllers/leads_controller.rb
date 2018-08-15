@@ -41,7 +41,7 @@ class LeadsController < ApplicationController
           .permit(:first_name, :last_name, :zip,
                   :phone_number, :email,
                   :subject_id, :comments)
-          .merge(country_code: country_code)
+          .merge(country_code: "US")
   end
 
   def errors
