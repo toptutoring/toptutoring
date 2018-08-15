@@ -32,7 +32,7 @@ module Users
             .permit(:first_name, :last_name, :phone_number, :email, :password,
                     :zip, signup_attributes: [:student, :subject_id, :comments])
             .merge(roles: Role.where(name: "client"),
-                   country_code: country_code)
+                   country_code: "US")
     end
 
     def return_path(user)

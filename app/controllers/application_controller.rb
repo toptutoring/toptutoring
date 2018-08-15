@@ -21,11 +21,6 @@ class ApplicationController < ActionController::Base
     raise ActiveRecord::RecordNotFound.new("Not Found")
   end
 
-  def country_code
-    code = request.location.country_code
-    code == "RD" ? "US" : code || "US"
-  end
-
   def masquerading?
     session[:admin_id].present?
   end

@@ -139,46 +139,47 @@ feature "Create user as first step of sign up process" do
       expect(page).to have_content(I18n.t("app.signup.tutors.agreement_fail"))
     end
 
-    context "when user is from another country" do
-      scenario "and inputs a valid phone number" do
-        visit client_sign_up_path
-        allow_any_instance_of(Users::ClientsController).to receive(:country_code) { "KR" }
+    # TODO Re-enable when country code is dynamcially generated
+    # context "when user is from another country" do
+    #   scenario "and inputs a valid phone number" do
+    #     visit client_sign_up_path
+    #     allow_any_instance_of(Users::ClientsController).to receive(:country_code) { "KR" }
 
-        name = "ClientName"
-        last_name = "ClientLastName"
-        fill_in "user_first_name", with: name
-        fill_in "user_last_name", with: last_name
-        fill_in "user_email", with: "client@example.com"
-        fill_in "user_phone_number", with: "02-312-3456"
-        fill_in "Zip Code", with: 94501 # not a korean zip, but required currently
-        fill_in "user_password", with: "password"
-        fill_in "confirm_password", with: "password"
-        select subject_academic.name, from: "user_signup_attributes_subject_id"
-        find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
-        click_button "Submit"
+    #     name = "ClientName"
+    #     last_name = "ClientLastName"
+    #     fill_in "user_first_name", with: name
+    #     fill_in "user_last_name", with: last_name
+    #     fill_in "user_email", with: "client@example.com"
+    #     fill_in "user_phone_number", with: "02-312-3456"
+    #     fill_in "Zip Code", with: 94501 # not a korean zip, but required currently
+    #     fill_in "user_password", with: "password"
+    #     fill_in "confirm_password", with: "password"
+    #     select subject_academic.name, from: "user_signup_attributes_subject_id"
+    #     find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
+    #     click_button "Submit"
 
-        expect(page).to have_content(I18n.t("app.signup.client.success_message"))
-        expect(page).to have_content(name)
-        expect(page).to have_content(last_name)
-      end
+    #     expect(page).to have_content(I18n.t("app.signup.client.success_message"))
+    #     expect(page).to have_content(name)
+    #     expect(page).to have_content(last_name)
+    #   end
 
-      scenario "and inputs a valid phone number" do
-        visit client_sign_up_path
-        allow_any_instance_of(Users::ClientsController).to receive(:country_code) { "KR" }
+    #   scenario "and inputs a valid phone number" do
+    #     visit client_sign_up_path
+    #     allow_any_instance_of(Users::ClientsController).to receive(:country_code) { "KR" }
 
-        fill_in "user_first_name", with: "Client"
-        fill_in "user_last_name", with: "Last Name"
-        fill_in "user_email", with: "client@example.com"
-        fill_in "user_phone_number", with: "555-5555" # invalid korean number
-        fill_in "Zip Code", with: 94501 # not a korean zip, but required currently
-        fill_in "user_password", with: "password"
-        fill_in "confirm_password", with: "password"
-        select subject_academic.name, from: "user_signup_attributes_subject_id"
-        find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
-        click_button "Submit"
+    #     fill_in "user_first_name", with: "Client"
+    #     fill_in "user_last_name", with: "Last Name"
+    #     fill_in "user_email", with: "client@example.com"
+    #     fill_in "user_phone_number", with: "555-5555" # invalid korean number
+    #     fill_in "Zip Code", with: 94501 # not a korean zip, but required currently
+    #     fill_in "user_password", with: "password"
+    #     fill_in "confirm_password", with: "password"
+    #     select subject_academic.name, from: "user_signup_attributes_subject_id"
+    #     find("#user_signup_attributes_student").find(:xpath, "option[2]").select_option
+    #     click_button "Submit"
 
-        expect(page).to have_content("Phone number is invalid")
-      end
-    end
+    #     expect(page).to have_content("Phone number is invalid")
+    #   end
+    # end
   end
 end

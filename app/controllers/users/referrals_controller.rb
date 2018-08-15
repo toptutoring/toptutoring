@@ -32,17 +32,11 @@ module Users
             .permit(:first_name, :last_name, :phone_number, :email, 
                     :password, :referrer_id, :zip,
                     signup_attributes: [:student, :subject_id, :comments])
-            .merge(roles: Role.where(name: "client"), country_code: country_code)
+            .merge(roles: Role.where(name: "client"), country_code: "US")
     end
 
     def confirm_password
       params.require(:confirm_password)
-    end
-
-    def country_code
-      return "US" if Rails.env.development? || Rails.env.test?
-      code = request.location.country_code
-      code == "RD" ? "US" : code
     end
 
     def return_path(user)
