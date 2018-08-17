@@ -34,3 +34,8 @@
 # Ignore local upload images
 /public/uploads
 /public/sitemap.xml.gz
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity

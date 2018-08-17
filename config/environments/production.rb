@@ -1,5 +1,8 @@
 require Rails.root.join("config/smtp")
 Rails.application.configure do
+  # Verifies that versions and hashed value of the package contents in the project's package.json
+config.webpacker.check_yarn_integrity = false
+
   if ENV.fetch("HEROKU_APP_NAME", "").include?("staging-pr-")
     ENV["APPLICATION_HOST"] = ENV["HEROKU_APP_NAME"] + ".herokuapp.com"
   end
