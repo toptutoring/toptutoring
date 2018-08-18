@@ -15,7 +15,6 @@ jobs:
 
     steps:
       - checkout
-      - run: echo "A first hello"
       - restore_cache:
           key: npm-cache-{{ .Branch }}-{{ checksum "package.json" }}
       - run: npm install
@@ -36,6 +35,10 @@ jobs:
       - run: bundle install --path vendor/bundle
 
       - run: sudo apt install -y postgresql-client || true
+      - run: curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      - run: sudo dpkg -i google-chrome.deb
+      - run: sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+      - run: rm google-chrome.deb
 
       - save_cache:
           key: v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
@@ -45,8 +48,6 @@ jobs:
       - run: 
           name: Database setup
           command: bundle exec rake db:create db:schema:load --trace
-          environment: 
-            DATABASE_URL: "postgres://ubuntu@localhost:5432/circleci_test"
 
       - run: bundle exec rake
               
@@ -62,4 +63,5 @@ workflows:
   toptutoring-workflows:
     jobs:
       - build
+      - two
 
