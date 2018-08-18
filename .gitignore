@@ -21,6 +21,7 @@
 # Ignore Development/Test Environment Variables
 .env.development
 .env.test
+.env.local
 .ruby-version
 
 # Added by webpacker:install
