@@ -11,7 +11,7 @@ jobs:
       - image: circleci/postgres:9.5-postgis-ram
         environment:
           POSTGRES_USER: ubuntu
-          POSTGRES_DB: circleci_test
+          POSTGRES_DB: top_tutoring_test
 
     steps:
       - checkout
