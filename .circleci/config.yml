@@ -2,7 +2,8 @@ version: 2
 jobs:
   one:
     docker:
-      - image: circleci/node:4.8.2
+      - image: circleci/ruby:2.4-node
+      - image: circleci/postgres:9.5-postgis-ram
     steps:
       - checkout
       - run: echo "A first hello"
@@ -13,6 +14,9 @@ jobs:
           key: npm-cache-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - run: bin/setup
+      - run: rake
+              
   two:
     docker:
       - image: circleci/node:4.8.2
