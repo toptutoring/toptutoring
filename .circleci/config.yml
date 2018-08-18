@@ -6,7 +6,13 @@ jobs:
         environment:
           RAILS_ENV: test
           RACK_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: root
       - image: circleci/postgres:9.5-postgis-ram
+        environment:
+          POSTGRES_USER: ubuntu
+          POSTGRES_DB: toptutoring_test
+
     steps:
       - checkout
       - run: echo "A first hello"
@@ -29,10 +35,20 @@ jobs:
 
       - run: bundle install --path vendor/bundle
 
+      - run: sudo apt install -y postgresql-client || true
+
       - save_cache:
           key: v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+
+      - run:
+          name: Database Setup
+          command: |
+            bundle exec rake db:create db:schema:load --trace
+            bundle exec rake db:migrate
+        environment: 
+          DATABASE_URL: "postgres://ubuntu@localhost:5432/toptutoring_test"
 
       #- run: bin/setup
       - run: bundle exec rake
