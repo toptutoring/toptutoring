@@ -3,6 +3,9 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.4.4-node
+        environment:
+          RAILS_ENV: test
+          RACK_ENV: test
       - image: circleci/postgres:9.5-postgis-ram
     steps:
       - checkout
@@ -14,13 +17,16 @@ jobs:
           key: npm-cache-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run: bundle install & bundle clean
+
+      # Run bundler
+      # Load installed gems from cache if possible
       - restore_cache:
-        keys:
-          # when lock file changes, use increasingly general patterns
-          - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-          - v1-gem-cache-{{ arch }}-{{ .Branch }}-
-          - v1-gem-cache-{{ arch }}-
+          keys:
+            # when lock file changes, use increasingly general patterns
+            - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - v1-gem-cache-{{ arch }}-{{ .Branch }}-
+            - v1-gem-cache-{{ arch }}-
+      - run: bundle install & bundle clean
       - save_cache:
           paths:
             - ~/.bundle
