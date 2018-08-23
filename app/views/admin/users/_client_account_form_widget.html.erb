@@ -6,6 +6,28 @@
       </div>
       <div class="widget-body">
         <%= form_for(user, url: url) do |f| %>
+          <% if @user.students.one? %>
+             <h3>Swap Student and Client roles</h3>
+          <% elsif @user.students.empty? %>
+            <% if @user.client_account.present? && @user.student_account.present? %>
+              <h3>This user is already a Client-Student</h3>
+            <% else %>
+              <h3>Make this Client into a Client-Student</h3>
+              <p> Client-Students have the ability to pay but also the ability to be tutored</p>
+            <% end %>
+          <% end %>
+
+          <% if @user.students.many? %>
+            <h3>Unable to swap roles due too many students</h3>
+          <% else %>
+            <% unless @user.client_account.present? && @user.student_account.present? %>
+              <div class="form-group form-inline">
+                <%= f.label :switch_to_student, "Reassign roles" %>
+                <%= f.check_box :switch_to_student, class: "form-control" %>
+              </div>
+            <% end %>
+          <% end %>
+
           <h3>Rates and Balances</h3>
           <p class="widget-hint">When rates are $0.00, rates and credits will not be shown to clients as well as tutors. Clients are only able to purchase credit types that have a rate.</p>
 
