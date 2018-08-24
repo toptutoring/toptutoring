@@ -1,0 +1,62 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.4.4-node
+        environment:
+          RAILS_ENV: test
+          RACK_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: ubuntu
+      - image: circleci/postgres:9.5-postgis-ram
+        environment:
+          POSTGRES_USER: ubuntu
+          POSTGRES_DB: top_tutoring_test
+
+    steps:
+      - checkout
+      - restore_cache:
+          key: npm-cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          key: npm-cache-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+      # Run bundler
+      # Load installed gems from cache if possible
+      - restore_cache:
+          keys:
+            # when lock file changes, use increasingly general patterns
+            - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - v1-gem-cache-{{ arch }}-{{ .Branch }}-
+            - v1-gem-cache-{{ arch }}-
+
+      - run: bundle install --path vendor/bundle
+
+      - run: sudo apt -f install chromium
+
+      - save_cache:
+          key: v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run: 
+          name: Database setup
+          command: bundle exec rake db:create db:schema:load --trace
+
+      - run: bundle exec rake
+              
+  two:
+    docker:
+      - image: circleci/node:4.8.2
+    steps:
+      - checkout
+      - run: echo "Place a second workflow here"
+
+workflows:
+  version: 2
+  toptutoring-workflows:
+    jobs:
+      - build
+
