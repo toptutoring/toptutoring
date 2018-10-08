@@ -12,40 +12,15 @@ module Director
 
     def update
       @user = User.clients.find(params[:id])
+
       if valid_inputs? && @user.update_attributes(user_params)
-        if @user.switch_to_student == "1"
-          if @user.students.one? && @user.client_account.engagements.one?# Swap the student and client roles
-            ActiveRecord::Base.transaction do
-              engagement = @user.client_account.engagements.last
-              old_student = @user.students.last
-              old_student.student_account.destroy!
-              old_student.create_client_account!
-              new_client = old_student
-              new_client_account = new_client.client_account
-
-              @user.client_account.destroy!
-              new_client.client_account.student_accounts.create!(user: @user, name: @user.full_name)
-              new_student = @user
-              new_student_account = new_student.student_account
-
-              @engagement.client_account = new_client_account
-              @engagement.student_account = new_student_account
-              @engagement.save
-            end
-          elsif @user.students.empty? && @user.client_account.engagements.one?
-            ActiveRecord::Base.transaction do
-              engagement = @user.client_account.engagements.last
-              # Make into client-student
-              @user.client_account.student_accounts.create!(user: @user, name: @user.full_name)
-              new_student_account = @user.student_account
-              engagement.student_account = new_student_account
-              engagement.save
-            end
-          elsif @user.students.empty? && @user.client_account.engagements.empty?
-            @user.client_account.student_accounts.create!(user: @user, name: @user.full_name)
-          end
+        result = SwapClientService.new(@user, @engagement).swap!
+        if result.success?
+          redirect_to director_clients_path, notice: "Client info is successfully updated! #{result.messages}"
+        else
+          flash[:error] = "#{result.messages}"
+          render "edit"
         end
-        redirect_to director_clients_path, notice: 'Client info is successfully updated!'
       else
         flash[:error] = @user.errors.full_messages
         render "edit"
