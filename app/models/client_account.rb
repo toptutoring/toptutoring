@@ -1,7 +1,7 @@
 class ClientAccount < ApplicationRecord
   belongs_to :user
   has_many :student_accounts, dependent: :destroy
-  has_many :engagements, dependent: :destroy
+  has_many :engagements
   has_many :invoices, through: :engagements
   has_many :client_reviews
   validates_presence_of :user
