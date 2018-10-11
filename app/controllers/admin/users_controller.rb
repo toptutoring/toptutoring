@@ -19,8 +19,9 @@ module Admin
     def destroy
       @user = User.find(params[:id])
       @user.students.destroy_all
-      @user.destroy
-      flash.now.notice = t("app.admin.users.remove_user_success", name: @user.full_name)
+      full_name = @user.full_name
+      @user.destroy!
+      flash.now.notice = t("app.admin.users.remove_user_success", name: full_name)
     rescue ActiveRecord::ActiveRecordError => e
       flash.now.alert = t("app.admin.users.remove_user_failure")
     end
