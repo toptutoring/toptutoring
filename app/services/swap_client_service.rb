@@ -8,7 +8,10 @@ class SwapClientService
 
   def swap!
     return Result.new(true) unless @user.switch_to_student == "1"
-    if @user.students.one? && @user.client_account.engagements.one?
+    if @user.client_account.present? && @user.student_account.present?
+      return unless @user.client_account.engagements.empty?
+      duplicate_client_student_into_student
+    elsif @user.students.one? && @user.client_account.engagements.one?
       make_client_into_student_and_swap
     elsif @user.students.empty? && @user.client_account.engagements.one?
       make_client_into_client_student_and_associate_existing_engagement
@@ -20,6 +23,28 @@ class SwapClientService
   end
 
   private
+
+  def duplicate_client_student_into_student
+    ActiveRecord::Base.transaction do
+      student_account = @user.student_account
+      new_student_email = @user.email.split('@').join('+student@')
+      new_student = User.create!(
+        email: new_student_email,
+        password: SecureRandom.hex(6),
+        first_name: @user.first_name,
+        phone_number: @user.phone_number
+      )
+      StudentAccount.create!(
+        user: new_student,
+        name: @user.student_account.name,
+        client_account: @user.client_account
+      )
+      @user.student_account.destroy!
+      @user.students << new_student
+      @user.save
+      Result.new(true, "Successfully swapped client with student")
+    end
+  end
 
   def make_client_into_student_and_swap
     ActiveRecord::Base.transaction do
@@ -55,6 +80,8 @@ class SwapClientService
       new_student_account = @user.student_account
       engagement.student_account = new_student_account
       engagement.save!
+      @user.roles << Role.find_by(name: "student")
+      @user.save!
       Result.new(true, "Successfully made client into client-student")
     end
   end
