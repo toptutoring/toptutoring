@@ -18,6 +18,8 @@ module Admin
 
     def destroy
       @user = User.find(params[:id])
+      @user.client_account.engagements.destroy_all if @user.client_account.present?
+
       @user.students.destroy_all
       full_name = @user.full_name
       @user.destroy!
