@@ -26,7 +26,7 @@ class SwapClientService
   end
 
   def originally_client_with_student?
-    @user.students.one? && @user.client_account.engagements.one?
+    @user.students.one?
   end
 
   def originally_client_without_students_yet?
@@ -64,25 +64,34 @@ class SwapClientService
   def merge_client_with_student_into_student_client
     ActiveRecord::Base.transaction do
       old_student = @user.students.last
-      @engagement.update_column(:student_account_id, nil)
+      if @engagement.present?
+        @engagement.update_column(:student_account_id, nil)
+        engagement = @user.client_account.engagements.last
+        engagement.student_account = new_student_account
+        engagement.save!
+      elsif @user.client_account.engagements.many?
+        raise ActiveRecord::RecordInvalid.new("Unable to duplicate student-client with multiple engagements")
+      end
 
       old_student.student_account.destroy!
       old_student.create_client_account!
       new_client = old_student
       new_client_account = new_client.client_account
+
       new_client.roles = [Role.find_by(name: "client")]
       new_client.save!
 
-      @engagement.update_column(:client_account_id, nil)
+      @engagement.update_column(:client_account_id, nil) if @engagement.present?
       @user.client_account.destroy!
       new_client.client_account.student_accounts.create!(user: @user, name: @user.full_name)
       new_student = @user
       new_student_account = new_student.student_account
       new_student.roles = [Role.find_by(name: "student")]
-
-      @engagement.client_account = new_client_account
-      @engagement.student_account = new_student_account
-      @engagement.save!
+      if @engagement.present?
+        @engagement.client_account = new_client_account
+        @engagement.student_account = new_student_account
+        @engagement.save!
+      end
       Result.new(true, "Successfully swapped client with student")
     end
   end
