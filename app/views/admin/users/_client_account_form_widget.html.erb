@@ -7,7 +7,7 @@
       <div class="widget-body">
         <%= form_for(user, url: url) do |f| %>
           <% if @user.students.one? %>
-             <h3>Swap Student and Client roles</h3>
+             <h3>Merge this Client with a Student into a Student-Client</h3>
           <% elsif @user.students.empty? %>
             <% if @user.client_account.present? && @user.student_account.present? %>
               <h3>Duplicate this Student-Client into a Client who has a Student</h3>
