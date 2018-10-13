@@ -5,11 +5,12 @@ describe SwapClientService do
     let(:client) { FactoryBot.create(:client_user) }
     let(:student) { FactoryBot.create(:student_user, first_name: "BobStudent", client: client) }
 
-    context "for student-clients without and engagement" do
-      it "makes a student out of the client" do
+    context "for a Client without students" do
+      it "converts the Client into a Student-Client" do
+        Engagement.destroy_all
         client.switch_to_student = "1"
         client.create_student_account(
-          name: 'Bob Student',
+          name: client.full_name,
           client_account_id: client.client_account.id)
         client.save
         subject = SwapClientService.new(client, nil)
@@ -36,9 +37,8 @@ describe SwapClientService do
       end
     end
 
-
-    context "for students with no engagements and no students" do
-      it "makes a client into a student and swaps" do
+    context "for client with no engagements and no students" do
+      it "makes a Client into a Student-Client" do
         client.switch_to_student = "1"
         client.save
         subject = SwapClientService.new(client, nil)
