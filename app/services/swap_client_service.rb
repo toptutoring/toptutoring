@@ -72,20 +72,6 @@ class SwapClientService
     end
   end
 
-  def make_client_into_client_student_and_associate_existing_engagement
-    ActiveRecord::Base.transaction do
-      engagement = @user.client_account.engagements.last
-      # Make into client-student
-      @user.client_account.student_accounts.create!(user: @user, name: @user.full_name)
-      new_student_account = @user.student_account
-      engagement.student_account = new_student_account
-      engagement.save!
-      @user.roles << Role.find_by(name: "student")
-      @user.save!
-      Result.new(true, "Successfully made client into client-student")
-    end
-  end
-
   def make_student_account_for_user
     @user.client_account.student_accounts.create!(user: @user, name: @user.full_name)
     Result.new(true, "Successfully made student account for user")

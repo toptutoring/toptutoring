@@ -36,20 +36,6 @@ describe SwapClientService do
       end
     end
 
-    context "for clients with one engagement but no students" do
-      let(:engagement) { FactoryBot.create(:engagement,
-        tutor_account: nil,
-        client_account: client.client_account) }
-      it "makes a client into a client-student" do
-        client.switch_to_student = "1"
-        client.save
-        subject = SwapClientService.new(client, engagement)
-        results = subject.swap!
-
-        expect(client.has_role?("client")).to be_truthy
-        expect(client.has_role?("student")).to be_truthy
-      end
-    end
 
     context "for students with no engagements and no students" do
       it "makes a client into a student and swaps" do
