@@ -64,14 +64,7 @@ class SwapClientService
   def merge_client_with_student_into_student_client
     ActiveRecord::Base.transaction do
       old_student = @user.students.last
-      if @engagement.present?
-        @engagement.update_column(:student_account_id, nil)
-        engagement = @user.client_account.engagements.last
-        engagement.student_account = new_student_account
-        engagement.save!
-      elsif @user.client_account.engagements.many?
-        raise ActiveRecord::RecordInvalid.new("Unable to duplicate student-client with multiple engagements")
-      end
+      @engagement.update_column(:student_account_id, nil) if @engagement.present?
 
       old_student.student_account.destroy!
       old_student.create_client_account!
@@ -91,7 +84,10 @@ class SwapClientService
         @engagement.client_account = new_client_account
         @engagement.student_account = new_student_account
         @engagement.save!
+      elsif @user.client_account.engagements.many?
+        raise ActiveRecord::RecordInvalid.new("Unable to merge client with multiple engagements")
       end
+
       Result.new(true, "Successfully swapped client with student")
     end
   end
