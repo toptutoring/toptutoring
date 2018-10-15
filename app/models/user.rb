@@ -41,6 +41,8 @@ class User < ActiveRecord::Base
   validates_presence_of :phone_number, :country_code, on: :create
   validate :credits_must_be_by_quarter_hours
 
+  attr_accessor :switch_to_student
+
   def credits_must_be_by_quarter_hours
     return if online_academic_credit % 0.25 == 0.0 && online_test_prep_credit % 0.25 == 0.0 &&
       in_person_academic_credit % 0.25 == 0.0 && in_person_test_prep_credit % 0.25 == 0.0

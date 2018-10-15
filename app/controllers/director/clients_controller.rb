@@ -12,14 +12,21 @@ module Director
 
     def update
       @user = User.clients.find(params[:id])
+
       if valid_inputs? && @user.update_attributes(user_params)
-        redirect_to director_clients_path, notice: 'Client info is successfully updated!'
+        result = SwapClientService.new(@user, @engagement).swap!
+        if result.success?
+          redirect_to director_clients_path, notice: "Client info is successfully updated! #{result.messages}"
+        else
+          flash[:error] = "#{result.messages}"
+          render "edit"
+        end
       else
         flash[:error] = @user.errors.full_messages
         render "edit"
       end
     end
-    
+
     private
 
     def user_params
@@ -27,7 +34,7 @@ module Director
                                    :online_academic_rate, :online_test_prep_rate,
                                    :in_person_academic_credit, :in_person_test_prep_credit,
                                    :in_person_academic_rate, :in_person_test_prep_rate,
-                                   :referrer_id, :referral_claimed,
+                                   :referrer_id, :referral_claimed, :switch_to_student,
                                    client_account_attributes: [:id, :review_source, :review_link])
     end
 

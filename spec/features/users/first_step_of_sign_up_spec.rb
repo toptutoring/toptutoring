@@ -23,7 +23,7 @@ feature "Create user as first step of sign up process" do
       click_button "Submit"
 
       expect(page).to have_current_path(new_clients_student_path)
-      expect(page).to have_content(I18n.t("app.signup.client.success_message"))
+      expect(page).to have_content("Thank you for signing up for Top Tutoring!")
       expect(page).to have_content(name)
       expect(page).to have_content(last_name)
       # Email count should be 2 since an email is sent to both client and admin
@@ -48,7 +48,7 @@ feature "Create user as first step of sign up process" do
       click_button "Submit"
 
       expect(page).to have_current_path(dashboard_path)
-      expect(page).to have_content(I18n.t("app.signup.client_student.success_message"))
+      expect(page).to have_content("Thank you for signing up for Top Tutoring!")
       expect(page).to have_content(name)
       expect(page).to have_content(last_name)
       # Email count should be 2 since an email is sent to both client and admin

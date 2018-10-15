@@ -9,17 +9,28 @@ module Admin
 
     def update
       if @user.update_attributes(user_params)
-        flash.now.notice = 'User successfully updated!'
+        result = SwapClientService.new(@user, @user.client_account&.engagements&.last).swap!
+        if result.success?
+          flash.now.notice = "User successfully updated!"
+          render :edit
+        else
+          flash[:error] = "#{result.messages}"
+          render :edit
+        end
       else
-        flash.now.alert = @user.errors.full_messages
+        flash[:error] = @user.errors.full_messages
+        render :edit
       end
-      render :edit
     end
 
     def destroy
       @user = User.find(params[:id])
-      @user.destroy
-      flash.now.notice = t("app.admin.users.remove_user_success", name: @user.full_name)
+      @user.client_account.engagements.destroy_all if @user.client_account.present?
+
+      @user.students.destroy_all
+      full_name = @user.full_name
+      @user.destroy!
+      flash.now.notice = t("app.admin.users.remove_user_success", name: full_name)
     rescue ActiveRecord::ActiveRecordError => e
       flash.now.alert = t("app.admin.users.remove_user_failure")
     end
@@ -53,7 +64,7 @@ module Admin
                                    :in_person_academic_rate, :in_person_test_prep_rate,
                                    :online_test_prep_credit, :online_academic_credit,
                                    :online_test_prep_rate, :online_academic_rate,
-                                   :referrer_id, :referral_claimed,
+                                   :referrer_id, :referral_claimed, :switch_to_student,
                                    client_account_attributes: [:id, :review_source, :review_link])
     end
 
