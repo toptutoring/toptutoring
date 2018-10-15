@@ -1,5 +1,5 @@
 <!-- Don't show Dwolla since we are migrating to Stripe <%= render "dwolla_login" if !current_user.has_valid_dwolla? %> -->
-<%= render "bank_linking_authentication" if current_user.stripe_uid.empty?%>
+<%= render "bank_linking_authentication" if current_user.stripe_uid.blank?%>
 
 <div class="row">
     <div class="col-md-6">

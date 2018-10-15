@@ -129,6 +129,7 @@ Rails.application.routes.draw do
       namespace :tutors do
         resources :students, only: [:index]
         resources :invoices, only: [:index, :create, :destroy]
+        resources :payouts, only: [:index]
         resources :subjects, only: [:index, :update]
         resource :tutor_profile, only: [:show, :update]
         scope :tutor_profile do
