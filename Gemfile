@@ -20,9 +20,13 @@ gem "title"
 gem "uglifier"
 gem "bootstrap-sass", "~> 3.3.6"
 
+# Payments
+gem "stripe", "~> 3.4.1"
+gem "oauth2"
+
 gem "bugsnag"
 gem "clearance"
-gem "stripe", "~> 3.4.1"
+
 gem "dwolla_v2", "~> 2.0"
 gem "newrelic_rpm"
 gem "omniauth"
