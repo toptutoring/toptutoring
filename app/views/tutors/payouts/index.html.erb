@@ -8,24 +8,48 @@
         <div class="widget-body">
           <div class="table-responsive">
             <% if current_user.stripe_uid.present? %>
-              <table class="table mb-0">
-                <thead>
-                  <tr>
-                    <th>Payout method</th>
-                    <th>Brand</th>
-                    <th>Expiry Year</th>
-                    <th>Last4</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><%= @card.object %></td>
-                    <td><%= @card.brand %></td>
-                    <td><%= @card.exp_year %></td>
-                    <td><%= @card.last4 %></td>
-                  </tr>
-                </tbody>
-              </table>
+              <% if @card.present? %>
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>Payout method</th>
+                      <th>Brand</th>
+                      <th>Expiry Year</th>
+                      <th>Last4</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><%= @card.object %></td>
+                      <td><%= @card.brand %></td>
+                      <td><%= @card.exp_year %></td>
+                      <td><%= @card.last4 %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              <% end %>
+
+              <% if @bank_account.present? %>
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>Payout method</th>
+                      <th>Bank Name</th>
+                      <th>Routing number</th>
+                      <th>Last4</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><%= @bank_account.object %></td>
+                      <td><%= @bank_account.bank_name %></td>
+                      <td><%= @bank_account.routing_number %></td>
+                      <td><%= @bank_account.last4 %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              <% end %>
+
               <table class="table mb-0">
                 <thead>
                   <tr>
