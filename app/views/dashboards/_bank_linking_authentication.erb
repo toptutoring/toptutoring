@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <div class="widget-heading clearfix">
+        <h3 class="widget-title pull-left">Authenticate with Stripe</h3>
+      </div>
+      <div class="widget-body text-center">
+        <p>
+        <%= payout_setup_message %>
+        </p>
+        <p>Our system is set up to handle Debit Card payouts which is the easiest and most popular option.</p>
+        <p>If you would prefer to enter in banking information, please let an administrator know.</p>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <a href=<%= @stripe_url %>, class="btn btn-block social-btn btn-primary">Authenticate with Stripe</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

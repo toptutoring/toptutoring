@@ -454,6 +454,7 @@ DEPENDENCIES
   money-rails (~> 1)
   newrelic_rpm
   normalize-rails (~> 3.0.0)
+  oauth2
   omniauth
   omniauth-oauth2
   opentok (~> 3.0.0)

@@ -4,6 +4,11 @@ module DashboardHelper
       is using Dwolla in order to make transfers. Please click the button below to authenticate with Dwolla."
   end
 
+  def payout_setup_message
+    "Hello #{current_user.full_name}, your #{ current_user.has_role?("director") ? 'administrator' : 'director' }
+      is using Stripe in order to pay tutors. Please click the button below to authenticate with Stripe."
+  end
+
   def dashboard_credit_widget_display(user)
     account = user.client_account
     capture do

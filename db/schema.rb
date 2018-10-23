@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180605182346) do
+ActiveRecord::Schema.define(version: 20181013212923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -379,6 +379,7 @@ ActiveRecord::Schema.define(version: 20180605182346) do
     t.integer "referrer_id"
     t.boolean "referral_claimed", default: false
     t.integer "zip"
+    t.string "stripe_uid"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
     t.index ["unique_token"], name: "index_users_on_unique_token", unique: true
