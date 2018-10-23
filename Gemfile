@@ -21,7 +21,7 @@ gem "uglifier"
 gem "bootstrap-sass", "~> 3.3.6"
 
 # Payments
-gem "stripe", "~> 3.4.1"
+gem "stripe"
 gem "oauth2"
 
 gem "bugsnag"
