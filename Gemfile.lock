@@ -147,7 +147,7 @@ GEM
       capybara
       sinatra
       webmock
-    faraday (0.12.1)
+    faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
@@ -384,7 +384,7 @@ GEM
     state_machines-activerecord (0.5.0)
       activerecord (>= 4.1, < 5.2)
       state_machines-activemodel (>= 0.5.0)
-    stripe (3.4.1)
+    stripe (3.28.0)
       faraday (~> 0.10)
     thor (0.19.4)
     thread_safe (0.3.6)
@@ -486,7 +486,7 @@ DEPENDENCIES
   sprockets (>= 3.0.0)
   state_machines
   state_machines-activerecord
-  stripe (~> 3.4.1)
+  stripe
   timecop
   title
   uglifier
