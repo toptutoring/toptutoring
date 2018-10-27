@@ -74,22 +74,20 @@ class PaymentService
 
   def charge_with_stripe
     charge = Stripe::Charge.create(
-      stripe_charge_params
+      { amount: payment.amount_cents,
+        currency: "usd",
+        description: payment.description,
+        source: source,
+        transfer_group: "#{user.id}_#{user.first_name}_#{user.last_name}"
+       }.tap do |hash|
+          hash.merge!(customer: account.customer_id) if account
+        end
     )
     payment.stripe_charge_id = charge.id
     card = charge.source
     payment.assign_attributes(stripe_source: card.id, last_four: card.last4,
                               card_holder_name: card.name,
                               card_brand: card.brand, status: "succeeded")
-  end
-
-  def stripe_charge_params
-    { amount: payment.amount_cents,
-      currency: "usd",
-      description: payment.description,
-      source: source }.tap do |hash|
-        hash.merge!(customer: account.customer_id) if account
-      end
   end
 
   def send_notices
