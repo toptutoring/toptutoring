@@ -2,7 +2,7 @@ module Admin
   class PaymentsController < ApplicationController
     before_action :require_login
     before_action :set_funding_source, :validate_funding_source, :set_invoice, :set_payee, only: :create
-    
+
     def index
       @payments = Payment.order(created_at: :desc)
                          .includes(:payer)
@@ -41,7 +41,12 @@ module Admin
     end
 
     def process_payout
-      result = DwollaPaymentService.charge!(@payout)
+      if @payout.receiving_account.user.stripe_uid
+        result = StripePaymentService.charge!(@payout, @invoice)
+      else
+        result = DwollaPaymentService.charge!(@payout)
+      end
+
       if result.success?
         adjust_balance_and_update_status_for_invoice
         flash.notice = result.message
