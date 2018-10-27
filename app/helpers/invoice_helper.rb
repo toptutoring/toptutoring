@@ -1,10 +1,11 @@
 module InvoiceHelper
   def pay_all_link(invoices, type)
-    return unless authorized_to_pay?(invoices, type)
-    total = if type == 'timesheets' then Invoice.contractor_pending_total
-            else Invoice.tutor_pending_total
-            end
-    render 'admin/invoices/pay_all_link', type: type, total_for_all: total
+    # Disable mass pay in favor of migrating to Stripe single pay
+    # return unless authorized_to_pay?(invoices, type)
+    # total = if type == 'timesheets' then Invoice.contractor_pending_total
+    #         else Invoice.tutor_pending_total
+    #         end
+    # render 'admin/invoices/pay_all_link', type: type, total_for_all: total
   end
 
   def delete_link(invoice)
