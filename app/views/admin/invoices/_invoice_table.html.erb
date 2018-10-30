@@ -24,7 +24,11 @@
             <br />
             <%= invoice_note_label(invoice) %>
           </td>
-          <td><%= invoice.submitter.full_name %></td>
+          <td><%= invoice.submitter.full_name %>
+            <%- if invoice.submitter.stripe_uid  %>
+              🙂
+            <%- end %>
+          </td>
           <td><%= l(invoice.updated_at, format: :date) %></td>
           <td><%= invoice.engagement.academic_type.humanize %></td>
           <td><%= invoice.session_rating %></td>
