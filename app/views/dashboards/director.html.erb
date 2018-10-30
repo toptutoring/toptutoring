@@ -1,4 +1,7 @@
-<%= render "dwolla_login" if !current_user.has_valid_dwolla? %>
+<%=# render "dwolla_login" if !current_user.has_valid_dwolla? %>
+<!-- Don't show Dwolla since we are migrating to Stripe -->
+<%= render "bank_linking_authentication" if current_user.stripe_uid.blank?%>
+
 <%= render "engagements" %>
 
 <div class="row">
