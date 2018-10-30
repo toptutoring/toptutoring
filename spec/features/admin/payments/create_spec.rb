@@ -59,7 +59,7 @@ feature "Create payment for tutor" do
         sign_in(director)
         visit admin_invoices_path
 
-        click_on "Pay"
+        click_on "Pay with Dwolla"
 
         expect(page).to have_content("Funding source is not set. Please contact the administrator.")
       end
@@ -73,7 +73,7 @@ feature "Create payment for tutor" do
         sign_in(director)
         visit admin_invoices_path
 
-        click_on "Pay"
+        click_on "Pay with Dwolla"
 
         payout = Payout.last
         expect(payout.dwolla_transfer_url).to eq transfer_url
@@ -84,7 +84,7 @@ feature "Create payment for tutor" do
       end
     end
 
-    context "and is paying himself" do 
+    context "and is paying himself" do
       scenario "with valid credentials" do
         director_engagement = FactoryBot.create(:engagement, tutor_account: director.tutor_account, client_account: client.client_account, student_account: student_account)
         FactoryBot.create(:invoice, submitter: director, client: client, engagement: director_engagement, hours: 1)
@@ -95,7 +95,7 @@ feature "Create payment for tutor" do
 
         sign_in(director)
         visit admin_invoices_path
-        click_on "Pay"
+        click_on "Pay with Dwolla"
 
         payout = Payout.last
         expect(payout.dwolla_transfer_url).to eq transfer_url

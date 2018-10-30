@@ -14,7 +14,6 @@ gem "rails", "~> 5.1.2"
 gem "recipient_interceptor"
 gem "sass-rails", "~> 5.0"
 gem "simple_form"
-gem "skylight"
 gem "sprockets", ">= 3.0.0"
 gem "title"
 gem "uglifier"
@@ -23,6 +22,11 @@ gem "bootstrap-sass", "~> 3.3.6"
 # Payments
 gem "stripe"
 gem "oauth2"
+
+# Feature flagging
+gem "flipper"
+gem "flipper-active_record"
+gem "flipper-ui"
 
 gem "bugsnag"
 gem "clearance"

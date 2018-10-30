@@ -21,7 +21,7 @@ feature "Admin invoice features" do
 
     expect(tutor.tutor_account.balance_pending).to eq Money.new(15_00)
 
-    click_on "Pay"
+    click_on "Pay with Dwolla"
 
     payout = Payout.last
     expect(page).to have_content("Payment is being processed.")

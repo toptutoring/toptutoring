@@ -1,3 +1,4 @@
+<p> Enable the Stripe payout feature in <%= link_to "Flipper", "/flipper" %></p>
 <%= render "layouts/page_widget", title: "Pending Invoices", heading_html: pay_all_link(@invoices.pending, 'invoices') do %>
   <%= render "invoice_table", invoices: @invoices.pending %>
 <% end %>

@@ -1,10 +1,13 @@
 module InvoiceHelper
   def pay_all_link(invoices, type)
-    return unless authorized_to_pay?(invoices, type)
-    total = if type == 'timesheets' then Invoice.contractor_pending_total
-            else Invoice.tutor_pending_total
-            end
-    render 'admin/invoices/pay_all_link', type: type, total_for_all: total
+    # Disable mass pay in favor of migrating to Stripe single pay
+    unless Flipper.enabled?(:stripe_payouts)
+      return unless authorized_to_pay?(invoices, type)
+      total = if type == 'timesheets' then Invoice.contractor_pending_total
+              else Invoice.tutor_pending_total
+              end
+      render 'admin/invoices/pay_all_link', type: type, total_for_all: total
+    end
   end
 
   def delete_link(invoice)
@@ -23,10 +26,15 @@ module InvoiceHelper
   end
 
   def invoice_actions(invoice)
+    payment_text = if invoice.submitter.stripe_uid && Flipper.enabled?(:stripe_payouts)
+                     "Pay"
+                   else
+                     "Pay with Dwolla"
+                  end
     return "No actions available" unless invoice.status == 'pending'
     link_to("Edit", edit_admin_invoice_path(invoice),
             class: "btn btn-sm btn-outline btn-primary") +
-      link_to("Pay", admin_payments_path({ invoice: invoice }),
+      link_to(payment_text, admin_payments_path({ invoice: invoice }),
               method: :post, data: { disable_with: 'Submitting' },
               class: "btn btn-sm btn-outline btn-primary") +
       link_to("Deny", deny_admin_invoice_path(invoice),

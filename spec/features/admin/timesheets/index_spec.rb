@@ -9,7 +9,7 @@ feature "Timesheet Index" do
     sign_in(admin)
     visit admin_timesheets_path
 
-    expect(page).to have_content("Timesheets")
+    expect(page).to have_content("Timesheet")
     expect(page).to have_content("Submitted By")
     expect(page).to have_content("Date Submitted")
     expect(page).to have_content("Total Hours")
