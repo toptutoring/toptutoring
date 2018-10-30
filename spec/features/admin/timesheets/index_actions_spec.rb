@@ -18,7 +18,7 @@ feature "Admin timesheet features" do
     account = contractor.contractor_account
     expect(account.balance_pending).to eq Money.new(15_00)
 
-    click_on "Pay"
+    click_on "Pay with Dwolla"
 
     payout = Payout.last
     expect(page).to have_content("Payment is being processed.")
@@ -56,7 +56,7 @@ feature "Admin timesheet features" do
 
     fill_in "Description", with: "Changing Description"
     fill_in "Hours", with: 3
-    
+
     click_on "Update"
 
     expect(account.reload.balance_pending).to eq Money.new(45_00)
