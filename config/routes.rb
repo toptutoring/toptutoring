@@ -73,6 +73,7 @@ Rails.application.routes.draw do
     end
 
     constraints Clearance::Constraints::SignedIn.new { |user| user.has_role?("admin") || user.has_role?("director") } do
+      mount Flipper::UI.app(Flipper) => "/flipper"
       scope module: :admin do
         scope module: :blogs do
           resources :blog_posts do
