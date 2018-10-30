@@ -23,6 +23,11 @@ gem "bootstrap-sass", "~> 3.3.6"
 gem "stripe"
 gem "oauth2"
 
+# Feature flagging
+gem "flipper"
+gem "flipper-active_record"
+gem "flipper-ui"
+
 gem "bugsnag"
 gem "clearance"
 
