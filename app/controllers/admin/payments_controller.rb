@@ -41,7 +41,7 @@ module Admin
     end
 
     def process_payout
-      if @payout.receiving_account.user.stripe_uid
+      if @payout.receiving_account.user.stripe_uid && Flipper.enabled?(:stripe_payouts)
         result = StripePaymentService.charge!(@payout, @invoice)
       else
         result = DwollaPaymentService.charge!(@payout)
