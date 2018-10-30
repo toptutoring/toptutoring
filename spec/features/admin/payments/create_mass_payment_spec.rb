@@ -14,31 +14,31 @@ feature "Create payment for tutor" do
   let(:funding_source) { FactoryBot.create(:funding_source, user_id: admin.id) }
 
   context "when user is admin", js: true do
-    # scenario "and attempts to pay invoice when funding source is not set" do
-    #   sign_in(admin)
-    #   visit admin_invoices_path
-    #   click_on "Pay All Invoices"
-    #   click_on "Ok"
-    #
-    #   expect(page).to have_content("Please select a funding source before making a payment.")
-    # end
+    scenario "and attempts to pay invoice when funding source is not set" do
+      sign_in(admin)
+      visit admin_invoices_path
+      click_on "Pay All Invoices"
+      click_on "Ok"
 
-    # scenario "makes payment for tutors with and without dwolla authentication" do
-    #   funding_source
-    #
-    #   mass_pay_url = "mass_pay_url"
-    #   dwolla_stub_success(mass_pay_url)
-    #
-    #   sign_in(admin)
-    #   visit admin_invoices_path
-    #   click_on "Pay All Invoices"
-    #   click_on "Ok"
-    #
-    #   expect(Payout.count).to eq 1
-    #   expect(Payout.last.dwolla_mass_pay_url).to eq mass_pay_url
-    #   expect(page).to have_content("Payment could not be processed for #{tutor_no_auth.full_name}.")
-    #   expect(page).to have_content("1 payment has been made for a total of $45.00")
-    #   expect(tutor.reload.tutor_account.balance_pending).to eq 0
-    # end
+      expect(page).to have_content("Please select a funding source before making a payment.")
+    end
+
+    scenario "makes payment for tutors with and without dwolla authentication" do
+      funding_source
+
+      mass_pay_url = "mass_pay_url"
+      dwolla_stub_success(mass_pay_url)
+
+      sign_in(admin)
+      visit admin_invoices_path
+      click_on "Pay All Invoices"
+      click_on "Ok"
+
+      expect(Payout.count).to eq 1
+      expect(Payout.last.dwolla_mass_pay_url).to eq mass_pay_url
+      expect(page).to have_content("Payment could not be processed for #{tutor_no_auth.full_name}.")
+      expect(page).to have_content("1 payment has been made for a total of $45.00")
+      expect(tutor.reload.tutor_account.balance_pending).to eq 0
+    end
   end
 end
