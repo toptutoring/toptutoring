@@ -38,7 +38,7 @@ module Admin
       @invoice = Invoice.find(params[:id])
     end
 
-   def type 
+   def type
       @invoice.by_tutor? ? "invoice" : "timesheet"
    end
 

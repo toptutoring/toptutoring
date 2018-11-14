@@ -85,7 +85,7 @@ module Tutors
     def adjust_balances_and_save_records
       @adjuster = CreditUpdater.new(@invoice).process_creation_of_invoice!
       if @adjuster.failed?
-        flash.alert = "There was an error while creating your invoice."
+        flash.alert = "Error #{@adjuster&.error}"
       elsif @adjuster.low_balance?
         flash.alert = "Your invoice has been created. However, your client is running low on their balance. Please consider making a suggestion to your client to add to their balance before scheduling any more sessions."
       else
@@ -101,7 +101,7 @@ module Tutors
     def authorize_tutor
       return if params[:invoice][:submitter_type] == "by_contractor"
       return if current_user.tutor_account.engagements.active.find_by_id(params[:invoice][:engagement_id])
-      flash.alert = "There was an error while processing your invoice. Please check with your tutor director if you have been set up yet to tutor this client." 
+      flash.alert = "There was an error while processing your invoice. Please check with your tutor director if you have been set up yet to tutor this client."
       redirect_to dashboard_path
     end
 
