@@ -13,9 +13,9 @@ class CreditUpdater
       subtract_from_client_credit(@invoice.hours) if @client
       @invoice.save!
     end
-    Struct.new(:failed?, :low_balance?).new(false, client_low_balance?)
+    Struct.new(:failed?, :low_balance?, :error).new(false, client_low_balance?, "Client has a low balance")
   rescue ActiveRecord::RecordInvalid => e
-    Struct.new(:failed?).new(true)
+    Struct.new(:failed?, :error).new(true, e&.message)
   end
 
   def process_denial_of_invoice!
