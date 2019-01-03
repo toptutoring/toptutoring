@@ -27,6 +27,7 @@ jobs:
         - v1-gem-cache-{{ arch }}-{{ .Branch }}-
         - v1-gem-cache-{{ arch }}-
     - run: bundle install --path vendor/bundle
+    - run: sudo apt-get update
     - run: sudo apt -f install chromium
     - save_cache:
         key: v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
