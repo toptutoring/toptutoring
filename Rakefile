@@ -14,4 +14,6 @@ if defined? RSpec
   end
 end
 
-task default: "bundler:audit"
+# Do not check bundler audit unless there is a team
+# which would allow us to manage patch upgrades
+# task default: "bundler:audit"
