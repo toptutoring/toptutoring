@@ -3,12 +3,16 @@ class StripePaymentService
     Result = Struct.new(:success?, :message)
 
     def charge!(payout, invoice)
-      client = invoice.client
+      if invoice.submitter_type == "by_contractor"
+        agent = invoice.submitter
+      else
+        agent = invoice.client
+      end
       transfer = Stripe::Transfer.create({
         :amount => payout.amount_cents,
         :currency => payout.amount_currency.downcase,
         :destination => payout.receiving_account.user.stripe_uid,
-        :transfer_group => "#{client.id}_#{client.first_name}_#{client.last_name}"
+        :transfer_group => "#{agent.id}_#{agent.first_name}_#{agent.last_name}"
       })
 
       if transfer
