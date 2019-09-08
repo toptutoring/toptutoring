@@ -85,7 +85,7 @@ en:
     contact:
       content: "Interested in our tutoring services or want more information about our rates? Please call our office or fill out the following form and a tutor director will be in contact with you shortly."
       confirmation: "Thank you for your submission, we will be in touch shortly."
-      failure: "Sorry, we were unable to record your message. Please ensure the form has been filled out correctly and try again."
+      failure: "Sorry, we were unable to record your message. Please ensure the form has been filled out completely and try again. We do not allow invalid nor international numbers to help combat spam. Please enter phone numbers with no spaces or dashes. Thanks!"
     cities:
       sub_title: "Top-Tier Academic and Test Prep Tutoring In %{location}"
       about:
@@ -94,7 +94,7 @@ en:
         content2: "Through our personalized approach with one-on-one tutoring, our tutors in %{city} craft a personalized plan to work with your strengths and weaknesses to give you the most effective results. We also offer the flexibility of both online and in-person tutoring for your various scheduling and budgeting needs."
       how_it_works:
         title: "How it works"
-        match: 
+        match:
           title: "match with a tutor"
           content: "After a free consultation with our tutor director, you will be matched with a tutor near %{city} best suited to your particular needs and learning style."
         personalize:
