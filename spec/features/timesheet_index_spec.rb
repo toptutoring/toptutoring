@@ -21,15 +21,4 @@ feature "as a contractor reviewing timesheets" do
     expect(page).to have_content(invoice.submitter_pay)
     expect(page).to have_content(invoice.status)
   end
-
-  scenario "when user deletes a timesheet" do
-    sign_in(contractor)
-    visit timesheets_path
-    expect(contractor.contractor_account.balance_pending).to eq Money.new(15_00)
-
-    click_on "Delete"
-
-    expect(page).to have_content("Timesheet deleted")
-    expect(contractor.reload.contractor_account.balance_pending).to eq 0
-  end
 end

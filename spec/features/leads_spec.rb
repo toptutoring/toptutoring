@@ -21,11 +21,13 @@ feature "Leaving a comment" do
     last_name = "Visitor"
     phone_number = "510-555-5555"
     zip = 94501
+    comments = "I'd like tutoring"
     fill_in "First Name", with: first_name
     fill_in "Last Name", with: last_name
     fill_in "Phone Number", with: phone_number
     fill_in "Email", with: email
     fill_in "Zip Code", with: zip
+    fill_in "Comments", with: comments
     chosen_select new_subject.name, from: "subject_id"
     click_button "Send Message"
 
