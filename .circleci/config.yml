@@ -36,7 +36,7 @@ jobs:
     - run:
         name: Database setup
         command: bundle exec rake db:create db:schema:load --trace
-    - run: bundle exec rake
+    - run: bundle exec rspec
   two:
     docker:
     - image: circleci/node:4.8.2
