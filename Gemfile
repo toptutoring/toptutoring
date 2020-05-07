@@ -31,7 +31,7 @@ gem "flipper-ui"
 gem "bugsnag"
 gem "clearance"
 
-gem "dwolla_v2", "~> 2.0"
+#gem "dwolla_v2", "~> 2.0"
 gem "newrelic_rpm"
 gem "omniauth"
 gem "omniauth-oauth2"
