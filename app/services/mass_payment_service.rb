@@ -12,15 +12,17 @@ class MassPaymentService
 
   def pay_all
     return no_payments_error if @payouts.empty?
-    request = DwollaService.request(:mass_payment, request_body)
-    if request.success?
-      finalize_payouts(request.response)
-      Result.new(true, @messages)
-    else
-      @invoices.update_all(payout_id: nil, status: "pending")
-      @payouts.destroy_all
-      Result.new(false, request.response)
-    end
+    # Dwolla disabled
+    return no_payments_error
+    # request = DwollaService.request(:mass_payment, request_body)
+    # if request.success?
+    #   finalize_payouts(request.response)
+    #   Result.new(true, @messages)
+    # else
+    #   @invoices.update_all(payout_id: nil, status: "pending")
+    #   @payouts.destroy_all
+    #   Result.new(false, request.response)
+    # end
   end
 
   private

@@ -3,15 +3,21 @@ class DwollaPaymentService
     Result = Struct.new(:success?, :message)
 
     def charge!(payout)
-      request = DwollaService.request(:transfer, transfer_payload(payout))
-      if request.success?
-        save_payout(payout, request.response)
-        SlackNotifier.notify_payout_made(payout)
-        Result.new(true, "Payment is being processed.")
-      else
-        Result.new(false, request.response)
-      end
+      Result.new(false, "Dwolla not supported")
+      # request = DwollaService.request(:transfer, transfer_payload(payout))
+      # if request.success?
+      #   save_payout(payout, request.response)
+      #   SlackNotifier.notify_payout_made(payout)
+      #   Result.new(true, "Payment is being processed.")
+      # else
+      #   Result.new(false, request.response)
+      # end
     end
+    # Stripe::Payout.create({
+    #   :amount => 50,
+    #   :currency => "usd",
+    #   :destination => User.find(13).stripe_uid
+    # })
 
     private
 

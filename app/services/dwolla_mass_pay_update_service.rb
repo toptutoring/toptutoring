@@ -1,13 +1,13 @@
 class DwollaMassPayUpdateService
   class << self
     def perform!(event)
-      request = DwollaService.request(:mass_pay_items, event.resource_url)
-      if request.success?
-        payouts = event.mass_pay_payouts
-        update_payouts(payouts, request.response)
-      else
-        record_payouts
-      end
+      # request = DwollaService.request(:mass_pay_items, event.resource_url)
+      # if request.success?
+      #   payouts = event.mass_pay_payouts
+      #   update_payouts(payouts, request.response)
+      # else
+      #   record_payouts
+      # end
     end
 
     private
