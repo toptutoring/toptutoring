@@ -21,8 +21,10 @@ class SlackNotifier
       message = "A user has left their contact info.\n"
       message.concat("Lead failed to save. #{lead.errors.full_messages.join(", ")}") unless lead.persisted?
       return if !lead.persisted? || lead.comments.blank?# Skip even more spammers# && (lead.first_name == lead.last_name) # Skip spammers
-      message.concat lead_message(lead, phone, lead.comments)
-      ping(message, :leads)
+      # Closing Top Tutoring
+      return
+      # message.concat lead_message(lead, phone, lead.comments)
+      # ping(message, :leads)
     end
 
     def lead_message(lead, phone, comments)

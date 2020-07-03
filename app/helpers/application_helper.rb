@@ -1,8 +1,6 @@
 module ApplicationHelper
-  CURRENT_YEAR = "2018"
-
   def current_year
-    CURRENT_YEAR || Date.current.year
+    Date.current.year
   end
 
   def page_title(page_title = "Top Tutoring")
@@ -14,7 +12,7 @@ module ApplicationHelper
   end
 
   def icon_link(path, icon, tooltip, id, classes: nil)
-    concat(link_to(path, id: id, class: "fs-24 #{classes}") do 
+    concat(link_to(path, id: id, class: "fs-24 #{classes}") do
       tag.i class: "icon #{icon}",
             data: { toggle: "tooltip", placement: "top", "original-title" => tooltip }
     end)
