@@ -7,7 +7,7 @@ module Admin
 
     def create
       client = User.find_by_id(params[:user_id])
-      UserNotifierMailer.send_review_request(client).deliver_later
+      # UserNotifierMailer.send_review_request(client).deliver_later
       flash.notice = "Review for #{client.full_name} has been requested."
       redirect_to admin_client_reviews_path
     end
